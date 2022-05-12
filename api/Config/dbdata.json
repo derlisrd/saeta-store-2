@@ -1,0 +1,9 @@
+{
+    "conexion": {
+        "host": "localhost",
+        "user": "root",
+        "pass": "pasdf",
+        "db": "dbname",
+        "apikey": "ke"
+    }
+}

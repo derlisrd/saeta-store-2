@@ -1,0 +1,68 @@
+import { Button, Grid, Stack, Typography } from "@mui/material";
+import React, { useState } from "react";
+import { useBarcode } from "react-barcodes";
+import { useLocation } from "react-router-dom";
+import printJS from "print-js";
+import Funciones from "../../../../Funciones";
+
+function useQuery() {
+  const { search } = useLocation();
+  return React.useMemo(() => new URLSearchParams(search), [search]);
+}
+const ProductCode = () => {
+  let query = useQuery();
+  const CODIGO = query.get("code") || "no-code";
+
+  const [cant, setCant] = useState([0]);
+  const { inputRef } = useBarcode({
+    value: CODIGO,
+    options: {
+      background: "#fff",
+      font: "monospace",
+      height: 50,
+    },
+  });
+  const add = ()=>{
+    let c = cant.length + 1;
+    let ca = [...cant];
+    ca.push(c);
+    setCant(ca);
+  }
+  const imprimir = () => {
+    printJS({ type: "html", printable: "print_code" });
+  };
+  return (
+    <Grid
+      container
+      spacing={2}
+      justifyContent="center"
+    >
+        <Grid item xs={12}>
+            <Typography variant="h6">Código de barras</Typography>
+        </Grid>
+      <Grid item xs={12}>
+        <Stack direction={{ xs: 'column', sm: 'row' }}
+  spacing={{ xs: 1, sm: 2, md: 4 }}>
+        <Button variant="outlined" size="large" onClick={imprimir}>
+          Imprimir
+        </Button>
+        <Button variant="outlined" size="large" onClick={add}>
+          Agregar Copia
+        </Button>
+        <Button variant="outlined" size="large" onClick={()=>Funciones.goto('productos')}>
+          Productos
+        </Button>
+        </Stack>
+      </Grid>
+      <Grid item xs={12}>
+        <div id="print_code">
+          {cant.map((e) => (
+            <canvas key={e} ref={inputRef} />
+          ))}
+        </div>
+      </Grid>
+    </Grid>
+  );
+};
+
+export default ProductCode;
