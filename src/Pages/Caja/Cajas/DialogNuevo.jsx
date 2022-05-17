@@ -1,20 +1,5 @@
-import {
-  Alert,
-  Button,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
-  FormControl,
-  FormHelperText,
-  Grid,
-  InputLabel,
-  LinearProgress,
-  MenuItem,
-  Select,
-  TextField,
-} from "@mui/material";
-import NumberFormatCustom from "../../../Componentes/NumberFormatCustom";
+import {Alert,Button,Dialog,DialogActions,DialogContent,DialogTitle,FormControl,FormHelperText,Grid,InputLabel,LinearProgress,MenuItem,Select,TextField} from "@mui/material";
+import NumberFormatCustom from "../../../Components/thirty/NumberFormatCustom";
 import { useCajas } from "./CajasProvider";
 
 const DialogNuevo = () => {

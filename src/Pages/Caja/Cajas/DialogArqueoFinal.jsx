@@ -1,16 +1,16 @@
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle } from '@mui/material';
 import React, { useState,useEffect,useCallback } from 'react'
-import { APICALLER } from '../../../Api/ApiCaller';
+import { APICALLER } from '../../../Services/api';
 import { useCajas } from './CajasProvider';
 import CierreResumen from './CierreResumen';
-import { useLogin } from "../../../Contextos/LoginProvider";
+import { useLogin } from "../../../Contexts/LoginProvider";
 import swal from 'sweetalert';
 
 const DialogArqueoFinal = () => {
 
   const {dialogs,setDialogs,setTotalSumaMonedasArqueo,datosCajaCierre,totalSumaMonedasArqueo,Funciones,getLista} = useCajas();
-  const {token_user,id_user} = useLogin()
-  
+  const {userData} = useLogin()
+  const {token_user,id_user} = userData;
   const datosIniciales = {
     montoInicial: 0,
     saldoFinal: 0,

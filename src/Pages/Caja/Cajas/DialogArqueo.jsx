@@ -1,16 +1,8 @@
-import {
-  Button,Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
-  Grid,
-  TextField,
-  Typography,
-} from "@mui/material";
+import {Button,Dialog,DialogActions,DialogContent,DialogTitle,Grid,TextField,Typography} from "@mui/material";
 import React, { Fragment, useState } from "react";
 import { useCajas } from "./CajasProvider";
-import { useDatosEmpresa } from "../../../Contextos/DatosEmpresaProvider";
-import NumberFormatCustom from "../../../Componentes/NumberFormatCustom";
+import { useDatosEmpresa } from "../../../Contexts/DatosEmpresaProvider";
+import NumberFormatCustom from "../../../Components/thirty/NumberFormatCustom";
 const DialogArqueo = () => {
   const {dialogs,setDialogs,listaRegistrosMonedas,Funciones,totalSumaMonedasArqueo,setTotalSumaMonedasArqueo} = useCajas();
   const {MONEDA_PRINCIPAL } = useDatosEmpresa();

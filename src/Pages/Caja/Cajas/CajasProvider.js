@@ -1,23 +1,21 @@
-import {
-  createContext,
-  useContext,
-  useState,
-  useEffect,
-  useCallback,
-} from "react";
+import {createContext,useContext,useState,useEffect,useCallback} from "react";
 import { useLocation } from "react-router-dom";
 import React from 'react';
 import swal from "sweetalert";
-import { APICALLER } from "../../../Api/ApiCaller";
-import { useLogin } from "../../../Contextos/LoginProvider";
-import { Funciones } from "../../../Funciones/Funciones";
+import { APICALLER } from "../../../Services/api";
+import { useLogin } from "../../../Contexts/LoginProvider";
+import { funciones as Funciones } from "../../../Functions";
+
 const Contexto = createContext();
+
 function useQuery() {
   const { search } = useLocation();
   return React.useMemo(() => new URLSearchParams(search), [search]);
 }
+
 const CajasProvider = ({ children }) => {
-  const { token_user, id_user } = useLogin();
+  const {userData} = useLogin()
+  const {token_user,id_user} = userData;
   let query = useQuery();
   const dialogQuery = query.get("dialog") ? query.get("dialog") : "";
   const dialogID = query.get("id") ? query.get("id") : "";

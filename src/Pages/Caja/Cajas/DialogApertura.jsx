@@ -1,7 +1,7 @@
 import { Alert, AlertTitle, Button, CircularProgress, Dialog, DialogActions, DialogContent, DialogTitle, Grid, InputAdornment, LinearProgress, TextField} from '@mui/material';
 import React,{useEffect,useCallback} from 'react'
 import { useCajas } from './CajasProvider';
-import NumberFormatCustom from "../../../Componentes/NumberFormatCustom";
+import NumberFormatCustom from "../../../Components/thirty/NumberFormatCustom";
 
 const DialogApertura = () => {
 

@@ -1,5 +1,5 @@
 import React,{Fragment} from 'react'
-import  Funciones  from "../../../Funciones";
+import { funciones as Funciones } from "../../../Functions";
 import { Typography,Grid, TextField,Alert,LinearProgress } from '@mui/material'
 import { useCajas } from './CajasProvider';
 

@@ -1,15 +1,7 @@
-import {
-  Button,
-  Icon,
-  IconButton,
-  InputAdornment,
-  Stack,
-  TextField,
-  Tooltip,
-} from "@mui/material";
+import {Button,Icon,IconButton,InputAdornment,Stack,TextField,Tooltip} from "@mui/material";
 import React from "react";
 import swal from "sweetalert";
-import Tablas from "../../../Componentes/Tablas";
+import Tablas from "../../../Components/UI/Tablas";
 import { useCajas } from "./CajasProvider";
 
 const ListaCajas = () => {
@@ -169,14 +161,14 @@ const ListaCajas = () => {
 
   return (
     <Tablas
-      nombretabla="Cajas"
-      subtitle="Habilitación y apertura de cajas"
+    title="Cajas" subtitle="Habilitación y apertura de cajas" 
+    loading={cargas.lista}
+      caption=""
       icono="point_of_sale"
-      columnas={columnas}
-      filas={lista}
-      Acciones={Acciones}
-      cargando={cargas.lista}
-      search={Search}
+      columns={columnas}
+      datas={lista}
+      Accions={Acciones}
+      inputs={Search}
       showOptions
     />
   );

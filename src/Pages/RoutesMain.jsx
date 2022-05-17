@@ -8,6 +8,7 @@ import ErrorPage from "./404";
 import LoginForm from "./Auth/LoginForm";
 import DashBoard from "./Dashboard";
 import MainPage from "./MainPage";
+import Cajas from "./Caja/Cajas";
 
 /* 
 import Agenda from "./Agenda";
@@ -82,6 +83,7 @@ const RoutesMain = () => {
     <Routes>
       
         <Route path={R+'dashboard'} element={<PrivateRoute id={59}><DashBoard /></PrivateRoute>} />
+        <Route path={R+'cajas'} element={<PrivateRoute id={22}><Cajas /></PrivateRoute>} />
         <Route path={R+'notautorized'} element={<NotAutorized />} />
         <Route path={R} element={<LoginForm />} />
         <Route path="*" element={<ErrorPage />} />

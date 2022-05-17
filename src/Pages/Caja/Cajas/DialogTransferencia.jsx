@@ -1,21 +1,7 @@
-import {
-  Alert,
-  Button,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
-  FormControl,
-  Grid,
-  InputLabel,
-  LinearProgress,
-  MenuItem,
-  Select,
-  TextField,
-} from "@mui/material";
+import {Alert,Button,Dialog,DialogActions,DialogContent,DialogTitle,FormControl,Grid,InputLabel,LinearProgress,MenuItem,Select,TextField} from "@mui/material";
 import React from "react";
 import { useCajas } from "./CajasProvider";
-import NumberFormatCustom from "../../../Componentes/NumberFormatCustom";
+import NumberFormatCustom from "../../../Components/thirty/NumberFormatCustom";
 
 const DialogTransferencia = () => {
   const {
