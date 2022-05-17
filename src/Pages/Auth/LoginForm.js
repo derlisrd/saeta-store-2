@@ -3,6 +3,7 @@ import { useState,useEffect,useCallback,useRef } from "react";
 import { useLogin } from "../../Contexts/LoginProvider";
 import { useNavigate } from "react-router-dom";
 import { useGlobalStyles } from "../../Styles/GlobalStyles";
+import LoadingBackDrop from "../../Components/UI/LoadingBackDrop";
 
 
 const LoginForm = () => {
@@ -37,7 +38,9 @@ const LoginForm = () => {
     return () => {isActive = false;ca.abort();};
   }, [verificar]);
 
-
+  if(login){
+    return <LoadingBackDrop />
+  }
 
   return (
 
