@@ -1,4 +1,4 @@
-import { Box, Grid, TextField,Button,FormControlLabel,Checkbox,Icon,InputAdornment,Alert, IconButton } from "@mui/material";
+import { Box, Grid, TextField,Button,FormControlLabel,Checkbox,Icon,InputAdornment,Alert, IconButton, Stack, Typography } from "@mui/material";
 import { useState,useEffect,useCallback,useRef } from "react";
 import { useLogin } from "../../Contexts/LoginProvider";
 import { useNavigate } from "react-router-dom";
@@ -49,7 +49,10 @@ const LoginForm = () => {
       <Box boxShadow={3} className={styles.formularioLogin} borderRadius={5} maxWidth={360}>
         <Grid container spacing={2}>
         <Grid item xs={12}>
-            <h2>Ingresar</h2>
+            <Stack justifyContent="center" alignItems="center" spacing={2}>
+              <Icon color="primary" fontSize="large">rocket_launch</Icon>
+              <Typography variant="h5">Ingresar</Typography>
+            </Stack>
         </Grid>
         <Grid item xs={12}>
             {load.active && <Alert variant="outlined" icon={false} severity="error">

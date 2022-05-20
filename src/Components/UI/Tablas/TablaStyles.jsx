@@ -9,6 +9,7 @@ export const useTablaStyles = makeStyles((theme)=>({
     },
     thead:{
         position: "sticky",
+        textTransform:"uppercase",
         zIndex:10,
         [theme.breakpoints.down("md")]: {
             display: "none !important",

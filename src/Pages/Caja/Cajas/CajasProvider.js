@@ -1,21 +1,24 @@
-import {createContext,useContext,useState,useEffect,useCallback} from "react";
-import { useLocation } from "react-router-dom";
-import React from 'react';
+import {createContext,useContext,useState,useEffect,useCallback,useMemo} from "react";
+import { useLocation,useNavigate } from "react-router-dom";
 import swal from "sweetalert";
 import { APICALLER } from "../../../Services/api";
 import { useLogin } from "../../../Contexts/LoginProvider";
 import { funciones as Funciones } from "../../../Functions";
+import { env } from "../../../Utils/config";
+import { useLang } from "../../../Contexts/LangProvider";
 
 const Contexto = createContext();
 
 function useQuery() {
   const { search } = useLocation();
-  return React.useMemo(() => new URLSearchParams(search), [search]);
+  return useMemo(() => new URLSearchParams(search), [search]);
 }
 
 const CajasProvider = ({ children }) => {
+  const {lang} = useLang();
   const {userData} = useLogin()
   const {token_user,id_user} = userData;
+  const navigate = useNavigate();
   let query = useQuery();
   const dialogQuery = query.get("dialog") ? query.get("dialog") : "";
   const dialogID = query.get("id") ? query.get("id") : "";
@@ -83,7 +86,7 @@ const CajasProvider = ({ children }) => {
     fecha_creacion: Funciones.getFechaHorarioString(),
     ult_mov_caja:Funciones.getFechaHorarioString(),
     tipo_caja: "1",
-    estado_caja: "1",
+    estado_caja: "open",
   };
   const [formNew, setFormNew] = useState(initialFormNew);
 
@@ -122,7 +125,7 @@ const CajasProvider = ({ children }) => {
         id_tipo_registro: "3", // 3 ES APERTURA DE CAJA
         monto_movimiento: formNew.monto_inicial,
         monto_sin_efectivo: "0",
-        detalles_movimiento: "Creación, habilitación y apertura de caja",
+        detalles_movimiento: lang.creacion_apertura_caja,
         fecha_movimiento: formNew.fecha_apertura,
       }
 
@@ -149,12 +152,12 @@ const CajasProvider = ({ children }) => {
       
       if(cajares[0].response==="ok" && cajares[1].response==="ok"){
         swal({
-          text: "Agregado y habilitado correctamente",
+          text: lang.agregado_habilitado_correctamente,
           timer: 1200,
           icon: "success",
         }).then(()=>{
           if(dialogQuery==="new"){
-            Funciones.goto("ventas");
+            navigate(env.BASEURL+"ventas");
           }
           else{
             setDialogs({ ...dialogs, nuevo: false });
@@ -182,7 +185,7 @@ const CajasProvider = ({ children }) => {
       token: token_user,
     });
     if (res.response === "ok") {
-      swal({ text: "Editado correctamente", icon: "success", timer: 1200 });
+      swal({ text: lang.editado_correctamente, icon: "success", timer: 1200 });
       getLista(false);
       setDialogs({ ...dialogs, editar: false });
     }
@@ -229,7 +232,7 @@ const CajasProvider = ({ children }) => {
         id_tipo_registro: "16",
         fecha_movimiento: Funciones.getFechaHorarioString(),
         monto_movimiento: parseFloat(formTransferencia.monto_transferir),
-        detalles_movimiento: `Transferencia de caja ${formTransferencia.nombre_caja} ${formTransferencia.id_caja} a: ${found.nombre_caja} ${found.id_caja} `,
+        detalles_movimiento: `${lang.transferencia_de_caja} ${formTransferencia.nombre_caja} ${formTransferencia.id_caja} ${lang.a}: ${found.nombre_caja} ${found.id_caja} `,
       };
       let mov = await APICALLER.insert({
         table: "cajas_movimientos",
@@ -238,7 +241,7 @@ const CajasProvider = ({ children }) => {
       });
       if (tra.response === "ok" && mov.response === "ok") {
         swal({
-          text: "Transferido correctamente",
+          text: lang.transferido_correctamente,
           icon: "success",
           timer: 1200,
         });
@@ -293,9 +296,9 @@ const CajasProvider = ({ children }) => {
     ])
     
     if(res[1].response==='ok' && res[0].response==='ok'){
-      swal({text: "Caja abierta correctamente",icon: "success",timer: 1200,}).then(()=>{
+      swal({text: lang.caja_abierta_correctamente,icon: "success",timer: 1200,}).then(()=>{
         if(dialogQuery==="open"){
-          Funciones.goto("ventas");
+          navigate(env.BASEURL+"ventas");
         }
         else{
           getLista(false); setDialogs({ ...dialogs, abrir: false });
@@ -373,7 +376,7 @@ const CajasProvider = ({ children }) => {
         setErrors,
         transferir,
         totalSumaMonedasArqueo, setTotalSumaMonedasArqueo,
-        datosCajaCierre,setDatosCajaCierre,arqueo,setArqueo,getLista,dialogQuery,dialogID
+        datosCajaCierre,setDatosCajaCierre,arqueo,setArqueo,getLista,dialogQuery,dialogID,lang
       }}
     >
       {children}
@@ -408,7 +411,7 @@ export const useCajas = () => {
     setErrors,
     transferir,
     totalSumaMonedasArqueo, setTotalSumaMonedasArqueo,
-    datosCajaCierre,setDatosCajaCierre,arqueo,setArqueo,getLista,dialogQuery,dialogID
+    datosCajaCierre,setDatosCajaCierre,arqueo,setArqueo,getLista,dialogQuery,dialogID,lang
   } = useContext(Contexto);
   return {
     cargas,
@@ -436,7 +439,7 @@ export const useCajas = () => {
     setErrors,
     transferir,
     totalSumaMonedasArqueo, setTotalSumaMonedasArqueo,
-    datosCajaCierre,setDatosCajaCierre,arqueo,setArqueo,getLista,dialogQuery,dialogID
+    datosCajaCierre,setDatosCajaCierre,arqueo,setArqueo,getLista,dialogQuery,dialogID,lang
   };
 };
 

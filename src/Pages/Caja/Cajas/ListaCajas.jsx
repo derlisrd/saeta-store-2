@@ -4,18 +4,10 @@ import swal from "sweetalert";
 import Tablas from "../../../Components/UI/Tablas";
 import { useCajas } from "./CajasProvider";
 
-const ListaCajas = () => {
-  const {
-    lista,
-    cargas,
-    dialogs,
-    setDialogs,
-    setFormEdit,
-    setFormAbrir,
-    setFormTransferencia,
-    formTransferencia,setDatosCajaCierre,setTotalSumaMonedasArqueo
-  } = useCajas();
 
+const ListaCajas = () => {
+
+  const {lista,cargas,dialogs,setDialogs,setFormEdit,setFormAbrir,setFormTransferencia,formTransferencia,setDatosCajaCierre,setTotalSumaMonedasArqueo,lang} = useCajas();
   const columnas = [
     {
       field: "id_caja",
@@ -23,25 +15,25 @@ const ListaCajas = () => {
     },
     {
       field: "nombre_caja",
-      title: "Nombre de caja",
+      title: lang.nombre_de_caja,
     },
 
     {
       field: "estado_caja",
-      title: "Estado",
+      title: lang.estado,
       items: {
-        0: "CERRADO",
-        1: "ABIERTO",
+        "close": lang.cerrado,
+        "open": lang.abierto,
       },
       comparaItem: "estado_caja",
-      styleCondicion: {
-        0: {
+      styleCondition: {
+        "close": {
           backgroundColor: "#dd4632",
           padding: "6px",
           borderRadius: "5px",
           color: "#fff",
         },
-        1: {
+        "open": {
           backgroundColor: "#00ce4f",
           padding: "6px",
           borderRadius: "5px",
@@ -51,11 +43,11 @@ const ListaCajas = () => {
     },
     {
       field: "nombre_user",
-      title: "asignado a",
+      title: lang.asignado_a,
     },
     {
       field: "monto_caja",
-      title: "Monto Actual Efectivo",
+      title: lang.monto_actual_efectivo,
       isNumber: true,
     },
   ];
@@ -95,33 +87,33 @@ const ListaCajas = () => {
     setTotalSumaMonedasArqueo(0);
   };
 
-  const Acciones = ({ filaProps }) => (
+  const Acciones = ({ rowProps }) => (
     <Stack spacing={1} direction="row" justifyContent="center">
-      <Tooltip arrow title="Hacer transferencia">
-        <IconButton onClick={() => abrirTransferencia(filaProps)}>
+      <Tooltip arrow title={lang.hacer_transferencia}>
+        <IconButton onClick={() => abrirTransferencia(rowProps)}>
           <Icon color="secondary">flight_takeoff</Icon>
         </IconButton>
       </Tooltip>
       <Tooltip arrow title="Editar">
-        <IconButton onClick={() => abrirEditar(filaProps)}>
+        <IconButton onClick={() => abrirEditar(rowProps)}>
           <Icon color="info">edit</Icon>
         </IconButton>
       </Tooltip>
-      {filaProps.estado_caja === "1" ? (
-        <Tooltip arrow title="Cerrar">
+      {rowProps.estado_caja === "open" ? (
+        <Tooltip arrow title={lang.cerrar}>
           <IconButton
             onClick={() => {
-              abrirArqueo(filaProps);
+              abrirArqueo(rowProps);
             }}
           >
             <Icon color="error">close</Icon>
           </IconButton>
         </Tooltip>
       ) : (
-        <Tooltip arrow title="Abrir">
+        <Tooltip arrow title={lang.abrir}>
           <IconButton
             onClick={() => {
-              abrirApertura(filaProps);
+              abrirApertura(rowProps);
             }}
           >
             <Icon color="primary">open_in_browser</Icon>
@@ -146,7 +138,7 @@ const ListaCajas = () => {
         onKeyPress={(e) => {}}
         onChange={(e) => {}}
         variant="outlined"
-        label="Buscar"
+        label={lang.buscar}
       />
       <Button
         color="primary"
@@ -154,21 +146,22 @@ const ListaCajas = () => {
         size="large"
         onClick={() => setDialogs({ ...dialogs, nuevo: true })}
       >
-        AGREGAR
+        {lang.agregar}
       </Button>
     </Stack>
   );
 
   return (
     <Tablas
-    title="Cajas" subtitle="Habilitación y apertura de cajas" 
+    title={lang.cajas} subtitle={lang.habilitacion_y_apertura_de_cajas} 
     loading={cargas.lista}
-      caption=""
-      icono="point_of_sale"
+      caption={lang.lista_de_cajas}
+      icon={{ name:"point_of_sale",color:'#1976d2' }}
       columns={columnas}
       datas={lista}
       Accions={Acciones}
       inputs={Search}
+      lang={lang}
       showOptions
     />
   );

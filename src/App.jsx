@@ -1,3 +1,4 @@
+import LangProvider from "./Contexts/LangProvider";
 import TemaProvider from "./Contexts/TemaProvider";
 import Pages from "./Pages";
 
@@ -7,7 +8,9 @@ function App() {
 
   return (
     <TemaProvider>
-      <Pages />
+      <LangProvider>
+        <Pages />
+      </LangProvider>
     </TemaProvider>
   );
 }

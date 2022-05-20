@@ -13,7 +13,7 @@ const DialogTransferencia = () => {
     initialTransferencia,
     errors,
     setErrors,
-    cargas,Funciones,transferir
+    cargas,Funciones,transferir,lang
   } = useCajas();
 
   const verificar = () => {
@@ -21,12 +21,12 @@ const DialogTransferencia = () => {
       setErrors({
         ...errors,
         transferencia: true,
-        transferenciaMensaje: "Indique la caja a la que desea transferir",
+        transferenciaMensaje: lang.indique_caja_a_transferir,
       });
       return false;
     }
     if ( parseFloat(formTransferencia.monto_transferir) > parseFloat(formTransferencia.monto_caja)) {
-      setErrors({...errors,transferencia: true,transferenciaMensaje: "En la caja no hay suficientes fondos"});
+      setErrors({...errors,transferencia: true,transferenciaMensaje: lang.no_hay_suficientes_fondos_en_caja});
       return false;
     }
     setErrors({ ...errors, transferencia: false, transferenciaMensaje: "" });
@@ -40,9 +40,7 @@ const DialogTransferencia = () => {
     setFormTransferencia({ ...formTransferencia, [name]: value });
   };
 
-  const listaCajaFiltradas = lista.filter(
-    (e) => e.id_caja !== formTransferencia.id_caja
-  );
+  const listaCajaFiltradas = lista.filter(e => e.id_caja !== formTransferencia.id_caja);
 
   const cerrar = () => {
     setDialogs({ ...dialogs, transferencia: false });
@@ -51,7 +49,7 @@ const DialogTransferencia = () => {
   };
   return (
     <Dialog open={dialogs.transferencia} onClose={cerrar} fullWidth>
-      <DialogTitle>Transferencia de caja en caja</DialogTitle>
+      <DialogTitle>{lang.transferencia_caja_a_caja}</DialogTitle>
       <DialogContent dividers>
         <Grid container spacing={2}>
           <Grid item xs={12}>
@@ -64,12 +62,12 @@ const DialogTransferencia = () => {
           </Grid>
           <Grid item xs={12}>
             <Alert icon={false}>
-              Caja: {formTransferencia.nombre_caja} - Monto: {Funciones.numberSeparator( isNaN(formTransferencia.monto_caja) ? 0 : formTransferencia.monto_caja )} {formTransferencia.abreviatura_moneda}
+              {lang.caja}: {formTransferencia.nombre_caja} - {lang.monto}: {Funciones.numberSeparator( isNaN(formTransferencia.monto_caja) ? 0 : formTransferencia.monto_caja )} {formTransferencia.abreviatura_moneda}
             </Alert>
           </Grid>
           <Grid item xs={12}>
             <FormControl fullWidth>
-              <InputLabel>Transferir a...</InputLabel>
+              <InputLabel>{lang.transferir_a}...</InputLabel>
               <Select
                 onChange={onChange}
                 name="id_caja_transferencia"
@@ -91,7 +89,7 @@ const DialogTransferencia = () => {
               name="monto_transferir"
               value={formTransferencia.monto_transferir}
               onChange={onChange}
-              label="Monto a transferir"
+              label={lang.monto_a_transferir}
               InputProps={{
                 inputComponent: NumberFormatCustom,
                 inputProps: { min: 0 },
@@ -102,10 +100,10 @@ const DialogTransferencia = () => {
       </DialogContent>
       <DialogActions>
         <Button variant="outlined" disabled={cargas.transferencia} onClick={verificar}>
-          Transferir
+          {lang.transferir}
         </Button>
         <Button variant="outlined" disabled={cargas.transferencia} onClick={cerrar}>
-          Cerrar
+          {lang.cerrar}
         </Button>
       </DialogActions>
     </Dialog>

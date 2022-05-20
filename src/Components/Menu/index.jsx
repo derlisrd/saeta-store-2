@@ -3,7 +3,7 @@ import { useMenu } from "../../Contexts/MenuProvider"
 import { useGlobalStyles } from "../../Styles/GlobalStyles";
 import IconsButtonsMenu from "./IconsButtonsMenu";
 import MenuList from "./MenuList";
-import UserMenu from "./UserMenu";
+import UtilsMenu from "./UtilsMenu";
 
 
 const Menu = () => {
@@ -18,7 +18,7 @@ const Menu = () => {
       <Toolbar  >
         <div className={styles.toolbar}>
             <IconsButtonsMenu />
-            <UserMenu />
+            <UtilsMenu />
         </div>
       </Toolbar>
     </AppBar>
