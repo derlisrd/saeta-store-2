@@ -1,15 +1,15 @@
 import { useTheme } from "../../Contexts/TemaProvider"
 import { Icon, IconButton } from "@mui/material"
 
-const ChangeThemeMenu = () => {
+export default function ChangeThemeMenu  () {
 
-    const {changeTheme} = useTheme();
+    const {changeTheme,themeMode} = useTheme();
 
   return (
     <IconButton onClick={changeTheme}>
-          <Icon>light_mode</Icon>
+          <Icon color={themeMode==='dark'? 'inherit' : 'warning'}>{themeMode==='dark'? 'dark_mode' : 'light_mode'}</Icon>
       </IconButton>
   )
 }
 
-export default ChangeThemeMenu
+

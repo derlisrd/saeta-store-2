@@ -5,15 +5,13 @@ const LanguageContext = createContext();
 
 export default function LangProvider({children}){
 
-    const [codeLang, setCodeLang] = useState("es");
+    const initialLang = JSON.parse(localStorage.getItem("lang")) || "es";
 
-
+    const [codeLang, setCodeLang] = useState(initialLang);
     const [lang,setLang] = useState(translate?.[codeLang]);
-
-   
-
     const changeLang = e=>{
         setLang(translate?.[e])
+        localStorage.setItem("lang", JSON.stringify(e));
     }
 
     const values = {

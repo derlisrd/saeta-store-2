@@ -1,5 +1,8 @@
 export const translate = {
     es:{
+        q_desea_cerrar_sesion:"Desea cerrar la sesion?",
+        cancelar:"Cancelar",
+        ok:"Ok",
         ingresar:"Ingresar",
         cargando:"Cargando",
         nombre:"Nombre",

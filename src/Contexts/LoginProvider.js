@@ -1,13 +1,13 @@
 import {createContext,useContext,useState,useEffect,useCallback} from 'react';
 import { APICALLER } from '../Services/api';
-import {  SECRETO } from "../Utils/config";
+import {  env } from "../Utils/config";
 import CryptoJS from "crypto-js";
 import { funciones } from '../Functions';
 const LoginContext = createContext()
 
 const LoginProvider = ({children}) => {
    // const navigate = useNavigate()
-    const CifrarTexto = (text) => CryptoJS.AES.encrypt(text, SECRETO).toString();
+    const CifrarTexto = (text) => CryptoJS.AES.encrypt(text, env.SECRETO).toString();
     const storage = JSON.parse(sessionStorage.getItem("userData")) || JSON.parse(localStorage.getItem("userData"));
     const [loading,setLoading] = useState(true);
     const [load,setLoad] = useState({
