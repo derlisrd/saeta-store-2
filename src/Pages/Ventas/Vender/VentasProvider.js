@@ -822,7 +822,7 @@ const VentasProvider = ({ children }) => {
       
     }
        
-  }, [id_user]);
+  }, [id_user,navigate]);
   /* FIN FUNCIONES ***********************************************/
 
   useEffect(() => {

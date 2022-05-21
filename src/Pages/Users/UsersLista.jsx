@@ -1,11 +1,12 @@
-import { Fab, Grid, Icon, Stack, TextField } from '@mui/material';
+import { Button, Fab,InputAdornment, Icon, IconButton, Stack, TextField } from '@mui/material';
 import Tablas from '../../Components/UI/Tablas/'
+import { useLang } from '../../Contexts/LangProvider';
 import { useUsers } from './UsersProvider';
 
 const UsersLista = () => {
 
   const {lista,cargas} = useUsers()
-
+  const {lang} = useLang();
   const columnas = [
     {
     field: "id_user",
@@ -13,15 +14,38 @@ const UsersLista = () => {
     },
     {
       field: "username_user",
-      title: "Usuario",
+      title: lang.usuario,
     },
     {
       field: "nombre_user",
-      title: "Nombre",
+      title: lang.nombre,
     },
 ]
 
-const Inputs = (<Grid container spacing={2}><Grid item><TextField label="Buscar" /></Grid></Grid>)
+const Inputs = (    <Stack spacing={2} direction="row">
+<TextField
+  InputProps={{
+    endAdornment: (
+      <InputAdornment position="end">
+        <IconButton onClick={() => {}}>
+          <Icon>search</Icon>
+        </IconButton>
+      </InputAdornment>
+    ),
+  }}
+  onKeyPress={(e) => {}}
+  onChange={(e) => {}}
+  variant="outlined"
+  label={lang.buscar}
+/>
+<Button
+  variant="outlined"
+  size="large"
+  onClick={() => {}}
+>
+  {lang.agregar}
+</Button>
+</Stack>)
 const Accions = ({rowProps})=>(
   <Stack spacing={1}  direction="row">
     <Fab size="small" variant="round" 
@@ -59,7 +83,15 @@ const Accions = ({rowProps})=>(
 
   return (
     <>
-      <Tablas title="Usuarios" showOptions Accions={Accions} subtitle="Lista de usuarios" loading={cargas.lista} columns={columnas} inputs={Inputs} datas={lista} />
+      <Tablas title={lang.usuarios}
+      icon={{ name:"people",color:"#06c" }} 
+      showOptions Accions={Accions} 
+      subtitle={lang.lista_de_usuarios}
+      lang={lang} 
+      loading={cargas.lista} 
+      columns={columnas} 
+      inputs={Inputs} 
+      datas={lista} />
     </>
   )
 }

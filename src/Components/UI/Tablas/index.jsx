@@ -13,7 +13,7 @@ const Tablas = ({title,subtitle,loading,datas,columns,caption,inputs,Accions,sho
     <Box padding={1} margin={1}>
         <Stack direction="row" spacing={2}>
             <Box>
-                <Avatar variant="rounded" sx={{ bgcolor: icon.color? icon.color : 'inherit',padding:3 }} >
+                <Avatar variant="rounded" sx={{ bgcolor: icon?.color? icon.color : 'inherit',padding:3 }} >
                     {icon && <Icon fontSize="large" >{icon.name}</Icon>}
                 </Avatar>
             </Box>
