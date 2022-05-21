@@ -1,6 +1,6 @@
 import { Grid, Icon } from '@mui/material';
 import React from 'react'
-import { CustomButton} from "../../../Componentes/Customs/muiCustom";
+import ButtonCustom from "../../../Components/MuiCustom/ButtonCustom";
 import ListaAguarda from './ListaAguarda';
 import { useVentas } from './VentasProvider';
 
@@ -12,7 +12,7 @@ const VentasMainUnder = () => {
   return (
     <Grid container spacing={2}>
       <Grid item >
-        <CustomButton
+        <ButtonCustom
           startIcon={<Icon>storefront</Icon>}
           variant="outlined"
           size="large"
@@ -20,10 +20,10 @@ const VentasMainUnder = () => {
           onClick={abrir}
         >
           Hacer venta
-        </CustomButton>
+        </ButtonCustom>
       </Grid>
       <Grid item  >
-        <CustomButton
+        <ButtonCustom
         startIcon={<Icon>receipt_long</Icon>}
           variant="outlined"
           size="large"
@@ -31,7 +31,7 @@ const VentasMainUnder = () => {
           onClick={()=> Funciones.goto('facturas')}
         >
           Lista de facturas
-        </CustomButton>
+        </ButtonCustom>
       </Grid>
       <Grid item xs={12}>
             <ListaAguarda outside />

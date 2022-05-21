@@ -9,7 +9,7 @@ import LoginForm from "./Auth/LoginForm";
 import DashBoard from "./Dashboard";
 import MainPage from "./MainPage";
 import Cajas from "./Caja/Cajas";
-
+import Ventas from "./Ventas/Vender";
 /* 
 import Agenda from "./Agenda";
 import Movimientos from "./Caja/Movimientos/Index";
@@ -41,7 +41,7 @@ import Entregas from "./Ventas/Entregas";
 import EntregasView from "./Ventas/Entregas/EntregasView";
 import Facturas from "./Ventas/Facturas";
 import Notas from "./Ventas/Notas";
-import Ventas from "./Ventas/Vender";
+
 import Informes from "./Informes";
 import RegistroFacturas from "./Settings/RegistroFacturas";
 import RegistroMovimientos from "./Caja/RegistroMovimientos";
@@ -81,7 +81,7 @@ const RoutesMain = () => {
   const R = BASEURL+'/';
   return (
     <Routes>
-      
+        <Route path={R+'ventas'} element={<PrivateRoute id={53}><Ventas /></PrivateRoute>} />
         <Route path={R+'dashboard'} element={<PrivateRoute id={59}><DashBoard /></PrivateRoute>} />
         <Route path={R+'cajas'} element={<PrivateRoute id={22}><Cajas /></PrivateRoute>} />
         <Route path={R+'notautorized'} element={<NotAutorized />} />

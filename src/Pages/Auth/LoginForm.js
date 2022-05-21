@@ -1,12 +1,14 @@
-import { Box, Grid, TextField,Button,FormControlLabel,Checkbox,Icon,InputAdornment,Alert, IconButton, Stack, Typography } from "@mui/material";
+import { Box, Grid, TextField,FormControlLabel,Checkbox,Icon,InputAdornment,Alert, IconButton, Stack, Typography } from "@mui/material";
 import { useState,useEffect,useCallback,useRef } from "react";
 import { useLogin } from "../../Contexts/LoginProvider";
 import { useNavigate } from "react-router-dom";
 import { useGlobalStyles } from "../../Styles/GlobalStyles";
 import LoadingBackDrop from "../../Components/UI/LoadingBackDrop";
-
+import { LoadingButton } from "@mui/lab";
+import { useLang } from "../../Contexts/LangProvider";
 
 const LoginForm = () => {
+  const {lang}= useLang();
   const navigate = useNavigate()
   const styles = useGlobalStyles();
   const { logIn ,load,userData} = useLogin();
@@ -51,7 +53,7 @@ const LoginForm = () => {
         <Grid item xs={12}>
             <Stack justifyContent="center" alignItems="center" spacing={2}>
               <Icon color="primary" fontSize="large">rocket_launch</Icon>
-              <Typography variant="h5">Ingresar</Typography>
+              <Typography variant="h5">{lang.ingresar}</Typography>
             </Stack>
         </Grid>
         <Grid item xs={12}>
@@ -64,10 +66,10 @@ const LoginForm = () => {
                     <InputAdornment position="start">
                       <Icon color="disabled">perm_identity</Icon>
                     </InputAdornment>
-                  ),}}  autoFocus required name="username_user" label="Usuario" value={form.username_user} onChange={change}  />
+                  ),}}  autoFocus required name="username_user" label={lang.usuario} value={form.username_user} onChange={change}  />
           </Grid>
           <Grid item xs={12}>
-            <TextField inputRef={inputPasswordRef} fullWidth disabled={load.login} required type={typeInput? "password" : "text"} label="Contraseña" name="password_user" value={form.password_user} onChange={change}  
+            <TextField inputRef={inputPasswordRef} fullWidth disabled={load.login} required type={typeInput? "password" : "text"} label={lang.contrasena} name="password_user" value={form.password_user} onChange={change}  
               InputProps={{
                 startAdornment: (
                   <InputAdornment position="start">
@@ -82,12 +84,12 @@ const LoginForm = () => {
             />
           </Grid>
           <Grid item xs={12}>
-          <FormControlLabel disabled={load.login} control={<Checkbox checked={recordar} onChange={e=> setRecordar(e.target.checked)} />} label="Recordarme" />
+          <FormControlLabel disabled={load.login} control={<Checkbox checked={recordar} onChange={e=> setRecordar(e.target.checked)} />} label={lang.recordarme} />
           </Grid>
         <Grid item xs={12}>
-            <Button size="large" disabled={load.login} fullWidth type="submit" variant="contained" color="primary" >
-                { load.login ? "Cargando..." : "Ingresar"}
-            </Button>
+            <LoadingButton loadingIndicator={lang.cargando} fullWidth type="submit"  variant="contained" color="primary" size="large" loading={load.login ? true : false}>
+         {lang.ingresar}
+          </LoadingButton>
         </Grid>
         </Grid>
       </Box>

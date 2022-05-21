@@ -1,9 +1,10 @@
 import {
   Alert,AlertTitle,InputLabel,FormControl,CircularProgress,Dialog,DialogActions,DialogContent,DialogTitle,FormControlLabel,Grid,Icon,IconButton,InputAdornment,Radio,TextField,Tooltip,Typography,
   Zoom,MenuItem,Select,Checkbox,Stack} from "@mui/material";
-import { CustomButton, CustomField } from "../../../Componentes/Customs/muiCustom";
+import NumberFormatCustom from "../../../Components/thirty/NumberFormatCustom";
+import TextFieldCustom from "../../../Components/MuiCustom/TextFieldCustom";
+import ButtonCustom from "../../../Components/MuiCustom/ButtonCustom";
 import { useVentas } from "./VentasProvider";
-import NumberFormatCustom from "../../../Componentes/NumberFormatCustom";
 import { useRef,useState } from "react";
 
 
@@ -310,7 +311,7 @@ const DialogFinalizar = () => {
                 />
               </Grid>
               <Grid item sm={12} md={8}>
-                <CustomField
+                <TextFieldCustom
                   label="Cantidad recibida"
                   onKeyPress={e => {e.key === "Enter" && verificar();}}
                   autoFocus inputRef={cantidadRecibidaRef} disabled={fa.datosFactura.tipoFactura === "2"}
@@ -327,17 +328,17 @@ const DialogFinalizar = () => {
                 />
               </Grid>
               <Grid item sm={12} md={4}>
-                <CustomButton disabled={fa.datosFactura.tipoFactura === "2"} variant="outlined"
+                <ButtonCustom disabled={fa.datosFactura.tipoFactura === "2"} variant="outlined"
                   onClick={() => {AgregarCantidadMetodoPago(); }}
                   startIcon={<Icon>add</Icon>}
                 >
                   Agregar
-                </CustomButton>
+                </ButtonCustom>
               </Grid>
               {
                 HACERDESCUENTO && <>
                 <Grid item xs={12} sm={12} md={6}>
-                <CustomField fullWidth
+                <TextFieldCustom fullWidth
                   disabled={descuentoAbsoluto>0}
                   label="Descuento %" onChange={(e)=>{hacerDescuento(e,true)}}
                   InputProps={{
@@ -351,7 +352,7 @@ const DialogFinalizar = () => {
               </Grid>
               
               <Grid item xs={12} sm={12} md={6}>
-                <CustomField fullWidth
+                <TextFieldCustom fullWidth
                   disabled={descuentoPorcent>0}
                   label={`Descuento ${ABM}`} onChange={(e)=>{hacerDescuento(e)}}
                   InputProps={{
@@ -412,7 +413,7 @@ const DialogFinalizar = () => {
       </DialogContent>
       <DialogActions>
 
-        <CustomButton
+        <ButtonCustom
           color="primary"
           variant="contained"
           size="large"
@@ -420,10 +421,10 @@ const DialogFinalizar = () => {
           disabled={cargas.finalizarVenta || fa.itemsFactura.length < 1 }
         >
           FINALIZAR
-        </CustomButton>
-        <CustomButton onClick={cerrar} color="error" variant="outlined" size="large">
+        </ButtonCustom>
+        <ButtonCustom onClick={cerrar} color="error" variant="outlined" size="large">
           CANCELAR
-        </CustomButton>
+        </ButtonCustom>
       </DialogActions>
     </Dialog>
   );

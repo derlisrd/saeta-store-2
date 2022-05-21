@@ -1,7 +1,7 @@
 import { Dialog, Zoom,Icon, DialogActions } from '@mui/material'
 import React from 'react'
 import { useVentas } from './VentasProvider'
-import { CustomButton } from "../../../Componentes/Customs/muiCustom";
+import ButtonCustom from "../../../Components/MuiCustom/ButtonCustom";
 import printJS from "print-js";
 
 const ImprimirTicket = () => {
@@ -154,7 +154,7 @@ const ImprimirTicket = () => {
         </div>
     
         <DialogActions>
-        <CustomButton 
+        <ButtonCustom 
           size="large"
           variant="contained"
           color="primary"
@@ -162,15 +162,15 @@ const ImprimirTicket = () => {
           onClick={imprimir}
         >
           Imprimir
-        </CustomButton>
-        <CustomButton
+        </ButtonCustom>
+        <ButtonCustom
           size="large"
           variant="outlined"
           color="primary"
           onClick={cerrar}
         >
           Cerrar
-        </CustomButton>
+        </ButtonCustom>
       </DialogActions>
     </Dialog>
   )

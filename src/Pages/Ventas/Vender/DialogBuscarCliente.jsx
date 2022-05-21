@@ -1,6 +1,6 @@
 import { CircularProgress, Autocomplete, Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField } from '@mui/material';
 import React, { useRef, useState,useCallback } from 'react'
-import { APICALLER } from '../../../Api/ApiCaller';
+import { APICALLER } from '../../../Services/api';
 import { useVentas } from './VentasProvider';
 
 const DialogBuscarCliente = () => {

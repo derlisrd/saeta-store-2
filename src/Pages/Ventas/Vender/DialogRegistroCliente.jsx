@@ -1,13 +1,14 @@
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Grid, Icon, InputAdornment, LinearProgress, TextField } from '@mui/material';
 import React, { useRef, useState } from 'react'
-import { APICALLER } from '../../../Api/ApiCaller';
-import { useLogin } from '../../../Contextos/LoginProvider';
+import { APICALLER } from '../../../Services/api';
+import { useLogin } from '../../../Contexts/LoginProvider';
 import { useVentas } from './VentasProvider';
 
 const DialogRegistroCliente = () => {
-
+    
     const {dialogs,setDialogs,datosFacturas,indexFactura,setearFactura,setErrors,errors} = useVentas();
-    const {token_user} = useLogin()
+    const {userData} = useLogin();
+    const {token_user} = userData;
     const initialForm = {
         ruc_cliente: "",
         nombre_cliente: "",

@@ -1,5 +1,12 @@
 export const translate = {
     es:{
+        ingresar:"Ingresar",
+        cargando:"Cargando",
+        nombre:"Nombre",
+        usuario:"Usuario",
+        recordarme:"Recordarme",
+        apellido:"Apellido",
+        contrasena:"Contraseña",
         a:"A",
         nombre_de_caja:"Nombre de caja",
         estado:"Estado",

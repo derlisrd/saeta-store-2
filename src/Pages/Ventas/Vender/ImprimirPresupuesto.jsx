@@ -2,7 +2,7 @@ import React, { useRef } from "react";
 import { useVentas } from "./VentasProvider";
 import printJS from "print-js";
 import { Dialog, DialogActions, DialogContent, DialogTitle, Icon, Zoom } from "@mui/material";
-import { CustomButton } from "../../../Componentes/Customs/muiCustom";
+import ButtonCustom from "../../../Components/MuiCustom/ButtonCustom";
 import ReactToPdf from "react-to-pdf";
 function ImprimirPresupuesto() {
   const { datosFacturas, indexFactura, dialogs, setDialogs,Funciones } = useVentas();
@@ -82,17 +82,17 @@ function ImprimirPresupuesto() {
               filename={`${fa.datosCliente.nombre_cliente}.pdf`}
             >
               {({ toPdf }) => (
-                <CustomButton
+                <ButtonCustom
                   variant="outlined"
                   startIcon={<Icon>picture_as_pdf</Icon>}
                   onClick={toPdf}
                 >
                   PDF
-                </CustomButton>
+                </ButtonCustom>
               )}
             </ReactToPdf>
-                <CustomButton variant="outlined" onClick={imprimir}>Imprimir</CustomButton>
-                <CustomButton variant="outlined" onClick={cerrar}>Cerrar</CustomButton>
+                <ButtonCustom variant="outlined" onClick={imprimir}>Imprimir</ButtonCustom>
+                <ButtonCustom variant="outlined" onClick={cerrar}>Cerrar</ButtonCustom>
             </DialogActions>
         </Dialog>
       )}

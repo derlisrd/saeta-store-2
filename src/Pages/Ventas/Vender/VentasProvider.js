@@ -1,16 +1,23 @@
 import {createContext,useContext,useEffect,useState,useRef,useCallback} from "react";
 import swal from "sweetalert";
 import { APICALLER } from "../../../Services/api";
-import { useLogin } from "../../../Contextos/LoginProvider";
-import Funciones from "../../../Funciones";
+import { useLogin } from "../../../Contexts/LoginProvider";
+import {funciones as Funciones} from "../../../Functions";
+import {useLang} from '../../../Contexts/LangProvider'
+import { useNavigate } from "react-router-dom";
+
+
 const Contexto = createContext();
 
 const VentasProvider = ({ children }) => {
+  const navigate = useNavigate();
   /* VARIABLES CONSTANTES, ESTADOS E INPUT*************************/
   const inputCodigo = useRef(null);
   const inputCantidad = useRef(null);
   const cantidadRecibidaRef = useRef(null)
-  const { token_user, id_user,permisos } = useLogin();
+  const { userData } = useLogin();
+  const {token_user, id_user,permisos} = userData;
+  const {lang} = useLang();
   const storage = JSON.parse(localStorage.getItem("facturasStorage"));
   
   const initialErrors = {
@@ -728,14 +735,15 @@ const VentasProvider = ({ children }) => {
       let rCajas = res[0];
       var ACTIVEFACTURA = false;
       var FACTURALISTA = [];
-      if (res[0].response === "ok") {
-        if (res[0].found < 1) {
+      var rc = res[0]
+      if (rc.response === "ok") {
+        if (rc.found < 1) {
           swal({text:"Debe habilitar una caja.",icon:"warning"}).then(()=>{
-            Funciones.goto("cajas?dialog=new");
+            navigate("/cajas?dialog=new");
           })
           return false;
         } else {
-          if(parseInt(res[0].results[0].estado_caja)===1){
+          if( (rc.results.some(e => e.estado_caja==="open"))){
             let IDCAJAFACTURA = res[0].results[0].id_caja;
             let fac = await APICALLER.get({table: "empresa_facturas",where: `id_caja_empresa,=,${IDCAJAFACTURA}`});
             if (fac.found > 0) {
@@ -745,7 +753,7 @@ const VentasProvider = ({ children }) => {
           }
           else{
             swal({text:"Debe abrir caja.",icon:"warning"}).then(()=>{
-              Funciones.goto(`cajas?dialog=open&id=${res[0].results[0].id_caja}`);
+              navigate(`/cajas?dialog=open&id=${res[0].results[0].id_caja}`);
             })
             return false;
           }
@@ -863,7 +871,7 @@ const VentasProvider = ({ children }) => {
         cerrarDialogFactura,
         insertarProductoTabla,restarCantidad,sumarCantidad,
         AgregarCantidadMetodoPago,borrarMetodoPago,changeMonedas,Anotar,CargarNota,permisos,cambiarDeposito,
-        MetodoDescuento
+        MetodoDescuento,lang
       }}
     >
       {children}
@@ -898,7 +906,7 @@ export const useVentas = () => {
     cerrarDialogFactura,
     insertarProductoTabla,restarCantidad,sumarCantidad,
     AgregarCantidadMetodoPago,borrarMetodoPago,changeMonedas,Anotar,CargarNota,permisos,cambiarDeposito,
-    MetodoDescuento
+    MetodoDescuento,lang
 
   } = useContext(Contexto);
   return {id_user,token_user,
@@ -931,7 +939,7 @@ export const useVentas = () => {
     cerrarDialogFactura,
     insertarProductoTabla,restarCantidad,sumarCantidad,
     AgregarCantidadMetodoPago,borrarMetodoPago,changeMonedas,Anotar,CargarNota,permisos,cambiarDeposito,
-    MetodoDescuento
+    MetodoDescuento,lang
   };
 };
 

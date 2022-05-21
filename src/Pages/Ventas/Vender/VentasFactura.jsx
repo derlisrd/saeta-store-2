@@ -1,19 +1,7 @@
-import {
-  Alert,
-  Button,
-  CircularProgress,
-  FormControlLabel,
-  Grid,
-  Icon,
-  IconButton,
-  InputAdornment,
-  Radio,
-  Tooltip,
-  Typography,
-  Zoom,
-} from "@mui/material";
+import {Alert,Button,CircularProgress,FormControlLabel,Grid,Icon,IconButton,InputAdornment,Radio,Tooltip,Typography,Zoom} from "@mui/material";
 import React, { useEffect } from "react";
-import { CustomButton, CustomField } from "../../../Componentes/Customs/muiCustom";
+import TextFieldCustom from "../../../Components/MuiCustom/TextFieldCustom";
+import ButtonCustom from "../../../Components/MuiCustom/ButtonCustom";
 import InfoCliente from "./InfoCliente";
 import InfoDeposito from "./InfoDeposito";
 import InfoNota from "./InfoNota";
@@ -78,7 +66,7 @@ const VentasFactura = () => {
       <Grid item xs={12} sm={12} md={12} lg={4}>
         <Grid container rowSpacing={2} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
           <Grid item xs={12}>
-            <CustomField
+            <TextFieldCustom
               onKeyPress={presionaEnterPaBuscar}
               inputRef={inputCodigo}
               id="input_inserta_codigo_producto"
@@ -107,7 +95,7 @@ const VentasFactura = () => {
             />
           </Grid>
           <Grid xs={12} item>
-            <CustomField
+            <TextFieldCustom
               onKeyPress={presionaEnterPaBuscar}
               inputRef={inputCantidad}
               type="number"
@@ -119,7 +107,7 @@ const VentasFactura = () => {
             />
           </Grid>
           <Grid xs={12} item>
-            <CustomButton
+            <ButtonCustom
               variant="contained"
               fullWidth
               size="large"
@@ -127,7 +115,7 @@ const VentasFactura = () => {
               onClick={()=>{verificarExisteEnTabla(inputCodigo.current.value)}}
             >
               Agregar item
-            </CustomButton>
+            </ButtonCustom>
           </Grid>
           
           <Grid xs={12} item >
@@ -136,16 +124,16 @@ const VentasFactura = () => {
               
               
                 <Grid item xs={12} sm={6} md={12} lg={6}>
-                  <CustomButton
+                  <ButtonCustom
                     variant="outlined"
                     onClick={openFinalizarDialog}
                     color="success" fullWidth
                   >
                     FINALIZAR
-                  </CustomButton>
+                  </ButtonCustom>
                 </Grid>
                 <Grid item xs={12} sm={6} md={12} lg={6}>
-                  <CustomButton
+                  <ButtonCustom
                     variant="outlined"
                     size="large"
                     fullWidth
@@ -153,10 +141,10 @@ const VentasFactura = () => {
                     onClick={CancelarFacturaActual}
                   >
                     CANCELAR
-                  </CustomButton>
+                  </ButtonCustom>
                 </Grid>
                 <Grid item xs={12} sm={6}>
-                  <CustomButton
+                  <ButtonCustom
                     variant="outlined"
                     size="large"
                     fullWidth
@@ -164,10 +152,10 @@ const VentasFactura = () => {
                     color="warning"
                   >
                     Aguardar
-                  </CustomButton>
+                  </ButtonCustom>
                 </Grid>
                 <Grid item xs={12} sm={6}>
-                  <CustomButton
+                  <ButtonCustom
                     variant="outlined"
                     size="large"
                     fullWidth
@@ -175,7 +163,7 @@ const VentasFactura = () => {
                     color="secondary"
                   >
                     Anotar
-                  </CustomButton>
+                  </ButtonCustom>
                 </Grid>
                 <Grid xs={12} item>
                 <Alert severity="info" icon={false}>

@@ -1,16 +1,9 @@
-import {
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
-  Grid,
-  InputAdornment,
-  Typography,
-  Zoom,
-} from "@mui/material";
+import {Dialog,DialogActions,DialogContent,DialogTitle,Grid,InputAdornment,Typography,Zoom} from "@mui/material";
 import { useRef, useState } from "react";
-import { CustomButton, CustomField } from "../../../Componentes/Customs/muiCustom";
-import NumberFormatCustom from "../../../Componentes/NumberFormatCustom";
+
+import NumberFormatCustom from "../../../Components/thirty/NumberFormatCustom";
+import TextFieldCustom from "../../../Components/MuiCustom/TextFieldCustom";
+import ButtonCustom from "../../../Components/MuiCustom/ButtonCustom";
 import { useVentas } from "./VentasProvider";
 
 const DialogCambioPrecio = () => {
@@ -71,7 +64,7 @@ const DialogCambioPrecio = () => {
             </Typography>
           </Grid>
           <Grid item xs={12}>
-            <CustomField
+            <TextFieldCustom
               inputRef={input}
               onKeyPress={e=> e.key === 'Enter' && verificar()}
               onChange={e=>{ setInputPrecio(e.target.value)}}
@@ -96,12 +89,12 @@ const DialogCambioPrecio = () => {
         </Grid>
       </DialogContent>
       <DialogActions>
-        <CustomButton variant="outlined" color="primary" onClick={verificar}>
+        <ButtonCustom variant="outlined" color="primary" onClick={verificar}>
           CAMBIAR
-        </CustomButton>
-        <CustomButton variant="outlined" color="secondary" onClick={cerrar}>
+        </ButtonCustom>
+        <ButtonCustom variant="outlined" color="secondary" onClick={cerrar}>
           Cancelar
-        </CustomButton>
+        </ButtonCustom>
       </DialogActions>
     </Dialog>
     </form>

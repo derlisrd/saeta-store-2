@@ -1,16 +1,8 @@
-import {
-  Dialog,
-  DialogContent,
-  DialogTitle,
-  Fade,
-  Icon,
-  IconButton,
-  Tooltip,
-  Zoom,
-} from "@mui/material";
+import {Dialog,DialogContent,DialogTitle,Fade,Icon,IconButton,Tooltip,Zoom} from "@mui/material";
 import React from "react";
-import Loading from "../../../Componentes/Loading";
-import SnackAlert from "../../../Componentes/SnackAlert";
+
+import LoadingBackDrop  from "../../../Components/UI/LoadingBackDrop";
+import SnackAlert from "../../../Components/MuiCustom/SnackAlert";
 import VentasFactura from "./VentasFactura";
 
 import { useVentas } from "./VentasProvider";
@@ -26,7 +18,7 @@ const VentasMain = () => {
   return (
     <>
       {
-        cargas.general && <Loading />
+        cargas.general && <LoadingBackDrop />
       }
       <Dialog open={dialogs.main} fullScreen TransitionComponent={Fade}>
         <DialogTitle>
@@ -53,7 +45,7 @@ const VentasMain = () => {
             }}
             message={errors.mensaje}
           />
-          {cargas.finalizarVenta ? <Loading /> : <VentasFactura />}
+          {cargas.finalizarVenta ? <LoadingBackDrop /> : <VentasFactura />}
         </DialogContent>
       </Dialog>
     </>

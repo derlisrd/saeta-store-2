@@ -1,6 +1,6 @@
 import { Dialog, Zoom, DialogActions, Icon, DialogContent } from "@mui/material";
 import ReactToPdf from "react-to-pdf";
-import { CustomButton } from "../../../Componentes/Customs/muiCustom";
+import ButtonCustom from "../../../Components/MuiCustom/ButtonCustom";
 import { useVentas } from "./VentasProvider";
 import printJS from "print-js";
 import { useRef } from "react";
@@ -225,16 +225,16 @@ const imprimir = () => {
               filename={`${FACTURA?.nro_datos_factura} ${DF.datosFactura.nro_factura} ${DF.datosCliente.nombre_cliente}.pdf`}
             >
               {({ toPdf }) => (
-                <CustomButton
+                <ButtonCustom
                   variant="outlined"
                   startIcon={<Icon>picture_as_pdf</Icon>}
                   onClick={toPdf}
                 >
                   PDF
-                </CustomButton>
+                </ButtonCustom>
               )}
             </ReactToPdf>
-        <CustomButton
+        <ButtonCustom
           size="large"
           variant="contained"
           color="primary"
@@ -242,15 +242,15 @@ const imprimir = () => {
           onClick={imprimir}
         >
           Imprimir
-        </CustomButton>
-        <CustomButton
+        </ButtonCustom>
+        <ButtonCustom
           size="large"
           variant="outlined"
           color="primary"
           onClick={cerrar}
         >
           Cerrar
-        </CustomButton>
+        </ButtonCustom>
       </DialogActions>
     </Dialog>
   );
