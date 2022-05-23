@@ -1,15 +1,19 @@
 import React, {createContext,useContext,useState,useEffect,useCallback} from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation,useNavigate } from "react-router-dom";
 import swal from "sweetalert";
-import { APICALLER } from "../../../../Api/ApiCaller";
-import { useLogin } from "../../../../Contextos/LoginProvider";
-import  Funciones  from "../../../../Funciones";
+import { APICALLER } from "../../../../Services/api";
+import { useLogin } from "../../../../Contexts/LoginProvider";
+import {env} from '../../../../Utils/config'
+import { useLang } from "../../../../Contexts/LangProvider";
 
 const ProductosContext = createContext();
 
 const ProductosProvider = ({ children }) => {
-  const { token_user,permisos } = useLogin();
+  const navigate = useNavigate();
+  const {lang} = useLang()
+  const { userData } = useLogin(); const {token_user,permisos} = userData;
   const location = useLocation();
+  
   const query = location.search ? new URLSearchParams(location.search) : 0;
   const [page, setPage] = useState(
     query && query.get("p") && !isNaN(query.get("p")) ? parseInt(query.get("p")) : 0
@@ -28,7 +32,7 @@ const ProductosProvider = ({ children }) => {
   const [dialogs,setDialogs] = useState(initialDialogs);
   
   const [formDetalles,setFormDetalles] = useState({});
-  const [limite, setLimite] = useState(60);
+  const [limite, setLimite] = useState(100);
   const [countTotal, setCountTotal] = useState(0);
   const [cargando, setCargando] = useState({lista:true,stock:true});
   const [listaCategorias, setListaCategorias] = useState([]);
@@ -37,7 +41,7 @@ const ProductosProvider = ({ children }) => {
 
   
   const borrarRegistro = async(id, nombre) => {
-    let e = await swal({icon: "warning",title: "Borrar?",text: `Estas seguro de borrar ${nombre}?`,buttons: [`Cancelar`, `Ok`],dangerMode: true});
+    let e = await swal({icon: "warning",title: lang.q_borrar,text: `${lang.borrar} ${nombre}?`,buttons: [lang.cancelar, lang.ok],dangerMode: true});
       if (e) {
         const res = await APICALLER.delete({table: `productos`,id: id,token: token_user});
         if (res.response === "ok") {
@@ -45,7 +49,7 @@ const ProductosProvider = ({ children }) => {
             APICALLER.delete({table: `productos_images`,namecolumns:"id_image_producto",ids:id,token: token_user}),
             APICALLER.delete({table: `productos_depositos`,namecolumns:"id_producto_deposito",ids:id,token: token_user})
           ])
-          swal({icon:"success",text:"Borrado correctamente", timer:1200})
+          swal({icon:"success",text:lang.borrado_correctamente, timer:1200})
           let array = [...lista];
           let index = array.findIndex(e => e.id_producto === id);
           array.splice(index, 1);
@@ -89,7 +93,7 @@ const ProductosProvider = ({ children }) => {
     console.log(res);
     if (res.found > 0 && res.response === "ok") {
       setLista(res.results);
-      Funciones.goto(`productos`);
+      navigate(env.BASEURL+'/productos')
     } else {
       console.log(res);
     }
@@ -109,19 +113,17 @@ const ProductosProvider = ({ children }) => {
       sort:"-id_producto", 
     };
     const res = await APICALLER.get(data);
-    if (res.response === "ok") {
+
+
+
+     if (res.response === "ok") {
       setCountTotal(res.total);
       if (res.found > 0) {
         setLista(res.results);
-        page === 0
-          ? Funciones.goto(`productos`)
-          : Funciones.goto(`productos?p=${page}`);
-      } else {
-        //page>0 && setPage(parseInt(page) - parseInt(limite));
-      }
+      } 
     } else {
       console.log(res);
-    }
+    } 
     setCargando({lista:false,stock:true});
   }, [limite, page]);
 
@@ -133,14 +135,14 @@ const ProductosProvider = ({ children }) => {
       getPermisos();
     }
     return () => {
-      isActive = false;
-      ca.abort();
+      isActive = false;ca.abort();
     };
   }, [getLista, getPermisos]);
 
   return (
     <ProductosContext.Provider
       value={{
+        lang,
         cargando,
         setCargando,
         showOptions,
@@ -168,7 +170,7 @@ const ProductosProvider = ({ children }) => {
 };
 
 export const useProductos = () => {
-  const {
+  const { lang,
     cargando,
     setCargando,
     showOptions,
@@ -191,6 +193,7 @@ export const useProductos = () => {
   } = useContext(ProductosContext);
 
   return {
+    lang,
     cargando,
     setCargando,
     showOptions,

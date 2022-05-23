@@ -1,14 +1,16 @@
 import { TableContainer,Table, TableHead, TableRow, TableCell, TableBody, Box,Typography,Icon,Alert, Stack,Avatar } from '@mui/material'
 import { useTablaStyles } from './TablaStyles';
 import TablaLoading from './TablaLoading'
+import { funciones } from '../../../Functions';
 
-const Tablas = ({title,subtitle,loading,datas,columns,caption,inputs,Accions,showOptions,lang,icon}) => {
+const Tablas = ({title,subtitle,loading,datas,columns,caption,inputs,Accions,showOptions,lang,icon,sort}) => {
     const style = useTablaStyles();
 
     if(!columns){ console.warn("Missing props 'columns'"); return; }
     if(!datas){ console.warn("Missing props 'datas[]'"); return; }
     if(!Accions){console.warn("Missing props 'Accions'"); return; }
-  return (
+
+return (
       <>
     <Box padding={1} margin={1}>
         <Stack direction="row" spacing={2}>
@@ -39,13 +41,15 @@ const Tablas = ({title,subtitle,loading,datas,columns,caption,inputs,Accions,sho
             <TableHead className={style.thead} >
                 <TableRow className={style.trtitles} >
                     {
-                        columns.map((item,index)=>(
-                            <TableCell align='left' key={index}>
-                                {item.title}:
+                        columns.map((col,index)=>(
+                            <TableCell  align={col.align ? col.align : "left" } key={index}>
+                               {sort?.desc && <span onClick={()=>sort.desc(col.field)} className={style.arrow}>↓</span> }
+                               {col.title} 
+                               {sort?.asc && <span onClick={()=>sort.asc(col.field)} className={style.arrow}>↑</span>}
                             </TableCell>
                         ))
                     }
-                    <TableCell>
+                    <TableCell align='center'>
                         {lang? lang.opciones : "Opciones"}
                     </TableCell>
                 </TableRow>
@@ -54,14 +58,25 @@ const Tablas = ({title,subtitle,loading,datas,columns,caption,inputs,Accions,sho
             <TableBody className={style.tbody}>
                 {
                     datas.map((data,index)=>(
-                        <TableRow hover key={index} className={style.tableRow}>
+                        <TableRow hover key={index} className={style.tableRow} >
                             {
                                 columns.map((column,i)=>(
-                                    <TableCell key={i} className={style.tableCell}>
+                                    <TableCell key={i} className={style.tableCell} align={column.align ? column.align : "left" }>
                                         <span className={style.columntitleSpan}>
                                             {column.title}:
                                         </span>
-                                        <span style={column.style? column.style : null}>{data[column.field]}</span>
+                                        <span style={column.style? column.style : null}>
+                                            {
+                                                column.before && column.before
+                                            }
+                                            { 
+                                            column.isNumber ? funciones.numberFormat(data[column.field]) :
+                                            data[column.field]
+                                            }
+                                            {
+                                                column.after && column.after
+                                            }
+                                            </span>
                                     </TableCell>
                                 ))
                             }
@@ -69,7 +84,7 @@ const Tablas = ({title,subtitle,loading,datas,columns,caption,inputs,Accions,sho
                                 {
                                     showOptions &&
                                     <Accions rowProps={data} />
-                                    }
+                                }
                             </TableCell>
                         </TableRow>
                     ))

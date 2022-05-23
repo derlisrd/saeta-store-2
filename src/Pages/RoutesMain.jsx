@@ -11,6 +11,7 @@ import MainPage from "./MainPage";
 import Cajas from "./Caja/Cajas";
 import Ventas from "./Ventas/Vender";
 import Users from "./Users";
+import Productos from "./Productos/Productos";
 /* 
 import Agenda from "./Agenda";
 import Movimientos from "./Caja/Movimientos/Index";
@@ -82,6 +83,7 @@ const RoutesMain = () => {
   const R = BASEURL+'/';
   return (
     <Routes>
+        <Route path={R+'productos'} element={<PrivateRoute id={34}><Productos /></PrivateRoute>} />
         <Route path={R+'users'} element={<PrivateRoute id={34}><Users /></PrivateRoute>} />
         <Route path={R+'ventas'} element={<PrivateRoute id={53}><Ventas /></PrivateRoute>} />
         <Route path={R+'dashboard'} element={<PrivateRoute id={59}><DashBoard /></PrivateRoute>} />

@@ -1,6 +1,11 @@
 import {  makeStyles} from '@mui/styles';
 
 export const useTablaStyles = makeStyles((theme)=>({
+    arrow:{
+        fontSize:"18px",
+        cursor: "pointer",
+        padding:"0 3px"
+    },
     tcontainer:{
         backgroundColor: theme.palette.background.default,
     },

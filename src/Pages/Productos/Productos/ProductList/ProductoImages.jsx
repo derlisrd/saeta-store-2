@@ -1,9 +1,9 @@
 
 import { useEffect,useCallback,useState } from 'react';
-import { APICALLER } from '../../../../Api/ApiCaller';
+import { APICALLER } from '../../../../Services/api';
 import { useProductos } from './ProductosProvider'
-import ImagenViewer from '../../../../Components/ImagenViewer';
-import { Loading } from '../../../../Components';
+import ImagenViewer from '../../../../Components/UI/ImageViewer';
+import LoadingBackDrop from '../../../../Components/UI/LoadingBackDrop';
 import swal from 'sweetalert';
 const ProductoImages = () => {
     const {dialogs,setDialogs,formDetalles} = useProductos();
@@ -30,7 +30,7 @@ const ProductoImages = () => {
     const cerrar = ()=>{ setDialogs({...dialogs,imagen:false})}
 
   return (
-    cargando ? <Loading /> : dialogs.imagen && <ImagenViewer open={dialogs.imagen} isClose={cerrar} imgSrc={imagen.url_imagen} />
+    cargando ? <LoadingBackDrop /> : dialogs.imagen && <ImagenViewer open={dialogs.imagen} isClose={cerrar} imgSrc={imagen.url_imagen} />
   )
 }
 

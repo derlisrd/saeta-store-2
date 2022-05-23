@@ -1,69 +1,53 @@
-import {Tablas} from "../../../../Components";
+import Tablas from "../../../../Components/UI/Tablas";
 import { Icon,Tooltip, Button, TextField, InputAdornment, IconButton, Stack,Fab } from "@mui/material";
 import { useProductos } from "./ProductosProvider";
 import ProductosListaPager from "./ProductosListaPager";
-import { Funciones } from "../../../../Funciones/Funciones";
-import { useLanguage } from "../../../../Contextos/Language";
+import { env } from '../../../../Utils/config';
+
 
 import MoreMenu from "./MoreMenu";
-
-
-
+import { useNavigate } from "react-router-dom";
 
 const ProductosLista = () => {
-  const {lang} = useLanguage();
-  const {inputSearch,showOptions,setInputSearch,cargando,lista,buscarRegistro,dialogs,setDialogs,setFormDetalles} = useProductos();
-  //const navigate = useNavigate();
+  
+  const {inputSearch,showOptions,lang,setInputSearch,cargando,lista,buscarRegistro,dialogs,setDialogs,setFormDetalles,setLista} = useProductos();
+  const navigate = useNavigate();
   const columns = [
 
     {
       field: "codigo_producto",
-      title: "Codigo",
+      title: lang.codigo,
     },
     {
       field: "nombre_producto",
-      title: "Nombre",
-      //sort:true
+      title: lang.nombre,
+      align:"center",
     },
-     /* {
-      field:"url_imagen",
-      title:"Imagen",
-      img:true,
-      align:"center"
-    },   */
     {
       field: "nombre_categoria",
-      title: lang.Categoría,
+      title: lang.categoria,
       style:{backgroundColor:"#3f51b591",padding:"2px",borderRadius:"5px",cursor:"pointer"},
       styleCondicion:"",
       NoPrint:true 
     },
     {
       field: "precio_producto",
-      title: "Precio",
+      title: lang.precio,
       isNumber:true,
+      before:"$. "
     },
-    /* {
-      field: "porcentaje_impuesto",
-      title: "IVA",
-      extraitem:"%"
-    }, */
-    /* {
-      field:"stock_producto",
-      title:"Stock",
-      isNumber:true,
-    } */
+
   ];
 
 
  
   const openPhoto = f => { setDialogs({...dialogs,imagen:true}); setFormDetalles(f); }
-  const Acciones = ({filaProps})=>
+  const Acciones = ({rowProps})=>
   (<Stack direction="row" spacing={1} justifyContent="center">
-    <Fab onClick={()=> {openPhoto(filaProps)}}  size="small">
+    <Fab onClick={()=> {openPhoto(rowProps)}}  size="small">
         <Icon color="error">image</Icon>
       </Fab>
-    <MoreMenu openPhoto={openPhoto} filaProps={filaProps} />
+    <MoreMenu openPhoto={openPhoto} rowData={rowProps} />
     </Stack>)
 
     
@@ -82,42 +66,71 @@ const ProductosLista = () => {
           onKeyPress={e=>{if(e.key==='Enter'){buscarRegistro() } } }
           onChange={(e) => setInputSearch(e.target.value)}
           variant="outlined"
-          label="Buscar"
+          label={lang.buscar}
         />
         <Tooltip title="AGREGAR NUEVO" arrow >
         <Button color="primary" variant="outlined" size="large" 
-          onClick={()=> Funciones.goto(`productos/new`)}
+          onClick={()=> navigate(env.BASEURL+'/productos/new')}
         >
-          AGREGAR
+          {lang.agregar}
           </Button>
           </Tooltip>
       </Stack>
     );
 
-    const FilterData =  lista.filter(
-      (item) => item.nombre_producto.toLowerCase().includes(inputSearch.toLowerCase()) 
+    const FilterData =  lista.filter(item => item.nombre_producto.toLowerCase().includes(inputSearch.toLowerCase()) 
       || item.codigo_producto.toLowerCase().includes(inputSearch.toLowerCase())
     );
+
+    const sort = {
+        desc : (col)=>{
+          
+        FilterData.sort((a, b) => {
+          let fa = a[col].toLowerCase(),
+        fb = b[col].toLowerCase();
+      
+          if (fa < fb) {
+              return -1;
+          }
+          if (fa > fb) {
+              return 1;
+          }
+          return 0;
+      });
+      setLista(FilterData)
+        },
+        asc : (col)=>{
+          FilterData.sort((a, b) => {
+            let fb = a[col].toLowerCase(),
+          fa = b[col].toLowerCase();
+        
+            if (fa < fb) {
+                return -1;
+            }
+            if (fa > fb) {
+                return 1;
+            }
+            return 0;
+        });
+        setLista(FilterData)
+        }
+    }
 
   return (
     <>
         <Tablas
-          nombretabla="Productos - Servicios"
-          subtitle="En el módulo PRODUCTOS podrá agregar nuevos productos al sistema, actualizar datos de los productos, eliminar o actualizar la imagen de los productos, imprimir códigos de barras de cada producto, buscar productos en el sistema, ver todos los productos en almacén, ver los productos más vendido y filtrar productos por categoría."
-          icono="inventory"
-          bgicono="#3f51b5"
-          namecolumnID="id_producto"
-          columnas={columns}
-          filas={FilterData}
-          Acciones={Acciones}
-          extraprops={"nombre_producto"}
-          search={search}
-          cargando={cargando.lista}
-          option={lang.Opciones}
+          title={lang.productos}
+          Accions={Acciones}
+          subtitle={lang.lista_productos}
+          loading={cargando.lista}
+          datas={FilterData}
+          columns={columns}
+          lang={lang}
+          icon={{ name:"inventory",color:"#06c" }}
           showOptions={showOptions}
-          print
-          exportExcel
-        />
+          inputs={search}
+          sort={sort}
+          />
 
         <ProductosListaPager />
 
