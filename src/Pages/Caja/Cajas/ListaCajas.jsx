@@ -21,23 +21,24 @@ const ListaCajas = () => {
     {
       field: "estado_caja",
       title: lang.estado,
+      compareField:"estado_caja",
       items: {
         "close": lang.cerrado,
         "open": lang.abierto,
       },
-      comparaItem: "estado_caja",
+      styleItemCondition: "estado_caja",
       styleCondition: {
         "close": {
-          backgroundColor: "#dd4632",
-          padding: "6px",
+          backgroundColor: "#ff7c6b",
+          padding: "6px",fontWeight:"bold",
           borderRadius: "5px",
-          color: "#fff",
+          color: "#780c00",
         },
         "open": {
-          backgroundColor: "#00ce4f",
-          padding: "6px",
+          backgroundColor: "#2dec76",
+          padding: "6px", fontWeight:"bold",
           borderRadius: "5px",
-          color: "#fff",
+          color: "#007b02",
         },
       },
     },

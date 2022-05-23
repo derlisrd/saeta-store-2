@@ -26,15 +26,15 @@ const ProductosLista = () => {
     {
       field: "nombre_categoria",
       title: lang.categoria,
-      style:{backgroundColor:"#3f51b591",padding:"2px",borderRadius:"5px",cursor:"pointer"},
-      styleCondicion:"",
+      style:{backgroundColor:"#95a5ff",padding:"4px",borderRadius:"6px",fontWeight:"bold"},
       NoPrint:true 
     },
     {
       field: "precio_producto",
       title: lang.precio,
       isNumber:true,
-      before:"$. "
+      style:{fontWeight:"bold"},
+      before:"$ "
     },
 
   ];

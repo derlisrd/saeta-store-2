@@ -1,6 +1,7 @@
-import {Alert,Button,Dialog,DialogActions,DialogContent,DialogTitle,FormControl,FormHelperText,Grid,InputLabel,LinearProgress,MenuItem,Select,TextField} from "@mui/material";
+import {Alert,Button,FormControl,FormHelperText,Grid,InputLabel,LinearProgress,MenuItem,Select,TextField} from "@mui/material";
 import NumberFormatCustom from "../../../Components/thirty/NumberFormatCustom";
 import { useCajas } from "./CajasProvider";
+import ModalDialog from "../../../Components/UI/ModalDialog";
 
 const DialogNuevo = () => {
   const {
@@ -9,7 +10,7 @@ const DialogNuevo = () => {
     formNew,
     setFormNew,
     initialFormNew,
-    listaUsers, listaMonedas, errors,setErrors,agregarCajaNueva,cargas
+    listaUsers, listaMonedas, errors,setErrors,agregarCajaNueva,cargas,lang
   } = useCajas();
 
   const onChange = (e) => {
@@ -43,10 +44,15 @@ const DialogNuevo = () => {
     setDialogs({ ...dialogs, nuevo: false });
     setFormNew(initialFormNew);
   };
+  const Acciones = (<>
+  <Button variant="outlined" onClick={verificar}>Agregar</Button>
+        <Button variant="outlined" onClick={cerrar}>
+          Cerrar
+        </Button></>)
   return (
-    <Dialog open={dialogs.nuevo} onClose={cerrar} fullWidth>
-      <DialogTitle>Habilitar y agregar nueva caja</DialogTitle>
-      <DialogContent dividers>
+
+      <ModalDialog title="Habilitar y agregar nueva caja" fullWidth open={dialogs.nuevo} ActionsButtons={Acciones} onClose={cerrar} >
+
         <Grid container spacing={2}>
           <Grid item xs={12}>
             {
@@ -64,7 +70,7 @@ const DialogNuevo = () => {
               name="nombre_caja"
               value={formNew.nombre_caja}
               onChange={onChange}
-              label="Nombre de caja"
+              label={lang.nombre_de_caja}
             />
           </Grid>
           <Grid item xs={12}>
@@ -73,7 +79,7 @@ const DialogNuevo = () => {
               name="monto_inicial"
               value={formNew.monto_inicial}
               onChange={onChange}
-              label="Monto inicial"
+              label={lang.monto_inicial}
               InputProps={{
                 inputComponent: NumberFormatCustom,
                 inputProps: { min: 0 },
@@ -82,7 +88,7 @@ const DialogNuevo = () => {
           </Grid>
           <Grid item xs={12}>
             <FormControl fullWidth>
-              <InputLabel>Asignar a un usuario</InputLabel>
+              <InputLabel>{lang.asignar_usuario}</InputLabel>
               <Select
                 onChange={onChange}
                 name="id_user_caja"
@@ -117,14 +123,7 @@ const DialogNuevo = () => {
             </FormControl>
           </Grid>
         </Grid>
-      </DialogContent>
-      <DialogActions>
-        <Button variant="outlined" onClick={verificar}>Agregar</Button>
-        <Button variant="outlined" onClick={cerrar}>
-          Cerrar
-        </Button>
-      </DialogActions>
-    </Dialog>
+</ModalDialog>
   );
 };
 

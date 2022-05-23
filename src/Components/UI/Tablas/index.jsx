@@ -65,12 +65,21 @@ return (
                                         <span className={style.columntitleSpan}>
                                             {column.title}:
                                         </span>
-                                        <span style={column.style? column.style : null}>
+                                        <span style={
+                                            column.style
+                                                ? column.style
+                                                : column.styleCondition
+                                                ? column.styleCondition[data[column.styleItemCondition]]
+                                                : null
+                                            }>
                                             {
                                                 column.before && column.before
                                             }
                                             { 
-                                            column.isNumber ? funciones.numberFormat(data[column.field]) :
+                                            column.isNumber ? 
+                                            funciones.numberFormat(data[column.field]) :
+                                            column.items ?
+                                            column.items[data[column.compareField]] :
                                             data[column.field]
                                             }
                                             {

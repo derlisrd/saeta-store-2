@@ -38,6 +38,8 @@ export const translate = {
         lista_de_cajas:"Lista de cajas",
         sin_registros:"Sin registros",
         asignado_a:"Asignado a",
+        monto_inicial:"Monto inicial",
+        asignar_usuario:"Asignar a un usuario",
         monto_actual_efectivo:"Monto actual efectivo",
         hacer_transferencia:"Hacer transferencia",
         creacion_apertura_caja:"Creación, habilitación y apertura de caja",

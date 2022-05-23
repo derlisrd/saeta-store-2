@@ -69,6 +69,20 @@ const TemaProvider = ({children})=>{
               }
             }
           },
+          MuiButton:{
+            styleOverrides:{
+              root:{
+                borderRadius:"8px"
+              }
+            }
+          },
+          MuiOutlinedInput:{
+            styleOverrides:{
+              root:{
+                borderRadius:"8px",
+              }
+            }
+          },
           MuiListItem:{
             styleOverrides:{
               root:{
