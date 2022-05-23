@@ -11,6 +11,7 @@ const MenuList = () => {
   const {activeBigMenu} = useMenu()
   const classes = makeStyles((theme)=>({
     menu:{
+      borderRight:"1px dashed gray",
       minWidth: drawerWidth, minHeight:"100%",
       [theme.breakpoints.up("lg")]: {
         marginLeft: activeBigMenu ? 0 : (-drawerWidth),

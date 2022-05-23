@@ -87,7 +87,9 @@ const LoginForm = () => {
           <FormControlLabel disabled={load.login} control={<Checkbox checked={recordar} onChange={e=> setRecordar(e.target.checked)} />} label={lang.recordarme} />
           </Grid>
         <Grid item xs={12}>
-            <LoadingButton loadingIndicator={lang.cargando} fullWidth type="submit"  variant="contained" color="primary" size="large" loading={load.login ? true : false}>
+            <LoadingButton fullWidth variant="contained" size="large" type="submit"
+            loading={load.login ? true : false}
+            >
          {lang.ingresar}
           </LoadingButton>
         </Grid>
