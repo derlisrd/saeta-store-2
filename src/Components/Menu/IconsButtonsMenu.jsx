@@ -7,10 +7,10 @@ const {changeStateMenu,activeMenu,activeBigMenu,changeStateBigMenu} = useMenu();
   return (
     <>
     <IconButton sx={{ display: {md:'inline-block',lg:'none' } }} onClick={()=>{changeStateMenu(!activeMenu)}}>
-      <Icon>menu</Icon>
+    <Icon> {activeMenu ? "keyboard_double_arrow_left": "keyboard_double_arrow_right"}</Icon>
     </IconButton>
     <IconButton sx={{ display: { xs: 'none',lg:"block" } }} onClick={()=>{changeStateBigMenu(!activeBigMenu)}}>
-       <Icon>menu</Icon>
+       <Icon> {activeBigMenu ? "keyboard_double_arrow_left": "keyboard_double_arrow_right"}</Icon>
     </IconButton>
     </>
   )

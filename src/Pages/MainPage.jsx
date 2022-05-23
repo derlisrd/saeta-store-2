@@ -13,8 +13,8 @@ const MainPage = ({children}) => {
   const classes = useGlobalStyles();
   const useStyles = makeStyles((theme)=>({
     MainPaperExtended:{
-      margin:"0 15px",padding:theme.spacing(1),minHeight:'100vh',
-      marginTop:theme.mixins.toolbar.minHeight+20,
+      margin:"0 15px",padding:theme.spacing(1),minHeight:`calc(100vh - ${theme.mixins.toolbar.minHeight}px)`,
+      marginTop:theme.mixins.toolbar.minHeight,
       [theme.breakpoints.up("lg")]: {
         marginRight:drawerWidth,
         transform: `translateX(${(drawerWidth)}px)`,

@@ -80,6 +80,7 @@ return (
                                             funciones.numberFormat(data[column.field]) :
                                             column.items ?
                                             column.items[data[column.compareField]] :
+                                            column.html ? column.html :
                                             data[column.field]
                                             }
                                             {
@@ -89,7 +90,7 @@ return (
                                     </TableCell>
                                 ))
                             }
-                            <TableCell>
+                            <TableCell align='center'>
                                 {
                                     showOptions &&
                                     <Accions rowProps={data} />

@@ -23,10 +23,11 @@ const ProductosLista = () => {
       title: lang.nombre,
       align:"center",
     },
+    
     {
       field: "nombre_categoria",
       title: lang.categoria,
-      style:{backgroundColor:"#95a5ff",padding:"4px",borderRadius:"6px",fontWeight:"bold"},
+      style:{backgroundColor:"#b9ddff",padding:"4px",borderRadius:"6px",fontWeight:"bold",color:"#1976d2"},
       NoPrint:true 
     },
     {
@@ -126,7 +127,7 @@ const ProductosLista = () => {
           datas={FilterData}
           columns={columns}
           lang={lang}
-          icon={{ name:"inventory",color:"#06c" }}
+          icon={{ name:"inventory",color:"#1976d2" }}
           showOptions={showOptions}
           inputs={search}
           sort={sort}

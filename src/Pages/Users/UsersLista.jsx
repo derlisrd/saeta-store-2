@@ -1,4 +1,4 @@
-import { Button, Fab,InputAdornment, Icon, IconButton, Stack, TextField } from '@mui/material';
+import { Button, Fab,InputAdornment, Icon, IconButton, Stack, TextField,Avatar } from '@mui/material';
 import Tablas from '../../Components/UI/Tablas/'
 import { useLang } from '../../Contexts/LangProvider';
 import { useUsers } from './UsersProvider';
@@ -11,6 +11,10 @@ const UsersLista = () => {
     {
     field: "id_user",
     title: "ID",
+    },
+    {
+      title:"Avatar",
+      html: (<Avatar sx={{ bgcolor:"#06f" }}><Icon>person</Icon></Avatar>)
     },
     {
       field: "username_user",
