@@ -1,13 +1,16 @@
 import {  makeStyles} from '@mui/styles';
 
 export const useTablaStyles = makeStyles((theme)=>({
+    boxContainer:{
+        backgroundColor: theme.palette.background.paper
+    },
     arrow:{
         fontSize:"18px",
         cursor: "pointer",
         padding:"0 3px"
     },
     tcontainer:{
-        backgroundColor: theme.palette.background.default,
+        /* backgroundColor: theme.palette.background.default, */
     },
     table:{
         borderCollapse:"inherit",

@@ -12,7 +12,7 @@ const Tablas = ({title,subtitle,loading,datas,columns,caption,inputs,Accions,sho
 
 return (
       <>
-    <Box padding={1} margin={1}>
+    <Box padding={1} margin={1} >
         <Stack direction="row" spacing={2}>
             <Box>
                 <Avatar variant="rounded" sx={{ bgcolor: icon?.color? icon.color : 'inherit',padding:3 }} >
@@ -25,7 +25,7 @@ return (
             </Box>
         </Stack>
     </Box>
-    <Box borderRadius={3} boxShadow={4} padding={3}>
+    <Box borderRadius={3} boxShadow={4} padding={3} className={style.boxContainer}>
         <Box padding={1} marginBottom={1}>
             {inputs && inputs}
         </Box>

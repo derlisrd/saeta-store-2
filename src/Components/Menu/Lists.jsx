@@ -33,7 +33,7 @@ const Lists = () => {
                 <Icon color="inherit">{e.icon}</Icon>
               </ListItemIcon>
               <ListItemText primary={e.title}  />
-              <Icon color="inherit" >{ e.open ? `expand_less` : `expand_more` }</Icon>
+              <Icon color="inherit" >{ e.open ? `expand_more` : `chevron_right` }</Icon>
             </ListItem>
             <Collapse in={e.open} timeout="auto" unmountOnExit>
               <List component="div" disablePadding className={style.submenu} >

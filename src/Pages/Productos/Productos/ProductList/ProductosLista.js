@@ -67,7 +67,7 @@ const ProductosLista = () => {
           label={lang.buscar}
         />
         <Tooltip title={lang.agregar} arrow >
-        <Button color="primary" variant="outlined" size="large" 
+        <Button color="primary" variant="contained" endIcon={<Icon>add</Icon>} size="large" 
           onClick={()=> go.to('productos/new')}
         >
           {lang.agregar}

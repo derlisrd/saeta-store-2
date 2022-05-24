@@ -12,15 +12,16 @@ const TemaProvider = ({children})=>{
         palette: {
           mode: themeMode==='light' ? "light" : "dark",
           background:{
-            paper:themeMode==='light' ? "#fff" : "#171721",
+            paper:themeMode==='light' ? "#fff" : "#212b36",
             default:themeMode==='light' ? "#f9f9f9" : "#101013",
+            
           }, 
           neutral: {
             main: '#64748B',
             contrastText: '#fff',
           },
         },
-      
+        
         typography: {
           fontSize:13,
           fontWeightMedium:"bold",
@@ -58,6 +59,7 @@ const TemaProvider = ({children})=>{
             styleOverrides:{
               root:{
                 transition:'all 0.2s',
+                backgroundColor:themeMode==='light' ? "#fff" : "#212b36",
               },
               
             }
