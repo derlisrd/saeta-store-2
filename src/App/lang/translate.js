@@ -1,5 +1,7 @@
 export const translate = {
     es:{
+        facturas:"Facturas",
+        lista_facturas:"Lista de facturas",
         buen_dia:"Buen día",
         buenas_tardes:"Buenas tardes",
         buenas_noches:"Buenas noches",

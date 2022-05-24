@@ -1,23 +1,14 @@
-import {
-  useEffect,
-  useContext,
-  createContext,
-  useState,
-  useCallback,
-} from "react";
-import { APICALLER } from "../../../Api/ApiCaller";
-import { Funciones } from "../../../Funciones/Funciones";
+import {useEffect,useContext,createContext,useState,useCallback} from "react";
+import { APICALLER } from "../../../Services/api";
+import { funciones } from "../../../Functions";
+import { useLang } from "../../../Contexts/LangProvider";
 
 const Context = createContext();
 
 const FacturasProvider = ({ children }) => {
+  const {lang} = useLang()
   const [lista, setLista] = useState([]);
-
   const [total, setTotal] = useState(0);
-  
-
-  
-
   const [dialogs,setDialogs] = useState({
     estado: false,
     imprimir:false,
@@ -27,7 +18,7 @@ const FacturasProvider = ({ children }) => {
 
 
 
-  let fecha = Funciones.fechaActualYMD();
+  let fecha = funciones.fechaActualYMD();
   const [cargando, setCargando] = useState(true);
   const [cargandoFactura,setCargandoFactura] = useState(true);
   const [desdeFecha, setDesdeFecha] = useState(fecha);
@@ -196,6 +187,7 @@ const FacturasProvider = ({ children }) => {
         cargando,
         setCargando,
         cargandoFactura,
+        lang,
         total,
         setTotal,
         dialogs,setDialogs,
@@ -203,6 +195,7 @@ const FacturasProvider = ({ children }) => {
         setFormulario,
         fecha,
         filtro,
+        funciones,
         setFiltro,
         inputSearch,
         setInputSearch,
@@ -227,6 +220,7 @@ export const useFacturas = () => {
     cargando,
     setCargando,
     cargandoFactura,
+    lang,
     total,
     setTotal,
     dialogs,setDialogs,
@@ -234,6 +228,7 @@ export const useFacturas = () => {
     setFormulario,
     fecha,
     filtro,
+    funciones,
     setFiltro,
     inputSearch,
     setInputSearch,
@@ -252,6 +247,7 @@ export const useFacturas = () => {
     cargando,
     setCargando,
     cargandoFactura,
+    lang,
     total,
     setTotal,
     dialogs,setDialogs,
@@ -259,6 +255,7 @@ export const useFacturas = () => {
     setFormulario,
     fecha,
     filtro,
+    funciones,
     setFiltro,
     inputSearch,
     setInputSearch,

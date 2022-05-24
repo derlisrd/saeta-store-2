@@ -1,12 +1,13 @@
 import { Grid, Icon } from '@mui/material';
 import React from 'react'
 import ButtonCustom from "../../../Components/MuiCustom/ButtonCustom";
+import useGoto from '../../../Hooks/useGoto';
 import ListaAguarda from './ListaAguarda';
 import { useVentas } from './VentasProvider';
 
 const VentasMainUnder = () => {
-    const {dialogs,setDialogs,Funciones} = useVentas();
-
+    const {dialogs,setDialogs} = useVentas();
+    const go = useGoto();
     const abrir = ()=>{ setDialogs({...dialogs,main:true})}
 
   return (
@@ -15,7 +16,6 @@ const VentasMainUnder = () => {
         <ButtonCustom
           startIcon={<Icon>storefront</Icon>}
           variant="outlined"
-          size="large"
           color="primary"
           onClick={abrir}
         >
@@ -26,9 +26,8 @@ const VentasMainUnder = () => {
         <ButtonCustom
         startIcon={<Icon>receipt_long</Icon>}
           variant="outlined"
-          size="large"
           color="primary"
-          onClick={()=> Funciones.goto('facturas')}
+          onClick={()=> go.to('facturas')}
         >
           Lista de facturas
         </ButtonCustom>

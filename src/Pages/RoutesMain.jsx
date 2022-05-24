@@ -10,6 +10,7 @@ import DashBoard from "./Dashboard";
 import MainPage from "./MainPage";
 import Cajas from "./Caja/Cajas";
 import Ventas from "./Ventas/Vender";
+import Facturas from "./Ventas/Facturas";
 import Users from "./Users";
 import Productos from "./Productos/Productos";
 /* 
@@ -85,7 +86,8 @@ const RoutesMain = () => {
     <Routes>
         <Route path={R+'productos'} element={<PrivateRoute id={34}><Productos /></PrivateRoute>} />
         <Route path={R+'users'} element={<PrivateRoute id={34}><Users /></PrivateRoute>} />
-        <Route path={R+'ventas'} element={<PrivateRoute id={53}><Ventas /></PrivateRoute>} />
+        <Route path={R+'facturas'} element={<PrivateRoute id={5}><Facturas /></PrivateRoute>} />
+        <Route path={R+'ventas'} element={<PrivateRoute id={1}><Ventas /></PrivateRoute>} />
         <Route path={R+'dashboard'} element={<PrivateRoute id={59}><DashBoard /></PrivateRoute>} />
         <Route path={R+'cajas'} element={<PrivateRoute id={22}><Cajas /></PrivateRoute>} />
         <Route path={R+'notautorized'} element={<NotAutorized />} />

@@ -9,15 +9,30 @@ const TemaProvider = ({children})=>{
     const drawerWidth = 275;
     const colorText = themeMode==='light' ? "#282a2c" : "#fff";
     const PaperBgColor = themeMode==='light' ? "#fff" : "#212b36";
+    const DefaultBgColor = themeMode==='light' ? "#f9f9f9" : "#161c24";
+    const LinkSelector = themeMode==='light' ? "#b9ddff" : "#0066cc";
+    const FontSizeMenu = 15;
     const theme = createTheme({
         
         palette: {
           mode: themeMode==='light' ? "light" : "dark",
           background:{
             paper:PaperBgColor,
-            default:themeMode==='light' ? "#f9f9f9" : "#101013",
+            default:DefaultBgColor,
             blueSky: "#50a7fd"
-          }, 
+          },
+          /* primary: {
+            light: '#757ce8',
+            main: '#3f50b5',
+            dark: '#002884',
+            contrastText: '#fff',
+          },
+          secondary: {
+            light: '#ff7961',
+            main: '#f44336',
+            dark: '#ba000d',
+            contrastText: '#000',
+          }, */
           neutral: {
             main: '#64748B',
             contrastText: '#fff',
@@ -72,6 +87,7 @@ const TemaProvider = ({children})=>{
               root:{
                 transition:'all 0.2s',
                 backgroundColor:PaperBgColor,
+                backgroundImage:"none"
               },
               
             }
@@ -101,16 +117,17 @@ const TemaProvider = ({children})=>{
             styleOverrides:{
               root:{
                 fontWeight:"bold",
+                fontSize:FontSizeMenu,
                 borderRadius:"9px",
-                transition:'all 0.01s linear',
+                transition:'all 0.02s linear',
                 "&.Mui-selected":{
-                  backgroundColor: themeMode==='light' ? "#b9ddff" : "#0066cc",
+                  backgroundColor: LinkSelector,
                   "& span":{
                     fontWeight:"bold"
                   }
                 },
                 "&:hover": {
-                  backgroundColor:themeMode==='light' ? "#b9ddff" : "#0066cc",
+                  backgroundColor:LinkSelector,
                   fontWeight:"bold",
                 },
                 
@@ -125,6 +142,8 @@ const TemaProvider = ({children})=>{
                 margin:0,
                 padding:0,
                 boxSizing:"border-box",
+                background:DefaultBgColor,
+                transition:'all 0.2s',
               },
               
             }

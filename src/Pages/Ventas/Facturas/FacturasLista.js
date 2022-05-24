@@ -1,46 +1,27 @@
 
 import { useState } from "react";
-import Tablas from "../../../Componentes/Tablas";
+import Tablas from "../../../Components/UI/Tablas";
 import { useFacturas } from "./FacturasProvider";
-import {
-  Button,
-  Icon,
-  TextField,
-  Select,
-  FormControl,
-  InputLabel,
-  MenuItem,
-  Grid,
-  IconButton,
-  InputAdornment, Tooltip, Stack
-} from "@mui/material";
-import { Funciones } from "../../../Funciones/Funciones";
-import { useDatosEmpresa } from "../../../Contextos/DatosEmpresaProvider";
-//import ExportExcelFile from "../../../Componentes/ExportExcelFile";
+import {Button,Icon,TextField,Select,FormControl,InputLabel,MenuItem,Grid,IconButton,InputAdornment, Tooltip, Stack} from "@mui/material";
+
+import { useDatosEmpresa } from "../../../Contexts/DatosEmpresaProvider";
+import useGoto from "../../../Hooks/useGoto";
+
 
 
 const FacturasLista = () => {
   const {
-    lista,
-    setDesdeFecha,
-    setHastaFecha,
-    cargando,
-    total,
-    setDialogs,dialogs,
-    setFormulario,
-    fecha,
-    setFiltro,
-    inputSearch,
-    setInputSearch,
-    getBuscarFactura, consultarParaImprimir
+    lista,setDesdeFecha,setHastaFecha,cargando,total,setDialogs,dialogs,
+    setFormulario,fecha,funciones,setFiltro,inputSearch,setInputSearch,
+    getBuscarFactura, consultarParaImprimir,lang
   } = useFacturas();
   const { MONEDA_PRINCIPAL } = useDatosEmpresa();
-  //const {goto} = Funciones
+
   const [desde, setDesde] = useState(fecha);
   const [hasta, setHasta] = useState(fecha);
   const [tipoFiltro, setTipoFiltro] = useState("");
 
-
+  const go = useGoto();
 
   /*const keys = [
     "NRO FACTURA",
@@ -93,7 +74,6 @@ const FacturasLista = () => {
     {
       field: "fecha_factura",
       title: "FECHA",
-      isDate:true,
     },
     {
       field: "nombre_cliente",
@@ -104,19 +84,19 @@ const FacturasLista = () => {
       field: "estado_factura",
       title: "ESTADO",
       items: { 0: "Anulado", 1: "Cobrado", 2: "Cobranza pendiente" },
-      comparaItem: "estado_factura",
+      compareField: "estado_factura",
     },
     {
       field: "tipo_factura",
       title: "TIPO",
       items: { 1: "Contado", 2: "Crédito", 0: "Recibo" },
-      comparaItem: "tipo_factura",
+      compareField: "tipo_factura",
     },
     {
       field: "monto_total_factura",
       title: "MONTO",
       isNumber: true,
-      extraitem: MONEDA_PRINCIPAL.abreviatura_moneda,
+      before: MONEDA_PRINCIPAL.abreviatura_moneda,
     },
   ];
 
@@ -160,7 +140,7 @@ const FacturasLista = () => {
         fullWidth
         color="primary"
         size="large"
-        onClick={()=>Funciones.goto('ventas')}
+        onClick={()=>go.to('ventas')}
         >
           Nueva venta
         </Button>
@@ -220,7 +200,7 @@ const FacturasLista = () => {
       </Grid>
       
       <Grid item xs={12}>
-        <h3>Total: {Funciones.numberSeparator(total)}{" "}
+        <h3>Total: {funciones.numberSeparator(total)}{" "}
         {MONEDA_PRINCIPAL.abreviatura_moneda}{" "}</h3>
       </Grid>
     </Grid>
@@ -264,9 +244,18 @@ const FacturasLista = () => {
       <Grid item xs={12} md={9}>
         
           <Tablas
-            print
+            title={lang.facturas}
+            icon={{ name:"assignment", }}
+            loading={cargando}
+            inputs={search2}
+            subtitle={lang.lista_facturas}
+            datas={FilterData}
+            columns={columnas}
+            Accions={Acciones}
+            showOptions
+            /* print
             nombretabla="Facturas"
-            caption={`Total: ${Funciones.numberSeparator(total)}`}
+            caption={`Total: ${funciones.numberSeparator(total)}`}
             subtitle="Todos los movimientos de facturas filtradas por fecha y tipo"
             columnas={columnas}
             Acciones={Acciones}
@@ -278,7 +267,7 @@ const FacturasLista = () => {
             search={search2}
             exportCSV
             exportExcel
-            showOptions
+            showOptions */
           />
       
       </Grid>

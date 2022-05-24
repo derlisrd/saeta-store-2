@@ -14,6 +14,7 @@ const MainPage = ({children}) => {
   const useStyles = makeStyles((theme)=>({
     MainPaperExtended:{
       margin:"0 15px",padding:theme.spacing(1),minHeight:`calc(100vh - ${theme.mixins.toolbar.minHeight}px)`,
+      paddingTop:"40px",
       marginTop:theme.mixins.toolbar.minHeight,
       [theme.breakpoints.up("lg")]: {
         marginRight:drawerWidth,
