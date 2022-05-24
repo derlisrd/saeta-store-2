@@ -36,7 +36,8 @@ export const useTablaStyles = makeStyles((theme)=>({
         " & :last-child":{
             borderTopRightRadius: 8,
             borderBottomRightRadius: 8
-        }
+        },
+        
     },
     tbody:{
         

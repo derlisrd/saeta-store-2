@@ -1,12 +1,23 @@
-
-
+import { Card, CardContent, Grid, Typography } from "@mui/material";
+import { useLang } from "../../Contexts/LangProvider";
 
 const DashBoard = () => {
+  const {lang} = useLang();
+
+  let ndate = new Date();
+  let hours = ndate.getHours();
+  let message = hours < 12 ? lang.buen_dia : hours < 18 ? lang.buenas_tardes : lang.buenas_noches;
 
   return (
-    <>
-     <h1>DASHBOARD</h1> 
-    </>
+    <Grid container spacing={2} sx={{ marginTop:5 }} >
+      <Grid item xs={12}  md={6}>
+     <Card>
+       <CardContent>
+         <Typography variant="h5">{message} usuario</Typography>
+       </CardContent>
+     </Card>
+     </Grid>
+    </Grid>
   )
 }
 

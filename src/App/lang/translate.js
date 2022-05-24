@@ -1,5 +1,8 @@
 export const translate = {
     es:{
+        buen_dia:"Buen día",
+        buenas_tardes:"Buenas tardes",
+        buenas_noches:"Buenas noches",
         q_desea_cerrar_sesion:"Desea cerrar la sesion?",
         q_borrar:"Borrar?",
         ordenar:"Ordenar",

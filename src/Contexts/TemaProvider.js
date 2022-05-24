@@ -7,19 +7,22 @@ const ContextTheme = createContext();
 const TemaProvider = ({children})=>{
     const [themeMode, setThemeMode] = useState("light");
     const drawerWidth = 275;
+    const colorText = themeMode==='light' ? "#282a2c" : "#fff";
+    const PaperBgColor = themeMode==='light' ? "#fff" : "#212b36";
     const theme = createTheme({
-
+        
         palette: {
           mode: themeMode==='light' ? "light" : "dark",
           background:{
-            paper:themeMode==='light' ? "#fff" : "#212b36",
+            paper:PaperBgColor,
             default:themeMode==='light' ? "#f9f9f9" : "#101013",
-            
+            blueSky: "#50a7fd"
           }, 
           neutral: {
             main: '#64748B',
             contrastText: '#fff',
           },
+          colorText:colorText,
         },
         
         typography: {
@@ -36,11 +39,20 @@ const TemaProvider = ({children})=>{
           h5:{
             fontWeight:"bold"
           }
+          
         },
         components:{
-          
+          MuiTableCell:{
+            styleOverrides:{
+              root:{
+                color:colorText,
+              }
+            }
+          },
           MuiTypography:{
-            
+            defaultProps:{
+              color:colorText,
+            }
           },
           MuiLink: {
             defaultProps: {
@@ -59,7 +71,7 @@ const TemaProvider = ({children})=>{
             styleOverrides:{
               root:{
                 transition:'all 0.2s',
-                backgroundColor:themeMode==='light' ? "#fff" : "#212b36",
+                backgroundColor:PaperBgColor,
               },
               
             }
@@ -112,7 +124,7 @@ const TemaProvider = ({children})=>{
               body: {
                 margin:0,
                 padding:0,
-                boxSizing:"border-box"
+                boxSizing:"border-box",
               },
               
             }

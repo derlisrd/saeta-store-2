@@ -10,6 +10,7 @@ export const useGlobalStyles = makeStyles((theme)=>({
         margin:"0 15px",padding:"10px",minHeight:'100vh',
         marginTop:theme.mixins.toolbar.minHeight,
         transition:"all .3s",
+        
     },
     centerDivLogin:{
         minHeight:`calc(100vh - 20px)`,
@@ -24,6 +25,7 @@ export const useGlobalStyles = makeStyles((theme)=>({
         margin:"5px auto",
         border: "1px solid whitesmoke",
         borderRadius: 10,
+        /* background:theme.palette.background.blueSky */
     },
     toolbar:{
         display:"flex",
