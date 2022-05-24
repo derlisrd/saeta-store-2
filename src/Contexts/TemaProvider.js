@@ -10,8 +10,40 @@ const TemaProvider = ({children})=>{
     const colorText = themeMode==='light' ? "#282a2c" : "#fff";
     const PaperBgColor = themeMode==='light' ? "#fff" : "#212b36";
     const DefaultBgColor = themeMode==='light' ? "#f9f9f9" : "#161c24";
-    const LinkSelector = themeMode==='light' ? "#b9ddff" : "#0066cc";
     const FontSizeMenu = 15;
+    const AvaibleColors = [{
+      name:"yellow",  
+      color:"#f57f17",
+    },
+    {   name:"violet",
+        color:"#7b1fa2",
+    }
+  ];
+
+
+
+
+    const colores =  {
+      yellow: { primary:{
+        light:"#fff176",
+        main:"#fbc02d",
+        dark:"#fbc02d",
+      }
+      },
+      violet:{ primary:{
+
+        light:"#ba68c8",
+        main:"#7b1fa2",
+        dark:"#7b1fa2",
+      }
+      }
+    }
+    const [colors,setColors] = useState("violet")
+    //const LinkSelector = themeMode==='light' ? "#b9ddff" : "#0066cc";
+    const LinkSelector = colores[colors].primary.light;
+
+    const currentColor = useState(colores[colors].primary.main)
+
     const theme = createTheme({
         
         palette: {
@@ -20,6 +52,17 @@ const TemaProvider = ({children})=>{
             paper:PaperBgColor,
             default:DefaultBgColor,
             blueSky: "#50a7fd"
+          },
+          primary:{
+            light:colores[colors].primary.light,
+            main:colores[colors].primary.main,
+            dark:colores[colors].primary.dark
+          },
+          secondary: {
+            light: '#ff7961',
+            main: '#f44336',
+            dark: '#ba000d',
+            contrastText: '#000',
           },
           /* primary: {
             light: '#757ce8',
@@ -33,10 +76,10 @@ const TemaProvider = ({children})=>{
             dark: '#ba000d',
             contrastText: '#000',
           }, */
-          neutral: {
+          /* neutral: {
             main: '#64748B',
             contrastText: '#fff',
-          },
+          }, */
           colorText:colorText,
         },
         
@@ -129,6 +172,7 @@ const TemaProvider = ({children})=>{
                 "&:hover": {
                   backgroundColor:LinkSelector,
                   fontWeight:"bold",
+                  color:"black"
                 },
                 
               },
@@ -180,7 +224,7 @@ const TemaProvider = ({children})=>{
       }, [])
 
     return (
-        <ContextTheme.Provider value={{themeMode, setThemeMode,changeTheme,drawerWidth}}>
+        <ContextTheme.Provider value={{themeMode, setThemeMode,changeTheme,drawerWidth,setColors,AvaibleColors,currentColor}}>
           <ThemeProvider theme={theme}>
           <CssBaseline />
           
@@ -192,8 +236,8 @@ const TemaProvider = ({children})=>{
 }
 
 export const useTheme = ()=>{
-    const {themeMode, setThemeMode,changeTheme,drawerWidth} = useContext(ContextTheme);
-    return {themeMode, setThemeMode,changeTheme,drawerWidth}
+    const {themeMode, setThemeMode,changeTheme,drawerWidth,setColors,AvaibleColors,currentColor} = useContext(ContextTheme);
+    return {themeMode, setThemeMode,changeTheme,drawerWidth,setColors,AvaibleColors,currentColor}
 }
 
 export default TemaProvider;

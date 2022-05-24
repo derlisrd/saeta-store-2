@@ -268,6 +268,13 @@ export const listaMenu = [
             url: `${BASEURL}/registrofacturas`,
           },
           {
+            id: 72,
+            title: "Tema y colores",
+            icon: "palette",
+            color: "#a0aec0",
+            url: `${BASEURL}/tema`,
+          },
+          {
             id: 59,
             title: "Info y ayuda",
             icon: "help",

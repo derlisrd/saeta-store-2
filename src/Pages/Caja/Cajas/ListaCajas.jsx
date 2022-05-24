@@ -157,7 +157,7 @@ const ListaCajas = () => {
     title={lang.cajas} subtitle={lang.habilitacion_y_apertura_de_cajas} 
     loading={cargas.lista}
       caption={lang.lista_de_cajas}
-      icon={{ name:"point_of_sale",color:'#1976d2' }}
+      icon={{ name:"point_of_sale" }}
       columns={columnas}
       datas={lista}
       Accions={Acciones}
