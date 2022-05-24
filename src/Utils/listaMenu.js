@@ -1,5 +1,4 @@
 import { BASEURL } from "./config";
-
 export const listaMenu = [
     {
         id: 59,

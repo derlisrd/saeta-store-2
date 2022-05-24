@@ -2,16 +2,13 @@ import Tablas from "../../../../Components/UI/Tablas";
 import { Icon,Tooltip, Button, TextField, InputAdornment, IconButton, Stack,Fab } from "@mui/material";
 import { useProductos } from "./ProductosProvider";
 import ProductosListaPager from "./ProductosListaPager";
-import { env } from '../../../../Utils/config';
-
-
 import MoreMenu from "./MoreMenu";
-import { useNavigate } from "react-router-dom";
+import useGoto from "../../../../Hooks/useGoto";
 
 const ProductosLista = () => {
   
   const {inputSearch,showOptions,lang,setInputSearch,cargando,lista,buscarRegistro,dialogs,setDialogs,setFormDetalles,setLista} = useProductos();
-  const navigate = useNavigate();
+  const go = useGoto();
   const columns = [
 
     {
@@ -69,9 +66,9 @@ const ProductosLista = () => {
           variant="outlined"
           label={lang.buscar}
         />
-        <Tooltip title="AGREGAR NUEVO" arrow >
+        <Tooltip title={lang.agregar} arrow >
         <Button color="primary" variant="outlined" size="large" 
-          onClick={()=> navigate(env.BASEURL+'/productos/new')}
+          onClick={()=> go.to('productos/new')}
         >
           {lang.agregar}
           </Button>
