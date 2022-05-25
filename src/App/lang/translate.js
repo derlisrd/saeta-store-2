@@ -1,5 +1,7 @@
 export const translate = {
     es:{
+        registro_facturas:"Registro de facturas",
+        registro_factura_descripcion:"Facturas habilitadas por la set",
         facturas:"Facturas",
         lista_facturas:"Lista de facturas",
         buen_dia:"Buen día",

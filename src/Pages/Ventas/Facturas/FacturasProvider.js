@@ -120,19 +120,19 @@ const FacturasProvider = ({ children }) => {
 
   const getLista = useCallback(async () => {
     setCargando(true);
-    var moreFilter="";
-    if(filtro==="0"){
-      moreFilter = ",and,tipo_factura,=,0";
-    }else if (filtro === "1") {
-      moreFilter = ",and,tipo_factura,=,1";
-    } else if (filtro === "2") {
-      moreFilter = ",and,tipo_factura,=,2";
-    } else if (filtro === "3") {
-      moreFilter =",and,estado_factura,=,1";
-    } else if (filtro === "4") {
-      moreFilter =",and,estado_factura,=,2";
-    }
     
+
+    var filtrosOBJ = {
+      "":"",
+      "0":",and,tipo_factura,=,0",
+      "no_recibo":",and,tipo_factura,<>,0",
+      "1":",and,tipo_factura,=,1",
+      "2":",and,tipo_factura,=,2",
+      "3":",and,estado_factura,=,1",
+      "4":",and,estado_factura,=,2"
+    }
+
+    let moreFilter=filtrosOBJ[filtro];
 
     const res = await APICALLER.get({
       table: "facturas",include:"clientes,monedas,users",

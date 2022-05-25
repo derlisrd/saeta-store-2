@@ -19,7 +19,7 @@ const TemaProvider = ({children})=>{
     const PaperBgColor = themeMode==='light' ? "#fff" : "#212b36";
     const DefaultBgColor = themeMode==='light' ? "#f9f9f9" : "#161c24";
 
-
+//MuiPaper-root
     const changeColor = cor =>{
       let json = {...local,color:cor}
       localStorage.setItem("theme",JSON.stringify(json));
@@ -179,22 +179,16 @@ const TemaProvider = ({children})=>{
                 background:DefaultBgColor,
                 transition:'all 0.2s',
               },
-              "::-webkit-scrollbar": {
-                width: "9px",
-                cursor:"pointer"      
-              },
-              "::-webkit-scrollbar-track": {
-                background: "none",          
-              },
-              "::-webkit-scrollbar-thumb": {
-                backgroundColor: "none",    
-                borderRadius:"3px",
-                cursor:"pointer" 
-              },
-              "::-webkit-scrollbar-thumb:hover": {
-                backgroundColor: "rgba(99, 115, 129, 0.48)", 
-                cursor:"pointer" 
-              }
+              ".swal-title":{color: colorText+"!important" },
+              ".swal-icon--success__hide-corners,.swal-icon--success:after, .swal-icon--success:before":{background:"none !important"},
+              ".swal-button":{backgroundColor: colores[colors].primary.main,color:colores[colors].primary.contrastText},
+              ".swal-button--cancel":{backgroundColor:colores[colors].secondary.main+"!important",color:colores[colors].secondary.contrastText},
+              ".swal-text":{color: colorText+"!important" },
+              ".swal-modal":{backgroundColor: PaperBgColor+"!important",},
+              "::-webkit-scrollbar": {width: "9px"},
+              "::-webkit-scrollbar-track": {background: "none"},
+              "::-webkit-scrollbar-thumb": {backgroundColor: PaperBgColor,borderRadius:"3px"},
+              "::-webkit-scrollbar-thumb:hover": {backgroundColor: "rgba(99, 115, 129, 0.48)"}
             }
           }
         }

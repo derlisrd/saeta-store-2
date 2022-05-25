@@ -5,11 +5,13 @@ import {
   useEffect,
   useContext,
 } from "react";
-import { APICALLER } from "../../../Api/ApiCaller";
-
+import { APICALLER } from "../../../Services/api";
+import {useLang} from "../../../Contexts/LangProvider";
 const Contexto = createContext();
 
 const RegistroFacturasProvider = ({ children }) => {
+
+  const {lang} = useLang()
   const [openModal, setOpenModal] = useState(false);
   const [listaFacturas, setListaFacturas] = useState([]);
   const [cargando,setCargando] = useState(true)
@@ -46,7 +48,7 @@ const RegistroFacturasProvider = ({ children }) => {
         listaFacturas,
         setListaFacturas,
         openModal,
-        setOpenModal,cargando,setCargando
+        setOpenModal,cargando,setCargando,lang
       }}
     >
       {children}
@@ -55,9 +57,9 @@ const RegistroFacturasProvider = ({ children }) => {
 };
 
 export const useRegistroFacturas = () => {
-  const { getFacturas, listaFacturas, openModal, setOpenModal,cargando,setCargando } =
+  const { getFacturas, listaFacturas, openModal, setOpenModal,cargando,setCargando,lang } =
     useContext(Contexto);
-  return { getFacturas, listaFacturas, openModal, setOpenModal,cargando,setCargando };
+  return { getFacturas, listaFacturas, openModal, setOpenModal,cargando,setCargando,lang};
 };
 
 export default RegistroFacturasProvider;

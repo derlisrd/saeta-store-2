@@ -1,26 +1,11 @@
-import {
-  Dialog,
-  DialogContent,
-  DialogTitle,
-  DialogActions,
-  Button,
-  DialogContentText,
-  TextField,
-  Select,
-  MenuItem,
-  FormControl,
-  InputLabel, Grid
-} from "@mui/material";
-
+import {Dialog,DialogContent,DialogTitle,DialogActions,Button,DialogContentText,TextField,Select,MenuItem,FormControl,InputLabel, Grid} from "@mui/material";
 import { useState, useEffect } from "react";
-import { StylesGenerales } from "../../../Styles/StylesGenerales";
-import { APICALLER } from "../../../Api/ApiCaller";
-import { useLogin } from "../../../Contextos/LoginProvider";
+import { APICALLER } from "../../../Services/api";
+import { useLogin } from "../../../Contexts/LoginProvider";
 import { useRegistroFacturas } from "./RegistroFacturasProvider";
 import swal from "sweetalert";
 
 const DialogFacturaNew = () => {
-  const classes = StylesGenerales();
   const { token_user } = useLogin();
   const { openModal, setOpenModal, getFacturas,} = useRegistroFacturas();
   const inicial = {
@@ -71,7 +56,6 @@ const DialogFacturaNew = () => {
     });
 
     if(res.response==="ok"){
-      //let array = [...listaFacturas];
       setListaCajas(res.results)
     }
     else{
@@ -88,13 +72,13 @@ const DialogFacturaNew = () => {
     <Dialog open={openModal} fullWidth maxWidth="md" scroll="body"  onClose={cerrar}>
       <form onSubmit={enviarFormulario}>
         <DialogTitle>Registrar talonario</DialogTitle>
-        <DialogContent>
+        <DialogContent dividers>
           <DialogContentText>
             Recuerde que este formulario solo será válido cuando la SET le
             genere una factura
           </DialogContentText>
           
-          <Grid container spacing={1}>
+          <Grid container spacing={2}>
 
          <Grid item xs={12}>
           <TextField
@@ -107,7 +91,7 @@ const DialogFacturaNew = () => {
             helperText="El timbrado debe estar correctamente"
             value={formulario.timbrado_factura}
             required
-            className={classes.textfield}
+
           />
           </Grid>
           <Grid item xs={12} sm={6}>
@@ -120,7 +104,6 @@ const DialogFacturaNew = () => {
               value={formulario.inicio_timbrado}
               required
               fullWidth
-              className={classes.textfield}
             />
           </Grid>
           <Grid item xs={12} sm={6}>
@@ -133,7 +116,6 @@ const DialogFacturaNew = () => {
             type="date"
             value={formulario.fin_timbrado}
             required
-            className={classes.textfield}
           />
 </Grid>
 <Grid item xs={12} sm={4}>
@@ -146,7 +128,6 @@ const DialogFacturaNew = () => {
             helperText="Ej: 001-002"
             value={formulario.nro_datos_factura}
             required
-            className={classes.textfield}
           />
 </Grid>
 <Grid item xs={12} sm={4}>
@@ -160,7 +141,6 @@ const DialogFacturaNew = () => {
             type="number"
             value={formulario.nro_inicio_factura}
             required
-            className={classes.textfield}
           />
           </Grid>
           <Grid item xs={12} sm={4}>
@@ -174,10 +154,10 @@ const DialogFacturaNew = () => {
             type="number"
             value={formulario.nro_fin_factura}
             required
-            className={classes.textfield}
           />
           </Grid>
-          <FormControl className={classes.SelectForm}>
+          <Grid item xs={12} sm={6}>
+          <FormControl fullWidth>
             <InputLabel>Asignar factura a caja</InputLabel>
             <Select
               value={formulario.id_caja_empresa}
@@ -196,6 +176,7 @@ const DialogFacturaNew = () => {
               ))}
             </Select>
           </FormControl>
+          </Grid>
           </Grid>
         </DialogContent>
         <DialogActions>

@@ -14,7 +14,7 @@ export default function UserMenu(){
     const handleClose = () => {setAnchorEl(null)}
     const navigate = useNavigate();
     const cerrarSesion = async()=>{
-      let q = await swal({text: lang.q_desea_cerrar_sesion,icon: "warning",buttons: [lang.cancelar, lang.ok]})
+      let q = await swal({text: lang.q_desea_cerrar_sesion, title:lang.cerrar, icon: "info",buttons: [lang.cancelar, lang.ok]})
         if(q){
             logOut();
         }

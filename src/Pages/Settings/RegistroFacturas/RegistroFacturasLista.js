@@ -1,10 +1,10 @@
-import Tablas from '../../../Componentes/Tablas'
+import Tablas from '../../../Components/UI/Tablas'
 import { Button,IconButton, Icon } from '@mui/material'
 import { useRegistroFacturas } from './RegistroFacturasProvider'
 
 const RegistroFacturasLista = () => {
 
-    const {listaFacturas,setOpenModal,cargando} = useRegistroFacturas() 
+    const {listaFacturas,setOpenModal,cargando,lang} = useRegistroFacturas() 
 
     const abrir = ()=> setOpenModal(true);
 
@@ -55,25 +55,24 @@ const RegistroFacturasLista = () => {
     </div>)
 
     const search = (
-        <Button variant="outlined" color="primary" onClick={abrir} >  
+        <Button variant="contained" color="primary" onClick={abrir} >  
             Registrar
         </Button>
     )
 
   return (
     <>
-      <Tablas 
-        nombretabla="Facturas"
-        icono="text_snippet"
-        bgicono="#303f9f"
-        subtitle="Facturas habilitadas por la set"
-        columnas={columns}
-        cargando={cargando}
-        filas={listaFacturas}
-        namecolumnID="id_empresa_factura"
-        Acciones={Acciones}
-        search={search}
+      <Tablas
+        title={lang.registro_facturas}
+        subtitle={lang.registro_factura_descripcion}
+        datas={listaFacturas}
+        columns={columns}
+        loading={cargando}
+        inputs={search}
+        lang={lang}
         showOptions
+        Accions={Acciones}
+        icon={{ name:"receipt" }}
       />
     </>
   )

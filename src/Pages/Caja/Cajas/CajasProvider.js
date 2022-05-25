@@ -296,7 +296,7 @@ const CajasProvider = ({ children }) => {
     ])
     
     if(res[1].response==='ok' && res[0].response==='ok'){
-      swal({text: lang.caja_abierta_correctamente,icon: "success",timer: 1200,}).then(()=>{
+      swal({text: lang.caja_abierta_correctamente,icon: "success",}).then(()=>{
         if(dialogQuery==="open"){
           navigate(env.BASEURL+"ventas");
         }

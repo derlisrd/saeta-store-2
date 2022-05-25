@@ -2,7 +2,7 @@ import { useCallback, useEffect } from "react";
 import { Route, Routes,Navigate,useNavigate } from "react-router-dom";
 import LoadingBackDrop from "../Components/UI/LoadingBackDrop";
 import { useLogin } from "../Contexts/LoginProvider";
-import { BASEURL } from "../Utils/config";
+import { env } from "../App/Config/config";
 import NotAutorized from "./404/NotAutorized";
 import ErrorPage from "./404";
 import LoginForm from "./Auth/LoginForm";
@@ -14,6 +14,7 @@ import Facturas from "./Ventas/Facturas";
 import Users from "./Users";
 import Productos from "./Productos/Productos";
 import Tema from "./Settings/Tema";
+import RegistroFacturas from "./Settings/RegistroFacturas";
 /* 
 import Agenda from "./Agenda";
 import Movimientos from "./Caja/Movimientos/Index";
@@ -59,7 +60,7 @@ const RoutesMain = () => {
 
   const PrivateRoute = ({children,id})=>{
     if(login && !permisos.some(e => parseInt(e.id_permiso_permiso) === parseInt(id)) ){
-      return <Navigate to={BASEURL + "/notautorized"} />
+      return <Navigate to={env.BASEURL + "/notautorized"} />
     } 
     return login ? <MainPage>{children}</MainPage> : <Navigate to={"/"} />
   }
@@ -82,12 +83,13 @@ const RoutesMain = () => {
   if(loading){
     return <LoadingBackDrop />
   }
-  const R = BASEURL+'/';
+  const R = env.BASEURL +'/';
   return (
     <Routes>
         <Route path={R+'tema'} element={<PrivateRoute id={72}><Tema /></PrivateRoute>} />
         <Route path={R+'productos'} element={<PrivateRoute id={34}><Productos /></PrivateRoute>} />
         <Route path={R+'users'} element={<PrivateRoute id={34}><Users /></PrivateRoute>} />
+        <Route path={R+'registrofacturas'} element={<PrivateRoute id={38}><RegistroFacturas /></PrivateRoute>} />
         <Route path={R+'facturas'} element={<PrivateRoute id={5}><Facturas /></PrivateRoute>} />
         <Route path={R+'ventas'} element={<PrivateRoute id={1}><Ventas /></PrivateRoute>} />
         <Route path={R+'dashboard'} element={<PrivateRoute id={59}><DashBoard /></PrivateRoute>} />

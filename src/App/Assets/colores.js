@@ -45,7 +45,7 @@ export const colores = {
       light: "#ffeb8c",
       main: "#f6ab4d",
       dark: "#d76a16",
-      contrastText: "#fff",
+      contrastText: "#000",
     },
   },
   orange: {

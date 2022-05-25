@@ -160,7 +160,7 @@ const DialogArqueoFinal = () => {
     setCargando(true);
     let data = {
       fecha_cierre: Funciones.getFechaHorarioString(),
-      estado_caja: "0",
+      estado_caja: "close",
       monto_cierre: datos.saldoFinal,
     };
 

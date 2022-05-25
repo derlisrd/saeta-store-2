@@ -23,33 +23,6 @@ const FacturasLista = () => {
 
   const go = useGoto();
 
-  /*const keys = [
-    "NRO FACTURA",
-    "FECHA",
-    "CLIENTE",
-    "DOC",
-    "ESTADO",
-    "TIPO",
-    "MONTO",
-  ];
-  const listaFiltrada = [];
-  lista.forEach((elem) => {
-    let obj = {
-      "NRO FACTURA": elem.nro_factura,
-      FECHA: elem.fecha_factura,
-      CLIENTE: elem.nombre_cliente,
-      DOC: elem.ruc_cliente,
-      ESTADO: elem.estado_factura === "1" ? "PAGADO" : "NO PAGADO",
-      TIPO:
-        elem.tipo_factura === "1"
-          ? "CONTADO"
-          : elem.tipo_factura === "0"
-          ? "RECIBO"
-          : "CREDITO",
-      MONTO: parseFloat(elem.monto_total_factura),
-    };
-    listaFiltrada.push(obj);
-  }); */
 
   const changeDatadesde = (e) => setDesde(e.target.value);
   const changeDatahasta = (e) => setHasta(e.target.value);
@@ -180,6 +153,7 @@ const FacturasLista = () => {
           >
             <MenuItem value="">Todos</MenuItem>
             <MenuItem value="0">Tipo recibo</MenuItem>
+            <MenuItem value="no_recibo">Solo facturas</MenuItem>
             <MenuItem value="1">Tipo contado</MenuItem>
             <MenuItem value="2">Tipo crédito</MenuItem>
             <MenuItem value="3">Cobrados</MenuItem>

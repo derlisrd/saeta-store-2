@@ -10,7 +10,7 @@ export const StylesTabla = makeStyles((theme) => ({
   },
   tableheader: {
     [theme.breakpoints.down("md")]: {
-      display: "none",
+      display: "none !important",
     },
   },
   tablecell: {
@@ -20,7 +20,7 @@ export const StylesTabla = makeStyles((theme) => ({
   },
   tablelist: {
     [theme.breakpoints.down("md")]: {
-      display: "flex",
+      display: "flex !important",
       flexDirection: "column",
       border: "1px solid silver",
       margin: "0 0 10px 0",
@@ -30,7 +30,7 @@ export const StylesTabla = makeStyles((theme) => ({
   },
   tableitem: {
     [theme.breakpoints.down("md")]: {
-      display: "flex",
+      display: "flex !important",
       justifyContent: "space-between",
     },
   },

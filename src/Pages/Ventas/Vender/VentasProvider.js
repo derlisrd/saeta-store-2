@@ -722,7 +722,7 @@ const VentasProvider = ({ children }) => {
     //consultar si hay factura en localstore
     if (localStorage.getItem("facturasStorage") === null) {
       let res = await Promise.all([
-        APICALLER.get({table: "cajas",include:"cajas_users", on:"id_caja,id_caja_caja",where: `id_user_caja,=,${id_user}`}),
+        APICALLER.get({table: "cajas",include:"cajas_users", on:"id_caja,id_caja_caja",where: `id_user_caja,=,${id_user},and,estado_caja,=,'open'`}),
         APICALLER.get({ table: "monedas" }),
         APICALLER.get({ table: "facturas_formas_pagos" }),
         APICALLER.get({ table: "empleados",fields:"id_empleado,nombre_empleado,apellido_empleado" }),

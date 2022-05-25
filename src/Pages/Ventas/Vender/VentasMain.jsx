@@ -28,7 +28,7 @@ const VentasMain = () => {
             arrow
             placement="right-start"
           >
-            <IconButton onClick={cerrar} color="secondary">
+            <IconButton onClick={cerrar} color="primary">
               <Icon>arrow_back_ios_new</Icon>
             </IconButton>
           </Tooltip>
