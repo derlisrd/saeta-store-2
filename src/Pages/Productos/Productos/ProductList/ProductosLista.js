@@ -124,7 +124,7 @@ const ProductosLista = () => {
           datas={FilterData}
           columns={columns}
           lang={lang}
-          icon={{ name:"inventory",color:"#1976d2" }}
+          icon={{ name:"inventory" }}
           showOptions={showOptions}
           inputs={search}
           sort={sort}
