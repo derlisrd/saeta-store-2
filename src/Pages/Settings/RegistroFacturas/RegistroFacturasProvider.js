@@ -16,7 +16,22 @@ const RegistroFacturasProvider = ({ children }) => {
   const [listaFacturas, setListaFacturas] = useState([]);
   const [cargando,setCargando] = useState(true)
   
+  let res = await APICALLER.get({
+    table: "cajas",
+    fields: "nombre_caja,id_caja",
+  });
+
+  if(res.response==="ok"){
+    setListaCajas(res.results)
+  }
+  else{
+    console.log(res)
+  }
+
   const getFacturas = useCallback(async () => {
+
+    let res = Promise.all()
+
     let fac = await APICALLER.get({
       table: `empresas`,include:`empresa_facturas,cajas`,
       on: `id_empresa_empresa,id_empresa,id_caja,id_caja_empresa`,
@@ -25,6 +40,8 @@ const RegistroFacturasProvider = ({ children }) => {
       ? fac.found > 0 && setListaFacturas(fac.results)
       : console.log(fac);
     setCargando(false)
+
+
   }, []);
 
   useEffect(() => {

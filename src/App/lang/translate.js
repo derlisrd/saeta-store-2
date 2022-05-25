@@ -1,5 +1,8 @@
 export const translate = {
     es:{
+        articulo:"Artículo",
+        servicio:"Servicio",
+        registrado_correctamente:"Registrado correctamente",
         registro_facturas:"Registro de facturas",
         registro_factura_descripcion:"Facturas habilitadas por la set",
         facturas:"Facturas",

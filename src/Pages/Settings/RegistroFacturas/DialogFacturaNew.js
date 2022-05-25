@@ -1,4 +1,4 @@
-import {Dialog,DialogContent,DialogTitle,DialogActions,Button,DialogContentText,TextField,Select,MenuItem,FormControl,InputLabel, Grid} from "@mui/material";
+import {Dialog,DialogContent,DialogTitle,DialogActions,Button,TextField,Select,MenuItem,FormControl,InputLabel, Grid} from "@mui/material";
 import { useState, useEffect } from "react";
 import { APICALLER } from "../../../Services/api";
 import { useLogin } from "../../../Contexts/LoginProvider";
@@ -7,7 +7,7 @@ import swal from "sweetalert";
 
 const DialogFacturaNew = () => {
   const { token_user } = useLogin();
-  const { openModal, setOpenModal, getFacturas,} = useRegistroFacturas();
+  const { openModal, setOpenModal, getFacturas,lang} = useRegistroFacturas();
   const inicial = {
     id_empresa_empresa: "1",
     id_caja_empresa: "",
@@ -34,7 +34,7 @@ const DialogFacturaNew = () => {
     });
     if (res.response === "ok") {
       getFacturas();
-      swal({icon:"success", text:"Registrado correctamente", timer:1200})
+      swal({icon:"success", text:lang.registrado_correctamente, timer:1200})
       localStorage.removeItem("facturasStorage");
       cerrar();
     } else {
@@ -50,17 +50,7 @@ const DialogFacturaNew = () => {
   const cerrar = () => {setOpenModal(false); setFormulario(inicial) }
 
   const getCajas = async () => {
-    let res = await APICALLER.get({
-      table: "cajas",
-      fields: "nombre_caja,id_caja",
-    });
-
-    if(res.response==="ok"){
-      setListaCajas(res.results)
-    }
-    else{
-      console.log(res)
-    }
+    
     
   };
 
@@ -73,13 +63,11 @@ const DialogFacturaNew = () => {
       <form onSubmit={enviarFormulario}>
         <DialogTitle>Registrar talonario</DialogTitle>
         <DialogContent dividers>
-          <DialogContentText>
-            Recuerde que este formulario solo será válido cuando la SET le
-            genere una factura
-          </DialogContentText>
-          
           <Grid container spacing={2}>
-
+          <Grid item xs={12}>
+          Recuerde que este formulario solo será válido cuando la SET le
+            genere una factura
+          </Grid>
          <Grid item xs={12}>
           <TextField
             fullWidth
