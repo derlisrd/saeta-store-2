@@ -6,20 +6,42 @@ const ContextTheme = createContext();
 
 
 const TemaProvider = ({children})=>{
-    
-    const [themeMode, setThemeMode] = useState("light");
+  
+    const local = JSON.parse(localStorage.getItem("theme"))
+
+    const [themeMode, setThemeMode] = useState(local?.mode || "light");
+    const [colors,setColors] = useState(local?.color || "violet");
+
+    const currentColor = colores[colors].primary.main;
+
     const drawerWidth = 275;
     const colorText = themeMode==='light' ? "#282a2c" : "#fff";
     const PaperBgColor = themeMode==='light' ? "#fff" : "#212b36";
     const DefaultBgColor = themeMode==='light' ? "#f9f9f9" : "#161c24";
-    const FontSizeMenu = 15;
-    const [colors,setColors] = useState("violet")
-    const LinkSelector = colores[colors].primary.light;
 
-    const currentColor = useState(colores[colors].primary.main)
 
-    const theme = createTheme({
-        
+    const changeColor = cor =>{
+      let json = {...local,color:cor}
+      localStorage.setItem("theme",JSON.stringify(json));
+      setColors(cor)
+    }
+    const changeTheme = ()=>{
+      if(themeMode==='light') 
+        { 
+          let json = {...local,mode:"dark"}
+          localStorage.setItem("theme",JSON.stringify(json));
+          setThemeMode("dark") 
+        } 
+      else
+        { 
+          let json = JSON.stringify({...local,mode:"light"})
+          localStorage.setItem("theme",json);
+          setThemeMode("light")
+        }
+    }
+    
+
+    const theme = createTheme({        
         palette: {
           mode: themeMode==='light' ? "light" : "dark",
           background:{
@@ -30,12 +52,14 @@ const TemaProvider = ({children})=>{
           primary:{
             light:colores[colors].primary.light,
             main:colores[colors].primary.main,
-            dark:colores[colors].primary.dark
+            dark:colores[colors].primary.dark,
+            contrastText:colores[colors].primary.contrastText
           },
           secondary: {
             light: colores[colors].secondary.light,
             main: colores[colors].secondary.main,
             dark: colores[colors].secondary.dark,
+            contrastText:colores[colors].secondary.contrastText
           },
           /* primary: {
             light: '#757ce8',
@@ -133,19 +157,27 @@ const TemaProvider = ({children})=>{
             styleOverrides:{
               root:{
                 fontWeight:"bold",
-                fontSize:FontSizeMenu,
+                fontSize:15,
                 borderRadius:"9px",
+                color:colores[colors].primary.dark, // icon
                 transition:'all 0.02s linear',
                 "&.Mui-selected":{
-                  backgroundColor: LinkSelector,
+                  backgroundColor: colores[colors].primary.light,
                   "& span":{
-                    fontWeight:"bold"
+                    fontWeight:"bold",
+                    color:colores[colors].primary.dark
+                  },
+                  "&:hover":{
+                    backgroundColor:colores[colors].primary.light,
                   }
                 },
                 "&:hover": {
-                  backgroundColor:LinkSelector,
+                  backgroundColor:colores[colors].primary.light,
                   fontWeight:"bold",
-                  color:"black"
+                  color:colores[colors].primary.light,
+                  "& span":{
+                    color:colores[colors].primary.dark
+                  }
                 },
                 
               },
@@ -162,25 +194,21 @@ const TemaProvider = ({children})=>{
                 background:DefaultBgColor,
                 transition:'all 0.2s',
               },
-              
+              "::-webkit-scrollbar": {
+                width: "8px"     
+              },
+              "::-webkit-scrollbar-track": {
+                background: colores[colors].primary.light,          
+              },
+              "::-webkit-scrollbar-thumb": {
+                backgroundColor: colores[colors].primary.main,    
+                borderRadius:"3px", 
+              }
             }
           }
         }
       });
-      const changeTheme = ()=>{
-        if(themeMode==='light') 
-          { 
-          let json = JSON.stringify({mode:"dark",color:"violet"})
-            localStorage.setItem("theme",json);
-            setThemeMode("dark") 
-          } 
-        else
-          { 
-            let json = JSON.stringify({mode:"light",color:"violet"})
-            localStorage.setItem("themeMode",json);
-            setThemeMode("light")
-          }
-      }
+
       
       
       const verifica = ()=>{
@@ -200,7 +228,7 @@ const TemaProvider = ({children})=>{
       }, [])
 
     return (
-        <ContextTheme.Provider value={{themeMode, setThemeMode,changeTheme,drawerWidth,setColors,AvaibleColors,currentColor}}>
+        <ContextTheme.Provider value={{themeMode,setThemeMode,changeTheme,drawerWidth,changeColor,AvaibleColors,currentColor}}>
           <ThemeProvider theme={theme}>
           <CssBaseline />
           
@@ -212,8 +240,8 @@ const TemaProvider = ({children})=>{
 }
 
 export const useTheme = ()=>{
-    const {themeMode, setThemeMode,changeTheme,drawerWidth,setColors,AvaibleColors,currentColor} = useContext(ContextTheme);
-    return {themeMode, setThemeMode,changeTheme,drawerWidth,setColors,AvaibleColors,currentColor}
+    const {themeMode, setThemeMode,changeTheme,drawerWidth,changeColor,AvaibleColors,currentColor} = useContext(ContextTheme);
+    return {themeMode, setThemeMode,changeTheme,drawerWidth,changeColor,AvaibleColors,currentColor}
 }
 
 export default TemaProvider;

@@ -4,13 +4,13 @@ import { useTheme } from '../../../Contexts/TemaProvider'
 
 const Tema = () => {
 
-    const {setColors,AvaibleColors} = useTheme();
+    const {changeColor,AvaibleColors} = useTheme();
 
   return (
     <Box>
       {
         AvaibleColors.map((e,i)=>(
-          <IconButton key={i} onClick={()=>{setColors(e.name)}} >
+          <IconButton key={i} onClick={()=>{changeColor(e.name)}} >
             <Icon sx={{ color:e.color }} >palette</Icon>
           </IconButton>
         ))

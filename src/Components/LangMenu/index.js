@@ -32,7 +32,7 @@ export default function ChangeLangMenu (){
 
     return(<>
         <IconButton onClick={handleClick}>
-            <Icon>language</Icon>
+            <Icon color="primary">language</Icon>
         </IconButton>
         <Menu
         anchorEl={anchorEl}
