@@ -61,22 +61,7 @@ const TemaProvider = ({children})=>{
             dark: colores[colors].secondary.dark,
             contrastText:colores[colors].secondary.contrastText
           },
-          /* primary: {
-            light: '#757ce8',
-            main: '#3f50b5',
-            dark: '#002884',
-            contrastText: '#fff',
-          },
-          secondary: {
-            light: '#ff7961',
-            main: '#f44336',
-            dark: '#ba000d',
-            contrastText: '#000',
-          }, */
-          /* neutral: {
-            main: '#64748B',
-            contrastText: '#fff',
-          }, */
+
           colorText:colorText,
         },
         
@@ -195,14 +180,20 @@ const TemaProvider = ({children})=>{
                 transition:'all 0.2s',
               },
               "::-webkit-scrollbar": {
-                width: "8px"     
+                width: "9px",
+                cursor:"pointer"      
               },
               "::-webkit-scrollbar-track": {
-                background: colores[colors].primary.light,          
+                background: "none",          
               },
               "::-webkit-scrollbar-thumb": {
-                backgroundColor: colores[colors].primary.main,    
-                borderRadius:"3px", 
+                backgroundColor: "none",    
+                borderRadius:"3px",
+                cursor:"pointer" 
+              },
+              "::-webkit-scrollbar-thumb:hover": {
+                backgroundColor: "rgba(99, 115, 129, 0.48)", 
+                cursor:"pointer" 
               }
             }
           }
