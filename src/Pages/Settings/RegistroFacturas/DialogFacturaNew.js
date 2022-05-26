@@ -1,13 +1,11 @@
-import {Dialog,DialogContent,DialogTitle,DialogActions,Button,TextField,Select,MenuItem,FormControl,InputLabel, Grid} from "@mui/material";
-import { useState, useEffect } from "react";
-import { APICALLER } from "../../../Services/api";
-import { useLogin } from "../../../Contexts/LoginProvider";
+import {Dialog,DialogContent,DialogTitle,DialogActions,Button,TextField,Select,MenuItem,FormControl,InputLabel, Grid, LinearProgress} from "@mui/material";
+import { useState } from "react";
 import { useRegistroFacturas } from "./RegistroFacturasProvider";
-import swal from "sweetalert";
+
 
 const DialogFacturaNew = () => {
-  const { token_user } = useLogin();
-  const { openModal, setOpenModal, getFacturas,lang} = useRegistroFacturas();
+
+  const { openModal, setOpenModal,lang,listaCajas,registrar,cargando} = useRegistroFacturas();
   const inicial = {
     id_empresa_empresa: "1",
     id_caja_empresa: "",
@@ -20,26 +18,10 @@ const DialogFacturaNew = () => {
     last_nro_factura: "",
   };
   const [formulario, setFormulario] = useState(inicial);
-  const [listaCajas, setListaCajas] = useState([]);
 
-  const enviarFormulario = async (e) => {
+  const enviarFormulario = e => {
     e.preventDefault();
-    let form = { ...formulario };
-    form.last_nro_factura = formulario.nro_inicio_factura;
-    localStorage.removeItem("facturasStorage");
-    let res = await APICALLER.insert({
-      table: "empresa_facturas",
-      data: form,
-      token: token_user,
-    });
-    if (res.response === "ok") {
-      getFacturas();
-      swal({icon:"success", text:lang.registrado_correctamente, timer:1200})
-      localStorage.removeItem("facturasStorage");
-      cerrar();
-    } else {
-      console.log(res);
-    }
+    registrar(formulario);
   };
 
   const onChange = (e) => {
@@ -49,21 +31,16 @@ const DialogFacturaNew = () => {
 
   const cerrar = () => {setOpenModal(false); setFormulario(inicial) }
 
-  const getCajas = async () => {
-    
-    
-  };
-
-  useEffect(() => {
-    getCajas();
-  }, []);
 
   return (
     <Dialog open={openModal} fullWidth maxWidth="md" scroll="body"  onClose={cerrar}>
       <form onSubmit={enviarFormulario}>
-        <DialogTitle>Registrar talonario</DialogTitle>
+        <DialogTitle>{lang.nuevo_talonario}</DialogTitle>
         <DialogContent dividers>
           <Grid container spacing={2}>
+          <Grid item xs={12}>
+            {cargando.save && <LinearProgress />}
+          </Grid>
           <Grid item xs={12}>
           Recuerde que este formulario solo será válido cuando la SET le
             genere una factura
@@ -73,7 +50,6 @@ const DialogFacturaNew = () => {
             fullWidth
             autoFocus
             label="Timbrado nro"
-            variant="outlined"
             name="timbrado_factura"
             onChange={onChange}
             helperText="El timbrado debe estar correctamente"
@@ -85,7 +61,6 @@ const DialogFacturaNew = () => {
           <Grid item xs={12} sm={6}>
             <TextField
               helperText="Fecha inicio de timbrado"
-              variant="outlined"
               name="inicio_timbrado"
               onChange={onChange}
               type="date"
@@ -98,7 +73,6 @@ const DialogFacturaNew = () => {
           <TextField
             fullWidth
             helperText="Fecha fin de timbrado"
-            variant="outlined"
             name="fin_timbrado"
             onChange={onChange}
             type="date"
@@ -110,7 +84,6 @@ const DialogFacturaNew = () => {
           <TextField
             fullWidth
             label="Nros iniciales de factura"
-            variant="outlined"
             name="nro_datos_factura"
             onChange={onChange}
             helperText="Ej: 001-002"
@@ -122,7 +95,6 @@ const DialogFacturaNew = () => {
           <TextField
             fullWidth
             label="Nro de inicio de factura"
-            variant="outlined"
             name="nro_inicio_factura"
             onChange={onChange}
             helperText="Ej: 300"
@@ -135,7 +107,6 @@ const DialogFacturaNew = () => {
           <TextField
             fullWidth
             label="Nro de final de factura"
-            variant="outlined"
             name="nro_fin_factura"
             onChange={onChange}
             helperText="Ej: 350"
@@ -150,7 +121,6 @@ const DialogFacturaNew = () => {
             <Select
               value={formulario.id_caja_empresa}
               name="id_caja_empresa"
-              variant="outlined"
               onChange={onChange}
               required
             >
@@ -168,10 +138,10 @@ const DialogFacturaNew = () => {
           </Grid>
         </DialogContent>
         <DialogActions>
-          <Button variant="outlined" type="submit" color="primary">
+          <Button variant="contained" type="submit" color="primary">
             Registrar
           </Button>
-          <Button variant="outlined" onClick={cerrar}>
+          <Button variant="contained" onClick={cerrar}>
             Cancelar
           </Button>
         </DialogActions>

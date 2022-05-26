@@ -1,9 +1,9 @@
-import { Dialog,DialogActions,DialogContent,DialogTitle } from '@mui/material';
+import { Dialog,DialogActions,DialogContent,DialogTitle,Button } from '@mui/material';
 import Zoom from '@mui/material/Zoom';
 import React from 'react';
 
 export default function AlertDialog(props) {
-  const { open,onClose,children,title,lang,actions } = props;
+  const { open,onClose,children,title,lang } = props;
   return (
       <Dialog
         open={open}

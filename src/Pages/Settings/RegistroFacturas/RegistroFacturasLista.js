@@ -67,7 +67,7 @@ const RegistroFacturasLista = () => {
         subtitle={lang.registro_factura_descripcion}
         datas={listaFacturas}
         columns={columns}
-        loading={cargando}
+        loading={cargando.lista}
         inputs={search}
         lang={lang}
         showOptions

@@ -1,5 +1,6 @@
 export const translate = {
     es:{
+        nuevo_talonario:"Nuevo talonario",
         articulo:"Artículo",
         servicio:"Servicio",
         registrado_correctamente:"Registrado correctamente",
