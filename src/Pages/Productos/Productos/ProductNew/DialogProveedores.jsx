@@ -1,27 +1,29 @@
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Grid, LinearProgress, TextField } from '@mui/material'
 import React from 'react'
-import { APICALLER } from '../../../../Api/ApiCaller'
+import { APICALLER } from '../../../../Services/api'
 import { useProductForm } from './ProductFormProvider'
 
-const DialogMarcas = () => {
+const DialogProveedores = () => {
 
     const {dialogs,setDialogs,listas,setearListas,token_user,formulario,setFormulario} = useProductForm()
     const name = React.useRef(null);
+    const ruc = React.useRef(null);
     const [load,setLoad] = React.useState(false)
     
-    const cerrar = ()=> setDialogs({...dialogs,marcas:false});
+    const cerrar = ()=> setDialogs({...dialogs,proveedores:false});
     const enviar = async()=>{
         setLoad(true)
         let list = {...listas}
         let form = {...formulario}
         let nombre = name.current.value;
-        if(nombre!=="" && nombre!==null ){
-        let res = await APICALLER.insert({table:'marcas',data:{nombre_marca:nombre},token:token_user})
+        let doc = ruc.current.value;
+        if(nombre!=="" && doc !=="" && doc!==null && nombre!==null ){
+        let res = await APICALLER.insert({table:'proveedors',data:{nombre_proveedor:nombre,ruc_proveedor:doc,telefono_proveedor:"0"},token:token_user})
         //console.log(res);
         if(res.response==="ok"){
-            let nuevo = {id_marca: res.last_id, nombre_marca:nombre}
-            list.marcas.push(nuevo);
-            form.id_marca_producto = res.last_id;
+            let nuevo = {id_proveedor: res.last_id, nombre_proveedor:nombre}
+            list.proveedores.push(nuevo);
+            form.id_proveedor_producto = res.last_id;
             setearListas(list);
             setFormulario(form);
         }else{ console.log(res)}
@@ -32,13 +34,16 @@ const DialogMarcas = () => {
     }
 
   return (
-    <Dialog open={dialogs.marcas} fullWidth onClose={cerrar}>
-      <DialogTitle>Nueva Marca</DialogTitle>
+    <Dialog open={dialogs.proveedores} fullWidth onClose={cerrar}>
+      <DialogTitle>Nuevo Proveedor</DialogTitle>
       <DialogContent>
         <Grid container spacing={2}>
             <Grid item xs={12}> {load && <LinearProgress />}</Grid>
             <Grid item xs={12}>
-                <TextField required autoFocus autoComplete='off' inputRef={name} fullWidth label="Nombre de marca" />
+                <TextField required autoFocus autoComplete='off' inputRef={name} fullWidth label="Nombre de proveedor" />
+            </Grid>
+            <Grid item xs={12}>
+                <TextField required autoComplete='off' inputRef={ruc} fullWidth label="Doc de proveedor" />
             </Grid>
         </Grid>
       </DialogContent>
@@ -50,4 +55,4 @@ const DialogMarcas = () => {
   )
 }
 
-export default DialogMarcas
+export default DialogProveedores

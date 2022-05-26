@@ -1,7 +1,7 @@
 import React,{createContext,useContext,useCallback,useState,useEffect,useRef} from 'react'
 import { useLocation } from 'react-router-dom';
-import { APICALLER } from '../../../../Api/ApiCaller';
-import {useLogin} from "../../../../Contextos/LoginProvider";
+import { APICALLER } from '../../../../Services/api';
+import {useLogin} from "../../../../Contexts/LoginProvider";
 
 const ProductFormContexto = createContext();
 function useQuery() {
@@ -17,9 +17,10 @@ const ProductFormProvider = (props) => {
     const storage = JSON.parse(localStorage.getItem("dataProductos"));
     const initialDialogs = {categorias: false,proveedores:false,marcas:false,depositos:false,unidades:false}
     const [dialogs,setDialogs] = useState(initialDialogs);
-    const { token_user } = useLogin();
+    const {userData} = useLogin();
+    const { token_user } = userData;
     const [tabValue,setTabValue] = useState(0);
-    const initialCargas = {main:true,imagen:false,guardar:false,}
+    const initialCargas = {main:true,imagen:false,guardar:false,verificarCodigo:false}
     const [cargas,setCargas] = useState(initialCargas);
     const initialSnack = {open:false,mensaje:"",severity:"success",id:""}
     const [snack,setSnack]= useState(initialSnack);
@@ -126,6 +127,7 @@ const ProductFormProvider = (props) => {
         setStock(lista);
         cantidadRef?.current?.focus();
     }
+
     const cargarStock = ()=>{
       let f = {...formulario};
       let lista = [...stock];
@@ -158,27 +160,31 @@ const ProductFormProvider = (props) => {
         setFormulario(initialForm);
         setImages([]);
         setImagesURL([]);
-        setCargas({...cargas,guardar:false});
+        setCargas({main:false,imagen:false,guardar:false,verificarCodigo:false});
         inputCodigo?.current?.focus();
     }
 
     const verificarProducto = async (e) => {
         const valorCodigo = e.target.value;
         setSnack({open:false,mensaje:"",severity:"error"})
+        setCargas({...cargas,verificarCodigo:true});
         if (valorCodigo !== "") {
-          const res = await APICALLER.get({
-            table: "productos",
-            where: `codigo_producto,=,'${valorCodigo}'`,
-          });
-    
+          
+          const res = await APICALLER.get({table: "productos",where: `codigo_producto,=,'${valorCodigo}'`});
+
+          if(res.response==="ok"){
+            setCargas({...cargas,verificarCodigo:false});
+          }
           if (res.found > 0) {
             setSnack({open:true,mensaje:"Ese código de producto o servicio ya existe.",severity:"error",id:"codigo_producto"});
             setTabValue(0);
             inputCodigo.current?.focus();
           } else {
+
             setSnack({open:false,mensaje:"",severity:"error"})
           }
         }
+        
       };
     
     const setearListas = lista=>{
@@ -201,7 +207,7 @@ const ProductFormProvider = (props) => {
           let list = {categorias:va[0].results,proveedores:va[1].results,marcas:va[2].results,medidas:va[3].results,impuestos:va[4].results,depositos:va[5].results}
           setearListas(list)
       }
-      setCargas({main:false,imagen:false,guardar:false});
+      setCargas({main:false,imagen:false,guardar:false,verificarCodigo:false});
         
     },[]);
     

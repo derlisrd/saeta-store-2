@@ -6,7 +6,7 @@ import DialogProveedores from './DialogProveedores'
 import ProductFormProvider from './ProductFormProvider'
 import ProductFormTabs from './ProductFormTabs'
 
-const ProductForm = () => {
+const ProductNew = () => {
   return (
     <ProductFormProvider>
       <DialogMarcas />
@@ -18,4 +18,4 @@ const ProductForm = () => {
   )
 }
 
-export default ProductForm
+export default ProductNew

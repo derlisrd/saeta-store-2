@@ -1,6 +1,6 @@
 import { Grid, Icon, InputAdornment, TextField,Checkbox,FormControlLabel, Typography, Tooltip, FormControl, InputLabel, Select, MenuItem, List, ListItemButton, ListItemIcon, ListItemText, Button, ListItem,  ListItemAvatar, IconButton } from "@mui/material";
 import React from "react";
-import NumberFormatCustom from "../../../../Componentes/NumberFormatCustom";
+import NumberFormatCustom from "../../../../Components/thirty/NumberFormatCustom";
 import { useProductForm } from "./ProductFormProvider";
 
 const Precios = () => {

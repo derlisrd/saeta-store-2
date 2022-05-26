@@ -82,7 +82,7 @@ export const listaMenu = [
         open: false,
         submenu: [
           {
-            id: 91,
+            id: 9,
             title: "Agregar",
             icon: "diamond",
             color: "#a0aec0",

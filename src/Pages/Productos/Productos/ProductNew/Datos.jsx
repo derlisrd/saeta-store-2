@@ -1,5 +1,5 @@
 import React from 'react'
-import {FormControl, Grid, Icon, InputAdornment, TextField,InputLabel,Select,MenuItem, Radio, FormControlLabel, FormLabel, Button, List, ListItemButton, ListItemText, ListItemIcon, Typography} from "@mui/material";
+import {FormControl, Grid, Icon, InputAdornment, TextField,InputLabel,Select,MenuItem, Radio, FormControlLabel, FormLabel, Button, List, ListItemButton, ListItemText, ListItemIcon, Typography, CircularProgress} from "@mui/material";
 import { useProductForm } from './ProductFormProvider';
 
 const Datos = () => {
@@ -26,6 +26,9 @@ const Datos = () => {
                 <Icon color="primary">qr_code</Icon>
               </InputAdornment>
             ),
+            endAdornment:(
+              cargas.verificarCodigo && <CircularProgress size={24} />
+            )
           }}
           fullWidth
           variant="outlined"

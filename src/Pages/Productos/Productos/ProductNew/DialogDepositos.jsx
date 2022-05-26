@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Grid, LinearProgress, TextField } from '@mui/material';
-import { APICALLER } from '../../../../Api/ApiCaller';
+import { APICALLER } from '../../../../Services/api';
 import { useProductForm } from './ProductFormProvider';
 function DialogDepositos() {
 

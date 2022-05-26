@@ -55,8 +55,8 @@ const RegistroFacturasLista = () => {
     </div>)
 
     const search = (
-        <Button variant="contained" color="primary" onClick={abrir} >  
-            Registrar
+        <Button variant="contained" size="large" color="primary" onClick={abrir} >  
+            {lang.registrar}
         </Button>
     )
 

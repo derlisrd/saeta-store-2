@@ -13,6 +13,7 @@ import Ventas from "./Ventas/Vender";
 import Facturas from "./Ventas/Facturas";
 import Users from "./Users";
 import Productos from "./Productos/Productos";
+import ProductosNew from "./Productos/Productos/ProductNew";
 import Tema from "./Settings/Tema";
 import RegistroFacturas from "./Settings/RegistroFacturas";
 /* 
@@ -87,6 +88,7 @@ const RoutesMain = () => {
   return (
     <Routes>
         <Route path={R+'tema'} element={<PrivateRoute id={72}><Tema /></PrivateRoute>} />
+        <Route path={R+'productos/new'} element={<PrivateRoute id={9}><ProductosNew /></PrivateRoute>} />
         <Route path={R+'productos'} element={<PrivateRoute id={34}><Productos /></PrivateRoute>} />
         <Route path={R+'users'} element={<PrivateRoute id={34}><Users /></PrivateRoute>} />
         <Route path={R+'registrofacturas'} element={<PrivateRoute id={38}><RegistroFacturas /></PrivateRoute>} />

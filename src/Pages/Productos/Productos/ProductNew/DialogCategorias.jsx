@@ -1,32 +1,29 @@
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Grid, LinearProgress, TextField } from '@mui/material'
 import React from 'react'
-import { APICALLER } from '../../../../Api/ApiCaller'
+import { APICALLER } from '../../../../Services/api'
 import { useProductForm } from './ProductFormProvider'
 
-const DialogProveedores = () => {
+const DialogCategorias = () => {
 
     const {dialogs,setDialogs,listas,setearListas,token_user,formulario,setFormulario} = useProductForm()
     const name = React.useRef(null);
-    const ruc = React.useRef(null);
     const [load,setLoad] = React.useState(false)
     
-    const cerrar = ()=> setDialogs({...dialogs,proveedores:false});
+    const cerrar = ()=> setDialogs({...dialogs,categorias:false});
     const enviar = async()=>{
         setLoad(true)
         let list = {...listas}
         let form = {...formulario}
         let nombre = name.current.value;
-        let doc = ruc.current.value;
-        if(nombre!=="" && doc !=="" && doc!==null && nombre!==null ){
-        let res = await APICALLER.insert({table:'proveedors',data:{nombre_proveedor:nombre,ruc_proveedor:doc,telefono_proveedor:"0"},token:token_user})
-        //console.log(res);
+        if(nombre!==""){
+        let res = await APICALLER.insert({table:'categorias',data:{nombre_categoria:nombre},token:token_user})
         if(res.response==="ok"){
-            let nuevo = {id_proveedor: res.last_id, nombre_proveedor:nombre}
-            list.proveedores.push(nuevo);
-            form.id_proveedor_producto = res.last_id;
+            let nuevo = {id_categoria: res.last_id, nombre_categoria:nombre}
+            list.categorias.push(nuevo);
+            form.id_categoria_producto = res.last_id;
             setearListas(list);
             setFormulario(form);
-        }else{ console.log(res)}
+        }
         }
         
         cerrar()
@@ -34,16 +31,13 @@ const DialogProveedores = () => {
     }
 
   return (
-    <Dialog open={dialogs.proveedores} fullWidth onClose={cerrar}>
-      <DialogTitle>Nuevo Proveedor</DialogTitle>
+    <Dialog open={dialogs.categorias} fullWidth onClose={cerrar}>
+      <DialogTitle>Nueva categoría</DialogTitle>
       <DialogContent>
         <Grid container spacing={2}>
             <Grid item xs={12}> {load && <LinearProgress />}</Grid>
             <Grid item xs={12}>
-                <TextField required autoFocus autoComplete='off' inputRef={name} fullWidth label="Nombre de proveedor" />
-            </Grid>
-            <Grid item xs={12}>
-                <TextField required autoComplete='off' inputRef={ruc} fullWidth label="Doc de proveedor" />
+                <TextField required autoFocus autoComplete='off' inputRef={name} fullWidth label="Nombre de categoria" />
             </Grid>
         </Grid>
       </DialogContent>
@@ -55,4 +49,4 @@ const DialogProveedores = () => {
   )
 }
 
-export default DialogProveedores
+export default DialogCategorias

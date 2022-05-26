@@ -2,7 +2,7 @@ import React from 'react';
 import ProductFormEditProvider from './ProductFormEditProvider';
 import ProductFormEditTabs from './ProductFormEditTabs';
 
-const ProductFormEdit = () => {
+const ProductEdit = () => {
 
     
   return (
@@ -12,4 +12,4 @@ const ProductFormEdit = () => {
   )
 }
 
-export default ProductFormEdit
+export default ProductEdit
