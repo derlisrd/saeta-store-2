@@ -166,6 +166,7 @@ const ProductFormProvider = (props) => {
 
     const verificarProducto = async (e) => {
         const valorCodigo = e.target.value;
+        if(valorCodigo==="") return false;
         setSnack({open:false,mensaje:"",severity:"error"})
         setCargas({...cargas,verificarCodigo:true});
         if (valorCodigo !== "") {

@@ -5,11 +5,12 @@ import { listaMenu } from "../../Utils/listaMenu";
 import { useGlobalStyles } from "../../Styles/GlobalStyles";
 import { Fragment, useState } from "react";
 import { useLogin } from "../../Contexts/LoginProvider";
-
+import {useLang} from "../../Contexts/LangProvider"
 const Lists = () => {
   const {changeStateMenu} = useMenu();
   const [lista,setLista] = useState(listaMenu);
   const {userData} = useLogin()
+  const {lang}= useLang()
   const {permisos} = userData;
 
   const switchOpen = (sw,id)=>{
@@ -32,7 +33,7 @@ const Lists = () => {
               <ListItemIcon>
                 <Icon color="inherit">{e.icon}</Icon>
               </ListItemIcon>
-              <ListItemText primary={e.title}  />
+              <ListItemText primary={lang[e.title]}  />
               <Icon color="inherit" >{ e.open ? `expand_more` : `chevron_right` }</Icon>
             </ListItem>
             <Collapse in={e.open} timeout="auto" unmountOnExit>
@@ -51,7 +52,7 @@ const Lists = () => {
                         <ListItemIcon>
                           <Icon color={elem.url===l.pathname ? "primary" : "inherit"}>{elem.icon}</Icon>
                         </ListItemIcon>
-                        <ListItemText primary={elem.title} className={elem.url===l.pathname ? style.selected : "" } />
+                        <ListItemText primary={lang[elem.title]} className={elem.url===l.pathname ? style.selected : "" } />
                       </ListItem>
                   ))
                 }
@@ -71,7 +72,7 @@ const Lists = () => {
             <ListItemIcon>
               <Icon color={e.url===l.pathname ? "primary" : "inherit"}>{e.icon}</Icon>
             </ListItemIcon>
-            <ListItemText primary={e.title} className={e.url===l.pathname ? style.selected : "" } />
+            <ListItemText primary={lang[e.title]} className={e.url===l.pathname ? style.selected : "" } />
           </ListItem>
           }
           </> }

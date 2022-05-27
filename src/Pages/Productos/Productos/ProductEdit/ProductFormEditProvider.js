@@ -64,6 +64,7 @@ const ProductFormEditProvider = (props) => {
 
 
     const verificarProducto = useCallback(async()=>{
+      
       setSnack({open:false,id_code:"",mensaje:"",severity:"success",send:true});
       if(code===formulario.codigo_producto) return false;
       let res = await APICALLER.get({table: `productos`,where: `codigo_producto,=,'${formulario.codigo_producto}'`,fields: `id_producto`});
@@ -175,7 +176,7 @@ const ProductFormEditProvider = (props) => {
             APICALLER.getPromise({table: `marcas`,fields: `id_marca,nombre_marca`}),
             APICALLER.getPromise({table: `unidad_medidas`}),
             APICALLER.getPromise({table: `impuestos`}),
-/*             APICALLER.getPromise({table: `depositos`,sort:"-id_deposito"}) */
+             APICALLER.getPromise({table: `depositos`,sort:"-id_deposito"}) 
         ]);
             let list = {categorias:va[0].results,proveedores:va[1].results,marcas:va[2].results,medidas:va[3].results,impuestos:va[4].results}
             setearListas(list) 

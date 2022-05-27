@@ -28,6 +28,30 @@ const ProductosLista = () => {
       NoPrint:true 
     },
     {
+      field:"tipo_producto",
+      title:lang.tipo_producto,
+      compareField:"tipo_producto",
+      items: {
+        "2": lang.servicio,
+        "1": lang.articulo,
+      },
+      styleItemCondition: "tipo_producto",
+      styleCondition: {
+        "1": {
+          backgroundColor: "#ff7c6b",
+          padding: "6px",fontWeight:"bold",
+          borderRadius: "5px",
+          color: "#780c00",
+        },
+        "2": {
+          backgroundColor: "#2dec76",
+          padding: "6px", fontWeight:"bold",
+          borderRadius: "5px",
+          color: "#007b02",
+        },
+      },
+    },
+    {
       field: "precio_producto",
       title: lang.precio,
       isNumber:true,

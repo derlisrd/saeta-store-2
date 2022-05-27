@@ -1,35 +1,36 @@
 import { BASEURL } from "./config";
+// el menu esta relacionado con un multidioma
 export const listaMenu = [
     {
         id: 59,
-        title: "Inicio",
+        title: "inicio",
         icon: "apps",
         color: "#a0aec0",
         url: `${BASEURL}/dashboard`,
       },
       {
         id: 44,
-        title: "Informes",
+        title: "informes",
         icon: "trending_up",
         color: "#a0aec0",
         url: `${BASEURL}/informes`,
       },
       {
         id:58,
-        title: "Agendas",
+        title: "agendas",
         open:false,
         icon:"calendar_month",
         submenu:[
           {
             id:49,
-            title:'Turnos',
+            title:'turnos',
             icon:'login',
             color: "#a0aec0",
             url:`${BASEURL}/turnos`,
           },
           {
             id:51,
-            title:'Agenda',
+            title:'agenda',
             icon:'date_range',
             color: "#a0aec0",
             url:`${BASEURL}/agenda`,
@@ -38,7 +39,7 @@ export const listaMenu = [
       },
       {
         id: 53,
-        title: "Ventas",
+        title: "ventas",
         icon: "sell",
         color: "#a0aec0",
         url: "url",
@@ -46,28 +47,28 @@ export const listaMenu = [
         submenu: [
           {
             id: 1,
-            title: "Nueva venta",
+            title: "nueva_venta",
             url: `${BASEURL}/ventas`,
             icon: "point_of_sale",
             color: "#a0aec0",
           },    
           {
             id: 6,
-            title: "Notas",
+            title: "notas",
             url: `${BASEURL}/notas`,
             icon: "receipt",
             color: "#a0aec0",
           },
           {
             id: 4,
-            title: "Lista Facturas",
+            title: "lista_facturas",
             url: `${BASEURL}/facturas`,
             icon: "assignment",
             color: "#a0aec0",
           },
           {
             id: 16,
-            title: "Entregas",
+            title: "entregas",
             url: `${BASEURL}/entregas`,
             icon: "delivery_dining",
             color: "#a0aec0",
@@ -76,21 +77,21 @@ export const listaMenu = [
       },
       {
         id: 54,
-        title: "Productos",
+        title: "productos",
         icon: "inventory_2",
         color: "#a0aec0",
         open: false,
         submenu: [
           {
             id: 9,
-            title: "Agregar",
+            title: "agregar",
             icon: "diamond",
             color: "#a0aec0",
             url: `${BASEURL}/productos/new`,
           },
           {
             id: 8,
-            title: "Lista de productos",
+            title: "lista_productos",
             icon: "content_paste",
             color: "#a0aec0",
             url: `${BASEURL}/productos`,
@@ -98,28 +99,28 @@ export const listaMenu = [
   
           {
             id: 10,
-            title: "Categorías",
+            title: "categorias",
             icon: "category",
             color: "#a0aec0",
             url: `${BASEURL}/categorias`,
           },
           {
             id: 14,
-            title: "Proveedores",
+            title: "proveedores",
             url: `${BASEURL}/proveedores`,
             icon: "local_shipping",
             color: "#a0aec0",
           },
           {
             id: 12,
-            title: "Marcas",
+            title: "marcas",
             url: `${BASEURL}/marcas`,
             icon: "branding_watermark",
             color: "#a0aec0",
           },
           {
             id: 18,
-            title: "Apartados",
+            title: "apartados",
             icon: "save",
             color: "#a0aec0",
             url: `${BASEURL}/apartados`,
@@ -127,21 +128,21 @@ export const listaMenu = [
           
           {
             id:39,
-            title:"Depositos",
+            title:"depositos",
             url:`${BASEURL}/depositos`,
             icon:"local_convenience_store",
             color:"#a0aec0",
           },
           {
             id:60,
-            title:"Transferencias",
+            title:"transferencias",
             url:`${BASEURL}/transferencias`,
             icon:"sync_alt",
             color:"#a0aec0",
           },
           {
             id: 43,
-            title: "Inventario",
+            title: "inventario",
             icon: "handyman",
             color: "#a0aec0",
             url: `${BASEURL}/inventario`,
@@ -151,35 +152,35 @@ export const listaMenu = [
       
       {
         id: 20,
-        title: "Compras",
+        title: "compras",
         icon: "shopping_basket",
         color: "#a0aec0",
         url: `${BASEURL}/compras`,
       },
       {
         id: 55,
-        title: "Arqueos",
+        title: "arqueos",
         icon: "savings",
         color: "#a0aec0",
         open: false,
         submenu: [
           {
             id: 22,
-            title: "Cajas",
+            title: "cajas",
             url: `${BASEURL}/cajas`,
             icon: `point_of_sale`,
             color: "#a0aec0",
           },
           {
             id: 24,
-            title: "Mov. de cajas",
+            title: "mov__caja",
             url: `${BASEURL}/movimientos`,
             icon: `leaderboard`,
             color: "#a0aec0",
           },
           {
             id: 26,
-            title: "Registro de mov.",
+            title: "registros__mov",
             url: `${BASEURL}/registromovimientos`,
             icon: `app_registration`,
             color: "#a0aec0",
@@ -187,14 +188,14 @@ export const listaMenu = [
         ],
       },{
         id: 47,
-        title: "Cuentas",
+        title: "cuentas",
         icon: "payments",
         color: "#a0aec0",
         url: `${BASEURL}/cuentas`,
       },
       {
         id: 56,
-        title: "Mantenimiento",
+        title: "mantenimiento",
         icon: "engineering",
         color: "#a0aec0",
         open: false,
@@ -202,14 +203,14 @@ export const listaMenu = [
         submenu: [
           {
             id: 28,
-            title: "Clientes",
+            title: "clientes",
             url: `${BASEURL}/clientes`,
             icon: "people",
             color: "#a0aec0",
           },
           {
             id: 41,
-            title: "Empleados",
+            title: "empleados",
             url: `${BASEURL}/empleados`,
             icon: "badge",
             color: "#a0aec0",
@@ -217,28 +218,28 @@ export const listaMenu = [
     
           {
             id: 30,
-            title: "Monedas",
+            title: "monedas",
             url: `${BASEURL}/monedas`,
             icon: "monetization_on",
             color: "#a0aec0",
           },
           {
             id: 32,
-            title: "Unidad de medida",
+            title: "unidad_medida",
             icon: "square_foot",
             color: "#a0aec0",
             url: `${BASEURL}/medidas`,
           },
           {
             id: 45,
-            title: "Impuestos",
+            title: "impuestos",
             icon: "account_balance",
             color: "#a0aec0",
             url: `${BASEURL}/impuestos`,
           },
           {
             id: 34,
-            title: "Usuarios",
+            title: "usuarios",
             icon: "manage_accounts",
             color: "#a0aec0",
             url: `${BASEURL}/users`,
@@ -248,35 +249,35 @@ export const listaMenu = [
     
       {
         id: 57,
-        title: "Ajustes",
+        title: "ajustes",
         icon: "settings",
         color: "#a0aec0",
         open: false,
         submenu: [
           {
             id: 36,
-            title: "Datos de Empresa",
+            title: "datos_empresa",
             icon: "admin_panel_settings",
             color: "#a0aec0",
             url: `${BASEURL}/settings`,
           },
           {
             id: 38,
-            title: "Registro de facturas",
+            title: "registro_facturas",
             icon: "app_registration",
             color: "#a0aec0",
             url: `${BASEURL}/registrofacturas`,
           },
           {
             id: 72,
-            title: "Tema y colores",
+            title: "tema_y_colores",
             icon: "palette",
             color: "#a0aec0",
             url: `${BASEURL}/tema`,
           },
           {
             id: 59,
-            title: "Info y ayuda",
+            title: "info_y_ayuda",
             icon: "help",
             color: "#a0aec0",
             url: `${BASEURL}/info`,
