@@ -12,8 +12,8 @@ const MainPage = ({children}) => {
   const {drawerWidth} = useTheme()
   const classes = useGlobalStyles();
   const useStyles = makeStyles((theme)=>({
-    MainPaperExtended:{
-      margin:"0 15px",padding:theme.spacing(1),minHeight:`calc(100vh - ${theme.mixins.toolbar.minHeight}px)`,
+    MainPaperExtended:{ // menu abierto en modo wide ejej
+      margin:"0 20px",padding:theme.spacing(1),minHeight:`calc(100vh - ${theme.mixins.toolbar.minHeight}px)`,
       paddingTop:"40px",
       marginTop:theme.mixins.toolbar.minHeight,
       [theme.breakpoints.up("lg")]: {

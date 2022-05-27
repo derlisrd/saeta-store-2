@@ -7,66 +7,71 @@ const ContextTheme = createContext();
 
 const TemaProvider = ({children})=>{
   
-    const local = JSON.parse(localStorage.getItem("theme"))
-
-    const [themeMode, setThemeMode] = useState(local?.mode || "light");
-    const [colors,setColors] = useState(local?.color || "violet");
-
-    const currentColor = colores[colors].primary.main;
+    const localStorageTema = JSON.parse(localStorage.getItem("tema"))
+    const [tema,setTema] = useState({
+      defaultColor: localStorageTema?.defaultColor || "violet",
+      mode:localStorageTema?.mode || "light",
+      colors:localStorageTema?.color || "violet",
+      currentColor: localStorageTema?.currentColor || colores["violet"].primary.main,
+      fontSize: {
+        general: localStorageTema?.fontSize.general || 14,
+        menu: localStorageTema?.fontSize.menu || 15
+      }
+    })
 
     const drawerWidth = 275;
-    const colorText = themeMode==='light' ? "#282a2c" : "#fff";
-    const PaperBgColor = themeMode==='light' ? "#fff" : "#212b36";
-    const DefaultBgColor = themeMode==='light' ? "#f9f9f9" : "#161c24";
+    const colorText = tema.mode==='light' ? "#282a2c" : "#fff";
+    const PaperBgColor = tema.mode==='light' ? "#fff" : "#212b36";
+    const DefaultBgColor = tema.mode==='light' ? "#f9f9f9" : "#161c24";
 
-//MuiPaper-root
-    const changeColor = cor =>{
-      let json = {...local,color:cor}
-      localStorage.setItem("theme",JSON.stringify(json));
-      setColors(cor)
+
+    const changeFont = (font,size)=>{
+      let json = {...tema}
+      json.fontSize[font] = parseInt(size);
+      localStorage.setItem("tema",JSON.stringify(json));
+      setTema(json);
     }
+
+    const changeColor = cor =>{
+      let json = {...tema,currentColor:cor}
+      localStorage.setItem("tema",JSON.stringify(json));
+      setTema(json);
+    }
+
     const changeTheme = ()=>{
-      if(themeMode==='light') 
-        { 
-          let json = {...local,mode:"dark"}
-          localStorage.setItem("theme",JSON.stringify(json));
-          setThemeMode("dark") 
-        } 
-      else
-        { 
-          let json = JSON.stringify({...local,mode:"light"})
-          localStorage.setItem("theme",json);
-          setThemeMode("light")
-        }
+      let newMode = tema.mode==="light" ? "dark" : "light";
+      let json = {...tema,mode:newMode}
+      localStorage.setItem("tema",JSON.stringify(json));
+      setTema(json)
     }
     
 
     const theme = createTheme({        
         palette: {
-          mode: themeMode==='light' ? "light" : "dark",
+          mode: tema.mode==='light' ? "light" : "dark",
           background:{
             paper:PaperBgColor,
             default:DefaultBgColor,
             blueSky: "#50a7fd"
           },
           primary:{
-            light:colores[colors].primary.light,
-            main:colores[colors].primary.main,
-            dark:colores[colors].primary.dark,
-            contrastText:colores[colors].primary.contrastText
+            light:colores[tema.colors].primary.light,
+            main:colores[tema.colors].primary.main,
+            dark:colores[tema.colors].primary.dark,
+            contrastText:colores[tema.colors].primary.contrastText
           },
           secondary: {
-            light: colores[colors].secondary.light,
-            main: colores[colors].secondary.main,
-            dark: colores[colors].secondary.dark,
-            contrastText:colores[colors].secondary.contrastText
+            light: colores[tema.colors].secondary.light,
+            main: colores[tema.colors].secondary.main,
+            dark: colores[tema.colors].secondary.dark,
+            contrastText:colores[tema.colors].secondary.contrastText
           },
 
           colorText:colorText,
         },
         
         typography: {
-          fontSize:13,
+          fontSize: parseInt(tema.fontSize.general),
           fontWeightMedium:"bold",
           fontWeightRegular:"500",
           fontFamily:"Montserrat",
@@ -142,26 +147,29 @@ const TemaProvider = ({children})=>{
             styleOverrides:{
               root:{
                 fontWeight:"bold",
-                fontSize:15,
+                fontSize:tema.fontSize.menu,
+                "& span":{
+                  fontSize:tema.fontSize.menu
+                },
                 borderRadius:"9px",
-                color:colores[colors].primary.dark, // icon
+                color:colores[tema.colors].primary.dark, // icon
                 transition:'all 0.02s linear',
                 "&.Mui-selected":{
-                  backgroundColor: colores[colors].primary.light,
+                  backgroundColor: colores[tema.colors].primary.light,
                   "& span":{
                     fontWeight:"bold",
-                    color:colores[colors].primary.dark
+                    color:colores[tema.colors].primary.dark
                   },
                   "&:hover":{
-                    backgroundColor:colores[colors].primary.light,
+                    backgroundColor:colores[tema.colors].primary.light,
                   }
                 },
                 "&:hover": {
-                  backgroundColor:colores[colors].primary.light,
+                  backgroundColor:colores[tema.colors].primary.light,
                   fontWeight:"bold",
-                  color:colores[colors].primary.light,
+                  color:colores[tema.colors].primary.light,
                   "& span":{
-                    color:colores[colors].primary.dark
+                    color:colores[tema.colors].primary.dark
                   }
                 },
                 
@@ -181,8 +189,8 @@ const TemaProvider = ({children})=>{
               },
               ".swal-title":{color: colorText+"!important" },
               ".swal-icon--success__hide-corners,.swal-icon--success:after, .swal-icon--success:before":{background:"none !important"},
-              ".swal-button":{backgroundColor: colores[colors].primary.main,color:colores[colors].primary.contrastText},
-              ".swal-button--cancel":{backgroundColor:colores[colors].secondary.main+"!important",color:colores[colors].secondary.contrastText},
+              ".swal-button":{backgroundColor: colores[tema.colors].primary.main,color:colores[tema.colors].primary.contrastText},
+              ".swal-button--cancel":{backgroundColor:colores[tema.colors].secondary.main+"!important",color:colores[tema.colors].secondary.contrastText},
               ".swal-text":{color: colorText+"!important" },
               ".swal-modal":{backgroundColor: PaperBgColor+"!important",},
               "::-webkit-scrollbar": {width: "9px"},
@@ -197,13 +205,22 @@ const TemaProvider = ({children})=>{
       
       
       const verifica = ()=>{
-        const local = JSON.parse(localStorage.getItem("theme"));
+        const local = JSON.parse(localStorage.getItem("tema"));
         if(local){
-          setThemeMode(local.mode);
+          setTema(local)
         }
         else{
-          let json = JSON.stringify({mode:"light",color:"violet"})
-          localStorage.setItem("theme",json);
+          let json = JSON.stringify({
+            defaultColor: "violet",
+            mode:"light",
+            colors:"violet",
+            currentColor: colores["violet"].primary.main,
+            fontSize: {
+              general: 14,
+              menu:15
+            }
+          })
+          localStorage.setItem("tema",json);
         }
       }
       
@@ -213,20 +230,18 @@ const TemaProvider = ({children})=>{
       }, [])
 
     return (
-        <ContextTheme.Provider value={{themeMode,setThemeMode,changeTheme,drawerWidth,changeColor,AvaibleColors,currentColor}}>
+        <ContextTheme.Provider value={{changeTheme,drawerWidth,changeColor,AvaibleColors,changeFont,tema}}>
           <ThemeProvider theme={theme}>
           <CssBaseline />
-          
               {children}
-          
           </ThemeProvider>
         </ContextTheme.Provider>
       );
 }
 
 export const useTheme = ()=>{
-    const {themeMode, setThemeMode,changeTheme,drawerWidth,changeColor,AvaibleColors,currentColor} = useContext(ContextTheme);
-    return {themeMode, setThemeMode,changeTheme,drawerWidth,changeColor,AvaibleColors,currentColor}
+    const {changeTheme,drawerWidth,changeColor,AvaibleColors,changeFont,tema} = useContext(ContextTheme);
+    return {changeTheme,drawerWidth,changeColor,AvaibleColors,changeFont,tema}
 }
 
 export default TemaProvider;

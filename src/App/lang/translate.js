@@ -1,17 +1,15 @@
 export const translate = {
     es:{
         inicio:"Inicio",
-        informes:"Informes",
+        informe:"Informe",
         agendas:"Agendas",
         ventas:"Ventas",
         compras:"Compras",
         arqueos:"Arqueos",
         ajustes:"Ajustes",
-        mantenimiento:"Mantenimiento",
         turnos:"Turnos",
         agenda:"Agenda",
         notas:"Notas",
-        nueva_venta:"Nueva venta",
         entregas:"Entregas",
         nuevo_talonario:"Nuevo talonario",
         articulo:"Artículo",
@@ -41,8 +39,6 @@ export const translate = {
         mov__caja:"Mov. de cajas",
         movimientos_caja:"Movimientos de cajas",
         registros__mov:"Registros de mov.",
-        tema_y_colores:"Tema y colores",
-        info_y_ayuda:"Info y ayuda",
         cuentas:"Cuentas",
         mantenimientos:"Mantenimientos",
         clientes:"Clientes",
@@ -50,11 +46,11 @@ export const translate = {
         monedas:"Monedas",
         unidad_medida:"Unidad de medida",
         impuestos:"Impuestos",
+        tamano_fuente_general:"Tamaño de fuente general",
+        tamano_fuente_menu:"Tamaño de fuente menú",
         datos_empresa:"Datos de empresa",
         tema_colores:"Tema y colores",
-        nuevo_producto:"Nuevo producto",
-        tipo_producto:"Tipo producto",
-        
+        info_ayuda:"Info y ayuda",
         codigo:"Código",
         productos:"Productos",
         lista_productos:"Lista de productos",
@@ -104,5 +100,9 @@ export const translate = {
         transferencia_de_caja:"Transferencia de caja",
         editado_correctamente:"Editado correctamente"
     },
+
+    en:{
+        
+    }
 
 }

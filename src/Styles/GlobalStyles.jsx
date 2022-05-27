@@ -7,10 +7,9 @@ export const useGlobalStyles = makeStyles((theme)=>({
         backdropFilter:"blur(2px)",
       },
     MainPaper:{
-        margin:"0 15px",padding:"10px",minHeight:'100vh',
+        margin:"0 20px",paddingTop:"40px",minHeight:'100vh',
         marginTop:theme.mixins.toolbar.minHeight,
-        transition:"all .3s",
-        
+        transition:"all .3s"
     },
     centerDivLogin:{
         minHeight:`calc(100vh - 20px)`,
