@@ -1,4 +1,4 @@
-import { Dialog, DialogActions, Zoom, Icon, Stack, CircularProgress } from "@mui/material";
+import { Dialog, DialogActions, Zoom, Icon, Stack, CircularProgress, DialogContent   } from "@mui/material";
 import ButtonCustom  from "../../../Components/MuiCustom/ButtonCustom";
 import printJS from "print-js";
 import ReactToPdf from "react-to-pdf";
@@ -24,7 +24,7 @@ const ImpresionFactura = () => {
 
   itemsFactura.forEach((e) => {
     let subtotal = parseFloat(e.precio_producto_factura) * parseFloat(e.cantidad_producto);
-    TOTAL = +subtotal;
+    TOTAL += subtotal;
     let iva_porcent = parseFloat(e.porcentaje_impuesto);
     if (iva_porcent === "5") {
       TOTAL5 += subtotal;
@@ -61,7 +61,7 @@ const ImpresionFactura = () => {
       maxWidth="md"
       onClose={cerrar}
       TransitionComponent={Zoom}
-    >
+    ><DialogContent sx={{ margin:"25px auto" }}>
       {cargandoFactura ? (
         <Stack sx={{ padding: "20px" }} alignItems="center"><CircularProgress /></Stack>
       ) : (
@@ -217,6 +217,7 @@ const ImpresionFactura = () => {
           </table>
         </div>
       )}
+      </DialogContent>
       <DialogActions>
       <ReactToPdf
               targetRef={refPDF}
