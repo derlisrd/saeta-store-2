@@ -34,7 +34,9 @@ export const useGlobalStyles = makeStyles((theme)=>({
         width: "100%",
     },
     selected: {
-        color: theme.palette.primary.main,
+        "& span":{
+          color: theme.palette.primary.main,
+        }
       },
     submenu:{
       paddingLeft: theme.spacing(2)+" !important",

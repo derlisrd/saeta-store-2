@@ -6,7 +6,7 @@ import { useTheme } from '../../../Contexts/TemaProvider';
 
 const Tablas = ({title,subtitle,loading,datas,columns,caption,inputs,Accions,showOptions,lang,icon,sort}) => {
     const style = useTablaStyles();
-    const {currentColor} = useTheme()
+    const {tema} = useTheme()
     if(!columns){ console.warn("Missing props 'columns'"); return; }
     if(!datas){ console.warn("Missing props 'datas[]'"); return; }
     if(!Accions){console.warn("Missing props 'Accions'"); return; }
@@ -16,7 +16,7 @@ return (
     <Box padding={1} margin={1} >
         <Stack direction="row" spacing={2}>
             <Box>
-                <Avatar variant="rounded" sx={{ bgcolor: icon?.color ? icon.color : currentColor,padding:3 }} >
+                <Avatar variant="rounded" sx={{ bgcolor: icon?.color ? icon.color : tema.currentColor,padding:3 }} >
                     {icon && <Icon fontSize="large" >{icon.name}</Icon>}
                 </Avatar>
             </Box>

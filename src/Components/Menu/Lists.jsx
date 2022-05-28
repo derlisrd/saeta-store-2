@@ -52,7 +52,7 @@ const Lists = () => {
                         <ListItemIcon>
                           <Icon color={elem.url===l.pathname ? "primary" : "inherit"}>{elem.icon}</Icon>
                         </ListItemIcon>
-                        <ListItemText primary={lang[elem.title]} className={elem.url===l.pathname ? style.selected : "" } />
+                        <ListItemText primary={lang[elem.title]} className={elem.url===l.pathname ? style.selected : null } />
                       </ListItem>
                   ))
                 }
@@ -72,7 +72,7 @@ const Lists = () => {
             <ListItemIcon>
               <Icon color={e.url===l.pathname ? "primary" : "inherit"}>{e.icon}</Icon>
             </ListItemIcon>
-            <ListItemText primary={lang[e.title]} className={e.url===l.pathname ? style.selected : "" } />
+            <ListItemText primary={lang[e.title]} className={e.url===l.pathname ? style.selected : null } />
           </ListItem>
           }
           </> }

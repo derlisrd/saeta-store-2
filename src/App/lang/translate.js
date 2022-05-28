@@ -1,6 +1,7 @@
 export const translate = {
     es:{
         inicio:"Inicio",
+        tipo_producto:"Tipo producto",
         informe:"Informe",
         informes:"Informes",
         mantenimiento:"Mantenimiento",

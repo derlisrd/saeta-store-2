@@ -3,5 +3,6 @@
 /node_modules
 /package-lock.json
 /tsconfig.json
-/novedades.txt
 /build
+novedades.txt
+

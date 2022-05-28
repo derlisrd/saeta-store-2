@@ -9,10 +9,10 @@ const TemaProvider = ({children})=>{
   
     const localStorageTema = JSON.parse(localStorage.getItem("tema"))
     const [tema,setTema] = useState({
-      defaultColor: localStorageTema?.defaultColor || "violet",
+      defaultColor: localStorageTema?.defaultColor || "violet", //referencia a key del objeto
       mode:localStorageTema?.mode || "light",
       colors:localStorageTema?.color || "violet",
-      currentColor: localStorageTema?.currentColor || colores["violet"].primary.main,
+      currentColor: localStorageTema?.currentColor || colores["violet"].primary.main, //hace referencia al oclor hexadecimal
       fontSize: {
         general: localStorageTema?.fontSize.general || 14,
         menu: localStorageTema?.fontSize.menu || 15
@@ -25,6 +25,12 @@ const TemaProvider = ({children})=>{
     const DefaultBgColor = tema.mode==='light' ? "#f9f9f9" : "#161c24";
 
 
+    const changeColor = cor =>{
+      let json = {...tema,defaultColor:cor,currentColor: colores[cor].primary.main,colors:cor}
+      localStorage.setItem("tema",JSON.stringify(json));
+      setTema(json);
+    }
+
     const changeFont = (font,size)=>{
       let json = {...tema}
       json.fontSize[font] = parseInt(size);
@@ -32,11 +38,7 @@ const TemaProvider = ({children})=>{
       setTema(json);
     }
 
-    const changeColor = cor =>{
-      let json = {...tema,currentColor:cor}
-      localStorage.setItem("tema",JSON.stringify(json));
-      setTema(json);
-    }
+    
 
     const changeTheme = ()=>{
       let newMode = tema.mode==="light" ? "dark" : "light";
@@ -147,10 +149,10 @@ const TemaProvider = ({children})=>{
             styleOverrides:{
               root:{
                 fontWeight:"bold",
-                fontSize:tema.fontSize.menu,
-                "& span":{
+               /* fontSize:tema.fontSize.menu, //icon
+                 "& span":{
                   fontSize:tema.fontSize.menu
-                },
+                }, */
                 borderRadius:"9px",
                 color:colores[tema.colors].primary.dark, // icon
                 transition:'all 0.02s linear',

@@ -36,7 +36,7 @@ export const colores = {
   },
   bluesky: {
     primary: {
-      light: "#9ce0fd",
+      light: "#2189e414",
       main: "#2189e4",
       dark: "#0d52a4",
       contrastText: "#fff",

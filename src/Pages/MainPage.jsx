@@ -17,7 +17,7 @@ const MainPage = ({children}) => {
       paddingTop:"40px",
       marginTop:theme.mixins.toolbar.minHeight,
       [theme.breakpoints.up("lg")]: {
-        marginRight:drawerWidth,
+        marginRight:drawerWidth+20,
         transform: `translateX(${(drawerWidth)}px)`,
         transition: "all .3s ease"
       },

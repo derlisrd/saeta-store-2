@@ -1,0 +1,22 @@
+ MuiListItemIcon:{
+            styleOverrides:{
+              root:{
+                fontSize:tema.fontSize.menu,
+                
+              },
+            }
+          },
+          MuiListItemText:{
+            styleOverrides:{
+              root:{
+                "& span":{
+                   fontWeight:"bold",
+                  fontSize:tema.fontSize.menu
+                },
+                "& span:hover":{
+                  color:colores[tema.colors].primary.dark,
+                  fontWeight:"bold"
+                }, 
+              },
+            },
+          },
