@@ -145,41 +145,44 @@ const TemaProvider = ({children})=>{
               }
             }
           },
+
+
+          MuiListItemIcon:{
+            styleOverrides:{
+              root:{
+                
+            },
+          },
+        },
+        MuiListItemText:{
+          styleOverrides:{
+            root:{
+              "& span":{
+                fontSize:tema.fontSize.menu
+              },
+          },
+        },
+        }
+        ,
           MuiListItem:{
             styleOverrides:{
               root:{
-                fontWeight:"bold",
-               /* fontSize:tema.fontSize.menu, //icon
-                 "& span":{
-                  fontSize:tema.fontSize.menu
-                }, */
-                borderRadius:"9px",
-                color:colores[tema.colors].primary.dark, // icon
+                borderRadius:"10px",
                 transition:'all 0.02s linear',
                 "&.Mui-selected":{
                   backgroundColor: colores[tema.colors].primary.light,
-                  "& span":{
-                    fontWeight:"bold",
-                    color:colores[tema.colors].primary.dark
-                  },
-                  "&:hover":{
-                    backgroundColor:colores[tema.colors].primary.light,
-                  }
                 },
                 "&:hover": {
                   backgroundColor:colores[tema.colors].primary.light,
-                  fontWeight:"bold",
-                  color:colores[tema.colors].primary.light,
                   "& span":{
                     color:colores[tema.colors].primary.dark
                   }
                 },
-                
-              },
-            
             },
-          
           },
+        }, 
+
+
           MuiCssBaseline:{
             styleOverrides:{
               body: {

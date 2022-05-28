@@ -8,7 +8,7 @@ export const AvaibleColors = [
 export const colores = {
   violet: {
     primary: {
-      light: "#7357b9",
+      light: "#512da81f",
       main: "#512da8",
       dark: "#381f75",
       contrastText: "#fff",
@@ -22,7 +22,7 @@ export const colores = {
   },
   green: {
     primary: {
-      light: "#9de39a",
+      light: "#409e3f1f",
       main: "#409e3f",
       dark: "#258023",
       contrastText: "#fff",
@@ -36,7 +36,7 @@ export const colores = {
   },
   bluesky: {
     primary: {
-      light: "#2189e414",
+      light: "#2189e41f",
       main: "#2189e4",
       dark: "#0d52a4",
       contrastText: "#fff",
@@ -50,7 +50,7 @@ export const colores = {
   },
   orange: {
     primary: {
-      light: "#fccb6c",
+      light: "#d76a161f",
       main: "#d76a16",
       dark: "#923108",
       contrastText: "#fff",
@@ -64,7 +64,7 @@ export const colores = {
   },
   red: {
     primary: {
-      light: "#FFC9AF",
+      light: "#FF48381f",
       main: "#FF4838",
       dark: "#931127",
       contrastText: "#fff",
