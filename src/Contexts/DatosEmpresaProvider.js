@@ -7,22 +7,27 @@ const DatosEmpresaProvider = ({children}) => {
 
     const storageEmpresa = JSON.parse(localStorage.getItem("dataEmpresa"));
     const storageMoneda = JSON.parse(localStorage.getItem("dataMonedas"));
-    const mon = storageMoneda ? storageMoneda.filter(e=> e.activo_moneda==="1") : {} 
+    const mon = storageMoneda ? storageMoneda.filter(e=> e.activo_moneda==="1" ||e.activo_moneda===1) : {} 
+
+
     const [MONEDA_PRINCIPAL,SET_MONEDA_PRINCIPAL] = useState(mon[0]);
     const [EMPRESA,SET_EMPRESA] = useState(storageEmpresa ? storageEmpresa : {})
     
-    const {logueado} = useLogin()
+    const {userData} = useLogin()
+    const {login} = userData
+
     const getDatos = useCallback(async()=>{
-      
-        if(logueado){
-        if(storageEmpresa===null || storageMoneda===null){
-          let res = await APICALLER.get({table:'monedas',where:`activo_moneda,=,1`})
+        
+      if(storageEmpresa===null || storageMoneda===null){
+          if(login){
+          let promise = await Promise.all([APICALLER.get({table:'monedas',where:`activo_moneda,=,1`}),APICALLER.get({table:'empresas'})])
+          let res = promise[0] 
           res.response==="ok" ? SET_MONEDA_PRINCIPAL(res.results[0]) : console.log(res)
-          let emp = await APICALLER.get({table:'empresas'});
+          let emp = promise[1]
           emp.response==="ok" ? SET_EMPRESA(emp.results[0]) : console.log(emp);
         }
-        }
-    },[logueado,storageEmpresa,storageMoneda])
+      }
+    },[login,storageEmpresa,storageMoneda])
 
     useEffect(() => {
         const ca = new AbortController();

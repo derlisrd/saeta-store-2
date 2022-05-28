@@ -16,6 +16,7 @@ import Productos from "./Productos/Productos";
 import ProductosNew from "./Productos/Productos/ProductNew";
 import Tema from "./Settings/Tema";
 import RegistroFacturas from "./Settings/RegistroFacturas";
+import Settings from "./Settings/DatosEmpresa";
 /* 
 import Agenda from "./Agenda";
 import Movimientos from "./Caja/Movimientos/Index";
@@ -38,7 +39,6 @@ import ProductForm from "./Productos/Productos/ProductForm";
 import ProductFormEdit from "./Productos/Productos/ProductFormEdit";
 import ProductosApartados from "./Productos/ProductosApartados";
 import Proveedores from "./Productos/Proveedores";
-import Settings from "./Settings/DatosEmpresa";
 import Impuestos from "./Settings/Impuestos";
 import Info from "./Settings/Info";
 import Turnos from "./Turnos";
@@ -87,6 +87,7 @@ const RoutesMain = () => {
   const R = env.BASEURL +'/';
   return (
     <Routes>
+        <Route path={R+'settings'} element={<PrivateRoute id={36}><Settings /></PrivateRoute>} />
         <Route path={R+'tema'} element={<PrivateRoute id={72}><Tema /></PrivateRoute>} />
         <Route path={R+'productos/new'} element={<PrivateRoute id={9}><ProductosNew /></PrivateRoute>} />
         <Route path={R+'productos'} element={<PrivateRoute id={34}><Productos /></PrivateRoute>} />

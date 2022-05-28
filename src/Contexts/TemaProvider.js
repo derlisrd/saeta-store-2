@@ -172,15 +172,16 @@ const TemaProvider = ({children})=>{
                 borderRadius:"10px",
                 transition:'all 0.02s linear',
                 "&.Mui-selected":{
-                  backgroundColor: colores[tema.colors].primary.light,
+                  backgroundColor: tema.mode==="light"? colores[tema.colors].primary.light : colores[tema.colors].primary.main,
                   "& span":{
                     fontWeight:"bold",
+                    color:tema.mode==="light"? colores[tema.colors].primary.main : colorText
                   }
                 },
                 "&:hover": {
                   backgroundColor:colores[tema.colors].primary.light,
                   "& span":{
-                    color:colores[tema.colors].primary.main,
+                    color:tema.mode==="light"? colores[tema.colors].primary.main : colorText,
                     fontWeight:"bold",
                   }
                 },

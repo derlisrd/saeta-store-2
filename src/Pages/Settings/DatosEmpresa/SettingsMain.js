@@ -1,11 +1,12 @@
 import { Tabs, Tab } from "@mui/material";
 import { useState } from "react";
+import { useLang } from "../../../Contexts/LangProvider";
 import DatosEmpresa from "./DatosdeEmpresa";
 
 
 const SettingsMain = () => {
 
-    
+    const {lang}= useLang();
     const [tabValue, setTabValue] = useState(0);
     const TabPanel = ({children,index})=>{
         return(
@@ -22,7 +23,7 @@ const SettingsMain = () => {
           setTabValue(value);
         }}
       >
-        <Tab label="DATOS DE EMPRESA" />
+        <Tab label={lang.datos_empresa} />
       </Tabs>
       <TabPanel value={tabValue} index={0}>
         <DatosEmpresa />

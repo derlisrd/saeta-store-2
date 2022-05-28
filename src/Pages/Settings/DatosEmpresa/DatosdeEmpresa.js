@@ -1,13 +1,13 @@
 import { Grid,TextField,Icon,Button, InputAdornment,Snackbar,Alert } from "@mui/material"
 import { useSettings } from "./SettingsProvider"
-import Loading from "../../../Componentes/Loading";
-import { Funciones } from "../../../Funciones/Funciones";
+import LoadingBackDrop from "../../../Components/UI/LoadingBackDrop";
+import { funciones as Funciones } from "../../../Functions";
 const DatosEmpresa = () => {
 
     const {datosEmpresa,snack,setSnack, Guardar,handleOnchange,cargando} = useSettings()
 
     if(cargando){
-      return <Loading />
+      return <LoadingBackDrop />
     }
   return (
       <>

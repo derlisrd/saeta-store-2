@@ -33,8 +33,18 @@ const LoginProvider = ({children}) => {
         sessionStorage.setItem("userData", JSON.stringify(f))
         if(remember) localStorage.setItem("userData", JSON.stringify(f))
     }
-
+    const setearEmpresa = ({empresa=null,monedas=null,mode})=>
+    {
+        if(mode){
+            localStorage.setItem("dataEmpresa", JSON.stringify(empresa))
+            localStorage.setItem("dataMonedas", JSON.stringify(monedas))
+        }else{
+            localStorage.removeItem("dataEmpresa");
+            localStorage.removeItem("dataMonedas");    
+        }
+    }
     const logOut = useCallback(()=>{
+        
         setUserData({login:false,
             token_user:null,
             id_user:null,
@@ -42,6 +52,7 @@ const LoginProvider = ({children}) => {
             rol_user:null,
             username_user:null,
             permisos:[],});
+        setearEmpresa({mode:false })
         localStorage.removeItem("userData");
         sessionStorage.removeItem("userData");
 
@@ -52,7 +63,9 @@ const LoginProvider = ({children}) => {
         let promise = await Promise.all([APICALLER.login(f),APICALLER.get({table:"empresas"}),APICALLER.get({table:"monedas"})]);
         let res = promise[0];
         let emp = promise[1];
-        let dataEmpresa = emp.response==="ok" ? emp.results[0] : null;
+        let mon = promise[2];
+        let dataMonedas = mon.results;
+        let dataEmpresa = emp.results[0];
         let today = new Date();
         let fechaLicencia = funciones.splitFecha(dataEmpresa.licencia)
 
@@ -60,6 +73,7 @@ const LoginProvider = ({children}) => {
             setLoad({login:false,active:true,msj:"Su licencia ha vencido. Por favor contacte con el proveedor."});
             return false;
         }
+        setearEmpresa({mode:true,empresa:dataEmpresa,monedas:dataMonedas})
 
         if(res.response==="ok" && res.found>0){
             let d = res.results[0];
@@ -70,6 +84,9 @@ const LoginProvider = ({children}) => {
                 username_user:CifrarTexto(d.username_user),
                 permisos: permisosData.response==="ok" ? permisosData.results : []
             }
+            
+        
+            
             setearLogin(datas,remember);
             setLoad({login:false,active:false,msj:null});
         }
@@ -77,6 +94,8 @@ const LoginProvider = ({children}) => {
             setLoad({login:false,active:true,msj:res.message});
         }
     }
+
+
     const verificar = useCallback(async()=>{
         setLoading(true);
         if (userData.login) {

@@ -17,6 +17,8 @@ const FacturasLista = () => {
   } = useFacturas();
   const { MONEDA_PRINCIPAL } = useDatosEmpresa();
 
+  
+
   const [desde, setDesde] = useState(fecha);
   const [hasta, setHasta] = useState(fecha);
   const [tipoFiltro, setTipoFiltro] = useState("");

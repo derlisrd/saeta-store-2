@@ -5,14 +5,17 @@ import {
   useContext,
   useCallback,
 } from "react";
-import { APICALLER } from "../../../Api/ApiCaller";
-import { useLogin } from "../../../Contextos/LoginProvider";
+import { APICALLER } from "../../../Services/api";
+import { useLogin } from "../../../Contexts/LoginProvider";
+import { useLang } from "../../../Contexts/LangProvider";
 
 const Contexto = createContext();
 
 const SettingsProvider = ({ children }) => {
   const storage = JSON.parse(localStorage.getItem("dataEmpresa"));
-  const { token_user } = useLogin();
+  const { userData } = useLogin();
+  const {token_user} = userData
+  const {lang} = useLang()
   const [cargando, setCargando] = useState(true);
 
   const initialState = {
@@ -60,8 +63,6 @@ const SettingsProvider = ({ children }) => {
          localStorage.setItem("dataEmpresa",JSON.stringify(res.results[0]))
        }
       }  
-        
-
     }
     setCargando(false);
   }, []);
@@ -89,7 +90,7 @@ const SettingsProvider = ({ children }) => {
         handleOnchange,
         Guardar,
         snack,
-        setSnack,
+        setSnack,lang
       }}
     >
       {children}
@@ -106,7 +107,7 @@ export const useSettings = () => {
     handleOnchange,
     Guardar,
     snack,
-    setSnack,
+    setSnack,lang
   } = useContext(Contexto);
   return {
     cargando,
@@ -116,7 +117,7 @@ export const useSettings = () => {
     handleOnchange,
     Guardar,
     snack,
-    setSnack,
+    setSnack,lang
   };
 };
 
