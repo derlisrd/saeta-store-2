@@ -7,17 +7,16 @@ import {
   Button,Fab
 } from "@mui/material";
 import React, { useState } from "react";
-import Tablas from "../../Componentes/Tablas";
-import { Funciones } from "../../Funciones/Funciones";
+import Tablas from "../../Components/UI/Tablas";
+
 import { useClientes } from "./ClientesProvider";
 
 
 const ClientesLista = () => {
-  const { lista, cargando,page, setPage,limite,buscarRegistro,countTotal,BorrarCliente } = useClientes();
+  const { lista, cargando,page, setPage,limite,buscarRegistro,countTotal,BorrarCliente,lang } = useClientes();
 
   const [inputSearch, setInputSearch] = useState("");
   
-
 
   const FilterData = lista.filter(
     (item) =>
@@ -45,13 +44,13 @@ const ClientesLista = () => {
     },
   ];
 
-  const Acciones = ({id,extraprops})=>(
+  const Acciones = ({rowProps})=>(
     <Stack direction="row" spacing={1} justifyContent="center">
       <Fab
           variant="round"
           color="primary"
           size="small"
-          onClick={() => Funciones.goto(`clientes/new/${id}`)}
+          onClick={() => console.log(rowProps)}
         >
           <Icon>edit</Icon>
         </Fab>
@@ -59,7 +58,7 @@ const ClientesLista = () => {
           variant="round"
           color="secondary"
           size="small"
-          onClick={() => BorrarCliente(id, extraprops)}
+          onClick={() => BorrarCliente(rowProps)}
         >
           <Icon>delete</Icon>
         </Fab>
@@ -80,13 +79,12 @@ const ClientesLista = () => {
         }}
         onKeyPress={e=>{if(e.key==='Enter'){buscarRegistro(inputSearch) } } }
         onChange={(e) => setInputSearch(e.target.value)}
-        variant="outlined"
-        label="Buscar"
+        label={lang.buscar}
       />
       <Button  color="primary" variant="outlined" size="large" 
-        onClick={() => Funciones.goto(`clientes/new/`)}
+        onClick={() => console.log(`clientes/new/`)}
       >
-        AGREGAR
+        {lang.agregar}
         </Button>
     </Stack>
   );
@@ -105,17 +103,13 @@ const ClientesLista = () => {
   return (
     <>
       <Tablas
-        nombretabla="Clientes"
-        icono="people"
-        bgicono="#3f51b5"
-        namecolumnID={`id_cliente`}
-        columnas={columns}
-        filas={FilterData}
-        Acciones={Acciones}
-        extraprops={"nombre_cliente"}
-        search={search}
-        cargando={cargando}
+        title={lang.clientes}
+        icon={{ name:"people" }}
+        columns={columns}
+        datas={FilterData}
+        Accions={Acciones}
         showOptions
+        inputs={search}
       />
       <Stack direction="row" spacing={2} justifyContent="center" >
       {page>0 &&(<Button 

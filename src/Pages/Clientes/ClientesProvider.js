@@ -7,14 +7,17 @@ import {
 } from "react";
 import { useLocation } from "react-router";
 import swal from "sweetalert";
-import { APICALLER } from "../../Api/ApiCaller";
-import { useLogin } from "../../Contextos/LoginProvider";
-import { Funciones } from "../../Funciones/Funciones";
+import { APICALLER } from "../../Services/api";
+import { useLogin } from "../../Contexts/LoginProvider";
+import { useLang } from "../../Contexts/LangProvider";
+import { funciones } from "../../Functions";
 
 const ClientesContext = createContext();
 
 const ClientesProvider = ({ children }) => {
-  const { token_user } = useLogin();
+  const { userData } = useLogin();
+  const {lang} = useLang()
+  const {token_user} = userData
   const location = useLocation();
   const query = location.search ? new URLSearchParams(location.search) : 0;
   const [page, setPage] = useState(
@@ -47,7 +50,7 @@ const ClientesProvider = ({ children }) => {
     setPage(0);
     if (res.results.length > 0 && res.response === "ok") {
       setLista(res.results);
-      Funciones.goto(`/clientes`);
+     
     }
     setCargando(false);
   };
@@ -59,7 +62,7 @@ const ClientesProvider = ({ children }) => {
         confirm: "Confirmar",
       },
       icon: "warning",
-      text: `Cliente: ${nombre}`,
+      text: `${lang.cliente}: ${nombre}`,
       title: `Eliminar este registro?`,
     }).then(async (e) => {
       if (e) {
@@ -131,7 +134,7 @@ const ClientesProvider = ({ children }) => {
         limite,
         setLimite,
         buscarRegistro,
-        BorrarCliente,countTotal
+        BorrarCliente,countTotal,lang
       }}
     >
       {children}
@@ -152,7 +155,7 @@ export const useClientes = () => {
     limite,
     setLimite,
     buscarRegistro,
-    BorrarCliente,countTotal
+    BorrarCliente,countTotal,lang
   } = useContext(ClientesContext);
   return {
     lista,
@@ -166,7 +169,7 @@ export const useClientes = () => {
     limite,
     setLimite,
     buscarRegistro,
-    BorrarCliente,countTotal
+    BorrarCliente,countTotal,lang
   };
 };
 

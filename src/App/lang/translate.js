@@ -50,6 +50,7 @@ export const translate = {
         cuentas:"Cuentas",
         mantenimientos:"Mantenimientos",
         clientes:"Clientes",
+        cliente:"Cliente",
         empleados:"Empleados",
         monedas:"Monedas",
         unidad_medida:"Unidad de medida",
