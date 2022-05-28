@@ -20,7 +20,7 @@ const TemaProvider = ({children})=>{
     })
 
     const drawerWidth = 275;
-    const colorText = tema.mode==='light' ? "#282a2c" : "#fff";
+    const colorText = tema.mode==='light' ? "#4e4d4d" : "#fff";
     const PaperBgColor = tema.mode==='light' ? "#fff" : "#212b36";
     const DefaultBgColor = tema.mode==='light' ? "#f9f9f9" : "#161c24";
 
@@ -150,7 +150,9 @@ const TemaProvider = ({children})=>{
           MuiListItemIcon:{
             styleOverrides:{
               root:{
-                
+                "& span":{
+                  //fontSize:tema.fontSize.menu
+                },
             },
           },
         },
@@ -171,11 +173,15 @@ const TemaProvider = ({children})=>{
                 transition:'all 0.02s linear',
                 "&.Mui-selected":{
                   backgroundColor: colores[tema.colors].primary.light,
+                  "& span":{
+                    fontWeight:"bold",
+                  }
                 },
                 "&:hover": {
                   backgroundColor:colores[tema.colors].primary.light,
                   "& span":{
-                    color:colores[tema.colors].primary.dark
+                    color:colores[tema.colors].primary.main,
+                    fontWeight:"bold",
                   }
                 },
             },

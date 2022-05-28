@@ -1,5 +1,7 @@
 export const translate = {
     es:{
+        colores_actuales:"Colores actuales",
+        seleccionar_colores:"Seleccionar color",
         inicio:"Inicio",
         tipo_producto:"Tipo producto",
         informe:"Informe",

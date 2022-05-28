@@ -1,4 +1,4 @@
-import { IconButton, Box, Icon, Grid, Stack,Tooltip } from "@mui/material";
+import { IconButton, Box, Icon, Grid, Stack,Tooltip, Typography } from "@mui/material";
 import { useTheme } from "../../../Contexts/TemaProvider";
 import {useLang} from "../../../Contexts/LangProvider"
 const Tema = () => {
@@ -9,6 +9,12 @@ const Tema = () => {
   return (
     <Box>
       <Grid container spacing={2}>
+      <Grid item xs={12}>
+        <Typography variant="h6">{lang.tema_y_colores}</Typography>
+      </Grid>
+      <Grid item xs={12}>
+        <Typography variant="body1">{lang.seleccionar_color}</Typography>
+      </Grid>
         <Grid item xs={12}>
           {AvaibleColors.map((e, i) => (
             <IconButton key={i} onClick={() => {changeColor(e.name);}}>
