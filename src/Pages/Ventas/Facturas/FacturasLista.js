@@ -80,13 +80,13 @@ const FacturasLista = () => {
     setFormulario(datos);
   };
 
-  const Acciones = ({ filaProps }) => (
+  const Acciones = ({ rowProps }) => (
     <Stack direction="row" spacing={2}>
       <Tooltip
         title="Ver estado" arrow>
       <IconButton
       onClick={() => {
-        abrirDetallesFactura(filaProps);
+        abrirDetallesFactura(rowProps);
       }}
       >
         <Icon>credit_score</Icon>
@@ -96,7 +96,7 @@ const FacturasLista = () => {
         title="Imprimir" arrow
       >
       <IconButton
-        onClick={() => consultarParaImprimir(filaProps)}
+        onClick={() => consultarParaImprimir(rowProps)}
         >
           <Icon>print</Icon>
       </IconButton>
@@ -229,21 +229,6 @@ const FacturasLista = () => {
             columns={columnas}
             Accions={Acciones}
             showOptions
-            /* print
-            nombretabla="Facturas"
-            caption={`Total: ${funciones.numberSeparator(total)}`}
-            subtitle="Todos los movimientos de facturas filtradas por fecha y tipo"
-            columnas={columnas}
-            Acciones={Acciones}
-            bgicono="#3f51b5"
-            icono="assignment"
-            filas={FilterData}
-            namecolumnID="id_factura"
-            cargando={cargando}
-            search={search2}
-            exportCSV
-            exportExcel
-            showOptions */
           />
       
       </Grid>

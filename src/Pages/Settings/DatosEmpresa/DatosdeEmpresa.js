@@ -4,7 +4,7 @@ import LoadingBackDrop from "../../../Components/UI/LoadingBackDrop";
 import { funciones as Funciones } from "../../../Functions";
 const DatosEmpresa = () => {
 
-    const {datosEmpresa,snack,setSnack, Guardar,handleOnchange,cargando} = useSettings()
+    const {datosEmpresa,snack,setSnack, Guardar,handleOnchange,cargando,lang} = useSettings()
 
     if(cargando){
       return <LoadingBackDrop />
@@ -12,21 +12,19 @@ const DatosEmpresa = () => {
   return (
       <>
       <Snackbar anchorOrigin={{horizontal:"center",vertical:"top"}} open={snack} onClose={()=>{setSnack(false)}} autoHideDuration={3000} >
-        <Alert severity="success">Actualizado correctamente!</Alert>
+        <Alert severity="success"> {lang.actualizado_correctamente} !</Alert>
         </Snackbar>
     <Grid container spacing={2} >
       <Grid item xs={12}>
         <Alert severity="info">
-          Licencia válida hasta: { Funciones.fechaEsDMY( datosEmpresa.licencia)} 
+          {lang.licencia_valida_hasta}: { Funciones.fechaEsDMY( datosEmpresa.licencia)} 
         </Alert>
       </Grid>
         <Grid item xs={12} sm={6}>
             <TextField
                 autoFocus 
-                label="Nombre de empresa"
-                variant="outlined"
+                label={lang.nombre_de_empresa}
                 fullWidth
-                helperText="Fulanito de tal SRL"
                 InputProps={{
                     startAdornment: (
                       <InputAdornment position="start">
@@ -41,10 +39,8 @@ const DatosEmpresa = () => {
         </Grid>
         <Grid item xs={12} sm={6}>
             <TextField 
-                label="Propietario de empresa"
-                variant="outlined"
+                label={lang.propietario}
                 fullWidth
-                helperText="Caso ser unipersonal, sino deje en blanco"
                 InputProps={{
                     startAdornment: (
                       <InputAdornment position="start">
@@ -59,8 +55,7 @@ const DatosEmpresa = () => {
         </Grid>
         <Grid item xs={12} sm={6}>
             <TextField 
-                label="Ruc de empresa"
-                variant="outlined"
+                label={lang.ruc_de_empresa}
                 fullWidth
                 InputProps={{
                     startAdornment: (
@@ -76,8 +71,7 @@ const DatosEmpresa = () => {
         </Grid>
         <Grid item xs={12} sm={6}>
             <TextField 
-                label="Dirección de empresa"
-                variant="outlined"
+                label={lang.direccion}
                 fullWidth
                 InputProps={{
                     startAdornment: (
@@ -93,13 +87,12 @@ const DatosEmpresa = () => {
         </Grid>
         <Grid item xs={12} sm={6}>
             <TextField 
-                label="Teléfono de empresa"
-                variant="outlined"
+                label={lang.telefono}
                 fullWidth
                 InputProps={{
                     startAdornment: (
                       <InputAdornment position="start">
-                        <Icon color="secondary">phone</Icon>
+                        <Icon color="primary">phone</Icon>
                       </InputAdornment>
                     ),
                   }}
@@ -110,13 +103,13 @@ const DatosEmpresa = () => {
         </Grid>
         <Grid item xs={12} sm={6}>
             <TextField 
-                label="Categoria"
+                label={lang.categoria}
                 variant="outlined"
                 fullWidth
                 InputProps={{
                     startAdornment: (
                       <InputAdornment position="start">
-                        <Icon color="action">category</Icon>
+                        <Icon color="primary">category</Icon>
                       </InputAdornment>
                     ),
                   }}
@@ -127,15 +120,14 @@ const DatosEmpresa = () => {
         </Grid>
         <Grid item xs={12} sm={6}>
             <TextField 
-                label="Dimension de ticket"
-                variant="outlined"
-                helperText='En mm'
+                label={lang.dim_ticket}
+                helperText={lang.en_mm}
                 fullWidth
                 type='number'
                 InputProps={{
                     startAdornment: (
                       <InputAdornment position="start">
-                        <Icon color="secondary">print</Icon>
+                        <Icon color="primary">print</Icon>
                       </InputAdornment>
                     ),
                   }}

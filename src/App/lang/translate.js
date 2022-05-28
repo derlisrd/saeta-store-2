@@ -1,6 +1,7 @@
 export const translate = {
     es:{
-        
+        licencia_valida_hasta:"Licencia válida hasta",
+        actualizado_correctamente:"Actualizado correctamente",
         colores_actuales:"Colores actuales",
         seleccionar_colores:"Seleccionar color",
         inicio:"Inicio",
@@ -74,6 +75,13 @@ export const translate = {
         apellido:"Apellido",
         contrasena:"Contraseña",
         a:"A",
+        en_mm:"En mm",
+        dim_ticket:"Dimensión de ticket",
+        direccion:"Dirección",
+        telefono:"Teléfono",
+        ruc_de_empresa:"Doc o Ruc de empresa",
+        propietario:"Propietario de empresa",
+        nombre_de_empresa:"Nombre de empresa",
         nombre_de_caja:"Nombre de caja",
         estado:"Estado",
         abierto:"Abierto",

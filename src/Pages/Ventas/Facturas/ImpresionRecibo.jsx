@@ -1,8 +1,7 @@
 import { Dialog,DialogActions,Zoom,Icon, CircularProgress, Stack } from '@mui/material'
-import React from 'react';
 import printJS from "print-js";
-import { CustomButton } from "../../../Componentes/Customs/muiCustom";
-import Funciones from '../../../Funciones';
+import ButtonCustom from '../../../Components/MuiCustom/ButtonCustom'
+import {funciones} from '../../../Functions';
 import { useFacturas } from './FacturasProvider'
 const ImpresionRecibo = () => {
 
@@ -85,9 +84,9 @@ const ImpresionRecibo = () => {
                       >
                         <td valign="top">{e.cantidad_producto}</td>
                         <td valign="top">{e.nombre_producto}</td>
-                        <td valign="top">{Funciones.numberFormat(e.precio_producto_factura)}</td>
+                        <td valign="top">{funciones.numberFormat(e.precio_producto_factura)}</td>
                         <td valign="top">
-                          {Funciones.numberFormat(parseFloat(e.precio_producto_factura) * parseFloat(e.cantidad_producto))}
+                          {funciones.numberFormat(parseFloat(e.precio_producto_factura) * parseFloat(e.cantidad_producto))}
                         </td>
                         
                       </tr>
@@ -105,15 +104,15 @@ const ImpresionRecibo = () => {
               <td>
               <table width="100%" style={{ fontSize: "12px" }}>
                   <tbody>
-                  <tr><th>SUBTOTAL: {Funciones.numberSeparator(DF.monto_total_factura)}</th></tr>
+                  <tr><th>SUBTOTAL: {funciones.numberSeparator(DF.monto_total_factura)}</th></tr>
                     {parseInt(DF.descuento_factura)>0&&<tr><th> DESCUENTO: -{DF.descuento_factura} </th></tr>}
                     <tr>
-                      <th>TOTAL: {Funciones.numberSeparator(parseFloat(DF.monto_total_factura)-parseInt(DF.descuento_factura))}{" "}{DF.abreviatura_moneda}</th>
+                      <th>TOTAL: {funciones.numberSeparator(parseFloat(DF.monto_total_factura)-parseInt(DF.descuento_factura))}{" "}{DF.abreviatura_moneda}</th>
                     </tr>
                     <tr>
                       <th>
                         
-                        {Funciones.NumeroALetras(
+                        {funciones.NumeroALetras(
                           parseFloat(DF.monto_total_factura) - parseFloat(DF.descuento_factura),
                           DF.abreviatura_moneda
                         )}{" "}
@@ -161,23 +160,21 @@ const ImpresionRecibo = () => {
         </div>
       }
         <DialogActions>
-        <CustomButton 
-          size="large"
+        <ButtonCustom 
           variant="contained"
           color="primary"
           startIcon={<Icon>print</Icon>}
           onClick={imprimir}
         >
           Imprimir
-        </CustomButton>
-        <CustomButton
-          size="large"
+        </ButtonCustom>
+        <ButtonCustom
           variant="outlined"
           color="primary"
           onClick={cerrar}
         >
           Cerrar
-        </CustomButton>
+        </ButtonCustom>
       </DialogActions>
     </Dialog>
   )

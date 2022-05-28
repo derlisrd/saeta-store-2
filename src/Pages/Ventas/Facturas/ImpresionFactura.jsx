@@ -1,10 +1,10 @@
 import { Dialog, DialogActions, Zoom, Icon, Stack, CircularProgress } from "@mui/material";
-import { CustomButton } from "../../../Componentes/Customs/muiCustom";
+import ButtonCustom  from "../../../Components/MuiCustom/ButtonCustom";
 import printJS from "print-js";
 import ReactToPdf from "react-to-pdf";
 import React, { useRef } from "react";
 import { useFacturas } from "./FacturasProvider";
-import Funciones from "../../../Funciones";
+import {funciones} from "../../../Functions";
 
 const ImpresionFactura = () => {
   const { dialogs, setDialogs, formulario, itemsFactura,cargandoFactura } = useFacturas();
@@ -103,7 +103,7 @@ const ImpresionFactura = () => {
               </tr>
               <tr>
                 <td width="65%" align="left" colSpan="3" style={{ fontSize:"12px" }}>
-                  <p>Fecha: {Funciones.getFechaActualString()}</p>
+                  <p>Fecha: {DF.fecha_factura}</p>
                   <p>Nombre o Razón Social: {DF?.nombre_cliente}</p>
                   <p>Dirección: {DF?.direccion_cliente}</p>
                 </td>
@@ -117,9 +117,8 @@ const ImpresionFactura = () => {
               </tr>
             </tbody>
             </table>
-
-<br/>
-<div style={{ minHeight:"600px"}}>
+          <br/>
+          <div style={{ minHeight:"600px"}}>
             <table width="740px" style={{ borderCollapse: "collapse" }}className="collapse" border="1">
                     <thead>
                       <tr align="left">
@@ -152,26 +151,26 @@ const ImpresionFactura = () => {
                           <td width="50%">{e.nombre_producto}</td>
                           <td width="10%" align="center">
                             <span>
-                              {Funciones.numberSeparator(
+                              {funciones.numberSeparator(
                                 e.precio_producto_factura
                               )}
                             </span>
                           </td>
                           <td width="10%" align="center">
                             {e.porcentaje_impuesto === "0" ?
-                              Funciones.numberSeparator(
+                              funciones.numberSeparator(
                                 parseFloat(e.precio_producto_factura) * parseFloat(e.cantidad_producto)
                               ) : "0"}
                           </td>
                           <td width="10%" align="center">
                             {e.porcentaje_impuesto === "5" ?
-                              Funciones.numberSeparator(
+                              funciones.numberSeparator(
                                 parseFloat(e.precio_producto_factura) * parseFloat(e.cantidad_producto)
                               ) : "0"}
                           </td>
                           <td width="10%" align="center">
                             {e.porcentaje_impuesto === "10" ?
-                              Funciones.numberSeparator(
+                              funciones.numberSeparator(
                                 parseFloat(e.precio_producto_factura) * parseFloat(e.cantidad_producto)
                               ) : "0"}
                           </td>
@@ -186,9 +185,9 @@ const ImpresionFactura = () => {
                         <td width="70%">
                           <p>SUBTOTALES:</p>
                         </td>
-                        <td width="10%" align="center">{Funciones.numberSeparator(EXENTAS)}</td>
-                        <td width="10%" align="center">{Funciones.numberSeparator(TOTAL5)}</td>
-                        <td width="10%" align="center">{Funciones.numberSeparator(TOTAL10)}</td>
+                        <td width="10%" align="center">{funciones.numberSeparator(EXENTAS)}</td>
+                        <td width="10%" align="center">{funciones.numberSeparator(TOTAL5)}</td>
+                        <td width="10%" align="center">{funciones.numberSeparator(TOTAL10)}</td>
                       </tr>
                     </tbody>
                   </table>
@@ -199,19 +198,19 @@ const ImpresionFactura = () => {
                 <td width="70%" colSpan="3">
                   <b>
                     TOTAL A PAGAR: {DF.abreviatura_moneda} {" "}
-                    {Funciones.NumeroALetras(TOTAL, "")}
+                    {funciones.NumeroALetras(TOTAL, "")}
                   </b>
                 </td>
                 <td width="30%" align="right">
-                  <b>{Funciones.numberSeparator(TOTAL)}</b>
+                  <b>{funciones.numberSeparator(TOTAL)}</b>
                 </td>
               </tr>
               <tr>
                 <td>LIQUIDACION IVA</td>
-                <td>5%: {Funciones.numberSeparator( parseInt(Funciones.redondeo2decimales(TOTALIVA5)))}</td>
-                <td>10%: {Funciones.numberSeparator( parseInt(Funciones.redondeo2decimales(TOTALIVA10)))}</td>
+                <td>5%: {funciones.numberSeparator( parseInt(funciones.redondeo2decimales(TOTALIVA5)))}</td>
+                <td>10%: {funciones.numberSeparator( parseInt(funciones.redondeo2decimales(TOTALIVA10)))}</td>
                 <td align="right">
-                  TOTAL IVA:{Funciones.redondeo2decimales(TOTALIVA)}
+                  TOTAL IVA:{funciones.redondeo2decimales(TOTALIVA)}
                 </td>
               </tr>
             </tbody>
@@ -225,32 +224,30 @@ const ImpresionFactura = () => {
               filename={`${DF?.nro_datos_factura} ${DF.nro_factura}.pdf`}
             >
               {({ toPdf }) => (
-                <CustomButton
+                <ButtonCustom
                   variant="outlined"
                   startIcon={<Icon>picture_as_pdf</Icon>}
                   onClick={toPdf}
                 >
                   PDF
-                </CustomButton>
+                </ButtonCustom>
               )}
             </ReactToPdf>
-        <CustomButton
-          size="large"
+        <ButtonCustom
           variant="contained"
           color="primary"
           startIcon={<Icon>print</Icon>}
           onClick={imprimir}
         >
           Imprimir
-        </CustomButton>
-        <CustomButton
-          size="large"
+        </ButtonCustom>
+        <ButtonCustom
           variant="outlined"
           color="primary"
           onClick={cerrar}
         >
           Cerrar
-        </CustomButton>
+        </ButtonCustom>
       </DialogActions>
     </Dialog>
   );
