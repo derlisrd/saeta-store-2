@@ -32,7 +32,7 @@ const ProductosProvider = ({ children }) => {
   const [dialogs,setDialogs] = useState(initialDialogs);
   
   const [formDetalles,setFormDetalles] = useState({});
-  const [limite, setLimite] = useState(3);
+  const [limite, setLimite] = useState(100);
   const [countTotal, setCountTotal] = useState(0);
   const [cargando, setCargando] = useState({lista:true,stock:true});
   const [listaCategorias, setListaCategorias] = useState([]);

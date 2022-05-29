@@ -9,14 +9,17 @@ export const useTablaStyles = makeStyles((theme)=>({
         cursor: "pointer",
         padding:"0 3px"
     },
+    sticky:{
+        
+    },
     tcontainer:{
         /* backgroundColor: theme.palette.background.default, */
+        overflowX: "initial"
     },
     table:{
         borderCollapse:"inherit",
     },
     thead:{
-        position: "sticky",
         textTransform:"uppercase",
         zIndex:10,
         [theme.breakpoints.down("md")]: {
