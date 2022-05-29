@@ -139,7 +139,7 @@ const ProductosLista = () => {
     }
 
   return (
-    <>
+    <Stack spacing={2}>
         <Tablas
           title={lang.productos}
           Accions={Acciones}
@@ -153,13 +153,8 @@ const ProductosLista = () => {
           inputs={search}
           sort={sort}
           />
-
         <ProductosListaPager />
-
-
-
-      
-    </>
+    </Stack>
   );
 };
 

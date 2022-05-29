@@ -1,15 +1,15 @@
 import React, {createContext,useContext,useState,useEffect,useCallback} from "react";
-import { useLocation,useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import swal from "sweetalert";
 import { APICALLER } from "../../../../Services/api";
 import { useLogin } from "../../../../Contexts/LoginProvider";
-import {env} from '../../../../Utils/config'
 import { useLang } from "../../../../Contexts/LangProvider";
+import useGoto from "../../../../Hooks/useGoto";
 
 const ProductosContext = createContext();
 
 const ProductosProvider = ({ children }) => {
-  const navigate = useNavigate();
+  const go = useGoto();
   const {lang} = useLang()
   const { userData } = useLogin(); const {token_user,permisos} = userData;
   const location = useLocation();
@@ -32,7 +32,7 @@ const ProductosProvider = ({ children }) => {
   const [dialogs,setDialogs] = useState(initialDialogs);
   
   const [formDetalles,setFormDetalles] = useState({});
-  const [limite, setLimite] = useState(100);
+  const [limite, setLimite] = useState(3);
   const [countTotal, setCountTotal] = useState(0);
   const [cargando, setCargando] = useState({lista:true,stock:true});
   const [listaCategorias, setListaCategorias] = useState([]);
@@ -90,10 +90,9 @@ const ProductosProvider = ({ children }) => {
       pagesize: limite,
       sort:"-nombre_producto"
     });
-    console.log(res);
     if (res.found > 0 && res.response === "ok") {
       setLista(res.results);
-      navigate(env.BASEURL+'/productos')
+      go.to('productos')
     } else {
       console.log(res);
     }
@@ -113,8 +112,6 @@ const ProductosProvider = ({ children }) => {
       sort:"-id_producto", 
     };
     const res = await APICALLER.get(data);
-
-
 
      if (res.response === "ok") {
       setCountTotal(res.total);

@@ -1,21 +1,24 @@
 import { useProductos } from "./ProductosProvider";
-
+import useGoto from "../../../../Hooks/useGoto";
 import { Button, Stack } from "@mui/material";
 
 const ProductosListaPager = () => {
   const { page, setPage, limite, countTotal,cargando } = useProductos();
-
+  const go = useGoto()
   const siguiente = () => {
     let i = parseInt(page) + parseInt(limite);
     setPage(i);
+    go.to("productos/?p="+i)
   };
   const atras = () => {
     if (page > 0) {
       let i = parseInt(page) - parseInt(limite);
       setPage(i);
+      go.to("productos/?p="+i)
     }
   };
-  if(cargando){
+
+  if(cargando.lista){
     return <></>
   }
 

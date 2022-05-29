@@ -1,5 +1,6 @@
 export const translate = {
     es:{
+
         licencia_valida_hasta:"Licencia válida hasta",
         actualizado_correctamente:"Actualizado correctamente",
         colores_actuales:"Colores actuales",
@@ -50,6 +51,7 @@ export const translate = {
         cuentas:"Cuentas",
         mantenimientos:"Mantenimientos",
         clientes:"Clientes",
+        lista_clientes:"Lista de clientes",
         cliente:"Cliente",
         empleados:"Empleados",
         monedas:"Monedas",

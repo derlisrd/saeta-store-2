@@ -104,11 +104,13 @@ const ClientesLista = () => {
     <>
       <Tablas
         title={lang.clientes}
+        subtitle={lang.lista_clientes}
         icon={{ name:"people" }}
         columns={columns}
         datas={FilterData}
         Accions={Acciones}
         showOptions
+        loading={cargando}
         inputs={search}
       />
       <Stack direction="row" spacing={2} justifyContent="center" >

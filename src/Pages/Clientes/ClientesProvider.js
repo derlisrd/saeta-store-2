@@ -10,7 +10,6 @@ import swal from "sweetalert";
 import { APICALLER } from "../../Services/api";
 import { useLogin } from "../../Contexts/LoginProvider";
 import { useLang } from "../../Contexts/LangProvider";
-import { funciones } from "../../Functions";
 
 const ClientesContext = createContext();
 
