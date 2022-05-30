@@ -21,19 +21,19 @@ const DialogNuevo = () => {
 
   const verificar = ()=>{
     if(formNew.nombre_caja===""){
-      setErrors({...errors,nuevo:true,nuevoMensaje:"Ingrese el nombre de caja"});
+      setErrors({...errors,nuevo:true,nuevoMensaje:lang.ingrese_nombre_caja});
       return false;
     }
     if(formNew.id_user_caja===""){
-      setErrors({...errors,nuevo:true,nuevoMensaje:"Seleccione un usuario"});
+      setErrors({...errors,nuevo:true,nuevoMensaje:lang.seleccione_usuario});
       return false;
     }
     if(formNew.id_moneda_caja===""){
-      setErrors({...errors,nuevo:true,nuevoMensaje:"Seleccione una moneda"});
+      setErrors({...errors,nuevo:true,nuevoMensaje:lang.seleccione_moneda});
       return false;
     }
     if(parseFloat(formNew.monto_inicial)<0){
-      setErrors({...errors,nuevo:true,nuevoMensaje:"El monto inicial no puede ser negativo"});
+      setErrors({...errors,nuevo:true,nuevoMensaje:lang.monto_inicial_negativo});
       return false;
     }
     setErrors({...errors,nuevo:false,nuevoMensaje:""});
@@ -45,9 +45,9 @@ const DialogNuevo = () => {
     setFormNew(initialFormNew);
   };
   const Acciones = (<>
-  <Button variant="outlined" onClick={verificar}>Agregar</Button>
-        <Button variant="outlined" onClick={cerrar}>
-          Cerrar
+  <Button variant="contained" onClick={verificar}>{lang.abrir}</Button>
+        <Button variant="contained" onClick={cerrar}>
+          {lang.cancelar}
         </Button></>)
   return (
 

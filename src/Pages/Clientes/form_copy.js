@@ -1,26 +1,9 @@
 import {
-  Button,
-  FormControl,
-  FormControlLabel,
-  FormLabel,
-  DialogContent,
-  DialogActions,
-  DialogTitle,
-  Dialog,
-  Radio,
-  RadioGroup,
-  TextField,
-  Typography,
-  Breadcrumbs,
-  Icon,
-  Grid,
-  LinearProgress,
-} from "@mui/material";
+  Button,FormControl,  FormControlLabel,  FormLabel,  DialogContent,  DialogActions,  DialogTitle,  Dialog,  Radio,  RadioGroup,  TextField,  Typography,  Breadcrumbs,  Icon,  Grid,  LinearProgress} from "@mui/material";
 import { useCallback, useEffect, useState } from "react";
 import swal from "sweetalert";
 import { APICALLER } from "../../Api/ApiCaller";
-import { Funciones } from "../../Funciones/Funciones";
-import { useLogin } from "../../Contextos/LoginProvider";
+import { useLogin } from "../../Contexts/LoginProvider";
 import { useParams } from "react-router-dom";
 
 
@@ -73,7 +56,7 @@ const ClientesForm = () => {
         title: textsucces,
         timer: 1300,
       });
-      Funciones.goto(`clientes`);
+      
     }
   };
 
@@ -102,7 +85,7 @@ const ClientesForm = () => {
   }, [getDatas]);
 
   const cerrar_dialog = () => {
-    Funciones.goto(`clientes`);
+   
   };
 
   return (
@@ -129,7 +112,6 @@ const ClientesForm = () => {
                 value={formulario.nombre_cliente && formulario.nombre_cliente}
                 fullWidth
                 label="Nombre"
-                variant="outlined"
               />
             </Grid>
 

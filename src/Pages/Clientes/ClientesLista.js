@@ -13,7 +13,7 @@ import { useClientes } from "./ClientesProvider";
 
 
 const ClientesLista = () => {
-  const { lista, cargando,page, setPage,limite,buscarRegistro,countTotal,BorrarCliente,lang } = useClientes();
+  const { lista, cargando,page, setPage,limite,buscarRegistro,countTotal,BorrarCliente,lang,dialogs,setDialogs } = useClientes();
 
   const [inputSearch, setInputSearch] = useState("");
   
@@ -81,8 +81,8 @@ const ClientesLista = () => {
         onChange={(e) => setInputSearch(e.target.value)}
         label={lang.buscar}
       />
-      <Button  color="primary" variant="outlined" size="large" 
-        onClick={() => console.log(`clientes/new/`)}
+      <Button variant="contained" size="large" 
+        onClick={() => setDialogs({...dialogs,form:true})}
       >
         {lang.agregar}
         </Button>

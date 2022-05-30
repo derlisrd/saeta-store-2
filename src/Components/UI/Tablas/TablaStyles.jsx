@@ -10,7 +10,7 @@ export const useTablaStyles = makeStyles((theme)=>({
         padding:"0 3px"
     },
     tcontainer:{
-        overflowX: "unset",
+        overflowX: "initial !important",
         position: "relative"
     },
     table:{

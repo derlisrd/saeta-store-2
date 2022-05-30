@@ -30,6 +30,7 @@ const LoginProvider = ({children}) => {
     
     const setearLogin = (f,remember)=>{
         setUserData(f);
+        localStorage.removeItem("dataProductos");
         sessionStorage.setItem("userData", JSON.stringify(f))
         if(remember) localStorage.setItem("userData", JSON.stringify(f))
     }

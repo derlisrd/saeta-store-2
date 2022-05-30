@@ -142,8 +142,7 @@ const ListaCajas = () => {
         label={lang.buscar}
       />
       <Button
-        color="primary"
-        variant="outlined"
+        variant="contained"
         size="large"
         onClick={() => setDialogs({ ...dialogs, nuevo: true })}
       >

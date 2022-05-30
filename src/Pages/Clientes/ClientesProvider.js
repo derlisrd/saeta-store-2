@@ -15,6 +15,9 @@ const ClientesContext = createContext();
 
 const ClientesProvider = ({ children }) => {
   const { userData } = useLogin();
+
+  const [dialogs,setDialogs] = useState({form:false})
+
   const {lang} = useLang()
   const {token_user} = userData
   const location = useLocation();
@@ -57,12 +60,12 @@ const ClientesProvider = ({ children }) => {
   const BorrarCliente = async (id, nombre) => {
     swal({
       buttons: {
-        cancel: "Cancelar",
-        confirm: "Confirmar",
+        cancel: lang.cancelar,
+        confirm: lang.ok,
       },
       icon: "warning",
-      text: `${lang.cliente}: ${nombre}`,
-      title: `Eliminar este registro?`,
+      text: `${lang.cliente}: ${nombre}. ${lang.warn_no_podra_recuperar}`,
+      title: lang.q_desea_eliminar,
     }).then(async (e) => {
       if (e) {
         let res = await APICALLER.delete({
@@ -79,7 +82,7 @@ const ClientesProvider = ({ children }) => {
           setLista(array);
           swal({
             icon: "success",
-            text: "Eliminado correctamente",
+            text: lang.borrado_correctamente,
           });
         }
       }
@@ -122,7 +125,7 @@ const ClientesProvider = ({ children }) => {
   return (
     <ClientesContext.Provider
       value={{
-        lista,
+        lista, dialogs,setDialogs,
         setLista,
         cargando,
         setCargando,
@@ -143,7 +146,7 @@ const ClientesProvider = ({ children }) => {
 
 export const useClientes = () => {
   const {
-    lista,
+    lista, dialogs,setDialogs,
     setLista,
     cargando,
     setCargando,
@@ -157,7 +160,7 @@ export const useClientes = () => {
     BorrarCliente,countTotal,lang
   } = useContext(ClientesContext);
   return {
-    lista,
+    lista, dialogs,setDialogs,
     setLista,
     cargando,
     setCargando,
