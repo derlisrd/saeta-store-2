@@ -15,6 +15,7 @@ const Tablas = ({title,subtitle,loading,datas,columns,caption,inputs,Accions,sho
 return (
       <>
     <TableInfo title={title} subtitle={subtitle} icon={icon} tema={tema} />
+    
     <Box borderRadius={3} boxShadow={4} padding={3} className={style.boxContainer}>
     
         <Box padding={1} marginBottom={1}>

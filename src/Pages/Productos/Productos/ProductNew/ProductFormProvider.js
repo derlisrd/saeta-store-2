@@ -68,7 +68,16 @@ const ProductFormProvider = (props) => {
       setFormulario({...formulario,codigo_producto:code});
       inputNombre.current.focus();
     }
-    const change = e=>{ const {name,value} = e.target; setFormulario({...formulario,[name]:value});}
+    const change = e=>{ 
+      const {name,value} = e.target; 
+      let newForm = {...formulario};
+      if(name === 'tipo_producto' && value !== newForm.tipo_producto){
+        newForm.id_categoria_producto = ""
+      }
+      newForm[name] = value;
+      
+      setFormulario(newForm);
+    }
     const changeCheck = (e) => {const { checked, name } = e.target; 
         setFormulario({ ...formulario, [name]: checked ? "1" : "0" });
     };
@@ -198,7 +207,7 @@ const ProductFormProvider = (props) => {
       if(sto===null){
 
           let va = await Promise.all([
-            APICALLER.getPromise({table: `categorias`,fields: `id_categoria,nombre_categoria,id_padre_categoria`,sort:'-nombre_categoria'}),
+            APICALLER.getPromise({table: `categorias`,fields: `id_categoria,nombre_categoria,id_padre_categoria,tipo_categoria`,sort:'-nombre_categoria'}),
             APICALLER.getPromise({table: "proveedors",fields: "id_proveedor,nombre_proveedor"}),
             APICALLER.getPromise({table: `marcas`,fields: `id_marca,nombre_marca`}),
             APICALLER.getPromise({table: `unidad_medidas`}),

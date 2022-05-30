@@ -18,6 +18,7 @@ import Tema from "./Settings/Tema";
 import RegistroFacturas from "./Settings/RegistroFacturas";
 import Settings from "./Settings/DatosEmpresa";
 import Clientes from "./Clientes";
+import Categorias from "./Productos/Categorias";
 /* 
 import Agenda from "./Agenda";
 import Movimientos from "./Caja/Movimientos/Index";
@@ -28,7 +29,6 @@ import Depositos from './Productos/Depositos'
 import Empleados from "./Empleados";
 import Medidas from "./Medidas";
 import Monedas from "./Monedas";
-import Categorias from "./Productos/Categorias";
 import CategoriasForm from "./Productos/Categorias/CategoriasForm";
 import Compras from "./Productos/Compras";
 import Inventario from "./Productos/Inventario";
@@ -87,20 +87,21 @@ const RoutesMain = () => {
   const R = env.BASEURL +'/';
   return (
     <Routes>
+      <Route path={R+'categorias'} element={<PrivateRoute id={10}><Categorias /></PrivateRoute>} />
       <Route path={R+'clientes'} element={<PrivateRoute id={28}><Clientes /></PrivateRoute>} />
-        <Route path={R+'settings'} element={<PrivateRoute id={36}><Settings /></PrivateRoute>} />
-        <Route path={R+'tema'} element={<PrivateRoute id={72}><Tema /></PrivateRoute>} />
-        <Route path={R+'productos/new'} element={<PrivateRoute id={9}><ProductosNew /></PrivateRoute>} />
-        <Route path={R+'productos'} element={<PrivateRoute id={34}><Productos /></PrivateRoute>} />
-        <Route path={R+'users'} element={<PrivateRoute id={34}><Users /></PrivateRoute>} />
-        <Route path={R+'registrofacturas'} element={<PrivateRoute id={38}><RegistroFacturas /></PrivateRoute>} />
-        <Route path={R+'facturas'} element={<PrivateRoute id={5}><Facturas /></PrivateRoute>} />
-        <Route path={R+'ventas'} element={<PrivateRoute id={1}><Ventas /></PrivateRoute>} />
-        <Route path={R+'dashboard'} element={<PrivateRoute id={59}><DashBoard /></PrivateRoute>} />
-        <Route path={R+'cajas'} element={<PrivateRoute id={22}><Cajas /></PrivateRoute>} />
-        <Route path={R+'notautorized'} element={<NotAutorized />} />
-        <Route path={R} element={<LoginForm />} />
-        <Route path="*" element={<ErrorPage />} />
+      <Route path={R+'settings'} element={<PrivateRoute id={36}><Settings /></PrivateRoute>} />
+      <Route path={R+'tema'} element={<PrivateRoute id={72}><Tema /></PrivateRoute>} />
+      <Route path={R+'productos/new'} element={<PrivateRoute id={9}><ProductosNew /></PrivateRoute>} />
+      <Route path={R+'productos'} element={<PrivateRoute id={34}><Productos /></PrivateRoute>} />
+      <Route path={R+'users'} element={<PrivateRoute id={34}><Users /></PrivateRoute>} />
+      <Route path={R+'registrofacturas'} element={<PrivateRoute id={38}><RegistroFacturas /></PrivateRoute>} />
+      <Route path={R+'facturas'} element={<PrivateRoute id={5}><Facturas /></PrivateRoute>} />
+      <Route path={R+'ventas'} element={<PrivateRoute id={1}><Ventas /></PrivateRoute>} />
+      <Route path={R+'dashboard'} element={<PrivateRoute id={59}><DashBoard /></PrivateRoute>} />
+      <Route path={R+'cajas'} element={<PrivateRoute id={22}><Cajas /></PrivateRoute>} />
+      <Route path={R+'notautorized'} element={<NotAutorized />} />
+      <Route path={R} element={<LoginForm />} />
+      <Route path="*" element={<ErrorPage />} />
     </Routes>
   );
 };

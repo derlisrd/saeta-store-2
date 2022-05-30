@@ -1,6 +1,9 @@
 export const translate = {
     es:{
-
+        salir:"Salir",
+        no_autorizado:"No tienes permiso para este sitio",
+        q_volver_casa:"Porque no vuelves a casa?",
+        volver_a_casa:"Volver a casa",
         licencia_valida_hasta:"Licencia válida hasta",
         actualizado_correctamente:"Actualizado correctamente",
         colores_actuales:"Colores actuales",
@@ -88,6 +91,10 @@ export const translate = {
         nombre_de_caja:"Nombre de caja",
         estado:"Estado",
         abierto:"Abierto",
+        padre:"Padre",
+        id:"ID",
+        tipo_categoria:"Tipo categoria",
+        error:"Error",
         cerrado:"Cerrado",
         cerrar:"Cerrar",
         abrir:"Abrir",

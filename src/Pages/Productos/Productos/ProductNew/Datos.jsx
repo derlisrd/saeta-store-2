@@ -5,6 +5,8 @@ import { useProductForm } from './ProductFormProvider';
 const Datos = () => {
   const {listas, dialogs,setDialogs, formulario,change,inputCodigo,verificarProducto,cargas,snack,inputNombre,generateCode} = useProductForm();
   
+  const filterCategory = listas.categorias.filter(e=> e.tipo_categoria === formulario.tipo_producto);
+
   return (
     <Grid container spacing={2} alignItems='center' >
       <Grid item xs={12} sm={12} md={6}>
@@ -42,12 +44,7 @@ const Datos = () => {
         <FormControlLabel
           value="1"
           control={
-            <Radio
-              name="tipo_producto"
-              checked={formulario.tipo_producto === "1"}
-              onChange={change}
-              color="primary"
-            />
+            <Radio name="tipo_producto" checked={formulario.tipo_producto === "1"}  onChange={change}  color="primary"  />
           }
           label="Artículo"
           labelPlacement="end"
@@ -55,12 +52,7 @@ const Datos = () => {
         <FormControlLabel
           value="2"
           control={
-            <Radio
-              name="tipo_producto"
-              checked={formulario.tipo_producto === "2"}
-              onChange={change}
-              color="primary"
-            />
+            <Radio name="tipo_producto" checked={formulario.tipo_producto === "2"} onChange={change} color="primary" />
           }
           label="Servicio"
           labelPlacement="end"
@@ -133,7 +125,7 @@ const Datos = () => {
       <FormControl fullWidth>
               <InputLabel variant="outlined">Selecccionar categoría</InputLabel>
               <Select required name="id_categoria_producto" value={formulario.id_categoria_producto} onChange={change} variant="outlined">
-                {listas.categorias.map((d) => (
+                {filterCategory.map((d) => (
                   <MenuItem key={d.id_categoria} value={d.id_categoria}>
                     {d.nombre_categoria}
                   </MenuItem>

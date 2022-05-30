@@ -1,4 +1,4 @@
-import Tablas from "../../../Componentes/Tablas";
+import Tablas from "../../../Components/UI/Tablas";
 import {
   Icon,
   Fab,
@@ -9,14 +9,12 @@ import {
   IconButton,
   Stack,
 } from "@mui/material";
-import Motion from "../../../Componentes/Motion";
 import { useCategorias } from "./CategoriasProvider";
 import { useState } from "react";
-import { Funciones } from "../../../Funciones/Funciones";
 
 const CategoriasLista = () => {
   const {
-    listas,
+    listas,lang,
     cargando,
     buscarRegistro,
     borrarRegistro,
@@ -39,18 +37,41 @@ const CategoriasLista = () => {
   const columns = [
     {
       field: "id_categoria",
-      title: "ID",
+      title: lang.id,
     },
     {
       field: "nombre_categoria",
-      title: "Nombre",
+      title: lang.nombre,
+    },
+    {
+      field: "tipo_categoria",
+      title: lang.tipo_categoria,
+      compareField: "tipo_categoria",
+      items:{
+        "1": lang.articulo,
+        "2": lang.servicio
+      },
+      styleItemCondition: "tipo_categoria",
+      styleCondition: {
+        "1": {
+          backgroundColor: "#06c",
+          padding: "6px",fontWeight:"bold",
+          borderRadius: "5px",
+          color: "#fff",
+        },
+        "2": {
+          backgroundColor: "#2dec76",
+          padding: "6px", fontWeight:"bold",
+          borderRadius: "5px",
+          color: "#007b02",
+        },
+      }
     },
     {
       field: "id_padre_categoria",
-      title: "Padre",
+      title: lang.padre,
       items: item,
-      comparaItem: "id_padre_categoria",
-      
+      compareField: "id_padre_categoria",
     },
   ];
 
@@ -76,32 +97,29 @@ const CategoriasLista = () => {
           }
         }}
         onChange={(e) => setInputSearch(e.target.value)}
-        variant="outlined"
-        label="Buscar"
+        label={lang.buscar}
       />
-      <Tooltip title="AGREGAR NUEVO" arrow>
+      <Tooltip title={lang.agregar} arrow>
         <Button
-          color="primary"
-          variant="outlined"
+          variant="contained"
           size="large"
           onClick={() => {
-            Funciones.goto(`categorias/new`);
           }}
         >
-          AGREGAR
+          {lang.agregar}
         </Button>
       </Tooltip>
       </Stack>
   );
 
-  const Acciones = ({ id, extraprops }) => (
+  const Acciones = ({ rowProps}) => (
       <Stack direction="row" spacing={1} justifyContent="center">
         <Fab
           variant="round"
           color="primary"
           size="small"
           onClick={() => {
-            Funciones.goto(`categorias/new/${id}`);
+            
           }}
         >
           <Icon>edit</Icon>
@@ -111,7 +129,7 @@ const CategoriasLista = () => {
           color="secondary"
           size="small"
           onClick={() => {
-            borrarRegistro(id, extraprops);
+            borrarRegistro();
           }}
         >
           <Icon>delete</Icon>
@@ -132,33 +150,32 @@ const CategoriasLista = () => {
   };
 
   return (
-    <Motion>
+<>
       <Tablas
-        nombretabla="Categorias"
-        icono="category"
-        bgicono="#3f51b5"
-        namecolumnID={`id_categoria`}
-        columnas={columns}
-        filas={FilterData}
-        Acciones={Acciones}
-        extraprops={"nombre_categoria"}
-        cargando={cargando}
-        search={search}
+        title={lang.categorias}
+        subtitle={lang.lista_categorias}
+        icon={{ name:"category" }}
+        columns={columns}
+        datas={FilterData}
+        loading={cargando}
+        inputs={search}
+        lang={lang}
+        Accions={Acciones}
         showOptions
-      />
+        />
       <Stack spacing={2} justifyContent="center" direction="row" >
         {page > 0 && (
           <Button onClick={atras} variant="outlined">
-            Atrás
+           {lang.atras}
           </Button>
         )}
         {countTotal > page && page + limite < countTotal && (
           <Button variant="outlined" onClick={siguiente}>
-            Siguiente
+            {lang.siguiente}
           </Button>
         )}
       </Stack>
-    </Motion>
+        </>
   );
 };
 

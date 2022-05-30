@@ -9,23 +9,21 @@ export const useTablaStyles = makeStyles((theme)=>({
         cursor: "pointer",
         padding:"0 3px"
     },
-    sticky:{
-        
-    },
     tcontainer:{
-        /* backgroundColor: theme.palette.background.default, */
-        overflowX: "initial"
+        overflowX: "unset",
+        position: "relative"
     },
     table:{
         borderCollapse:"inherit",
     },
     thead:{
+        position: "sticky",
+        top:theme.mixins.toolbar.minHeight + 6,
         textTransform:"uppercase",
-        zIndex:10,
+        zIndex:1051,
         [theme.breakpoints.down("md")]: {
             display: "none !important",
           },
-        
     },
     trtitles:{
         backgroundColor: theme.palette.action.hover,
