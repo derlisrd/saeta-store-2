@@ -13,7 +13,7 @@ import { useClientes } from "./ClientesProvider";
 
 
 const ClientesLista = () => {
-  const { lista, cargando,page, setPage,limite,buscarRegistro,countTotal,BorrarCliente,lang,dialogs,setDialogs } = useClientes();
+  const { lista, cargando,page, setPage,limite,buscarRegistro,countTotal,BorrarCliente,lang,dialogs,setDialogs,openEdit } = useClientes();
 
   const [inputSearch, setInputSearch] = useState("");
   
@@ -50,7 +50,7 @@ const ClientesLista = () => {
           variant="round"
           color="primary"
           size="small"
-          onClick={() => console.log(rowProps)}
+          onClick={() => openEdit(rowProps)}
         >
           <Icon>edit</Icon>
         </Fab>
@@ -110,7 +110,7 @@ const ClientesLista = () => {
         datas={FilterData}
         Accions={Acciones}
         showOptions
-        loading={cargando}
+        loading={cargando.lista}
         inputs={search}
       />
       <Stack direction="row" spacing={2} justifyContent="center" >

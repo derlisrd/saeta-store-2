@@ -7,6 +7,7 @@ export const translate = {
         volver_a_casa:"Volver a casa",
         licencia_valida_hasta:"Licencia válida hasta",
         actualizado_correctamente:"Actualizado correctamente",
+        agregado_correctamente: "Agregado correctamente",
         colores_actuales:"Colores actuales",
         seleccionar_colores:"Seleccionar color",
         inicio:"Inicio",
@@ -21,6 +22,8 @@ export const translate = {
         arqueos:"Arqueos",
         ajustes:"Ajustes",
         turnos:"Turnos",
+        guardar:"Guardar",
+
         agenda:"Agenda",
         notas:"Notas",
         entregas:"Entregas",

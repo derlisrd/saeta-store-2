@@ -1,17 +1,28 @@
 import { Breadcrumbs, Button, Dialog, DialogActions, DialogContent, DialogTitle, FormControl, FormControlLabel, FormLabel, Grid, LinearProgress, Radio, RadioGroup, TextField, Typography, Zoom } from '@mui/material'
-import {useState} from 'react'
+
 import { useClientes } from './ClientesProvider'
 
 const ClientesForm = () => {
-    const {dialogs,setDialogs,lang,cargando}= useClientes();
+    const {dialogs,setDialogs,lang,cargando,formulario,setFormulario,editar,agregar}= useClientes();
     const initialFormulario = {
+        id_cliente:null,
         nombre_cliente:"",
         ruc_cliente:"",
         tipo_cliente:"3",
         telefono_cliente:"",
-        direccion_cliente:""
+        direccion_cliente:"",
+        email_cliente:"",
     }
-    const [formulario,setFormulario] = useState(initialFormulario)
+
+    const send = e=>{
+      e.preventDefault();
+      if(formulario.id_cliente===null){
+        agregar()
+      }
+      else{
+        editar()
+      }
+    }
     
     const onChange = e=>{
         const {value,name} = e.target;
@@ -19,9 +30,10 @@ const ClientesForm = () => {
         newformulario[name] = value;
         setFormulario(newformulario);
     }
-    const cerrar = ()=>{ setDialogs({...dialogs,form:false})}
+    const cerrar = ()=>{ setDialogs({...dialogs,form:false}); setFormulario(initialFormulario); }
   return (
     <Dialog open={dialogs.form} fullWidth onClose={cerrar} TransitionComponent={Zoom} >
+      <form onSubmit={send}>
       <DialogTitle>
             {lang.cliente_nuevo}
       </DialogTitle>
@@ -132,8 +144,10 @@ const ClientesForm = () => {
           </Grid>
       </DialogContent>
       <DialogActions>
+      <Button variant='contained' disabled={cargando.guardar} type="submit" >{lang.guardar}</Button>
         <Button variant='contained' onClick={cerrar} >{lang.cerrar}</Button>
       </DialogActions>
+    </form>
     </Dialog>
   )
 }

@@ -30,14 +30,15 @@ const ClientesProvider = ({ children }) => {
   const [limite, setLimite] = useState(30);
   const [countTotal, setCountTotal] = useState("0");
   const [lista, setLista] = useState([]);
-  const [cargando, setCargando] = useState(true);
+  const [cargando, setCargando] = useState({guardar:false,lista:true});
   const initialFormulario = {
-    nombre_cliente: "",
-    nro_cliente: "",
-    ruc_cliente: "",
-    email_cliente: "",
-    direccion_cliente: "",
-    tipo_cliente: 3,
+    id_cliente:null,
+    nombre_cliente:"",
+        ruc_cliente:"",
+        tipo_cliente:"3",
+        telefono_cliente:"",
+        direccion_cliente:"",
+        email_cliente:"",
   };
   const [formulario, setFormulario] = useState(initialFormulario);
 
@@ -57,7 +58,40 @@ const ClientesProvider = ({ children }) => {
     setCargando(false);
   };
 
-  const BorrarCliente = async (id, nombre) => {
+  const openEdit = f=>{
+    setFormulario(f);
+    setDialogs({...formulario,form:true})
+  }
+
+  const agregar = async()=>{
+    setCargando({guardar:true})
+    let f = {...formulario}
+    delete f.id_cliente
+    let res = await APICALLER.insert({
+      table: "clientes",
+      data: f,
+      token: token_user,
+    });
+    res.response==='ok' ? swal({text:lang.agregado_correctamente,timer:1300,icon:"success"}) : console.log(res);
+    setDialogs({form:false})
+    getLista();
+  }
+  
+  const editar = async()=>{
+    setCargando({guardar:true})
+    let res = await APICALLER.update({
+      table: `clientes`,
+      data: formulario,
+      token: token_user,
+      id: formulario.id_cliente,
+    });
+    res.response==='ok' ? swal({text:lang.actualizado_correctamente,timer:1300,icon:"success"}) : console.log(res);
+    setDialogs({form:false})
+    getLista();
+  }
+
+  const BorrarCliente = async (data) => {
+    const {id, nombre} = data;
     swal({
       buttons: {
         cancel: lang.cancelar,
@@ -92,10 +126,10 @@ const ClientesProvider = ({ children }) => {
 
 
   const getLista = useCallback(async () => {
-    setCargando(true);
+    setCargando({guardar:false,lista:true});
     let data = {
       table: "clientes",
-      fields: "id_cliente,nombre_cliente,ruc_cliente,telefono_cliente",
+      fields: "*",
       orderBy: "-id_cliente",
     };
     let res = await APICALLER.get(data);
@@ -106,7 +140,7 @@ const ClientesProvider = ({ children }) => {
     } else {
       console.log(res);
     }
-    setCargando(false);
+    setCargando({guardar:false,lista:false});
   }, []);
 
   useEffect(() => {
@@ -125,7 +159,7 @@ const ClientesProvider = ({ children }) => {
   return (
     <ClientesContext.Provider
       value={{
-        lista, dialogs,setDialogs,
+        lista, dialogs,setDialogs,openEdit,
         setLista,
         cargando,
         setCargando,
@@ -136,7 +170,7 @@ const ClientesProvider = ({ children }) => {
         limite,
         setLimite,
         buscarRegistro,
-        BorrarCliente,countTotal,lang
+        BorrarCliente,countTotal,lang,editar,agregar
       }}
     >
       {children}
@@ -146,7 +180,7 @@ const ClientesProvider = ({ children }) => {
 
 export const useClientes = () => {
   const {
-    lista, dialogs,setDialogs,
+    lista, dialogs,setDialogs,openEdit,
     setLista,
     cargando,
     setCargando,
@@ -157,10 +191,10 @@ export const useClientes = () => {
     limite,
     setLimite,
     buscarRegistro,
-    BorrarCliente,countTotal,lang
+    BorrarCliente,countTotal,lang,editar,agregar
   } = useContext(ClientesContext);
   return {
-    lista, dialogs,setDialogs,
+    lista, dialogs,setDialogs,openEdit,
     setLista,
     cargando,
     setCargando,
@@ -171,7 +205,7 @@ export const useClientes = () => {
     limite,
     setLimite,
     buscarRegistro,
-    BorrarCliente,countTotal,lang
+    BorrarCliente,countTotal,lang,editar,agregar
   };
 };
 
