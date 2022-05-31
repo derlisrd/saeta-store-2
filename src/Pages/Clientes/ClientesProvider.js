@@ -1,10 +1,4 @@
-import {
-  createContext,
-  useContext,
-  useEffect,
-  useState,
-  useCallback,
-} from "react";
+import {createContext,useContext,useEffect,useState,useCallback,} from "react";
 import { useLocation } from "react-router";
 import swal from "sweetalert";
 import { APICALLER } from "../../Services/api";
@@ -27,6 +21,7 @@ const ClientesProvider = ({ children }) => {
       ? parseInt(query.get("p"))
       : 0
   );
+  
   const [limite, setLimite] = useState(30);
   const [countTotal, setCountTotal] = useState("0");
   const [lista, setLista] = useState([]);
@@ -53,7 +48,6 @@ const ClientesProvider = ({ children }) => {
     setPage(0);
     if (res.results.length > 0 && res.response === "ok") {
       setLista(res.results);
-     
     }
     setCargando(false);
   };
@@ -131,6 +125,8 @@ const ClientesProvider = ({ children }) => {
       table: "clientes",
       fields: "*",
       orderBy: "-id_cliente",
+      pagenumber: page,
+      pagesize: limite,
     };
     let res = await APICALLER.get(data);
     if (res.response === "ok") {
@@ -141,7 +137,7 @@ const ClientesProvider = ({ children }) => {
       console.log(res);
     }
     setCargando({guardar:false,lista:false});
-  }, []);
+  }, [page,limite]);
 
   useEffect(() => {
     const ca = new AbortController();

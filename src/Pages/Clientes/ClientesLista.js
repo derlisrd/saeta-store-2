@@ -8,12 +8,13 @@ import {
 } from "@mui/material";
 import React, { useState } from "react";
 import Tablas from "../../Components/UI/Tablas";
+import ClientesListaPager from "./ClientesListaPager";
 
 import { useClientes } from "./ClientesProvider";
 
 
 const ClientesLista = () => {
-  const { lista, cargando,page, setPage,limite,buscarRegistro,countTotal,BorrarCliente,lang,dialogs,setDialogs,openEdit } = useClientes();
+  const { lista, cargando,buscarRegistro,BorrarCliente,lang,dialogs,setDialogs,openEdit } = useClientes();
 
   const [inputSearch, setInputSearch] = useState("");
   
@@ -89,16 +90,6 @@ const ClientesLista = () => {
     </Stack>
   );
 
-  const siguiente = ()=>{
-    let i = parseInt(page)+parseInt(limite);
-    setPage(i);
-  }
-  const atras = ()=>{
-    if(page>0){
-      let i = parseInt(page)-parseInt(limite);
-      setPage(i);
-    }
-  }
 
   return (
     <>
@@ -113,20 +104,7 @@ const ClientesLista = () => {
         loading={cargando.lista}
         inputs={search}
       />
-      <Stack direction="row" spacing={2} justifyContent="center" >
-      {page>0 &&(<Button 
-        onClick={atras}
-        variant="outlined" >
-          Atrás
-        </Button>)}
-        {
-          ((countTotal>page) && ((page+limite)<countTotal) ) &&      
-        <Button variant="outlined" 
-        onClick={siguiente} >
-          Siguiente
-          </Button>
-        }
-      </Stack>
+  <ClientesListaPager />
     </>
   );
 };

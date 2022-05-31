@@ -2,7 +2,8 @@ import {  makeStyles} from '@mui/styles';
 
 export const useTablaStyles = makeStyles((theme)=>({
     boxContainer:{
-        backgroundColor: theme.palette.background.paper
+        backgroundColor: theme.palette.background.paper,
+        marginBottom:20,
     },
     arrow:{
         fontSize:"18px",
@@ -11,7 +12,8 @@ export const useTablaStyles = makeStyles((theme)=>({
     },
     tcontainer:{
         overflowX: "initial !important",
-        position: "relative"
+        position: "relative",
+        
     },
     table:{
         borderCollapse:"inherit",

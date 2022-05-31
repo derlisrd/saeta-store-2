@@ -1,5 +1,5 @@
 export const AvaibleColors = [
-  { name: "violet", color: "#512da8" },
+  { name: "violet", color: "#734ad5" },
   { name: "green", color: "#59bd5c" },
   { name: "bluesky", color: "#186dc3" },
   { name: "orange", color: "#d76a16" },
@@ -9,7 +9,7 @@ export const colores = {
   violet: {
     primary: {
       light: "#512da81f",
-      main: "#512da8",
+      main: "#734ad5",
       dark: "#381f75",
       contrastText: "#fff",
     },

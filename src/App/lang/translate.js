@@ -119,6 +119,8 @@ export const translate = {
         agregar:"Agregar",
         caja:"Caja",
         cajas:"Cajas",
+        siguiente:"Siguiente",
+        atras:"Atras",
         habilitacion_y_apertura_de_cajas:"Habilitacion y apertura de cajas",
         caja_abierta_correctamente:"Caja abierta correctamente",
         opciones:"Opciones",
