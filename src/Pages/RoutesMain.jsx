@@ -19,6 +19,7 @@ import RegistroFacturas from "./Settings/RegistroFacturas";
 import Settings from "./Settings/DatosEmpresa";
 import Clientes from "./Clientes";
 import Categorias from "./Productos/Categorias";
+import Informes from "./Informes";
 /* 
 import Agenda from "./Agenda";
 import Movimientos from "./Caja/Movimientos/Index";
@@ -87,6 +88,7 @@ const RoutesMain = () => {
   const R = env.BASEURL +'/';
   return (
     <Routes>
+      <Route path={R+'informes'} element={<PrivateRoute id={44}><Informes /></PrivateRoute>} />
       <Route path={R+'categorias'} element={<PrivateRoute id={10}><Categorias /></PrivateRoute>} />
       <Route path={R+'clientes'} element={<PrivateRoute id={28}><Clientes /></PrivateRoute>} />
       <Route path={R+'settings'} element={<PrivateRoute id={36}><Settings /></PrivateRoute>} />

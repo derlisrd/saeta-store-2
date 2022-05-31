@@ -5,8 +5,8 @@ import {
   createContext,
   useCallback,
 } from "react";
-import { APICALLER } from "../../Api/ApiCaller";
-import { Funciones } from "../../Funciones/Funciones";
+import { APICALLER } from "../../Services/api";
+import { funciones as Funciones } from "../../Functions";
 
 const Contexto = createContext();
 

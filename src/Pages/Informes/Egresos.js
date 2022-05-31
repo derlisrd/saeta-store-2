@@ -8,7 +8,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import {useInformes} from './InformesProvider';
-import { Funciones } from '../../Funciones/Funciones';
+import { funciones as Funciones } from '../../Functions';
 
 
 export default function Egresos() {

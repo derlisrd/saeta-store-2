@@ -1,15 +1,7 @@
-import {
-  Container,
-  Typography,
-  Grid,
-  Card,
-  CardContent,
-  Icon, TextField,
-  Alert,
-} from "@mui/material";
+import { Container,Typography,Grid,Card,CardContent,Icon, TextField,Alert} from "@mui/material";
 
-import Loading from "../../Componentes/Loading";
-import { Funciones } from "../../Funciones/Funciones";
+import  LoadingBackDrop from "../../Components/UI/LoadingBackDrop";
+import { funciones as Funciones } from "../../Functions";
 import CardsCustom from "./CardsCustom";
 import Egresos from "./Egresos";
 import GraficosMensuales from "./GraficosMensuales";
@@ -20,7 +12,7 @@ const InformesGenerales = () => {
   const { fechaMostrar, cargando, mesState,setMesState} = useInformes();
 
   if (cargando) {
-    return <Loading />;
+    return <LoadingBackDrop />;
   }
 
   const changeMes = e=>setMesState(e.target.value);

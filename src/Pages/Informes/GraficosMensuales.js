@@ -1,9 +1,11 @@
 import { Bar } from "react-chartjs-2";
 import { useInformes } from "./InformesProvider";
+import { useTheme } from "../../Contexts/TemaProvider";
+
 
 const GraficosMensuales = () => {
     const { labelDiarioMes, datosEgresosDiariosMes,datosIngresosDiariosMes} = useInformes()
-    
+    const {tema} = useTheme()
   return (
     <Bar
       height="40vh"

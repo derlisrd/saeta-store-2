@@ -1,6 +1,6 @@
 import { Grid, Typography, Icon, CardContent, Card, Alert} from "@mui/material";
 import { useInformes } from "./InformesProvider";
-import { Funciones } from "../../Funciones/Funciones";
+import { funciones as Funciones } from "../../Functions";
 export default function CardsCustom() {
   const { ingresosDia, ingresosMes, egresosDia, egresosMes } = useInformes();
   return (
