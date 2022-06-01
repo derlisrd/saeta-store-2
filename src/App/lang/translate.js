@@ -117,6 +117,7 @@ export const translate = {
         estado:"Estado",
         abierto:"Abierto",
         no:"No",
+        complete_campo_correctamente:"Complete el campo correctamente",
         _abreviatura_moneda:"Abre. moneda",
         nombre_moneda:"Nombre de moneda",
         valor:"Valor",

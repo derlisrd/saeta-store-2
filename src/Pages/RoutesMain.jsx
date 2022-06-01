@@ -23,6 +23,7 @@ import Informes from "./Informes";
 import ProductEdit from "./Productos/Productos/ProductEdit";
 import Notas from "./Ventas/Notas";
 import Monedas from "./Monedas";
+import CategoriasForm from "./Productos/Categorias/CategoriasForm";
 /* 
 import Agenda from "./Agenda";
 import Movimientos from "./Caja/Movimientos/Index";
@@ -94,6 +95,16 @@ const RoutesMain = () => {
       <Route path={R+'monedas'} element={<PrivateRoute id={30}><Monedas /></PrivateRoute>} />
       <Route path={R+'informes'} element={<PrivateRoute id={44}><Informes /></PrivateRoute>} />
       <Route path={R+'categorias'} element={<PrivateRoute id={10}><Categorias /></PrivateRoute>} />
+      
+      <Route path={R+'categorias/new'} element={<PrivateRoute id={11}>
+        <CategoriasForm />
+      </PrivateRoute>} />
+
+      <Route path="teams" element={<PrivateRoute id={11}><CategoriasForm /></PrivateRoute>}>
+          <Route path=":id" element={<CategoriasForm />} />
+          <Route index element={<CategoriasForm />} />
+      </Route>
+
       <Route path={R+'clientes'} element={<PrivateRoute id={28}><Clientes /></PrivateRoute>} />
       <Route path={R+'settings'} element={<PrivateRoute id={36}><Settings /></PrivateRoute>} />
       <Route path={R+'tema'} element={<PrivateRoute id={72}><Tema /></PrivateRoute>} />

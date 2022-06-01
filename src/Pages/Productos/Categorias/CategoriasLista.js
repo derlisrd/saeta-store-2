@@ -11,8 +11,10 @@ import {
 } from "@mui/material";
 import { useCategorias } from "./CategoriasProvider";
 import { useState } from "react";
+import useGoto from "../../../Hooks/useGoto";
 
 const CategoriasLista = () => {
+  const go = useGoto()
   const {
     listas,lang,
     cargando,
@@ -103,8 +105,7 @@ const CategoriasLista = () => {
         <Button
           variant="contained"
           size="large"
-          onClick={() => {
-          }}
+          onClick={() => { go.to("categorias/new")}}
         >
           {lang.agregar}
         </Button>

@@ -1,35 +1,21 @@
-import {
-  Dialog,
-  DialogContent,
-  DialogTitle,
-  Icon,
-  DialogActions,
-  Button,
-  TextField,
-  InputAdornment,
-  LinearProgress,
-  Grid,
-  Select,
-  MenuItem,
-  FormControl,
-  InputLabel,
-} from "@mui/material";
-import { Alert } from "@mui/lab";
+import {Dialog,DialogContent,DialogTitle,Icon,DialogActions,Button,TextField,InputAdornment,LinearProgress,Grid,Select,MenuItem,FormControl,InputLabel,} from "@mui/material";
+import { Alert } from "@mui/material";
 import { useParams } from "react-router-dom";
 import { useEffect, useState, useRef, useCallback } from "react";
 import swal from "sweetalert";
-import { APICALLER } from "../../../Api/ApiCaller";
-import { useLogin } from "../../../Contextos/LoginProvider";
-import { Funciones } from "../../../Funciones/Funciones";
-
+import { APICALLER } from "../../../Services/api";
+import { useLogin } from "../../../Contexts/LoginProvider";
+import useGoto from "../../../Hooks/useGoto";
+import { useLang } from "../../../Contexts/LangProvider";
 
 const CategoriasForm = () => {
   const { id } = useParams();
+  const {lang} = useLang()
   const storage = JSON.parse(localStorage.getItem("dataProductos"));
   const inputNombreCategoria = useRef(null);
- 
-
-  const { token_user } = useLogin();
+  const go = useGoto()
+  const {userData} = useLogin();
+  const { token_user } = userData
   const [listaCategorias, setListaCategorias] = useState([]);
   const [cargando, setCargando] = useState(true);
 
@@ -42,10 +28,10 @@ const CategoriasForm = () => {
   const initialError = {
     nombre_categoria: false,
     error: false,
-    errorMsj: "Complete el campo correctamente",
+    errorMsj: lang.complete_campo_correctamente,
   };
   const [formErrores, setFormErrores] = useState(initialError);
-  const cerrar = () => Funciones.goto(`categorias`);
+  const cerrar = () => go.to(`categorias`);
 
   const handlerOnChange = (e) => {
     const { name, value } = e.target;
@@ -174,7 +160,7 @@ const CategoriasForm = () => {
     <Dialog fullWidth open={true} onClose={cerrar}>
       <form onSubmit={enviarForm}>
         <DialogTitle>
-          Agregar Categoría
+          {lang.agregar}
         </DialogTitle>
         <DialogContent dividers>
           
@@ -190,7 +176,7 @@ const CategoriasForm = () => {
                 autoFocus
                 inputRef={inputNombreCategoria}
                 onChange={handlerOnChange}
-                label="Nombre"
+                label={lang.nombre}
                 autoComplete="off"
                 name="nombre_categoria"
                 value={formulario.nombre_categoria}
@@ -203,9 +189,7 @@ const CategoriasForm = () => {
                 }}
                 fullWidth
                 required
-                variant="outlined"
                 error={formErrores.nombre_categoria}
-                helperText="Nombre de categoría"
                 disabled={cargando}
               />
             </Grid>
