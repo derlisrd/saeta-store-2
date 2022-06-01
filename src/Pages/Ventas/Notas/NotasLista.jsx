@@ -1,9 +1,9 @@
 import React from 'react'
 import { useNotas } from './NotasProvider'
-import Tablas from "../../../Components/Tablas";
+import Tablas from "../../../Components/UI/Tablas";
 import { Button, Stack } from '@mui/material';
 const NotasLista = () => {
-  const {lista,cargas} = useNotas();
+  const {lista,cargas,lang} = useNotas();
 
 
   const columns = [
@@ -29,7 +29,7 @@ const NotasLista = () => {
     },
   ];
 
-  const Acciones= ({filaProps})=>(<Stack direction="row" justifyContent='center' spacing={2}>
+  const Acciones= ({rowProps})=>(<Stack direction="row" justifyContent='center' spacing={2}>
     <Button variant='outlined'>Procesar nota</Button>
     <Button variant='outlined'>Ver detalles</Button>
   </Stack>)
@@ -39,13 +39,12 @@ const NotasLista = () => {
 
   return (
     <Tablas
-      nombretabla="Notas de pedido"
-      columnas={columns}
-      filas={lista}
-      icono="receipt"
-      bgicono="#303f9f"
-      Acciones={Acciones}
-      cargando={cargas}
+      title={lang.notas_pedidos}
+      columns={columns}
+      datas={lista}
+      icon={{ name:"receipt" }}
+      Accions={Acciones}
+      loading={cargas}
       showOptions
     />
   )

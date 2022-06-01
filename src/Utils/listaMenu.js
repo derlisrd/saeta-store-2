@@ -54,8 +54,8 @@ export const listaMenu = [
           },    
           {
             id: 6,
-            title: "notas",
-            url: `${BASEURL}/notas`,
+            title: "notas_pedidos",
+            url: `${BASEURL}/notaspedidos`,
             icon: "receipt",
             color: "#a0aec0",
           },

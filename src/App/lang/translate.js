@@ -121,6 +121,7 @@ export const translate = {
         tipo:"Tipo",
         tipo_categoria:"Tipo categoria",
         error:"Error",
+        notas_pedidos:"Notas de pedidos",
         cerrado:"Cerrado",
         cerrar:"Cerrar",
         abrir:"Abrir",

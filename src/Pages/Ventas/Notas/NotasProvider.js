@@ -1,6 +1,6 @@
 import React, { createContext, useCallback, useContext, useEffect, useState } from 'react'
-import { APICALLER } from '../../../Api/ApiCaller';
-
+import { APICALLER } from '../../../Services/api';
+import { useLang } from '../../../Contexts/LangProvider';
 const NotasContext = createContext();
 
 const NotasProvider = ({children}) => {
@@ -8,7 +8,7 @@ const NotasProvider = ({children}) => {
     const [lista,setLista] = useState([]);
   
     const [cargas,setCargas] = useState(true);
-
+    const {lang} = useLang()
 
     const getLista = useCallback(async()=>{
         setCargas(true)
@@ -31,7 +31,7 @@ const NotasProvider = ({children}) => {
 
   return (
     <NotasContext.Provider
-        value={{ lista,cargas }}
+        value={{ lista,cargas,lang }}
     >
         {children}
     </NotasContext.Provider>
@@ -40,8 +40,8 @@ const NotasProvider = ({children}) => {
 
 
 export const useNotas = () =>{
-    const {lista,cargas} = useContext(NotasContext);
-    return {lista,cargas}
+    const {lista,cargas,lang} = useContext(NotasContext);
+    return {lista,cargas,lang}
 }
 
 export default NotasProvider
