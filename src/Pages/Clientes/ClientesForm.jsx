@@ -1,9 +1,10 @@
-import { Breadcrumbs, Button, Dialog, DialogActions, DialogContent, DialogTitle, FormControl, FormControlLabel, FormLabel, Grid, LinearProgress, Radio, RadioGroup, TextField, Typography, Zoom } from '@mui/material'
+import { Alert, Breadcrumbs, Button, Dialog, DialogActions, DialogContent, DialogTitle, FormControl, FormControlLabel, FormLabel, Grid, LinearProgress, Radio, RadioGroup, TextField, Typography, Zoom } from '@mui/material'
+import { useEffect,useState } from 'react';
 
 import { useClientes } from './ClientesProvider'
 
 const ClientesForm = () => {
-    const {dialogs,setDialogs,lang,cargando,formulario,setFormulario,editar,agregar}= useClientes();
+    const {dialogs,setDialogs,lang,cargando,formulario,editar,agregar,errors}= useClientes();
     const initialFormulario = {
         id_cliente:null,
         nombre_cliente:"",
@@ -14,24 +15,30 @@ const ClientesForm = () => {
         email_cliente:"",
     }
 
+    const [form,setForm] = useState(initialFormulario)
     const send = e=>{
       e.preventDefault();
-      if(formulario.id_cliente===null){
-        agregar()
+      if(form.id_cliente===null){
+        agregar(form)
       }
       else{
-        editar()
+        editar(form)
       }
     }
     
     const onChange = e=>{
         const {value,name} = e.target;
-        let newformulario = {...formulario}
+        let newformulario = {...form}
         newformulario[name] = value;
-        setFormulario(newformulario);
+        setForm(newformulario);
     }
-    const cerrar = ()=>{ setDialogs({...dialogs,form:false}); setFormulario(initialFormulario); }
-    console.log("render formulario")
+    const cerrar = ()=>{ setDialogs({...dialogs,form:false});  }
+    
+    useEffect(() => {
+      setForm(formulario)
+    }, [formulario])
+
+
   return (
     <Dialog open={dialogs.form} fullWidth onClose={cerrar} TransitionComponent={Zoom} >
       <form onSubmit={send}>
@@ -42,6 +49,7 @@ const ClientesForm = () => {
       <Grid container spacing={2}>
             <Grid item xs={12}>
               {cargando.guardar && <LinearProgress />}
+              {errors.error && <Alert severity='error'>{errors.message}</Alert>}
             </Grid>
             <Grid item xs={12}>
               <Breadcrumbs separator="›">
@@ -54,7 +62,7 @@ const ClientesForm = () => {
                 onChange={onChange}
                 name="nombre_cliente"
                 required
-                value={formulario.nombre_cliente && formulario.nombre_cliente}
+                value={form.nombre_cliente && form.nombre_cliente}
                 fullWidth
                 label={lang.nombre}
               />
@@ -63,10 +71,11 @@ const ClientesForm = () => {
             <Grid item xs={12} sm={6}>
               <TextField
                 fullWidth
-                required
+                required error={errors.id==="ruc"}
                 onChange={onChange}
                 name="ruc_cliente"
-                value={formulario.ruc_cliente}
+                disabled={formulario.id_cliente!==null}
+                value={form.ruc_cliente}
                 label={lang.ruc_de_empresa}
               />
             </Grid>
@@ -76,8 +85,8 @@ const ClientesForm = () => {
                 label={lang.nro_telefono}
                 onChange={onChange}
                 value={
-                  formulario.telefono_cliente !== null
-                    ? formulario.telefono_cliente
+                  form.telefono_cliente !== null
+                    ? form.telefono_cliente
                     : ``
                 }
                 fullWidth
@@ -91,20 +100,20 @@ const ClientesForm = () => {
               onChange={onChange}
               name="direccion_cliente"
               value={
-                formulario.direccion_cliente !== null
-                ? formulario.direccion_cliente
+                form.direccion_cliente !== null
+                ? form.direccion_cliente
                 : ``
               }
               />
               </Grid>
             <Grid item xs={12} sm={6}>
               <TextField
-                fullWidth
+                fullWidth type="email"
                 onChange={onChange}
                 name="email_cliente"
                 value={
-                  formulario.email_cliente !== null
-                    ? formulario.email_cliente
+                  form.email_cliente !== null
+                    ? form.email_cliente
                     : ``
                 }
                 label={lang.correo_electronico}
@@ -115,27 +124,27 @@ const ClientesForm = () => {
                 <FormLabel component="legend">{lang.tipo}:</FormLabel>
                 <RadioGroup
                   name="tipo_cliente"
-                  value={formulario.tipo_cliente}
+                  value={form.tipo_cliente}
                   onChange={onChange}
                 >
                   <FormControlLabel
                     value={3}
                     control={
-                      <Radio checked={formulario.tipo_cliente === "3"} />
+                      <Radio checked={form.tipo_cliente === "3"} />
                     }
                     label={lang.casual}
                   />
                   <FormControlLabel
                     value={2}
                     control={
-                      <Radio checked={formulario.tipo_cliente === "2"} />
+                      <Radio checked={form.tipo_cliente === "2"} />
                     }
                     label={lang.minorista}
                   />
                   <FormControlLabel
                     value={1}
                     control={
-                      <Radio checked={formulario.tipo_cliente === "1"} />
+                      <Radio checked={form.tipo_cliente === "1"} />
                     }
                     label={lang.mayorista}
                   />

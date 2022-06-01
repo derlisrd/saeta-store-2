@@ -14,7 +14,7 @@ import { useClientes } from "./ClientesProvider";
 
 
 const ClientesLista = () => {
-  const { lista, cargando,buscarRegistro,BorrarCliente,lang,dialogs,setDialogs,openEdit } = useClientes();
+  const { lista, cargando,buscarRegistro,BorrarCliente,lang,openEdit,openAgregar } = useClientes();
 
   const [inputSearch, setInputSearch] = useState("");
   
@@ -83,7 +83,7 @@ const ClientesLista = () => {
         label={lang.buscar}
       />
       <Button variant="contained" size="large" 
-        onClick={() => setDialogs({...dialogs,form:true})}
+        onClick={() => openAgregar()}
       >
         {lang.agregar}
         </Button>

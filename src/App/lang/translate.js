@@ -44,6 +44,7 @@ export const translate = {
         ordenar:"Ordenar",
         borrado_correctamente:"Borrado correctamente",
         q_desea_borrar_imagen:"Desea borrar la imagen?",
+        cliente_existente_doc:"Ese cliente ya existe con ese documento",
         borrar:"Borrar",
         categoria:"Categoría",
         categorias:"Categorías",

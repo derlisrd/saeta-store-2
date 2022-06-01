@@ -9,7 +9,9 @@ const ClientesContext = createContext();
 
 const ClientesProvider = ({ children }) => {
   const { userData } = useLogin();
-
+  const [errors,setErrors] = useState({
+    error:false,message:null,id:null
+  })
   const [dialogs,setDialogs] = useState({form:false})
 
   const {lang} = useLang()
@@ -53,13 +55,25 @@ const ClientesProvider = ({ children }) => {
   };
 
   const openEdit = f=>{
+    setErrors({error:false,message:null,id:null})
     setFormulario(f);
-    setDialogs({...formulario,form:true})
+    setDialogs({form:true})
   }
 
-  const agregar = async()=>{
+  const openAgregar = ()=>{
+    setErrors({error:false,message:null,id:null})
+    setFormulario(initialFormulario);
+    setDialogs({form:true})
+  }
+  
+  const agregar = async(f)=>{
     setCargando({guardar:true})
-    let f = {...formulario}
+    let resp = await APICALLER.get({table:"clientes",where:`ruc_cliente,=,'${f.ruc_cliente}'`});
+    if(resp.found>0){
+      setErrors({error:true,message:lang.cliente_existente_doc,id:"ruc"})
+      setCargando({guardar:false})
+      return false;
+    }
     delete f.id_cliente
     let res = await APICALLER.insert({
       table: "clientes",
@@ -67,20 +81,28 @@ const ClientesProvider = ({ children }) => {
       token: token_user,
     });
     res.response==='ok' ? swal({text:lang.agregado_correctamente,timer:1300,icon:"success"}) : console.log(res);
+    setFormulario(initialFormulario)
     setDialogs({form:false})
     getLista();
   }
   
-  const editar = async()=>{
+  const editar = async(f)=>{
     setCargando({guardar:true})
+    let resp = await APICALLER.get({table:"clientes",where:`ruc_cliente,=,'${f.ruc_cliente}'`});
+    if(resp.found>1){
+      setErrors({error:true,message:lang.cliente_existente_doc,id:"ruc"})
+      setCargando({guardar:false})
+      return false;
+    }
     let res = await APICALLER.update({
       table: `clientes`,
-      data: formulario,
+      data: f,
       token: token_user,
-      id: formulario.id_cliente,
+      id: f.id_cliente,
     });
     res.response==='ok' ? swal({text:lang.actualizado_correctamente,timer:1300,icon:"success"}) : console.log(res);
     setDialogs({form:false})
+    setFormulario(initialFormulario)
     getLista();
   }
 
@@ -156,7 +178,7 @@ const ClientesProvider = ({ children }) => {
   return (
     <ClientesContext.Provider
       value={{
-        lista, dialogs,setDialogs,openEdit,
+        lista, dialogs,setDialogs,openEdit,openAgregar,
         setLista,
         cargando,
         setCargando,
@@ -167,7 +189,7 @@ const ClientesProvider = ({ children }) => {
         limite,
         setLimite,
         buscarRegistro,
-        BorrarCliente,countTotal,lang,editar,agregar
+        BorrarCliente,countTotal,lang,editar,agregar,errors
       }}
     >
       {children}
@@ -177,7 +199,7 @@ const ClientesProvider = ({ children }) => {
 
 export const useClientes = () => {
   const {
-    lista, dialogs,setDialogs,openEdit,
+    lista, dialogs,setDialogs,openEdit,openAgregar,
     setLista,
     cargando,
     setCargando,
@@ -188,10 +210,10 @@ export const useClientes = () => {
     limite,
     setLimite,
     buscarRegistro,
-    BorrarCliente,countTotal,lang,editar,agregar
+    BorrarCliente,countTotal,lang,editar,agregar,errors
   } = useContext(ClientesContext);
   return {
-    lista, dialogs,setDialogs,openEdit,
+    lista, dialogs,setDialogs,openEdit,openAgregar,
     setLista,
     cargando,
     setCargando,
@@ -202,7 +224,7 @@ export const useClientes = () => {
     limite,
     setLimite,
     buscarRegistro,
-    BorrarCliente,countTotal,lang,editar,agregar
+    BorrarCliente,countTotal,lang,editar,agregar,errors
   };
 };
 
