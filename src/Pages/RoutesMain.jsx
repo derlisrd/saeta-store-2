@@ -22,6 +22,7 @@ import Categorias from "./Productos/Categorias";
 import Informes from "./Informes";
 import ProductEdit from "./Productos/Productos/ProductEdit";
 import Notas from "./Ventas/Notas";
+import Monedas from "./Monedas";
 /* 
 import Agenda from "./Agenda";
 import Movimientos from "./Caja/Movimientos/Index";
@@ -90,6 +91,7 @@ const RoutesMain = () => {
   const R = env.BASEURL +'/';
   return (
     <Routes>
+      <Route path={R+'monedas'} element={<PrivateRoute id={30}><Monedas /></PrivateRoute>} />
       <Route path={R+'informes'} element={<PrivateRoute id={44}><Informes /></PrivateRoute>} />
       <Route path={R+'categorias'} element={<PrivateRoute id={10}><Categorias /></PrivateRoute>} />
       <Route path={R+'clientes'} element={<PrivateRoute id={28}><Clientes /></PrivateRoute>} />

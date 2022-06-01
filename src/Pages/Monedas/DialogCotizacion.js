@@ -3,29 +3,24 @@ import {
   DialogContent,
   DialogActions,
   DialogTitle,
-  Icon,
-  IconButton,
   TextField,
-  DialogContentText,
   Button,
-  LinearProgress,
+  LinearProgress,Zoom, Grid,
 } from "@mui/material";
 import { useEffect, useState } from "react";
-import { APICALLER } from "../../Api/ApiCaller";
-import { StylesGenerales } from "../../Styles/StylesGenerales";
+import { APICALLER } from "../../Services/api";
 import { useMonedas } from "./MonedasProvider";
-import { useLogin } from "../../Contextos/LoginProvider";
-import NumberFormatCustom from "../../Componentes/NumberFormatCustom";
+import { useLogin } from "../../Contexts/LoginProvider";
+import NumberFormatCustom from "../../Components/thirty/NumberFormatCustom";
 
 const DialogCotizacion = () => {
-  const classes = StylesGenerales();
   const { token_user } = useLogin();
   const {
     setDialogCotizacion,
     dialogCotizacion,
     datosMonedas,
     lista,
-    setLista,
+    setLista,lang
   } = useMonedas();
   const [data, setData] = useState({
     valor_moneda: "",
@@ -71,42 +66,37 @@ const DialogCotizacion = () => {
   }, [dialogCotizacion, datosMonedas]);
 
   return (
-    <Dialog open={dialogCotizacion} onClose={cerrar} fullWidth>
+    <Dialog open={dialogCotizacion} onClose={cerrar} TransitionComponent={Zoom} fullWidth>
       <DialogTitle>
-        <div className={classes.titulodialog}>
-          <div>Cambiar cotización</div>
-          <IconButton onClick={() => cerrar()}>
-            <Icon>close</Icon>
-          </IconButton>
-        </div>
+       {lang.cambiar_cotizacion}
       </DialogTitle>
       <DialogContent dividers>
         {cargando && <LinearProgress />}
-        <DialogContentText>
-          Con respecto a la moneda principal
-        </DialogContentText>
-        <TextField
-          variant="outlined"
-          onChange={onChange}
-          name="valor_moneda"
-          InputProps={{ 
-            inputComponent:NumberFormatCustom,
-          }}
-          value={data.valor_moneda}
-          label="Cotización"
-        />
+        
+        <Grid container spacing={2}>
+          <Grid item xs={12}>
+          <TextField
+              onChange={onChange}
+              name="valor_moneda"
+              InputProps={{ 
+                inputComponent:NumberFormatCustom,
+              }}
+              value={data.valor_moneda}
+              label={lang.cotizacion}
+            />
+          </Grid>
+        </Grid>
       </DialogContent>
       <DialogActions>
         <Button
-          variant="outlined"
-          color="primary"
+          variant="contained"
           onClick={enviar}
           disabled={cargando}
         >
-          Confirmar
+          {lang.ok}
         </Button>
-        <Button variant="outlined" onClick={cerrar}>
-          Cerrar
+        <Button variant="contained" onClick={cerrar}>
+          {lang.cerrar}
         </Button>
       </DialogActions>
     </Dialog>

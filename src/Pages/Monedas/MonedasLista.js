@@ -1,10 +1,10 @@
-import Tablas from "../../Componentes/Tablas"
+import Tablas from "../../Components/UI/Tablas"
 import { useMonedas } from "./MonedasProvider"
 import {Button} from '@mui/material'
 
 const MonedasLista = () => {
 
-    const {lista,cargando,setDialogCotizacion,setDatosMonedas} = useMonedas()
+    const {lista,cargando,setDialogCotizacion,setDatosMonedas,lang,datosMonedas} = useMonedas()
 
     const abrirDialogCotizacion = (datos)=>{
         setDatosMonedas(datos)
@@ -16,28 +16,44 @@ const MonedasLista = () => {
             field: "id_moneda",
             title:"ID"
         },
+
         {
             field:"activo_moneda",
-            title:"Moneda principal",
+            title:lang.moneda_principal,
             items:
                 {
-                    0: "No",
-                    1: "Moneda principal"
+                    0: lang.no,
+                    1: lang.moneda_principal
                 }
             ,
-            comparaItem: "activo_moneda",
+            compareField: "activo_moneda",
+            styleItemCondition: "activo_moneda",
+            styleCondition: {
+              "0": {
+                backgroundColor: "#ff7c6b",
+                padding: "6px",fontWeight:"bold",
+                borderRadius: "5px",
+                color: "#780c00",
+              },
+              "1": {
+                backgroundColor: "#2dec76",
+                padding: "6px", fontWeight:"bold",
+                borderRadius: "5px",
+                color: "#007b02",
+              },
+            },
         },
         {
             field:"abreviatura_moneda",
-            title:"Abre."
+            title:lang._abreviatura_moneda
         },
         {
             field:"nombre_moneda",
-            title:"Nombre de moneda"
+            title:lang.nombre_moneda
         },
         {
             field:"valor_moneda",
-            title:"Valor",
+            title:lang.valor,
             isNumber:true,
         },
     ]
@@ -52,16 +68,15 @@ const MonedasLista = () => {
 
   return (
     <Tablas
-        nombretabla="Cotizaciones de monedas"
-        subtitle="Moneda principal: Guaraní"
-        bgicono="#3f51b5"
-        icono="monetization_on"
-        columnas={columns}
-        cargando={cargando}
-        filas={lista}
-        Acciones={Acciones}
-        namecolumnID="id_moneda"
-        search={search}
+        title={lang.cotizaciones_monedas}
+        subtitle={`${lang.moneda_principal}: ${datosMonedas.nombre_moneda}`}
+        icon={{ name:"monetization_on" }}
+        columns={columns}
+        loading={cargando}
+        datas={lista}
+        Accions={Acciones}
+        inputs={search}
+        lang={lang}
         showOptions
     />
   )
