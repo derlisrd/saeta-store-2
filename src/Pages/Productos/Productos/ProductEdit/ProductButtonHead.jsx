@@ -1,11 +1,12 @@
 import { Grid, Typography } from "@mui/material";
-import { CustomButton } from "../../../../Components";
+import ButtonCustom from "../../../../Components/MuiCustom/ButtonCustom";
 import React from "react";
 import { useProductFormEdit } from "./ProductFormEditProvider";
-import Funciones from "../../../../Funciones";
+import useGoto from "../../../../Hooks/useGoto";
 
 const ProductButtonHead = () => {
-  const { cargas} = useProductFormEdit();
+  const { cargas,lang} = useProductFormEdit();
+  const go = useGoto()
   return (
     <Grid
       container
@@ -14,7 +15,7 @@ const ProductButtonHead = () => {
       alignItems="center"
     >
       <Grid item>
-        <Typography variant="h5"> EDITAR </Typography>
+        <Typography variant="h5"> {lang.editar_producto} </Typography>
       </Grid>
       <Grid item>
         <Grid
@@ -25,25 +26,25 @@ const ProductButtonHead = () => {
           alignItems="flex-start"
         >
           <Grid item>
-            <CustomButton
+            <ButtonCustom
               onClick={() => {}}
               color="primary"
+              variant="contained"
               type="submit"
-              variant="outlined"
               disabled={cargas.guardar}
             >
-              GUARDAR
-            </CustomButton>
+              {lang.guardar}
+            </ButtonCustom>
           </Grid>
           <Grid item>
-            <CustomButton
+            <ButtonCustom
               color="error"
-              onClick={() => {Funciones.goto("productos")}}
-              variant="outlined"
+              variant="contained"
+              onClick={() => {go.to("productos")}}
               disabled={cargas.guardar}
             >
-              Volver
-            </CustomButton>
+              {lang.volver}
+            </ButtonCustom>
           </Grid>
         </Grid>
       </Grid>

@@ -1,15 +1,14 @@
 import { useRef, useState } from 'react';
 import { Menu, MenuItem, Fab, ListItemIcon, ListItemText,Icon } from '@mui/material'
 import { useProductos } from './ProductosProvider';
-import { useNavigate } from "react-router-dom";
-import { env } from '../../../../Utils/config';
+import useGoto from '../../../../Hooks/useGoto';
 
 
 export default function MoreMenu({rowData}) {
   const ref = useRef(null);
   const [isOpen, setIsOpen] = useState(false);
-  const {borrarRegistro,page,getStock,dialogs,setDialogs} = useProductos();
-  const navigate = useNavigate();
+  const {borrarRegistro,getStock,dialogs,setDialogs} = useProductos();
+  const navigate = useGoto();
   const id = rowData.id_producto;
   const close = () => {setIsOpen(false);}
   const openStock = ()=>{ setDialogs({...dialogs,stock:true}); getStock(rowData); close(); }
@@ -34,19 +33,19 @@ export default function MoreMenu({rowData}) {
           <ListItemIcon><Icon color="success">inventory</Icon></ListItemIcon>
           <ListItemText primary="Stock" primaryTypographyProps={{ variant: 'body2' }} />
         </MenuItem>
-        <MenuItem onClick={()=> navigate(`${env.BASEURL}/productos/new/${id}`,{state:{page:page}})}  sx={{ color: 'text.secondary' }}>
+        <MenuItem onClick={()=> navigate.to(`productos/edit/${id}`)}  sx={{ color: 'text.secondary' }}>
           <ListItemIcon>
           <Icon color="primary">mode_edit</Icon>
           </ListItemIcon>
           <ListItemText primary="Editar" primaryTypographyProps={{ variant: 'body2' }} />
         </MenuItem>
-        <MenuItem onClick={()=> {navigate(env.BASEURL+`/productos/bc?code=${rowData.codigo_producto}`)}}  sx={{ color: 'text.secondary' }}>
+        <MenuItem onClick={()=> {navigate.to(`productos/bc?code=${rowData.codigo_producto}`)}}  sx={{ color: 'text.secondary' }}>
           <ListItemIcon>
           <Icon color="secondary">qr_code</Icon>
           </ListItemIcon>
           <ListItemText primary="Código de barras" primaryTypographyProps={{ variant: 'body2' }} />
         </MenuItem>
-        <MenuItem onClick={()=>{borrarRegistro(rowData.id_producto,rowData.nombre_producto)}} sx={{ color: 'text.secondary' }}>
+        <MenuItem onClick={()=>{borrarRegistro(id,rowData.nombre_producto)}} sx={{ color: 'text.secondary' }}>
           <ListItemIcon>
           <Icon color="error">delete_sweep</Icon>
           </ListItemIcon>

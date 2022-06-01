@@ -1,22 +1,25 @@
 import React,{createContext,useContext,useCallback,useState,useEffect,useRef} from 'react'
-import { useLocation, useParams,useNavigate } from 'react-router-dom';
+import { /* useLocation, */ useParams } from 'react-router-dom';
 import swal from 'sweetalert';
-import { APICALLER } from '../../../../Api/ApiCaller';
-import { useLogin } from '../../../../Contextos/LoginProvider';
-import Funciones from '../../../../Funciones';
-//import Funciones from '../../../../Funciones';
+import { APICALLER } from '../../../../Services/api';
+import { useLogin } from '../../../../Contexts/LoginProvider';
+import { useLang } from '../../../../Contexts/LangProvider';
+import useGoto from '../../../../Hooks/useGoto';
 
 const ProductFormEditContexto = createContext();
 const ProductFormEditProvider = (props) => {
+    const {lang} = useLang()
     const {id} = useParams();
-    const {state} = useLocation();
-    const page = state?.page || 0;
-    const navigate = useNavigate();
-    const { token_user } = useLogin();
+    /* const {state} = useLocation();
+    const page = state?.page || 0; */
+    const navigate = useGoto();
+    const {userData} = useLogin();
+    const { token_user } = userData;
     const [tabValue,setTabValue] = useState(0);
     const initialSnack = {open:false,severity:"success",mensaje:"",id_code:"",send:false}
     const [snack,setSnack] = useState(initialSnack);
     const initialCargas = {main:true,guardar:false}
+    const [exists,setExists] = useState(true)
     const [cargas,setCargas] = useState(initialCargas);
     const inputCodigo = useRef(null);
     const inputNombre = useRef(null);
@@ -56,7 +59,13 @@ const ProductFormEditProvider = (props) => {
     const [code,setCode] = useState(null);
     const [images,setImages] = useState([]); 
     const [imagesURL,setImagesURL] = useState([]);
-    const change = e=>{ const {name,value} = e.target; setFormulario({...formulario,[name]:value});}
+    
+    const change = e=>{ 
+      const {name,value} = e.target; 
+
+      setFormulario({...formulario,[name]:value});
+  }
+
     const changeCheck = (e) => {
         const { checked, name } = e.target; 
         setFormulario({ ...formulario, [name]: checked ? "1" : "0" });
@@ -74,7 +83,7 @@ const ProductFormEditProvider = (props) => {
           if(res.results[0].id_producto === id){
             setSnack({open:false,id_code:"",mensaje:"",severity:"success",send:true});
           }else{
-            setSnack({open:true,mensaje:"Ese código del producto ya existe.",severity:"warning",id_code:"codigo_producto",send:false});
+            setSnack({open:true,mensaje:lang.codigo_existe,severity:"warning",id_code:"codigo_producto",send:false});
             inputCodigo?.current?.focus();
             return false;
           }
@@ -85,15 +94,17 @@ const ProductFormEditProvider = (props) => {
       } else {
         console.log(res);
       }
-    },[formulario,id,code]);
+    },[formulario,id,code,lang]);
+
+
 
     const eliminarImagen = async(idImage)=>{
-      let borrar = await swal({icon: "warning",text:"Desea borrar la imagen?",buttons: [`Cancelar`, `Ok`],dangerMode: true})
+      let borrar = await swal({icon: "warning",text:lang.q_desea_borrar_imagen,buttons: [`Cancelar`, `Ok`],dangerMode: true})
        if(borrar){
          setCargas({main:false,guardar:true});
           let res = await APICALLER.deleteImage({table:"productos_images",path:id,token:token_user,idImage:idImage});
          if(res.response==="ok"){
-           swal({text:"Eliminado correctamente",timer:1200,icon:"success"});
+           swal({text:lang.borrado_correctamente,timer:1200,icon:"success"});
           }else{
             console.log(res);
           }
@@ -106,18 +117,20 @@ const ProductFormEditProvider = (props) => {
      }
 
 
+
+
     const sendForm = useCallback(async(e)=>{
         e.preventDefault(); let f = {...formulario}
         
         if(f.codigo_producto==='') {
           setTabValue(0); 
-          setSnack({open:true,severity:"warning",mensaje:"Rellene el código",id:"codigo_producto",send:false});
+          setSnack({open:true,severity:"warning",mensaje:lang.rellene_codigo,id:"codigo_producto",send:false});
           return false;
         }
         if(f.nombre_producto==='') {
           setTabValue(0);
           inputNombre?.current?.focus(); 
-          setSnack({open:true,severity:"warning",mensaje:"Rellene el nombre del producto",id:"nombre_producto",send:false});
+          setSnack({open:true,severity:"warning",mensaje:lang.rellene_nombre,id:"nombre_producto",send:false});
           return false;
         }
         if(f.id_categoria_producto==="" || f.id_impuesto_producto==="" ||
@@ -125,7 +138,7 @@ const ProductFormEditProvider = (props) => {
         f.id_proveedor_producto==="" ||
         f.id_unidad_medida_producto===""){
           setTabValue(0); 
-          setSnack({open:true,severity:"warning",mensaje:"Rellene todos los campos",id:"3",send:false});
+          setSnack({open:true,severity:"warning",mensaje:lang.rellene_campos,id:"3",send:false});
           return false;
         }
         if(snack.send===false){
@@ -145,13 +158,13 @@ const ProductFormEditProvider = (props) => {
           }
           if(res.response==="ok"){
             swal({text:"Actualizado correctamente",icon:'success',timer:2000}).then(()=>{
-              Funciones.goto(`productos?p=${page}`);
+              navigate.to(`productos`);
             });
             setCargas({main:false,guardar:false});
             
           }
         
-    },[token_user,formulario,id,images,snack,page]);
+    },[token_user,formulario,id,images,snack,lang,navigate]);
 
     const setearListas = lista=>{
       setListas(lista);
@@ -167,11 +180,11 @@ const ProductFormEditProvider = (props) => {
       })])
 
      
-      if(re[1].response==='ok'){ 
+      if(re[1].response==='ok' && re[1].found>0){ 
         let sto = localStorage.getItem("dataProductos");
         if(sto===null){
           let va = await Promise.all([
-            APICALLER.getPromise({table: `categorias`,fields: `id_categoria,nombre_categoria,id_padre_categoria`,sort:'-nombre_categoria'}),
+            APICALLER.getPromise({table: `categorias`,fields: `id_categoria,nombre_categoria,id_padre_categoria,tipo_categoria`,sort:'-nombre_categoria'}),
             APICALLER.getPromise({table: "proveedors",fields: "id_proveedor,nombre_proveedor"}),
             APICALLER.getPromise({table: `marcas`,fields: `id_marca,nombre_marca`}),
             APICALLER.getPromise({table: `unidad_medidas`}),
@@ -186,10 +199,13 @@ const ProductFormEditProvider = (props) => {
         setFormulario(re[1].results[0]);
         setCode(re[1].results[0].codigo_producto);
         setCargas({main:false,imagen:false,guardar:false});
-      }else{
-        navigate("/productos");
       }
-  },[id,navigate]);
+      else{
+        setFormulario({});
+        setCargas({main:false,imagen:false,guardar:false});
+        setExists(false)
+      }
+  },[id]);
 
     useEffect(() => {
         let isActive = true;
@@ -198,15 +214,15 @@ const ProductFormEditProvider = (props) => {
         return () => {isActive = false; ca.abort(); };
     }, [traerDatos]);
     return (
-      <ProductFormEditContexto.Provider value={{eliminarImagen,change,sendForm,changeCheck,verificarProducto,images,setImages,imagesURL,setImagesURL,cargas,inputCodigo,inputNombre,listas,listaImagenes,formulario,setFormulario,tabValue,setTabValue,snack,setSnack }}>
+      <ProductFormEditContexto.Provider value={{exists,lang,eliminarImagen,change,sendForm,changeCheck,verificarProducto,images,setImages,imagesURL,setImagesURL,cargas,inputCodigo,inputNombre,listas,listaImagenes,formulario,setFormulario,tabValue,setTabValue,snack,setSnack }}>
         {props.children}
       </ProductFormEditContexto.Provider>
     )
   }
   
   export const useProductFormEdit = ()=>{
-      const {eliminarImagen,change,sendForm,changeCheck,verificarProducto,images,setImages,imagesURL,setImagesURL,cargas,inputCodigo,inputNombre,listas,listaImagenes,formulario,setFormulario,tabValue,setTabValue,snack,setSnack} = useContext(ProductFormEditContexto);
-      return {eliminarImagen,change,sendForm,changeCheck,verificarProducto,images,setImages,imagesURL,setImagesURL,cargas,
+      const {exists,lang,eliminarImagen,change,sendForm,changeCheck,verificarProducto,images,setImages,imagesURL,setImagesURL,cargas,inputCodigo,inputNombre,listas,listaImagenes,formulario,setFormulario,tabValue,setTabValue,snack,setSnack} = useContext(ProductFormEditContexto);
+      return {exists,lang,eliminarImagen,change,sendForm,changeCheck,verificarProducto,images,setImages,imagesURL,setImagesURL,cargas,
         inputCodigo,inputNombre,listas,listaImagenes,formulario,setFormulario,tabValue,setTabValue,snack,setSnack}
   }
   

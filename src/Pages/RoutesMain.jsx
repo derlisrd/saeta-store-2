@@ -20,6 +20,7 @@ import Settings from "./Settings/DatosEmpresa";
 import Clientes from "./Clientes";
 import Categorias from "./Productos/Categorias";
 import Informes from "./Informes";
+import ProductEdit from "./Productos/Productos/ProductEdit";
 /* 
 import Agenda from "./Agenda";
 import Movimientos from "./Caja/Movimientos/Index";
@@ -93,6 +94,7 @@ const RoutesMain = () => {
       <Route path={R+'clientes'} element={<PrivateRoute id={28}><Clientes /></PrivateRoute>} />
       <Route path={R+'settings'} element={<PrivateRoute id={36}><Settings /></PrivateRoute>} />
       <Route path={R+'tema'} element={<PrivateRoute id={72}><Tema /></PrivateRoute>} />
+      <Route path={R+'productos/edit/:id'} element={<PrivateRoute id={9}><ProductEdit /></PrivateRoute>} />
       <Route path={R+'productos/new'} element={<PrivateRoute id={9}><ProductosNew /></PrivateRoute>} />
       <Route path={R+'productos'} element={<PrivateRoute id={34}><Productos /></PrivateRoute>} />
       <Route path={R+'users'} element={<PrivateRoute id={34}><Users /></PrivateRoute>} />

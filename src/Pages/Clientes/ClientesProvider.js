@@ -142,6 +142,7 @@ const ClientesProvider = ({ children }) => {
   useEffect(() => {
     const ca = new AbortController();
     let isActive = true;
+   
     if (isActive) {
       getLista();
     }

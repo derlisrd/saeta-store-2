@@ -3,20 +3,23 @@ import React, { useCallback } from 'react';
 import { useProductFormEdit } from './ProductFormEditProvider';
 import ProductButtonHead from './ProductButtonHead';
 import Datos from './Datos';
-import { Loading } from '../../../../Components';
+import LoadingBackDrop from '../../../../Components/UI/LoadingBackDrop';
 import Precios from './Precios';
 import Imagenes from './Imagenes';
-
+import { Navigate } from 'react-router-dom';
 const ProductFormEditTabs = () => {
-    const {tabValue,setTabValue,cargas,snack,setSnack,sendForm} = useProductFormEdit();
+    const {tabValue,setTabValue,cargas,snack,setSnack,sendForm,exists} = useProductFormEdit();
     const TabPanel = useCallback(({children,index})=>{
         return(
           tabValue === index && (<div style={{marginTop:"25px"}}>{children}</div>)
         )
       },[tabValue]);
+      if(!exists){
+        return <Navigate to={"/404"} />
+      }
   return (
     <form onSubmit={sendForm}>
-      {cargas.main && <Loading /> }
+      {cargas.main && <LoadingBackDrop /> }
       <Snackbar
         open={snack.open}
         onClose={() => setSnack({...snack,open:false})}

@@ -3,7 +3,7 @@ import {FormControl, Grid, Icon, InputAdornment, TextField,InputLabel,Select,Men
 import { useProductFormEdit } from './ProductFormEditProvider';
 
 const Datos = () => {
-  const {listas, formulario,change,inputCodigo,cargas,snack,inputNombre,verificarProducto} = useProductFormEdit();
+  const {listas, formulario,change,inputCodigo,cargas,snack,inputNombre,verificarProducto,lang} = useProductFormEdit();
   return (
     <Grid container spacing={2}>
       <Grid item xs={12} sm={12} md={6}>
@@ -27,12 +27,11 @@ const Datos = () => {
             ),
           }}
           fullWidth
-          variant="outlined"
           helperText="Código de único del producto"
         />
       </Grid>
       <Grid item xs={12} sm={12} md={6}>
-        <FormLabel component="legend">Tipo:</FormLabel>
+        <FormLabel component="legend">{lang.tipo}:</FormLabel>
         <FormControlLabel
           value="1"
           control={

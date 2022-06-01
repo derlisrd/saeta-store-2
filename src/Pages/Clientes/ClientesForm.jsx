@@ -31,6 +31,7 @@ const ClientesForm = () => {
         setFormulario(newformulario);
     }
     const cerrar = ()=>{ setDialogs({...dialogs,form:false}); setFormulario(initialFormulario); }
+    console.log("render formulario")
   return (
     <Dialog open={dialogs.form} fullWidth onClose={cerrar} TransitionComponent={Zoom} >
       <form onSubmit={send}>
