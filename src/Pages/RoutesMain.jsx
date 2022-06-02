@@ -96,14 +96,10 @@ const RoutesMain = () => {
       <Route path={R+'informes'} element={<PrivateRoute id={44}><Informes /></PrivateRoute>} />
       <Route path={R+'categorias'} element={<PrivateRoute id={10}><Categorias /></PrivateRoute>} />
       
-      <Route path={R+'categorias/new'} element={<PrivateRoute id={11}>
-        <CategoriasForm />
-      </PrivateRoute>} />
+      <Route path={R+'categorias/new'} element={<PrivateRoute id={11}><CategoriasForm /></PrivateRoute>} />
 
-      <Route path="teams" element={<PrivateRoute id={11}><CategoriasForm /></PrivateRoute>}>
-          <Route path=":id" element={<CategoriasForm />} />
-          <Route index element={<CategoriasForm />} />
-      </Route>
+      <Route path="categorias/edit/:id" element={<PrivateRoute id={11}><CategoriasForm /></PrivateRoute>} />
+       
 
       <Route path={R+'clientes'} element={<PrivateRoute id={28}><Clientes /></PrivateRoute>} />
       <Route path={R+'settings'} element={<PrivateRoute id={36}><Settings /></PrivateRoute>} />

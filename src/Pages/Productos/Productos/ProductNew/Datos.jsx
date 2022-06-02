@@ -3,7 +3,7 @@ import {FormControl, Grid, Icon, InputAdornment, TextField,InputLabel,Select,Men
 import { useProductForm } from './ProductFormProvider';
 
 const Datos = () => {
-  const {listas, dialogs,setDialogs, formulario,change,inputCodigo,verificarProducto,cargas,snack,inputNombre,generateCode} = useProductForm();
+  const {listas, dialogs,setDialogs, formulario,change,inputCodigo,verificarProducto,cargas,snack,inputNombre,generateCode,lang} = useProductForm();
   
   const filterCategory = listas.categorias.filter(e=> e.tipo_categoria === formulario.tipo_producto);
 
@@ -33,14 +33,13 @@ const Datos = () => {
             )
           }}
           fullWidth
-          variant="outlined"
         />
       </Grid>
       <Grid item xs={12} sm={12} md={3}>
-        <Button variant="outlined" size="large" onClick={generateCode}>Generar código</Button>
+        <Button variant="outlined" size="large" onClick={generateCode}>{lang.generar_codigo}</Button>
       </Grid>
       <Grid item xs={12} sm={12} md={3}>
-        <FormLabel component="legend">Tipo:</FormLabel>
+        <FormLabel component="legend">{lang.tipo}:</FormLabel>
         <FormControlLabel
           value="1"
           control={

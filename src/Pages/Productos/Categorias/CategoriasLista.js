@@ -1,20 +1,15 @@
 import Tablas from "../../../Components/UI/Tablas";
-import {
-  Icon,
-  Fab,
-  Tooltip,
-  Button,
-  TextField,
-  InputAdornment,
-  IconButton,
-  Stack,
-} from "@mui/material";
+import {Icon,Fab,Tooltip,Button,TextField,InputAdornment,IconButton,Stack} from "@mui/material";
 import { useCategorias } from "./CategoriasProvider";
 import { useState } from "react";
-import useGoto from "../../../Hooks/useGoto";
+import { env } from "../../../App/Config/config";
+//import useGoto from "../../../Hooks/useGoto";
+import { useNavigate } from "react-router-dom";
+
 
 const CategoriasLista = () => {
-  const go = useGoto()
+  //const go = useGoto()
+  const navigate = useNavigate();
   const {
     listas,lang,
     cargando,
@@ -105,7 +100,7 @@ const CategoriasLista = () => {
         <Button
           variant="contained"
           size="large"
-          onClick={() => { go.to("categorias/new")}}
+          onClick={() => { navigate(env.BASEURL+"/categorias/new")}}
         >
           {lang.agregar}
         </Button>
@@ -120,7 +115,7 @@ const CategoriasLista = () => {
           color="primary"
           size="small"
           onClick={() => {
-            
+            navigate(env.BASEURL+"/categorias/edit/"+rowProps.id_categoria,{state:rowProps})
           }}
         >
           <Icon>edit</Icon>

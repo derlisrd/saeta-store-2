@@ -37,6 +37,7 @@ export const translate = {
         facturas:"Facturas",
         lista_facturas:"Lista de facturas",
         buen_dia:"Buen día",
+        generar_codigo:"Generar código",
         buenas_tardes:"Buenas tardes",
         buenas_noches:"Buenas noches",
         q_desea_cerrar_sesion:"Desea cerrar la sesion?",

@@ -1,6 +1,6 @@
-import {Dialog,DialogContent,DialogTitle,Icon,DialogActions,Button,TextField,InputAdornment,LinearProgress,Grid,Select,MenuItem,FormControl,InputLabel,} from "@mui/material";
+import {Dialog,DialogContent,DialogTitle,Icon,DialogActions,Button,TextField,InputAdornment,LinearProgress,Grid,Select,MenuItem,FormControl,InputLabel, FormLabel, FormControlLabel, Radio,} from "@mui/material";
 import { Alert } from "@mui/material";
-import { useParams } from "react-router-dom";
+import { useParams,useLocation } from "react-router-dom";
 import { useEffect, useState, useRef, useCallback } from "react";
 import swal from "sweetalert";
 import { APICALLER } from "../../../Services/api";
@@ -9,6 +9,9 @@ import useGoto from "../../../Hooks/useGoto";
 import { useLang } from "../../../Contexts/LangProvider";
 
 const CategoriasForm = () => {
+
+  const location = useLocation()
+  console.log(location)
   const { id } = useParams();
   const {lang} = useLang()
   const storage = JSON.parse(localStorage.getItem("dataProductos"));
@@ -23,17 +26,18 @@ const CategoriasForm = () => {
     id_categoria: "",
     nombre_categoria: "",
     id_padre_categoria: "0",
+    tipo_categoria:"1"
   };
   const [formulario, setFormulario] = useState(initial);
   const initialError = {
     nombre_categoria: false,
     error: false,
-    errorMsj: lang.complete_campo_correctamente,
+    errorMsj: lang.complete_campo_correctamente, id:null
   };
   const [formErrores, setFormErrores] = useState(initialError);
   const cerrar = () => go.to(`categorias`);
 
-  const handlerOnChange = (e) => {
+  const change = (e) => {
     const { name, value } = e.target;
     setFormulario({ ...formulario, [name]: value });
   };
@@ -42,11 +46,12 @@ const CategoriasForm = () => {
     e.preventDefault();
 
     if (formulario.nombre_categoria.length < 2) {
-      setFormErrores({ ...formErrores, nombre_categoria: true, error: true });
+      setFormErrores({ ...formErrores, nombre_categoria: true, error: true,id:"nombre" });
       return false;
     }
     setCargando(true);
     setFormErrores({ ...formErrores, nombre_categoria: false, error: false });
+    
     if (id) {
       const res = await APICALLER.update({
         table: `categorias`,
@@ -91,14 +96,13 @@ const CategoriasForm = () => {
   };
 
   const cargar = useCallback(async()=>{
-    setCargando(true);
     const sto = JSON.parse(localStorage.getItem("dataProductos"));
       if (id) {
         if(sto===null){
           
           let resTodes = await APICALLER.get({
             table: `categorias`,
-            fields: `id_categoria,nombre_categoria,id_padre_categoria`,
+            fields: `id_categoria,nombre_categoria,id_padre_categoria,tipo_categoria`,
             where:`id_categoria,!=,${id}`,
             sort:"-nombre_categoria",
           });
@@ -108,10 +112,13 @@ const CategoriasForm = () => {
             where: `id_categoria,=,${id}`,
             sort:"-nombre_categoria",
           });
+          let rescategoria = res.results[0]
+          
           setFormulario({
             id_categoria: id,
-            id_padre_categoria: res.results[0].id_padre_categoria,
-            nombre_categoria: res.results[0].nombre_categoria,
+            id_padre_categoria: rescategoria.id_padre_categoria,
+            nombre_categoria: rescategoria.nombre_categoria,
+            tipo_categoria: rescategoria.tipo_categoria
           });
 
           
@@ -175,7 +182,7 @@ const CategoriasForm = () => {
               <TextField
                 autoFocus
                 inputRef={inputNombreCategoria}
-                onChange={handlerOnChange}
+                onChange={change}
                 label={lang.nombre}
                 autoComplete="off"
                 name="nombre_categoria"
@@ -194,13 +201,31 @@ const CategoriasForm = () => {
               />
             </Grid>
             <Grid item xs={12}>
+              <FormLabel component="legend">{lang.tipo}:</FormLabel>
+              <FormControlLabel
+                value="1"
+                control={
+                  <Radio name="tipo_categoria" checked={formulario.tipo_categoria === "1"}  onChange={change}  color="primary"  />
+                }
+                label="Artículo"
+                labelPlacement="end"
+              />
+              <FormControlLabel
+                value="2"
+                control={
+                  <Radio name="tipo_categoria" checked={formulario.tipo_categoria === "2"} onChange={change} color="primary" />
+                }
+                label="Servicio"
+                labelPlacement="end"
+              />
+            </Grid>
+            <Grid item xs={12}>
               <FormControl fullWidth>
                 <InputLabel variant="outlined">Categoría padre</InputLabel>
                 <Select
                   name="id_padre_categoria"
                   value={formulario.id_padre_categoria}
-                  onChange={handlerOnChange}
-                  variant="outlined"
+                  onChange={change}
                   disabled={cargando}
                 >
                   <MenuItem value="0">Ninguno</MenuItem>
@@ -217,14 +242,13 @@ const CategoriasForm = () => {
         <DialogActions>
           <Button
             type="submit"
-            color="primary"
-            variant="outlined"
+            variant="contained"
             disabled={cargando}
           >
-            GUARDAR
+            {lang.guardar}
           </Button>
-          <Button onClick={cerrar} variant="outlined" disabled={cargando}>
-            CERRAR
+          <Button onClick={cerrar} variant="contained" disabled={cargando}>
+            {lang.cerrar}
           </Button>
         </DialogActions>
       </form>

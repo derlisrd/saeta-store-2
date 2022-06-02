@@ -2,6 +2,7 @@ import React,{createContext,useContext,useCallback,useState,useEffect,useRef} fr
 import { useLocation } from 'react-router-dom';
 import { APICALLER } from '../../../../Services/api';
 import {useLogin} from "../../../../Contexts/LoginProvider";
+import { useLang } from '../../../../Contexts/LangProvider';
 
 const ProductFormContexto = createContext();
 function useQuery() {
@@ -13,7 +14,7 @@ const ProductFormProvider = (props) => {
 
     let query = useQuery();
     const CODIGO = query.get("codigo") || ""; 
-
+    const {lang} = useLang()
     const storage = JSON.parse(localStorage.getItem("dataProductos"));
     const initialDialogs = {categorias: false,proveedores:false,marcas:false,depositos:false,unidades:false}
     const [dialogs,setDialogs] = useState(initialDialogs);
@@ -230,16 +231,16 @@ const ProductFormProvider = (props) => {
 
   return (
     <ProductFormContexto.Provider 
-    value={{token_user,cargas,listas,setearListas,tabValue,setTabValue,formulario,setFormulario,change,sendForm,inputCodigo,inputNombre,setImagesURL,imagesURL,generateCode,
+    value={{lang,token_user,cargas,listas,setearListas,tabValue,setTabValue,formulario,setFormulario,change,sendForm,inputCodigo,inputNombre,setImagesURL,imagesURL,generateCode,
     snack,setSnack,verificarProducto,changeCheck,reiniciarTodo,images,setImages,dialogs,setDialogs,enviado,stock,setStock,cargarStock,borrarStock}}>
         {props.children}
     </ProductFormContexto.Provider>
   )
 }
 export const useProductForm = ()=>{
-    const {token_user,cargas,listas,setearListas,tabValue,setTabValue,formulario,setFormulario,change,sendForm,inputCodigo,inputNombre,setImagesURL,imagesURL,generateCode,
+    const {lang,token_user,cargas,listas,setearListas,tabValue,setTabValue,formulario,setFormulario,change,sendForm,inputCodigo,inputNombre,setImagesURL,imagesURL,generateCode,
       snack,setSnack,verificarProducto,changeCheck,reiniciarTodo,images,setImages,dialogs,setDialogs,enviado,stock,setStock,cargarStock,borrarStock} = useContext(ProductFormContexto);
-    return {token_user,cargas,listas,setearListas,tabValue,setTabValue,formulario,setFormulario,change,sendForm,inputCodigo,inputNombre,snack,setImagesURL,imagesURL,generateCode,
+    return {lang,token_user,cargas,listas,setearListas,tabValue,setTabValue,formulario,setFormulario,change,sendForm,inputCodigo,inputNombre,snack,setImagesURL,imagesURL,generateCode,
       setSnack,verificarProducto,changeCheck,reiniciarTodo,images,setImages,dialogs,setDialogs,enviado,stock,setStock,cargarStock,borrarStock}
 }
 export default ProductFormProvider
