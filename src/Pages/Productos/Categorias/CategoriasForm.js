@@ -11,7 +11,7 @@ import { useLang } from "../../../Contexts/LangProvider";
 const CategoriasForm = () => {
 
   const location = useLocation()
-  console.log(location)
+  console.log(location.state)
   const { id } = useParams();
   const {lang} = useLang()
   const storage = JSON.parse(localStorage.getItem("dataProductos"));
@@ -60,7 +60,7 @@ const CategoriasForm = () => {
         id: id,
       });
       if(res.response === "ok"){
-        swal({ icon: "success", text: "Actualizado",timer:1300 }).then(()=>{
+        swal({ icon: "success", text: lang.actualizado_correctamente,timer:1300 }).then(()=>{
         if(storage){
           let array = {...storage}
           let index = array.categorias.findIndex(e=> e.id_categoria === id);
@@ -80,7 +80,7 @@ const CategoriasForm = () => {
         token: token_user,
       });
       if (res.response === "ok") {
-        swal({ icon: "success", text: "Agregado",timer:1300 })
+        swal({ icon: "success", text:lang.agregado_correctamente,timer:1300 })
         if(storage){
             let array = {...storage}
             let nuevo = {nombre_categoria: formulario.nombre_categoria, id_categoria:res.last_id}
@@ -99,7 +99,6 @@ const CategoriasForm = () => {
     const sto = JSON.parse(localStorage.getItem("dataProductos"));
       if (id) {
         if(sto===null){
-          
           let resTodes = await APICALLER.get({
             table: `categorias`,
             fields: `id_categoria,nombre_categoria,id_padre_categoria,tipo_categoria`,
@@ -221,14 +220,14 @@ const CategoriasForm = () => {
             </Grid>
             <Grid item xs={12}>
               <FormControl fullWidth>
-                <InputLabel variant="outlined">Categoría padre</InputLabel>
+                <InputLabel variant="outlined">{lang.categoria_padre}</InputLabel>
                 <Select
                   name="id_padre_categoria"
                   value={formulario.id_padre_categoria}
                   onChange={change}
                   disabled={cargando}
                 >
-                  <MenuItem value="0">Ninguno</MenuItem>
+                  <MenuItem value="0">{lang.ninguno}</MenuItem>
                   {listaCategorias.map((d) => (
                     <MenuItem key={d.id_categoria} value={d.id_categoria}>
                       {d.nombre_categoria}

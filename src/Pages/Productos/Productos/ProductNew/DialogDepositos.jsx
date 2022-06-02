@@ -4,7 +4,7 @@ import { APICALLER } from '../../../../Services/api';
 import { useProductForm } from './ProductFormProvider';
 function DialogDepositos() {
 
-    const {dialogs,setDialogs,listas,setearListas,token_user,formulario,setFormulario} = useProductForm()
+    const {dialogs,setDialogs,listas,setearListas,token_user,formulario,setFormulario,lang} = useProductForm()
     const name = React.useRef(null);
     const [load,setLoad] = React.useState(false)
     const cerrar = ()=> setDialogs({...dialogs,depositos:false});
@@ -29,18 +29,18 @@ function DialogDepositos() {
     }
   return (
     <Dialog open={dialogs.depositos} fullWidth onClose={cerrar}>
-      <DialogTitle>Nuevo depósito</DialogTitle>
+      <DialogTitle>{lang.nuevo_deposito}</DialogTitle>
       <DialogContent>
         <Grid container spacing={2}>
             <Grid item xs={12}> {load && <LinearProgress />}</Grid>
             <Grid item xs={12}>
-                <TextField required autoFocus autoComplete='off' inputRef={name} fullWidth label="Nombre de marca" />
+                <TextField required autoFocus autoComplete='off' inputRef={name} fullWidth label={lang.nombre} />
             </Grid>
         </Grid>
       </DialogContent>
       <DialogActions>
-          <Button variant="outlined" onClick={enviar}>Guardar</Button>
-          <Button variant="outlined" onClick={cerrar}>Cerrar</Button>
+          <Button variant="contained" onClick={enviar}>Guardar</Button>
+          <Button variant="contained" onClick={cerrar}>Cerrar</Button>
       </DialogActions>
     </Dialog>
   )

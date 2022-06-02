@@ -8,7 +8,7 @@ import { useProductForm } from './ProductFormProvider'
 import ProductButtonHead from './ProductButtonHead';
 
 const ProductFormTabs = () => {
-  const {tabValue,setTabValue,sendForm,snack,setSnack,cargas} = useProductForm();
+  const {tabValue,setTabValue,sendForm,snack,setSnack,cargas,lang} = useProductForm();
   const TabPanel = useCallback(({children,index})=>{
     return(
       tabValue === index && (<div style={{marginTop:"25px"}}>{children}</div>)
@@ -43,9 +43,9 @@ const ProductFormTabs = () => {
         value={tabValue}
         onChange={(e, value) => {setTabValue(value);}}
         >
-        <Tab label="DATOS" />
-        <Tab label="VALORES Y STOCK" />
-        <Tab label="IMAGENES" />
+        <Tab label={lang.datos} />
+        <Tab label={lang.valores_stock} />
+        <Tab label={lang.imagenes} />
       </Tabs>
     </Box>
       <TabPanel value={tabValue} index={0}>

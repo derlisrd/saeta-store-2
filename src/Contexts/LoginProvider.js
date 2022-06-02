@@ -8,6 +8,7 @@ const LoginContext = createContext()
 const LoginProvider = ({children}) => {
    // const navigate = useNavigate()
     const CifrarTexto = (text) => CryptoJS.AES.encrypt(text, env.SECRETO).toString();
+    const Descifrar = (text) => CryptoJS.AES.decrypt(text, env.SECRETO).toString(CryptoJS.enc.Utf8);
     const storage = JSON.parse(sessionStorage.getItem("userData")) || JSON.parse(localStorage.getItem("userData"));
     const [loading,setLoading] = useState(true);
     const [load,setLoad] = useState({
@@ -120,7 +121,7 @@ const LoginProvider = ({children}) => {
           ca.abort();
         };
       }, [verificar]);
-      const values = {userData,logIn,logOut,load,loading}
+      const values = {userData,logIn,logOut,load,loading,Descifrar}
   return (
     <LoginContext.Provider value={values}>
       {children}
@@ -130,8 +131,8 @@ const LoginProvider = ({children}) => {
 
 
 export const useLogin = ()=>{
-    const {userData,logIn,logOut,load,loading} = useContext(LoginContext);
-    return {userData,logIn,logOut,load,loading}
+    const {userData,logIn,logOut,load,loading,Descifrar} = useContext(LoginContext);
+    return {userData,logIn,logOut,load,loading,Descifrar}
 }
 
 export default LoginProvider
