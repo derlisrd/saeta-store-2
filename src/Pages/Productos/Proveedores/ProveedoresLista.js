@@ -16,14 +16,14 @@ const ProveedoresLista = () => {
   const [inputSearch, setInputSearch] = useState("");
   const { lista, cargando, setFormulario, setOpenDialog, borrarRegistro,lang } = useProveedores();
 
-  const Acciones = ({ id, extraprops }) => (
+  const Acciones = ({ rowProps }) => (
     <Stack direction="row" justifyContent="center" spacing={1}>
       <Fab
         variant="round"
         color="primary"
         size="small"
         onClick={() => {
-          let i = lista.findIndex((e) => e.id_proveedor === id);
+          let i = lista.findIndex((e) => e.id_proveedor === rowProps.id_proveedor);
           setFormulario(lista[i]);
           setOpenDialog(true);
         }}
@@ -35,7 +35,7 @@ const ProveedoresLista = () => {
         color="secondary"
         size="small"
         onClick={() => {
-          borrarRegistro(id, extraprops);
+          borrarRegistro(rowProps.id_proveedor);
         }}
       >
         <Icon>delete</Icon>

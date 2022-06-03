@@ -48,6 +48,7 @@ export const translate = {
         buenas_noches:"Buenas noches",
         q_desea_cerrar_sesion:"Desea cerrar la sesion?",
         q_borrar:"Borrar?",
+        no_puede_borrar_productos:"No se puede borrar porque hay productos que tiene este proveedor",
         ordenar:"Ordenar",
         borrado_correctamente:"Borrado correctamente",
         q_desea_borrar_imagen:"Desea borrar la imagen?",

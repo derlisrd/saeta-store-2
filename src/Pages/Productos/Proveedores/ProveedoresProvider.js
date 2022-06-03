@@ -20,7 +20,7 @@ const ProveedoresProvider = ({children}) => {
   const enviarFormulario = async(e)=>{
     setCargando(true)
     e.preventDefault()
-    let msj = formulario.id_proveedor==="" ? `Agregado` : `Actualizado` ;
+    let msj = formulario.id_proveedor==="" ? lang.agregado_correctamente : lang.actualizado_correctamente ;
     const table = "proveedors";
     var res;
     if(formulario.id_proveedor===""){
@@ -53,13 +53,13 @@ const ProveedoresProvider = ({children}) => {
     
   }
 
-  const borrarRegistro = async(id,nombre="")=>{
-    swal({icon:"info",text:`Desear borrar "${nombre}" ?`, title:`Borrar?`, buttons:['Cancelar','OK']}).then(
+  const borrarRegistro = async(id)=>{
+    swal({icon:"info", title:lang.q_borrar, buttons:[lang.cancelar,lang.ok]}).then(
       async(e)=>{
         if(e){
           let res = await APICALLER.get({table:`productos`,where:`id_proveedor_producto,=,${id}`})
           if(res.response==="ok"){ 
-            if(res.found>0) { swal({icon:`error`, text:`No se puede borrar porque hay productos que tiene este proveedor`}) }
+            if(res.found>0) { swal({icon:`error`, text:lang.no_puede_borrar_productos}) }
             else{
               await APICALLER.delete({table:'proveedors',id:id,token:token_user});
               let array = [...lista];
