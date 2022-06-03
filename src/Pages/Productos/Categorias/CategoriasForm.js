@@ -196,7 +196,7 @@ const CategoriasForm = () => {
                 fullWidth
                 required
                 error={formErrores.nombre_categoria}
-                disabled={cargando}
+                
               />
             </Grid>
             <Grid item xs={12}>

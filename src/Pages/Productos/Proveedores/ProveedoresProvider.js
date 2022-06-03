@@ -1,13 +1,15 @@
 import { createContext, useState,useContext, useEffect,useCallback } from 'react'
 import swal from "sweetalert";
-import { APICALLER } from "../../../Api/ApiCaller";
-import { useLogin } from "../../../Contextos/LoginProvider";
+import { APICALLER } from "../../../Services/api";
+import { useLogin } from "../../../Contexts/LoginProvider";
 
 const Contexto = createContext()
 
 const ProveedoresProvider = ({children}) => {
   const storage = JSON.parse(localStorage.getItem("dataProductos"));
-  const {token_user} = useLogin()
+
+  const {userData} = useLogin()
+  const {token_user} = userData
   const [lista, setLista] = useState([]);
   const [cargando,setCargando] = useState(true)
   const initial = {id_proveedor:"",nombre_proveedor:"",telefono_proveedor:"",ruc_proveedor:""}

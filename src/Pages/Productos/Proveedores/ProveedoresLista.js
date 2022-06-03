@@ -1,6 +1,5 @@
 import { useState } from "react";
-import Motion from "../../../Componentes/Motion";
-import Tablas from "../../../Componentes/Tablas";
+import Tablas from "../../../Components/UI/Tablas";
 import { useProveedores } from "./ProveedoresProvider";
 import {
   Fab,
@@ -103,7 +102,7 @@ const ProveedoresLista = () => {
     </Stack>
   );
   return (
-    <Motion>
+    <>
       <Tablas
         nombretabla="Proveedores"
         icono="local_shipping"
@@ -118,7 +117,7 @@ const ProveedoresLista = () => {
         showOptions
       />
       <div></div>
-    </Motion>
+    </>
   );
 };
 
