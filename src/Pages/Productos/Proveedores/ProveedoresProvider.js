@@ -53,8 +53,8 @@ const ProveedoresProvider = ({children}) => {
     
   }
 
-  const borrarRegistro = async(id)=>{
-    swal({icon:"info", title:lang.q_borrar, buttons:[lang.cancelar,lang.ok]}).then(
+  const borrarRegistro = async(id,nombre)=>{
+    swal({icon:"info", title:lang.q_borrar, text: nombre, buttons:[lang.cancelar,lang.ok]}).then(
       async(e)=>{
         if(e){
           let res = await APICALLER.get({table:`productos`,where:`id_proveedor_producto,=,${id}`})
@@ -62,6 +62,7 @@ const ProveedoresProvider = ({children}) => {
             if(res.found>0) { swal({icon:`error`, text:lang.no_puede_borrar_productos}) }
             else{
               await APICALLER.delete({table:'proveedors',id:id,token:token_user});
+              
               let array = [...lista];
               let index = array.findIndex((e) => e.id_proveedor === id);
               array.splice(index, 1);
@@ -71,6 +72,7 @@ const ProveedoresProvider = ({children}) => {
                 obj.proveedores.splice(index,1);
                 localStorage.setItem("dataProductos",JSON.stringify(obj));
               }
+              swal({text:lang.borrado_correctamente,timer:1200,icon:"success"});
             }
           }
           else{ console.log(res) }

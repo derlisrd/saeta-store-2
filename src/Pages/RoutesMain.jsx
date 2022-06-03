@@ -25,6 +25,7 @@ import Notas from "./Ventas/Notas";
 import Monedas from "./Monedas";
 import CategoriasForm from "./Productos/Categorias/CategoriasForm";
 import Proveedores from "./Productos/Proveedores";
+import Marcas from "./Productos/Marcas";
 /* 
 import Agenda from "./Agenda";
 import Movimientos from "./Caja/Movimientos/Index";
@@ -38,7 +39,6 @@ import Monedas from "./Monedas";
 import CategoriasForm from "./Productos/Categorias/CategoriasForm";
 import Compras from "./Productos/Compras";
 import Inventario from "./Productos/Inventario";
-import Marcas from "./Productos/Marcas";
 import Productos from "./Productos/Productos";
 import ProductCode from "./Productos/Productos/ProductCode";
 import ProductForm from "./Productos/Productos/ProductForm";
@@ -99,6 +99,7 @@ const RoutesMain = () => {
       <Route path={R+'categorias/new'} element={<PrivateRoute id={11}><CategoriasForm /></PrivateRoute>} />
       <Route path={R+"categorias/edit/:id"} element={<PrivateRoute id={11}><CategoriasForm /></PrivateRoute>} />
       <Route path={R+"proveedores"} element={<PrivateRoute id={14}><Proveedores /></PrivateRoute>} />
+      <Route path={R+"marcas"} element={<PrivateRoute id={12}><Marcas /></PrivateRoute>} />
       <Route path={R+'clientes'} element={<PrivateRoute id={28}><Clientes /></PrivateRoute>} />
       <Route path={R+'settings'} element={<PrivateRoute id={36}><Settings /></PrivateRoute>} />
       <Route path={R+'tema'} element={<PrivateRoute id={72}><Tema /></PrivateRoute>} />

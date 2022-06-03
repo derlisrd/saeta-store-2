@@ -1,23 +1,24 @@
 import { createContext, useCallback, useContext, useEffect, useState } from "react";
 import swal from "sweetalert";
-import { APICALLER } from "../../../Api/ApiCaller";
-import { useLogin } from "../../../Contextos/LoginProvider";
-
+import { APICALLER } from "../../../Services/api";
+import { useLogin } from "../../../Contexts/LoginProvider";
+import {useLang} from "../../../Contexts/LangProvider"
 const Context = createContext();
 
 const MarcasProvider = ({ children }) => {
   const storage = JSON.parse(localStorage.getItem("dataProductos"));
-  const {token_user} = useLogin();
+  const {userData} = useLogin()
+  const {token_user} = userData
+  const {lang} = useLang()
   const [lista, setLista] = useState([]);
   const [cargando,setCargando] = useState(true)
   const initial = {id_marca:"",nombre_marca:"",}
   const [formulario,setFormulario] = useState(initial)
   const [openDialog,setOpenDialog]= useState(false)
 
-  //setInterval(function () {console.log("hi")}, 8000);
   const enviarFormulario = async(e)=>{
     e.preventDefault()
-    let msj = formulario.id_marca ? `Actualizado` : `Agregado` ;
+    let msj = formulario.id_marca ? lang.agregado_correctamente : lang.actualizado_correctamente ;
     const table = "marcas";
     var res;
     setCargando(true)
@@ -42,7 +43,7 @@ const MarcasProvider = ({ children }) => {
         localStorage.setItem("dataProductos",JSON.stringify(obj));
       }
     }
-    res.response==="ok" ? swal({icon:"success",text:`${msj} correctamente`}) : console.log(res)
+    res.response==="ok" ? swal({icon:"success",text:`${msj}`,timer:1300}) : console.log(res)
     getLista()
     setOpenDialog(false)
     setFormulario(initial);
@@ -55,7 +56,7 @@ const MarcasProvider = ({ children }) => {
         if(e){
           let res = await APICALLER.get({table:`productos`,where:`id_marca_producto,=,${id}`})
           if(res.response==="ok"){ 
-            if(res.found>0) { swal({icon:`error`, text:`No se puede borrar porque hay productos que tiene esta marca`}) }
+            if(res.found>0) { swal({icon:`error`, text:lang.no_se_puede_borrar}) }
             else{
               let res = await APICALLER.delete({table:'marcas',id:id,token:token_user});
               res.response!=="ok" && console.log(res);
@@ -97,13 +98,13 @@ const MarcasProvider = ({ children }) => {
   }, [getLista]);
 
   return (
-    <Context.Provider value={{ lista, setLista,cargando,setCargando,openDialog,setOpenDialog,formulario,setFormulario,enviarFormulario,borrarRegistro }}>{children}</Context.Provider>
+    <Context.Provider value={{lang, lista, setLista,cargando,setCargando,openDialog,setOpenDialog,formulario,setFormulario,enviarFormulario,borrarRegistro }}>{children}</Context.Provider>
   );
 };
 
 export const useMarcas = () => {
-  const { lista, setLista,cargando,setCargando,openDialog,setOpenDialog,formulario,setFormulario,enviarFormulario,borrarRegistro } = useContext(Context);
-  return { lista, setLista,cargando,setCargando,openDialog,setOpenDialog,formulario,setFormulario,enviarFormulario,borrarRegistro };
+  const {lang, lista, setLista,cargando,setCargando,openDialog,setOpenDialog,formulario,setFormulario,enviarFormulario,borrarRegistro } = useContext(Context);
+  return { lang,lista, setLista,cargando,setCargando,openDialog,setOpenDialog,formulario,setFormulario,enviarFormulario,borrarRegistro };
 };
 
 export default MarcasProvider;

@@ -35,7 +35,7 @@ const ProveedoresLista = () => {
         color="secondary"
         size="small"
         onClick={() => {
-          borrarRegistro(rowProps.id_proveedor);
+          borrarRegistro(rowProps.id_proveedor,rowProps.nombre_proveedor);
         }}
       >
         <Icon>delete</Icon>
@@ -65,7 +65,7 @@ const ProveedoresLista = () => {
     },
   ];
   const search = (
-    <Stack direction="row" justifyContent="center" spacing={2}>
+    <Stack direction="row" spacing={2}>
       <TextField
         InputProps={{
           endAdornment: (

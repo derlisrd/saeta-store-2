@@ -1,10 +1,10 @@
-import {Dialog,DialogContent, DialogActions,DialogTitle,TextField,Button,LinearProgress, Grid} from '@mui/material'
+import {Dialog,DialogContent, DialogActions,DialogTitle,TextField,Button,LinearProgress,Zoom, Grid} from '@mui/material'
 import React from 'react'
 import { useProveedores } from './ProveedoresProvider'
 
 const ProveedoresForm = () => {
     
-    const {openDialog,setOpenDialog,formulario,enviarFormulario,setFormulario,cargando} = useProveedores();
+    const {openDialog,setOpenDialog,formulario,enviarFormulario,setFormulario,cargando, lang} = useProveedores();
 
     const cerrar = ()=>{
       setOpenDialog(false)
@@ -16,10 +16,10 @@ const ProveedoresForm = () => {
     }
 
   return (
-    <Dialog open={openDialog} fullWidth onClose={cerrar}>
+    <Dialog open={openDialog} fullWidth TransitionComponent={Zoom}  onClose={cerrar}>
       <form onSubmit={enviarFormulario}>
         <DialogTitle>
-          Proveedor
+          {lang.proveedor}
         </DialogTitle>
         <DialogContent dividers>
         
@@ -34,8 +34,7 @@ const ProveedoresForm = () => {
                   value={formulario.nombre_proveedor}
                   onChange={onChange}
                   fullWidth
-                  label="Nombre de proveedor"
-                  variant="outlined"
+                  label={lang.nombre}
                   required
                   disabled={cargando}
                 />
@@ -48,8 +47,7 @@ const ProveedoresForm = () => {
               value={formulario.ruc_proveedor}
               onChange={onChange}
               fullWidth
-              label="Documento del proveedor"
-              variant="outlined"
+              label={lang.documento}
               required
               disabled={cargando}
               />
@@ -60,16 +58,15 @@ const ProveedoresForm = () => {
               value={formulario.telefono_proveedor}
               onChange={onChange}
               fullWidth
-              label="Teléfono de contacto"
-              variant="outlined"
+              label={lang.telefono}
               disabled={cargando}
             />
             </Grid>
             </Grid>
         </DialogContent>
         <DialogActions>
-          <Button disabled={cargando} variant="outlined" onClick={enviarFormulario}  > { formulario.id_proveedor ? `EDITAR` : `AGREGAR`}</Button>
-          <Button variant="outlined"  onClick={()=>cerrar()}>CERRAR</Button>
+          <Button disabled={cargando} variant="contained" type="submit"  > {lang.guardar}</Button>
+          <Button variant="contained"  onClick={()=>cerrar()}>{lang.cerrar}</Button>
         </DialogActions>
       </form>
     </Dialog>

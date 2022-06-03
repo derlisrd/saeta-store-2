@@ -3,10 +3,9 @@ import {
   DialogActions,
   DialogTitle,
   DialogContent,
-  DialogContentText,
   Button,
   TextField,
-  Grid, LinearProgress
+  Grid, LinearProgress,Zoom
 } from "@mui/material";
 import { useMarcas } from "./MarcasProvider";
 
@@ -17,7 +16,7 @@ const MarcasForm = () => {
     openDialog,
     setOpenDialog,
     cargando,
-    enviarFormulario,
+    enviarFormulario,lang
   } = useMarcas();
   const cerrar = () => {
     setFormulario({ nombre_marca: "" });
@@ -29,15 +28,11 @@ const MarcasForm = () => {
   };
 
   return (
-    <Dialog fullWidth open={openDialog} onClose={cerrar}>
+    <Dialog fullWidth open={openDialog} onClose={cerrar} TransitionComponent={Zoom}>
       <form onSubmit={enviarFormulario}>
-        <DialogTitle>Marcas</DialogTitle>
+        <DialogTitle>{lang.marcas}</DialogTitle>
         <DialogContent dividers>
-          <DialogContentText>
-            {formulario.id_marca
-              ? `Editar el nombre de la marca`
-              : `Ingrese el nombre de la marca`}
-          </DialogContentText>
+
           <Grid container spacing={2}>
             <Grid item xs={12}>
               {cargando && <LinearProgress /> }
@@ -50,8 +45,7 @@ const MarcasForm = () => {
                 name="nombre_marca"
                 onChange={onChange}
                 fullWidth
-                variant="outlined"
-                helperText="Nombre de la marca"
+                label={lang.nombre}
                 disabled={cargando}
                 required
               />
@@ -59,12 +53,11 @@ const MarcasForm = () => {
           </Grid>
         </DialogContent>
         <DialogActions>
-          <Button variant="outlined" onClick={enviarFormulario}>
-            {" "}
-            {formulario.id_marca ? `EDITAR` : `AGREGAR`}
+          <Button variant="contained" type="submit">
+            {lang.guardar}
           </Button>
-          <Button variant="outlined" onClick={cerrar}>
-            CERRAR
+          <Button variant="contained" onClick={cerrar}>
+            {lang.cerrar}
           </Button>
         </DialogActions>
       </form>

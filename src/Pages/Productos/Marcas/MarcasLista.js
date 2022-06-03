@@ -1,5 +1,5 @@
-import Motion from "../../../Componentes/Motion"
-import Tablas from "../../../Componentes/Tablas"
+
+import Tablas from "../../../Components/UI/Tablas"
 import { useMarcas } from "./MarcasProvider"
 import {Fab, Icon, TextField, InputAdornment, IconButton, Tooltip, Button, Stack} from '@mui/material'
 
@@ -7,7 +7,7 @@ import { useState } from "react"
 
 const MarcasLista = () => {
 
-    const {lista,cargando,setOpenDialog, setFormulario,formulario,borrarRegistro} = useMarcas()
+    const {lista,cargando,setOpenDialog, setFormulario,formulario,borrarRegistro,lang} = useMarcas()
     
 
     const [inputSearch, setInputSearch] = useState("")
@@ -15,22 +15,22 @@ const MarcasLista = () => {
     const columns = [
         {
           field: "id_marca",
-          title: "ID",
+          title: lang.id,
         },
         {
           field: "nombre_marca",
-          title: "Nombre",
+          title: lang.nombre,
         },
       ];
 
-    const Acciones = ({id,extraprops,filaProps})=>(
+    const Acciones = ({rowProps})=>(
         
         <Stack justifyContent="center" spacing={1} direction="row">
         <Fab
           variant="round"
           color="primary"
           size="small"
-          onClick={() =>{ setFormulario({...formulario,id_marca:id,nombre_marca: extraprops}); setOpenDialog(true) } }
+          onClick={() =>{ setFormulario({...formulario,id_marca:rowProps.id_marca,nombre_marca: rowProps.nombre_marca}); setOpenDialog(true) } }
         >
           <Icon>edit</Icon>
         </Fab>
@@ -38,7 +38,7 @@ const MarcasLista = () => {
           variant="round"
           color="secondary"
           size="small"
-          onClick={()=>{ borrarRegistro( filaProps.id_marca,filaProps.nombre_marca)}}
+          onClick={()=>{ borrarRegistro( rowProps.id_marca,rowProps.nombre_marca)}}
         >
           <Icon>delete</Icon>
         </Fab>
@@ -60,15 +60,14 @@ const MarcasLista = () => {
             }}
             onKeyPress={e=>{if(e.key==='Enter'){  } } }
             onChange={(e) => {setInputSearch(e.target.value)}}
-            variant="outlined"
-            label="Buscar"
+            label={lang.buscar}
             value={inputSearch}
           />
-          <Tooltip title="AGREGAR NUEVO" arrow >
-          <Button  color="primary" variant="outlined"  size="large" 
+          <Tooltip title={lang.agregar_nuevo} arrow >
+          <Button variant="contained"  size="large" 
             onClick={()=>{setOpenDialog(true)}}
           >
-            AGREGAR
+            {lang.agregar}
             </Button>
             </Tooltip>
         </Stack>
@@ -79,22 +78,20 @@ const MarcasLista = () => {
       );
 
   return (
-    <Motion>
+    <>
         <Tablas 
-            nombretabla="Marcas"
-            icono="branding_watermark"
-            bgicono="#3f51b5"
-            namecolumnID={`id_marca`}
-            columnas={columns}
-            filas={FilterData}
-            Acciones={Acciones}
-            extraprops={"nombre_marca"}
-            search={search}
-            cargando={cargando}
+            title={lang.marcas}
+            subtitle={lang.lista_marcas}
+            icon={{ name:"branding_watermark" }}
+            columns={columns}
+            datas={FilterData}
+            Accions={Acciones}
+            inputs={search}
+            loading={cargando}
             showOptions
         />
         
-    </Motion>
+    </>
   )
 }
 

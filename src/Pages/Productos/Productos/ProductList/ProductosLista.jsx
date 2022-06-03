@@ -87,11 +87,10 @@ const ProductosLista = () => {
           }}
           onKeyPress={e=>{if(e.key==='Enter'){buscarRegistro() } } }
           onChange={(e) => setInputSearch(e.target.value)}
-          variant="outlined"
           label={lang.buscar}
         />
         <Tooltip title={lang.agregar} arrow >
-        <Button color="primary" variant="contained" endIcon={<Icon>add</Icon>} size="large" 
+        <Button color="primary" variant="contained" size="large" 
           onClick={()=> go.to('productos/new')}
         >
           {lang.agregar}

@@ -10,7 +10,7 @@ import { useVentas } from "./VentasProvider";
 import VentasTabla from "./VentasTabla";
 
 const VentasFactura = () => {
-  const { Funciones,dialogs, setDialogs, cargas,inputCodigo, inputCantidad,verificarExisteEnTabla,Aguardar,datosFacturas,indexFactura,CancelarFacturaActual,changeMonedas,Anotar} = useVentas();
+  const { Funciones,dialogs, lang, setDialogs, cargas,inputCodigo, inputCantidad,verificarExisteEnTabla,Aguardar,datosFacturas,indexFactura,CancelarFacturaActual,changeMonedas,Anotar} = useVentas();
 
   const da = {...datosFacturas.facturas[indexFactura]}
   
@@ -73,10 +73,9 @@ const VentasFactura = () => {
               autoComplete="off"
               autoFocus
               name="codigo_producto"
-              variant="outlined"
               label="Código de Producto"
               placeholder="Ctrl + b"
-              helperText="Ingrese el código y presione Enter o el botón"
+              helperText={lang.ingrese_codigo_pulse_enter}
               fullWidth
               InputProps={{
                 startAdornment: (
@@ -100,7 +99,6 @@ const VentasFactura = () => {
               inputRef={inputCantidad}
               type="number"
               name="cantidad"
-              variant="outlined"
               helperText="Cantidad"
               label="Cantidad"
               defaultValue="1"
@@ -114,7 +112,7 @@ const VentasFactura = () => {
               color="primary"
               onClick={()=>{verificarExisteEnTabla(inputCodigo.current.value)}}
             >
-              Agregar item
+              {lang.agregar_item}
             </ButtonCustom>
           </Grid>
           
@@ -125,11 +123,11 @@ const VentasFactura = () => {
               
                 <Grid item xs={12} sm={6} md={12} lg={6}>
                   <ButtonCustom
-                    variant="outlined"
+                    variant="contained"
                     onClick={openFinalizarDialog}
                     color="success" fullWidth
                   >
-                    FINALIZAR
+                    {lang.finalizar}
                   </ButtonCustom>
                 </Grid>
                 <Grid item xs={12} sm={6} md={12} lg={6}>
@@ -140,7 +138,7 @@ const VentasFactura = () => {
                     color="primary"
                     onClick={CancelarFacturaActual}
                   >
-                    CANCELAR
+                    {lang.cancelar}
                   </ButtonCustom>
                 </Grid>
                 <Grid item xs={12} sm={6}>
@@ -151,19 +149,20 @@ const VentasFactura = () => {
                     onClick={Aguardar}
                     color="warning"
                   >
-                    Aguardar
+                    {lang.esperar}
                   </ButtonCustom>
                 </Grid>
                 <Grid item xs={12} sm={6}>
-                  <ButtonCustom
-                    variant="outlined"
-                    size="large"
-                    fullWidth
-                    onClick={Anotar}
-                    color="secondary"
-                  >
-                    Anotar
-                  </ButtonCustom>
+                  <Tooltip title={lang.genera_un_pedido}>
+                    <ButtonCustom
+                      size="large"
+                      fullWidth  variant="outlined"
+                      onClick={Anotar}
+                      color="secondary"
+                    >
+                      {lang.anotar}
+                    </ButtonCustom>
+                  </Tooltip>
                 </Grid>
                 <Grid xs={12} item>
                 <Alert severity="info" icon={false}>
@@ -185,12 +184,12 @@ const VentasFactura = () => {
           </Grid>
           <Grid item xs={12}>
             <Button
-                variant="outlined"
+                 variant="outlined"
                 size="small"
                 color="error"
                 onClick={()=>{setDialogs({...dialogs,ayuda:true})}}
               >
-                Ayuda
+                {lang.ayuda}
               </Button>
               {da.itemsFactura.length>0 && 
               <Tooltip title="Imprimir presupuesto" placement="top">
