@@ -14,7 +14,7 @@ import {
 
 const ProveedoresLista = () => {
   const [inputSearch, setInputSearch] = useState("");
-  const { lista, cargando, setFormulario, setOpenDialog, borrarRegistro } = useProveedores();
+  const { lista, cargando, setFormulario, setOpenDialog, borrarRegistro,lang } = useProveedores();
 
   const Acciones = ({ id, extraprops }) => (
     <Stack direction="row" justifyContent="center" spacing={1}>
@@ -53,15 +53,15 @@ const ProveedoresLista = () => {
     },
     {
       field: "ruc_proveedor",
-      title: "Documento",
+      title: lang.doc,
     },
     {
       field: "nombre_proveedor",
-      title: "Nombre",
+      title: lang.nombre,
     },
     {
       field: "telefono_proveedor",
-      title: "Contacto",
+      title: lang.contacto,
     },
   ];
   const search = (
@@ -78,25 +78,24 @@ const ProveedoresLista = () => {
         }}
         onKeyPress={(e) => {
           if (e.key === "Enter") {
+            
           }
         }}
         onChange={(e) => {
           setInputSearch(e.target.value);
         }}
-        variant="outlined"
-        label="Buscar"
+        label={lang.buscar}
         value={inputSearch}
       />
-      <Tooltip title="AGREGAR NUEVO" arrow>
+      <Tooltip title={lang.agregar_nuevo} arrow>
         <Button
-          color="primary"
-          variant="outlined"
+          variant="contained"
           size="large"
           onClick={() => {
             setOpenDialog(true);
           }}
         >
-          AGREGAR
+          {lang.agregar}
         </Button>
       </Tooltip>
     </Stack>
@@ -104,16 +103,14 @@ const ProveedoresLista = () => {
   return (
     <>
       <Tablas
-        nombretabla="Proveedores"
-        icono="local_shipping"
-        bgicono="#3f51b5"
-        namecolumnID={`id_proveedor`}
-        columnas={columns}
-        filas={FilterData}
-        Acciones={Acciones}
-        extraprops={"nombre_proveedor"}
-        search={search}
-        cargando={cargando}
+        loading={cargando}
+        inputs={search}
+        title={lang.proveedores}
+        subtitle={lang.lista_proveedores}
+        columns={columns}
+        datas={FilterData}
+        Accions={Acciones}
+        icon={{ name:"local_shipping" }}
         showOptions
       />
       <div></div>

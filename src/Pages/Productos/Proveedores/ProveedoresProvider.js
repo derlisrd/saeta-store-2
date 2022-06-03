@@ -2,12 +2,12 @@ import { createContext, useState,useContext, useEffect,useCallback } from 'react
 import swal from "sweetalert";
 import { APICALLER } from "../../../Services/api";
 import { useLogin } from "../../../Contexts/LoginProvider";
-
+import {useLang} from "../../../Contexts/LangProvider"
 const Contexto = createContext()
 
 const ProveedoresProvider = ({children}) => {
   const storage = JSON.parse(localStorage.getItem("dataProductos"));
-
+  const {lang} = useLang()
   const {userData} = useLogin()
   const {token_user} = userData
   const [lista, setLista] = useState([]);
@@ -99,7 +99,7 @@ const ProveedoresProvider = ({children}) => {
     };
   }, [getLista]);
   return (
-    <Contexto.Provider value={{lista,setLista,cargando,formulario,setFormulario,openDialog,setOpenDialog,enviarFormulario,borrarRegistro}}>
+    <Contexto.Provider value={{lang,lista,setLista,cargando,formulario,setFormulario,openDialog,setOpenDialog,enviarFormulario,borrarRegistro}}>
       {children}
     </Contexto.Provider>
   )
@@ -107,8 +107,8 @@ const ProveedoresProvider = ({children}) => {
 
 export const useProveedores = ()=>{
 
-  const {lista,setLista,cargando,formulario,setFormulario,openDialog,setOpenDialog,enviarFormulario,borrarRegistro} = useContext(Contexto);
-  return {lista,setLista,cargando,formulario,setFormulario,openDialog,setOpenDialog,enviarFormulario,borrarRegistro}
+  const {lang,lista,setLista,cargando,formulario,setFormulario,openDialog,setOpenDialog,enviarFormulario,borrarRegistro} = useContext(Contexto);
+  return {lang,lista,setLista,cargando,formulario,setFormulario,openDialog,setOpenDialog,enviarFormulario,borrarRegistro}
 }
 
 export default ProveedoresProvider
