@@ -3,7 +3,7 @@ import { Button, Menu, MenuItem } from '@mui/material';
 import { useInventario } from './InventarioProvider';
 
 const InfoDeposito = () => {
-    const {listaDepositos,cambiarDeposito,idDeposito} = useInventario();
+    const {listaDepositos,cambiarDeposito,idDeposito,lang} = useInventario();
     const [anchorEl, setAnchorEl] = React.useState(null);
     const open = Boolean(anchorEl);
     const handleChange = e=>{
@@ -19,7 +19,7 @@ const InfoDeposito = () => {
         <Button
           onClick={handleOpen}
         >
-          DEPOSITO: {NOMBRE}
+          {lang.deposito}: {NOMBRE}
         </Button>
         <Menu
           anchorEl={anchorEl}

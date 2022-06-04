@@ -1,11 +1,13 @@
 import {useCallback, createContext , useContext,useState,useEffect,useRef} from "react"
 import swal from "sweetalert";
-import { APICALLER } from "../../../Api/ApiCaller";
-import { useLogin } from "../../../Contextos/LoginProvider";
+import { APICALLER } from "../../../Services/api";
+import { useLogin } from "../../../Contexts/LoginProvider";
+import { useLang } from "../../../Contexts/LangProvider";
 const Contexto = createContext()
 
 const InventarioProvider = ({children})=>{
-    const { token_user } = useLogin();
+    const {lang} = useLang()
+    const { userData } = useLogin(); const {token_user} = userData;
     const [load,setLoad] = useState(true);
     const [idDeposito,setIdDeposito] = useState('');
     const [listaDepositos,setListaDepositos]=useState([]);
@@ -101,8 +103,11 @@ const InventarioProvider = ({children})=>{
         };
       }, [getLista]);
 
+
+const values ={ lang,finalizarCorreccion,load,formulario,setFormulario,initialForm,listaDepositos,cambiarDeposito,idDeposito,setIdDeposito,listaStock,setListaStock,corregirLista,inputCorregir,msj,setMsj,cantidadNueva,setCantidadNueva }
+
     return(
-        <Contexto.Provider value={{finalizarCorreccion,load,formulario,setFormulario,initialForm,listaDepositos,cambiarDeposito,idDeposito,setIdDeposito,listaStock,setListaStock,corregirLista,inputCorregir,msj,setMsj,cantidadNueva,setCantidadNueva }}>
+        <Contexto.Provider value={values}>
             {children}
         </Contexto.Provider>
     )
@@ -112,6 +117,6 @@ export default InventarioProvider;
 
 export const useInventario = ()=>{
 
-    const {finalizarCorreccion,load,formulario,setFormulario,initialForm,listaDepositos,cambiarDeposito,idDeposito,setIdDeposito,listaStock,setListaStock,corregirLista,inputCorregir,msj,setMsj,cantidadNueva,setCantidadNueva} = useContext(Contexto)
-    return {finalizarCorreccion,load,formulario,setFormulario,initialForm,listaDepositos,cambiarDeposito,idDeposito,setIdDeposito,listaStock,setListaStock,corregirLista,inputCorregir,msj,setMsj,cantidadNueva,setCantidadNueva}
+    const {lang,finalizarCorreccion,load,formulario,setFormulario,initialForm,listaDepositos,cambiarDeposito,idDeposito,setIdDeposito,listaStock,setListaStock,corregirLista,inputCorregir,msj,setMsj,cantidadNueva,setCantidadNueva} = useContext(Contexto)
+    return {lang,finalizarCorreccion,load,formulario,setFormulario,initialForm,listaDepositos,cambiarDeposito,idDeposito,setIdDeposito,listaStock,setListaStock,corregirLista,inputCorregir,msj,setMsj,cantidadNueva,setCantidadNueva}
 }
