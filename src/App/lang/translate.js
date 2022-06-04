@@ -197,7 +197,8 @@ export const translate = {
         transferir:"Transferir",
         transferido_correctamente: "Transferido correctamente",
         transferencia_de_caja:"Transferencia de caja",
-        editado_correctamente:"Editado correctamente"
+        editado_correctamente:"Editado correctamente",
+        porcentaje:"porcentaje",
     },
 
     en:{

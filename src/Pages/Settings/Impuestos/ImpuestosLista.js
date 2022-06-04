@@ -1,13 +1,12 @@
 import { Icon,IconButton } from '@mui/material'
 
-
-import Tablas from '../../../Componentes/Tablas'
+import Tablas from '../../../Components/UI/Tablas'
 
 import { useImpuestos } from './ImpuestosProvider'
 
 const ImpuestosLista = () => {
 
-  const {lista,cargando} = useImpuestos()
+  const {lista,cargando,lang} = useImpuestos()
   const columnas = [
       {
         field:"id_impuesto",
@@ -15,12 +14,12 @@ const ImpuestosLista = () => {
       },
       {
         field:"nombre_impuesto",
-        title:"Nombre Impuesto",
+        title:lang.nombre,
       },
       {
         field:"porcentaje_impuesto",
-        title:"porcentaje",
-        extraitem:" %"
+        title:lang.porcentaje,
+        after:" %"
       }
   ]
 
@@ -32,20 +31,19 @@ const ImpuestosLista = () => {
   const Acciones = ()=>
   (<>
   <IconButton>
-
     <Icon>more_vert</Icon>
   </IconButton>
   </>)
   
   return (
     <Tablas 
-        nombretabla="Impuestos"
-        bgicono="#3f51b5"
+        title={lang.impuestos}
         cargando={cargando}
-        icono="account_balance"
-        columnas={columnas}
-        filas={FilterData}
-        Acciones={Acciones}
+        lang={lang}
+        icon={{ name:"account_balance" }}
+        columns={columnas}
+        datas={FilterData}
+        Accions={Acciones}
         showOptions
     />
   )

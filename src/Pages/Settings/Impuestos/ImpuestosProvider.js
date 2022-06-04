@@ -1,6 +1,6 @@
 import { useState,useEffect,useContext,createContext,useCallback } from "react";
-import { APICALLER } from "../../../Api/ApiCaller";
-
+import { APICALLER } from "../../../Services/api";
+import {useLang} from "../../../Contexts/LangProvider"
 
 const Contexto = createContext()
 
@@ -8,6 +8,7 @@ const ImpuestoProvider = ({children})=>{
 
     const [cargando,setCargando] = useState(true)
     const [lista,setLista] = useState([])
+    const {lang} = useLang();
 
     const getLista = useCallback(async()=>{
 
@@ -31,7 +32,7 @@ const ImpuestoProvider = ({children})=>{
     },[getLista])
     return (
         <Contexto.Provider
-            value={{cargando,setCargando,lista,setLista}}
+            value={{cargando,setCargando,lista,setLista,lang}}
         >
             {children}
         </Contexto.Provider>
@@ -39,8 +40,8 @@ const ImpuestoProvider = ({children})=>{
 }
 
 export const useImpuestos = ()=>{
-    const {cargando,setCargando,lista,setLista} = useContext(Contexto)
-    return {cargando,setCargando,lista,setLista}
+    const {cargando,setCargando,lista,setLista,lang} = useContext(Contexto)
+    return {cargando,setCargando,lista,setLista,lang}
 }
 
 export default ImpuestoProvider

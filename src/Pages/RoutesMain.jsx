@@ -30,6 +30,7 @@ import Empleados from "./Empleados";
 import ProductosApartados from "./Productos/ProductosApartados";
 import Depositos from "./Productos/Depositos";
 import Inventario from "./Productos/Inventario";
+import Impuestos from "./Settings/Impuestos";
 /* 
 import Agenda from "./Agenda";
 import Movimientos from "./Caja/Movimientos/Index";
@@ -97,6 +98,7 @@ const RoutesMain = () => {
   const R = env.BASEURL +'/';
   return (
     <Routes>
+      <Route path={R+'impuestos'} element={<PrivateRoute id={45}><Impuestos /></PrivateRoute>} />
       <Route path={R+'inventario'} element={<PrivateRoute id={43}><Inventario /></PrivateRoute>} />
       <Route path={R+'depositos'} element={<PrivateRoute id={39}><Depositos /></PrivateRoute>} />
       <Route path={R+'apartados'} element={<PrivateRoute id={18}><ProductosApartados /></PrivateRoute>} />
