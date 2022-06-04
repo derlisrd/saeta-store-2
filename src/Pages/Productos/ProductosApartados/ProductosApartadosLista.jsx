@@ -1,11 +1,10 @@
 
 import { Button, IconButton, Tooltip, Icon, Stack} from '@mui/material';
-import Motion from '../../../Componentes/Motion';
-import Tablas from '../../../Componentes/Tablas';
+import Tablas from '../../../Components/UI/Tablas';
 import { useProductosApartados } from './ProductosApartadosProvider';
 
 const ProductosApartadosLista = () => {
-    const {cargando,lista,dialogs ,setDialogs,devolver} = useProductosApartados()
+    const {cargando,lista,dialogs ,setDialogs,devolver,lang} = useProductosApartados()
 
     const FilterData = [...lista]
 
@@ -13,31 +12,31 @@ const ProductosApartadosLista = () => {
     const columns = [
         {
           field: "id_productos_apartado",
-          title: "ID",
+          title: lang.id,
         },
         {
             field: "codigo_producto",
-            title: "Código",
+            title: lang.codigo,
         },
         {
             field: "nombre_producto",
-            title: "Producto",
+            title: lang.producto,
         },
         {
             field:"nombre_cliente",
-            title:"Cliente"
+            title:lang.cliente
         },
         {
           field:"nombre_user",
-          title:"Apartado por"
+          title:lang.apartado_por
         },
         {
             field:"cantidad_apartado",
-            title:"Cantidad"
+            title:lang.cantidad
         },
         {
           field:"nombre_deposito",
-          title:"Deposito"
+          title:lang.deposito
       }
         
     ];
@@ -54,25 +53,23 @@ const ProductosApartadosLista = () => {
     )
 
     const Search = (<div>
-        <Button variant="outlined" onClick={()=>{setDialogs({...dialogs,apartar:true})}} color="primary" >Apartar producto</Button>
+        <Button variant="contained" onClick={()=>{setDialogs({...dialogs,apartar:true})}}  >{lang.apartar_producto}</Button>
     </div>)
 
   return (
-    <Motion>
+    <>
       <Tablas
-        nombretabla="Productos Apartados"
-        subtitle="Módulo de apartado de stock de los dépositos"
-        icono="save"
-        bgicono="#3f51b5"
-        namecolumnID="id_productos_apartado"
-        columnas={columns}
-        filas={FilterData}
-        Acciones={Acciones}
-        cargando={cargando.lista}
-        search={Search}
+        title={lang.apartados}
+        subtitle={lang.lista_apartados}
+        icon={{ name:"save" }}
+        columns={columns}
+        datas={FilterData}
+        Accions={Acciones}
+        loading={cargando.lista}
+        inputs={Search}
         showOptions
       />
-    </Motion>
+    </>
   )
 }
 

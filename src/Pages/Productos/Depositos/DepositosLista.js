@@ -1,15 +1,14 @@
-
-
-import Tablas from '../../../Componentes/Tablas'
+import { Button, Icon, IconButton, InputAdornment, Stack, TextField, Tooltip } from '@mui/material';
+import Tablas from '../../../Components/UI/Tablas'
 import { useDepositos } from './DepositosProvider'
 import MoreMenu from './MoreMenu';
-import  Button   from '@mui/material/Button';
-import { Icon } from '@mui/material';
+
+
 
 const DepositosLista = () => {
 
   
-  const {lista,cargando,borrar,setForm,setDialogs,dialogs} = useDepositos()
+  const {lista,cargando,borrar,setForm,setDialogs,dialogs,lang} = useDepositos()
   const columnas = [
       {
         field:"id_deposito",
@@ -17,7 +16,7 @@ const DepositosLista = () => {
       },
       {
         field:"nombre_deposito",
-        title:"Nombre Depósito",
+        title:lang.nombre,
       },
   ]
 
@@ -31,22 +30,49 @@ const DepositosLista = () => {
   }
 
 
-  const search = (
-    <Button color="primary" variant="outlined" startIcon={<Icon>add</Icon>} onClick={()=>{setDialogs({...dialogs,editar:true}); setForm({id_deposito:"",nombre_deposito:""} )}}  >Agregar</Button>
-  )
 
-  const Acciones = ({filaProps})=>(<MoreMenu  borrar={borrar} abrir={abrir} filaProps={filaProps} />)
+
+  const search = (
+    <Stack direction="row" spacing={2}>
+      <TextField
+        InputProps={{
+          endAdornment: (
+            <InputAdornment position="end">
+              <IconButton onClick={()=>{ }}>
+                <Icon>search</Icon>
+              </IconButton>
+            </InputAdornment>
+          ),
+        }}
+        onKeyPress={e=>{if(e.key==='Enter'){ } } }
+        onChange={(e) => console.log(e.target.value)}
+        label={lang.buscar}
+      />
+      <Tooltip title={lang.agregar} arrow >
+      <Button  variant="contained" size="large" 
+        onClick={()=>{setDialogs({...dialogs,editar:true}); setForm({id_deposito:"",nombre_deposito:""} )}}
+      >
+        {lang.agregar}
+        </Button>
+        </Tooltip>
+    </Stack>
+  );
+
+
+  
+
+  const Acciones = ({rowProps})=>(<MoreMenu  borrar={borrar} abrir={abrir} filaProps={rowProps} />)
   
   return (
     <Tablas 
-        nombretabla="Depósitos"
-        subtitle="Depósitos donde se almacenan los productos."
-        search={search}
-        cargando={cargando}
-        icono="local_convenience_store"
-        columnas={columnas}
-        filas={FilterData}
-        Acciones={Acciones}
+        title={lang.depositos}
+        subtitle={lang.lista_depositos}
+        inputs={search}
+        loading={cargando}
+        icon={{ name:"local_convenience_store" }}
+        columns={columnas}
+        datas={FilterData}
+        Accions={Acciones}
         showOptions
     />
   )

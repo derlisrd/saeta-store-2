@@ -1,5 +1,4 @@
 import { Dialog } from '@mui/material';
-import React from 'react'
 import { useProductosApartados } from './ProductosApartadosProvider'
 
 const DialogBuscarProducto = () => {

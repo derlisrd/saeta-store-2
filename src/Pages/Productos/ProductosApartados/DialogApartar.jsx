@@ -1,7 +1,7 @@
 import { Alert, Button, Dialog, DialogActions, DialogContent, DialogTitle, FormControl, Grid, Icon, IconButton, InputAdornment, InputLabel, LinearProgress, MenuItem, Select, TextField } from '@mui/material'
 import React,{useRef,useState} from 'react'
-import { APICALLER } from '../../../Api/ApiCaller';
-import NumberFormatCustom from '../../../Componentes/NumberFormatCustom';
+import { APICALLER } from '../../../Services/api';
+import NumberFormatCustom from '../../../Components/thirty/NumberFormatCustom';
 import { useProductosApartados } from './ProductosApartadosProvider'
 
 const DialogApartar = () => {

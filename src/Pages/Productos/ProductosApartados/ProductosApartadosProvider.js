@@ -1,13 +1,16 @@
 import { useState,useEffect,useContext,createContext,useCallback } from "react";
 import swal from "sweetalert";
-import { APICALLER } from "../../../Api/ApiCaller";
-import { useLogin } from "../../../Contextos/LoginProvider";
-
+import { APICALLER } from "../../../Services/api";
+import { useLogin } from "../../../Contexts/LoginProvider";
+import { useLang } from "../../../Contexts/LangProvider";
 
 const Contexto = createContext()
 
 const ProductosApartadosProvider = ({children})=>{
-    const {token_user,id_user} = useLogin();
+    
+    const {lang} = useLang()
+    const {userData} = useLogin();
+    const {token_user,id_user} = userData;
     const initialDialogs = {apartar: false,buscarProducto:false,buscarCliente:false}
     const [dialogs,setDialogs] = useState(initialDialogs);
 
@@ -122,7 +125,7 @@ const ProductosApartadosProvider = ({children})=>{
 
     return (
         <Contexto.Provider
-            value={{listaDepositos,cargando,setCargando,lista,setLista,setDialogs,dialogs,apartar,devolver,datosCliente,setDatosCliente,errores,setErrores}}
+            value={{lang,listaDepositos,cargando,setCargando,lista,setLista,setDialogs,dialogs,apartar,devolver,datosCliente,setDatosCliente,errores,setErrores}}
         >
             {children}
         </Contexto.Provider>
@@ -130,8 +133,8 @@ const ProductosApartadosProvider = ({children})=>{
 }
 
 export const useProductosApartados = ()=>{
-    const {listaDepositos,cargando,setCargando,lista,setLista,setDialogs,dialogs,apartar,devolver,datosCliente,setDatosCliente,errores,setErrores} = useContext(Contexto)
-    return {listaDepositos,cargando,setCargando,lista,setLista,setDialogs,dialogs,apartar,devolver,datosCliente,setDatosCliente,errores,setErrores}
+    const {lang,listaDepositos,cargando,setCargando,lista,setLista,setDialogs,dialogs,apartar,devolver,datosCliente,setDatosCliente,errores,setErrores} = useContext(Contexto)
+    return {lang,listaDepositos,cargando,setCargando,lista,setLista,setDialogs,dialogs,apartar,devolver,datosCliente,setDatosCliente,errores,setErrores}
 }
 
 export default ProductosApartadosProvider

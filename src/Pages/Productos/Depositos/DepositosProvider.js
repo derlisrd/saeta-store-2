@@ -1,13 +1,9 @@
-import {
-  useState,
-  useEffect,
-  useContext,
-  createContext,
-  useCallback,
-} from "react";
+import {useState,useEffect,useContext,createContext,useCallback} from "react";
 import swal from "sweetalert";
-import { APICALLER } from "../../../Api/ApiCaller";
-import { useLogin } from "../../../Contextos/LoginProvider";
+import { APICALLER } from "../../../Services/api";
+import { useLogin } from "../../../Contexts/LoginProvider";
+import { useLang } from "../../../Contexts/LangProvider";
+
 
 const Contexto = createContext();
 
@@ -15,7 +11,10 @@ const DepositosProvider = ({ children }) => {
 
   const storage = JSON.parse(localStorage.getItem("dataProductos"));
   const table= 'depositos';
-  const {token_user} = useLogin()
+  const {lang} = useLang()
+  const { userData } = useLogin(); const {token_user} = userData;
+
+
   const [cargando, setCargando] = useState(true);
   const [lista, setLista] = useState([]);
 
@@ -43,7 +42,7 @@ const DepositosProvider = ({ children }) => {
         localStorage.setItem("dataProductos",JSON.stringify(obj));  
       }
       getLista();
-      swal({ text: "Agregado correctamente", icon: "success", timer: 1200 });    
+      swal({ text: lang.agregado_correctamente, icon: "success", timer: 1200 });    
     }
     else{
       console.log(res);
@@ -53,14 +52,14 @@ const DepositosProvider = ({ children }) => {
   const borrar = async (fila) => {
     
     swal({
-      text: "Desea borrar este registro?",
+      text: lang.q_desea_borrar,
       icon: "warning",
-      buttons: ["Cancelar", "Borrar"],
+      buttons: [lang.cancelar, lang.ok],
     }).then( async(e) => {
       if (e) {
         let res = await APICALLER.delete({table,id:fila.id_deposito,token:token_user})
         if(res.response==="ok"){
-            swal({ text: "Borrado correctamente", timer: 1800, icon: "success" });
+            swal({ text: lang.borrado_correctamente, timer: 1800, icon: "success" });
             let array = [...lista];
             let index = array.findIndex((e) => e.id_deposito === fila.id_deposito);
             array.splice(index, 1);
@@ -79,7 +78,7 @@ const DepositosProvider = ({ children }) => {
     setCargando(true);
     let res = await APICALLER.update({table,data:form,id:form.id_deposito,token:token_user});
     if(res.response==="ok"){
-        swal({icon:'success',text:'Actualizado correctamente',timer:1200});
+        swal({icon:'success',text:lang.actualizado_correctamente,timer:1200});
         getLista();
         if(storage){
           let obj = {...storage}
@@ -113,21 +112,12 @@ const DepositosProvider = ({ children }) => {
     }
   }, [getLista]);
 
+
+  const values = {cargando,setCargando,lista,setLista,editar,borrar,form,setForm,dialogs,setDialogs,guardar,lang}
+
   return (
     <Contexto.Provider
-      value={{
-        cargando,
-        setCargando,
-        lista,
-        setLista,
-        editar,
-        borrar,
-        form,
-        setForm,
-        dialogs,
-        setDialogs,
-        guardar,
-      }}
+      value={values}
     >
       {children}
     </Contexto.Provider>
@@ -146,7 +136,7 @@ export const useDepositos = () => {
     setForm,
     dialogs,
     setDialogs,
-    guardar,
+    guardar,lang
   } = useContext(Contexto);
   return {
     cargando,
@@ -159,7 +149,7 @@ export const useDepositos = () => {
     setForm,
     dialogs,
     setDialogs,
-    guardar,
+    guardar,lang
   };
 };
 

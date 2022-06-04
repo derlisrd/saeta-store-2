@@ -153,7 +153,7 @@ const VentasFactura = () => {
                   </ButtonCustom>
                 </Grid>
                 <Grid item xs={12} sm={6}>
-                  <Tooltip title={lang.genera_un_pedido}>
+                  
                     <ButtonCustom
                       size="large"
                       fullWidth  variant="outlined"
@@ -162,7 +162,7 @@ const VentasFactura = () => {
                     >
                       {lang.anotar}
                     </ButtonCustom>
-                  </Tooltip>
+                  
                 </Grid>
                 <Grid xs={12} item>
                 <Alert severity="info" icon={false}>

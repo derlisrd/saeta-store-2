@@ -5,13 +5,13 @@ import {
   DialogContent,
   DialogTitle,
   Grid,
-  TextField, Collapse
+  TextField, Zoom
 } from "@mui/material";
 import {  useRef } from "react";
 import { useDepositos } from "./DepositosProvider";
 
 const DialogDepositos = () => {
-  const { setDialogs, dialogs, guardar,form,setForm,editar } = useDepositos();
+  const { setDialogs, dialogs, guardar,form,setForm,editar,lang} = useDepositos();
   const nombre_depositoRef = useRef(null);
 
   const cerrar = () => {
@@ -43,10 +43,10 @@ const DialogDepositos = () => {
   };
 
   return (
-    <Dialog open={dialogs.editar} onClose={cerrar} TransitionComponent={Collapse} fullWidth>
-      <DialogTitle>{form.id_deposito===""? `Agregar depósito nuevo`: `Editar depósito`}</DialogTitle>
+    <Dialog open={dialogs.editar} onClose={cerrar} TransitionComponent={Zoom} fullWidth>
+      <DialogTitle>{lang.deposito}</DialogTitle>
     <form onSubmit={guardarValidate}>
-      <DialogContent>
+      <DialogContent dividers>
         <Grid container spacing={2}>
           <Grid item xs={12}>
             <TextField
@@ -54,21 +54,20 @@ const DialogDepositos = () => {
               inputRef={nombre_depositoRef}
               onChange={onChange}
               name="nombre_deposito"
-              variant="outlined"
               autoFocus
               value={form.nombre_deposito}
               fullWidth
-              label="Nombre del depósito"
+              label={lang.nombre}
             />
           </Grid>
         </Grid>
       </DialogContent>
       <DialogActions>
-        <Button variant="outlined" type="submit">
-          Guardar
+        <Button variant="contained" type="submit">
+          {lang.guardar}
         </Button>
-        <Button variant="outlined" onClick={cerrar}>
-          Cancelar
+        <Button variant="contained" onClick={cerrar}>
+          {lang.cancelar}
         </Button>
       </DialogActions>
       </form>
