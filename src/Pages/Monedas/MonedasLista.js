@@ -8,6 +8,7 @@ const MonedasLista = () => {
 
     const abrirDialogCotizacion = (datos)=>{
         setDatosMonedas(datos)
+        //console.log(datos)
         setDialogCotizacion(true)
     }
 
@@ -62,8 +63,8 @@ const MonedasLista = () => {
         <div >
         </div>
     )
-    const Acciones = ({filaProps})=>(
-    <Button variant="outlined" onClick={()=>{abrirDialogCotizacion(filaProps)}} color="primary" size="small" >Cambiar</Button>
+    const Acciones = ({rowProps})=>(
+    <Button variant="outlined" onClick={()=>{abrirDialogCotizacion(rowProps)}} color="primary" size="small" >{lang.cambiar}</Button>
     )
 
   return (

@@ -1,11 +1,10 @@
-import { Button, Icon, IconButton, Stack } from '@mui/material'
-import React from 'react'
-import Tablas from '../../Componentes/Tablas'
+import { Button, Icon, IconButton, InputAdornment, Stack, TextField, Tooltip } from '@mui/material'
+import Tablas from '../../Components/UI/Tablas'
 import { useEmpleados } from './EmpleadosProvider'
 
 const EmpleadosLista = () => {
 
-  const {lista,dialogs,setDialogs,setForm,loading} = useEmpleados()
+  const {lista,dialogs,setDialogs,setForm,loading,lang} = useEmpleados()
 
 
 const columnas = [
@@ -15,15 +14,15 @@ const columnas = [
     },
     {
       field:"apellido_empleado",
-      title:"Apellido"
+      title:lang.apellido
     },
     {
         field:"nombre_empleado",
-        title:"Nombre"
+        title:lang.nombre
     },
     {
         field:"doc_empleado",
-        title:"Doc"
+        title:lang.doc
     }
 ];
 
@@ -32,9 +31,14 @@ const open = (f)=>{
   setDialogs({...dialogs,agregar:true});
 }
 
-const Acciones = ({filaProps})=>
+
+const buscarRegistro = ()=>{
+
+}
+
+const Acciones = ({rowProps})=>
   (<Stack direction="row" spacing={1} justifyContent="center" >
-  <IconButton onClick={()=>open(filaProps)}>
+  <IconButton onClick={()=>open(rowProps)}>
     <Icon>edit</Icon>
   </IconButton>
     <IconButton onClick={()=>{}}>
@@ -42,20 +46,39 @@ const Acciones = ({filaProps})=>
   </IconButton>
   </Stack>)
 
-  const search = (
-    <Button variant="outlined" onClick={()=>{ setDialogs({agregar:true})}}>Registrar</Button>
+
+    const search = (
+      <Stack direction="row" spacing={2}>
+        <TextField
+          InputProps={{
+            endAdornment: (
+              <InputAdornment position="end">
+                <IconButton onClick={()=>{buscarRegistro()}}>
+                  <Icon>search</Icon>
+                </IconButton>
+              </InputAdornment>
+            ),
+          }}
+          onKeyPress={e=>{if(e.key==='Enter'){buscarRegistro() } } }
+          onChange={(e) => console(e.target.value)}
+          label={lang.buscar}
+        />
+        <Tooltip title={lang.agregar} arrow >
+          <Button variant="contained" onClick={()=>{ setDialogs({agregar:true})}}>{lang.agregar}</Button>
+        </Tooltip>
+      </Stack>
   );
 
   return (
     <Tablas 
-        search={search}
-        nombretabla="Empleados"
-        subtitle="Lista de empleados"
-        cargando={loading}
-        icono="badge"
-        columnas={columnas}
-        filas={lista}
-        Acciones={Acciones}
+        inputs={search}
+        title={lang.empleados}
+        subtitle={lang.lista_empleados}
+        loading={loading}
+        icon={{ name:"badge" }}
+        columns={columnas}
+        datas={lista}
+        Accions={Acciones}
         showOptions
     />
   )

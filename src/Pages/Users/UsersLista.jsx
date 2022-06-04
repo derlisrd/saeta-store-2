@@ -1,21 +1,20 @@
-import { Button, Fab,InputAdornment, Icon, IconButton, Stack, TextField,Avatar } from '@mui/material';
+import { Button, Fab,InputAdornment, Icon, IconButton, Stack, TextField } from '@mui/material';
 import Tablas from '../../Components/UI/Tablas/'
-import { useLang } from '../../Contexts/LangProvider';
 import { useUsers } from './UsersProvider';
 
 const UsersLista = () => {
 
-  const {lista,cargas} = useUsers()
-  const {lang} = useLang();
+  const {lista,cargas,lang} = useUsers()
+
   const columnas = [
     {
     field: "id_user",
-    title: "ID",
+    title: lang.id,
     },
-    {
+/*     {
       title:"Avatar",
       html: (<Avatar sx={{ bgcolor:"#06f" }}><Icon>person</Icon></Avatar>)
-    },
+    }, */
     {
       field: "username_user",
       title: lang.usuario,
@@ -26,7 +25,7 @@ const UsersLista = () => {
     },
 ]
 
-const Inputs = (    <Stack spacing={2} direction="row">
+const Inputs = (<Stack spacing={2} direction="row">
 <TextField
   InputProps={{
     endAdornment: (
@@ -39,11 +38,10 @@ const Inputs = (    <Stack spacing={2} direction="row">
   }}
   onKeyPress={(e) => {}}
   onChange={(e) => {}}
-  variant="outlined"
   label={lang.buscar}
 />
 <Button
-  variant="outlined"
+  variant="contained"
   size="large"
   onClick={() => {}}
 >
@@ -88,7 +86,7 @@ const Accions = ({rowProps})=>(
   return (
     <>
       <Tablas title={lang.usuarios}
-      icon={{ name:"people",color:"#06c" }} 
+      icon={{ name:"people" }} 
       showOptions Accions={Accions} 
       subtitle={lang.lista_de_usuarios}
       lang={lang} 

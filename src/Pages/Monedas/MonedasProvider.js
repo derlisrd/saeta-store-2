@@ -10,8 +10,7 @@ const MonedasProvider = ({children}) => {
     const [cargando,setCargando] = useState(true)
     const [dialogCotizacion,setDialogCotizacion] = useState(false)
 
-    const [datosMonedas,setDatosMonedas] = 
-    useState({id_moneda: "1", abreviatura_moneda: "Gs.", nombre_moneda: "Guaraníes", valor_moneda: "1", activo_moneda: "1"})
+    const [datosMonedas,setDatosMonedas] = useState({id_moneda: "1", abreviatura_moneda: "Gs.", nombre_moneda: "Guaraníes", valor_moneda: "1", activo_moneda: "1"})
 
     const getLista = useCallback(async()=>{
         const local = localStorage.getItem("dataMonedas");

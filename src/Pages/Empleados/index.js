@@ -1,4 +1,3 @@
-import React from 'react'
 import EmpleadosDialog from './EmpleadosDialog'
 import EmpleadosLista from './EmpleadosLista'
 import EmpleadosProvider from './EmpleadosProvider'

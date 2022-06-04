@@ -39,9 +39,7 @@ const DialogCotizacion = () => {
       token: token_user,
     });
     if (res.response === "ok") {
-      let index = lista.findIndex(
-        (i) => i.id_moneda === datosMonedas.id_moneda
-      );
+      let index = lista.findIndex((i) => i.id_moneda === datosMonedas.id_moneda);
       let array = [...lista];
       array[index].valor_moneda = data.valor_moneda;
       setLista(array);
@@ -76,6 +74,7 @@ const DialogCotizacion = () => {
         <Grid container spacing={2}>
           <Grid item xs={12}>
           <TextField
+              autoFocus
               onChange={onChange}
               name="valor_moneda"
               InputProps={{ 

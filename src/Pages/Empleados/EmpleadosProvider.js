@@ -1,11 +1,12 @@
 import React,{createContext,useContext,useState,useEffect,useCallback} from 'react'
-import { APICALLER } from '../../Api/ApiCaller'
-
+import { APICALLER } from '../../Services/api'
+import {useLang} from '../../Contexts/LangProvider'
 
 const Contexto = createContext()
 
 const EmpleadosProvider = ({children}) => {
 
+    const {lang} = useLang()
     const [loading,setLoading]= useState(true)
     const [lista,setLista] = useState([]);
     const [listaRols,setListaRols] = useState([]);
@@ -54,15 +55,15 @@ const EmpleadosProvider = ({children}) => {
         };
       }, [getLista]);
   return (
-    <Contexto.Provider value={{lista,getLista,loading,dialogs,setDialogs,form,setForm,initialForm,listaRols  }}>
+    <Contexto.Provider value={{lang,lista,getLista,loading,dialogs,setDialogs,form,setForm,initialForm,listaRols  }}>
         {children}
     </Contexto.Provider>
   )
 }
 
 export const useEmpleados = ()=>{
-    const {lista,getLista,loading,dialogs,setDialogs,form,setForm,initialForm,listaRols} = useContext(Contexto);
-    return {lista,getLista,loading,dialogs,setDialogs,form,setForm,initialForm,listaRols};
+    const {lang,lista,getLista,loading,dialogs,setDialogs,form,setForm,initialForm,listaRols} = useContext(Contexto);
+    return {lang,lista,getLista,loading,dialogs,setDialogs,form,setForm,initialForm,listaRols};
 }
 
 

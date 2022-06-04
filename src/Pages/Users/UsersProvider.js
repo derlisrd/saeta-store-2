@@ -1,11 +1,12 @@
 import {createContext,useEffect,useState,useContext,useCallback} from "react";
 import { useLogin } from "../../Contexts/LoginProvider";
 import { APICALLER } from "../../Services/api";
-
+import { useLang } from "../../Contexts/LangProvider";
 const UsersContext = createContext();
 
 function UsersProvider ({children}){
     const {userData} = useLogin();
+    const {lang} = useLang()
     const {token_user} = userData;
     const initialCargas = {lista:true,guardar:false}
     const [cargas,setCargas]=useState(initialCargas);
@@ -29,7 +30,7 @@ function UsersProvider ({children}){
     }, [getLista]);
 
     const values = {
-        dialogs,setDialogs,cargas,lista
+        dialogs,setDialogs,cargas,lista,lang
     }
     return(
         <UsersContext.Provider value={values}>
@@ -38,7 +39,7 @@ function UsersProvider ({children}){
     )
 }
 export function useUsers (){
-    const {dialogs,setDialogs,cargas,lista} = useContext(UsersContext);
-    return {dialogs,setDialogs,cargas,lista}
+    const {dialogs,setDialogs,cargas,lista,lang} = useContext(UsersContext);
+    return {dialogs,setDialogs,cargas,lista,lang}
 }
 export default UsersProvider
