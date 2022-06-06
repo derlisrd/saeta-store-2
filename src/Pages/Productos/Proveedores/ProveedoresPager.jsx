@@ -1,25 +1,24 @@
-import { useClientes } from "./ClientesProvider";
-import useGoto from "../../Hooks/useGoto";
+import { useProveedores } from "./ProveedoresProvider";
+import useGoto from "../../../Hooks/useGoto";
 import { Button, Stack } from "@mui/material";
 
-const ClientesListaPager = () => {
-  const { page, setPage, limite, countTotal,cargando,lang} = useClientes();
+const ProveedoresPager = () => {
+  const { page, setPage, limite, countTotal,cargando, lang} = useProveedores();
   const go = useGoto()
-  
   const siguiente = () => {
     let i = parseInt(page) + parseInt(limite);
     setPage(i);
-    go.to("clientes/?p="+i)
+    go.to("proveedores/?p="+i)
   };
   const atras = () => {
     if (page > 0) {
       let i = parseInt(page) - parseInt(limite);
       setPage(i);
-      go.to("clientes/?p="+i)
+      go.to("proveedores/?p="+i)
     }
   };
 
-  if(cargando.lista){
+  if(cargando){
     return <></>
   }
 
@@ -35,11 +34,12 @@ const ClientesListaPager = () => {
           ((countTotal>page) && ((page+limite)<countTotal) ) &&      
         <Button variant="outlined" 
         onClick={siguiente} >
-          {lang.siguiente}
+            {lang.siguiente}
           </Button>
         }
       </Stack>
   );
 };
 
-export default ClientesListaPager;
+export default ProveedoresPager;
+

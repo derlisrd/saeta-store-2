@@ -26,11 +26,14 @@ import Monedas from "./Monedas";
 import CategoriasForm from "./Productos/Categorias/CategoriasForm";
 import Proveedores from "./Productos/Proveedores";
 import Marcas from "./Productos/Marcas";
+
 import Empleados from "./Empleados";
 import ProductosApartados from "./Productos/ProductosApartados";
 import Depositos from "./Productos/Depositos";
 import Inventario from "./Productos/Inventario";
 import Impuestos from "./Settings/Impuestos";
+import Info from "./Settings/Info";
+
 /* 
 import Agenda from "./Agenda";
 import Movimientos from "./Caja/Movimientos/Index";
@@ -69,6 +72,10 @@ const RoutesMain = () => {
   const navigate = useNavigate();
   const {userData,loading} = useLogin();
   const {login,permisos} = userData
+
+
+  const PublicRoute = ({children})=> login ? <MainPage>{children}</MainPage> : <Navigate to={"/"} />
+
 
   const PrivateRoute = ({children,id})=>{
     if(login && !permisos.some(e => parseInt(e.id_permiso_permiso) === parseInt(id)) ){
@@ -121,7 +128,8 @@ const RoutesMain = () => {
       <Route path={R+'facturas'} element={<PrivateRoute id={5}><Facturas /></PrivateRoute>} />
       <Route path={R+'notaspedidos'} element={<PrivateRoute id={6}><Notas /></PrivateRoute>} />
       <Route path={R+'ventas'} element={<PrivateRoute id={1}><Ventas /></PrivateRoute>} />
-      <Route path={R+'dashboard'} element={<PrivateRoute id={59}><DashBoard /></PrivateRoute>} />
+      <Route path={R+'dashboard'} element={<PublicRoute><DashBoard /></PublicRoute>} />
+      <Route path={R+'info'} element={<PublicRoute><Info /></PublicRoute>} />
       <Route path={R+'cajas'} element={<PrivateRoute id={22}><Cajas /></PrivateRoute>} />
       <Route path={R+'notautorized'} element={<NotAutorized />} />
       <Route path={R} element={<LoginForm />} />

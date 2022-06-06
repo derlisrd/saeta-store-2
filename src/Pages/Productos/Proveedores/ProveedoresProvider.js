@@ -3,10 +3,19 @@ import swal from "sweetalert";
 import { APICALLER } from "../../../Services/api";
 import { useLogin } from "../../../Contexts/LoginProvider";
 import {useLang} from "../../../Contexts/LangProvider"
+import { useLocation } from 'react-router-dom';
 const Contexto = createContext()
 
 const ProveedoresProvider = ({children}) => {
   const storage = JSON.parse(localStorage.getItem("dataProductos"));
+
+
+  const location = useLocation();
+  const q = location.search ? new URLSearchParams(location.search) : 0;
+  const [page, setPage] = useState(q && q.get("p") && !isNaN(q.get("p")) ? parseInt(q.get("p")) : 0);
+  const [limite, setLimite] = useState(15);
+  const [countTotal, setCountTotal] = useState(0);
+
   const {lang} = useLang()
   const {userData} = useLogin()
   const {token_user} = userData
@@ -45,7 +54,7 @@ const ProveedoresProvider = ({children}) => {
       }
     }
 
-    res.response==="ok" ? swal({icon:"success",text:`${msj} correctamente`}) : console.log(res)
+    res.response==="ok" ? swal({icon:"success",text:msj}) : console.log(res)
     getLista()
     setOpenDialog(false)
     setFormulario(initial)
@@ -83,10 +92,22 @@ const ProveedoresProvider = ({children}) => {
   }
 
   const getLista = useCallback( async()=>{
-    let res = await APICALLER.get({table:`proveedors`})
-    res.response==="ok" ? setLista(res.results) : console.log(res);
-    setCargando(false)
-  },[]);
+    let res = await APICALLER.get({table:`proveedors`,
+    pagenumber: page,
+    pagesize: limite,})
+    
+    
+    if (res.response === "ok") {
+     setCountTotal(res.total);
+     if (res.found > 0) {
+       setLista(res.results);
+     } 
+   } else {
+     console.log(res);
+   }
+
+   setCargando(false)
+  },[page,limite]);
 
   useEffect(() => {
     let isActive = true;
@@ -100,8 +121,9 @@ const ProveedoresProvider = ({children}) => {
       ca.abort();
     };
   }, [getLista]);
+  const values = {setLimite,setPage,page,limite,countTotal,lang,lista,setLista,cargando,formulario,setFormulario,openDialog,setOpenDialog,enviarFormulario,borrarRegistro}
   return (
-    <Contexto.Provider value={{lang,lista,setLista,cargando,formulario,setFormulario,openDialog,setOpenDialog,enviarFormulario,borrarRegistro}}>
+    <Contexto.Provider value={values}>
       {children}
     </Contexto.Provider>
   )
@@ -109,8 +131,8 @@ const ProveedoresProvider = ({children}) => {
 
 export const useProveedores = ()=>{
 
-  const {lang,lista,setLista,cargando,formulario,setFormulario,openDialog,setOpenDialog,enviarFormulario,borrarRegistro} = useContext(Contexto);
-  return {lang,lista,setLista,cargando,formulario,setFormulario,openDialog,setOpenDialog,enviarFormulario,borrarRegistro}
+  const {setLimite,setPage,page,limite,countTotal,lang,lista,setLista,cargando,formulario,setFormulario,openDialog,setOpenDialog,enviarFormulario,borrarRegistro} = useContext(Contexto);
+  return {setLimite,setPage,page,limite,countTotal,lang,lista,setLista,cargando,formulario,setFormulario,openDialog,setOpenDialog,enviarFormulario,borrarRegistro}
 }
 
 export default ProveedoresProvider

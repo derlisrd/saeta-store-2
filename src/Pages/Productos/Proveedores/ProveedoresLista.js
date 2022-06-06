@@ -11,6 +11,7 @@ import {
   Button,
   Stack,
 } from "@mui/material";
+import ProveedoresPager from "./ProveedoresPager";
 
 const ProveedoresLista = () => {
   const [inputSearch, setInputSearch] = useState("");
@@ -113,7 +114,7 @@ const ProveedoresLista = () => {
         icon={{ name:"local_shipping" }}
         showOptions
       />
-      <div></div>
+      <ProveedoresPager />
     </>
   );
 };
