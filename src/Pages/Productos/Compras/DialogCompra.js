@@ -1,6 +1,6 @@
 import { Dialog, DialogContent, Icon,IconButton,Grid,TextField, DialogActions,Button, DialogTitle, Typography, Alert, Stack } from "@mui/material";
 import swal from "sweetalert";
-import NumberFormatCustom from "../../../Componentes/NumberFormatCustom";
+import NumberFormatCustom from "../../../Components/thirty/NumberFormatCustom";
 import { useCompras } from "./ComprasProvider";
 import InfoDeposito from "./InfoDeposito";
 

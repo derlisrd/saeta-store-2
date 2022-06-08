@@ -1,21 +1,19 @@
-import {
-  useState,
-  useEffect,
-  useContext,
-  createContext,
-  useRef,
-  useCallback,
-} from "react";
+import {useState,useEffect,useContext,createContext,useRef,useCallback} from "react";
 import swal from "sweetalert";
-import { APICALLER } from "../../../Api/ApiCaller";
-import { useLogin } from "../../../Contextos/LoginProvider";
-import { Funciones } from "../../../Funciones/Funciones";
+import { APICALLER } from "../../../Services/api";
+import { useLogin } from "../../../Contexts/LoginProvider";
+import { useLang } from "../../../Contexts/LangProvider";
+import { funciones } from "../../../Functions";
+import useGoto from "../../../Hooks/useGoto";
 
 
 const Contexto = createContext();
 
 const ComprasProvider = ({ children }) => {
-  const { token_user, id_user } = useLogin();
+  const go = useGoto()
+  const {lang} = useLang()
+  const {userData} = useLogin();
+  const { token_user, id_user } = userData;
   const [cargando, setCargando] = useState(true);
   const [cargandoItem, setCargandoItem] = useState(false);
   
@@ -27,9 +25,9 @@ const ComprasProvider = ({ children }) => {
   const [dialogs,setDialogs] = useState(initialDialogs);
 
 
-  const fechaActual = Funciones.fechaActualYMD();
-  const hora_actual = Funciones.HoraActualHMS();
-  const fecha_actual_horas = Funciones.getFechaHorarioString;
+  const fechaActual = funciones.fechaActualYMD();
+  const hora_actual = funciones.HoraActualHMS();
+  const fecha_actual_horas = funciones.getFechaHorarioString;
 
   
 
@@ -279,7 +277,7 @@ const ComprasProvider = ({ children }) => {
         } else {
           swal({text: "Desea registrar ese producto?",icon: "info",buttons: ["No", "Si"],
           }).then(si => {
-            if (si) { Funciones.goto(`productos/new/?codigo=${codigo}`);}
+            if (si) { go.to(`productos/new/?codigo=${codigo}`);}
           });
         }
       } else {
@@ -349,7 +347,7 @@ const ComprasProvider = ({ children }) => {
 
   return (
     <Contexto.Provider
-      value={{
+      value={{lang,
         cargando,
         setCargando,
         dialogs,setDialogs,
@@ -379,6 +377,7 @@ const ComprasProvider = ({ children }) => {
 
 export const useCompras = () => {
   const {
+    lang,
     cargando,
     setCargando,
     datosCompra,
@@ -401,6 +400,7 @@ export const useCompras = () => {
     LimpiarTodo,sumarItem,restarItem,listaDepositos,idDeposito,setIdDeposito,cambiarDeposito
   } = useContext(Contexto);
   return {
+    lang,
     cargando,
     setCargando,
     datosCompra,

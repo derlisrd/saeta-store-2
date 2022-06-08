@@ -1,12 +1,12 @@
-import { Dialog, DialogContent, TextField, Button, DialogActions, DialogTitle,Autocomplete,CircularProgress } from '@mui/material'
+import { Dialog, DialogContent, TextField, Button, DialogActions, DialogTitle,Autocomplete,CircularProgress,Zoom } from '@mui/material'
 import { useCompras } from './ComprasProvider'
-import { APICALLER } from "../../../Api/ApiCaller";
+import { APICALLER } from "../../../Services/api";
 import React,{useState,useCallback} from 'react'
 
 const DialogSearchProduct = () => {
 
 
-    const {setDialogs,dialogs,InsertarProductoTabla,idDeposito} = useCompras()
+    const {setDialogs,dialogs,InsertarProductoTabla,idDeposito,lang} = useCompras()
     const [listaBuscaProducto, setListaBuscaProducto] = useState([])
     const [load,setLoad] = useState(false)
     // buscador con con input text field
@@ -49,9 +49,9 @@ const DialogSearchProduct = () => {
     }
 
   return (
-    <Dialog fullWidth open={dialogs.buscar} onClose={cerrar} >    
+    <Dialog fullWidth open={dialogs.buscar} onClose={cerrar} TransitionComponent={Zoom} >    
         <DialogTitle>
-            Buscar producto
+            {lang.buscar}
         </DialogTitle>
         <DialogContent dividers>
         <Autocomplete

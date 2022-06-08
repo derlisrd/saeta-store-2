@@ -30,7 +30,6 @@ const MedidasForm = () => {
                 required
                 autoFocus
                 fullWidth
-                variant="outlined"
                 label="Descripción de medida"
                 name="descripcion_medida"
                 value={form.descripcion_medida}
@@ -41,7 +40,6 @@ const MedidasForm = () => {
               <TextField
                 required
                 label="símbolo de abreviatura"
-                variant="outlined"
                 name="simbolo_medida"
                 value={form.simbolo_medida}
                 onChange={onChange}
@@ -51,8 +49,8 @@ const MedidasForm = () => {
           </Grid>
         </DialogContent>
         <DialogActions>
-            <Button variant="outlined" onClick={onSubmit} color="primary">Guardar</Button>
-            <Button variant="outlined" onClick={cerrar} color="primary">Cerrar</Button>
+            <Button variant="contained" onClick={onSubmit} >Guardar</Button>
+            <Button variant="contained" onClick={cerrar}>Cerrar</Button>
         </DialogActions>
       </Dialog>
     </form>

@@ -6,13 +6,14 @@ import {
   useCallback,
 } from "react";
 import swal from "sweetalert";
-import { APICALLER } from "../../Api/ApiCaller";
-import { useLogin } from "../../Contextos/LoginProvider";
+import { APICALLER } from "../../Services/api";
+import { useLogin } from "../../Contexts/LoginProvider";
 
 const Contexto = createContext();
 
 const MedidasProvider = ({ children }) => {
-  const { token_user } = useLogin();
+  const { userData } = useLogin();
+  const {token_user} = userData
   const [cargando, setCargando] = useState(true);
   const [lista, setLista] = useState([]);
   const [dialog, setDialog] = useState(false);

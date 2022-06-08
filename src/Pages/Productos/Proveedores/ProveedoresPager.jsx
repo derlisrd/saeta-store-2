@@ -8,13 +8,13 @@ const ProveedoresPager = () => {
   const siguiente = () => {
     let i = parseInt(page) + parseInt(limite);
     setPage(i);
-    go.to("proveedores/?p="+i)
+    go.to("proveedores?p="+i)
   };
   const atras = () => {
     if (page > 0) {
       let i = parseInt(page) - parseInt(limite);
       setPage(i);
-      go.to("proveedores/?p="+i)
+      go.to("proveedores?p="+i)
     }
   };
 

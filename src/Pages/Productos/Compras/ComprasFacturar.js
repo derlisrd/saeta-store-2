@@ -1,9 +1,9 @@
-import { Grid, TextField, Typography, Button, Icon, CircularProgress, InputAdornment, FormControlLabel, Radio, IconButton, FormControl, MenuItem, Select, InputLabel, } from "@mui/material";
+import { Grid, TextField, Typography, Button, Icon, CircularProgress, InputAdornment, FormControlLabel, Radio, IconButton, FormControl, MenuItem, Select, InputLabel } from "@mui/material";
 import ComprasTabla from "./ComprasTabla";
 import { useCompras } from "./ComprasProvider";
-import { Funciones } from "../../../Funciones/Funciones";
-import SnackAlert from "../../../Componentes/SnackAlert";
-import Loading from "../../../Componentes/Loading";
+import { funciones } from "../../../Functions";
+import SnackAlert from "../../../Components/UI/SnackAlert";
+import LoadingBackDrop from "../../../Components/UI/LoadingBackDrop";
 import {useRef} from 'react'
 import swal from "sweetalert";
 import InfoDeposito from "./InfoDeposito";
@@ -104,7 +104,7 @@ const ComprasFacturar = () => {
           </Grid>
           <Grid item sm={12}>
             {
-              cargando ? <Loading /> : <ComprasTabla />
+              cargando ? <LoadingBackDrop /> : <ComprasTabla />
             }
           </Grid>
         </Grid>
@@ -215,7 +215,7 @@ const ComprasFacturar = () => {
           </Grid>
           <Grid item xs={12}>
             <Typography variant="button">
-              TOTAL: {Funciones.numberSeparator(datosCompra.total_factura)}{" "}
+              TOTAL: {funciones.numberSeparator(datosCompra.total_factura)}{" "}
             </Typography>
           </Grid>
           <Grid item xs={12}>

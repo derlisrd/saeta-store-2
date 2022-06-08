@@ -1,12 +1,4 @@
-import {
-    Table,
-    TableContainer,
-    TableHead,
-    TableRow,
-    TableCell,
-    TableBody,
-    Typography,
-  } from "@mui/material";
+import {Table,TableContainer,TableHead,TableRow,TableCell,TableBody,Typography} from "@mui/material";
   import { StylesTabla } from "./StylesTabla";
   
 import ComprasTablaItems from "./ComprasTablaItems";

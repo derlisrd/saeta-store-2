@@ -20,16 +20,13 @@ const ImpuestoProvider = ({children})=>{
     useEffect(()=>{
         let isActive = true;
     const ca = new AbortController();
-    if (isActive) {
-        
-        getLista();
-    }
-
+    if (isActive) { getLista();}
     return () => {
       isActive = false;
       ca.abort();
     };
     },[getLista])
+    
     return (
         <Contexto.Provider
             value={{cargando,setCargando,lista,setLista,lang}}

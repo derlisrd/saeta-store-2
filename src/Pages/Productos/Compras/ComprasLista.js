@@ -1,13 +1,13 @@
 import React from 'react'
-import Tablas from '../../../Componentes/Tablas'
+import Tablas from '../../../Components/UI/Tablas'
 
 const ComprasLista = () => {
   return (
     <>
       <Tablas 
-        nombretabla="Compras realizadas"
+        title="Compras realizadas"
         subtitle="Compras realizadas"
-        icono="shopping_bag"
+        icon={{ name:"shopping_bag" }}
         columnas={[]}
         filas={[]}
         Acciones={()=>{}}

@@ -9,13 +9,13 @@ const ClientesListaPager = () => {
   const siguiente = () => {
     let i = parseInt(page) + parseInt(limite);
     setPage(i);
-    go.to("clientes/?p="+i)
+    go.to("clientes?p="+i)
   };
   const atras = () => {
     if (page > 0) {
       let i = parseInt(page) - parseInt(limite);
       setPage(i);
-      go.to("clientes/?p="+i)
+      go.to("clientes?p="+i)
     }
   };
 

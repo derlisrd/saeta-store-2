@@ -1,8 +1,7 @@
-import React from "react";
 import printJS from "print-js";
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Zoom } from "@mui/material";
 import { useCompras } from "./ComprasProvider";
-import Funciones from "../../../Funciones";
+import {funciones} from "../../../Functions";
 
 function ImprimirCompra() {
   const { datosCompra, dialogs, setDialogs,LimpiarTodo } = useCompras();
@@ -53,8 +52,8 @@ function ImprimirCompra() {
                               <td>{e.stock_nuevo}</td>
                               <td>{e.nombre_producto}</td>
                               <td>{e.costo_producto}</td>
-                              <td>{Funciones.numberSeparator(e.precio_producto)}</td>
-                              <td>{Funciones.numberSeparator(parseFloat(e.precio_producto) * parseFloat(e.stock_nuevo))}</td>
+                              <td>{funciones.numberSeparator(e.precio_producto)}</td>
+                              <td>{funciones.numberSeparator(parseFloat(e.precio_producto) * parseFloat(e.stock_nuevo))}</td>
                             </tr>
                             ))
                         }
@@ -66,7 +65,7 @@ function ImprimirCompra() {
                             Total: 
                             </td>
                             <td>
-                               {Funciones.numberFormat(da.total_factura)}
+                               {funciones.numberFormat(da.total_factura)}
                             </td>
                         </tr>
                     </tbody>

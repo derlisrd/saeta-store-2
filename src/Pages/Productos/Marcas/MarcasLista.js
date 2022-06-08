@@ -84,6 +84,7 @@ const MarcasLista = () => {
             subtitle={lang.lista_marcas}
             icon={{ name:"branding_watermark" }}
             columns={columns}
+            lang={lang}
             datas={FilterData}
             Accions={Acciones}
             inputs={search}

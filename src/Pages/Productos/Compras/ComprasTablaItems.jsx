@@ -1,6 +1,6 @@
 import { Alert, AlertTitle, TableCell, TableRow,Icon,IconButton,Typography,Stack,Tooltip } from "@mui/material";
 import { StylesTabla } from "./StylesTabla";
-import {Funciones} from '../../../Funciones/Funciones'
+import {funciones} from '../../../Functions'
 import { green } from '@mui/material/colors';
 import { useCompras } from "./ComprasProvider";
 const ComprasTablaItems = () => {
@@ -51,7 +51,7 @@ const ComprasTablaItems = () => {
                   <span className={classes.columname}>PRECIO:</span>
                   <span>
                     {
-                      Funciones.numberSeparator( parseFloat(d.costo_producto) )
+                      funciones.numberSeparator( parseFloat(d.costo_producto) )
                     }
                   </span>
                 </TableCell>
@@ -61,7 +61,7 @@ const ComprasTablaItems = () => {
                   <span className={classes.columname}>SUBTOTAL:</span>
                   <span>
                     {
-                      Funciones.numberSeparator(parseFloat(d.costo_producto)*parseFloat(d.stock_nuevo))
+                      funciones.numberSeparator(parseFloat(d.costo_producto)*parseFloat(d.stock_nuevo))
                     }
                   </span>
                 </TableCell>

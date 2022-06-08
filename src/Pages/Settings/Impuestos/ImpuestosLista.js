@@ -38,7 +38,7 @@ const ImpuestosLista = () => {
   return (
     <Tablas 
         title={lang.impuestos}
-        cargando={cargando}
+        loading={cargando}
         lang={lang}
         icon={{ name:"account_balance" }}
         columns={columnas}

@@ -1,5 +1,5 @@
 import { Icon,IconButton,Button } from '@mui/material'
-import Tablas from '../../Componentes/Tablas';
+import Tablas from '../../Components/UI/Tablas';
 import { useMedidas } from './MedidasProvider'
 
 
@@ -32,26 +32,25 @@ const MedidasLista = () => {
   }
   const openNew = ()=> {setDialog(true); Clear(); } 
 
-  const Acciones = ({filaProps})=>
+  const Acciones = ({rowProps})=>
   (<>
-  <IconButton onClick={()=>open(filaProps)}>
+  <IconButton onClick={()=>open(rowProps)}>
     <Icon>edit</Icon>
   </IconButton>
   </>)
 
   const Search = (
-  <Button variant="outlined" color="primary" size="large" onClick={openNew} >Agregar</Button>)
+  <Button variant="contained" size="large" onClick={openNew} >Agregar</Button>)
   
   return (
     <Tablas 
-        nombretabla="Unidades de medidas"
-        bgicono="#3f51b5"
-        cargando={cargando}
-        icono="account_balance"
-        columnas={columnas}
-        filas={FilterData}
-        Acciones={Acciones}
-        search={Search}
+        title="Unidades de medidas"
+        loading={cargando}
+        icon={{ name:"account_balance" }}
+        columns={columnas}
+        datas={FilterData}
+        Accions={Acciones}
+        inputs={Search}
         showOptions
     />
   )
