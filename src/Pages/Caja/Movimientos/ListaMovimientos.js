@@ -86,9 +86,9 @@ const ListaMovimientos = () => {
   ];
 
   const Acciones = ({rowProps}) => (
-    <Tooltip arrow title="Presione para ver más detalles">
+    <Tooltip arrow title={lang.presione_mas_detalles}>
       <Button onClick={()=>abrirForm(rowProps)} variant="outlined"  color="primary">
-        Ver más
+        {lang.ver_mas}
       </Button>
     </Tooltip>
   );
@@ -144,10 +144,10 @@ const ListaMovimientos = () => {
           >
             <MenuItem value="">Todos</MenuItem>
 
-              <MenuItem value={"2"}>Apertura</MenuItem>
-              <MenuItem value={"1"}>Ingreso</MenuItem>
-              <MenuItem value={"0"}>Egreso</MenuItem>
-              <MenuItem value={"3"}>Cierre</MenuItem>
+              <MenuItem value={"2"}>{lang.apertura}</MenuItem>
+              <MenuItem value={"1"}>{lang.ingreso}</MenuItem>
+              <MenuItem value={"0"}>{lang.egreso}</MenuItem>
+              <MenuItem value={"3"}>{lang.cierre}</MenuItem>
               
           </Select>
         </FormControl>
@@ -163,8 +163,8 @@ const ListaMovimientos = () => {
         </Button>
       </Grid>
       <Grid item xs={12}>
-        <Button variant="outlined" color="secondary" onClick={abrir}>
-          Registrar movimiento
+        <Button variant="contained" onClick={abrir}>
+          {lang.registrar_movimiento}
         </Button>
       </Grid>
       <Grid item >
@@ -177,14 +177,14 @@ const ListaMovimientos = () => {
       <Grid item >
         <Alert severity="warning" variant="outlined" icon={false}>
         <Typography variant="h5">
-          Sin efectivo: {funciones.numberSeparator(movimientos.ingresoSinEfectivo)}{" "}
+         {lang.sin_efectivo}: {funciones.numberSeparator(movimientos.ingresoSinEfectivo)}{" "}
         </Typography>
         </Alert>
       </Grid>
       <Grid item >
         <Alert severity="error" variant="outlined" icon={false}>
         <Typography variant="h5">
-          Egresos: {funciones.numberSeparator(movimientos.egresos)}{" "}
+          {lang.egresos}: {funciones.numberSeparator(movimientos.egresos)}{" "}
         </Typography>
         </Alert>
       </Grid>
@@ -202,9 +202,9 @@ const ListaMovimientos = () => {
     <>
       <Tablas
         icon={{ name:"leaderboard" }}
-        caption={`Total de movimiento: ${funciones.numberSeparator(movimientos.ingresoTotal)}`}
-        title="Movimientos de caja"
-        subtitle="En este módulo se pueden visualizar todos los movimientos de las cajas por fecha"
+        caption={`${lang.total_movimiento}: ${funciones.numberSeparator(movimientos.ingresoTotal)}`}
+        title={lang.movimientos_caja}
+        subtitle={lang.long_movimiento_caja}
         inputs={search}
         columns={columnas}
         Accions={Acciones}

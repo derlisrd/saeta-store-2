@@ -16,11 +16,11 @@ const DialogDetallesMovimientos = () => {
         <DialogContent >
           <Grid container>
             <Grid item xs={12}>
-              <h3>Caja: {form.nombre_caja}</h3>
-              <h3>Usuario: {form.nombre_user}</h3>
-              <h4>Detalles: {form.detalles_movimiento}</h4>
-              <h4>Cantidad en efectivo: { funciones.numberFormat( form.monto_movimiento)}</h4>
-              <h4>Cantidad sin efectivo: { funciones.numberFormat( form.monto_sin_efectivo)}</h4>
+              <h3>{lang.caja}: {form.nombre_caja}</h3>
+              <h3>{lang.usuario}: {form.nombre_user}</h3>
+              <h4>{lang.detalles}: {form.detalles_movimiento}</h4>
+              <h4>{lang.cantidad_efectivo}: { funciones.numberFormat( form.monto_movimiento)}</h4>
+              <h4>{lang.cantidad_sin_efectivo}: { funciones.numberFormat( form.monto_sin_efectivo)}</h4>
             </Grid>
             <Grid item xs={12}>
               <Alert icon={false} severity={form.tipo_registro==="1" ? 'success' : 'warning'}>
@@ -30,8 +30,8 @@ const DialogDetallesMovimientos = () => {
           </Grid>
         </DialogContent>
         <DialogActions>
-          <Button variant="outlined" onClick={cerrar}>
-            Cerrar
+          <Button variant="contained" onClick={cerrar}>
+            {lang.cerrar}
           </Button>
         </DialogActions>
     </Dialog>

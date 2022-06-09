@@ -1,5 +1,11 @@
 export const translate = {
     es:{
+        ver_mas:"Ver más",
+        apertura:"Apertura",
+        ingreso:"Ingreso",
+        egreso:"Egreso",
+        cierre:"Cierre",
+        presione_mas_detalles:"Presione para ver más detalles",
         habilitar_nueva_caja:"Habilitar y agregar nueva caja",
         salir:"Salir",
         no_autorizado:"No tienes permiso para este sitio",
@@ -218,7 +224,9 @@ export const translate = {
         entrada:"Entrada",
         salida:"Salida",
         producto_chequeado:"Producto chequeado",
-        entregas_pendientes:"Entregas pendientes"
+        entregas_pendientes:"Entregas pendientes",
+        long_movimiento_caja:"En este módulo se pueden visualizar todos los movimientos de las cajas por fecha",
+        total_movimiento:"Total de movimiento"
     },
 
     en:{
