@@ -8,13 +8,13 @@ const ProductosListaPager = () => {
   const siguiente = () => {
     let i = parseInt(page) + parseInt(limite);
     setPage(i);
-    go.to("productos/?p="+i)
+    go.to("productos?p="+i)
   };
   const atras = () => {
     if (page > 0) {
       let i = parseInt(page) - parseInt(limite);
       setPage(i);
-      go.to("productos/?p="+i)
+      go.to("productos?p="+i)
     }
   };
 

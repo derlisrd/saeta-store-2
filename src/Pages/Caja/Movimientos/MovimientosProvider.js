@@ -1,19 +1,14 @@
-import {
-  useContext,
-  createContext,
-  useState,
-  useEffect,
-  useCallback,
-} from "react";
-import { APICALLER } from "../../../Api/ApiCaller";
-import { Funciones } from "../../../Funciones/Funciones";
+import {useContext,createContext,useState,useEffect,useCallback} from "react";
+import {useLang} from "../../../Contexts/LangProvider"
+import { APICALLER } from "../../../Services/api";
+import { funciones } from "../../../Functions";
 
 const Contexto = createContext();
 
 const MovimientosProvider = ({ children }) => {
   const [cargando, setCargando] = useState(true);
-
-  const fecha = Funciones.fechaActualYMD();
+  const {lang} = useLang();
+  const fecha = funciones.fechaActualYMD();
   const initialForm = {
     nombre_caja:"",
     id_cajas_movimiento:"",
@@ -108,7 +103,7 @@ const MovimientosProvider = ({ children }) => {
 
   return (
     <Contexto.Provider
-      value={{
+      value={{lang,
         cargando,
         setCargando,
         desdeFecha,
@@ -135,7 +130,7 @@ const MovimientosProvider = ({ children }) => {
 };
 
 export const useMovimientos = () => {
-  const {
+  const {lang,
     cargando,
     setCargando,
     desdeFecha,
@@ -154,7 +149,7 @@ export const useMovimientos = () => {
     getData,
     movimientos,form, setForm,initialForm
   } = useContext(Contexto);
-  return {
+  return {lang,
     cargando,
     setCargando,
     desdeFecha,

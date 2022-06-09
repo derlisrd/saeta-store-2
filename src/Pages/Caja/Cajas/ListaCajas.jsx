@@ -42,9 +42,14 @@ const ListaCajas = () => {
         },
       },
     },
+    
     {
       field: "nombre_user",
       title: lang.asignado_a,
+    },
+    {
+      field: "abreviatura_moneda",
+      title: lang.moneda,
     },
     {
       field: "monto_caja",

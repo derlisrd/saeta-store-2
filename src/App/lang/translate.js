@@ -199,6 +199,22 @@ export const translate = {
         transferencia_de_caja:"Transferencia de caja",
         editado_correctamente:"Editado correctamente",
         porcentaje:"porcentaje",
+        moneda:"Moneda",
+        registrar_movimiento:"Registrar movimiento",
+        seleccione_caja:"Seleccione caja",
+        selecciona_registro:"Selecciona registro",
+        seleccione_movimiento:"Seleccione movimiento",
+        monto_movimiento:"Monto de movimiento",
+        obs_detalles:"Observaciones y detalles",
+        monto_efe_caja:"Monto efectivo en caja",
+        responsable:"Responsable",
+        fecha:"Fecha",
+        sin_efectivo:"Sin efectivo",
+        desde:"Desde",
+        hasta:"Hasta",
+        todos:"Todos",
+        filtrar:"Filtrar",
+        detalles_movimiento:"Detalles de movimiento"
     },
 
     en:{

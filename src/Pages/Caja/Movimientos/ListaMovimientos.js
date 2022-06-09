@@ -1,23 +1,11 @@
-import Tablas from "../../../Componentes/Tablas";
-import {
-  TextField,
-  Button,
-  Icon,
-  Grid,
-  FormControl,
-  InputLabel,
-  Select,
-  MenuItem,
-  Tooltip,
-  Typography,
-  Alert,
-} from "@mui/material";
+import Tablas from "../../../Components/UI/Tablas";
+import {TextField,Button,Icon,Grid,FormControl,InputLabel,Select, MenuItem,Tooltip,Typography,Alert} from "@mui/material";
 import { useMovimientos } from "./MovimientosProvider";
 import { useState } from "react";
-import { Funciones } from "../../../Funciones/Funciones";
+import { funciones } from "../../../Functions";
 
 const ListaMovimientos = () => {
-  const {
+  const { lang,
     setDesdeFecha,
     setHastaFecha,
     setDialog,
@@ -63,19 +51,18 @@ const ListaMovimientos = () => {
     },
     {
       field: "nombre_caja",
-      title: "Caja",
+      title: lang.caja,
     },
     {
       field: "nombre_user",
-      title: "Responsable",
+      title: lang.responsable,
     },
-
     {
       field: "tipo_registro",
-      title: "Tipo",
+      title: lang.tipo,
       items: itemscompare,
-      comparaItem: "tipo_registro",
-      styleCondicion:{
+      compareField: "tipo_registro",
+      styleCondition:{
         0:{backgroundColor:"#dd4632",padding:"6px",borderRadius:"5px",color:'#fff'},
         1:{backgroundColor:"#00ce4f",padding:"6px",borderRadius:"5px",color:'#fff'},
         2:{backgroundColor:"#1976d2",padding:"6px",borderRadius:"5px",color:'#fff'},
@@ -84,23 +71,23 @@ const ListaMovimientos = () => {
     },
     {
       field: "fecha_movimiento",
-      title: "Fecha de movimiento",
+      title: lang.fecha,
     },
     {
       field: "monto_movimiento",
-      title: "Monto",
+      title: lang.monto,
       isNumber: true,
     },
     {
       field: "monto_sin_efectivo",
-      title: "Sin efectivo",
+      title: lang.sin_efectivo,
       isNumber: true,
     },
   ];
 
-  const Acciones = ({filaProps}) => (
+  const Acciones = ({rowProps}) => (
     <Tooltip arrow title="Presione para ver más detalles">
-      <Button onClick={()=>abrirForm(filaProps)} variant="outlined"  color="primary">
+      <Button onClick={()=>abrirForm(rowProps)} variant="outlined"  color="primary">
         Ver más
       </Button>
     </Tooltip>
@@ -111,8 +98,7 @@ const ListaMovimientos = () => {
       <Grid item xs={12} sm={6} md={2}>
         <TextField
           fullWidth
-          label="Desde"
-          variant="outlined"
+          label={lang.desde}
           type="date"
           defaultValue={desde}
           onChange={changeDatadesde}
@@ -122,8 +108,7 @@ const ListaMovimientos = () => {
       <Grid item xs={12} sm={6} md={2}>
         <TextField
           fullWidth
-          label="Hasta"
-          variant="outlined"
+          label={lang.hasta}
           type="date"
           defaultValue={hasta}
           onChange={changeDatahasta}
@@ -132,7 +117,7 @@ const ListaMovimientos = () => {
       </Grid>
       <Grid item xs={12} sm={6} md={3}>
         <FormControl fullWidth>
-          <InputLabel>Seleccione caja</InputLabel>
+          <InputLabel>{lang.seleccione_caja}</InputLabel>
           <Select
             name="id_caja"
             onChange={(e) => {
@@ -140,7 +125,7 @@ const ListaMovimientos = () => {
             }}
             value={idCajita}
           >
-            <MenuItem value="">Todos</MenuItem>
+            <MenuItem value="">{lang.todos}</MenuItem>
             {listaCajas.map((item, index) => (
               <MenuItem key={index} value={item.id_caja}>
                 {item.nombre_caja}
@@ -151,7 +136,7 @@ const ListaMovimientos = () => {
       </Grid>
       <Grid item xs={12} sm={6} md={3}>
         <FormControl fullWidth>
-          <InputLabel>Seleccione movimiento</InputLabel>
+          <InputLabel>{lang.seleccione_movimiento}</InputLabel>
           <Select
             name="id_tipo_registro"
             onChange={(e) => { setIdRegistrito(e.target.value)}}
@@ -170,12 +155,11 @@ const ListaMovimientos = () => {
       <Grid item xs={12} sm={6} md={5}>
         <Button
           onClick={Filtrar}
-          variant="outlined"
-          color="primary"
+          variant="contained"
           size="large"
           startIcon={<Icon>filter_list</Icon>}
         >
-          Filtrar
+          {lang.filtrar}
         </Button>
       </Grid>
       <Grid item xs={12}>
@@ -186,28 +170,28 @@ const ListaMovimientos = () => {
       <Grid item >
       <Alert severity="success" variant="outlined" icon={false}>
         <Typography variant="h5">
-          Efectivo: {Funciones.numberSeparator(movimientos.ingresoEfectivo)}{" "}
+          Efectivo: {funciones.numberSeparator(movimientos.ingresoEfectivo)}{" "}
         </Typography>
         </Alert>
       </Grid>
       <Grid item >
         <Alert severity="warning" variant="outlined" icon={false}>
         <Typography variant="h5">
-          Sin efectivo: {Funciones.numberSeparator(movimientos.ingresoSinEfectivo)}{" "}
+          Sin efectivo: {funciones.numberSeparator(movimientos.ingresoSinEfectivo)}{" "}
         </Typography>
         </Alert>
       </Grid>
       <Grid item >
         <Alert severity="error" variant="outlined" icon={false}>
         <Typography variant="h5">
-          Egresos: {Funciones.numberSeparator(movimientos.egresos)}{" "}
+          Egresos: {funciones.numberSeparator(movimientos.egresos)}{" "}
         </Typography>
         </Alert>
       </Grid>
       <Grid item >
         <Alert severity="info" variant="outlined" icon={false}>
         <Typography variant="h5">
-          Neto: {Funciones.numberSeparator(movimientos.ingresoEfectivo - movimientos.egresos )}{" "}
+          Neto: {funciones.numberSeparator(movimientos.ingresoEfectivo - movimientos.egresos )}{" "}
         </Typography>
         </Alert>
       </Grid>
@@ -217,17 +201,15 @@ const ListaMovimientos = () => {
   return (
     <>
       <Tablas
-        icono="leaderboard"
-        caption={`Total de movimiento: ${Funciones.numberSeparator(movimientos.ingresoTotal)}`}
-        bgicono="#303f9f"
-        nombretabla="Movimientos de caja"
+        icon={{ name:"leaderboard" }}
+        caption={`Total de movimiento: ${funciones.numberSeparator(movimientos.ingresoTotal)}`}
+        title="Movimientos de caja"
         subtitle="En este módulo se pueden visualizar todos los movimientos de las cajas por fecha"
-        search={search}
-        namecolumnID="id_cajas_movimiento"
-        columnas={columnas}
-        Acciones={Acciones}
-        filas={lista}
-        cargando={cargando}
+        inputs={search}
+        columns={columnas}
+        Accions={Acciones}
+        datas={lista}
+        loading={cargando}
         showOptions
       />
     </>

@@ -324,6 +324,7 @@ const CajasProvider = ({ children }) => {
           APICALLER.get({  table: "monedas",fields: "nombre_moneda,id_moneda,abreviatura_moneda"}),
           APICALLER.get({ table: "monedas_registros" })  
         ]);
+        
         setLista(val[0].results);
         setListaUsers(val[1].results);
         setListaMonedas(val[2].results)
