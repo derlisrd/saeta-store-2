@@ -43,7 +43,7 @@ const ClientesForm = () => {
     <Dialog open={dialogs.form} fullWidth onClose={cerrar} TransitionComponent={Zoom} >
       <form onSubmit={send}>
       <DialogTitle>
-            {lang.cliente_nuevo}
+            {lang.cliente}
       </DialogTitle>
       <DialogContent dividers>
       <Grid container spacing={2}>

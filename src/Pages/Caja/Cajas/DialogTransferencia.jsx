@@ -13,7 +13,7 @@ const DialogTransferencia = () => {
     initialTransferencia,
     errors,
     setErrors,
-    cargas,Funciones,transferir,lang
+    cargas,funciones,transferir,lang
   } = useCajas();
 
   const verificar = () => {
@@ -62,7 +62,7 @@ const DialogTransferencia = () => {
           </Grid>
           <Grid item xs={12}>
             <Alert icon={false}>
-              {lang.caja}: {formTransferencia.nombre_caja} - {lang.monto}: {Funciones.numberSeparator( isNaN(formTransferencia.monto_caja) ? 0 : formTransferencia.monto_caja )} {formTransferencia.abreviatura_moneda}
+              {lang.caja}: {formTransferencia.nombre_caja} - {lang.monto}: {funciones.numberSeparator( isNaN(formTransferencia.monto_caja) ? 0 : formTransferencia.monto_caja )} {formTransferencia.abreviatura_moneda}
             </Alert>
           </Grid>
           <Grid item xs={12}>
@@ -99,10 +99,10 @@ const DialogTransferencia = () => {
         </Grid>
       </DialogContent>
       <DialogActions>
-        <Button variant="outlined" disabled={cargas.transferencia} onClick={verificar}>
+        <Button variant="contained" disabled={cargas.transferencia} onClick={verificar}>
           {lang.transferir}
         </Button>
-        <Button variant="outlined" disabled={cargas.transferencia} onClick={cerrar}>
+        <Button variant="contained" disabled={cargas.transferencia} onClick={cerrar}>
           {lang.cerrar}
         </Button>
       </DialogActions>
