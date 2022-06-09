@@ -3,7 +3,7 @@ import { useLocation,useNavigate } from "react-router-dom";
 import swal from "sweetalert";
 import { APICALLER } from "../../../Services/api";
 import { useLogin } from "../../../Contexts/LoginProvider";
-import { funciones as Funciones } from "../../../Functions";
+import { funciones  } from "../../../Functions";
 import { env } from "../../../Utils/config";
 import { useLang } from "../../../Contexts/LangProvider";
 
@@ -82,9 +82,9 @@ const CajasProvider = ({ children }) => {
     monto_inicial: "0",
     monto_cierre: "0",
     monto_caja: "0",
-    fecha_apertura: Funciones.getFechaHorarioString(),
-    fecha_creacion: Funciones.getFechaHorarioString(),
-    ult_mov_caja:Funciones.getFechaHorarioString(),
+    fecha_apertura: funciones.getFechaHorarioString(),
+    fecha_creacion: funciones.getFechaHorarioString(),
+    ult_mov_caja:funciones.getFechaHorarioString(),
     tipo_caja: "1",
     estado_caja: "open",
   };
@@ -134,7 +134,7 @@ const CajasProvider = ({ children }) => {
         id_user_arqueo:id_user,
         monto_arqueo: formNew.monto_inicial,
         tipo_arqueo:"1",
-        fecha_arqueo:Funciones.getFechaHorarioString()
+        fecha_arqueo:funciones.getFechaHorarioString()
       }
 
       let cajares = await Promise.all([APICALLER.insert({
@@ -197,9 +197,7 @@ const CajasProvider = ({ children }) => {
   
   const transferir = async () => {
     setCargas({ ...cargas, transferencia: true });
-    const found = lista.find(
-      (e) => e.id_caja === formTransferencia.id_caja_transferencia
-    );
+    const found = lista.find(e => e.id_caja === formTransferencia.id_caja_transferencia);
     let cajaPrincipal = {
       id_caja: formTransferencia.id_caja,
       monto_caja:
@@ -230,7 +228,7 @@ const CajasProvider = ({ children }) => {
         id_caja_movimiento: formTransferencia.id_caja,
         id_user_movimiento: id_user,
         id_tipo_registro: "16",
-        fecha_movimiento: Funciones.getFechaHorarioString(),
+        fecha_movimiento: funciones.getFechaHorarioString(),
         monto_movimiento: parseFloat(formTransferencia.monto_transferir),
         detalles_movimiento: `${lang.transferencia_de_caja} ${formTransferencia.nombre_caja} ${formTransferencia.id_caja} ${lang.a}: ${found.nombre_caja} ${found.id_caja} `,
       };
@@ -268,8 +266,8 @@ const CajasProvider = ({ children }) => {
     let dataCaja = filter[0]; */
     let formCaja = {
      estado_caja : "1",
-     fecha_apertura: Funciones.getFechaHorarioString(),
-     ult_mov_caja: Funciones.getFechaHorarioString(), 
+     fecha_apertura: funciones.getFechaHorarioString(),
+     ult_mov_caja: funciones.getFechaHorarioString(), 
      monto_inicial: f.monto_inicial,
      monto_caja: f.monto_inicial
     }
@@ -287,7 +285,7 @@ const CajasProvider = ({ children }) => {
       monto_arqueo: f.monto_inicial,
       tipo_arqueo:"1",
       id_user_arqueo:id_user,
-      fecha_arqueo:Funciones.getFechaHorarioString()
+      fecha_arqueo:funciones.getFechaHorarioString()
     }
     let res = await Promise.all([
       APICALLER.update({table: "cajas",data: formCaja,id: IDCAJA,token: token_user}),
@@ -369,7 +367,7 @@ const CajasProvider = ({ children }) => {
         setFormTransferencia,
         initialTransferencia,
         initialFormNew,
-        Funciones,
+        funciones,
         agregarCajaNueva,
         editarCaja,
         aperturaCaja,
@@ -404,7 +402,7 @@ export const useCajas = () => {
     setFormTransferencia,
     initialTransferencia,
     initialFormNew,
-    Funciones,
+    funciones,
     agregarCajaNueva,
     editarCaja,
     aperturaCaja,
@@ -432,7 +430,7 @@ export const useCajas = () => {
     setFormTransferencia,
     initialTransferencia,
     initialFormNew,
-    Funciones,
+    funciones,
     agregarCajaNueva,
     editarCaja,
     aperturaCaja,

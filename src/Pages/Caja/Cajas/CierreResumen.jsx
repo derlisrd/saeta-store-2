@@ -1,5 +1,5 @@
 import React,{Fragment} from 'react'
-import { funciones as Funciones } from "../../../Functions";
+import { funciones } from "../../../Functions";
 import { Typography,Grid, TextField,Alert,LinearProgress } from '@mui/material'
 import { useCajas } from './CajasProvider';
 
@@ -21,7 +21,7 @@ const CierreResumen = ({datos,cargando}) => {
       </Grid>
       <Grid item xs={6}>
         <Alert icon={false} severity="warning" >
-          <Typography variant="button" >Monto inicial : {Funciones.numberSeparator(datos.montoInicial)} {moneda}</Typography>
+          <Typography variant="button" >Monto inicial : {funciones.numberSeparator(datos.montoInicial)} {moneda}</Typography>
         </Alert>
       </Grid>
       <Grid item xs={6}>
@@ -41,7 +41,7 @@ const CierreResumen = ({datos,cargando}) => {
       </Grid>
       <Grid item xs={12}>
         <Alert severity="info" icon={false}>
-          <Typography variant="h5">VENTAS SIN EFECTIVO: { Funciones.numberSeparator(datos.montoSinEfectivo)} {moneda}</Typography>
+          <Typography variant="h5">VENTAS SIN EFECTIVO: { funciones.numberSeparator(datos.montoSinEfectivo)} {moneda}</Typography>
         </Alert>
       </Grid>
       <Grid item xs={12} sm={6}>
@@ -56,7 +56,7 @@ const CierreResumen = ({datos,cargando}) => {
             </Grid>
             <Grid item xs={6}>
               <Typography variant="overline">
-                {Funciones.numberSeparator(datos.ventasContado)} {moneda}
+                {funciones.numberSeparator(datos.ventasContado)} {moneda}
               </Typography>
             </Grid>
             <Grid item xs={12}>
@@ -65,7 +65,7 @@ const CierreResumen = ({datos,cargando}) => {
                   datos.ventasDescripcion.map(e=>(
                     <Fragment key={e.id}>
                     <Grid item xs={6}><Typography variant="overline">{e.descripcion}</Typography> </Grid>
-                    <Grid item xs={6}><Typography variant="overline">{Funciones.numberSeparator(e.monto)} {moneda}</Typography></Grid>
+                    <Grid item xs={6}><Typography variant="overline">{funciones.numberSeparator(e.monto)} {moneda}</Typography></Grid>
                     </Fragment>
                   ))
                 }
@@ -77,7 +77,7 @@ const CierreResumen = ({datos,cargando}) => {
             </Grid>
             <Grid item xs={6}>
               <Typography variant="overline">
-              { Funciones.numberSeparator(datos.depositos)} {moneda}
+              { funciones.numberSeparator(datos.depositos)} {moneda}
               </Typography>
             </Grid>
             <Grid item xs={6}>
@@ -85,7 +85,7 @@ const CierreResumen = ({datos,cargando}) => {
             </Grid>
             <Grid item xs={6}>
               <Typography variant="overline">
-                { Funciones.numberSeparator(datos.cobrosVentasCredito)} {moneda}
+                { funciones.numberSeparator(datos.cobrosVentasCredito)} {moneda}
               </Typography>
             </Grid>
             
@@ -94,7 +94,7 @@ const CierreResumen = ({datos,cargando}) => {
             </Grid>
             <Grid item xs={6}>
               <Typography variant="overline">
-                { Funciones.numberSeparator(datos.otrosIngresos)} {moneda}
+                { funciones.numberSeparator(datos.otrosIngresos)} {moneda}
               </Typography>
             </Grid>
 
@@ -118,7 +118,7 @@ const CierreResumen = ({datos,cargando}) => {
             </Grid>
             <Grid item xs={6}>
               <Typography variant="overline">
-              { Funciones.numberSeparator(datos.comprasContado)} {moneda}
+              { funciones.numberSeparator(datos.comprasContado)} {moneda}
               </Typography>
             </Grid>
             <Grid item xs={6}>
@@ -126,7 +126,7 @@ const CierreResumen = ({datos,cargando}) => {
             </Grid>
             <Grid item xs={6}>
               <Typography variant="overline">
-              { Funciones.numberSeparator(datos.retiros)} {moneda}
+              { funciones.numberSeparator(datos.retiros)} {moneda}
               </Typography>
             </Grid>
             <Grid item xs={6}>
@@ -134,7 +134,7 @@ const CierreResumen = ({datos,cargando}) => {
             </Grid>
             <Grid item xs={6}>
               <Typography variant="overline">
-                { Funciones.numberSeparator(datos.pagoComprasCredito)} {moneda}
+                { funciones.numberSeparator(datos.pagoComprasCredito)} {moneda}
               </Typography>
             </Grid>
             <Grid item xs={6}>
@@ -142,7 +142,7 @@ const CierreResumen = ({datos,cargando}) => {
             </Grid>
             <Grid item xs={6}>
               <Typography variant="overline">
-                { Funciones.numberSeparator(datos.descuentos)} {moneda}
+                { funciones.numberSeparator(datos.descuentos)} {moneda}
               </Typography>
             </Grid>
             <Grid item xs={6}>
@@ -150,7 +150,7 @@ const CierreResumen = ({datos,cargando}) => {
             </Grid>
             <Grid item xs={6}>
               <Typography variant="overline">
-                { Funciones.numberSeparator(datos.otrosPagos)} {moneda}
+                { funciones.numberSeparator(datos.otrosPagos)} {moneda}
               </Typography>
             </Grid>
           
@@ -159,7 +159,7 @@ const CierreResumen = ({datos,cargando}) => {
       <Grid item xs={6}>
        { FALTANTE!==0  && 
         <Alert severity="error" variant="outlined" icon={false}>
-          <Typography variant="button">FALTANTE: {Funciones.numberSeparator(FALTANTE)} {moneda}</Typography>
+          <Typography variant="button">FALTANTE: {funciones.numberSeparator(FALTANTE)} {moneda}</Typography>
         </Alert>
         }
       </Grid>
@@ -167,7 +167,7 @@ const CierreResumen = ({datos,cargando}) => {
         {
           SOBRANTE!==0 && 
         <Alert severity="info" variant="outlined" icon={false}>
-          <Typography variant="button">SOBRANTE: {Funciones.numberSeparator(SOBRANTE)} {moneda}</Typography>
+          <Typography variant="button">SOBRANTE: {funciones.numberSeparator(SOBRANTE)} {moneda}</Typography>
         </Alert>
         }
       </Grid>
@@ -180,12 +180,12 @@ const CierreResumen = ({datos,cargando}) => {
       
       <Grid item xs={12} md={6}>
         <Alert severity="success" variant="outlined" icon={false}>
-          <Typography variant="h6">SALDO FINAL: {Funciones.numberSeparator(datos.saldoFinal)} {moneda}</Typography>
+          <Typography variant="h6">SALDO FINAL: {funciones.numberSeparator(datos.saldoFinal)} {moneda}</Typography>
         </Alert>
       </Grid>
       <Grid item xs={12} md={6}>
         <Alert severity="warning" variant="outlined" icon={false}>
-          <Typography variant="h6">ARQUEO DE CAJA: {Funciones.numberSeparator(arqueo)} {moneda}</Typography>
+          <Typography variant="h6">ARQUEO DE CAJA: {funciones.numberSeparator(arqueo)} {moneda}</Typography>
         </Alert>
       </Grid>
       

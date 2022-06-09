@@ -4,14 +4,7 @@ import { useCajas } from "./CajasProvider";
 import ModalDialog from "../../../Components/UI/ModalDialog";
 
 const DialogNuevo = () => {
-  const {
-    dialogs,
-    setDialogs,
-    formNew,
-    setFormNew,
-    initialFormNew,
-    listaUsers, listaMonedas, errors,setErrors,agregarCajaNueva,cargas,lang
-  } = useCajas();
+  const {dialogs,setDialogs,formNew,setFormNew,initialFormNew,listaUsers, listaMonedas, errors,setErrors,agregarCajaNueva,cargas,lang} = useCajas();
 
   const onChange = (e) => {
     const { value, name } = e.target;
@@ -51,7 +44,7 @@ const DialogNuevo = () => {
         </Button></>)
   return (
 
-      <ModalDialog title="Habilitar y agregar nueva caja" fullWidth open={dialogs.nuevo} ActionsButtons={Acciones} onClose={cerrar} >
+      <ModalDialog title={lang.habilitar_nueva_caja} fullWidth open={dialogs.nuevo} ActionsButtons={Acciones} onClose={cerrar} >
 
         <Grid container spacing={2}>
           <Grid item xs={12}>

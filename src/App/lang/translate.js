@@ -1,6 +1,6 @@
 export const translate = {
     es:{
-
+        habilitar_nueva_caja:"Habilitar y agregar nueva caja",
         salir:"Salir",
         no_autorizado:"No tienes permiso para este sitio",
         q_volver_casa:"Porque no vuelves a casa?",

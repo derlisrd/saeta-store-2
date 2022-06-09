@@ -5,7 +5,7 @@ import NumberFormatCustom from "../../../Components/thirty/NumberFormatCustom";
 
 const DialogApertura = () => {
 
-    const {dialogs,setDialogs,formAbrir, setFormAbrir, Funciones,aperturaCaja,errors,setErrors,cargas,dialogQuery, lista,dialogID} = useCajas();
+    const {dialogs,setDialogs,formAbrir, setFormAbrir, funciones,aperturaCaja,errors,setErrors,cargas,dialogQuery, lista,dialogID} = useCajas();
 
 
     const onChange = (e) => {
@@ -22,9 +22,9 @@ const DialogApertura = () => {
         delete f.nombre_user;
         delete f.nombre_moneda;
         delete f.abreviatura_moneda;
-        f.ult_mov_caja = Funciones.getFechaHorarioString();
+        f.ult_mov_caja = funciones.getFechaHorarioString();
         f.estado_caja="1";
-        f.fecha_apertura = Funciones.getFechaHorarioString()
+        f.fecha_apertura = funciones.getFechaHorarioString()
         if(parseFloat(f.monto_inicial)<0){
             setErrors({...errors,abrir:true,abrirMensaje:"El monto inicial no puede ser negativo"});
             return false;
@@ -82,7 +82,7 @@ const DialogApertura = () => {
               </Grid>
               <Grid item xs={12}>
                 <Alert severity="info" icon={false}>
-                    Monto de último cierre valor en efectivo : <AlertTitle>{Funciones.numberSeparator(formAbrir?.monto_cierre)} {formAbrir?.nombre_moneda}</AlertTitle>
+                    Monto de último cierre valor en efectivo : <AlertTitle>{funciones.numberSeparator(formAbrir?.monto_cierre)} {formAbrir?.nombre_moneda}</AlertTitle>
                 </Alert>
               </Grid>
            

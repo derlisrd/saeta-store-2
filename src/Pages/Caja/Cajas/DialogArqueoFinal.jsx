@@ -8,7 +8,7 @@ import swal from 'sweetalert';
 
 const DialogArqueoFinal = () => {
 
-  const {dialogs,setDialogs,setTotalSumaMonedasArqueo,datosCajaCierre,totalSumaMonedasArqueo,Funciones,getLista} = useCajas();
+  const {dialogs,setDialogs,setTotalSumaMonedasArqueo,datosCajaCierre,totalSumaMonedasArqueo,funciones,getLista} = useCajas();
   const {userData} = useLogin()
   const {token_user,id_user} = userData;
   const datosIniciales = {
@@ -159,7 +159,7 @@ const DialogArqueoFinal = () => {
   const EfectuarCierre = async () => {
     setCargando(true);
     let data = {
-      fecha_cierre: Funciones.getFechaHorarioString(),
+      fecha_cierre: funciones.getFechaHorarioString(),
       estado_caja: "close",
       monto_cierre: datos.saldoFinal,
     };
@@ -169,16 +169,16 @@ const DialogArqueoFinal = () => {
       id_user_movimiento: id_user,
       id_tipo_registro: "9", // 9 es cierre
       monto_movimiento: datos.saldoFinal,
-      fecha_movimiento: Funciones.getFechaHorarioString(),
+      fecha_movimiento: funciones.getFechaHorarioString(),
       monto_sin_efectivo: datos.montoSinEfectivo,
-      detalles_movimiento: "Cierre de caja fecha " + Funciones.getFechaHorarioString()
+      detalles_movimiento: "Cierre de caja fecha " + funciones.getFechaHorarioString()
     };
     let arqueo = {
       id_caja_arqueo: datosCajaCierre.id_caja,
       monto_arqueo: datos.saldoFinal,
       id_user_arqueo:id_user,
       tipo_arqueo:"0",
-      fecha_arqueo:Funciones.getFechaHorarioString()
+      fecha_arqueo:funciones.getFechaHorarioString()
     }
 
     let promise = await Promise.all([APICALLER.update({
