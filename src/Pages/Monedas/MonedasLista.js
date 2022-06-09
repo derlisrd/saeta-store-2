@@ -28,7 +28,7 @@ const MonedasLista = () => {
                 }
             ,
             compareField: "activo_moneda",
-            styleItemCondition: "activo_moneda",
+            styleFieldCondition: "activo_moneda",
             styleCondition: {
               "0": {
                 backgroundColor: "#ff7c6b",

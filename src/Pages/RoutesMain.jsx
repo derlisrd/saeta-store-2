@@ -36,6 +36,9 @@ import Info from "./Settings/Info";
 import Compras from "./Productos/Compras";
 import Medidas from "./Medidas";
 import Movimientos from "./Caja/Movimientos";
+import RegistroMovimientos from "./Caja/RegistroMovimientos";
+import Entregas from "./Ventas/Entregas";
+import Transferencias from "./Productos/Transferencias";
 
 /* 
 import Agenda from "./Agenda";
@@ -108,6 +111,9 @@ const RoutesMain = () => {
   const R = env.BASEURL +'/';
   return (
     <Routes>
+      <Route path={R+"transferencias"} element={<PrivateRoute id={60}><Transferencias /></PrivateRoute>} />
+      <Route path={R+"entregas"} element={<PrivateRoute id={16}><Entregas /></PrivateRoute>} />
+      <Route path={R+"registromovimientos"} element={<PrivateRoute id={26}><RegistroMovimientos /></PrivateRoute>} />
       <Route path={R+"movimientos"} element={<PrivateRoute id={24}><Movimientos /></PrivateRoute>} />
       <Route path={R+'medidas'} element={<PrivateRoute id={32}><Medidas /></PrivateRoute>} />
       <Route path={R+'compras'} element={<PrivateRoute id={20}><Compras /></PrivateRoute>} />

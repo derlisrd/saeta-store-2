@@ -1,11 +1,11 @@
 import { Icon } from '@mui/material';
 import React from 'react'
-import Tablas from '../../../Componentes/Tablas';
+import Tablas from '../../../Components/UI/Tablas';
 import { useEntregas } from './EntregasProvider'
 
 const EntregasPendientes = () => {
 
-    const {listaPendientes} = useEntregas();
+    const {listaPendientes,lang} = useEntregas();
 
     
 
@@ -32,12 +32,12 @@ const EntregasPendientes = () => {
 
   return (
     <Tablas
-        icono="pending_actions"
-        nombretabla="Entregas pendientes"
+        icon={{ name:"pending_actions" }}
+        title={lang.entregas_pendientes}
         subtitle="Productos con entregas pendientes que aún no salieron de stock"
-        columnas={columnas}
-        filas={listaPendientes}
-        Acciones={Acciones}
+        columns={columnas}
+        datas={listaPendientes}
+        Accions={Acciones}
         showOptions
     />
   )

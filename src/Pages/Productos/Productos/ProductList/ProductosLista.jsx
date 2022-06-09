@@ -35,7 +35,7 @@ const ProductosLista = () => {
         "2": lang.servicio,
         "1": lang.articulo,
       },
-      styleItemCondition: "tipo_producto",
+      styleFieldCondition: "tipo_producto",
       styleCondition: {
         "1": {
           backgroundColor: "#ff7c6b",

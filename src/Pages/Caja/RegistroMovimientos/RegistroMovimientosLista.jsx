@@ -1,11 +1,11 @@
 import { Button, Icon, IconButton } from '@mui/material'
 import React from 'react'
-import Tablas from '../../../Componentes/Tablas'
+import Tablas from '../../../Components/UI/Tablas'
 import { useRegistroMovimientos } from './RegistroMovimientosProvider'
 
 const RegistroMovimientosLista = () => {
 
-    const {lista,dialogs,setDialogs,/* setForm,*/loading}=useRegistroMovimientos()
+    const {lista,dialogs,setDialogs,lang,loading}=useRegistroMovimientos()
 
 
 
@@ -18,13 +18,31 @@ const columnas = [
         field:"descripcion_registro",
         title:"Descripcion",
       },
-    {
-        field:"tipo_registro",
-        title:"Tipo",
-        items: { 0: "SALIDA", 1: "ENTRADA" },
-        comparaItem: "tipo_registro",
-        style:{backgroundColor:"#3f51b591",padding:"2px",borderRadius:"5px",cursor:"pointer"},
-    },
+
+      {
+        field: "tipo_registro",
+        title: lang.tipo,
+        compareField:"tipo_registro",
+        items: {
+          "0": lang.salida,
+          "1": lang.entrada,
+        },
+        styleFieldCondition: "tipo_registro",
+        styleCondition: {
+          "0": {
+            backgroundColor: "#ff7c6b",
+            padding: "6px",fontWeight:"bold",
+            borderRadius: "5px",
+            color: "#780c00",
+          },
+          "1": {
+            backgroundColor: "#2dec76",
+            padding: "6px", fontWeight:"bold",
+            borderRadius: "5px",
+            color: "#007b02",
+          },
+        },
+      },
     
 ];
 
@@ -33,27 +51,27 @@ const open = (f)=>{
   setForm(f); */
 }
 
-const Acciones = ({filaProps})=>
+const Acciones = ({rowProps})=>
   (<>
-  <IconButton onClick={()=>open(filaProps)}>
+  <IconButton onClick={()=>open(rowProps)}>
     <Icon>edit</Icon>
   </IconButton>
   </>)
 
   const search = (
-    <Button variant="outlined" onClick={()=> setDialogs({...dialogs,agregar:true})}>Agregar</Button>
+    <Button variant="contained" onClick={()=> setDialogs({...dialogs,agregar:true})}>{lang.agregar}</Button>
   );
 
   return (
     <Tablas 
-        search={search}
-        nombretabla="Registro de movimientos"
-        icono="list_alt"
-        columnas={columnas}
-        filas={lista}
-        Acciones={Acciones}
+        inputs={search}
+        title="Registro de movimientos"
+        icon={{ name:"list_alt" }}
+        columns={columnas}
+        datas={lista}
+        Accions={Acciones}
         showOptions={false}
-        cargando={loading}
+        loading={loading}
     />
   )
 }

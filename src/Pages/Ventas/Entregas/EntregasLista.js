@@ -14,13 +14,13 @@ import {
   MenuItem,
 } from "@mui/material";
 import { useState } from "react";
-
+import { useTheme } from "../../../Contexts/TemaProvider";
 import { useEntregas } from "./EntregasProvider";
 import EntregasView from "./EntregasView";
 
 const EntregasLista = () => {
-  const { nroFactura, getFactura, lista, cargando, tipoFactura, setTipoFactura } = useEntregas();
-
+  const { nroFactura, getFactura, lista, cargando, tipoFactura, setTipoFactura,lang } = useEntregas();
+  const {tema} = useTheme()
   const [error, setError] = useState(false);
   const [errorMsj, setErrorMsj] = useState("Ingrese el número de factura");
   const PressEnter = (e) => {
@@ -47,16 +47,13 @@ const EntregasLista = () => {
         <Grid item xs={12} md={1}>
           <Avatar
             variant="rounded"
-            style={{
-              padding: 8,
-              backgroundColor: `#3f51b5`,
-            }}
+            sx={{bgcolor: tema.currentColor}}
           >
             <Icon fontSize="large">delivery_dining</Icon>
           </Avatar>
         </Grid>
         <Grid item xs={12} md={11}>
-          <Typography variant="button">Entregas</Typography>
+          <Typography variant="button">{lang.entregas}</Typography>
           <br />
           <Typography variant="caption">
             En el módulo de ENTREGAS se dan salida a los productos vendidos del
@@ -66,7 +63,7 @@ const EntregasLista = () => {
         </Grid>
         <Grid item xs={12} sm={3}>
           <FormControl fullWidth>
-            <InputLabel variant="outlined">Tipo</InputLabel>
+            <InputLabel variant="outlined">{lang.tipo}</InputLabel>
             <Select
               variant="outlined"
               onChange={(e)=>{ setTipoFactura(e.target.value) }}

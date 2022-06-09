@@ -1,13 +1,12 @@
 import { createContext, useContext, useState,useEffect, useCallback } from "react";
-import { APICALLER } from "../../../Api/ApiCaller";
-
+import { APICALLER } from "../../../Services/api";
+import { useLang } from "../../../Contexts/LangProvider";
 const Contexto = createContext();
 
 const RegistroMovimientosProvider = ({ children }) => {
+  const {lang} = useLang()
   const [loading, setLoading] = useState(true);
-  const [dialogs,setDialogs] = useState({
-    agregar:false
-  })
+  const [dialogs,setDialogs] = useState({agregar:false})
   const initialForm = {
     id_cajas_registro:"",
     descripcion_registro:"",
@@ -37,12 +36,12 @@ const RegistroMovimientosProvider = ({ children }) => {
     };
   }, [getLista]);
 
-  return <Contexto.Provider value={{ loading,setLoading,lista,dialogs,setDialogs,form,setForm,initialForm,getLista }}>{children}</Contexto.Provider>;
+  return <Contexto.Provider value={{lang, loading,setLoading,lista,dialogs,setDialogs,form,setForm,initialForm,getLista }}>{children}</Contexto.Provider>;
 };
 
 export const useRegistroMovimientos = () => {
-  const {loading,setLoading,lista,dialogs,setDialogs,form,setForm,initialForm,getLista} = useContext(Contexto);
-  return {loading,setLoading,lista,dialogs,setDialogs,form,setForm,initialForm,getLista}
+  const {lang,loading,setLoading,lista,dialogs,setDialogs,form,setForm,initialForm,getLista} = useContext(Contexto);
+  return {lang,loading,setLoading,lista,dialogs,setDialogs,form,setForm,initialForm,getLista}
 };
 
 export default RegistroMovimientosProvider;

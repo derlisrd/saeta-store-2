@@ -48,7 +48,7 @@ const CategoriasLista = () => {
         "1": lang.articulo,
         "2": lang.servicio
       },
-      styleItemCondition: "tipo_categoria",
+      styleFieldCondition: "tipo_categoria",
       styleCondition: {
         "1": {
           backgroundColor: "#06c",

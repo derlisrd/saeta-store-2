@@ -1,13 +1,12 @@
-import { Radio,Dialog, DialogContent, DialogTitle, FormControlLabel, FormLabel, Grid,  TextField, DialogActions, Button } from '@mui/material'
-import React from 'react'
+import { Radio,Dialog, DialogContent, DialogTitle, FormControlLabel, FormLabel, Grid,  TextField, DialogActions, Button,Zoom } from '@mui/material'
 import swal from 'sweetalert'
-import { APICALLER } from '../../../Api/ApiCaller'
-import { useLogin } from '../../../Contextos/LoginProvider'
+import { APICALLER } from '../../../Services/api'
+import { useLogin } from '../../../Contexts/LoginProvider'
 import { useRegistroMovimientos } from './RegistroMovimientosProvider'
 
 const RegistroDialog = () => {
   const {token_user} = useLogin()
-    const {dialogs,setDialogs,form,setForm,initialForm,getLista} = useRegistroMovimientos()
+    const {dialogs,setDialogs,form,setForm,initialForm,getLista,lang} = useRegistroMovimientos()
 
     const cerrar = ()=>{
         setDialogs({...dialogs,agregar:false});
@@ -40,7 +39,7 @@ const RegistroDialog = () => {
     }
 
   return (
-    <Dialog onClose={cerrar} open={dialogs.agregar} fullWidth>
+    <Dialog onClose={cerrar} open={dialogs.agregar} fullWidth TransitionComponent={Zoom}>
       <form onSubmit={enviarForm}>
       <DialogTitle>
         Editar o Registrar
@@ -92,8 +91,8 @@ const RegistroDialog = () => {
         </Grid>
       </DialogContent>
       <DialogActions>
-        <Button variant="outlined" type="onsubmit" >Guardar</Button>
-        <Button variant="outlined" onClick={cerrar}>Cancelar</Button>
+        <Button variant="contained" type="onsubmit" >{lang.guardar}</Button>
+        <Button variant="contained" onClick={cerrar}>{lang.cancelar}</Button>
       </DialogActions>
     </form>
     </Dialog>

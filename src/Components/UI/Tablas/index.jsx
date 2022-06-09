@@ -62,7 +62,7 @@ return (
                                             column.style
                                                 ? column.style
                                                 : column.styleCondition
-                                                ? column.styleCondition[data[column.styleItemCondition]]
+                                                ? column.styleCondition[data[column.styleFieldCondition]]
                                                 : null
                                             }>
                                             {

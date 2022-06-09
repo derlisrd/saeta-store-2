@@ -1,11 +1,12 @@
 import React,{createContext,useContext,useState,useEffect,useCallback} from 'react'
 import { APICALLER } from '../../../Services/api';
-import {useLogin} from '../../../Contextos/LoginProvider';
+import {useLogin} from '../../../Contexts/LoginProvider';
 import swal from 'sweetalert';
 const TransferenciasContext = createContext();
 
 const TransferenciasProvider = ({children}) => {
-    const {token_user} = useLogin()
+    const {userData} = useLogin()
+    const {token_user} = userData
     const initialDialogs = {transferir:false}
     const [cargas,setCargas] = useState({lista:true,transferencia:false});
     const [error,setError] = useState({active:false,msj:"",id:""})

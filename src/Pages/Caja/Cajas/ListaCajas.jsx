@@ -26,7 +26,7 @@ const ListaCajas = () => {
         "close": lang.cerrado,
         "open": lang.abierto,
       },
-      styleItemCondition: "estado_caja",
+      styleFieldCondition: "estado_caja",
       styleCondition: {
         "close": {
           backgroundColor: "#ff7c6b",

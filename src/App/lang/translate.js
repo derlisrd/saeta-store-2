@@ -214,7 +214,11 @@ export const translate = {
         hasta:"Hasta",
         todos:"Todos",
         filtrar:"Filtrar",
-        detalles_movimiento:"Detalles de movimiento"
+        detalles_movimiento:"Detalles de movimiento",
+        entrada:"Entrada",
+        salida:"Salida",
+        producto_chequeado:"Producto chequeado",
+        entregas_pendientes:"Entregas pendientes"
     },
 
     en:{

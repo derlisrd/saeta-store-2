@@ -1,29 +1,21 @@
 
 
 import { useState } from "react";
-import {
-  Alert,
-  Button,
-  Icon,
-  Tooltip,
-  CircularProgress,
-  Snackbar,
-  TextField,
-  Stack,
-} from "@mui/material";
-import Tablas from "../../../Componentes/Tablas";
+import {Alert,Button,Icon,Tooltip,CircularProgress,Snackbar,TextField,Stack} from "@mui/material";
+import Tablas from "../../../Components/UI/Tablas";
 import { green } from "@mui/material/colors";
 import { useEntregas } from "./EntregasProvider";
-import { useLogin } from "../../../Contextos/LoginProvider";
-import { APICALLER } from "../../../Api/ApiCaller";
+import { useLogin } from "../../../Contexts/LoginProvider";
+import { APICALLER } from "../../../Services/api";
 
 const EntregasView = () => {
 
 
   const [cargandoCheck, setCargandoCheck] = useState(false);
   const [openSnack, setOpenSnack] = useState(false);
-  const { lista, setLista, tipoFactura,listaPendientes,setListaPendientes } = useEntregas();
-  const { token_user } = useLogin();
+  const { lista, setLista, tipoFactura,listaPendientes,setListaPendientes,lang } = useEntregas();
+  const { userData } = useLogin();
+  const {token_user} = userData
   const FilterData = [...lista];
 
   if (lista.length < 1) {
@@ -116,18 +108,17 @@ const EntregasView = () => {
         anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
       >
         <Alert onClose={closeSnack} severity="success">
-          PRODUCTO CHEQUEADO
+          {lang.producto_chequeado}
         </Alert>
       </Snackbar>
 
       <Tablas
-        columnas={columnas}
-        filas={FilterData}
-        icono="receipt"
-        nombretabla={INFO}
+        columns={columnas}
+        datas={FilterData}
+        icon={{ name:"receipt" }}
+        title={INFO}
         subtitle="Verifique bien los productos para entregar, y presione el botón de check"
-        namecolumnID="codigo_producto"
-        Acciones={Acciones}
+        Accions={Acciones}
         showOptions
       />
     </>

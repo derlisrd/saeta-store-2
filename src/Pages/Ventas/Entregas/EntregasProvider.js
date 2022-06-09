@@ -1,16 +1,11 @@
-import {
-  useState,
-  useEffect,
-  useContext,
-  createContext,
-  useCallback,
-  useRef,
-} from "react";
-import { APICALLER } from "../../../Api/ApiCaller";
+import {useState,useEffect,useContext,createContext,useCallback,useRef} from "react";
+import { useLang } from "../../../Contexts/LangProvider";
+import { APICALLER } from "../../../Services/api";
 
 const Contexto = createContext();
 
 const EntregasProvider = ({ children }) => {
+  const {lang} = useLang()
   const [cargando, setCargando] = useState(false);
   const [lista, setLista] = useState([]);
   const [listaPendientes,setListaPendientes] = useState([]);
@@ -68,15 +63,15 @@ const EntregasProvider = ({ children }) => {
   }, [getPendientes]);
 
   return (
-    <Contexto.Provider value={{ cargando, setCargando, lista, setLista,getFactura,nroFactura,error,setError,tipoFactura,setTipoFactura,listaPendientes,setListaPendientes}}>
+    <Contexto.Provider value={{lang, cargando, setCargando, lista, setLista,getFactura,nroFactura,error,setError,tipoFactura,setTipoFactura,listaPendientes,setListaPendientes}}>
       {children}
     </Contexto.Provider>
   );
 };
 
 export const useEntregas = () => {
-  const { cargando, setCargando, lista, setLista, getFactura,nroFactura,error,setError,tipoFactura,setTipoFactura,listaPendientes,setListaPendientes } = useContext(Contexto);
-  return { cargando, setCargando, lista, setLista, getFactura,nroFactura,error,setError,tipoFactura,setTipoFactura,listaPendientes,setListaPendientes };
+  const {lang, cargando, setCargando, lista, setLista, getFactura,nroFactura,error,setError,tipoFactura,setTipoFactura,listaPendientes,setListaPendientes } = useContext(Contexto);
+  return {lang, cargando, setCargando, lista, setLista, getFactura,nroFactura,error,setError,tipoFactura,setTipoFactura,listaPendientes,setListaPendientes };
 };
 
 export default EntregasProvider;
