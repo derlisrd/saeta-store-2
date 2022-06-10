@@ -2,46 +2,55 @@ import {Alert,Button,FormControl,FormHelperText,Grid,InputLabel,LinearProgress,M
 import NumberFormatCustom from "../../../Components/thirty/NumberFormatCustom";
 import { useCajas } from "./CajasProvider";
 import ModalDialog from "../../../Components/UI/ModalDialog";
+import { useEffect,useState } from 'react';
 
 const DialogNuevo = () => {
-  const {dialogs,setDialogs,formNew,setFormNew,initialFormNew,listaUsers, listaMonedas, errors,setErrors,agregarCajaNueva,cargas,lang} = useCajas();
+  const {dialogs,setDialogs,formNew,initialFormNew,listaUsers, listaMonedas, errors,setErrors,agregarCajaNueva,cargas,lang} = useCajas();
+  const [form,setForm] = useState(initialFormNew)
 
+  
   const onChange = (e) => {
     const { value, name } = e.target;
-    setFormNew({ ...formNew, [name]: value });
+    setForm({ ...form, [name]: value });
   };
 
+  
 
   const verificar = ()=>{
-    if(formNew.nombre_caja===""){
+    if(form.nombre_caja===""){
       setErrors({...errors,nuevo:true,nuevoMensaje:lang.ingrese_nombre_caja});
       return false;
     }
-    if(formNew.id_user_caja===""){
+    if(form.id_user_caja===""){
       setErrors({...errors,nuevo:true,nuevoMensaje:lang.seleccione_usuario});
       return false;
     }
-    if(formNew.id_moneda_caja===""){
+    if(form.id_moneda_caja===""){
       setErrors({...errors,nuevo:true,nuevoMensaje:lang.seleccione_moneda});
       return false;
     }
-    if(parseFloat(formNew.monto_inicial)<0){
+    if(parseFloat(form.monto_inicial)<0){
       setErrors({...errors,nuevo:true,nuevoMensaje:lang.monto_inicial_negativo});
       return false;
     }
     setErrors({...errors,nuevo:false,nuevoMensaje:""});
-    agregarCajaNueva();
+    agregarCajaNueva(form);
   }
 
   const cerrar = () => {
     setDialogs({ ...dialogs, nuevo: false });
-    setFormNew(initialFormNew);
+    setForm(initialFormNew);
   };
   const Acciones = (<>
   <Button variant="contained" onClick={verificar}>{lang.abrir}</Button>
         <Button variant="contained" onClick={cerrar}>
           {lang.cancelar}
         </Button></>)
+
+useEffect(() => {
+  setForm(formNew)
+}, [formNew])
+
   return (
 
       <ModalDialog title={lang.habilitar_nueva_caja} fullWidth open={dialogs.nuevo} ActionsButtons={Acciones} onClose={cerrar} >
@@ -61,7 +70,7 @@ const DialogNuevo = () => {
               required
               fullWidth
               name="nombre_caja"
-              value={formNew.nombre_caja}
+              value={form.nombre_caja}
               onChange={onChange}
               label={lang.nombre_de_caja}
             />
@@ -70,7 +79,7 @@ const DialogNuevo = () => {
             <TextField
               fullWidth
               name="monto_inicial"
-              value={formNew.monto_inicial}
+              value={form.monto_inicial}
               onChange={onChange}
               label={lang.monto_inicial}
               InputProps={{
@@ -85,7 +94,7 @@ const DialogNuevo = () => {
               <Select
                 onChange={onChange}
                 name="id_user_caja"
-                value={formNew.id_user_caja}
+                value={form.id_user_caja}
                 fullWidth
               >
                 {listaUsers.map((d) => (
@@ -103,7 +112,7 @@ const DialogNuevo = () => {
               <Select
                 onChange={onChange}
                 name="id_moneda_caja"
-                value={formNew.id_moneda_caja}
+                value={form.id_moneda_caja}
                 fullWidth
               >
                 {listaMonedas.map((d,i) => (

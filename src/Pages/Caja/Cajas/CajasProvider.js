@@ -103,11 +103,12 @@ const CajasProvider = ({ children }) => {
   };
   const [formTransferencia, setFormTransferencia] = useState(initialTransferencia);
 
-  const agregarCajaNueva = async () => {
+  const agregarCajaNueva = async (f) => {
     setCargas({ ...cargas, nuevo: true });
-    let formulario = { ...formNew };
+
+    let formulario = { ...f };
     delete formulario.id_user_caja;
-    formulario.monto_caja = formNew.monto_inicial;
+    formulario.monto_caja = f.monto_inicial;
     let res = await APICALLER.insert({
       table: "cajas",
       data: formulario,
@@ -116,23 +117,23 @@ const CajasProvider = ({ children }) => {
 
     if (res.response === "ok") {
       let LASTIDCAJA = res.last_id;
-      let IDUSER = formNew.id_user_caja;
+      let IDUSER = f.id_user_caja;
       let cajaformusers = { id_user_caja: IDUSER, id_caja_caja: LASTIDCAJA };
 
       let cajamovimientosForm = {
         id_caja_movimiento: LASTIDCAJA,
         id_user_movimiento: id_user,
         id_tipo_registro: "3", // 3 ES APERTURA DE CAJA
-        monto_movimiento: formNew.monto_inicial,
+        monto_movimiento: f.monto_inicial,
         monto_sin_efectivo: "0",
         detalles_movimiento: lang.creacion_apertura_caja,
-        fecha_movimiento: formNew.fecha_apertura,
+        fecha_movimiento: f.fecha_apertura,
       }
 
       let arqueo = {
         id_caja_arqueo: LASTIDCAJA,
         id_user_arqueo:id_user,
-        monto_arqueo: formNew.monto_inicial,
+        monto_arqueo: f.monto_inicial,
         tipo_arqueo:"1",
         fecha_arqueo:funciones.getFechaHorarioString()
       }
