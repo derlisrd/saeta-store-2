@@ -1,26 +1,10 @@
-import {
-  Button,
-  Grid,
-  Typography,
-  Icon,
-  Avatar,
-  TextField,
-  Container,
-  CircularProgress,
-  InputAdornment,
-  FormControl,
-  InputLabel,
-  Select,
-  MenuItem,
-} from "@mui/material";
+import {Button,Grid,Typography,Icon,Avatar,TextField,Container,CircularProgress,InputAdornment,FormControl,InputLabel,Select,MenuItem} from "@mui/material";
 import { useState } from "react";
-import { useTheme } from "../../../Contexts/TemaProvider";
 import { useEntregas } from "./EntregasProvider";
 import EntregasView from "./EntregasView";
 
 const EntregasLista = () => {
   const { nroFactura, getFactura, lista, cargando, tipoFactura, setTipoFactura,lang } = useEntregas();
-  const {tema} = useTheme()
   const [error, setError] = useState(false);
   const [errorMsj, setErrorMsj] = useState("Ingrese el número de factura");
   const PressEnter = (e) => {
@@ -47,7 +31,7 @@ const EntregasLista = () => {
         <Grid item xs={12} md={1}>
           <Avatar
             variant="rounded"
-            sx={{bgcolor: tema.currentColor}}
+            sx={{bgcolor: 'primary.main',padding:3}}
           >
             <Icon fontSize="large">delivery_dining</Icon>
           </Avatar>
@@ -63,15 +47,14 @@ const EntregasLista = () => {
         </Grid>
         <Grid item xs={12} sm={3}>
           <FormControl fullWidth>
-            <InputLabel variant="outlined">{lang.tipo}</InputLabel>
+            <InputLabel>{lang.tipo}</InputLabel>
             <Select
-              variant="outlined"
               onChange={(e)=>{ setTipoFactura(e.target.value) }}
               name="tipo_factura"
               value={tipoFactura}
             >
                 <MenuItem value="0">
-                  Recibo
+                  {lang.recibo}
                 </MenuItem>
                 <MenuItem value="1">
                   Factura Contado
@@ -105,12 +88,10 @@ const EntregasLista = () => {
 
         <Grid item xs={12} sm={4}>
           <Button
-            size="large"
-            variant="outlined"
+            size="large" variant="contained" sx={{ padding:2 }}
             onClick={Consultar}
-            color="primary"
           >
-            Consultar
+            {lang.consultar}
           </Button>
         </Grid>
 

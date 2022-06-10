@@ -87,7 +87,7 @@ const ListaCajas = () => {
   };
 
   const abrirArqueo = (f) => {
-    
+  
     setDatosCajaCierre(f);
     setDialogs({ ...dialogs, arqueo: true });
     setTotalSumaMonedasArqueo(0);
@@ -108,9 +108,7 @@ const ListaCajas = () => {
       {rowProps.estado_caja === "open" ? (
         <Tooltip arrow title={lang.cerrar}>
           <IconButton
-            onClick={() => {
-              abrirArqueo(rowProps);
-            }}
+            onClick={() => {abrirArqueo(rowProps);}}
           >
             <Icon color="error">close</Icon>
           </IconButton>
@@ -130,7 +128,7 @@ const ListaCajas = () => {
   );
 
   const Search = (
-    <Stack spacing={2} direction="row">
+    <Stack spacing={2} direction={{ xs: 'column', sm: 'row' }}>
       <TextField
         InputProps={{
           endAdornment: (
@@ -143,11 +141,10 @@ const ListaCajas = () => {
         }}
         onKeyPress={(e) => {}}
         onChange={(e) => {}}
-        variant="outlined"
         label={lang.buscar}
       />
       <Button
-        variant="contained"
+        variant="contained" /* sx={{ bgcolor:{xs:'primary.main',sm:'secondary.main'} }} */
         size="large"
         onClick={() => setDialogs({ ...dialogs, nuevo: true })}
       >

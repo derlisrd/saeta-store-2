@@ -5,7 +5,7 @@ import NumberFormatCustom from "../../../Components/thirty/NumberFormatCustom";
 
 const DialogApertura = () => {
 
-    const {dialogs,setDialogs,formAbrir, setFormAbrir, funciones,aperturaCaja,errors,setErrors,cargas,dialogQuery, lista,dialogID} = useCajas();
+    const {dialogs,setDialogs,formAbrir, setFormAbrir, funciones,aperturaCaja,errors,setErrors,cargas,dialogQuery,lang, lista,dialogID} = useCajas();
 
 
     const onChange = (e) => {
@@ -26,7 +26,7 @@ const DialogApertura = () => {
         f.estado_caja="1";
         f.fecha_apertura = funciones.getFechaHorarioString()
         if(parseFloat(f.monto_inicial)<0){
-            setErrors({...errors,abrir:true,abrirMensaje:"El monto inicial no puede ser negativo"});
+            setErrors({...errors,abrir:true,abrirMensaje:lang.long_no_negativo});
             return false;
           }
         setErrors({...errors,abrir:false,abrirMensaje:""});
@@ -61,7 +61,7 @@ const DialogApertura = () => {
 
     return (
         <Dialog open={dialogs.abrir} onClose={cerrar} fullWidth>
-          <DialogTitle>Hacer apertura</DialogTitle>
+          <DialogTitle>{lang.hacer_apertura}</DialogTitle>
           <DialogContent dividers>
             {
               cargas.lista ? <CircularProgress /> :
@@ -77,18 +77,18 @@ const DialogApertura = () => {
               
                 <Grid item xs={12}>
                 <Alert severity="warning" icon={false}>
-                    NOMBRE: <AlertTitle>{formAbrir?.nombre_caja}</AlertTitle>
+                    {lang.nombre}: <AlertTitle>{formAbrir?.nombre_caja}</AlertTitle>
                 </Alert>
               </Grid>
               <Grid item xs={12}>
                 <Alert severity="info" icon={false}>
-                    Monto de último cierre valor en efectivo : <AlertTitle>{funciones.numberSeparator(formAbrir?.monto_cierre)} {formAbrir?.nombre_moneda}</AlertTitle>
+                    {lang.long_ultimo_monto} : <AlertTitle>{funciones.numberSeparator(formAbrir?.monto_cierre)} {formAbrir?.nombre_moneda}</AlertTitle>
                 </Alert>
               </Grid>
            
                 <Grid item xs={12}>
                   <Alert severity="info" icon={false}>
-                    PRESIONE EN ABRIR PARA PROCEDER
+                    {lang.presione_abrir}
                   </Alert>
                 </Grid>
               
@@ -99,7 +99,7 @@ const DialogApertura = () => {
               name="monto_inicial"
               value={formAbrir?.monto_inicial}
               onChange={onChange}
-              label="Monto inicial en caja"
+              label={lang.monto_inicial}
               InputProps={{
                 inputComponent: NumberFormatCustom,
                 inputProps: { min: 0 },
@@ -109,7 +109,6 @@ const DialogApertura = () => {
                     </InputAdornment>
                   ),
               }}
-              helperText="Ingrese el monto actual existente en caja"
             />
               </Grid>
               
@@ -118,10 +117,8 @@ const DialogApertura = () => {
             
           </DialogContent>
           <DialogActions>
-            <Button variant="outlined" onClick={verificar}>Abrir caja</Button>
-            <Button variant="outlined" onClick={cerrar}>
-              Cerrar
-            </Button>
+            <Button variant="contained" onClick={verificar}>{lang.abrir_caja}</Button>
+            <Button variant="contained" onClick={cerrar}>{lang.cancelar}</Button>
           </DialogActions>
         </Dialog>
       );

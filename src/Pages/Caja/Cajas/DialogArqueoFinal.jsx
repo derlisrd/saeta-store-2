@@ -8,7 +8,7 @@ import swal from 'sweetalert';
 
 const DialogArqueoFinal = () => {
 
-  const {dialogs,setDialogs,setTotalSumaMonedasArqueo,datosCajaCierre,totalSumaMonedasArqueo,funciones,getLista} = useCajas();
+  const {dialogs,setDialogs,setTotalSumaMonedasArqueo,datosCajaCierre,totalSumaMonedasArqueo,funciones,getLista,lang} = useCajas();
   const {userData} = useLogin()
   const {token_user,id_user} = userData;
   const datosIniciales = {
@@ -52,8 +52,7 @@ const DialogArqueoFinal = () => {
         let facturas = promise[2];
         
         if (res.response === "ok") {
-          //console.log(res);
-
+          
           let nombre_caja = res.results[0].nombre_caja;
           let monto_inicial = parseFloat(datosCajaCierre.monto_inicial);
           let fechaAper = rescate_fecha_apertura;
@@ -148,7 +147,7 @@ const DialogArqueoFinal = () => {
   const PreguntarCierre = () => {
     swal({
       text: `Desea cerrar la caja ${datosCajaCierre.nombre_caja}?`,
-      buttons: ["Cancelar", "Cerrar caja"],
+      buttons: [lang.cancelar, "Cerrar caja"],
     }).then((e) => {
       if (e) {
         EfectuarCierre();
@@ -238,16 +237,16 @@ return (
         Volver a arqueo
       </Button>
       <Button
-        variant="outlined"
+        variant="contained"
         size="large"
         disabled={cargando || FALTANTE !== 0 || SOBRANTE !== 0}
         onClick={PreguntarCierre}
         color="primary"
       >
-        Confirmar cierre
+        {lang.confirmar}
       </Button>
-      <Button variant="outlined" size="large" onClick={cerrar}>
-        Cancelar
+      <Button variant="contained" size="large" onClick={cerrar}>
+        {lang.cancelar}
       </Button>
     </DialogActions>
   </Dialog>

@@ -1,10 +1,10 @@
-import {Button,Dialog,DialogActions,DialogContent,DialogTitle,Grid,TextField,Typography} from "@mui/material";
+import {Button,Dialog,DialogActions,DialogContent,DialogTitle,Grid,TextField,Typography, Zoom} from "@mui/material";
 import React, { Fragment, useState } from "react";
 import { useCajas } from "./CajasProvider";
 import { useDatosEmpresa } from "../../../Contexts/DatosEmpresaProvider";
 import NumberFormatCustom from "../../../Components/thirty/NumberFormatCustom";
 const DialogArqueo = () => {
-  const {dialogs,setDialogs,listaRegistrosMonedas,Funciones,totalSumaMonedasArqueo,setTotalSumaMonedasArqueo} = useCajas();
+  const {dialogs,setDialogs,listaRegistrosMonedas,funciones,totalSumaMonedasArqueo,setTotalSumaMonedasArqueo,lang} = useCajas();
   const {MONEDA_PRINCIPAL } = useDatosEmpresa();
 
   const [cantidadMoneda, setCantidadMoneda] = useState({});
@@ -46,14 +46,14 @@ const DialogArqueo = () => {
   return (
     <>
       {dialogs.arqueo && (
-        <Dialog fullWidth maxWidth="md" open={dialogs.arqueo} onClose={cerrar}>
-          <DialogTitle>Arqueo de caja</DialogTitle>
+        <Dialog fullWidth maxWidth="md" open={dialogs.arqueo} onClose={cerrar} TransitionComponent={Zoom}>
+          <DialogTitle>{lang.arqueo_caja}</DialogTitle>
           <DialogContent dividers>
             {
               <Grid container spacing={2}>
                 <Grid item xs={12}>
                   <Typography variant="button">
-                    COMPLETE CON CANTIDAD DE BILLETES Y MONEDAS PARA CERRAR CAJA
+                    {lang.billetes_y_monedas}
                   </Typography>
                 </Grid>
                 {listaRegistrosMonedas.map((e, i) => {
@@ -75,23 +75,15 @@ const DialogArqueo = () => {
             }
             <Grid item xs={12}>
               <Typography variant="h6">
-                TOTAL EN EFECTIVO:{" "}
-                {Funciones.numberSeparator(totalSumaMonedasArqueo)}{" "}
+                {lang.total_en_efectivo}:{" "}
+                {funciones.numberSeparator(totalSumaMonedasArqueo)}{" "}
                 {MONEDA_PRINCIPAL.nombre_moneda}{" "}
               </Typography>
             </Grid>
           </DialogContent>
           <DialogActions>
-            <Button
-              color="primary"
-              onClick={finalizarArqueo}
-              variant="outlined"
-            >
-              Confirmar cierre
-            </Button>
-            <Button variant="outlined" onClick={cerrar}>
-              Cancelar
-            </Button>
+            <Button onClick={finalizarArqueo} variant="contained">{lang.confirmar}</Button>
+            <Button variant="contained" onClick={cerrar}>{lang.cancelar}</Button>
           </DialogActions>
         </Dialog>
       )}

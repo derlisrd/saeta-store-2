@@ -73,7 +73,7 @@ const CategoriasLista = () => {
   ];
 
   const search = (
-    <Stack direction="row" spacing={2}>
+    <Stack  direction={{ xs: 'column', sm: 'row' }} spacing={2}>
       <TextField
         InputProps={{
           endAdornment: (
@@ -161,12 +161,12 @@ const CategoriasLista = () => {
         />
       <Stack spacing={2} justifyContent="center" direction="row" >
         {page > 0 && (
-          <Button onClick={atras} variant="outlined">
+          <Button onClick={atras} variant="contained">
            {lang.atras}
           </Button>
         )}
         {countTotal > page && page + limite < countTotal && (
-          <Button variant="outlined" onClick={siguiente}>
+          <Button variant="contained" onClick={siguiente}>
             {lang.siguiente}
           </Button>
         )}

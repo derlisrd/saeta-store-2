@@ -44,20 +44,20 @@ const FacturasLista = () => {
   const columnas = [
     {
       field: "nro_factura",
-      title: "NRO",
+      title: lang.nro,
     },
     {
       field: "fecha_factura",
-      title: "FECHA",
+      title: lang.fecha,
     },
     {
       field: "nombre_cliente",
-      title: "CLIENTE",
+      title: lang.cliente,
     },
 
     {
       field: "estado_factura",
-      title: "ESTADO",
+      title: lang.estado,
       items: { 0: "Anulado", 1: "Cobrado", 2: "Cobranza pendiente" },
       compareField: "estado_factura",
     },
@@ -69,7 +69,7 @@ const FacturasLista = () => {
     },
     {
       field: "monto_total_factura",
-      title: "MONTO",
+      title: lang.monto,
       isNumber: true,
       before: MONEDA_PRINCIPAL.abreviatura_moneda,
     },
@@ -110,21 +110,10 @@ const FacturasLista = () => {
 
   const search = (
     <Grid container spacing={3}>
-      <Grid item xs={12} sm={12}  >
-        <Button variant="contained"
-        fullWidth
-        color="primary"
-        size="large"
-        onClick={()=>go.to('ventas')}
-        >
-          Nueva venta
-        </Button>
-      </Grid>
       <Grid item xs={12}  >
         <TextField
           fullWidth
-          label="Desde"
-          variant="outlined"
+          label={lang.desde}
           type="date"
           defaultValue={desde}
           onChange={changeDatadesde}
@@ -134,8 +123,7 @@ const FacturasLista = () => {
       <Grid item xs={12}  >
         <TextField
           fullWidth
-          label="Hasta"
-          variant="outlined"
+          label={lang.hasta}
           type="date"
           defaultValue={hasta}
           onChange={changeDatahasta}
@@ -144,14 +132,13 @@ const FacturasLista = () => {
       </Grid>
       <Grid item xs={12}  >
         <FormControl fullWidth>
-          <InputLabel variant="outlined">Seleccione opciones</InputLabel>
+          <InputLabel variant="outlined">{lang.opciones_filtro}</InputLabel>
           <Select
             name="tipo_filtro"
             value={tipoFiltro}
             onChange={(e) => {
               setTipoFiltro(e.target.value);
             }}
-            variant="outlined"
           >
             <MenuItem value="">Todos</MenuItem>
             <MenuItem value="0">Tipo recibo</MenuItem>
@@ -166,25 +153,23 @@ const FacturasLista = () => {
       <Grid item xs={12} sm={6} >
         <Button
           onClick={Filtrar}
-          variant="outlined"
-          color="primary"
+          variant="contained"
           size="large"
           startIcon={<Icon>filter_list</Icon>}
         >
-          Filtrar
+          {lang.filtrar}
         </Button>
       </Grid>
       
       <Grid item xs={12}>
-        <h3>Total: {funciones.numberSeparator(total)}{" "}
+        <h3>{lang.total}: {funciones.numberSeparator(total)}{" "}
         {MONEDA_PRINCIPAL.abreviatura_moneda}{" "}</h3>
       </Grid>
     </Grid>
   );
 
-  const search2 = (<Grid container spacing={1}>
-    <Grid item xs={12} sm={4}>
-        <TextField
+  const search2 = (<Stack spacing={2} direction={{ xs: 'column', sm: 'row' }}>
+  <TextField
           InputProps={{
             endAdornment: (
               <InputAdornment position="end">
@@ -204,13 +189,10 @@ const FacturasLista = () => {
             }
           }}
           onChange={(e) => setInputSearch(e.target.value)}
-          variant="outlined"
-          label="Buscar por número"
-          fullWidth
+          label={lang.buscar_por_nro}
         />
-      </Grid>
-      
-  </Grid>)
+<Button variant="contained" size="large"onClick={()=>go.to('ventas')}>{lang.nueva_venta}</Button>
+</Stack>)
 
   return (
     <Grid container spacing={3}>
@@ -238,3 +220,5 @@ const FacturasLista = () => {
 };
 
 export default FacturasLista;
+
+

@@ -74,7 +74,7 @@ const ProductosLista = () => {
 
     
     const search = (
-      <Stack direction="row" spacing={2}>
+      <Stack  direction={{ xs: 'column', sm: 'row' }} spacing={2}>
         <TextField
           InputProps={{
             endAdornment: (

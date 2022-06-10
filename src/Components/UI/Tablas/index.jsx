@@ -2,19 +2,17 @@ import { TableContainer,Table, TableHead, TableRow, TableCell, TableBody, Box,Ty
 import { useTablaStyles } from './TablaStyles';
 import TablaLoading from './TablaLoading'
 import { funciones } from '../../../Functions';
-import { useTheme } from '../../../Contexts/TemaProvider';
 import TableInfo from './TableInfo';
 
 const Tablas = ({title,subtitle,loading,datas,columns,caption,inputs,Accions,showOptions,lang,icon,sort}) => {
     const style = useTablaStyles();
-    const {tema} = useTheme()
     if(!columns){ console.warn("Missing props 'columns'"); return; }
     if(!datas){ console.warn("Missing props 'datas[]'"); return; }
     if(!Accions){console.warn("Missing props 'Accions'"); return; }
 
 return (
       <>
-    <TableInfo title={title} subtitle={subtitle} icon={icon} tema={tema} />
+    <TableInfo title={title} subtitle={subtitle} icon={icon}  />
     
     <Box borderRadius={3} boxShadow={4} padding={3} className={style.boxContainer}>
     
@@ -74,7 +72,7 @@ return (
                                             column.items ?
                                             column.items[data[column.compareField]] :
                                             column.html ? column.html :
-                                            data[column.field]
+                                            data[column.field].substr(0,25)
                                             }
                                             {
                                                 column.after && column.after

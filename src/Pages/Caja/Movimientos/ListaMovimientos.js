@@ -191,7 +191,7 @@ const ListaMovimientos = () => {
       <Grid item >
         <Alert severity="info" variant="outlined" icon={false}>
         <Typography variant="h5">
-          Neto: {funciones.numberSeparator(movimientos.ingresoEfectivo - movimientos.egresos )}{" "}
+          {lang.neto}: {funciones.numberSeparator(movimientos.ingresoEfectivo - movimientos.egresos )}{" "}
         </Typography>
         </Alert>
       </Grid>

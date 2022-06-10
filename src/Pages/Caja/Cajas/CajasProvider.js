@@ -176,13 +176,13 @@ const CajasProvider = ({ children }) => {
 
 
 
-  const editarCaja = async () => {
+  const editarCaja = async (f) => {
     setCargas({ ...cargas, editar: true });
 
     let res = await APICALLER.update({
       table: "cajas",
-      data: formEdit,
-      id: formEdit.id_caja,
+      data: f,
+      id: f.id_caja,
       token: token_user,
     });
     if (res.response === "ok") {
