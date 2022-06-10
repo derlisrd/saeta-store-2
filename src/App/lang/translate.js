@@ -247,7 +247,10 @@ export const translate = {
         total:"Total",
         opciones_filtro:"Opciones de filtro",
         buscar_por_nro:"Buscar por nro",
-        lista_categorias:"Lista de categorias"
+        lista_categorias:"Lista de categorias",
+        volver_arqueo:"Volver al arqueo",
+        cierre_caja_resumen:"Cierre de caja resumen",
+        q_desea_cerrar: "Desea cerrar ",
     },
 
     en:{

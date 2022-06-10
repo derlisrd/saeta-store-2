@@ -23,7 +23,7 @@ const CajasProvider = ({ children }) => {
   const dialogQuery = query.get("dialog") ? query.get("dialog") : "";
   const dialogID = query.get("id") ? query.get("id") : "";
 
-  
+  const [valoresMonedas,setValoresMonedas] = useState({})
 
   const initialDialogs = {
     editar: false,
@@ -351,7 +351,7 @@ const CajasProvider = ({ children }) => {
   return (
     <Contexto.Provider
       value={{
-        cargas,
+        cargas,valoresMonedas,setValoresMonedas,
         lista,
         listaMonedas,
         listaUsers,
@@ -386,7 +386,7 @@ const CajasProvider = ({ children }) => {
 
 export const useCajas = () => {
   const {
-    cargas,
+    cargas,valoresMonedas,setValoresMonedas,
     lista,
     listaMonedas,
     listaUsers,
@@ -414,7 +414,7 @@ export const useCajas = () => {
     datosCajaCierre,setDatosCajaCierre,arqueo,setArqueo,getLista,dialogQuery,dialogID,lang
   } = useContext(Contexto);
   return {
-    cargas,
+    cargas,valoresMonedas,setValoresMonedas,
     lista,
     listaMonedas,
     listaUsers,

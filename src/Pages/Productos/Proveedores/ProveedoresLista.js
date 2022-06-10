@@ -106,6 +106,7 @@ const ProveedoresLista = () => {
       <Tablas
         loading={cargando}
         inputs={search}
+        lang={lang}
         title={lang.proveedores}
         subtitle={lang.lista_proveedores}
         columns={columns}

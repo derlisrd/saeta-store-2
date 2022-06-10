@@ -4,12 +4,12 @@ import swal from "sweetalert";
 import { APICALLER } from "../../../../Services/api";
 import { useLogin } from "../../../../Contexts/LoginProvider";
 import { useLang } from "../../../../Contexts/LangProvider";
-import useGoto from "../../../../Hooks/useGoto";
+
 
 const ProductosContext = createContext();
 
 const ProductosProvider = ({ children }) => {
-  const go = useGoto();
+
   const {lang} = useLang()
   const { userData } = useLogin(); const {token_user,permisos} = userData;
   const location = useLocation();
@@ -92,7 +92,7 @@ const ProductosProvider = ({ children }) => {
     });
     if (res.found > 0 && res.response === "ok") {
       setLista(res.results);
-      go.to('productos')
+      //go.to('productos')
     } else {
       console.log(res);
     }

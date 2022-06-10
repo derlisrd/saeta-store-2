@@ -60,15 +60,17 @@ const ListaMovimientos = () => {
     {
       field: "tipo_registro",
       title: lang.tipo,
+      compareField:"tipo_registro",
       items: itemscompare,
-      compareField: "tipo_registro",
+      styleFieldCondition: "tipo_registro",
       styleCondition:{
-        0:{backgroundColor:"#dd4632",padding:"6px",borderRadius:"5px",color:'#fff'},
-        1:{backgroundColor:"#00ce4f",padding:"6px",borderRadius:"5px",color:'#fff'},
-        2:{backgroundColor:"#1976d2",padding:"6px",borderRadius:"5px",color:'#fff'},
-        3:{backgroundColor:"#a2a2ce",padding:"6px",borderRadius:"5px",color:'#000'},
+        0:{backgroundColor:"#dd4632",padding:"6px",borderRadius:"5px",color:'#fff',fontWeight:"bold"},
+        1:{backgroundColor:"#00ce4f",padding:"6px",borderRadius:"5px",color:'#006226',fontWeight:"bold"},
+        2:{backgroundColor:"#1976d2",padding:"6px",borderRadius:"5px",color:'#fff',fontWeight:"bold"},
+        3:{backgroundColor:"#a2a2ce",padding:"6px",borderRadius:"5px",color:'#515168',fontWeight:"bold"},
       },
     },
+    
     {
       field: "fecha_movimiento",
       title: lang.fecha,

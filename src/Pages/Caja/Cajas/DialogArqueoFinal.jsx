@@ -8,7 +8,7 @@ import swal from 'sweetalert';
 
 const DialogArqueoFinal = () => {
 
-  const {dialogs,setDialogs,setTotalSumaMonedasArqueo,datosCajaCierre,totalSumaMonedasArqueo,funciones,getLista,lang} = useCajas();
+  const {dialogs,setDialogs,setTotalSumaMonedasArqueo,datosCajaCierre,totalSumaMonedasArqueo,funciones,getLista,lang,setValoresMonedas} = useCajas();
   const {userData} = useLogin()
   const {token_user,id_user} = userData;
   const datosIniciales = {
@@ -144,10 +144,12 @@ const DialogArqueoFinal = () => {
     setTotalSumaMonedasArqueo(0);
   };
 
+
+
   const PreguntarCierre = () => {
     swal({
-      text: `Desea cerrar la caja ${datosCajaCierre.nombre_caja}?`,
-      buttons: [lang.cancelar, "Cerrar caja"],
+      text: `${lang.q_desea_cerrar} ${datosCajaCierre.nombre_caja}?`,
+      buttons: [lang.cancelar, lang.cerrar],
     }).then((e) => {
       if (e) {
         EfectuarCierre();
@@ -213,11 +215,11 @@ const DialogArqueoFinal = () => {
   const FALTANTE = datos.saldoFinal - totalSumaMonedasArqueo > 0 ? datos.saldoFinal - totalSumaMonedasArqueo : 0;
   const SOBRANTE = totalSumaMonedasArqueo - datos.saldoFinal > 0  ? totalSumaMonedasArqueo - datos.saldoFinal  : 0;
   
-const cerrar = ()=> {setDialogs({...dialogs,arqueoFinal:false}); setTotalSumaMonedasArqueo(0); }
+const cerrar = ()=> {setDialogs({...dialogs,arqueoFinal:false}); setTotalSumaMonedasArqueo(0); setValoresMonedas({}); }
 return (
   <Dialog fullScreen open={dialogs.arqueoFinal} onClose={cerrar}>
     <DialogTitle>
-        Cierre de caja - Resumen
+        {lang.cierre_caja_resumen}
     </DialogTitle>
     <DialogContent dividers>
        
@@ -234,14 +236,12 @@ return (
         disabled={cargando}
         onClick={VolverArqueo}
       >
-        Volver a arqueo
+       {lang.volver_arqueo}
       </Button>
       <Button
-        variant="contained"
-        size="large"
+        variant="contained" size="large"
         disabled={cargando || FALTANTE !== 0 || SOBRANTE !== 0}
         onClick={PreguntarCierre}
-        color="primary"
       >
         {lang.confirmar}
       </Button>
