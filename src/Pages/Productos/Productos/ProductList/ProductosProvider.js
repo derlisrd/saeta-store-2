@@ -14,10 +14,8 @@ const ProductosProvider = ({ children }) => {
   const { userData } = useLogin(); const {token_user,permisos} = userData;
   const location = useLocation();
   
-  const query = location.search ? new URLSearchParams(location.search) : 0;
-  const [page, setPage] = useState(
-    query && query.get("p") && !isNaN(query.get("p")) ? parseInt(query.get("p")) : 0
-  );
+  const q = location.search ? new URLSearchParams(location.search) : 0;
+  const [page, setPage] = useState(q && q.get("p") && !isNaN(q.get("p")) ? parseInt(q.get("p")) : 0);
 
   const [showOptions,setShowOptions] = useState(false);
 
@@ -33,11 +31,15 @@ const ProductosProvider = ({ children }) => {
   
   const [formDetalles,setFormDetalles] = useState({});
   const [limite, setLimite] = useState(30);
+  const [idDeposito,setIdDeposito] = useState("");
   const [countTotal, setCountTotal] = useState(0);
   const [cargando, setCargando] = useState({lista:true,stock:true});
   const [listaCategorias, setListaCategorias] = useState([]);
   const [inputSearch, setInputSearch] = useState("");
-  const [lista, setLista] = useState([]);
+  const [lista, setLista] = useState({
+    productos:[],
+    depositos:[]
+  });
 
   
   const borrarRegistro = async(id, nombre) => {
@@ -78,6 +80,7 @@ const ProductosProvider = ({ children }) => {
     }else{ setShowOptions(true)}
   },[permisos]);
   
+
   const buscarRegistro = async () => {
     setCargando({lista:true,stock:true});
     let res = await APICALLER.get({
@@ -91,8 +94,7 @@ const ProductosProvider = ({ children }) => {
       sort:"-nombre_producto"
     });
     if (res.found > 0 && res.response === "ok") {
-      setLista(res.results);
-      //go.to('productos')
+      setLista({...lista,productos:res.results});
     } else {
       console.log(res);
     }
@@ -102,27 +104,41 @@ const ProductosProvider = ({ children }) => {
 
   const getLista = useCallback(async () => {
     setCargando({lista:true,stock:true});
-    let data = {
+
+    let data = {};
+
+    if(idDeposito===''){
+      data = {
       table: "productos",
       include: "categorias,unidad_medidas",
       on:"id_categoria_producto,id_categoria,id_unidad_medida_producto,id_unidad_medida",
       fields:"id_producto,nombre_producto,nombre_categoria,codigo_producto,precio_producto,costo_producto,preciom_producto,descripcion_medida,tipo_producto",
       pagenumber: page,
       pagesize: limite,
-      sort:"-id_producto", 
-    };
-    const res = await APICALLER.get(data);
+      sort:"-id_producto" }
+    }else{
+      data = {table: "productos",
+      include: "categorias,unidad_medidas,productos_depositos",
+      on:"id_categoria_producto,id_categoria,id_unidad_medida_producto,id_unidad_medida,id_producto_deposito,id_producto",
+      fields:"id_producto,nombre_producto,nombre_categoria,codigo_producto,precio_producto,costo_producto,preciom_producto,descripcion_medida,tipo_producto",
+      where:`id_deposito_deposito,=,${idDeposito}`,
+      pagenumber: page,
+      pagesize: limite,
+      sort:"-id_producto", }
+    }
 
-     if (res.response === "ok") {
-      setCountTotal(res.total);
-      if (res.found > 0) {
-        setLista(res.results);
-      } 
+    const res = await Promise.all([APICALLER.get(data),APICALLER.get({table:"depositos"})]);
+
+     if (res[1].response === "ok" && res[0].response==="ok") {
+      setCountTotal(res[0].found);
+      setLista({productos:res[0].results,depositos:res[1].results}); 
     } else {
       console.log(res);
     } 
     setCargando({lista:false,stock:true});
-  }, [limite, page]);
+  }, [limite, page,idDeposito]);
+
+
 
   useEffect(() => {
     let isActive = true;
@@ -139,7 +155,7 @@ const ProductosProvider = ({ children }) => {
   return (
     <ProductosContext.Provider
       value={{
-        lang,
+        lang,idDeposito,setIdDeposito,
         cargando,
         setCargando,
         showOptions,
@@ -167,7 +183,7 @@ const ProductosProvider = ({ children }) => {
 };
 
 export const useProductos = () => {
-  const { lang,
+  const { lang,idDeposito,setIdDeposito,
     cargando,
     setCargando,
     showOptions,
@@ -190,7 +206,7 @@ export const useProductos = () => {
   } = useContext(ProductosContext);
 
   return {
-    lang,
+    lang,idDeposito,setIdDeposito,
     cargando,
     setCargando,
     showOptions,

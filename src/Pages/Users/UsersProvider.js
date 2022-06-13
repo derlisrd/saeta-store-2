@@ -15,6 +15,28 @@ function UsersProvider ({children}){
     const [dialogs,setDialogs] = useState(initialDialogs);
     
 
+    const deletUser = f=>{
+
+    }
+
+    const newUser = f=>{
+
+    }
+
+    const editUser = f=>{
+
+    }
+
+    const changePass = f=>{
+
+    }
+
+    const setPermision = f=>{
+
+    }
+
+
+
     const getLista = useCallback(async()=>{
         setCargas({lista:true,guardar:false})
         let res = await APICALLER.get({table:"users",token:token_user});
@@ -30,7 +52,7 @@ function UsersProvider ({children}){
     }, [getLista]);
 
     const values = {
-        dialogs,setDialogs,cargas,lista,lang
+        dialogs,setDialogs,cargas,lista,lang,deletUser,newUser,editUser,changePass,setPermision
     }
     return(
         <UsersContext.Provider value={values}>
@@ -39,7 +61,7 @@ function UsersProvider ({children}){
     )
 }
 export function useUsers (){
-    const {dialogs,setDialogs,cargas,lista,lang} = useContext(UsersContext);
-    return {dialogs,setDialogs,cargas,lista,lang}
+    const {dialogs,setDialogs,cargas,lista,lang,deletUser,newUser,editUser,changePass,setPermision} = useContext(UsersContext);
+    return {dialogs,setDialogs,cargas,lista,lang,deletUser,newUser,editUser,changePass,setPermision}
 }
 export default UsersProvider

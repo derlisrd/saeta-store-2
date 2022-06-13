@@ -49,7 +49,7 @@ const Inputs = (<Stack spacing={2} direction="row">
 </Button>
 </Stack>)
 const Accions = ({rowProps})=>(
-  <Stack spacing={1}  direction="row">
+  <Stack spacing={1}  direction="row" justifyContent="center">
     <Fab size="small" variant="round" 
         onClick={() => { console.log(rowProps)}}
       >
@@ -60,13 +60,7 @@ const Accions = ({rowProps})=>(
       }}>
         <Icon>key</Icon>
       </Fab>
-      <Fab
-        size="small"
-        color="primary"
-        variant="round"
-        onClick={() => {
-
-        }}
+      <Fab size="small" color="primary" variant="round" onClick={() => { }}
       >
         <Icon>edit</Icon>
       </Fab>

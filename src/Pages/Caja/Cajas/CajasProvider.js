@@ -1,10 +1,10 @@
 import {createContext,useContext,useState,useEffect,useCallback,useMemo} from "react";
-import { useLocation,useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import swal from "sweetalert";
 import { APICALLER } from "../../../Services/api";
 import { useLogin } from "../../../Contexts/LoginProvider";
 import { funciones  } from "../../../Functions";
-import { env } from "../../../Utils/config";
+import useGoto from "../../../Hooks/useGoto";
 import { useLang } from "../../../Contexts/LangProvider";
 
 const Contexto = createContext();
@@ -18,7 +18,7 @@ const CajasProvider = ({ children }) => {
   const {lang} = useLang();
   const {userData} = useLogin()
   const {token_user,id_user} = userData;
-  const navigate = useNavigate();
+  const navigate = useGoto();
   let query = useQuery();
   const dialogQuery = query.get("dialog") ? query.get("dialog") : "";
   const dialogID = query.get("id") ? query.get("id") : "";
@@ -158,7 +158,7 @@ const CajasProvider = ({ children }) => {
           icon: "success",
         }).then(()=>{
           if(dialogQuery==="new"){
-            navigate(env.BASEURL+"ventas");
+            navigate.to("ventas");
           }
           else{
             setDialogs({ ...dialogs, nuevo: false });
@@ -297,7 +297,7 @@ const CajasProvider = ({ children }) => {
     if(res[1].response==='ok' && res[0].response==='ok'){
       swal({text: lang.caja_abierta_correctamente,icon: "success",}).then(()=>{
         if(dialogQuery==="open"){
-          navigate(env.BASEURL+"ventas");
+          navigate("ventas");
         }
         else{
           getLista(false); setDialogs({ ...dialogs, abrir: false });

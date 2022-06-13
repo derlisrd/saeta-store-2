@@ -7,8 +7,8 @@ const LoginContext = createContext()
 
 const LoginProvider = ({children}) => {
    // const navigate = useNavigate()
-    const CifrarTexto = (text) => CryptoJS.AES.encrypt(text, env.SECRETO).toString();
-    const Descifrar = (text) => CryptoJS.AES.decrypt(text, env.SECRETO).toString(CryptoJS.enc.Utf8);
+    const CifrarTexto = t => CryptoJS.AES.encrypt(t, env.SECRETO).toString();
+    const Descifrar = t => CryptoJS.AES.decrypt(t, env.SECRETO).toString(CryptoJS.enc.Utf8);
     const storage = JSON.parse(sessionStorage.getItem("userData")) || JSON.parse(localStorage.getItem("userData"));
     const [loading,setLoading] = useState(true);
     const [load,setLoad] = useState({

@@ -1,0 +1,34 @@
+sql para nuevo sistema;
+
+TRUNCATE `cajas`;
+TRUNCATE `cajas_arqueos`;
+TRUNCATE `cajas_movimientos`;
+TRUNCATE `cajas_users`;
+TRUNCATE `categorias`;
+TRUNCATE `clientes`;
+TRUNCATE `compras`;
+TRUNCATE `compras_items`;
+TRUNCATE `depositos`;
+TRUNCATE `empleados`;
+TRUNCATE `empresa_facturas`;
+TRUNCATE `facturas`;
+TRUNCATE `facturas_items`;
+TRUNCATE `marcas`;
+TRUNCATE `notas_items`;
+TRUNCATE `notas_pedidos`;
+TRUNCATE `pedidos`;
+TRUNCATE `productos`;
+TRUNCATE `productos_apartados`;
+TRUNCATE `productos_depositos`;
+TRUNCATE `productos_images`;
+TRUNCATE `productos_vendidos`;
+TRUNCATE `proveedors`;
+TRUNCATE `registros`;
+TRUNCATE `turnos`;
+TRUNCATE `turnos_servicios`;
+
+INSERT INTO `categorias` (`id_categoria`, `id_padre_categoria`, `nombre_categoria`, `imagen_categoria`, `publicado_categoria`, `tipo_categoria`) VALUES (NULL, '0', 'SIN CATEGORIA', NULL, '1', '1'), (NULL, '0', 'SERVICIOS', NULL, '1', '2');
+INSERT INTO `clientes` (`id_cliente`, `ruc_cliente`, `nombre_cliente`, `telefono_cliente`, `email_cliente`, `direccion_cliente`, `tipo_cliente`) VALUES (NULL, 'X', 'SIN NOMBRE', '0', NULL, NULL, '3');
+INSERT INTO `marcas` (`id_marca`, `nombre_marca`) VALUES (NULL, 'SIN MARCA');
+INSERT INTO `proveedors` (`id_proveedor`, `ruc_proveedor`, `nombre_proveedor`, `telefono_proveedor`) VALUES (NULL, 'X', 'SIN PROVEEDOR', '0');
+INSERT INTO `depositos` (`id_deposito`, `nombre_deposito`, `tipo_deposito`) VALUES (NULL, 'DEPOSITO PRINCIPAL', '1');

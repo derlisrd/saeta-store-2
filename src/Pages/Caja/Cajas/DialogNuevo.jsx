@@ -66,9 +66,7 @@ useEffect(() => {
           </Grid>
           <Grid item xs={12}>
             <TextField
-              autoFocus
-              required
-              fullWidth
+              autoFocus required fullWidth autoComplete="off"
               name="nombre_caja"
               value={form.nombre_caja}
               onChange={onChange}

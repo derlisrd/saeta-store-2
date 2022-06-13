@@ -1,5 +1,5 @@
 import Tablas from "../../../../Components/UI/Tablas";
-import { Icon,Tooltip, Button, TextField, InputAdornment, IconButton, Stack,Fab } from "@mui/material";
+import { Icon,Tooltip, Button, TextField, InputAdornment, IconButton, Stack,Fab, FormControl, InputLabel, Select, MenuItem } from "@mui/material";
 import { useProductos } from "./ProductosProvider";
 import ProductosListaPager from "./ProductosListaPager";
 import MoreMenu from "./MoreMenu";
@@ -7,7 +7,7 @@ import useGoto from "../../../../Hooks/useGoto";
 
 const ProductosLista = () => {
   
-  const {inputSearch,showOptions,lang,setInputSearch,cargando,lista,buscarRegistro,dialogs,setDialogs,setFormDetalles,setLista} = useProductos();
+  const {inputSearch,idDeposito,setIdDeposito,showOptions,lang,setInputSearch,cargando,lista,buscarRegistro,dialogs,setDialogs,setFormDetalles,setLista} = useProductos();
   const go = useGoto();
   const columns = [
 
@@ -75,6 +75,22 @@ const ProductosLista = () => {
     
     const search = (
       <Stack  direction={{ xs: 'column', sm: 'row' }} spacing={2}>
+        <FormControl sx={{ width:"240px" }}>
+          <InputLabel>{lang.depositos}</InputLabel>
+          <Select
+            name="id_deposito"
+            onChange={(e) => { setIdDeposito(e.target.value)}}
+            value={idDeposito}
+          >
+            <MenuItem value="">{lang.todos}</MenuItem>
+            {
+              lista.depositos.map((e,i)=>(
+                <MenuItem key={i} value={e.id_deposito}>{e.nombre_deposito}</MenuItem>
+              ))
+            }
+              
+          </Select>
+        </FormControl>
         <TextField
           InputProps={{
             endAdornment: (
@@ -90,16 +106,15 @@ const ProductosLista = () => {
           label={lang.buscar}
         />
         <Tooltip title={lang.agregar} arrow >
-        <Button  variant="contained" size="large" 
-          onClick={()=> go.to('productos/new')}
-        >
-          {lang.agregar}
+          <Button  variant="contained" size="large" onClick={()=> go.to('productos/new')}>
+            {lang.agregar}
           </Button>
-          </Tooltip>
+        </Tooltip>
+        
       </Stack>
     );
 
-    const FilterData =  lista.filter(item => item.nombre_producto.toLowerCase().includes(inputSearch.toLowerCase()) 
+    const FilterData =  lista.productos.filter(item => item.nombre_producto.toLowerCase().includes(inputSearch.toLowerCase()) 
       || item.codigo_producto.toLowerCase().includes(inputSearch.toLowerCase())
     );
 
