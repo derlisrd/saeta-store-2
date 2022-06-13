@@ -251,6 +251,9 @@ export const translate = {
         volver_arqueo:"Volver al arqueo",
         cierre_caja_resumen:"Cierre de caja resumen",
         q_desea_cerrar: "Desea cerrar ",
+        no_puede_eliminarte:"No puedes eliminarte a ti mismo",
+        long_no_farzante:"Debemos estar seguros de que no eres un farzante",
+        confirmar_contra:"Confirmar contraseña",
     },
 
     en:{

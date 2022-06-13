@@ -4,7 +4,7 @@ import { useUsers } from './UsersProvider';
 
 const UsersLista = () => {
 
-  const {lista,cargas,lang} = useUsers()
+  const {lista,cargas,lang,deleteUser} = useUsers()
 
   const columnas = [
     {
@@ -68,9 +68,7 @@ const Accions = ({rowProps})=>(
         size="small"
         color="secondary"
         variant="round"
-        onClick={() => {
-
-        }}
+        onClick={() => { deleteUser(rowProps)}}
       >
         <Icon>delete</Icon>
       </Fab>
