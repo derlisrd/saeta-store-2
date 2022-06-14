@@ -32,3 +32,6 @@ INSERT INTO `clientes` (`id_cliente`, `ruc_cliente`, `nombre_cliente`, `telefono
 INSERT INTO `marcas` (`id_marca`, `nombre_marca`) VALUES (NULL, 'SIN MARCA');
 INSERT INTO `proveedors` (`id_proveedor`, `ruc_proveedor`, `nombre_proveedor`, `telefono_proveedor`) VALUES (NULL, 'X', 'SIN PROVEEDOR', '0');
 INSERT INTO `depositos` (`id_deposito`, `nombre_deposito`, `tipo_deposito`) VALUES (NULL, 'DEPOSITO PRINCIPAL', '1');
+
+
+alter table users_permisos RENAME to users_rols;

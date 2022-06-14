@@ -254,6 +254,20 @@ export const translate = {
         no_puede_eliminarte:"No puedes eliminarte a ti mismo",
         long_no_farzante:"Debemos estar seguros de que no eres un farzante",
         confirmar_contra:"Confirmar contraseña",
+        nuevo_usuario:"Nuevo usuario",
+        usuario_logueo:"Usuario de logueo",
+        repetir_contrasena:"Repetir contraseña",
+        email:"Correo",
+        rol_user:"Rol de usuario",
+        select_rol:"Seleccione rol",
+        ya_existe_usuario:"Ya existe ese usuario",
+        password_no_iguales:"Contraseñas no son iguales",
+        error_pass:"Error de contraseña",
+        edit_usuario:"Editar usuario",
+        cambiar_pass:"Cambiar contraseña",
+        old_pass:"Contraseña antigua",
+        long_contrasena_cambiado: "Contraseña cambiada exitosamente, para mayor seguridad, cierre la sesión e inicie nuevamente.",
+        permisos:"Permisos"
     },
 
     en:{
@@ -453,7 +467,8 @@ export const translate = {
         transferir:"Transferir",
         transferido_correctamente: "Transferido correctamente",
         transferencia_de_caja:"Transferencia de caja",
-        editado_correctamente:"Edited correctly"
+        editado_correctamente:"Edited correctly",
+        nuevo_usuario:"Nuevo usuario"
     }
 
 }

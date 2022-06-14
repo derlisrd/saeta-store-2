@@ -1,10 +1,11 @@
 import { Button, Fab,InputAdornment, Icon, IconButton, Stack, TextField } from '@mui/material';
+import LoadingCenter from '../../Components/UI/LoadingCenter';
 import Tablas from '../../Components/UI/Tablas/'
 import { useUsers } from './UsersProvider';
 
 const UsersLista = () => {
 
-  const {lista,cargas,lang,deleteUser} = useUsers()
+  const {lista,cargas,lang,deleteUser,setDialogs,dialogs,setearForm} = useUsers()
 
   const columnas = [
     {
@@ -43,37 +44,31 @@ const Inputs = (<Stack spacing={2} direction="row">
 <Button
   variant="contained"
   size="large"
-  onClick={() => {}}
+  onClick={() => {setDialogs({...dialogs,new:true})}}
 >
   {lang.agregar}
 </Button>
 </Stack>)
 const Accions = ({rowProps})=>(
   <Stack spacing={1}  direction="row" justifyContent="center">
-    <Fab size="small" variant="round" 
-        onClick={() => { console.log(rowProps)}}
-      >
+    <Fab size="small" variant="round" onClick={() => { setearForm(rowProps,"permissions")}}>
         <Icon>manage_accounts</Icon>
       </Fab>
-      <Fab size="small" color="warning" onClick={()=>{
-
-      }}>
+      <Fab size="small" color="warning" onClick={()=>{setearForm(rowProps,"pass")}}>
         <Icon>key</Icon>
       </Fab>
-      <Fab size="small" color="primary" variant="round" onClick={() => { }}
-      >
+      <Fab size="small" color="primary" variant="round" onClick={() => {setearForm(rowProps,"edit") }}>
         <Icon>edit</Icon>
       </Fab>
-      <Fab
-        size="small"
-        color="secondary"
-        variant="round"
-        onClick={() => { deleteUser(rowProps)}}
-      >
+      <Fab size="small" color="secondary" variant="round"onClick={() => { deleteUser(rowProps)}}>
         <Icon>delete</Icon>
       </Fab>
   </Stack>
 )
+
+  if(cargas.all){
+   return <LoadingCenter />
+  }
 
   return (
     <>
@@ -85,7 +80,7 @@ const Accions = ({rowProps})=>(
       loading={cargas.lista} 
       columns={columnas} 
       inputs={Inputs} 
-      datas={lista} />
+      datas={lista.users} />
     </>
   )
 }
