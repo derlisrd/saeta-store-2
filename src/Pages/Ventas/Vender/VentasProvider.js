@@ -45,10 +45,10 @@ const VentasProvider = ({ children }) => {
     finalizarVenta: storage===null ? true : false,
   };
   const [cargas, setCargas] = useState(initialCargas);
-
-  const initialDialogs={main:!0,nota:!1,buscarProducto:!1,cambiarPrecio:!1,buscarCliente:!1,registrarCliente:!1,finalizarVenta:!1,imprimirTicket:!1,imprimirFactura:!1,imprimirPresupuesto:!1,ayuda:!1,cambioCliente:!1,abrirCaja:!1,imagen:!1};
+  
+  const initialDialogs={main:!0,nota:!1,buscarProducto:!1,cambiarPrecio:!1,buscarCliente:!1,registrarCliente:!1,finalizarVenta:!1,imprimirNotaPedido:!1,imprimirTicket:!1,imprimirFactura:!1,imprimirPresupuesto:!1,ayuda:!1,cambioCliente:!1,abrirCaja:!1,imagen:!1};
   const [dialogs, setDialogs] = useState(initialDialogs);
-
+  const [IDNotaPedido,setIDNotaPedido] = useState("");
   const [indexFactura, setIndexFactura] = useState(
     storage ? storage.indexFactura : 0
   );
@@ -347,6 +347,7 @@ const VentasProvider = ({ children }) => {
     let fact = { ...datosFacturas};
     setIndexPrecioCambiar(-1);
     setErrors(initialErrors);
+    setIDNotaPedido("");
     inputCantidad.current.value = 1;
     fact.facturas[indexFactura].itemsFactura = [];
     fact.facturas[indexFactura].datosFactura = initialDatosFactura;
@@ -429,13 +430,15 @@ const VentasProvider = ({ children }) => {
       let ins = await APICALLER.insert({token:token_user,table:"notas_pedidos",data}) 
       if(ins.response==="ok"){
         let lastid= ins.last_id;
+        setIDNotaPedido(ins.last_id);
         let promesas = [];
         fa.itemsFactura.forEach(async(e) => {
           let datos = { id_notas_pedido_item: lastid,id_producto_item: e.id_producto,precio_guardado:e.precio_guardado,cantidad_item:e.cantidad_producto }
           promesas.push(APICALLER.insert({table:"notas_items",token:token_user,data:datos}));
         });
         Promise.all(promesas);
-        setErrors({...errors,color:"success",mensaje:"Nota nro: "+ins.last_id+" generada existosamente",error:true})
+        //setErrors({...errors,color:"success",mensaje:"Nota nro: "+ins.last_id+" generada existosamente",error:true})
+        setDialogs({...dialogs,imprimirNotaPedido:true});
       } else{ console.log(ins)}
     }
   }
@@ -871,7 +874,7 @@ const VentasProvider = ({ children }) => {
         cerrarDialogFactura,
         insertarProductoTabla,restarCantidad,sumarCantidad,
         AgregarCantidadMetodoPago,borrarMetodoPago,changeMonedas,Anotar,CargarNota,permisos,cambiarDeposito,
-        MetodoDescuento,lang
+        MetodoDescuento,lang,IDNotaPedido
       }}
     >
       {children}
@@ -906,7 +909,7 @@ export const useVentas = () => {
     cerrarDialogFactura,
     insertarProductoTabla,restarCantidad,sumarCantidad,
     AgregarCantidadMetodoPago,borrarMetodoPago,changeMonedas,Anotar,CargarNota,permisos,cambiarDeposito,
-    MetodoDescuento,lang
+    MetodoDescuento,lang,IDNotaPedido
 
   } = useContext(Contexto);
   return {id_user,token_user,
@@ -939,7 +942,7 @@ export const useVentas = () => {
     cerrarDialogFactura,
     insertarProductoTabla,restarCantidad,sumarCantidad,
     AgregarCantidadMetodoPago,borrarMetodoPago,changeMonedas,Anotar,CargarNota,permisos,cambiarDeposito,
-    MetodoDescuento,lang
+    MetodoDescuento,lang,IDNotaPedido
   };
 };
 

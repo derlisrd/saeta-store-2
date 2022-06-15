@@ -267,7 +267,11 @@ export const translate = {
         cambiar_pass:"Cambiar contraseña",
         old_pass:"Contraseña antigua",
         long_contrasena_cambiado: "Contraseña cambiada exitosamente, para mayor seguridad, cierre la sesión e inicie nuevamente.",
-        permisos:"Permisos"
+        permisos:"Permisos",
+        imprimir:"Imprimir",
+        imprimir_nota_pedido:"Imprimir nota de pedido",
+        nota_de_pedido:"Nota de pedido",
+        nro_de_pedido:"Nro de pedido"
     },
 
     en:{

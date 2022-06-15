@@ -9,6 +9,7 @@ import DialogImagen from './DialogImagen'
 import DialogImprimir from './DialogImprimir'
 import DialogNota from './DialogNota'
 import DialogRegistroCliente from './DialogRegistroCliente'
+import ImprimirNotaPedido from './ImprimirNotaPedido'
 import ImprimirPresupuesto from './ImprimirPresupuesto'
 import VentasMain from './VentasMain'
 import VentasMainUnder from './VentasMainUnder'
@@ -23,6 +24,7 @@ const Ventas = () => {
         <DialogRegistroCliente />
         <DialogBuscarCliente />
         <DialogBuscarProducto />
+        <ImprimirNotaPedido />
         <ImprimirPresupuesto />
         <DialogAyuda />
         <DialogCambioCliente />
