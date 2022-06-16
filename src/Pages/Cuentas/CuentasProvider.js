@@ -33,7 +33,7 @@ const CuentasProvider = ({ children }) => {
   const fecha_actual = funciones.getFechaHorarioString();
   
   const [formPagar, setformPagar] = useState({id_compra:"",total_factura_compra:"",nro_factura_compra:""});
-  const [formCobrar, setformCobrar] = useState({monto_total_factura:0,recibido_factura:"",id_factura:"",nro_factura:"",nombre_caja:"",id_caja_factura:"",id_factura_cliente:"",nombre_cliente:""});
+  const [formCobrar, setformCobrar] = useState({tipo_factura:"",monto_total_factura:0,recibido_factura:"",id_factura:"",nro_factura:"",nombre_caja:"",id_caja_factura:"",id_factura_cliente:"",nombre_cliente:""});
   
 
 
@@ -53,7 +53,7 @@ const CuentasProvider = ({ children }) => {
       let montototalfactura = parseFloat(formCobrar.monto_total_factura);
       let estado = 2;  // 2 no pagado
       let detalles= `Cobro de ventas a crédito factura nro: ${formCobrar.nro_factura}`;
-      let tipofactura = parseInt(formCobrar.tipofactura)
+      let tipofactura = parseInt(formCobrar.tipo_factura)
       if(tipofactura===3){
         detalles = `Cobro de venta a cuota. Ref nro ${formCobrar.nro_factura}`
       }
