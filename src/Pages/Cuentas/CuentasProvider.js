@@ -40,44 +40,51 @@ const CuentasProvider = ({ children }) => {
   const cobrarCuenta = async(datos)=>{
     setCargando({lista:false,mov:true});
     
+    //console.log(formCobrar,datos)
     
-
-    
-    /*     let CAMBIARCAJA = 0;
-    let indexCaja = listas.cajas.findIndex(e => e.id_caja === CAMBIARCAJA);
-    
-
-    let montoNuevo = parseFloat(listas.cajas[indexCaja].monto_caja) + parseFloat(formCobrar.monto_total_factura);
-      let rescaja = await APICALLER.update({
-        data: { monto_caja: montoNuevo, ult_mov_caja: fecha_actual },
-        token: token_user,
-        id: CAMBIARCAJA,
-        table: "cajas",
-      });
-      rescaja.response !== "ok" ?? console.log(rescaja);
-    
-      let fact = await APICALLER.update({table:'facturas',data:{estado_factura:1},id:formCobrar.id_factura,token:token_user})
-      fact.response!=="ok" ?? console.log(fact);
-
+    let idcaja = formCobrar.id_caja_factura;
+    let getcaja = await APICALLER.get({table:"cajas",where:`id_caja,=,${idcaja}`})
+    if(getcaja.response==="ok" && getcaja.found>0){
+     
+      let datoscaja = getcaja.results[0];
+      let montocobrado = parseFloat(datos.monto_cobrado);
+      let montoacumulado = montocobrado + parseFloat(formCobrar.recibido_factura);
+      let montonuevocaja = montocobrado + parseFloat(datoscaja.monto_caja);
+      let montototalfactura = parseFloat(formCobrar.monto_total_factura);
+      let estado = 2;  // 2 no pagado
+      let detalles= `Cobro de ventas a crédito factura nro: ${formCobrar.nro_factura}`;
+      let tipofactura = parseInt(formCobrar.tipofactura)
+      if(tipofactura===3){
+        detalles = `Cobro de venta a cuota. Ref nro ${formCobrar.nro_factura}`
+      }
+      if(montototalfactura<=montoacumulado){estado = 1; }
+      
       let datosMov = {
-        id_caja_movimiento:CAMBIARCAJA,
+        id_caja_movimiento:idcaja,
         id_user_movimiento:id_user,
         id_tipo_registro:2,
-        monto_movimiento: idFormasPago==="1" ? formCobrar.monto_total_factura : 0,
-        monto_sin_efectivo: idFormasPago!=="1" ? formCobrar.monto_total_factura : 0,
-        detalles_movimiento: `Cobro de ventas a crédito factura nro: ${formCobrar.nro_factura}`,
+        monto_movimiento: datos.id_forma_pago==="1" ? montocobrado : 0,
+        monto_sin_efectivo: datos.id_forma_pago!=="1" ? montocobrado : 0,
+        detalles_movimiento: detalles,
         fecha_movimiento: fecha_actual
       }
-  
-      let mov = await APICALLER.insert({
-        table:'cajas_movimientos',token:token_user,data:datosMov,
-      })
-      //console.log(mov);
-      mov.response!=="ok" ?? console.log(mov);
+      
+      Promise.all([
+        await APICALLER.update({table:'facturas',data:{estado_factura:estado,recibido_factura:montoacumulado},id:formCobrar.id_factura,token:token_user}),
+        await APICALLER.update({table: "cajas",data: { monto_caja: montonuevocaja, ult_mov_caja: fecha_actual },token: token_user,id:idcaja}),
+        await APICALLER.insert({table:'cajas_movimientos',token:token_user,data:datosMov})
+      ])
+      
       setCargando({lista:false,mov:false});
-      swal({text:lang.borrado_correctamente,icon:'success',timer:1800});
+      swal({text:lang.cobrado_correctamente,icon:'success',timer:1800});
       setDialogs({pagar: false,cobrar: false });
-      getLista(); */
+      getLista()
+
+    }
+    else{
+      console.log(getcaja)
+      return false;
+    }
   }
 
 
@@ -148,10 +155,12 @@ const CuentasProvider = ({ children }) => {
     let resFormas=res[3]; 
 
     if(resPagar.response==='ok' && resCajas.response==='ok' && resFormas.response==='ok'){
-      let totalaCobrar=0;
+      let totalaCobrar=0, totalrecibido = 0, montototal = 0;
       resCobrar.results.forEach(e => {
-        totalaCobrar += parseFloat(e.recibido_factura)
+        totalrecibido += parseFloat(e.recibido_factura)
+        montototal +=parseFloat(e.monto_total_factura)
       });
+      totalaCobrar = montototal - totalrecibido;
       
       setListas({
       pagar:resPagar.results,

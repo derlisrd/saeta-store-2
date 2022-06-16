@@ -85,7 +85,7 @@ const CuentasCobrarDialog = () => {
             </Grid>
             <Grid item xs={12}>
               <TextField
-                label="Monto a cobrar" required fullWidth value={form.monto_cobrado} name="monto_cobrado" onChange={change} InputProps={{inputComponent: NumberFormatCustom}}
+                label={lang.monto_a_cobrar} autoComplete="off" required fullWidth value={form.monto_cobrado} name="monto_cobrado" onChange={change} InputProps={{inputComponent: NumberFormatCustom}}
               />
             </Grid>
             <Grid item xs={12}>

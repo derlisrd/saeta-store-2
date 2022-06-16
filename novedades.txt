@@ -34,4 +34,7 @@ INSERT INTO `proveedors` (`id_proveedor`, `ruc_proveedor`, `nombre_proveedor`, `
 INSERT INTO `depositos` (`id_deposito`, `nombre_deposito`, `tipo_deposito`) VALUES (NULL, 'DEPOSITO PRINCIPAL', '1');
 
 
+
+UPDATE `cajas_registros` SET `descripcion_registro` = 'Cobro de ventas crédito o cuotas' WHERE `cajas_registros`.`id_cajas_registro` = 2;
+
 alter table users_permisos RENAME to users_rols;

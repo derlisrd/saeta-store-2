@@ -292,7 +292,9 @@ export const translate = {
         observaciones:"Observaciones",
         monto_recibido:"Monto recibido",
         monto_faltante:"Monto faltante",
-        
+        monto_a_cobrar:"Monto a cobrar",
+        pagado_correctamente:"Pagado correctamente",
+        cobrado_correctamente:"Cobrado correctamente"
     },
 
     en:{
