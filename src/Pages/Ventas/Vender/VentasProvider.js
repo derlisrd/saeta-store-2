@@ -750,11 +750,11 @@ const VentasProvider = ({ children }) => {
     //consultar si hay factura en localstore
     if (localStorage.getItem("facturasStorage") === null) {
       let res = await Promise.all([
-        APICALLER.get({table: "cajas",include:"cajas_users", on:"id_caja,id_caja_caja",where: `id_user_caja,=,${id_user},and,estado_caja,=,'open'`}),
+        APICALLER.get({table: "cajas",include:"cajas_users", on:"id_caja,id_caja_caja",where: `id_user_caja,=,${id_user}`}),
         APICALLER.get({ table: "monedas" }),
         APICALLER.get({ table: "facturas_formas_pagos" }),
         APICALLER.get({ table: "empleados",fields:"id_empleado,nombre_empleado,apellido_empleado" }),
-        APICALLER.get({table:"depositos",where:"tipo_deposito,=,1"})
+        APICALLER.get({table:"depositos",where:"tipo_deposito,=,1"}),
       ])
       let rDepositos = res[4];  
       let rVendedores = res[3];
@@ -763,7 +763,8 @@ const VentasProvider = ({ children }) => {
       let rCajas = res[0];
       var ACTIVEFACTURA = false;
       var FACTURALISTA = [];
-      var rc = res[0]
+      var rc = res[0];
+      
       if (rc.response === "ok") {
         if (rc.found < 1) {
           swal({text:"Debe habilitar una caja.",icon:"warning"}).then(()=>{

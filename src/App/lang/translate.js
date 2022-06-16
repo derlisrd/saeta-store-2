@@ -294,7 +294,8 @@ export const translate = {
         monto_faltante:"Monto faltante",
         monto_a_cobrar:"Monto a cobrar",
         pagado_correctamente:"Pagado correctamente",
-        cobrado_correctamente:"Cobrado correctamente"
+        cobrado_correctamente:"Cobrado correctamente",
+        seleccione_vendedor:"Seleccione vendedor"
     },
 
     en:{

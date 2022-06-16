@@ -171,22 +171,21 @@ const DialogFinalizar = () => {
               </Grid>
               <Grid item xs={12} sm={6}>
                 <FormControl fullWidth>
-                  <InputLabel variant="outlined">
-                    Seleccione vendedor
+                  <InputLabel >
+                    {lang.seleccione_vendedor}
                   </InputLabel>
                   <Select
                     error={
                       errors.factura.errorMensaje ===
                       "Seleccione un vendedor por favor"
                     }
-                    variant="outlined"
                     name="id_empleado"
                     onChange={changeInputsDatosFactura}
                     fullWidth
                     value={fa.datosFactura.id_empleado}
                   >
                     <MenuItem value="" selected disabled>
-                      <em>Seleccione vendedor</em>
+                      <em>{lang.seleccione_vendedor}</em>
                     </MenuItem>
 
                     {fd.listaVendedores.map((e, i) => (
@@ -236,7 +235,7 @@ const DialogFinalizar = () => {
                   label="CRÉDITO" labelPlacement="end"
                 />
                 <FormControlLabel
-                  value="3" disabled={!fd.facturaActiva || fa.datosCliente.ruc_cliente === "0"}
+                  value="3" disabled={fa.datosCliente.ruc_cliente === "0"}
                   name="tipoFactura" onChange={changeInputsDatosFactura}
                   control={<Radio checked={fa.datosFactura.tipoFactura === "3" && fa.datosCliente.ruc_cliente !== "0"}/>}
                   label="CUOTA" labelPlacement="end"
