@@ -28,6 +28,7 @@ const Lists = () => {
         listaMenu.map((e,index)=>(
           <Fragment key={index}>
           {e.submenu ?
+          (permisos.some(p => parseInt(p.id_permiso_permiso)===parseInt(e.id)) || e.private===false) &&
           <>
             <ListItem button onClick={()=>switchOpen(e.open,e.id)} key={index}  >
               <ListItemIcon>
@@ -40,7 +41,7 @@ const Lists = () => {
               <List component="div" disablePadding className={style.submenu} >
                 {
                   e.submenu.map((elem,i)=>(
-                    permisos.some(p => parseInt(p.id_permiso_permiso)===parseInt(elem.id)) &&
+                    (permisos.some(p => parseInt(p.id_permiso_permiso)===parseInt(elem.id)) || elem.private===false ) &&
                     <ListItem
                         key={i}
                         selected={l.pathname === elem.url}
@@ -61,7 +62,7 @@ const Lists = () => {
           </> :
           <>
           {
-            permisos.some(p => parseInt(p.id_permiso_permiso)===parseInt(e.id)) &&
+            (permisos.some(p => parseInt(p.id_permiso_permiso)===parseInt(e.id)) || e.private===false) &&
             <ListItem
             selected={l.pathname === e.url}
             button

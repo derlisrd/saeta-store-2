@@ -7,6 +7,7 @@ export const listaMenu = [
         icon: "apps",
         color: "#a0aec0",
         url: `${BASEURL}/dashboard`,
+        private:false
       },
       {
         id: 44,
@@ -253,6 +254,7 @@ export const listaMenu = [
         icon: "settings",
         color: "#a0aec0",
         open: false,
+        private:false,
         submenu: [
           {
             id: 36,
@@ -281,6 +283,7 @@ export const listaMenu = [
             icon: "help",
             color: "#a0aec0",
             url: `${BASEURL}/info`,
+            private:false
           },
         ],
       },  
