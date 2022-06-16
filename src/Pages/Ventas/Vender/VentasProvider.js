@@ -122,7 +122,7 @@ const VentasProvider = ({ children }) => {
     var LASTNROFACTURA;
     var DESCUENTO = df.descuento;
     var IDCAJAFACTURACION = df.datosFactura.id_caja;
-    
+  
     if (df.datosFactura.tipoFactura === "0" || df.datosFactura.tipoFactura==="3") {
       let nrorec = await APICALLER.get({ table: "empresa_recibos" });
       if (nrorec.response === "ok") {
@@ -141,7 +141,9 @@ const VentasProvider = ({ children }) => {
         APICALLER.update({table: "empresa_facturas",token: token_user, id:idf, 
         data: {last_nro_factura: parseInt(LASTNROFACTURA) + 1}});
       }
-    }
+    } 
+
+
     
     let efectivo=0,sinEfectivo=0,cambio = 0, observaciones = ""; 
     let objDetalles = {
@@ -163,10 +165,14 @@ const VentasProvider = ({ children }) => {
       observaciones += e.obs 
     })
     observaciones += DESCUENTO>0 ? ` Descuento ${DESCUENTO}` : "";
-    cambio = efectivo - df.total;
+    
+    if(efectivo>df.total){
+      cambio = efectivo - df.total;
+    }
+    
     efectivo = efectivo - cambio;
     
-    //console.log(efectivo,sinEfectivo,observaciones,detallesMov)
+    //console.log(efectivo,sinEfectivo,observaciones,detallesMov,cambio)
     // INGRESAMOS AL REGISTRO DE CAJA SI ES CONTADO, SI ES CREDITO IGNORAMOS PQ NO HAY MOVIMIENTO EN CAJA
     
     let tipoFactura = parseInt(df.datosFactura.tipoFactura)
@@ -235,7 +241,7 @@ const VentasProvider = ({ children }) => {
       nro_factura: parseInt(LASTNROFACTURA),
       fecha_factura: Funciones.fechaActualYMD() +" "+ Funciones.getHorarioActualString(),
       fecha_cobro_factura: df.datosFactura.fecha_cobro_factura +" "+ Funciones.getHorarioActualString(),
-      estado_factura: df.datosFactura.tipoFactura === "2" ? 2 : 1,
+      estado_factura: parseInt(df.datosFactura.tipoFactura) < 2 ? 1 : 2,
       tipo_factura: df.datosFactura.tipoFactura,
       recibido_factura:  df.datosFactura.tipoFactura === "2" ? 0 : df.datosFactura.totalAbonado,
       monto_total_factura: df.total,
@@ -633,10 +639,10 @@ const VentasProvider = ({ children }) => {
     let e = {...errors};
     if(!isNaN(valorInicial) || valorInicial>0){
       let valor = valorInicial * parseFloat(fa.facturas[indexFactura].datosMoneda.valor_moneda);
-      let found = da.formasPago.filter(e => e.id_forma_pago === da.id_formaPago);
-      if (found.length === 0) {
+      let foundIndex = da.formasPago.findIndex(e => e.id_forma_pago === da.id_formaPago);
+
+      if (foundIndex<0) {
         let des = list.filter(e=> e.id_facturas_formas_pago === da.id_formaPago); 
-        da.totalAbonado +=  isNaN(valor) ? 0 : parseFloat(valor); 
         da.formasPago.push({
           id_forma_pago: da.id_formaPago,
           obs:da.obs_pago,
@@ -646,9 +652,12 @@ const VentasProvider = ({ children }) => {
         e.factura.error = false;
         e.factura.errorMensaje="";
       }else{
-        e.factura.error = true;
-        e.factura.errorMensaje="Ese método de pago ya esta en la lista. Elija otro o mofique el método.";
-      }  
+          let cantidadMas = da.formasPago[foundIndex].cantidad + parseFloat(valor)
+          da.formasPago[foundIndex].cantidad = cantidadMas;
+        //e.factura.error = true;
+       // e.factura.errorMensaje="Ese método de pago ya esta en la lista. Elija otro o mofique el método.";
+      }
+      da.totalAbonado +=  isNaN(valor) ? 0 : parseFloat(valor);    
     }
     else{
       e.factura.error = true;

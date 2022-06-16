@@ -281,7 +281,18 @@ export const translate = {
         finalizar_venta:"Finalizar venta",
         volver_factura:"Volver a factura",
         pagado:"Pagado",
-        pendiente:"Pendiente"
+        pendiente:"Pendiente",
+        detalles:"Detalles",
+        cantidad_efectivo:"Cantidad en efectivo",
+        cantidad_sin_efectivo:"Cantidad sin efectivo",
+        registrar_cliente:"Registrar cliente",
+        cobrar:"Cobrar",
+        formas_de_pago:"Formas de pago",
+        monto_total:"Monto total",
+        observaciones:"Observaciones",
+        monto_recibido:"Monto recibido",
+        monto_faltante:"Monto faltante",
+        
     },
 
     en:{

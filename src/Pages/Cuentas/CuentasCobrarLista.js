@@ -1,11 +1,11 @@
-import { Button, Icon, IconButton, InputAdornment, TextField } from "@mui/material";
+import { Button, Icon, IconButton, InputAdornment, Stack, TextField } from "@mui/material";
 import Tablas from "../../Components/UI/Tablas";
 import { useCuentas } from "./CuentasProvider";
 import {funciones} from '../../Functions'
 import {useDatosEmpresa} from '../../Contexts/DatosEmpresaProvider'
 const CuentasCobrarLista = () => {
   const {MONEDA_PRINCIPAL} = useDatosEmpresa()
-  const {cargando,listaCobrar,setformCobrar,setDialogs,dialogs,listaCajas,setIdCaja,totalCobrar,lang} = useCuentas();
+  const {cargando,setformCobrar,setDialogs,dialogs,lang,listas} = useCuentas();
 
   const columnas = [
     {
@@ -28,12 +28,23 @@ const CuentasCobrarLista = () => {
       style: { fontWeight: "bold" },
     },
     {
+      field: "tipo_factura",
+      title: lang.tipo,
+      items: {"2":"Crédito","3":"Cuotas" },
+      compareField: "tipo_factura",
+    },
+    {
+      field: "recibido_factura",
+      title: "Recibido",
+      isNumber: true,
+      style: { fontWeight: "bold" },
+    },
+    {
       field: "monto_total_factura",
       title: "Total",
       isNumber: true,
       style: { fontWeight: "bold" },
     },
-
     {
       field: "estado_factura",
       title: lang.estado,
@@ -46,13 +57,13 @@ const CuentasCobrarLista = () => {
       styleCondition: {
         "2": {
           backgroundColor: "#ff7c6b",
-          padding: "6px",fontWeight:"bold",
+          padding: "3px",fontWeight:"bold",
           borderRadius: "5px",
           color: "#780c00",
         },
         "1": {
           backgroundColor: "#2dec76",
-          padding: "6px", fontWeight:"bold",
+          padding: "3px", fontWeight:"bold",
           borderRadius: "5px",
           color: "#007b02",
         },
@@ -61,19 +72,20 @@ const CuentasCobrarLista = () => {
   ];
 
   const open = (form) => {
-    let index = listaCajas.findIndex((e) => e.id_caja === form.id_caja_factura);
-    setIdCaja(listaCajas[index].id_caja);
     setformCobrar(form);
-    setDialogs({ ...dialogs, cobrar: true });
+    setDialogs({ ...dialogs, cobrar: true }); 
   };
+
+
   const Acciones = ({ rowProps }) => (
-    <Button
-      variant="outlined"
-      onClick={() => open(rowProps)}
-      startIcon={<Icon color="primary">paid</Icon>}
-    >
-      Cobrar
+    <Stack spacing={2}>
+    <Button onClick={() => console.log(rowProps)} variant="outlined">
+      {lang.detalles}
     </Button>
+    <Button onClick={() => open(rowProps)} variant="outlined">
+      {lang.cobrar}
+    </Button>
+    </Stack>
   );
 
   
@@ -94,7 +106,7 @@ const CuentasCobrarLista = () => {
     </>
   );
 
-  const totalTxt = "Total a cobrar: "+funciones.numberSeparator(totalCobrar)+" "+ MONEDA_PRINCIPAL.abreviatura_moneda;
+  const totalTxt = "Total a cobrar: "+funciones.numberSeparator(listas.totalCobrar)+" "+ MONEDA_PRINCIPAL.abreviatura_moneda;
 
   return (
       <>
@@ -105,9 +117,9 @@ const CuentasCobrarLista = () => {
       caption={totalTxt}
       subtitle={lang.listas_cuentas_cobrar}
       Accions={Acciones}
-      loading={cargando}
+      loading={cargando.lista}
       columns={columnas}
-      datas={listaCobrar}
+      datas={listas.cobrar}
       inputs={search}
       showOptions
     />

@@ -1,7 +1,6 @@
-import {Alert,Button,FormControl,FormHelperText,Grid,InputLabel,LinearProgress,MenuItem,Select,TextField} from "@mui/material";
+import {Alert,Button,Dialog,DialogActions,DialogContent,DialogTitle,FormControl,FormHelperText,Grid,InputLabel,LinearProgress,MenuItem,Select,TextField} from "@mui/material";
 import NumberFormatCustom from "../../../Components/thirty/NumberFormatCustom";
 import { useCajas } from "./CajasProvider";
-import ModalDialog from "../../../Components/UI/ModalDialog";
 import { useEffect,useState } from 'react';
 
 const DialogNuevo = () => {
@@ -41,21 +40,19 @@ const DialogNuevo = () => {
     setDialogs({ ...dialogs, nuevo: false });
     setForm(initialFormNew);
   };
-  const Acciones = (<>
-  <Button variant="contained" onClick={verificar}>{lang.abrir}</Button>
-        <Button variant="contained" onClick={cerrar}>
-          {lang.cancelar}
-        </Button></>)
+
 
 useEffect(() => {
   setForm(formNew)
 }, [formNew])
 
   return (
-
-      <ModalDialog title={lang.habilitar_nueva_caja} fullWidth open={dialogs.nuevo} ActionsButtons={Acciones} onClose={cerrar} >
-
-        <Grid container spacing={2}>
+    <Dialog fullWidth open={dialogs.nuevo}  onClose={cerrar}>
+      <DialogTitle>
+      {lang.habilitar_nueva_caja}
+      </DialogTitle>
+      <DialogContent dividers>
+      <Grid container spacing={2}>
           <Grid item xs={12}>
             {
               errors.nuevo && <Alert icon={false} severity="error">{errors.nuevoMensaje}</Alert>
@@ -123,7 +120,14 @@ useEffect(() => {
             </FormControl>
           </Grid>
         </Grid>
-</ModalDialog>
+      </DialogContent>
+      <DialogActions>
+      <Button variant="contained" size="large"  onClick={verificar}>{lang.abrir}</Button>
+        <Button variant="contained" size="large"  onClick={cerrar}>
+          {lang.cancelar}
+        </Button>
+      </DialogActions>
+    </Dialog>
   );
 };
 

@@ -6,7 +6,7 @@ import { useVentas } from './VentasProvider';
 
 const DialogRegistroCliente = () => {
     
-    const {dialogs,setDialogs,datosFacturas,indexFactura,setearFactura,setErrors,errors} = useVentas();
+    const {dialogs,setDialogs,datosFacturas,indexFactura,setearFactura,setErrors,errors,lang} = useVentas();
     const {userData} = useLogin();
     const {token_user} = userData;
     const initialForm = {
@@ -94,7 +94,7 @@ const DialogRegistroCliente = () => {
       onClose={cerrar}
       fullWidth
     >
-      <DialogTitle>Registrar cliente</DialogTitle>
+      <DialogTitle>{lang.registrar_cliente}</DialogTitle>
       <DialogContent dividers>
         
           
@@ -113,7 +113,6 @@ const DialogRegistroCliente = () => {
               fullWidth
               name="ruc_cliente"
               value={formCliente.ruc_cliente}
-              variant="outlined"
               InputProps={{
                 startAdornment: (
                   <InputAdornment position="start">
@@ -133,7 +132,6 @@ const DialogRegistroCliente = () => {
               label="Nombre o nombre de empresa"
               fullWidth
               name="nombre_cliente"
-              variant="outlined"
               onChange={cambiarValor}
               value={formCliente.nombre_cliente}
               InputProps={{
@@ -207,20 +205,19 @@ const DialogRegistroCliente = () => {
       </DialogContent>
       <DialogActions>
         <Button
-          variant="outlined"
-          color="primary"
+          variant="contained" size='large'
           onClick={() => {
             VerificarRegistro();
           }}
           type="submit"
         >
-          Registrar
+          {lang.registrar}
         </Button>
         <Button
-          variant="outlined"
+          variant="contained" size='large'
           onClick={cerrar}
         >
-          Cancelar
+          {lang.cancelar}
         </Button>
       </DialogActions>
     </Dialog>

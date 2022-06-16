@@ -129,7 +129,8 @@ const FacturasProvider = ({ children }) => {
       "1":",and,tipo_factura,=,1",
       "2":",and,tipo_factura,=,2",
       "3":",and,estado_factura,=,1",
-      "4":",and,estado_factura,=,2"
+      "4":",and,estado_factura,=,2",
+      "5":",and,tipo_factura,=,3",
     }
 
     let moreFilter=filtrosOBJ[filtro];

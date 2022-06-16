@@ -138,11 +138,11 @@ const DialogFacturaNew = () => {
           </Grid>
         </DialogContent>
         <DialogActions>
-          <Button variant="contained" type="submit" color="primary">
-            Registrar
+          <Button variant="contained" size="large" type="submit" color="primary">
+            {lang.registrar}
           </Button>
-          <Button variant="contained" onClick={cerrar}>
-            Cancelar
+          <Button variant="contained" size="large" onClick={cerrar}>
+            {lang.cancelar}
           </Button>
         </DialogActions>
       </form>

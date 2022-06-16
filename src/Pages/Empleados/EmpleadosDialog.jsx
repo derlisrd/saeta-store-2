@@ -134,8 +134,8 @@ const EmpleadosDialog = () => {
         </Grid>
       </DialogContent>
       <DialogActions>
-        <Button variant="contained" type="onsubmit" >{lang.guardar}</Button>
-        <Button variant="contained" onClick={cerrar}>{lang.cancelar}</Button>
+        <Button variant="contained" size="large" type="onsubmit" >{lang.guardar}</Button>
+        <Button variant="contained" size="large" onClick={cerrar}>{lang.cancelar}</Button>
       </DialogActions>
     </form>
     </Dialog>

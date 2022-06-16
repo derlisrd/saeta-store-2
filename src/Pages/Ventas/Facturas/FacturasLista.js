@@ -60,13 +60,29 @@ const FacturasLista = () => {
       title: lang.estado,
       items: { 0: "Anulado", 1: "Cobrado", 2: "Cobranza pendiente" },
       compareField: "estado_factura",
+      styleFieldCondition: "estado_factura",
+      styleCondition: {
+        "2": {
+          backgroundColor: "#ff7c6b",
+          padding: "2px",fontWeight:"bold",
+          borderRadius: "5px",
+          color: "#780c00",
+        },
+        "1": {
+          backgroundColor: "#2dec76",
+          padding: "2px", fontWeight:"bold",
+          borderRadius: "5px",
+          color: "#007b02",
+        },
+      },
     },
     {
       field: "tipo_factura",
-      title: "TIPO",
-      items: { 1: "Contado", 2: "Crédito", 0: "Recibo" },
+      title: lang.tipo,
+      items: { 1: "Contado", 2: "Crédito", 0: "Recibo","3":"Cuotas" },
       compareField: "tipo_factura",
     },
+    
     {
       field: "monto_total_factura",
       title: lang.monto,
@@ -145,6 +161,7 @@ const FacturasLista = () => {
             <MenuItem value="no_recibo">Solo facturas</MenuItem>
             <MenuItem value="1">Tipo contado</MenuItem>
             <MenuItem value="2">Tipo crédito</MenuItem>
+            <MenuItem value="5">Tipo cuotas</MenuItem>
             <MenuItem value="3">Cobrados</MenuItem>
             <MenuItem value="4">No cobrados</MenuItem>
           </Select>
@@ -196,10 +213,10 @@ const FacturasLista = () => {
 
   return (
     <Grid container spacing={3}>
-      <Grid item xs={12} md={3}>
+      <Grid item xs={12} sm={12} md={3}>
           {search}
       </Grid>
-      <Grid item xs={12} md={9}>
+      <Grid item xs={12} sm={12} md={9}>
         
           <Tablas
             title={lang.facturas}

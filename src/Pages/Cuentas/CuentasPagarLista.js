@@ -1,11 +1,11 @@
 
-import { Button, Icon } from '@mui/material'
+import { Button, Icon, Stack } from '@mui/material'
 import Tablas from '../../Components/UI/Tablas'
 import { useCuentas } from './CuentasProvider'
 
 const CuentasPagarLista = () => {
 
-    const {cargando,listaPagar,dialogs,setDialogs,setformPagar,lang} = useCuentas()
+    const {cargando,dialogs,setDialogs,setformPagar,lang,listas} = useCuentas()
 
     const columnas = [
         {
@@ -61,8 +61,14 @@ const CuentasPagarLista = () => {
     }
 
     const Acciones = ({rowProps})=>(
+      <Stack spacing={2}>
+      <Button onClick={() => console.log(rowProps)} startIcon={<Icon color="primary">paid</Icon>}>
+        {lang.detalles}
+      </Button>
     <Button variant="outlined" onClick={()=>{openPago(rowProps)}} 
-    startIcon={<Icon color="primary">paid</Icon>} >Pagar</Button>)
+    startIcon={<Icon color="primary">paid</Icon>} >Pagar</Button>
+    </Stack>
+    )
     
   return (
     <Tablas
@@ -73,8 +79,8 @@ const CuentasPagarLista = () => {
         showOptions
         title={lang.cuentas_a_pagar}
         lang={lang}
-        loading={cargando}
-        datas={listaPagar}
+        loading={cargando.lista}
+        datas={listas.pagar}
     />
   )
 }

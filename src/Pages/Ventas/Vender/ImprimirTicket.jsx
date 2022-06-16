@@ -51,6 +51,11 @@ const ImprimirTicket = () => {
               </td>
             </tr>
             <tr>
+              <td align="center">
+                <strong> {DF.datosFactura.tipoFactura==="3" && "CREDITO CUOTA" }</strong>
+              </td>
+            </tr>
+            <tr>
               <td align="center">Moneda: {DF.datosMoneda.nombre_moneda}</td>
             </tr>
           </thead>
@@ -95,21 +100,24 @@ const ImprimirTicket = () => {
               </td>
             </tr>
             <tr>
-              <td>
+              <td >
               <table width="100%" style={{ fontSize: "12px" }}>
                   <tbody>
-                  <tr><th>SUBTOTAL: {Funciones.numberSeparator(DF.total)}</th></tr>
+                  <tr><th>SUBTOTAL: {Funciones.numberSeparator(DF.total)} {DF.datosMoneda.abreviatura_moneda}</th></tr>
                     {DF.descuento>0&&<tr><th> DESCUENTO: -{DF.descuento} </th></tr>}
                     <tr>
-                      <th>TOTAL: {Funciones.numberSeparator(DF.total-DF.descuento)}{" "}{DF.datosMoneda.abreviatura_moneda}</th>
+                      <th>TOTAL A PAGAR: {Funciones.numberSeparator(DF.total-DF.descuento)}{" "}{DF.datosMoneda.abreviatura_moneda}</th>
+                    </tr>
+                    <tr>
+                      <th>ABONADO: {DF.datosFactura.totalAbonado} {DF.datosMoneda.abreviatura_moneda}</th>
                     </tr>
                     <tr>
                       <th>
-                        
+                        LETRAS:  {" "}
                         {Funciones.NumeroALetras(
                           DF.total - DF.descuento,
                           DF.datosMoneda.abreviatura_moneda
-                        )}{" "}
+                        )}
                       </th>
                     </tr>
                   </tbody>
