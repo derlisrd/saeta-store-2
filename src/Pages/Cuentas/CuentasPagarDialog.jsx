@@ -1,19 +1,5 @@
-import {
-  Dialog,
-  Grid,
-  TextField,
-  FormControl,
-  InputLabel,
-  Select,
-  MenuItem,
-  Zoom,
-  DialogContent,
-  DialogTitle,
-  DialogActions,
-  Button,
-  LinearProgress,Alert
-} from "@mui/material";
-import NumberFormatCustom from '../../Componentes/NumberFormatCustom'
+import {Dialog,Grid,TextField,FormControl,InputLabel,Select,MenuItem,Zoom,DialogContent,DialogTitle,DialogActions,Button,LinearProgress,Alert} from "@mui/material";
+import NumberFormatCustom from '../../Components/thirty/NumberFormatCustom'
 import { useCuentas } from "./CuentasProvider";
 import {useState} from 'react';
 
@@ -30,7 +16,7 @@ const CuentasPagarDialog = () => {
     setIdFormasPago,
     obs,
     setObs,
-    pagarCuenta, cargandoMov
+    pagarCuenta, cargandoMov,lang
   } = useCuentas();
 
 
@@ -65,7 +51,7 @@ const CuentasPagarDialog = () => {
       open={dialogs.pagar}
     >
       <form onSubmit={pagar}>
-        <DialogTitle>Cuenta a pagar </DialogTitle>
+        <DialogTitle>{lang.cuenta_a_pagar} </DialogTitle>
         <DialogContent>
           <Grid container spacing={2}>
           <Grid item xs={12}>
@@ -141,11 +127,11 @@ const CuentasPagarDialog = () => {
           </Grid>
         </DialogContent>
         <DialogActions>
-          <Button disabled={cargandoMov} variant="outlined" type="submit">
-            Pagar
+          <Button disabled={cargandoMov} variant="contained" size="large" type="submit">
+            {lang.pagar}
           </Button>
-          <Button variant="outlined" onClick={cerrar}>
-            Cerrar
+          <Button variant="contained" size="large" onClick={cerrar}>
+            {lang.cerrar}
           </Button>
         </DialogActions>
       </form>

@@ -1,10 +1,11 @@
+
 import { Button, Icon } from '@mui/material'
-import Tablas from '../../Componentes/Tablas'
+import Tablas from '../../Components/UI/Tablas'
 import { useCuentas } from './CuentasProvider'
 
 const CuentasPagarLista = () => {
 
-    const {cargando,listaPagar,dialogs,setDialogs,setformPagar} = useCuentas()
+    const {cargando,listaPagar,dialogs,setDialogs,setformPagar,lang} = useCuentas()
 
     const columnas = [
         {
@@ -29,12 +30,29 @@ const CuentasPagarLista = () => {
             isDate:true,
         },
         {
-            field:"estado_compra",
-            title:"Estado",
-            items: {1:"Pagado",2:"Pendiente de pago"},
-            comparaItem: "estado_compra",
-            style:{fontWeight:"bold"}
-        }
+            field: "estado_compra",
+            title: lang.estado,
+            compareField:"estado_compra",
+            items: {
+              "1": lang.pagado,
+              "2": lang.pendiente,
+            },
+            styleFieldCondition: "estado_compra",
+            styleCondition: {
+              "1": {
+                backgroundColor: "#ff7c6b",
+                padding: "6px",fontWeight:"bold",
+                borderRadius: "5px",
+                color: "#780c00",
+              },
+              "2": {
+                backgroundColor: "#2dec76",
+                padding: "6px", fontWeight:"bold",
+                borderRadius: "5px",
+                color: "#007b02",
+              },
+            },
+          },
     ]
 
     const openPago = (form)=>{
@@ -42,20 +60,21 @@ const CuentasPagarLista = () => {
         setformPagar(form)
     }
 
-    const Acciones = ({filaProps})=>(
-    <Button variant="outlined" onClick={()=>{openPago(filaProps)}} 
+    const Acciones = ({rowProps})=>(
+    <Button variant="outlined" onClick={()=>{openPago(rowProps)}} 
     startIcon={<Icon color="primary">paid</Icon>} >Pagar</Button>)
     
   return (
     <Tablas
-        nombretabla="Cuentas a Pagar"
-        subtitle="Lista de compras a pagar"
-        namecolumnID="id_factura"
-        Acciones={Acciones}
-        cargando={cargando} 
-        columnas={columnas}
-        filas={listaPagar}
+        subtitle={lang.listas_compras}
+        Accions={Acciones}
+        icon={{ name:"payments" }}
+        columns={columnas}
         showOptions
+        title={lang.cuentas_a_pagar}
+        lang={lang}
+        loading={cargando}
+        datas={listaPagar}
     />
   )
 }

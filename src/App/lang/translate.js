@@ -271,7 +271,17 @@ export const translate = {
         imprimir:"Imprimir",
         imprimir_nota_pedido:"Imprimir nota de pedido",
         nota_de_pedido:"Nota de pedido",
-        nro_de_pedido:"Nro de pedido"
+        nro_de_pedido:"Nro de pedido",
+        cuentas_a_pagar:"Cuentas a pagar",
+        listas_compras:"Lista de compras a pagar",
+        cuentas_a_cobrar:"Cuentas a cobrar",
+        listas_cuentas_cobrar:"Lista de ventas/facturas a cobrar",
+        cuenta_a_pagar:"Cuenta a pagar",
+        pagar:"Pagar",
+        finalizar_venta:"Finalizar venta",
+        volver_factura:"Volver a factura",
+        pagado:"Pagado",
+        pendiente:"Pendiente"
     },
 
     en:{

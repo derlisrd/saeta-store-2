@@ -114,13 +114,10 @@ const ProductosLista = () => {
       </Stack>
     );
 
-    const FilterData =  lista.productos.filter(item => item.nombre_producto.toLowerCase().includes(inputSearch.toLowerCase()) 
-      || item.codigo_producto.toLowerCase().includes(inputSearch.toLowerCase())
-    );
+    const FilterData =  lista.productos.filter(item => item.nombre_producto.toLowerCase().includes(inputSearch.toLowerCase())|| item.codigo_producto.toLowerCase().includes(inputSearch.toLowerCase()));
 
     const sort = {
         desc : (col)=>{
-          
         FilterData.sort((a, b) => {
           let fa = a[col].toLowerCase(),
         fb = b[col].toLowerCase();
@@ -133,7 +130,7 @@ const ProductosLista = () => {
           }
           return 0;
       });
-      setLista(FilterData)
+      setLista({...lista,productos:FilterData})
         },
         asc : (col)=>{
           FilterData.sort((a, b) => {
@@ -148,7 +145,7 @@ const ProductosLista = () => {
             }
             return 0;
         });
-        setLista(FilterData)
+        setLista({...lista,productos:FilterData})
         }
     }
 

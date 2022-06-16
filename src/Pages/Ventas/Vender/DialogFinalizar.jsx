@@ -9,7 +9,7 @@ import { useRef,useState } from "react";
 
 
 const DialogFinalizar = () => {
-  const {MetodoDescuento,permisos,
+  const {MetodoDescuento,permisos, lang,
     dialogs,setDialogs,datosFacturas,indexFactura,Funciones,errors,cargas,setCargas,consultarCliente,changeInputsDatosFactura,setErrors,initialErrors,verificarYEnviarFactura,AgregarCantidadMetodoPago,cantidadRecibidaRef,borrarMetodoPago,//permisos, Anotar
   } = useVentas();
   const inputDoc = useRef(null);
@@ -37,6 +37,7 @@ const DialogFinalizar = () => {
     let cj = f.id_caja;
     let v = f.id_empleado;
     let e = { ...errors };
+
     if(fa.datosFactura.formasPago.length<1 && fa.datosFactura.tipoFactura!=="2"){
       e.factura.error = true;
       e.factura.errorMensaje =
@@ -45,7 +46,8 @@ const DialogFinalizar = () => {
       cantidadRecibidaRef.current?.focus();
       return false;
     }
-    if ((isNaN(cr) || cr < fa.total) && fa.datosFactura.tipoFactura !== "2") {
+
+    if ((isNaN(cr) || cr < fa.total) && parseInt(fa.datosFactura.tipoFactura) < 2) {
       e.factura.error = true;
       e.factura.errorMensaje =
         "La cantidad abonada no puede ser menor al total de la factura";
@@ -94,7 +96,7 @@ const DialogFinalizar = () => {
   const CAMBIO = CR - TOTAL;
 
 
- 
+  
   return (
     <Dialog
       open={dialogs.finalizarVenta}
@@ -104,9 +106,9 @@ const DialogFinalizar = () => {
       TransitionComponent={Zoom}
     >
       <DialogTitle>
-        <Tooltip title={<h2>Volver a factura</h2>} TransitionComponent={Zoom} arrow placement="right-start">
+        <Tooltip title={<h2>{lang.volver_factura}</h2>} TransitionComponent={Zoom} arrow placement="right-start">
             <IconButton onClick={cerrar}><Icon>arrow_back_ios_new</Icon></IconButton>
-          </Tooltip>FINALIZAR VENTA - TOTAL: {Funciones.numberSeparator(Funciones.redondeo2decimales(TOTAL))} {ABM}</DialogTitle>
+          </Tooltip>{lang.finalizar_venta} - TOTAL: {Funciones.numberSeparator(Funciones.redondeo2decimales(TOTAL))} {ABM}</DialogTitle>
       <DialogContent>
         <Grid container spacing={2} justifyContent="center">
           <Grid item xs={12}>
@@ -233,6 +235,12 @@ const DialogFinalizar = () => {
                   }
                   label="CRÉDITO" labelPlacement="end"
                 />
+                <FormControlLabel
+                  value="3" disabled={!fd.facturaActiva || fa.datosCliente.ruc_cliente === "0"}
+                  name="tipoFactura" onChange={changeInputsDatosFactura}
+                  control={<Radio checked={fa.datosFactura.tipoFactura === "3" && fa.datosCliente.ruc_cliente !== "0"}/>}
+                  label="CUOTA" labelPlacement="end"
+                />
               </Grid>
               <Grid item xs={12} sm={6}>
                 {fa.datosFactura.tipoFactura === "2" && (
@@ -332,7 +340,7 @@ const DialogFinalizar = () => {
                   onClick={() => {AgregarCantidadMetodoPago(); }}
                   startIcon={<Icon>add</Icon>}
                 >
-                  Agregar
+                  {lang.agregar}
                 </ButtonCustom>
               </Grid>
               {
@@ -412,18 +420,16 @@ const DialogFinalizar = () => {
         </Grid>
       </DialogContent>
       <DialogActions>
-
         <ButtonCustom
           color="primary"
           variant="contained"
-          size="large"
           onClick={verificar}
           disabled={cargas.finalizarVenta || fa.itemsFactura.length < 1 }
         >
-          FINALIZAR
+          {lang.finalizar}
         </ButtonCustom>
-        <ButtonCustom onClick={cerrar} color="error" variant="outlined" size="large">
-          CANCELAR
+        <ButtonCustom onClick={cerrar} color="error" variant="outlined" >
+          {lang.cancelar}
         </ButtonCustom>
       </DialogActions>
     </Dialog>

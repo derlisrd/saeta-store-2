@@ -6,14 +6,16 @@ import {
   useCallback,
 } from "react";
 import swal from "sweetalert";
-import { APICALLER } from "../../Api/ApiCaller";
-import { useLogin } from "../../Contextos/LoginProvider";
-import { Funciones } from "../../Funciones/Funciones";
+import { APICALLER } from "../../Services/api";
+import { useLogin } from "../../Contexts/LoginProvider";
+import { funciones } from "../../Functions";
+import { useLang } from "../../Contexts/LangProvider";
 const Contexto = createContext();
 
 const CuentasProvider = ({ children }) => {
-  const { id_user, token_user } = useLogin();
-
+  const {lang} = useLang()
+  const {userData} = useLogin();
+  const { id_user, token_user } = userData
   const [cargando, setCargando] = useState(true);
   const [cargandoMov,setCargandoMov] = useState(false)
   const [listaPagar, setListaPagar] = useState([]);
@@ -21,14 +23,30 @@ const CuentasProvider = ({ children }) => {
   const [totalCobrar,setTotalCobrar] = useState(0);
   const [listaCajas, setListaCajas] = useState([]);
   const [formasDePago, setFormasDePago] = useState([]);
+  
+  const [loadings,setLoadings] = useState({
+    lista:false,
+    mov:false
+  })
+  const [listas,setListas] = useState({
+    pagar:[],
+    cobrar:[],
+    cajas:[],
+    formasPago:[],
+    totalCobrar:0,
+    totalPagar:0
+  })
+
   const [dialogs, setDialogs] = useState({
     pagar: false,
     cobrar: false,
   });
+
   const [idCaja, setIdCaja] = useState("");
   const [idFormasPago, setIdFormasPago] = useState("");
   const [obs, setObs] = useState("");
-  const fecha_actual = Funciones.getFechaHorarioString();
+  const fecha_actual = funciones.getFechaHorarioString();
+  
   const [formPagar, setformPagar] = useState({id_compra:"",total_factura_compra:"",nro_factura_compra:""});
   const [formCobrar, setformCobrar] = useState({monto_total_factura:"",id_factura:"",nro_factura:"",nombre_caja:""});
   
@@ -64,7 +82,7 @@ const CuentasProvider = ({ children }) => {
       console.log(mov);
       mov.response!=="ok" ?? console.log(mov);
       setCargandoMov(false)
-      swal({title:'Se ha cobrado correctamente',icon:'success',timer:1800});
+      swal({text:lang.borrado_correctamente,icon:'success',timer:1800});
       setDialogs({pagar: false,cobrar: false });
       getLista();
   }
@@ -129,7 +147,7 @@ const CuentasProvider = ({ children }) => {
       table: "facturas",
       include: "clientes,cajas",
       on: "id_cliente,id_cliente_factura,id_caja,id_caja_factura",
-      where: "tipo_factura,=,2,and,estado_factura,=,2",
+      where: "tipo_factura,>,1,and,estado_factura,=,2",
     }),APICALLER.get({
       table: "compras",
       where: "tipo_factura_compra,=,2,and,estado_compra,=,2",
@@ -170,7 +188,7 @@ const CuentasProvider = ({ children }) => {
   return (
     <Contexto.Provider
       value={{
-        cargando,
+        cargando,lang,
         setCargando,
         listaPagar,
         setListaPagar,
@@ -203,7 +221,7 @@ const CuentasProvider = ({ children }) => {
 
 export const useCuentas = () => {
   const {
-    cargando,
+    cargando,lang,
     setCargando,
     listaPagar,
     setListaPagar,
@@ -229,7 +247,7 @@ export const useCuentas = () => {
     totalCobrar,setTotalCobrar
   } = useContext(Contexto);
   return {
-    cargando,
+    cargando,lang,
     setCargando,
     listaPagar,
     setListaPagar,

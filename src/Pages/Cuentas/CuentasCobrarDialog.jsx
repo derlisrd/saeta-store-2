@@ -1,6 +1,6 @@
 import {Dialog,Grid,TextField,FormControl,InputLabel,Select,MenuItem,Zoom,DialogContent,
   DialogTitle,DialogActions,Button,LinearProgress,Alert} from "@mui/material";
-import NumberFormatCustom from '../../Componentes/NumberFormatCustom'
+import NumberFormatCustom from '../../Components/thirty/NumberFormatCustom'
 import { useCuentas } from "./CuentasProvider";
 import React from 'react'
 const CuentasCobrarDialog = () => {

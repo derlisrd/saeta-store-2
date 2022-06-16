@@ -6,8 +6,8 @@ import {funciones as Funciones} from "../../../Functions";
 import {useLang} from '../../../Contexts/LangProvider'
 import { useNavigate } from "react-router-dom";
 
-
 const Contexto = createContext();
+
 
 const VentasProvider = ({ children }) => {
   const navigate = useNavigate();
@@ -49,9 +49,7 @@ const VentasProvider = ({ children }) => {
   const initialDialogs={main:!0,nota:!1,buscarProducto:!1,cambiarPrecio:!1,buscarCliente:!1,registrarCliente:!1,finalizarVenta:!1,imprimirNotaPedido:!1,imprimirTicket:!1,imprimirFactura:!1,imprimirPresupuesto:!1,ayuda:!1,cambioCliente:!1,abrirCaja:!1,imagen:!1};
   const [dialogs, setDialogs] = useState(initialDialogs);
   const [IDNotaPedido,setIDNotaPedido] = useState("");
-  const [indexFactura, setIndexFactura] = useState(
-    storage ? storage.indexFactura : 0
-  );
+  const [indexFactura, setIndexFactura] = useState(storage ? storage.indexFactura : 0);
   const initialDatosFactura = {
     tipoCliente: "1",
     tipoFactura: "0",
@@ -124,13 +122,13 @@ const VentasProvider = ({ children }) => {
     var LASTNROFACTURA;
     var DESCUENTO = df.descuento;
     var IDCAJAFACTURACION = df.datosFactura.id_caja;
-    if (df.datosFactura.tipoFactura === "0") {
+    
+    if (df.datosFactura.tipoFactura === "0" || df.datosFactura.tipoFactura==="3") {
       let nrorec = await APICALLER.get({ table: "empresa_recibos" });
       if (nrorec.response === "ok") {
         LASTNROFACTURA = nrorec.results[0].last_nro_recibo;
         let idr = nrorec.results[0].id_empresa_recibo;
-        APICALLER.update({table: "empresa_recibos",token: token_user,
-          id:idr, data: {last_nro_recibo: parseInt(LASTNROFACTURA) + 1} });
+        APICALLER.update({table: "empresa_recibos",token: token_user,id:idr, data: {last_nro_recibo: parseInt(LASTNROFACTURA) + 1} });
       }
     } else {
       let nrofac = await APICALLER.get({ table: "empresa_facturas",where: `id_caja_empresa,=,${IDCAJAFACTURACION}`});
@@ -145,8 +143,15 @@ const VentasProvider = ({ children }) => {
       }
     }
     
-    let efectivo=0,sinEfectivo=0, observaciones = ""; let cambio = 0;
-    let detallesMov = df.datosFactura.tipoFactura === "0" ? `Venta recibo nro: ${LASTNROFACTURA}. `  : `Venta contado factura: ${LASTNROFACTURA}. `;
+    let efectivo=0,sinEfectivo=0,cambio = 0, observaciones = ""; 
+    let objDetalles = {
+      "0": `Venta recibo: ${LASTNROFACTURA}. `,
+      "1": `Venta contado factura: ${LASTNROFACTURA}. `,
+      "2": `Venta credito factura: ${LASTNROFACTURA}. `,
+      "3": `Venta a cuota recibo: ${LASTNROFACTURA}. `
+    }
+    let detallesMov = objDetalles[df.datosFactura.tipoFactura];
+    
     df.datosFactura.formasPago.forEach(e=>{
       if(e.id_forma_pago==="1") {
         efectivo += e.cantidad
@@ -163,53 +168,61 @@ const VentasProvider = ({ children }) => {
     
     //console.log(efectivo,sinEfectivo,observaciones,detallesMov)
     // INGRESAMOS AL REGISTRO DE CAJA SI ES CONTADO, SI ES CREDITO IGNORAMOS PQ NO HAY MOVIMIENTO EN CAJA
-    if (df.datosFactura.tipoFactura === "1" || df.datosFactura.tipoFactura === "0") {
+    
+    let tipoFactura = parseInt(df.datosFactura.tipoFactura)
+    if (tipoFactura<2 || tipoFactura===3 ) {
       //let cajasMov = 
-      let promesas=[APICALLER.insert({
-        table: "cajas_movimientos",
-        token: token_user,
-        data: {
-          id_user_movimiento: id_user,
-          id_caja_movimiento: df.datosFactura.id_caja,
-          id_tipo_registro: 1, // 1 VENTA CONTADO REVISAR TABLA
-          monto_movimiento: efectivo, // forma de pago efectivo  es 1
-          monto_sin_efectivo: sinEfectivo,
-          detalles_movimiento:detallesMov,
-          fecha_movimiento: Funciones.getFechaHorarioString(),
-        },
-      })];
-      if(DESCUENTO>0){
-        promesas.push(APICALLER.insert({table: "cajas_movimientos",
-        token: token_user,
-        data: {
-          id_user_movimiento: id_user,
-          id_caja_movimiento: df.datosFactura.id_caja,
-          id_tipo_registro: 17, // 1 DESCUENTO
-          monto_movimiento: DESCUENTO, // forma de pago efectivo  es 1
-          monto_sin_efectivo: 0,
-          detalles_movimiento:`Descuento de venta de ${DESCUENTO}`,
-          fecha_movimiento: Funciones.getFechaHorarioString(),
-        }}))
-      }
-      Promise.all(promesas)
-      //if(cajasMov.response!=="ok") {console.log(cajasMov)}
-      // SI ES EN EFECTIVO
-      if (df.datosFactura.id_formaPago === "1") {
-        let call_monto = await APICALLER.get({
-          table: `cajas`,
-          fields: `monto_caja`,
-          where: `id_caja,=,${df.datosFactura.id_caja}`,
-        });
-        let nuevo_monto = (efectivo + parseFloat(call_monto.results[0].monto_caja)) - DESCUENTO;
-        APICALLER.update({
-          table: `cajas`,
+      let totalPagado = parseFloat(df.datosFactura.totalAbonado);
+      if(totalPagado>0){
+        let promesas=[APICALLER.insert({
+          table: "cajas_movimientos",
           token: token_user,
-          data: { monto_caja: nuevo_monto , ult_mov_caja: Funciones.getFechaHorarioString() },
-          id: df.datosFactura.id_caja,
-        });
+          data: {
+            id_user_movimiento: id_user,
+            id_caja_movimiento: df.datosFactura.id_caja,
+            id_tipo_registro: 1, // 1 VENTA CONTADO REVISAR TABLA
+            monto_movimiento: efectivo, // forma de pago efectivo  es 1
+            monto_sin_efectivo: sinEfectivo,
+            detalles_movimiento:detallesMov,
+            fecha_movimiento: Funciones.getFechaHorarioString(),
+          },
+        })];
+        if(DESCUENTO>0){
+          promesas.push(APICALLER.insert({table: "cajas_movimientos",
+          token: token_user,
+          data: {
+            id_user_movimiento: id_user,
+            id_caja_movimiento: df.datosFactura.id_caja,
+            id_tipo_registro: 17, // 17 DESCUENTO
+            monto_movimiento: DESCUENTO, // forma de pago efectivo  es 1
+            monto_sin_efectivo: 0,
+            detalles_movimiento:`Descuento de venta de ${DESCUENTO}`,
+            fecha_movimiento: Funciones.getFechaHorarioString(),
+          }}))
+        }
+        Promise.all(promesas)
+        //if(cajasMov.response!=="ok") {console.log(cajasMov)}
+        // SI ES EN EFECTIVO
+        if (df.datosFactura.id_formaPago === "1") {
+          let call_monto = await APICALLER.get({
+            table: `cajas`,
+            fields: `monto_caja`,
+            where: `id_caja,=,${df.datosFactura.id_caja}`,
+          });
+          let nuevo_monto = (efectivo + parseFloat(call_monto.results[0].monto_caja)) - DESCUENTO;
+          APICALLER.update({
+            table: `cajas`,
+            token: token_user,
+            data: { monto_caja: nuevo_monto , ult_mov_caja: Funciones.getFechaHorarioString() },
+            id: df.datosFactura.id_caja,
+          });
+        }
       }
       
     }
+
+
+
     //ingresamos a la factura
     let obj = {
       id_cliente_factura: df.datosCliente.id_cliente,
@@ -237,8 +250,10 @@ const VentasProvider = ({ children }) => {
 
     if (resInsert.response === "ok") {
       let ID_FACTURA = resInsert.last_id;
+      let insertsPromises = [];
       df.itemsFactura.forEach(async (e) => {
-        APICALLER.insert({
+        
+        insertsPromises.push(APICALLER.insert({
           table: "facturas_items",token: token_user,
           data: {
             id_items_factura: ID_FACTURA,
@@ -249,18 +264,18 @@ const VentasProvider = ({ children }) => {
             porcentaje_comision_factura: e.porcentaje_comision,
             entregado_item: e.tipo_producto === "2" ? "2" : df.datosFactura.entregado_items,
           },
-        });
+        }));
+
         if(df.datosFactura.entregado_items==='1'){
-          
           if(e.tipo_producto === 1){
             let ncantidad = parseFloat(e.stock_producto) - parseFloat(e.cantidad_producto);
-            //console.log(ncantidad);
-            APICALLER.update({table:'productos_depositos',data:{stock_producto_deposito:ncantidad},id:e.id_productos_deposito,token:token_user});
-            
+            insertsPromises.push(APICALLER.update({table:'productos_depositos',data:{stock_producto_deposito:ncantidad},id:e.id_productos_deposito,token:token_user}));
           }
         }
         //item.response !== "ok" && console.log(item);
       });
+      // insertando con promisses
+      Promise.all(insertsPromises)
     } else {
       console.log(resInsert);
     }
@@ -268,7 +283,8 @@ const VentasProvider = ({ children }) => {
     fa.facturas[indexFactura].datosFactura.nro_factura =  parseInt(LASTNROFACTURA);
     setearFactura(fa);
     setCargas({ ...cargas, finalizarVenta: false});
-    if (df.datosFactura.tipoFactura === "0") {
+   
+    if ( tipoFactura === 0 || tipoFactura===3) {
       setDialogs({ ...dialogs, imprimirTicket: true, finalizarVenta:false });
     } else {
       setDialogs({ ...dialogs,imprimirFactura: true, finalizarVenta:false});

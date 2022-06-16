@@ -1,11 +1,11 @@
 import { Button, Icon, IconButton, InputAdornment, TextField } from "@mui/material";
-import Tablas from "../../Componentes/Tablas";
+import Tablas from "../../Components/UI/Tablas";
 import { useCuentas } from "./CuentasProvider";
-import {Funciones} from '../../Funciones/Funciones'
-import {useDatosEmpresa} from '../../Contextos/DatosEmpresaProvider'
+import {funciones} from '../../Functions'
+import {useDatosEmpresa} from '../../Contexts/DatosEmpresaProvider'
 const CuentasCobrarLista = () => {
   const {MONEDA_PRINCIPAL} = useDatosEmpresa()
-  const {cargando,listaCobrar,setformCobrar,setDialogs,dialogs,listaCajas,setIdCaja,totalCobrar} = useCuentas();
+  const {cargando,listaCobrar,setformCobrar,setDialogs,dialogs,listaCajas,setIdCaja,totalCobrar,lang} = useCuentas();
 
   const columnas = [
     {
@@ -33,11 +33,30 @@ const CuentasCobrarLista = () => {
       isNumber: true,
       style: { fontWeight: "bold" },
     },
+
     {
       field: "estado_factura",
-      title: "Estado",
-      items: { 1: "Pagado", 2: "Pendiente de cobro" },
-      comparaItem: "estado_factura",
+      title: lang.estado,
+      compareField:"estado_factura",
+      items: {
+        "1": lang.pagado,
+        "2": lang.pendiente+'...',
+      },
+      styleFieldCondition: "estado_factura",
+      styleCondition: {
+        "2": {
+          backgroundColor: "#ff7c6b",
+          padding: "6px",fontWeight:"bold",
+          borderRadius: "5px",
+          color: "#780c00",
+        },
+        "1": {
+          backgroundColor: "#2dec76",
+          padding: "6px", fontWeight:"bold",
+          borderRadius: "5px",
+          color: "#007b02",
+        },
+      },
     },
   ];
 
@@ -47,10 +66,10 @@ const CuentasCobrarLista = () => {
     setformCobrar(form);
     setDialogs({ ...dialogs, cobrar: true });
   };
-  const Acciones = ({ filaProps }) => (
+  const Acciones = ({ rowProps }) => (
     <Button
       variant="outlined"
-      onClick={() => open(filaProps)}
+      onClick={() => open(rowProps)}
       startIcon={<Icon color="primary">paid</Icon>}
     >
       Cobrar
@@ -75,20 +94,21 @@ const CuentasCobrarLista = () => {
     </>
   );
 
-  const totalTxt = "Total a cobrar: "+Funciones.numberSeparator(totalCobrar)+" "+ MONEDA_PRINCIPAL.abreviatura_moneda;
+  const totalTxt = "Total a cobrar: "+funciones.numberSeparator(totalCobrar)+" "+ MONEDA_PRINCIPAL.abreviatura_moneda;
 
   return (
       <>
     <Tablas
-      nombretabla="Cuentas a cobrar"
+      lang={lang}
+      icon={{ name:"payments" }}
+      title={lang.cuentas_a_cobrar}
       caption={totalTxt}
-      subtitle="Lista de ventas/facturas a cobrar"
-      namecolumnID="id_factura"
-      Acciones={Acciones}
-      cargando={cargando}
-      columnas={columnas}
-      filas={listaCobrar}
-      search={search}
+      subtitle={lang.listas_cuentas_cobrar}
+      Accions={Acciones}
+      loading={cargando}
+      columns={columnas}
+      datas={listaCobrar}
+      inputs={search}
       showOptions
     />
 

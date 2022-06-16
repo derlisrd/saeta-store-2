@@ -39,6 +39,7 @@ import Movimientos from "./Caja/Movimientos";
 import RegistroMovimientos from "./Caja/RegistroMovimientos";
 import Entregas from "./Ventas/Entregas";
 import Transferencias from "./Productos/Transferencias";
+import Cuentas from "./Cuentas";
 
 /* 
 import Agenda from "./Agenda";
@@ -111,6 +112,7 @@ const RoutesMain = () => {
   const R = env.BASEURL +'/';
   return (
     <Routes>
+      <Route path={R+"cuentas"} element={<PrivateRoute id={47}><Cuentas /></PrivateRoute>} />
       <Route path={R+"transferencias"} element={<PrivateRoute id={60}><Transferencias /></PrivateRoute>} />
       <Route path={R+"entregas"} element={<PrivateRoute id={16}><Entregas /></PrivateRoute>} />
       <Route path={R+"registromovimientos"} element={<PrivateRoute id={26}><RegistroMovimientos /></PrivateRoute>} />
