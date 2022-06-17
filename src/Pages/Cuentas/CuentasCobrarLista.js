@@ -3,10 +3,11 @@ import Tablas from "../../Components/UI/Tablas";
 import { useCuentas } from "./CuentasProvider";
 import {funciones} from '../../Functions'
 import {useDatosEmpresa} from '../../Contexts/DatosEmpresaProvider'
+import { useState } from "react";
 const CuentasCobrarLista = () => {
   const {MONEDA_PRINCIPAL} = useDatosEmpresa()
-  const {cargando,setformCobrar,setDialogs,dialogs,lang,listas} = useCuentas();
-
+  const {cargando,setformCobrar,setDialogs,dialogs,lang,listas,getbuscarCobrar} = useCuentas();
+  const [inputbuscar,setInputBuscar] = useState("")
   const columnas = [
     {
       field: "nro_factura",
@@ -15,17 +16,8 @@ const CuentasCobrarLista = () => {
       style: { fontWeight: "bold" },
     },
     {
-      field: "nombre_caja",
-      title: "Caja",
-    },
-    {
       field: "nombre_cliente",
       title: "Cliente",
-    },
-    {
-      field: "fecha_cobro_factura",
-      title: "Fecha de cobro",
-      style: { fontWeight: "bold" },
     },
     {
       field: "tipo_factura",
@@ -92,11 +84,11 @@ const CuentasCobrarLista = () => {
 
   const search = (
     <>
-      <TextField label="Buscar por cliente" 
+      <TextField label={lang.buscar} value={inputbuscar} onChange={e=>setInputBuscar(e.target.value)}  
         InputProps={{
             endAdornment:(
             <InputAdornment position="end" >
-                <IconButton onClick={()=>{console.log("buscar")}}>
+                <IconButton onClick={()=>{ getbuscarCobrar(inputbuscar) }}>
                     <Icon>search</Icon>
                 </IconButton>
             </InputAdornment> )
@@ -107,7 +99,7 @@ const CuentasCobrarLista = () => {
   );
 
   const totalTxt = "Total a cobrar: "+funciones.numberSeparator(listas.totalCobrar)+" "+ MONEDA_PRINCIPAL.abreviatura_moneda;
-
+  const listaFiltrada = listas.cobrar.filter(item => item.nombre_cliente.toLowerCase().includes(inputbuscar.toLowerCase()));
   return (
       <>
     <Tablas
@@ -119,7 +111,7 @@ const CuentasCobrarLista = () => {
       Accions={Acciones}
       loading={cargando.lista}
       columns={columnas}
-      datas={listas.cobrar}
+      datas={listaFiltrada}
       inputs={search}
       showOptions
     />

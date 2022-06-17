@@ -174,7 +174,7 @@ const TemaProvider = ({children})=>{
                 "&.Mui-selected":{
                   backgroundColor: tema.mode==="light"? colores[tema.colors].primary.light : colores[tema.colors].primary.main,
                   "& span":{
-                    fontWeight:"bold",
+                    /* fontWeight:"bold", */
                     color:tema.mode==="light"? colores[tema.colors].primary.main : colorText
                   }
                 },
@@ -182,7 +182,7 @@ const TemaProvider = ({children})=>{
                   backgroundColor:colores[tema.colors].primary.light,
                   "& span":{
                     color:tema.mode==="light"? colores[tema.colors].primary.main : colorText,
-                    fontWeight:"bold",
+                    /* fontWeight:"bold", */
                   }
                 },
             },

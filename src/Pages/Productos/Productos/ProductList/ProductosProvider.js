@@ -88,7 +88,8 @@ const ProductosProvider = ({ children }) => {
       include: "categorias,unidad_medidas",
       on:"id_categoria_producto,id_categoria,id_unidad_medida_producto,id_unidad_medida",
       fields:"id_producto,nombre_producto,nombre_categoria,codigo_producto,precio_producto,costo_producto,preciom_producto,descripcion_medida,tipo_producto",
-      filtersField:"nombre_producto,codigo_producto",filtersSearch:`${inputSearch}`,
+      filtersField:"nombre_producto,codigo_producto",
+      filtersSearch:`${inputSearch}`,
       pagenumber: "0",
       pagesize: limite,
       sort:"-nombre_producto"

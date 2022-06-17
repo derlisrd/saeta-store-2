@@ -1,11 +1,6 @@
-import {
-  useState,
-  useEffect,
-  useContext,
-  createContext,
-  useCallback,
-} from "react";
+import {useState,useEffect,useContext,createContext,useCallback} from "react";
 import swal from "sweetalert";
+//import { useLocation } from "react-router-dom";
 import { APICALLER } from "../../Services/api";
 import { useLogin } from "../../Contexts/LoginProvider";
 import { funciones } from "../../Functions";
@@ -17,10 +12,7 @@ const CuentasProvider = ({ children }) => {
   const {userData} = useLogin();
   const { id_user, token_user } = userData
   const [formasDePago, setFormasDePago] = useState([]);
-  const [error,setError] = useState({
-    error:false,
-    errorMsj:"",
-  })
+  const [error,setError] = useState({error:false,errorMsj:""})
   const [cargando, setCargando] = useState({lista:true,mov:false})
   const [listas,setListas] = useState({
     pagar:[],
@@ -32,19 +24,17 @@ const CuentasProvider = ({ children }) => {
   })
 
   const [dialogs, setDialogs] = useState({pagar: false,cobrar: false});
-
   const fecha_actual = funciones.getFechaHorarioString();
-  
   const [formPagar, setformPagar] = useState({id_compra:"",total_factura_compra:"",nro_factura_compra:""});
   const [formCobrar, setformCobrar] = useState({tipo_factura:"",monto_total_factura:0,recibido_factura:"",id_factura:"",nro_factura:"",nombre_caja:"",id_caja_factura:"",id_factura_cliente:"",nombre_cliente:""});
-  
-
+  /* const location = useLocation();
+  const q = location.search ? new URLSearchParams(location.search) : 0;
+  const [pageC, setPageC] = useState(q && q.get("pc") && !isNaN(q.get("pc")) ? parseInt(q.get("pc")) : 0);
+  const [limite, setLimite] = useState(30); */
 
   const cobrarCuenta = async(datos)=>{
-    setCargando({lista:false,mov:true});
-    
+    setCargando({lista:false,mov:true});    
     //console.log(formCobrar,datos)
-    
     let idcaja = formCobrar.id_caja_factura;
     let getcaja = await APICALLER.get({table:"cajas",where:`id_caja,=,${idcaja}`})
     if(getcaja.response==="ok" && getcaja.found>0){
@@ -82,15 +72,12 @@ const CuentasProvider = ({ children }) => {
       swal({text:lang.cobrado_correctamente,icon:'success',timer:1800});
       setDialogs({pagar: false,cobrar: false });
       getLista()
-
     }
     else{
       console.log(getcaja)
       setDialogs({pagar: false,cobrar: false });
       return false;
-      
     }
-    
   }
 
 
@@ -98,14 +85,10 @@ const CuentasProvider = ({ children }) => {
 
 
   const pagarCuenta = async (f) => {
-
     setCargando({lista:false,mov:true});
     let idcaja = f.id_caja;
     let getcaja = await APICALLER.get({table:"cajas",where:`id_caja,=,${idcaja},and,estado_caja,=,'open'`});
-
-    
     if(getcaja.response==="ok" && getcaja.found>0){
-      
       let montopagado = parseFloat(formPagar.total_factura_compra);
       let montoactualencaja = parseFloat(getcaja.results[0].monto_caja);
       let montodescontado = montoactualencaja - montoactualencaja;
@@ -146,7 +129,24 @@ const CuentasProvider = ({ children }) => {
 
 
 
-
+  const getbuscarCobrar = async(f)=>{
+    setCargando({lista:true,mov:false});
+    let res = await APICALLER.get({
+      table: "facturas",include:"clientes,cajas",on: "id_cliente,id_cliente_factura,id_caja,id_caja_factura",where: "tipo_factura,>,1,and,estado_factura,=,2",
+      filtersField:"nombre_cliente,ruc_cliente",
+      filtersSearch:`${f}`,
+      })
+    if(res.response==="ok"){
+      let totalaCobrar=0, totalrecibido = 0, montototal = 0;
+      res.results.forEach(e => {
+        totalrecibido += parseFloat(e.recibido_factura)
+        montototal +=parseFloat(e.monto_total_factura)
+      });
+      totalaCobrar = montototal - totalrecibido;
+      setListas({...listas,cobrar:res.results,totalCobrar:totalaCobrar})
+    }
+    setCargando({lista:false,mov:false});
+  }
 
   const getLista = useCallback(async () => {
 
@@ -193,7 +193,7 @@ const CuentasProvider = ({ children }) => {
   return (
     <Contexto.Provider
       value={{
-        lang,cargando,listas,error,
+        lang,cargando,listas,error,getbuscarCobrar,
         dialogs,
         setDialogs,
         formPagar,
@@ -211,7 +211,7 @@ const CuentasProvider = ({ children }) => {
 
 export const useCuentas = () => {
   const {
-    lang,cargando,listas,error,
+    lang,cargando,listas,error,getbuscarCobrar,
     dialogs,
     setDialogs,
     formPagar,
@@ -222,7 +222,7 @@ export const useCuentas = () => {
     formCobrar, setformCobrar,cobrarCuenta,funciones
   } = useContext(Contexto);
   return {
-    lang,cargando,listas, error,
+    lang,cargando,listas, error,getbuscarCobrar,
         dialogs,
         setDialogs,
         formPagar,
