@@ -295,7 +295,8 @@ export const translate = {
         monto_a_cobrar:"Monto a cobrar",
         pagado_correctamente:"Pagado correctamente",
         cobrado_correctamente:"Cobrado correctamente",
-        seleccione_vendedor:"Seleccione vendedor"
+        seleccione_vendedor:"Seleccione vendedor",
+        recibo_nro:"Recibo nro"
     },
 
     en:{

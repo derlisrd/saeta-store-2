@@ -4,6 +4,7 @@ import CuentasCobrarLista from './CuentasCobrarLista'
 import CuentasCobrarDialog from './CuentasCobrarDialog'
 import CuentasPagarDialog from './CuentasPagarDialog'
 import CuentasPagarLista from './CuentasPagarLista'
+import DetallesDialog from './DetallesDialog'
 
 //import { useLocation } from "react-router-dom";
 
@@ -35,6 +36,7 @@ const CuentasMain = () => {
       </Tabs>
       
       <TabPanel value={tabValue} index={0}>
+          <DetallesDialog />
           <CuentasCobrarLista />
           <CuentasCobrarDialog />
       </TabPanel>

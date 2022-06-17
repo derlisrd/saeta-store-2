@@ -67,11 +67,14 @@ const CuentasCobrarLista = () => {
     setformCobrar(form);
     setDialogs({ ...dialogs, cobrar: true }); 
   };
-
+  const detalles = (f)=>{
+    setformCobrar(f);
+    setDialogs({ ...dialogs, detalles: true }); 
+  }
 
   const Acciones = ({ rowProps }) => (
     <Stack spacing={2} direction="row">
-      <Button onClick={() => console.log(rowProps)} variant="outlined">
+      <Button onClick={() => detalles(rowProps)} variant="outlined">
         {lang.detalles}
       </Button>
       <Button onClick={() => open(rowProps)} variant="outlined">

@@ -23,10 +23,10 @@ const CuentasProvider = ({ children }) => {
     totalPagar:0
   })
 
-  const [dialogs, setDialogs] = useState({pagar: false,cobrar: false});
+  const [dialogs, setDialogs] = useState({pagar: false,cobrar: false,detalles:false});
   const fecha_actual = funciones.getFechaHorarioString();
   const [formPagar, setformPagar] = useState({id_compra:"",total_factura_compra:"",nro_factura_compra:""});
-  const [formCobrar, setformCobrar] = useState({tipo_factura:"",monto_total_factura:0,recibido_factura:"",id_factura:"",nro_factura:"",nombre_caja:"",id_caja_factura:"",id_factura_cliente:"",nombre_cliente:""});
+  const [formCobrar, setformCobrar] = useState({tipo_factura:"",monto_total_factura:0,recibido_factura:"",id_moneda_caja:"",id_factura:"",nro_factura:"",nombre_caja:"",id_caja_factura:"",id_factura_cliente:"",nombre_cliente:""});
   /* const location = useLocation();
   const q = location.search ? new URLSearchParams(location.search) : 0;
   const [pageC, setPageC] = useState(q && q.get("pc") && !isNaN(q.get("pc")) ? parseInt(q.get("pc")) : 0);
@@ -70,12 +70,12 @@ const CuentasProvider = ({ children }) => {
       
       setCargando({lista:false,mov:false});
       swal({text:lang.cobrado_correctamente,icon:'success',timer:1800});
-      setDialogs({pagar: false,cobrar: false });
+      setDialogs({pagar: false,cobrar: false,detalles:false });
       getLista()
     }
     else{
       console.log(getcaja)
-      setDialogs({pagar: false,cobrar: false });
+      setDialogs({pagar: false,cobrar: false,detalles:false });
       return false;
     }
   }
@@ -121,7 +121,7 @@ const CuentasProvider = ({ children }) => {
         ])
         setCargando({lista:false,mov:false});
         swal({title:lang.pagado_correctamente,icon:'success',timer:1800});
-        setDialogs({pagar: false,cobrar: false });
+        setDialogs({pagar: false,cobrar: false,detalles:false });
         getLista();
     }
 
