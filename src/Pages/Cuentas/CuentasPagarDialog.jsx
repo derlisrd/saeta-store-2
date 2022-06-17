@@ -4,43 +4,23 @@ import { useCuentas } from "./CuentasProvider";
 import {useState} from 'react';
 
 const CuentasPagarDialog = () => {
-  const {
-    dialogs,
-    setDialogs,
-    listaCajas,
-    formPagar,
-    formasDePago,
-    idCaja,
-    setIdCaja,
-    idFormasPago,
-    setIdFormasPago,
-    obs,
-    setObs,
-    pagarCuenta, cargandoMov,lang
-  } = useCuentas();
+  const {dialogs,setDialogs,formPagar,pagarCuenta, cargando,lang,listas,error} = useCuentas();
 
 
-  const [error,setError] = useState({
-      error:false,
-      errorMsj:"",
+  const [form,setForm] = useState({
+    id_caja:"",
+    obs:""
   })
-  const cerrar = () => {
-    setDialogs({ ...dialogs, pagar: false });
-  };
+  const change = e=>{
+    const {value,name} = e.target
+    setForm({...form,[name]:value})
+  }
+
+  const cerrar = () => {setDialogs({ ...dialogs, pagar: false });};
 
   const pagar = async (e) => {
-    e.preventDefault();
-    let indexCaja = listaCajas.findIndex((e) => e.id_caja === idCaja);
-    let montoCaja = parseFloat(listaCajas[indexCaja].monto_caja) ;
-    let montoPagar = parseFloat(formPagar.total_factura_compra);
-    if(montoCaja< montoPagar && idFormasPago==="1"){
-        setError({error:true,errorMsj: "No hay suficiente dinero en la caja para pagar esta cuenta"})
-        return false;
-    }
-    else{
-        setError({error:false,errorMsj: ""})
-        pagarCuenta();
-    }
+    e.preventDefault();    
+    pagarCuenta(form)
   };
 
   return (
@@ -52,32 +32,29 @@ const CuentasPagarDialog = () => {
     >
       <form onSubmit={pagar}>
         <DialogTitle>{lang.cuenta_a_pagar} </DialogTitle>
-        <DialogContent>
+        <DialogContent dividers>
           <Grid container spacing={2}>
           <Grid item xs={12}>
-              { cargandoMov && <LinearProgress /> }
+              { cargando.mov && <LinearProgress /> }
               {
                   error.error && <Alert severity="error">{error.errorMsj}</Alert>
               }
           </Grid>
             <Grid item xs={12}>
               <FormControl fullWidth>
-                <InputLabel variant="outlined">Seleccione la caja</InputLabel>
+                <InputLabel >{lang.seleccione_caja}</InputLabel>
                 <Select
-                  name="id_caja_movimiento"
-                  variant="outlined"
-                  value={idCaja}
-                  onChange={(e) => {
-                    setIdCaja(e.target.value);
-                  }}
+                  name="id_caja"
+                  value={form.id_caja}
+                  onChange={change}
                   required
                 >
                   {
                     <MenuItem disabled value="">
-                      Seleccione una caja
+                      {lang.seleccione_caja}
                     </MenuItem>
                   }
-                  {listaCajas.map((d, index) => (
+                  {listas.cajas.map((d, index) => (
                     <MenuItem key={index} value={d.id_caja}>
                       {d.nombre_caja}
                     </MenuItem>
@@ -86,48 +63,27 @@ const CuentasPagarDialog = () => {
               </FormControl>
             </Grid>
             <Grid item xs={12}>
-              <FormControl fullWidth>
-                <InputLabel variant="outlined">Formas de pago</InputLabel>
-                <Select
-                    required
-                  name="id_formas_pago"
-                  variant="outlined"
-                  value={idFormasPago}
-                  onChange={(e) => {
-                    setIdFormasPago(e.target.value);
-                  }}
-                >
-                  {formasDePago.map((d, index) => (
-                    <MenuItem key={index} value={d.id_facturas_formas_pago}>
-                      {d.descripcion_forma_pago}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
-            </Grid>
-            <Grid item xs={12}>
               <TextField
-                label="Monto"
+                label={lang.monto}
                 fullWidth
                 value={formPagar.total_factura_compra}
                 disabled
-                InputProps={{
-                    inputComponent: NumberFormatCustom,               
-                  }}
+                InputProps={{inputComponent: NumberFormatCustom}}
               />
             </Grid>
             <Grid item xs={12}>
               <TextField
-                label="Observaciones y referencias"
+                label={lang.observaciones}
                 fullWidth
-                value={obs}
-                onChange={(e) => setObs(e.target.value)}
+                name="obs" autoComplete="off"
+                value={form.obs}
+                onChange={change}
               />
             </Grid>
           </Grid>
         </DialogContent>
         <DialogActions>
-          <Button disabled={cargandoMov} variant="contained" size="large" type="submit">
+          <Button disabled={cargando.mov} variant="contained" size="large" type="submit">
             {lang.pagar}
           </Button>
           <Button variant="contained" size="large" onClick={cerrar}>

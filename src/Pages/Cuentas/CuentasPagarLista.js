@@ -1,5 +1,5 @@
 
-import { Button, Icon, Stack } from '@mui/material'
+import { Button, Stack } from '@mui/material'
 import Tablas from '../../Components/UI/Tablas'
 import { useCuentas } from './CuentasProvider'
 
@@ -40,16 +40,16 @@ const CuentasPagarLista = () => {
             styleFieldCondition: "estado_compra",
             styleCondition: {
               "1": {
-                backgroundColor: "#ff7c6b",
-                padding: "6px",fontWeight:"bold",
-                borderRadius: "5px",
-                color: "#780c00",
-              },
-              "2": {
                 backgroundColor: "#2dec76",
-                padding: "6px", fontWeight:"bold",
+                padding: "3px",fontWeight:"bold",
                 borderRadius: "5px",
                 color: "#007b02",
+              },
+              "2": {
+                backgroundColor: "#ff7c6b",
+                padding: "3px", fontWeight:"bold",
+                borderRadius: "5px",
+                color: "#780c00",
               },
             },
           },
@@ -60,15 +60,17 @@ const CuentasPagarLista = () => {
         setformPagar(form)
     }
 
-    const Acciones = ({rowProps})=>(
-      <Stack spacing={2}>
-      <Button onClick={() => console.log(rowProps)} startIcon={<Icon color="primary">paid</Icon>}>
+
+    const Acciones = ({ rowProps }) => (
+      <Stack spacing={2} direction="row">
+      <Button onClick={() => console.log(rowProps)} variant="outlined">
         {lang.detalles}
       </Button>
-    <Button variant="outlined" onClick={()=>{openPago(rowProps)}} 
-    startIcon={<Icon color="primary">paid</Icon>} >Pagar</Button>
-    </Stack>
-    )
+      <Button onClick={() => openPago(rowProps)} variant="outlined">
+        {lang.pagar}
+      </Button>
+      </Stack>
+    );
     
   return (
     <Tablas

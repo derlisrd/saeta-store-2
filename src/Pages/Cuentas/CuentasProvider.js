@@ -17,7 +17,10 @@ const CuentasProvider = ({ children }) => {
   const {userData} = useLogin();
   const { id_user, token_user } = userData
   const [formasDePago, setFormasDePago] = useState([]);
-  
+  const [error,setError] = useState({
+    error:false,
+    errorMsj:"",
+  })
   const [cargando, setCargando] = useState({lista:true,mov:false})
   const [listas,setListas] = useState({
     pagar:[],
@@ -83,58 +86,62 @@ const CuentasProvider = ({ children }) => {
     }
     else{
       console.log(getcaja)
+      setDialogs({pagar: false,cobrar: false });
       return false;
+      
     }
+    
   }
 
 
 
 
 
-  const pagarCuenta = async (F) => {
- /*    setCargando({lista:false,mov:true});
-    
-    let res = await APICALLER.update({
-      table: "compras",
-      token: token_user,
-      data: { estado_compra: 1 },
-      id: formPagar.id_compra,
-    });
-    res.response !== "ok" ?? console.log(res);
+  const pagarCuenta = async (f) => {
 
-    let indexCaja = listas.cajas.findIndex((e) => e.id_caja === F.idCaja);
-
-    let montoNuevo =
-      parseFloat(listas.cajas[indexCaja].monto_caja) -
-      parseFloat(formPagar.total_factura_compra);
-
-    let rescaja = await APICALLER.update({
-      data: { monto_caja: montoNuevo },
-      token: token_user,
-      id: F.idCaja,
-      table: "cajas",
-    });
-    rescaja.response !== "ok" ?? console.log(rescaja);
+    setCargando({lista:false,mov:true});
+    let idcaja = f.id_caja;
+    let getcaja = await APICALLER.get({table:"cajas",where:`id_caja,=,${idcaja},and,estado_caja,=,'open'`});
 
     
-    let datosMov = {
-      id_caja_movimiento:F.idCaja,
-      id_user_movimiento:id_user,
-      id_tipo_registro:7,
-      monto_movimiento: idFormasPago==="1" ? formPagar.total_factura_compra : 0,
-      monto_sin_efectivo: idFormasPago!=="1" ? formPagar.total_factura_compra : 0,
-      detalles_movimiento: `Pago de compras a crédito factura nro: ${formPagar.nro_factura_compra}`,
-      fecha_movimiento: fecha_actual
+    if(getcaja.response==="ok" && getcaja.found>0){
+      
+      let montopagado = parseFloat(formPagar.total_factura_compra);
+      let montoactualencaja = parseFloat(getcaja.results[0].monto_caja);
+      let montodescontado = montoactualencaja - montoactualencaja;
+      if(montodescontado<0)
+      {
+        setCargando({lista:false,mov:false});
+        setError({error:true,errorMsj:"No hay suficiente fondos"})
+        return false;
+      }
+      setError({error:false,errorMsj:null})
+
+      let datosMov = {
+        id_caja_movimiento:idcaja,
+        id_user_movimiento:id_user,
+        id_tipo_registro:7,
+        monto_movimiento: montopagado,
+        monto_sin_efectivo: 0,
+        detalles_movimiento: `Pago de compras a crédito factura nro: ${formPagar.nro_factura_compra}`,
+        fecha_movimiento: fecha_actual
+      }
+      let datosCaja = {
+        ult_mov_caja: fecha_actual,
+        monto_caja:montodescontado,
+      }
+      
+        Promise.all([
+          APICALLER.update({table: "cajas",data: datosCaja,token: token_user,id: idcaja}),
+          APICALLER.update({table: "compras",data: { estado_compra: 1 },token: token_user,id: formPagar.id_compra}),
+          APICALLER.insert({table:'cajas_movimientos',token:token_user,data:datosMov})
+        ])
+        setCargando({lista:false,mov:false});
+        swal({title:lang.pagado_correctamente,icon:'success',timer:1800});
+        setDialogs({pagar: false,cobrar: false });
+        getLista();
     }
 
-    let mov = await APICALLER.insert({
-      table:'cajas_movimientos',token:token_user,data:datosMov,
-    })
-    mov.response!=="ok" ?? console.log(mov);
-    setCargando({lista:false,mov:false});
-    swal({title:'Se ha pagado correctamente',icon:'success',timer:1800});
-    setDialogs({pagar: false,cobrar: false });
-    getLista(); */
   }
 
 
@@ -145,7 +152,8 @@ const CuentasProvider = ({ children }) => {
 
     let res = await Promise.all([
       APICALLER.get({table: "facturas",include: "clientes,cajas",on: "id_cliente,id_cliente_factura,id_caja,id_caja_factura",where: "tipo_factura,>,1,and,estado_factura,=,2"}),
-      APICALLER.get({table: "compras",where: "tipo_factura_compra,=,2,and,estado_compra,=,2"}),APICALLER.get({table: "cajas", include:'cajas_users',on:'id_caja_caja,id_caja', where:`id_user_caja,=,${id_user},and,estado_caja,=,1`}),
+      APICALLER.get({table: "compras",where: "tipo_factura_compra,=,2,and,estado_compra,=,2"}),
+      APICALLER.get({table: "cajas", include:'cajas_users',on:'id_caja_caja,id_caja', where:`id_user_caja,=,${id_user},and,estado_caja,=,'open'`}),
       APICALLER.get({table: "facturas_formas_pagos"})
     ]);
     
@@ -185,7 +193,7 @@ const CuentasProvider = ({ children }) => {
   return (
     <Contexto.Provider
       value={{
-        lang,cargando,listas,
+        lang,cargando,listas,error,
         dialogs,
         setDialogs,
         formPagar,
@@ -203,7 +211,7 @@ const CuentasProvider = ({ children }) => {
 
 export const useCuentas = () => {
   const {
-    lang,cargando,listas,
+    lang,cargando,listas,error,
     dialogs,
     setDialogs,
     formPagar,
@@ -214,7 +222,7 @@ export const useCuentas = () => {
     formCobrar, setformCobrar,cobrarCuenta,funciones
   } = useContext(Contexto);
   return {
-    lang,cargando,listas,
+    lang,cargando,listas, error,
         dialogs,
         setDialogs,
         formPagar,

@@ -78,13 +78,13 @@ const CuentasCobrarLista = () => {
 
 
   const Acciones = ({ rowProps }) => (
-    <Stack spacing={2}>
-    <Button onClick={() => console.log(rowProps)} variant="outlined">
-      {lang.detalles}
-    </Button>
-    <Button onClick={() => open(rowProps)} variant="outlined">
-      {lang.cobrar}
-    </Button>
+    <Stack spacing={2} direction="row">
+      <Button onClick={() => console.log(rowProps)} variant="outlined">
+        {lang.detalles}
+      </Button>
+      <Button onClick={() => open(rowProps)} variant="outlined">
+        {lang.cobrar}
+      </Button>
     </Stack>
   );
 
