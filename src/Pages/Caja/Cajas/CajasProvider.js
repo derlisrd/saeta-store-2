@@ -105,7 +105,6 @@ const CajasProvider = ({ children }) => {
 
   const agregarCajaNueva = async (f) => {
     setCargas({ ...cargas, nuevo: true });
-
     let formulario = { ...f };
     delete formulario.id_user_caja;
     formulario.monto_caja = f.monto_inicial;
@@ -165,12 +164,10 @@ const CajasProvider = ({ children }) => {
             getLista(false);
           }
         });
-      }
-      
+      } 
     } else {
       console.log(res);
     }
-    
     setCargas({ ...cargas, nuevo: false });
   };
 
@@ -266,7 +263,7 @@ const CajasProvider = ({ children }) => {
      let filter = listaCajas.filter(e=> e.id_caja=== IDCAJA)
     let dataCaja = filter[0]; */
     let formCaja = {
-     estado_caja : "1",
+     estado_caja : "open",
      fecha_apertura: funciones.getFechaHorarioString(),
      ult_mov_caja: funciones.getFechaHorarioString(), 
      monto_inicial: f.monto_inicial,
