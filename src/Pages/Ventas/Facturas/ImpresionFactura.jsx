@@ -34,18 +34,19 @@ const ImpresionFactura = () => {
     }else if(iva_porcent === 0){
       EXENTAS += subtotal;
     }
-    TOTALIVA += TOTALIVA5 + TOTALIVA10;
+    
   });
+  TOTALIVA = TOTALIVA5 + TOTALIVA10;
+
 
   const imprimir = () => {
     printJS({
       type: "html",
       printable: "print_factura",
       style: ` .border1 {border:none} 
-      .maindiv{margin:20px auto; font-family:monospace;  max-width:198mm;display:flex;flex-direction:column;}
-      .maindiv td{ padding-left:5px;}
+      .maindiv{margin:0px auto; font-size:10px; font-family:monospace;max-width:198mm;display:flex;flex-direction:column;}
+      .maindiv td{ padding-left:10px;}
       .collapse{border-collapse:collapse; border-color:silver}
-      .fontsize11{font-size:10px}
       `,
     });
   };
@@ -60,7 +61,7 @@ const ImpresionFactura = () => {
       maxWidth="md"
       onClose={cerrar}
       TransitionComponent={Zoom}
-    ><DialogContent sx={{ margin:"25px auto" }}>
+    ><DialogContent sx={{ margin:"0px auto" }}>
       {cargandoFactura ? (
         <Stack sx={{ padding: "20px" }} alignItems="center"><CircularProgress /></Stack>
       ) : (
@@ -69,7 +70,7 @@ const ImpresionFactura = () => {
             display: "flex",
             justifyContent: "center",
             flexDirection:'column',
-            margin: "25px auto",
+            margin: "0px auto",
             fontFamily: "monospace",
           }}
           id="print_factura"
@@ -108,7 +109,7 @@ const ImpresionFactura = () => {
                 </td>
                 <td width="35%" align="left" valign="top" className="fontsize11" style={{ fontSize:"12px" }}>
                   <p>
-                    Condición de venta:{" "}
+                    Cond. de venta:{" "}
                     {DF.tipo_factura === "1" ? "Contado" : "Crédito"}
                   </p>
                   <p>RUC/CI: {DF?.ruc_cliente}</p>
@@ -117,7 +118,7 @@ const ImpresionFactura = () => {
             </tbody>
             </table>
           <br/>
-          <div style={{ minHeight:"600px"}}>
+          <div style={{ minHeight:"570px"}}>
             <table width="740px" style={{ borderCollapse: "collapse" }}className="collapse" border="1">
                     <thead>
                       <tr align="left">
@@ -193,23 +194,33 @@ const ImpresionFactura = () => {
                   <br/>
               <table width="740px" style={{ borderCollapse: "collapse" }}className="collapse" border="1">
                 <tbody>
-              <tr>
-                <td width="70%" colSpan="3">
-                  <b>
-                    TOTAL A PAGAR: {DF.abreviatura_moneda} {" "}
-                    {funciones.NumeroALetras(TOTAL, "")}
-                  </b>
-                </td>
-                <td width="30%" align="right">
-                  <b>{funciones.numberSeparator(TOTAL)}</b>
-                </td>
-              </tr>
+                <tr>
+                  <td width="70%" colSpan="3">
+                    <b>
+                      TOTAL A PAGAR: {DF.abreviatura_moneda} {" "}
+                      {funciones.NumeroALetras(TOTAL, "")}
+                    </b>
+                  </td>
+                  <td width="30%" align="right">
+                    <b>{funciones.numberSeparator(TOTAL)}</b>
+                  </td>
+                </tr>
               <tr>
                 <td>LIQUIDACION IVA</td>
                 <td>5%: {funciones.numberSeparator( parseInt(funciones.redondeo2decimales(TOTALIVA5)))}</td>
                 <td>10%: {funciones.numberSeparator( parseInt(funciones.redondeo2decimales(TOTALIVA10)))}</td>
                 <td align="right">
-                  TOTAL IVA:{funciones.redondeo2decimales(TOTALIVA)}
+                  TOTAL IVA:{funciones.numberSeparator(parseInt(funciones.redondeo2decimales(TOTALIVA)))}
+                </td>
+              </tr>
+              <tr>
+                <td colSpan="4">
+                  {DF.obs_empresa_factura}
+                </td>
+              </tr>
+              <tr>
+                <td colSpan="4">
+                  Fecha: {DF.fecha_empresa_factura}
                 </td>
               </tr>
             </tbody>

@@ -42,6 +42,8 @@ const FacturasProvider = ({ children }) => {
     tipo_factura: "",
     valor_moneda: "",
     descuento_factura:"",
+    fecha_empresa_factura:"",
+    obs_empresa_factura:""
   };
   const [formulario, setFormulario] = useState(initialFormulario);
 
@@ -76,6 +78,8 @@ const FacturasProvider = ({ children }) => {
         form.fin_timbrado= ef.fin_timbrado;
         form.inicio_timbrado= ef.inicio_timbrado;
         form.nro_datos_factura = ef.nro_datos_factura;
+        form.obs_empresa_factura = ef.obs_empresa_factura;
+        form.fecha_empresa_factura = ef.fecha_empresa_factura;
         setFormulario(form);
       }
       else{

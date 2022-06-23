@@ -57,7 +57,7 @@ const imprimir = () => {
     type: "html",
     printable: "print_factura",
     style: ` .border1 {border:none} 
-    .maindiv{margin:20px auto; font-family:monospace;max-width:198mm;display:flex;flex-direction:column;}
+    .maindiv{margin:20px auto; font-size:10px; font-family:monospace;max-width:198mm;display:flex;flex-direction:column;}
     .maindiv td{ padding-left:10px;}
     .collapse{border-collapse:collapse; border-color:silver}
     `,
@@ -112,7 +112,7 @@ const imprimir = () => {
               </td>
               <td width="35%" align="left" valign="top"style={{ fontSize:"10px" }}>
                 <p>
-                  Condición de venta:{" "}
+                  Cond. de venta:{" "}
                   {DF.datosFactura.tipoFactura === "1" ? "Contado" : "Crédito"}
                 </p>
                 <p>RUC/CI: {DF.datosCliente.ruc_cliente}</p>
@@ -213,6 +213,16 @@ const imprimir = () => {
               <td>10%: {Funciones.redondeo2decimales(TOTALIVA10)}</td>
               <td align="right">TOTAL IVA:{Funciones.redondeo2decimales(DF.total_iva)}</td>
             </tr>
+            <tr>
+                <td colSpan="4">
+                  {FACTURA?.obs_empresa_factura}
+                </td>
+              </tr>
+              <tr>
+                <td colSpan="4">
+                  Fecha: {FACTURA?.fecha_empresa_factura}
+                </td>
+              </tr>
           </tbody>
         </table>
       </div>
