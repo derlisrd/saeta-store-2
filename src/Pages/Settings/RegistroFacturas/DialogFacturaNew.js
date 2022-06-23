@@ -1,4 +1,4 @@
-import {Dialog,DialogContent,DialogTitle,DialogActions,Button,TextField,Select,MenuItem,FormControl,InputLabel, Grid, LinearProgress} from "@mui/material";
+import {Dialog,DialogContent,DialogTitle,DialogActions,Button,TextField,Select,MenuItem,FormControl,InputLabel, Grid, LinearProgress, FormControlLabel, FormLabel, Radio} from "@mui/material";
 import { useState } from "react";
 import { useRegistroFacturas } from "./RegistroFacturasProvider";
 
@@ -16,6 +16,9 @@ const DialogFacturaNew = () => {
     nro_inicio_factura: "",
     nro_fin_factura: "",
     last_nro_factura: "",
+    autoimpresor:"0",
+    fecha_empresa_factura:"",
+    obs_empresa_factura:""
   };
   const [formulario, setFormulario] = useState(inicial);
 
@@ -45,7 +48,7 @@ const DialogFacturaNew = () => {
           Recuerde que este formulario solo será válido cuando la SET le
             genere una factura
           </Grid>
-         <Grid item xs={12}>
+         <Grid item xs={12} sm={6}>
           <TextField
             fullWidth
             autoFocus
@@ -54,6 +57,17 @@ const DialogFacturaNew = () => {
             onChange={onChange}
             helperText="El timbrado debe estar correctamente"
             value={formulario.timbrado_factura}
+            required
+
+          />
+          </Grid>
+          <Grid item xs={12} sm={6}>
+          <TextField
+            fullWidth
+            helperText="Fecha de habilitacion" type="date"
+            name="fecha_empresa_factura"
+            onChange={onChange}
+            value={formulario.fecha_empresa_factura}
             required
 
           />
@@ -103,7 +117,8 @@ const DialogFacturaNew = () => {
             required
           />
           </Grid>
-          <Grid item xs={12} sm={4}>
+
+      <Grid item xs={12} sm={4}>
           <TextField
             fullWidth
             label="Nro de final de factura"
@@ -114,6 +129,28 @@ const DialogFacturaNew = () => {
             value={formulario.nro_fin_factura}
             required
           />
+          </Grid>
+          <Grid item xs={12}>
+          <FormLabel component="legend">Autoimpresor?:</FormLabel>
+          <FormControlLabel
+            value="0"
+            control={
+              <Radio name="autoimpresor" checked={formulario.autoimpresor === "0"}  onChange={onChange}   />
+            }
+            label="No"
+            labelPlacement="end"
+          />
+          <FormControlLabel
+            value="1"
+            control={
+              <Radio name="autoimpresor" checked={formulario.autoimpresor === "1"} onChange={onChange} />
+            }
+            label="Si"
+            labelPlacement="end"
+          />
+          </Grid>
+          <Grid item xs={12} >
+            <TextField fullWidth onChange={onChange} name="obs_empresa_factura" value={formulario.obs_empresa_factura} label="Observaciones importantes a declarar por la set" />
           </Grid>
           <Grid item xs={12} sm={6}>
           <FormControl fullWidth>
@@ -135,6 +172,7 @@ const DialogFacturaNew = () => {
             </Select>
           </FormControl>
           </Grid>
+          
           </Grid>
         </DialogContent>
         <DialogActions>

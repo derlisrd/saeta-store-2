@@ -13,8 +13,8 @@ const RegistroFacturasLista = () => {
         title:"ID",
     },
     {
-        field:"propietario_empresa",
-        title:"Propietario",
+        field:"fecha_empresa_factura",
+        title:"Fecha",
     },
     {
         field:"timbrado_factura",
