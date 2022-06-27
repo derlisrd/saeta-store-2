@@ -33,8 +33,9 @@ class Routes {
                     print JsonResponse::jsonResponseError("Error",200,"Method invalid");
                 break;
             }
-            
-
+        }
+        else{
+            print JsonResponse::jsonResponseError("Error",200,"Method invalid");
         }
 
     }

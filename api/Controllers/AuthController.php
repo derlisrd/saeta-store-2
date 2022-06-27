@@ -195,7 +195,37 @@ class AuthController {
     
     
 
+    public static function RevalidateToken($token,$json=true){
+   
 
+        try {
+            $decode = JWT::decode(
+                $token,
+                self::$secret_key,
+                self::$encrypt
+            );
+
+            if ($decode->aud !== self::Aud() || $decode->iss !== DOMAIN_AUTH) {
+                return false;
+                die();
+            } else {
+                if($json){
+                    $data = self::GetData($token);
+                    $response = self::GenerateToken($data);
+                    echo JsonResponse::jsonResponseGET($response,"ok",200,1); 
+                }
+                return true;
+            }
+
+        } catch (\Exception $e) {
+
+            echo JsonResponse::jsonResponseError("Error",200,$e->getMessage());
+            return false;
+            die();
+        }
+
+       
+    }
 
 
     public static function ValidateToken($token,$json=true){
@@ -231,7 +261,7 @@ class AuthController {
     public static function GenerateToken($data){
 
         $time = new DateTimeImmutable();
-        $expire = $time->modify('+1380 minutes')->getTimestamp();
+        $expire = $time->modify('+16 minutes')->getTimestamp();
         $serverName = DOMAIN_AUTH;
 
         $token = array(

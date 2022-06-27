@@ -87,6 +87,21 @@ export const APICALLER = {
     }
   },
 
+  ReValidateToken : async(token)=>{
+    try {
+      let tk = DescifrarTexto(token);
+      const res = await Axios({
+        url: `${APIURL}Auth/ReValidateToken`,
+        method: "POST",
+        data: JSON.stringify({ token: tk }),
+        headers: { "X-Api-Token": XAPITOKEN },
+      });
+      return await res.data;
+    } catch (error) {
+      const err = [{ results: `error`, response: `error`, message: error }];
+      return err;
+    }
+  },
   validateToken: async (token) => {
     try {
       let tk = DescifrarTexto(token);

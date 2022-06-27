@@ -1,10 +1,8 @@
 <?php
 
 namespace Controllers;
-
 use AuthController\AuthController;
 use JsonResponse\JsonResponse;
-
 use GetController\GetController;
 use PostController\PostController;
 use PutController\PutController;
@@ -81,6 +79,10 @@ class Controllers {
             else if($method && $method === "Register"){
                 AuthController::Register($data);
             }
+            else if($method && $method==="ReValidateToken" ){
+                $data = json_decode($data,true);
+                AuthController::ReValidateToken($data['token']);
+            }
             else if($method && $method==="ValidateToken" ){
                 $data = json_decode($data,true);
                 AuthController::ValidateToken($data['token']);
@@ -90,7 +92,6 @@ class Controllers {
             }
             else if($method && $method==="UpdatePassword" ){
                 AuthController::UpdatePassword($data);
-                
             }
             else{
                 echo JsonResponse::jsonResponseError("Error",200,"No method exits");

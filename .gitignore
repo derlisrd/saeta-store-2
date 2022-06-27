@@ -4,4 +4,5 @@
 /package-lock.json
 /tsconfig.json
 /build
+/api/Config/dbdata.json
 

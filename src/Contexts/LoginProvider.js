@@ -18,6 +18,7 @@ const LoginProvider = ({children}) => {
     })
     const initialUserData = { 
         login:false,
+        remember:false,
         token_user:null,
         id_user:null,
         nombre_user:null,
@@ -27,6 +28,18 @@ const LoginProvider = ({children}) => {
     }
     const [userData,setUserData] = useState( storage ? storage : initialUserData);    
     
+    setInterval(async()=>{
+        const store = JSON.parse(sessionStorage.getItem("userData")) || JSON.parse(localStorage.getItem("userData"));
+        if(userData.login && store){
+            let res = await APICALLER.ReValidateToken(userData.token_user);
+            if(res.response==='ok'){
+                let f = {...userData}
+                f.token_user = CifrarTexto(res.results);
+                setUserData(f);
+                sessionStorage.setItem("userData", JSON.stringify(f))
+            }
+        };
+    }, 900000)
     
     
     const setearLogin = (f,remember)=>{
@@ -34,8 +47,11 @@ const LoginProvider = ({children}) => {
         localStorage.removeItem("facturasStorage");  
         localStorage.removeItem("dataProductos");
         sessionStorage.setItem("userData", JSON.stringify(f))
-        if(remember) localStorage.setItem("userData", JSON.stringify(f))
+        if(remember){
+            localStorage.setItem("userData", JSON.stringify(f))
+        } 
     }
+
     const setearEmpresa = ({empresa=null,monedas=null,mode})=>
     {
         if(mode){
@@ -54,6 +70,7 @@ const LoginProvider = ({children}) => {
             nombre_user:null,
             rol_user:null,
             username_user:null,
+            remember:false,
             permisos:[],});
         setearEmpresa({mode:false })
         localStorage.removeItem("userData");
@@ -111,10 +128,13 @@ const LoginProvider = ({children}) => {
         }
         setLoading(false)
     },[userData,logOut])
+
     useEffect(() => {
         const ca = new AbortController(); let isActive = true;
         if (isActive) {
+
           verificar();
+         
         }
         return () => {
           isActive = false;

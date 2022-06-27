@@ -2,8 +2,8 @@
     "conexion": {
         "host": "localhost",
         "user": "root",
-        "pass": "pasdf",
-        "db": "dbname",
-        "apikey": "ke"
+        "pass": "",
+        "db": "saeta_derlis",
+        "apikey": "rtivcin5dlrl7x5h5pf4zqxrdxzlz43yp8ryrq47r98k"
     }
 }
