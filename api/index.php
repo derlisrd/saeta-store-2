@@ -11,7 +11,7 @@ require "./Controllers/PutController.php";
 require "./Controllers/PostController.php";
 require "./Controllers/DeleteController.php";
 require "./Controllers/AuthController.php";
-require "vendor/autoload.php";
+require "./vendor/autoload.php";
 require "./Models/Models.php";
 require "./Routes/Routes.php";
 require "./Routes/JsonResponse.php";
