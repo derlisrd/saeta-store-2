@@ -1,8 +1,12 @@
 /.gitignore
 /.env
+/api/vendor/*
+/api/.env
 /node_modules
 /package-lock.json
 /tsconfig.json
 /build
-/api/Config/dbdata.json
+
+/api/**/*.json
+
 
