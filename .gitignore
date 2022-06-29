@@ -6,7 +6,7 @@
 /package-lock.json
 /tsconfig.json
 /build
-
+/api-2
 /api/**/*.json
 
 

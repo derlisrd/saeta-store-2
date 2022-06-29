@@ -4,8 +4,11 @@ namespace AuthController;
 
 
 use DataBaseConnect\DataBaseConnect;
+use DateTime;
 use DateTimeImmutable;
+use DateTimeZone;
 use Firebase\JWT\JWT;
+use Firebase\JWT\Key;
 use JsonResponse\JsonResponse;
 use PDO;
 use PostController\PostController;
@@ -15,17 +18,18 @@ class AuthController {
 
 
     private static $secret_key = 'S9d1e5.xx';
-    private static $encrypt = ['HS256'];
+    private static $encrypt = 'HS256';
 
 
-
+    public static function datenow($format){
+        $date = new DateTime(date('Y-m-d H:i:s'), new DateTimeZone(TIME_ZONE));
+        return $date->format($format);
+    }
 
     public static function Login($data){
 
-
         $data = json_decode($data,true);
-        date_default_timezone_set(TIME_ZONE);
-        $last_login = date('Y-m-d H:i:s');
+        $last_login =  self::datenow('Y-m-d H:i:s');
         $intentos = 5; // el usuario al principio tiene 5 intentos
         $password = $data['password_user'];
         $userOrEmail = $data['username_user'];
@@ -229,14 +233,18 @@ class AuthController {
 
 
     public static function ValidateToken($token,$json=true){
+        
+
+        
 
         try {
-            $decode = JWT::decode(
+            /* $decode = JWT::decode(
                 $token,
-                self::$secret_key,
-                self::$encrypt
-            );
-
+                new Key(self::$secret_key,self::$encrypt)
+            ); */
+            $decode = JWT::decode($token, new Key(self::$secret_key, self::$encrypt));
+            print_r($decode);
+            return;
             if ($decode->aud !== self::Aud() || $decode->iss !== DOMAIN_AUTH) {
                 return false;
                 die();
@@ -272,8 +280,8 @@ class AuthController {
             'aud' => self::Aud(),
             'data' => $data
         );
-
-        return JWT::encode($token, self::$secret_key);
+        return JWT::encode($token, self::$secret_key, self::$encrypt);
+        //return JWT::encode($token, self::$secret_key);
 
     }
 

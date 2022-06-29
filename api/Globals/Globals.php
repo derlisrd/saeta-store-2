@@ -12,8 +12,8 @@ $phpself = substr($phpself,0,-9);
 $countphpSelf = strlen($phpself);
 
 
-$request =  substr( $_SERVER['REQUEST_URI'],$countphpSelf-1);
-
+//$request =  substr( $_SERVER['REQUEST_URI'],$countphpSelf-1);
+$request = $_SERVER['REQUEST_URI'];
 define("RAIZ",$request);
 
 define("UPLOADPATH",'Uploads');

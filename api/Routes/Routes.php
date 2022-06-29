@@ -7,7 +7,7 @@ use JsonResponse\JsonResponse;
 
 class Routes {
 
-    public static function index (){
+    public static function methods (){
         
         if(isset($_SERVER["REQUEST_METHOD"])){
 

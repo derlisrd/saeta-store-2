@@ -15,7 +15,10 @@ class Controllers {
         
         $tableURIArray = explode("/",RAIZ);
         
+        
         $tableArray = array_filter($tableURIArray); // convierte en array
+
+        
         if($tableArray){
             $table = $tableArray[1];
             $table = explode("?",$table);
@@ -67,7 +70,8 @@ class Controllers {
         $table = $tableArray[1];
         $data = file_get_contents("php://input");
 
-        
+
+      
 
         
 

@@ -18,9 +18,6 @@ require "./Routes/JsonResponse.php";
 
 use ApiRoutes\Routes;
 
-$routes = new Routes();
-$routes->index();
-
-
+Routes::methods();
 
 ?>
