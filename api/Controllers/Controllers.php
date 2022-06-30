@@ -71,8 +71,7 @@ class Controllers {
         $data = file_get_contents("php://input");
 
 
-      
-
+        
         
 
         if($table === "Auth"){
@@ -172,6 +171,7 @@ class Controllers {
             $id = isset($tableArray[2]) ? $tableArray[2] : null;
             $namecolumns = null; $ids = null;
         }
+        
         $idImage = isset($_GET['idImage']) ? $_GET['idImage'] : null;
 
         $TOKEN = isset($_GET['token']) || !empty($_GET['token']) ? $_GET['token'] : null; 

@@ -76,7 +76,7 @@ const CajasProvider = ({ children }) => {
   const [formAbrir, setFormAbrir] = useState(initialAbrir);
 
   const initialFormNew = {
-    id_moneda_caja: "",
+    id_moneda: [],
     id_user_caja: "",
     nombre_caja: "",
     monto_inicial: "0",

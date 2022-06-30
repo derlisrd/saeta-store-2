@@ -203,11 +203,7 @@ class AuthController {
    
 
         try {
-            $decode = JWT::decode(
-                $token,
-                self::$secret_key,
-                self::$encrypt
-            );
+            $decode = JWT::decode($token, new Key(self::$secret_key, self::$encrypt));
 
             if ($decode->aud !== self::Aud() || $decode->iss !== DOMAIN_AUTH) {
                 return false;
@@ -243,14 +239,15 @@ class AuthController {
                 new Key(self::$secret_key,self::$encrypt)
             ); */
             $decode = JWT::decode($token, new Key(self::$secret_key, self::$encrypt));
-            print_r($decode);
-            return;
+
             if ($decode->aud !== self::Aud() || $decode->iss !== DOMAIN_AUTH) {
                 return false;
                 die();
             } else {
+
                 if($json){
-                    $res = self::GetData($token);
+                    //$res = self::GetData($token);
+                    $res = [$decode->data];
                     echo JsonResponse::jsonResponseGET($res,"ok",200,1); 
                 }
                 return true;
@@ -288,11 +285,7 @@ class AuthController {
 
     public static function GetData($token)
     {
-        $decode = JWT::decode(
-            $token,
-            self::$secret_key,
-            self::$encrypt
-        )->data;
+        $decode = JWT::decode($token, new Key(self::$secret_key, self::$encrypt))->data;
         
         return [$decode];
     }

@@ -52,10 +52,10 @@ class Models {
             $stmt->execute();
             
             $idcolumn = "id_".substr($table,0,-1);
-            $stmt = DataBaseConnect::connect()->prepare("SELECT MAX($idcolumn) as last_id from $table");
+            $stmt = DataBaseConnect::connect()->prepare("SELECT * from $table order by $idcolumn desc limit 1");
             $stmt->execute();
             $last = $stmt->fetchAll(PDO::FETCH_ASSOC);
-            return JsonResponse::jsonResponsePOST("ok",200,"Inserted",$last[0]['last_id']);
+            return JsonResponse::jsonResponsePOST("ok",200,"Inserted",$last[0][$idcolumn],$last);
             DataBaseConnect::CloseConnect();
             
         } catch (\Throwable $th) {

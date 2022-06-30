@@ -45,14 +45,15 @@ class JsonResponse {
     return json_encode($json,http_response_code($status));
     }
 
-    public static function jsonResponsePOST ($response,$status,$message,$last_id){
+    public static function jsonResponsePOST ($response,$status,$message,$last_id,$results=[]){
         
         $json = array(
             "response" =>$response,            
             "status"=> $status,
             "message"=>$message,
             "error"=>false,
-            "last_id"=>$last_id
+            "last_id"=>$last_id,
+            "results"=>$results
         );
     
     return json_encode($json,http_response_code($status));
