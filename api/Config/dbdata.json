@@ -2,8 +2,8 @@
     "conexion": {
         "host": "localhost",
         "user": "root",
-        "pass": "join1234",
-        "db": "saeta",
+        "pass": "",
+        "db": "saeta_derlis",
         "apikey": ""
     }
 }

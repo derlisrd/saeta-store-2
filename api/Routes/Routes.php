@@ -37,8 +37,26 @@ class Routes {
         else{
             print JsonResponse::jsonResponseError("Error",200,"Method invalid");
         }
-
     }
+
+
+    public static function get(){
+        return $_SERVER["REQUEST_METHOD"] ?  Controllers::get() : null;
+    }
+
+    public static function post(){
+        return $_SERVER["REQUEST_METHOD"] ?  Controllers::get() : null;
+    }
+
+    public static function put(){
+        return $_SERVER["REQUEST_METHOD"] ?  Controllers::get() : null;
+    }
+
+    public static function delete(){
+        return $_SERVER["REQUEST_METHOD"] ?  Controllers::get() : null;
+    }
+
+
  
 
 }
