@@ -41,19 +41,19 @@ class Routes {
 
 
     public static function get(){
-        return $_SERVER["REQUEST_METHOD"] ?  Controllers::get() : null;
+        return $_SERVER["REQUEST_METHOD"]=="GET" ?  Controllers::get() : null;
     }
 
     public static function post(){
-        return $_SERVER["REQUEST_METHOD"] ?  Controllers::get() : null;
+        return $_SERVER["REQUEST_METHOD"]=="POST" ?  Controllers::post() : null;
     }
 
     public static function put(){
-        return $_SERVER["REQUEST_METHOD"] ?  Controllers::get() : null;
+        return $_SERVER["REQUEST_METHOD"]=="PUT" ?  Controllers::put() : null;
     }
 
     public static function delete(){
-        return $_SERVER["REQUEST_METHOD"] ?  Controllers::get() : null;
+        return $_SERVER["REQUEST_METHOD"]=="DELETE" ?  Controllers::delete() : null;
     }
 
 

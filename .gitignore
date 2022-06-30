@@ -1,5 +1,5 @@
-/.gitignore
-/.env
+.gitignore
+.env
 /api/vendor/*
 /api/.env
 /node_modules
@@ -7,6 +7,6 @@
 /tsconfig.json
 /build
 /api-2
-/api/**/*.json
+composer.lock
 
 

@@ -26,7 +26,7 @@ class Models {
             
             DataBaseConnect::CloseConnect();
         } catch (\Throwable $th) {
-            return JsonResponse::jsonResponseError("Error",200,$th->getMessage(),$sql);
+            return JsonResponse::jsonResponseError("Error",404,$th->getMessage(),$sql);
             die();
         }
 
@@ -59,7 +59,7 @@ class Models {
             DataBaseConnect::CloseConnect();
             
         } catch (\Throwable $th) {
-            return JsonResponse::jsonResponseError("Error",200,$th->getMessage(),$sql);
+            return JsonResponse::jsonResponseError("Error",404,$th->getMessage(),$sql);
             die();
         }
 
@@ -76,7 +76,7 @@ class Models {
             return JsonResponse::jsonResponsePUT("ok",200,"Updated!");
             DataBaseConnect::CloseConnect();
         } catch (\Throwable $th) {
-            return JsonResponse::jsonResponseError("Error",200,$th->getMessage(),$sql);
+            return JsonResponse::jsonResponseError("Error",404,$th->getMessage(),$sql);
             die();
         }
 
@@ -91,7 +91,7 @@ class Models {
             return JsonResponse::jsonResponsePUT("ok",200,"Deleted!");
             DataBaseConnect::CloseConnect();
         } catch (\Throwable $th) {
-            return JsonResponse::jsonResponseError("Error",200,$th->getMessage(),$sql);
+            return JsonResponse::jsonResponseError("Error",404,$th->getMessage(),$sql);
             die();
         }
 

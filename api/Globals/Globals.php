@@ -1,6 +1,5 @@
 <?php
-$dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
-$dotenv->load();
+
 
  if(isset($_SERVER['HTTPS']) and $_SERVER['HTTPS'] == 'on') $protocol = 'https://';  else $protocol = 'http://';
  
@@ -14,7 +13,8 @@ $countphpSelf = strlen($phpself);
 
 
 //$request =  substr( $_SERVER['REQUEST_URI'],$countphpSelf-1);
-$request = $_SERVER['REQUEST_URI'];
+$countrootpath = strlen($_ENV['ROOTPATH']);
+$request = substr($_SERVER['REQUEST_URI'],$countrootpath);
 define("RAIZ",$request);
 
 define("UPLOADPATH",'Uploads');

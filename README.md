@@ -10,7 +10,7 @@ ALTER TABLE `empresa_facturas` ADD `fecha_empresa_factura` DATE NULL DEFAULT NUL
 
 
 CREATE TABLE `cajas_monedas` (
-  `id_cajas_moneda` int(11) `id_cajas_moneda` int(11) PRIMARY KEY  NOT NULL AUTO_INCREMENT,
+  `id_cajas_moneda`  int(11) PRIMARY KEY  NOT NULL AUTO_INCREMENT,
   `id_moneda_caja_moneda` int(11) NOT NULL COMMENT 'rel: id_moneda',
   `id_caja_moneda` int(11) NOT NULL COMMENT 'rel: id_caja',
   `monto_caja_moneda` float NOT NULL,

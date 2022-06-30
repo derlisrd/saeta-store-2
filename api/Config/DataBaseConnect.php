@@ -12,7 +12,7 @@ class DataBaseConnect{
 
     static public function connect(){
         
-        $direccion = dirname(__FILE__);
+        /* $direccion = dirname(__FILE__);
         $jsonData = file_get_contents($direccion."/"."dbdata.json");
         $listaDatos = json_decode($jsonData, true);
         foreach($listaDatos as  $value){
@@ -21,7 +21,12 @@ class DataBaseConnect{
             $user = $value['user'];
             $pass = $value['pass'];
             $apikey = $value['apikey'];
-        }
+        } */
+            $host = $_ENV['DBHOST'];
+            $db = $_ENV['DBNAME'];
+            $user = $_ENV['DBUSER'];
+            $pass = $_ENV['DBPASS'];
+            $apikey = $_ENV['X_API_TOKEN'];
         
 
         try {

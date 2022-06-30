@@ -98,7 +98,7 @@ class Controllers {
                 AuthController::UpdatePassword($data);
             }
             else{
-                echo JsonResponse::jsonResponseError("Error",200,"No method exits");
+                echo JsonResponse::jsonResponseError("Error",404,"No method exits");
             }
 
         }
@@ -148,7 +148,7 @@ class Controllers {
             PutController::UpdateTable($table,$id,$data,$set);
         }
         else{
-            if($TOKEN===null) { echo  JsonResponse::jsonResponseError("Error",200 || !empty($_GET['token']),"Token invalid"); }
+            if($TOKEN===null) { echo  JsonResponse::jsonResponseError("Error",404 || !empty($_GET['token']),"Token invalid"); }
         }
 
         
@@ -185,7 +185,7 @@ class Controllers {
             }
         }  
         else{
-            if($TOKEN===null) { echo  JsonResponse::jsonResponseError("Error",200,"Token invalid"); }
+            if($TOKEN===null) { echo  JsonResponse::jsonResponseError("Error",404,"Token invalid"); }
         } 
 
     } 
