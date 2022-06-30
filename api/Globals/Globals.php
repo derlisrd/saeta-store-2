@@ -1,5 +1,6 @@
 <?php
-
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
+$dotenv->load();
 
  if(isset($_SERVER['HTTPS']) and $_SERVER['HTTPS'] == 'on') $protocol = 'https://';  else $protocol = 'http://';
  
