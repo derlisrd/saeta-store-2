@@ -1,7 +1,7 @@
 <?php
 header('Access-Control-Allow-Origin: *');
 header("Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept,X-Api-Token,Authorization");
-header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE,OPTIONS,HEAD');
+header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE');
 
 require "./vendor/autoload.php";
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);

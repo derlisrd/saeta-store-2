@@ -24,7 +24,6 @@ define("API_TOKEN",isset($_SERVER['HTTP_X_API_TOKEN']) ? $_SERVER['HTTP_X_API_TO
 define("PROTOCOLO",$protocol);
 define("DOMINIO",$domainName);
 
-
 define("TABLES_PRIVATES",array('users'));
 
 define("USERS_TABLE","users");
