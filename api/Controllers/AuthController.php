@@ -17,8 +17,8 @@ use PutController\PutController;
 class AuthController {
 
 
-    private static $secret_key = 'S9d1e5.xx';
-    private static $encrypt = 'HS256';
+    private  function secret_key (){ return $_ENV['SECRET_KEY'];} 
+    private  function encrypt(){return $_ENV['ENCRYTED'];}
 
 
     public static function datenow($format){
@@ -203,7 +203,7 @@ class AuthController {
    
 
         try {
-            $decode = JWT::decode($token, new Key(self::$secret_key, self::$encrypt));
+            $decode = JWT::decode($token, new Key(self::secret_key(), self::encrypt()));
 
             if ($decode->aud !== self::Aud() || $decode->iss !== DOMAIN_AUTH) {
                 return false;
@@ -238,7 +238,7 @@ class AuthController {
                 $token,
                 new Key(self::$secret_key,self::$encrypt)
             ); */
-            $decode = JWT::decode($token, new Key(self::$secret_key, self::$encrypt));
+            $decode = JWT::decode($token, new Key(self::secret_key(), self::encrypt()));
 
             if ($decode->aud !== self::Aud() || $decode->iss !== DOMAIN_AUTH) {
                 return false;
@@ -277,7 +277,7 @@ class AuthController {
             'aud' => self::Aud(),
             'data' => $data
         );
-        return JWT::encode($token, self::$secret_key, self::$encrypt);
+        return JWT::encode($token, self::secret_key(), self::encrypt());
         //return JWT::encode($token, self::$secret_key);
 
     }
@@ -285,7 +285,7 @@ class AuthController {
 
     public static function GetData($token)
     {
-        $decode = JWT::decode($token, new Key(self::$secret_key, self::$encrypt))->data;
+        $decode = JWT::decode($token, new Key(self::secret_key(), self::encrypt()))->data;
         
         return [$decode];
     }
