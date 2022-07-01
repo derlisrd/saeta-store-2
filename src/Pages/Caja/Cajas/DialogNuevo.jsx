@@ -9,12 +9,23 @@ const DialogNuevo = () => {
   
   
   const [form,setForm] = useState(initialFormNew)
+  const [monedas,setMonedas] = useState([
 
+  ])
   
   const onChange = (e) => {
     const { value, name } = e.target;
     setForm({ ...form, [name]: value });
   };
+
+  const changeMoneda = e=>{
+    let newarray = [...monedas]
+    
+    setMonedas(newarray);
+   
+  }
+
+
 
   
 
@@ -35,8 +46,8 @@ const DialogNuevo = () => {
       setErrors({...errors,nuevo:true,nuevoMensaje:lang.monto_inicial_negativo});
       return false;
     }
-    //setErrors({...errors,nuevo:false,nuevoMensaje:""});
-    console.log(form)
+    setErrors({...errors,nuevo:false,nuevoMensaje:""});
+    console.log(form,monedas)
     //agregarCajaNueva(form);
   }
 
@@ -102,7 +113,7 @@ useEffect(() => {
                   </MenuItem>
                 ))}
               </Select>
-              <FormHelperText> </FormHelperText>
+              <FormHelperText>{lang.asignar_usuario} </FormHelperText>
             </FormControl>
           </Grid>
           <Grid item xs={12}>
@@ -111,7 +122,7 @@ useEffect(() => {
           <InputLabel>{lang.monedas_de_caja}</InputLabel>
           {listaMonedas.map((d,i) => (
             <FormControlLabel key={i}  control={<Checkbox 
-              onChange={onChange} name={`id_moneda[${d.id_moneda}]`} value={form.id_moneda[{id_moneda:d.id_moneda}]}  />} 
+              onChange={changeMoneda} value={d.id_moneda} name={d.id_moneda} />} 
               label={d.nombre_moneda} />
             ))}  
           </FormGroup>
