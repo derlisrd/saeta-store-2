@@ -47,15 +47,6 @@ const ListaCajas = () => {
       field: "nombre_user",
       title: lang.asignado_a,
     },
-    {
-      field: "abreviatura_moneda",
-      title: lang.moneda,
-    },
-    {
-      field: "monto_caja",
-      title: lang.monto_actual_efectivo,
-      isNumber: true,
-    },
   ];
 
   const abrirEditar = (f) => {

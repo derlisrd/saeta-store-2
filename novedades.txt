@@ -35,4 +35,24 @@ INSERT INTO `depositos` (`id_deposito`, `nombre_deposito`, `tipo_deposito`) VALU
 INSERT INTO `empleados` (`id_empleado`, `id_rol`, `nombre_empleado`, `apellido_empleado`, `telefono_empleado`, `doc_empleado`, `salario_empleado`, `tipo_salario`) VALUES
 (1, 2, 'NOMBRE', 'APELLIDO', '0983202090', '0', 0, 1);
 
-
+DROP TABLE IF EXISTS `productos`;
+CREATE TABLE IF NOT EXISTS `productos` (
+  `id_producto` int(11) NOT NULL AUTO_INCREMENT,
+  `id_marca_producto` int(5) NOT NULL,
+  `id_categoria_producto` int(5) NOT NULL DEFAULT '1',
+  `id_impuesto_producto` int(11) NOT NULL COMMENT 'id_impuesto',
+  `id_proveedor_producto` int(11) NOT NULL COMMENT 'con id_proveedor',
+  `id_unidad_medida_producto` int(11) NOT NULL COMMENT 'id_unidad de medida',
+  `codigo_producto` varchar(255) NOT NULL UNIQUE,
+  `nombre_producto` varchar(50) NOT NULL,
+  `descripcion_producto` text,
+  `costo_producto` float NOT NULL,
+  `porcentaje_comision` float NOT NULL DEFAULT '0' COMMENT 'comsion',
+  `precio_producto` float DEFAULT '0',
+  `preciom_producto` float NOT NULL DEFAULT '0' COMMENT 'precio p/ mayoristas',
+  `minimo_producto` float NOT NULL DEFAULT '0' COMMENT 'stock minimo',
+  `notificar_producto` int(1) NOT NULL DEFAULT '0' COMMENT '0=no 1=si',
+  `tipo_producto` int(1) NOT NULL DEFAULT '1' COMMENT '1=fisico 2=servicio',
+  `disponible_producto` int(1) NOT NULL DEFAULT '1' COMMENT '0=no 1=si',
+  PRIMARY KEY (`id_producto`)
+);

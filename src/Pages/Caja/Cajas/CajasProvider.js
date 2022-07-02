@@ -76,12 +76,9 @@ const CajasProvider = ({ children }) => {
   const [formAbrir, setFormAbrir] = useState(initialAbrir);
 
   const initialFormNew = {
-    id_moneda: [],
     id_user_caja: "",
     nombre_caja: "",
-    monto_inicial: "0",
     monto_cierre: "0",
-    monto_caja: "0",
     fecha_apertura: funciones.getFechaHorarioString(),
     fecha_creacion: funciones.getFechaHorarioString(),
     ult_mov_caja:funciones.getFechaHorarioString(),
@@ -103,14 +100,22 @@ const CajasProvider = ({ children }) => {
   };
   const [formTransferencia, setFormTransferencia] = useState(initialTransferencia);
 
-  const agregarCajaNueva = async (f) => {
+
+
+  const agregarCajaNueva = async (f,mon) => {
     setCargas({ ...cargas, nuevo: true });
-    let formulario = { ...f };
-    delete formulario.id_user_caja;
-    formulario.monto_caja = f.monto_inicial;
+    let tablecaja = { 
+      nombre_caja:f.nombre_caja,
+      fecha_apertura:f.fecha_apertura,
+      fecha_creacion:f.fecha_creacion,
+      ult_mov_caja: f.ult_mov_caja,
+      estado_caja:f.estado_caja,
+      tipo_caja:f.tipo_caja
+     };
+
     let res = await APICALLER.insert({
       table: "cajas",
-      data: formulario,
+      data: tablecaja,
       token: token_user,
     });
 
@@ -118,7 +123,7 @@ const CajasProvider = ({ children }) => {
       let LASTIDCAJA = res.last_id;
       let IDUSER = f.id_user_caja;
       let cajaformusers = { id_user_caja: IDUSER, id_caja_caja: LASTIDCAJA };
-
+      
       let cajamovimientosForm = {
         id_caja_movimiento: LASTIDCAJA,
         id_user_movimiento: id_user,
@@ -137,7 +142,7 @@ const CajasProvider = ({ children }) => {
         fecha_arqueo:funciones.getFechaHorarioString()
       }
 
-      let cajares = await Promise.all([APICALLER.insert({
+      let promesas = [APICALLER.insert({
         table: "cajas_users",
         data: cajaformusers,
         token: token_user,
@@ -147,7 +152,18 @@ const CajasProvider = ({ children }) => {
         token: token_user,
       }),
       APICALLER.insert({table:"cajas_arqueos",token:token_user,data:arqueo}) 
-    ]);
+    ]
+      mon.forEach(elem => {
+        let tablecajasmonedas = {
+          id_moneda_caja_moneda: elem.id_moneda,
+          id_caja_moneda: LASTIDCAJA,
+          monto_caja_moneda:elem.monto_caja_moneda,
+          monto_inicial_caja:elem.monto_inicial_caja,
+          monto_cierre_caja:0
+        }
+        promesas.push(APICALLER.insert({table:"cajas_monedas",token:token_user,data:tablecajasmonedas}))
+      });
+      let cajares = await Promise.all(promesas);
       
       
       if(cajares[0].response==="ok" && cajares[1].response==="ok"){
@@ -311,10 +327,10 @@ const CajasProvider = ({ children }) => {
     
       setCargas({ lista: true });
       
-        let val = await Promise.all([APICALLER.get({
-          table: "cajas",include: "users,monedas,cajas_users",
-          on: "id_user,id_user_caja,id_moneda,id_moneda_caja,id_caja,id_caja_caja",
-          fields:"nombre_caja,id_caja,estado_caja,nombre_user,monto_caja,monto_inicial,monto_cierre,nombre_moneda,abreviatura_moneda,fecha_apertura",
+         let val = await Promise.all([APICALLER.get({
+          table: "cajas",include: "users,cajas_users",
+          on: "id_user,id_user_caja,id_caja,id_caja_caja",
+          fields:"nombre_caja,id_caja,estado_caja,nombre_user,fecha_apertura",
         }),
           APICALLER.get({table: "users",token: token_user,fields: "nombre_user,id_user"}),
           APICALLER.get({  table: "monedas",fields: "nombre_moneda,id_moneda,abreviatura_moneda"}),
@@ -324,7 +340,7 @@ const CajasProvider = ({ children }) => {
         setLista(val[0].results);
         setListaUsers(val[1].results);
         setListaMonedas(val[2].results)
-        setListaRegistroMonedas(val[3].results)
+        setListaRegistroMonedas(val[3].results) 
       
       setCargas({
         lista: false,

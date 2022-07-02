@@ -15,8 +15,43 @@ CREATE TABLE `cajas_monedas` (
   `id_caja_moneda` int(11) NOT NULL COMMENT 'rel: id_caja',
   `monto_caja_moneda` float NOT NULL,
   `monto_inicial_caja` float NOT NULL,
-  `monto_cierre_caja` float NOT NULL
+  `monto_cierre_caja` float  NULL
 ) ;
+
+DROP TABLE IF EXISTS `cajas`;
+CREATE TABLE IF NOT EXISTS `cajas` (
+  `id_caja` int(11) NOT NULL AUTO_INCREMENT,
+  `nombre_caja` varchar(50) NOT NULL,
+  `fecha_apertura` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `fecha_cierre` datetime DEFAULT NULL,
+  `fecha_creacion` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `tipo_caja` int(1) NOT NULL DEFAULT '1' COMMENT '1 efe 2 noefectivo',
+  `estado_caja` enum('close','open') NOT NULL DEFAULT 'open' COMMENT '0=cerrado 1=abierto',
+  `ult_mov_caja` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id_caja`)
+);
+
+DROP TABLE IF EXISTS `productos`;
+CREATE TABLE IF NOT EXISTS `productos` (
+  `id_producto` int(11) NOT NULL AUTO_INCREMENT,
+  `id_marca_producto` int(5) NOT NULL,
+  `id_categoria_producto` int(5) NOT NULL DEFAULT '1',
+  `id_impuesto_producto` int(11) NOT NULL COMMENT 'id_impuesto',
+  `id_proveedor_producto` int(11) NOT NULL COMMENT 'con id_proveedor',
+  `id_unidad_medida_producto` int(11) NOT NULL COMMENT 'id_unidad de medida',
+  `codigo_producto` varchar(255) NOT NULL UNIQUE,
+  `nombre_producto` varchar(50) NOT NULL,
+  `descripcion_producto` text,
+  `costo_producto` float NOT NULL,
+  `porcentaje_comision` float NOT NULL DEFAULT '0' COMMENT 'comsion',
+  `precio_producto` float DEFAULT '0',
+  `preciom_producto` float NOT NULL DEFAULT '0' COMMENT 'precio p/ mayoristas',
+  `minimo_producto` float NOT NULL DEFAULT '0' COMMENT 'stock minimo',
+  `notificar_producto` int(1) NOT NULL DEFAULT '0' COMMENT '0=no 1=si',
+  `tipo_producto` int(1) NOT NULL DEFAULT '1' COMMENT '1=fisico 2=servicio',
+  `disponible_producto` int(1) NOT NULL DEFAULT '1' COMMENT '0=no 1=si',
+  PRIMARY KEY (`id_producto`)
+);
 ```
 
 

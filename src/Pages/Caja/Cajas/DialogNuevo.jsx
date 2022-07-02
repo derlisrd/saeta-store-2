@@ -1,7 +1,7 @@
 import {Alert,Button,Checkbox,Dialog,DialogActions,DialogContent,DialogTitle,FormControl,FormControlLabel,FormGroup,FormHelperText,Grid,InputLabel,LinearProgress,MenuItem,Select,TextField} from "@mui/material";
 import NumberFormatCustom from "../../../Components/thirty/NumberFormatCustom";
 import { useCajas } from "./CajasProvider";
-import { useEffect,useState } from 'react';
+import { Fragment, useEffect,useState } from 'react';
 
 const DialogNuevo = () => {
   const {dialogs,setDialogs,formNew,initialFormNew,listaUsers, listaMonedas, errors,setErrors,agregarCajaNueva,cargas,lang} = useCajas();
@@ -20,7 +20,15 @@ const DialogNuevo = () => {
 
   const changeMoneda = e=>{
     let newarray = [...monedas]
-    
+    if(e.target.checked){
+      let obj = {id_moneda: e.target.value}
+      newarray.push(obj)
+    }else{
+      let index =  newarray.findIndex(item=> item.id_moneda === e.target.value)
+      if(index>=0){
+        newarray.splice(index, 1);
+      }
+    }
     setMonedas(newarray);
    
   }
@@ -38,17 +46,22 @@ const DialogNuevo = () => {
       setErrors({...errors,nuevo:true,nuevoMensaje:lang.seleccione_usuario});
       return false;
     }
-    if(form.id_moneda_caja===""){
+    /* if(form.id_moneda_caja===""){
       setErrors({...errors,nuevo:true,nuevoMensaje:lang.seleccione_moneda});
       return false;
-    }
+    } */
     if(parseFloat(form.monto_inicial)<0){
       setErrors({...errors,nuevo:true,nuevoMensaje:lang.monto_inicial_negativo});
       return false;
     }
     setErrors({...errors,nuevo:false,nuevoMensaje:""});
-    console.log(form,monedas)
-    //agregarCajaNueva(form);
+
+    if(monedas.length<1){
+      setErrors({...errors,nuevo:true,nuevoMensaje:lang.seleccione_moneda});
+      return false;
+    }
+    agregarCajaNueva(form,monedas);
+
   }
 
   const cerrar = () => {
@@ -86,17 +99,7 @@ useEffect(() => {
             />
           </Grid>
           <Grid item xs={12}>
-            <TextField
-              fullWidth
-              name="monto_inicial"
-              value={form.monto_inicial}
-              onChange={onChange}
-              label={lang.monto_inicial}
-              InputProps={{
-                inputComponent: NumberFormatCustom,
-                inputProps: { min: 0 },
-              }}
-            />
+            
           </Grid>
           <Grid item xs={12}>
             <FormControl fullWidth>
@@ -121,10 +124,19 @@ useEffect(() => {
           <FormGroup>
           <InputLabel>{lang.monedas_de_caja}</InputLabel>
           {listaMonedas.map((d,i) => (
-            <FormControlLabel key={i}  control={<Checkbox 
-              onChange={changeMoneda} value={d.id_moneda} name={d.id_moneda} />} 
-              label={d.nombre_moneda} />
-            ))}  
+            <Fragment key={i}>
+              <FormControlLabel key={i}  control={<Checkbox 
+                onChange={changeMoneda} value={d.id_moneda} name={d.id_moneda} />} 
+                label={d.nombre_moneda} />
+                {
+                  monedas.some(elem=> elem.id_moneda === d.id_moneda ) &&(
+              <TextField
+                fullWidth name="monto_inicial" value={form.monto_inicial} 
+                label={lang.monto_inicial+": "+d.nombre_moneda}InputProps={{inputComponent: NumberFormatCustom,inputProps: { min: 0 }}}
+              />)}
+            </Fragment>
+            ))}
+              
           </FormGroup>
 
           </Grid>
