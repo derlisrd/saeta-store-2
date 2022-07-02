@@ -4,7 +4,7 @@
 /api/.env
 /node_modules
 /package-lock.json
-/tsconfig.json
+
 /build
 /api-2
 composer.lock
