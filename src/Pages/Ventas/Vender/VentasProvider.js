@@ -113,6 +113,11 @@ const VentasProvider = ({ children }) => {
   /* FUNCIONES ***********************************************/
   //const cargarFactura = ()=>{}
 
+  const valorConvertido = val =>{
+    let fa = { ...datosFacturas };
+    let df = fa.facturas[indexFactura];
+    return Funciones.numberSeparator( Funciones.redondeo2decimales(val / df.datosMoneda.valor_moneda));
+  } 
 
   const verificarYEnviarFactura = async () => {
     let fa = { ...datosFacturas };
@@ -877,41 +882,45 @@ const VentasProvider = ({ children }) => {
     return () => {isActive = false;ca.abort();};
   }, [getDatosFactura, datosFacturas, indexFactura]);
 
+
+  const values = {
+    id_user,token_user,
+    cargas,
+    setCargas,
+    dialogs,
+    setDialogs,
+    datosFacturas,
+    indexFactura,
+    inputCodigo,
+    inputCantidad,
+    cantidadRecibidaRef,
+    verificarExisteEnTabla,
+    errors,
+    setErrors,
+    initialErrors,
+    Aguardar,
+    Funciones,
+    setearIndexFactura,
+    setearFactura,
+    CancelarFacturaActual,
+    borrarItem,
+    cambiarPrecio,
+    openCambiarPrecio,openImagen,
+    indexPrecioCambiar, setIndexPrecioCambiar,
+    AgregarCantidad,
+    consultarCliente,
+    changeInputsDatosFactura,
+    verificarYEnviarFactura,
+    cerrarDialogFactura,
+    insertarProductoTabla,restarCantidad,sumarCantidad,
+    AgregarCantidadMetodoPago,borrarMetodoPago,changeMonedas,Anotar,CargarNota,permisos,cambiarDeposito,
+    MetodoDescuento,lang,IDNotaPedido,valorConvertido
+  }
+
+
   return (
     <Contexto.Provider
-      value={{
-        id_user,token_user,
-        cargas,
-        setCargas,
-        dialogs,
-        setDialogs,
-        datosFacturas,
-        indexFactura,
-        inputCodigo,
-        inputCantidad,
-        cantidadRecibidaRef,
-        verificarExisteEnTabla,
-        errors,
-        setErrors,
-        initialErrors,
-        Aguardar,
-        Funciones,
-        setearIndexFactura,
-        setearFactura,
-        CancelarFacturaActual,
-        borrarItem,
-        cambiarPrecio,
-        openCambiarPrecio,openImagen,
-        indexPrecioCambiar, setIndexPrecioCambiar,
-        AgregarCantidad,
-        consultarCliente,
-        changeInputsDatosFactura,
-        verificarYEnviarFactura,
-        cerrarDialogFactura,
-        insertarProductoTabla,restarCantidad,sumarCantidad,
-        AgregarCantidadMetodoPago,borrarMetodoPago,changeMonedas,Anotar,CargarNota,permisos,cambiarDeposito,
-        MetodoDescuento,lang,IDNotaPedido
-      }}
+      value={values}
     >
       {children}
     </Contexto.Provider>
@@ -945,7 +954,7 @@ export const useVentas = () => {
     cerrarDialogFactura,
     insertarProductoTabla,restarCantidad,sumarCantidad,
     AgregarCantidadMetodoPago,borrarMetodoPago,changeMonedas,Anotar,CargarNota,permisos,cambiarDeposito,
-    MetodoDescuento,lang,IDNotaPedido
+    MetodoDescuento,lang,IDNotaPedido,valorConvertido
 
   } = useContext(Contexto);
   return {id_user,token_user,
@@ -978,7 +987,7 @@ export const useVentas = () => {
     cerrarDialogFactura,
     insertarProductoTabla,restarCantidad,sumarCantidad,
     AgregarCantidadMetodoPago,borrarMetodoPago,changeMonedas,Anotar,CargarNota,permisos,cambiarDeposito,
-    MetodoDescuento,lang,IDNotaPedido
+    MetodoDescuento,lang,IDNotaPedido,valorConvertido
   };
 };
 

@@ -1,6 +1,8 @@
 .gitignore
 .env
+/api/vendor
 /api/vendor/*
+
 /api/.env
 /node_modules
 /package-lock.json

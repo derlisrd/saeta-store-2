@@ -8,13 +8,16 @@ import VentasFactura from "./VentasFactura";
 import { useVentas } from "./VentasProvider";
 
 const VentasMain = () => {
-  const { errors, setErrors, Funciones, cargas, dialogs, setDialogs,datosFacturas,indexFactura } =
+  const { errors, setErrors, cargas, dialogs, setDialogs,datosFacturas,indexFactura,lang,valorConvertido } =
     useVentas();
   const cerrar = () => {
     setDialogs({ ...dialogs, main: false,finalizarVenta:false });
   };
   const fa = datosFacturas.facturas[indexFactura];
   const ABM = fa?.datosMoneda.abreviatura_moneda;
+  
+
+
   return (
     <>
       {
@@ -33,8 +36,8 @@ const VentasMain = () => {
             </IconButton>
           </Tooltip>
 
-          Nueva venta - 
-            Total: {Funciones.numberSeparator(Funciones.redondeo2decimales(fa.total))} {ABM}
+         {lang.nueva_venta} - 
+            {lang.total}: {valorConvertido(fa.total)} {ABM}
         </DialogTitle>
         <DialogContent>
           <SnackAlert

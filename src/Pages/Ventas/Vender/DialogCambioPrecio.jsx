@@ -7,7 +7,7 @@ import ButtonCustom from "../../../Components/MuiCustom/ButtonCustom";
 import { useVentas } from "./VentasProvider";
 
 const DialogCambioPrecio = () => {
-  const {dialogs,setDialogs,datosFacturas,indexFactura,indexPrecioCambiar,Funciones,errors,setErrors,cambiarPrecio,setIndexPrecioCambiar} = useVentas();
+  const {dialogs,setDialogs,datosFacturas,indexFactura,indexPrecioCambiar,errors,setErrors,cambiarPrecio,setIndexPrecioCambiar,valorConvertido} = useVentas();
   const cerrar = () => {
     setDialogs({ ...dialogs, cambiarPrecio: false });setErrors({...errors,cambioPrecio:false,cambioPrecioMensaje:""});
     setIndexPrecioCambiar(-1);
@@ -28,7 +28,7 @@ const DialogCambioPrecio = () => {
       cerrar();
     }
   }
-
+  
   
   return (
     <>
@@ -47,19 +47,19 @@ const DialogCambioPrecio = () => {
         <Grid container spacing={2}>
           <Grid item xs={12}>
             <Typography variant="body1">
-              Precio original: {Funciones.numberSeparator(pr.precio_original)}{" "}
+              Precio original: { valorConvertido(pr.precio_original)}{" "}
               {fd.datosMoneda.abreviatura_moneda}
             </Typography>
           </Grid>
           <Grid item xs={12}>
             <Typography variant="body1">
-              Precio mayorista: {Funciones.numberSeparator(pr.preciom_producto)}{" "}
+              Precio mayorista: { valorConvertido(pr.preciom_producto)}{" "}
               {fd.datosMoneda.abreviatura_moneda}
             </Typography>
           </Grid>
           <Grid item xs={12}>
             <Typography variant="body1">
-              Precio actual: {Funciones.numberSeparator(pr.precio_guardado)}{" "}
+              Precio actual: { valorConvertido(pr.precio_guardado)}{" "}
               {fd.datosMoneda.abreviatura_moneda}
             </Typography>
           </Grid>

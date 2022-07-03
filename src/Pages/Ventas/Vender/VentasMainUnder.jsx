@@ -6,7 +6,7 @@ import ListaAguarda from './ListaAguarda';
 import { useVentas } from './VentasProvider';
 
 const VentasMainUnder = () => {
-    const {dialogs,setDialogs} = useVentas();
+    const {dialogs,setDialogs,lang} = useVentas();
     const go = useGoto();
     const abrir = ()=>{ setDialogs({...dialogs,main:true})}
 
@@ -16,20 +16,18 @@ const VentasMainUnder = () => {
         <ButtonCustom
           startIcon={<Icon>storefront</Icon>}
           variant="outlined"
-          color="primary"
           onClick={abrir}
         >
-          Hacer venta
+          {lang.hacer_venta}
         </ButtonCustom>
       </Grid>
       <Grid item  >
         <ButtonCustom
         startIcon={<Icon>receipt_long</Icon>}
           variant="outlined"
-          color="primary"
           onClick={()=> go.to('facturas')}
         >
-          Lista de facturas
+          {lang.listas_facturas}
         </ButtonCustom>
       </Grid>
       <Grid item xs={12}>

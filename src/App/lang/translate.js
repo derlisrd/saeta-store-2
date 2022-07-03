@@ -298,7 +298,9 @@ export const translate = {
         cobrado_correctamente:"Cobrado correctamente",
         seleccione_vendedor:"Seleccione vendedor",
         recibo_nro:"Recibo nro",
-        iniciar:"Iniciar"
+        iniciar:"Iniciar",
+        hacer_venta:"Hacer venta",
+        listas_facturas:"Listas de facturas"
     },
 
     en:{

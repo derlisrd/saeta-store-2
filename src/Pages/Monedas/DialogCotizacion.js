@@ -14,7 +14,8 @@ import { useLogin } from "../../Contexts/LoginProvider";
 import NumberFormatCustom from "../../Components/thirty/NumberFormatCustom";
 
 const DialogCotizacion = () => {
-  const { token_user } = useLogin();
+  const {userData} = useLogin();
+  const { token_user } = userData
   const {
     setDialogCotizacion,
     dialogCotizacion,
@@ -33,22 +34,23 @@ const DialogCotizacion = () => {
   const enviar = async () => {
     
     setCargando(true);
+
+
     let res = await APICALLER.update({
       table: "monedas",
       id: datosMonedas.id_moneda,
       data: data,
       token: token_user,
     });
-    console.log(res);
-    /* if (res.response === "ok") {
-      let index = lista.findIndex((i) => i.id_moneda === datosMonedas.id_moneda);
+     if (res.response === "ok") {
+      let index = lista.findIndex(i => i.id_moneda === datosMonedas.id_moneda);
       let array = [...lista];
       array[index].valor_moneda = data.valor_moneda;
       setLista(array);
       cerrar();
     } else {
       console.log(res);
-    } */
+    } 
     setCargando(false);
   };
 
