@@ -26,6 +26,7 @@ TRUNCATE `proveedors`;
 TRUNCATE `registros`;
 TRUNCATE `turnos`;
 TRUNCATE `turnos_servicios`;
+TRUNCATE `cajas_monedas`;
 
 INSERT INTO `categorias` (`id_categoria`, `id_padre_categoria`, `nombre_categoria`, `imagen_categoria`, `publicado_categoria`, `tipo_categoria`) VALUES (NULL, '0', 'SIN CATEGORIA', NULL, '1', '1'), (NULL, '0', 'SERVICIOS', NULL, '1', '2');
 INSERT INTO `clientes` (`id_cliente`, `ruc_cliente`, `nombre_cliente`, `telefono_cliente`, `email_cliente`, `direccion_cliente`, `tipo_cliente`) VALUES (NULL, 'X', 'SIN NOMBRE', '0', NULL, NULL, '3');
@@ -37,7 +38,7 @@ INSERT INTO `empleados` (`id_empleado`, `id_rol`, `nombre_empleado`, `apellido_e
 
 DROP TABLE IF EXISTS `productos`;
 CREATE TABLE IF NOT EXISTS `productos` (
-  `id_producto` int(11) NOT NULL AUTO_INCREMENT,
+  `id_producto` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
   `id_marca_producto` int(5) NOT NULL,
   `id_categoria_producto` int(5) NOT NULL DEFAULT '1',
   `id_impuesto_producto` int(11) NOT NULL COMMENT 'id_impuesto',
@@ -54,5 +55,4 @@ CREATE TABLE IF NOT EXISTS `productos` (
   `notificar_producto` int(1) NOT NULL DEFAULT '0' COMMENT '0=no 1=si',
   `tipo_producto` int(1) NOT NULL DEFAULT '1' COMMENT '1=fisico 2=servicio',
   `disponible_producto` int(1) NOT NULL DEFAULT '1' COMMENT '0=no 1=si',
-  PRIMARY KEY (`id_producto`)
 );

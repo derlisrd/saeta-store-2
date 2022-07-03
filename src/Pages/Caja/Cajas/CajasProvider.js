@@ -103,6 +103,7 @@ const CajasProvider = ({ children }) => {
 
 
   const agregarCajaNueva = async (f,mon) => {
+
     setCargas({ ...cargas, nuevo: true });
     let tablecaja = { 
       nombre_caja:f.nombre_caja,
@@ -128,19 +129,12 @@ const CajasProvider = ({ children }) => {
         id_caja_movimiento: LASTIDCAJA,
         id_user_movimiento: id_user,
         id_tipo_registro: "3", // 3 ES APERTURA DE CAJA
-        monto_movimiento: f.monto_inicial,
+        monto_movimiento: "0",
         monto_sin_efectivo: "0",
         detalles_movimiento: lang.creacion_apertura_caja,
         fecha_movimiento: f.fecha_apertura,
       }
 
-      let arqueo = {
-        id_caja_arqueo: LASTIDCAJA,
-        id_user_arqueo:id_user,
-        monto_arqueo: f.monto_inicial,
-        tipo_arqueo:"1",
-        fecha_arqueo:funciones.getFechaHorarioString()
-      }
 
       let promesas = [APICALLER.insert({
         table: "cajas_users",
@@ -151,13 +145,13 @@ const CajasProvider = ({ children }) => {
         data: cajamovimientosForm,
         token: token_user,
       }),
-      APICALLER.insert({table:"cajas_arqueos",token:token_user,data:arqueo}) 
+      
     ]
       mon.forEach(elem => {
         let tablecajasmonedas = {
           id_moneda_caja_moneda: elem.id_moneda,
           id_caja_moneda: LASTIDCAJA,
-          monto_caja_moneda:elem.monto_caja_moneda,
+          monto_caja_moneda:elem.monto_inicial_caja,
           monto_inicial_caja:elem.monto_inicial_caja,
           monto_cierre_caja:0
         }

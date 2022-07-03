@@ -21,7 +21,7 @@ const DialogNuevo = () => {
   const changeMoneda = e=>{
     let newarray = [...monedas]
     if(e.target.checked){
-      let obj = {id_moneda: e.target.value}
+      let obj = {id_moneda: e.target.value,monto_inicial_caja:"0"}
       newarray.push(obj)
     }else{
       let index =  newarray.findIndex(item=> item.id_moneda === e.target.value)
@@ -33,7 +33,12 @@ const DialogNuevo = () => {
    
   }
 
-
+  const changeValorInicial = (e,id)=>{
+    let newarray = [...monedas]
+    let index = newarray.findIndex(item=> item.id_moneda === id)
+    newarray[index].monto_inicial_caja = e.target.value;
+    setMonedas(newarray);
+  }
 
   
 
@@ -130,7 +135,7 @@ useEffect(() => {
                 label={d.nombre_moneda} />
                 {
                   monedas.some(elem=> elem.id_moneda === d.id_moneda ) &&(
-              <TextField
+              <TextField onChange={(e)=>{changeValorInicial(e,d.id_moneda)}} autoComplete='off'
                 fullWidth name="monto_inicial" value={form.monto_inicial} 
                 label={lang.monto_inicial+": "+d.nombre_moneda}InputProps={{inputComponent: NumberFormatCustom,inputProps: { min: 0 }}}
               />)}

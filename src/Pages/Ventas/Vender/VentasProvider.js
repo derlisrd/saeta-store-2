@@ -750,7 +750,7 @@ const VentasProvider = ({ children }) => {
     //consultar si hay factura en localstore
     if (localStorage.getItem("facturasStorage") === null) {
       let res = await Promise.all([
-        APICALLER.get({table: "cajas",include:"cajas_users", on:"id_caja,id_caja_caja",where: `id_user_caja,=,${id_user}`}),
+        APICALLER.get({table: "cajas",include:"cajas_users,cajas_monedas", on:"id_caja,id_caja_caja,id_caja,id_caja_moneda",where: `id_user_caja,=,${id_user}`}),
         APICALLER.get({ table: "monedas" }),
         APICALLER.get({ table: "facturas_formas_pagos" }),
         APICALLER.get({ table: "empleados",fields:"id_empleado,nombre_empleado,apellido_empleado" }),
@@ -767,7 +767,8 @@ const VentasProvider = ({ children }) => {
       
       if (rc.response === "ok") {
         if (rc.found < 1) {
-          swal({text:"Debe habilitar una caja.",icon:"warning"}).then(()=>{
+          swal({text:"Debe habilitar una caja.",icon:"warning"})
+          .then(()=>{
             navigate("/cajas?dialog=new");
           })
           return false;
@@ -781,7 +782,8 @@ const VentasProvider = ({ children }) => {
             }
           }
           else{
-            swal({text:"Debe abrir caja.",icon:"warning"}).then(()=>{
+            swal({text:"Debe abrir caja.",icon:"warning"})
+            .then(()=>{
               navigate(`/cajas?dialog=open&id=${res[0].results[0].id_caja}`);
             })
             return false;
@@ -789,7 +791,15 @@ const VentasProvider = ({ children }) => {
         }
       }
       
-      if (rMoneda.response === "ok") {var activeMoneda = rMoneda.results.filter(e => e.activo_moneda === "1");}
+      if (rMoneda.response === "ok") {
+        var activeMoneda = rMoneda.results.filter(e => e.activo_moneda === "1");
+        var listasdeMonedas = [];
+        rc.results.forEach(caja=> {
+            let push = rMoneda.results.find(mone=> mone.id_moneda === caja.id_moneda_caja_moneda);
+            listasdeMonedas.push(push);
+        })
+
+    }
       if(rDepositos.response==='ok'){ var ID_DEPOSITO_ACTIVO = rDepositos.results.length>0 ? rDepositos.results[0].id_deposito : "0" } 
       const initialFacturasLocal = {
         facturas: [
@@ -831,7 +841,7 @@ const VentasProvider = ({ children }) => {
         facturaActiva: ACTIVEFACTURA,
         indexFactura: 0,
         listaFormasPago: rFormasPago.response === "ok" ? rFormasPago.results : [],
-        listaMonedas: rMoneda.response === "ok" ? rMoneda.results : [],
+        listaMonedas: listasdeMonedas,//rMoneda.response === "ok" ? rMoneda.results : [],
         monedaActiva: activeMoneda.length > 0 ? activeMoneda[0] : {},
         listaCajas: rCajas.response === "ok" ? rCajas.results : [],
         listaFacturas: FACTURALISTA,

@@ -2,6 +2,8 @@
 
 namespace PutController;
 
+use DateTime;
+use DateTimeZone;
 use Models\Models;
 
 class PutController {
@@ -21,17 +23,17 @@ class PutController {
                 $SET .= $value;
             }
         }
-        $SET  = substr($SET,0,-2);
+        //$SET  = substr($SET,0,-2);
 
         
         $CAMPO_ID = "id_";
         $CAMPO_ID .= substr($table,0,-1); 
         $WHERE = "$CAMPO_ID = $id";
-        
+        $UPDATED_AT = " updated_at= '".self::datenow('Y-m-d H:i:s')."'";
             
         
 
-        $sql = "UPDATE $table $SET WHERE  $WHERE ";
+        $sql = "UPDATE $table $SET $UPDATED_AT WHERE  $WHERE ";
         
         $response = Models::PUT($sql);
         if($resp){
@@ -39,6 +41,11 @@ class PutController {
         }
         
 
+    }
+
+    public static function datenow($format){
+        $date = new DateTime(date('Y-m-d H:i:s'), new DateTimeZone(TIME_ZONE));
+        return $date->format($format);
     }
 
 }

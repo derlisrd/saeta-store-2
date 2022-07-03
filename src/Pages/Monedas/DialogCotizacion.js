@@ -31,6 +31,7 @@ const DialogCotizacion = () => {
   };
 
   const enviar = async () => {
+    
     setCargando(true);
     let res = await APICALLER.update({
       table: "monedas",
@@ -38,7 +39,8 @@ const DialogCotizacion = () => {
       data: data,
       token: token_user,
     });
-    if (res.response === "ok") {
+    console.log(res);
+    /* if (res.response === "ok") {
       let index = lista.findIndex((i) => i.id_moneda === datosMonedas.id_moneda);
       let array = [...lista];
       array[index].valor_moneda = data.valor_moneda;
@@ -46,7 +48,7 @@ const DialogCotizacion = () => {
       cerrar();
     } else {
       console.log(res);
-    }
+    } */
     setCargando(false);
   };
 
