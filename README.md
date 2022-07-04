@@ -1,5 +1,8 @@
 # NOVEDADES
 ```
+
+ALTER TABLE `cajas_movimientos` CHANGE `id_moneda_movimiento` `id_moneda_movimiento` INT(11) NOT NULL DEFAULT '0' COMMENT 'rel:id_moneda';
+
 ALTER TABLE `cajas` CHANGE `estado_caja` `estado_caja` ENUM("close","open") NOT NULL DEFAULT 'open' COMMENT '0=cerrado 1=abierto';
 ALTER TABLE `categorias` ADD `tipo_categoria` TINYINT(1) NOT NULL DEFAULT '1' COMMENT '1=artic 2=serv' AFTER `publicado_categoria`;
 
