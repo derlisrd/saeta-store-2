@@ -191,6 +191,7 @@ const VentasProvider = ({ children }) => {
           data: {
             id_user_movimiento: id_user,
             id_caja_movimiento: df.datosFactura.id_caja,
+            id_moneda_movimiento:df.datosMoneda.id_moneda,
             id_tipo_registro: 1, // 1 VENTA CONTADO REVISAR TABLA
             monto_movimiento: efectivo, // forma de pago efectivo  es 1
             monto_sin_efectivo: sinEfectivo,
@@ -203,6 +204,7 @@ const VentasProvider = ({ children }) => {
           token: token_user,
           data: {
             id_user_movimiento: id_user,
+            id_moneda_movimiento:df.datosMoneda.id_moneda,
             id_caja_movimiento: df.datosFactura.id_caja,
             id_tipo_registro: 17, // 17 DESCUENTO
             monto_movimiento: DESCUENTO, // forma de pago efectivo  es 1
@@ -231,9 +233,6 @@ const VentasProvider = ({ children }) => {
       }
       
     }
-
-
-
     //ingresamos a la factura
     let obj = {
       id_cliente_factura: df.datosCliente.id_cliente,
@@ -444,6 +443,9 @@ const VentasProvider = ({ children }) => {
     inputCodigo.current?.focus()
   }
 
+
+
+
   const Anotar = async()=>{
     let fa = {...datosFacturas.facturas[indexFactura]}
     if(fa.itemsFactura.length>0){
@@ -511,6 +513,8 @@ const VentasProvider = ({ children }) => {
     }
     setCargas({ ...cargas, cargandoProducto: false });
   };
+
+
 
   const insertarProductoTabla = (prod,cantidad=null) => {
     let cantidadInput = cantidad || parseFloat(inputCantidad.current.value) ;
@@ -590,6 +594,8 @@ const VentasProvider = ({ children }) => {
     }
   }
 
+
+
   const AgregarCantidad = (cant, index) => {
     let fObj = { ...datosFacturas };
     let iva_porcent = fObj.facturas[indexFactura].itemsFactura[index].iva_porcentaje;
@@ -629,6 +635,8 @@ const VentasProvider = ({ children }) => {
     hacerTotal(fObj);
     inputCodigo.current.focus();
   };
+
+
 
   const borrarItem = (index) => {
     let facturaObj = { ...datosFacturas };
@@ -700,11 +708,15 @@ const VentasProvider = ({ children }) => {
     setearFactura(f);
   }
 
+
+
   const setearFactura = (factura) => {
     setDatosFacturas(factura);
     const values = JSON.stringify(factura);
     localStorage.setItem("facturasStorage", values);
   };
+
+
 
   const Aguardar = ({deposito=""}) => {
     let fact = { ...datosFacturas };
