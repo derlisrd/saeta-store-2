@@ -439,6 +439,7 @@ DROP TABLE IF EXISTS `facturas_formas_pagos`;
 CREATE TABLE IF NOT EXISTS `facturas_formas_pagos` (
   `id_facturas_formas_pago` int(11) NOT NULL AUTO_INCREMENT,
   `descripcion_forma_pago` varchar(100) NOT NULL,
+  `porcentaje_descuento_pago` float NOT NULL DEFAULT 0 COMMENT 'descuento',
   `updated_at` datetime DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id_facturas_formas_pago`)
 ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4;

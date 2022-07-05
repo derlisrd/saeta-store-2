@@ -13,6 +13,7 @@ const ClientesForm = () => {
         telefono_cliente:"",
         direccion_cliente:"",
         email_cliente:"",
+        nacimiento_cliente:""
     }
 
     const [form,setForm] = useState(initialFormulario)
@@ -118,6 +119,9 @@ const ClientesForm = () => {
                 }
                 label={lang.correo_electronico}
               />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <TextField fullWidth name="nacimiento_cliente" value={form.nacimiento_cliente} type="date" onChange={onChange} helperText={lang.fecha_nacimiento} />
             </Grid>
             <Grid item xs={12} sm={6}>
               <FormControl component="fieldset">

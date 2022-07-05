@@ -1,6 +1,7 @@
 export const translate = {
     es:{
         monedas_de_caja:"Monedas de caja",
+        fecha_nacimiento:"Fecha de nacimiento",
         ver_mas:"Ver más",
         apertura:"Apertura",
         ingreso:"Ingreso",

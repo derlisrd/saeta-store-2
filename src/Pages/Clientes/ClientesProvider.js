@@ -36,6 +36,7 @@ const ClientesProvider = ({ children }) => {
         telefono_cliente:"",
         direccion_cliente:"",
         email_cliente:"",
+        nacimiento_cliente:""
   };
   const [formulario, setFormulario] = useState(initialFormulario);
 
