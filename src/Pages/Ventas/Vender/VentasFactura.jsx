@@ -10,10 +10,11 @@ import { useVentas } from "./VentasProvider";
 import VentasTabla from "./VentasTabla";
 
 const VentasFactura = () => {
-  const { Funciones,dialogs, lang, setDialogs, cargas,inputCodigo, inputCantidad,verificarExisteEnTabla,Aguardar,datosFacturas,indexFactura,CancelarFacturaActual,changeMonedas,Anotar} = useVentas();
+  const { dialogs, lang, setDialogs, cargas,inputCodigo, valorConvertido,inputCantidad,verificarExisteEnTabla,Aguardar,datosFacturas,indexFactura,CancelarFacturaActual,changeMonedas,Anotar} = useVentas();
 
   const da = {...datosFacturas.facturas[indexFactura]}
-  
+  const ABM = da?.datosMoneda.abreviatura_moneda;
+
   const openDialogBuscaProducto = () => {setDialogs({ ...dialogs, buscarProducto: true });};
 
   const presionaEnterPaBuscar = (e)=>{
@@ -46,7 +47,6 @@ const VentasFactura = () => {
   },[dialogs,setDialogs,inputCodigo])
   
 
-  const TOTAL = da.total / parseFloat(da.datosMoneda.valor_moneda);
 
   return (
     <Grid container  columnSpacing={{ xs: 1, sm: 2, md: 2 }}>
@@ -99,8 +99,7 @@ const VentasFactura = () => {
               inputRef={inputCantidad}
               type="number"
               name="cantidad"
-              helperText="Cantidad"
-              label="Cantidad"
+              label={lang.cantidad}
               defaultValue="1"
             />
           </Grid>
@@ -109,7 +108,6 @@ const VentasFactura = () => {
               variant="contained"
               fullWidth
               size="large"
-              color="primary"
               onClick={()=>{verificarExisteEnTabla(inputCodigo.current.value)}}
             >
               {lang.agregar_item}
@@ -135,7 +133,6 @@ const VentasFactura = () => {
                     variant="outlined"
                     size="large"
                     fullWidth
-                    color="primary"
                     onClick={CancelarFacturaActual}
                   >
                     {lang.cancelar}
@@ -166,7 +163,7 @@ const VentasFactura = () => {
                 </Grid>
                 <Grid xs={12} item>
                 <Alert severity="info" icon={false}>
-                  <Typography variant="h6">Total: {Funciones.numberSeparator(TOTAL)} {datosFacturas.facturas[indexFactura].datosMoneda.abreviatura_moneda}</Typography>
+                  <Typography variant="h6"> {lang.total}: {valorConvertido(da.total)} {ABM} </Typography>
                 </Alert>
                 </Grid>
               </Grid>

@@ -153,7 +153,8 @@ const CajasProvider = ({ children }) => {
           id_caja_moneda: LASTIDCAJA,
           monto_caja_moneda:elem.monto_inicial_caja,
           monto_inicial_caja:elem.monto_inicial_caja,
-          monto_cierre_caja:0
+          monto_cierre_caja:0,
+          active_moneda_caja:elem.active_moneda_caja
         }
         promesas.push(APICALLER.insert({table:"cajas_monedas",token:token_user,data:tablecajasmonedas}))
       });

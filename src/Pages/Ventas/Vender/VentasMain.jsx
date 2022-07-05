@@ -26,7 +26,7 @@ const VentasMain = () => {
       <Dialog open={dialogs.main} fullScreen TransitionComponent={Fade}>
         <DialogTitle>
           <Tooltip
-            title={<h2>Volver menú principal</h2>}
+            title={<h2>{lang.volver_menu_principal}</h2>}
             TransitionComponent={Zoom}
             arrow
             placement="right-start"

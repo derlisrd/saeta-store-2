@@ -1,4 +1,4 @@
-import {Alert,Button,Checkbox,Dialog,DialogActions,DialogContent,DialogTitle,FormControl,FormControlLabel,FormGroup,FormHelperText,Grid,InputLabel,LinearProgress,MenuItem,Select,TextField} from "@mui/material";
+import {Alert,Button,Checkbox,Dialog,DialogActions,DialogContent,DialogTitle,FormControl,FormControlLabel,FormGroup,FormHelperText,Grid,InputLabel,LinearProgress,MenuItem,Radio,Select,Stack,TextField} from "@mui/material";
 import NumberFormatCustom from "../../../Components/thirty/NumberFormatCustom";
 import { useCajas } from "./CajasProvider";
 import { Fragment, useEffect,useState } from 'react';
@@ -9,9 +9,7 @@ const DialogNuevo = () => {
   
   
   const [form,setForm] = useState(initialFormNew)
-  const [monedas,setMonedas] = useState([
-
-  ])
+  const [monedas,setMonedas] = useState([])
   
   const onChange = (e) => {
     const { value, name } = e.target;
@@ -21,7 +19,8 @@ const DialogNuevo = () => {
   const changeMoneda = e=>{
     let newarray = [...monedas]
     if(e.target.checked){
-      let obj = {id_moneda: e.target.value,monto_inicial_caja:"0"}
+      let activo = newarray.length===0 ? "1" : "0";
+      let obj = {id_moneda: e.target.value,monto_inicial_caja:"0",active_moneda_caja:activo}
       newarray.push(obj)
     }else{
       let index =  newarray.findIndex(item=> item.id_moneda === e.target.value)
@@ -30,7 +29,6 @@ const DialogNuevo = () => {
       }
     }
     setMonedas(newarray);
-   
   }
 
   const changeValorInicial = (e,id)=>{
@@ -39,7 +37,14 @@ const DialogNuevo = () => {
     newarray[index].monto_inicial_caja = e.target.value;
     setMonedas(newarray);
   }
-
+  const changeActiveMoneda = id =>{
+    let array = [...monedas];
+    let index1 = array.findIndex(item=> item.id_moneda === id);
+    let index2 = array.findIndex(item=> item.active_moneda_caja==="1")
+    array[index1].active_moneda_caja = "1"
+    array[index2].active_moneda_caja = "0"
+    setMonedas(array);
+  }
   
 
   const verificar = ()=>{
@@ -66,7 +71,8 @@ const DialogNuevo = () => {
       return false;
     }
     agregarCajaNueva(form,monedas);
-
+    setForm(initialFormNew);
+    setMonedas([]);
   }
 
   const cerrar = () => {
@@ -134,11 +140,18 @@ useEffect(() => {
                 onChange={changeMoneda} value={d.id_moneda} name={d.id_moneda} />} 
                 label={d.nombre_moneda} />
                 {
-                  monedas.some(elem=> elem.id_moneda === d.id_moneda ) &&(
-              <TextField onChange={(e)=>{changeValorInicial(e,d.id_moneda)}} autoComplete='off'
-                fullWidth name="monto_inicial" value={form.monto_inicial} 
-                label={lang.monto_inicial+": "+d.nombre_moneda}InputProps={{inputComponent: NumberFormatCustom,inputProps: { min: 0 }}}
-              />)}
+                  monedas.map((elem,index)=>(
+                    elem.id_moneda === d.id_moneda &&
+                    <Stack direction="row" key={index} spacing={2}>
+                      <TextField onChange={(e)=>{changeValorInicial(e,elem.id_moneda)}} autoComplete='off'
+                        fullWidth name="monto_inicial" value={elem.monto_inicial_caja} 
+                        label={lang.monto_inicial+": "+d.nombre_moneda}InputProps={{inputComponent: NumberFormatCustom,inputProps: { min: 0 }}}
+                      />
+                      <FormControlLabel onChange={(e)=>{changeActiveMoneda(elem.id_moneda)}}  value="1" name="active_moneda_caja" control={<Radio checked={ elem.active_moneda_caja === '1'} />} label="Moneda principal" />
+                    </Stack>
+                  
+                  )
+                  )}
             </Fragment>
             ))}
               

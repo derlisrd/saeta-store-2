@@ -300,7 +300,8 @@ export const translate = {
         recibo_nro:"Recibo nro",
         iniciar:"Iniciar",
         hacer_venta:"Hacer venta",
-        listas_facturas:"Listas de facturas"
+        listas_facturas:"Listas de facturas",
+        volver_menu_principal:"Volver menú principal"
     },
 
     en:{

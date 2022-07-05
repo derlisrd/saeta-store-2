@@ -9,13 +9,13 @@ import { useRef,useState } from "react";
 
 
 const DialogFinalizar = () => {
-  const {MetodoDescuento,permisos, lang,
+  const {MetodoDescuento,permisos, lang, changeMonedas,
     dialogs,setDialogs,datosFacturas,indexFactura,Funciones,errors,cargas,setCargas,consultarCliente,changeInputsDatosFactura,setErrors,initialErrors,verificarYEnviarFactura,AgregarCantidadMetodoPago,cantidadRecibidaRef,borrarMetodoPago,//permisos, Anotar
   } = useVentas();
   const inputDoc = useRef(null);
   const [descuentoPorcent,setDescuentoPorcent] = useState(0);
   const [descuentoAbsoluto,setDescuentoAbsoluto] = useState(0);
-  const fd = datosFacturas;
+  const fd = {...datosFacturas};
   const fa = fd.facturas[indexFactura];
 
   //const HACERVENTA = permisos.some(e=> parseInt(e.id_permiso_permiso)=== 51);
@@ -37,7 +37,7 @@ const DialogFinalizar = () => {
     let cj = f.id_caja;
     let v = f.id_empleado;
     let e = { ...errors };
-
+    
     if(fa.datosFactura.formasPago.length<1 && fa.datosFactura.tipoFactura!=="2"){
       e.factura.error = true;
       e.factura.errorMensaje =
@@ -46,6 +46,17 @@ const DialogFinalizar = () => {
       cantidadRecibidaRef.current?.focus();
       return false;
     }
+
+
+    
+    if(! fd.monedasdecajas.some(elem=> elem.id_caja_moneda===f.id_caja && elem.id_moneda_caja_moneda === fa.datosMoneda.id_moneda)){
+      e.factura.error = true;
+      e.factura.errorMensaje ="Esa moneda no esta habilitada para esta caja";
+      setErrors(e);
+      cantidadRecibidaRef.current?.focus();
+      return false;
+    }
+
 
     if ((isNaN(cr) || cr < fa.total) && parseInt(fa.datosFactura.tipoFactura) < 2) {
       e.factura.error = true;
@@ -74,13 +85,14 @@ const DialogFinalizar = () => {
 
   const hacerDescuento = (e,porcentaje=false)=>{
     let valor = parseFloat(e.target.value);
+    let valorMoneda = parseFloat(fa.datosMoneda.valor_moneda)
     if(isNaN(valor)){valor = 0}
     if(porcentaje){
       valor>0 ? setDescuentoPorcent(valor) : setDescuentoPorcent(0);
       MetodoDescuento(valor,true)
     }else{
-      valor>0 ? setDescuentoAbsoluto(valor) : setDescuentoAbsoluto(0);
-      MetodoDescuento(valor,false)
+      valor>0 ? setDescuentoAbsoluto(valor*valorMoneda) : setDescuentoAbsoluto(0);
+      MetodoDescuento(valor*valorMoneda,false)
     }
   }
   
@@ -289,15 +301,13 @@ const DialogFinalizar = () => {
               justifyContent="center"
               alignItems="center"
             >
-              
-              
               <Grid item xs={12} sm={6}>
                 <FormControl fullWidth>
-                  <InputLabel variant="outlined">Método de pago</InputLabel>
+                  <InputLabel >Método de pago</InputLabel>
                   <Select
                     value={fa.datosFactura.id_formaPago}
                     name="id_formaPago" onChange={changeInputsDatosFactura}
-                    variant="outlined" disabled={fa.datosFactura.tipoFactura === "2"}
+                     disabled={fa.datosFactura.tipoFactura === "2"}
                   >
                     <MenuItem value="" selected disabled>
                       <em>Seleccione forma de pago</em>
@@ -314,7 +324,7 @@ const DialogFinalizar = () => {
                 <TextField
                   fullWidth value={fa.datosFactura.obs_pago}
                   name="obs_pago" onChange={changeInputsDatosFactura}
-                  variant="outlined" label="Observaciones de pago"
+                  label="Observaciones de pago"
                 />
               </Grid>
               <Grid item sm={12} md={8}>
@@ -373,7 +383,15 @@ const DialogFinalizar = () => {
               </Grid>
                 </>
               }
-              
+              <Grid item xs={12}>
+              {
+              datosFacturas.listaMonedas.map((e,i)=>(
+                  <FormControlLabel key={i} value={e.id_moneda} name="listaMonedas" onChange={()=>{changeMonedas(e)}}  label={e.abreviatura_moneda} labelPlacement="end"
+                    control={<Radio checked={fa.datosMoneda.id_moneda===e.id_moneda} /> }
+                  />
+                  ))
+                }
+              </Grid>
               <Grid item xs={12} sm={12}>
                 <Alert icon={false} variant="outlined" severity="info">
                 <Grid container>
@@ -393,7 +411,7 @@ const DialogFinalizar = () => {
                     <h3>DESCUENTOS:</h3>
                   </Grid>
                   <Grid item xs={6} sm={6}>
-                    <h3>{Funciones.numberSeparator(fa.descuento/valorMoneda)} {ABM}</h3>
+                    <h3>{Funciones.numberSeparator(fa.descuento)} {ABM}</h3>
                   </Grid>
                   
                   <Grid item xs={6} sm={6}>
@@ -420,7 +438,6 @@ const DialogFinalizar = () => {
       </DialogContent>
       <DialogActions>
         <ButtonCustom
-          color="primary"
           variant="contained"
           onClick={verificar}
           disabled={cargas.finalizarVenta || fa.itemsFactura.length < 1 }

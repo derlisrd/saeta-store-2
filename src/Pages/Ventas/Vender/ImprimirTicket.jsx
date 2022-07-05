@@ -5,7 +5,7 @@ import ButtonCustom from "../../../Components/MuiCustom/ButtonCustom";
 import printJS from "print-js";
 
 const ImprimirTicket = () => {
-    const {dialogs,setDialogs,indexFactura,datosFacturas,Funciones,cerrarDialogFactura} = useVentas();
+    const {dialogs,setDialogs,indexFactura,datosFacturas,Funciones,cerrarDialogFactura,valorConvertido} = useVentas();
     
     const EMPRESA = JSON.parse( localStorage.getItem('dataEmpresa') );
     const imprimir = () => {
@@ -18,6 +18,8 @@ const ImprimirTicket = () => {
       setDialogs({...dialogs,imprimirTicket:false});
       cerrarDialogFactura();
   }
+
+  
 
   return (
     <Dialog open={dialogs.imprimirTicket}
@@ -83,9 +85,9 @@ const ImprimirTicket = () => {
                       >
                         <td valign="top">{item.cantidad_producto}</td>
                         <td valign="top">{item.nombre_producto}</td>
-                        <td valign="top">{Funciones.numberSeparator(item.precio_guardado)}</td>
+                        <td valign="top">{valorConvertido(item.precio_guardado)}</td>
                         <td valign="top">
-                          {Funciones.numberSeparator(item.precio_guardado * item.cantidad_producto)}
+                          {valorConvertido(item.precio_guardado * item.cantidad_producto)}
                         </td>
                         
                       </tr>
@@ -103,19 +105,19 @@ const ImprimirTicket = () => {
               <td >
               <table width="100%" style={{ fontSize: "12px" }}>
                   <tbody>
-                  <tr><th>SUBTOTAL: {Funciones.numberSeparator(DF.total)} {DF.datosMoneda.abreviatura_moneda}</th></tr>
-                    {DF.descuento>0&&<tr><th> DESCUENTO: -{DF.descuento} </th></tr>}
+                  <tr><th>SUBTOTAL: {valorConvertido(DF.total)} {DF.datosMoneda.abreviatura_moneda}</th></tr>
+                    {DF.descuento>0&&<tr><th> DESCUENTO: -{valorConvertido(DF.descuento)} </th></tr>}
                     <tr>
-                      <th>TOTAL A PAGAR: {Funciones.numberSeparator(DF.total-DF.descuento)}{" "}{DF.datosMoneda.abreviatura_moneda}</th>
+                      <th>TOTAL A PAGAR: {valorConvertido(DF.total-DF.descuento)}{" "}{DF.datosMoneda.abreviatura_moneda}</th>
                     </tr>
                     <tr>
-                      <th>ABONADO: {DF.datosFactura.totalAbonado} {DF.datosMoneda.abreviatura_moneda}</th>
+                      <th>ABONADO: {valorConvertido(DF.datosFactura.totalAbonado)} {DF.datosMoneda.abreviatura_moneda}</th>
                     </tr>
                     <tr>
                       <th>
                         LETRAS:  {" "}
                         {Funciones.NumeroALetras(
-                          DF.total - DF.descuento,
+                          valorConvertido(DF.total - DF.descuento),
                           DF.datosMoneda.abreviatura_moneda
                         )}
                       </th>
