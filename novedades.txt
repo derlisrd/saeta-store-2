@@ -1,8 +1,16 @@
-
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
 SET time_zone = "-04:00";
 
+--
+-- Base de datos: `saeta_derlis`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `agendas`
+--
 
 DROP TABLE IF EXISTS `agendas`;
 CREATE TABLE IF NOT EXISTS `agendas` (
@@ -186,6 +194,7 @@ CREATE TABLE IF NOT EXISTS `clientes` (
   `id_cliente` int(11) NOT NULL AUTO_INCREMENT,
   `ruc_cliente` varchar(20) DEFAULT NULL,
   `nombre_cliente` varchar(150) NOT NULL,
+  `nacimiento_cliente` date DEFAULT NULL,
   `telefono_cliente` varchar(150) NOT NULL,
   `email_cliente` varchar(50) DEFAULT NULL,
   `direccion_cliente` text,
@@ -198,8 +207,8 @@ CREATE TABLE IF NOT EXISTS `clientes` (
 -- Volcado de datos para la tabla `clientes`
 --
 
-INSERT INTO `clientes` (`id_cliente`, `ruc_cliente`, `nombre_cliente`, `telefono_cliente`, `email_cliente`, `direccion_cliente`, `tipo_cliente`, `updated_at`) VALUES
-(1, 'X', 'SIN NOMBRE', '0', NULL, NULL, 3, '2022-07-05 01:31:43');
+INSERT INTO `clientes` (`id_cliente`, `ruc_cliente`, `nombre_cliente`, `nacimiento_cliente`, `telefono_cliente`, `email_cliente`, `direccion_cliente`, `tipo_cliente`, `updated_at`) VALUES
+(1, 'X', 'SIN NOMBRE', NULL, '0', NULL, NULL, 3, '2022-07-05 01:31:43');
 
 -- --------------------------------------------------------
 
