@@ -16,7 +16,7 @@ function useQuery() {
 
 const CajasProvider = ({ children }) => {
   const {lang} = useLang();
-  const {userData} = useLogin()
+  const {userData,logOut} = useLogin()
   const {token_user,id_user} = userData;
   const navigate = useGoto();
   let query = useQuery();
@@ -328,15 +328,18 @@ const CajasProvider = ({ children }) => {
           fields:"nombre_caja,id_caja,estado_caja,nombre_user,fecha_apertura",
         }),
           APICALLER.get({table: "users",token: token_user,fields: "nombre_user,id_user"}),
-          APICALLER.get({  table: "monedas",fields: "nombre_moneda,id_moneda,abreviatura_moneda"}),
-          APICALLER.get({ table: "monedas_registros" })  
+          APICALLER.get({table: "monedas",fields: "nombre_moneda,id_moneda,abreviatura_moneda"}),
+          APICALLER.get({table: "monedas_registros" })  
         ]);
-        
-        setLista(val[0].results);
-        setListaUsers(val[1].results);
-        setListaMonedas(val[2].results)
-        setListaRegistroMonedas(val[3].results) 
-      
+        let usersresponse = val[1];
+        if(usersresponse.response==="ok"){
+          setLista(val[0].results);
+          setListaUsers(val[1].results);
+          setListaMonedas(val[2].results)
+          setListaRegistroMonedas(val[3].results) 
+        }else{
+          logOut()
+        }
       setCargas({
         lista: false,
         editar: false,
@@ -344,7 +347,7 @@ const CajasProvider = ({ children }) => {
         abrir: false,
         nuevo: false,
       });
-    },[token_user]);
+    },[token_user,logOut]);
 
   useEffect(() => {
     const ca = new AbortController(); let isActive = true;
