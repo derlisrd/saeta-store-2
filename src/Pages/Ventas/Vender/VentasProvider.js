@@ -128,7 +128,7 @@ const VentasProvider = ({ children }) => {
     var DESCUENTO = df.descuento / VALOR_MONEDA;
     var IDCAJAFACTURACION = df.datosFactura.id_caja;
     var TOTAL_A_PAGAR = (df.total / VALOR_MONEDA) - (DESCUENTO);
-
+    var FECHA_ACTUAL = Funciones.fechaActualYMD() +" "+ Funciones.getHorarioActualString();
     if (df.datosFactura.tipoFactura === "0" || df.datosFactura.tipoFactura==="3") {
       let nrorec = await APICALLER.get({ table: "empresa_recibos" });
       if (nrorec.response === "ok") {
@@ -249,7 +249,7 @@ const VentasProvider = ({ children }) => {
       id_moneda_factura: df.datosMoneda.id_moneda,
       valor_moneda_factura: df.datosMoneda.valor_moneda,
       nro_factura: parseInt(LASTNROFACTURA),
-      fecha_factura: Funciones.fechaActualYMD() +" "+ Funciones.getHorarioActualString(),
+      fecha_factura: FECHA_ACTUAL,
       fecha_cobro_factura: df.datosFactura.fecha_cobro_factura +" "+ Funciones.getHorarioActualString(),
       estado_factura: parseInt(df.datosFactura.tipoFactura) < 2 ? 1 : 2,
       tipo_factura: df.datosFactura.tipoFactura,
@@ -267,6 +267,7 @@ const VentasProvider = ({ children }) => {
     if (resInsert.response === "ok") {
       let ID_FACTURA = resInsert.last_id;
       let insertsPromises = [];
+
       df.itemsFactura.forEach(async (e) => {
         
         insertsPromises.push(APICALLER.insert({
@@ -281,9 +282,21 @@ const VentasProvider = ({ children }) => {
             entregado_item: e.tipo_producto === "2" ? "2" : df.datosFactura.entregado_items,
           },
         }));
+       
 
         if(df.datosFactura.entregado_items==='1'){
           if(e.tipo_producto === 1){
+            insertsPromises.push(APICALLER.insert({table:'productos_vendidos',token:token_user,
+            data:{
+              id_producto_vendido:e.id_producto,
+              id_factura_vendido: ID_FACTURA,
+              id_cliente_vendido: df.datosCliente.id_cliente,
+              costo_producto_vendido:e.costo_producto,
+              precio_vendido: e.precio_guardado,
+              cantidad_vendido: e.cantidad_producto,
+              fecha_vendido:FECHA_ACTUAL
+            }
+          }))
             let ncantidad = parseFloat(e.stock_producto) - parseFloat(e.cantidad_producto);
             insertsPromises.push(APICALLER.update({table:'productos_depositos',data:{stock_producto_deposito:ncantidad},id:e.id_productos_deposito,token:token_user}));
           }

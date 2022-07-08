@@ -198,6 +198,7 @@ CREATE TABLE IF NOT EXISTS `clientes` (
   `telefono_cliente` varchar(150) NOT NULL,
   `email_cliente` varchar(50) DEFAULT NULL,
   `direccion_cliente` text,
+  `fecha_nacimiento` DATETIME NULL,
   `tipo_cliente` int(11) NOT NULL DEFAULT '3' COMMENT '1 mayorista 2 minorista 3 casual',
   `updated_at` datetime DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id_cliente`)
@@ -907,8 +908,9 @@ CREATE TABLE IF NOT EXISTS `productos_vendidos` (
   `id_producto_vendido` int(11) NOT NULL COMMENT 'con id_producto',
   `id_factura_vendido` int(11) NOT NULL COMMENT 'con id_factura',
   `id_cliente_vendido` int(11) NOT NULL COMMENT 'con id_cliente',
-  `precio_vendido` int(11) NOT NULL,
-  `cantidad_vendido` int(11) NOT NULL,
+  `precio_vendido` float NOT NULL,
+  `costo_producto_vendido` float not null,
+  `cantidad_vendido` float NOT NULL,
   `fecha_vendido` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` datetime DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id_productos_vendido`)
