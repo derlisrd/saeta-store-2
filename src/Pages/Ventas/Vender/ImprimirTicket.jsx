@@ -117,7 +117,7 @@ const ImprimirTicket = () => {
                       <th>
                         LETRAS:  {" "}
                         {Funciones.NumeroALetras(
-                          (DF.total - DF.descuento),
+                          valorConvertido((DF.total - DF.descuento),true),
                           DF.datosMoneda.abreviatura_moneda
                         )}
                       </th>

@@ -14,7 +14,23 @@ export const listaMenu = [
         title: "informes",
         icon: "trending_up",
         color: "#a0aec0",
-        url: `${BASEURL}/informes`,
+        submenu:[
+          {
+            id:63,
+            url: `${BASEURL}/informes`,
+            title:'Informes_Generales',
+            icon: "trending_up",
+            color: "#a0aec0",
+          },
+          {
+            id:64,
+            url: `${BASEURL}/informesproductos`,
+            title:'Informes_Productos',
+            icon: "summarize",
+            color: "#a0aec0",
+          },
+        ],
+        
       },
       {
         id:58,

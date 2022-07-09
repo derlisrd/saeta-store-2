@@ -320,10 +320,13 @@ const VentasProvider = ({ children }) => {
     }  
   }
 
-  const valorConvertido = val =>{
+  const valorConvertido = (val,letter=false) =>{
     
     let fa = { ...datosFacturas };
     let df = fa.facturas[indexFactura];
+    if(letter){
+      return  Funciones.redondeo2decimales(val / df.datosMoneda.valor_moneda)
+    }
     return Funciones.numberSeparator( Funciones.redondeo2decimales(val / df.datosMoneda.valor_moneda));
   } 
 

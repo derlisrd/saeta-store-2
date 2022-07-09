@@ -61,7 +61,7 @@ const ListaCajas = () => {
     setDialogs({ ...dialogs, abrir: true });
   };
 
-  const abrirTransferencia = (f) => {
+  /* const abrirTransferencia = (f) => {
     if(f.estado_caja==="0"){
       swal({text:"Una caja cerrada no puede transferir"});
     }
@@ -75,10 +75,11 @@ const ListaCajas = () => {
     });
     setDialogs({ ...dialogs, transferencia: true });
     }
-  };
+  }; */
 
   const abrirArqueo = (f) => {
-  
+    console.log(f);
+    return;
     setDatosCajaCierre(f);
     setDialogs({ ...dialogs, arqueo: true });
     setTotalSumaMonedasArqueo(0);
@@ -86,11 +87,7 @@ const ListaCajas = () => {
 
   const Acciones = ({ rowProps }) => (
     <Stack spacing={1} direction="row" justifyContent="center">
-      <Tooltip arrow title={lang.hacer_transferencia}>
-        <IconButton onClick={() => abrirTransferencia(rowProps)}>
-          <Icon color="secondary">flight_takeoff</Icon>
-        </IconButton>
-      </Tooltip>
+
       <Tooltip arrow title="Editar">
         <IconButton onClick={() => abrirEditar(rowProps)}>
           <Icon color="info">edit</Icon>

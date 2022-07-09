@@ -4,6 +4,8 @@ export const translate = {
         fecha_nacimiento:"Fecha de nacimiento",
         ver_mas:"Ver más",
         apertura:"Apertura",
+        Informes_Generales:"Informes Generales",
+        Informes_Productos:"Informes Productos",
         ingreso:"Ingreso",
         egreso:"Egreso",
         cierre:"Cierre",
