@@ -3,6 +3,7 @@ export const translate = {
         monedas_de_caja:"Monedas de caja",
         fecha_nacimiento:"Fecha de nacimiento",
         ver_mas:"Ver más",
+        Error_404:"Error 404",
         apertura:"Apertura",
         Informes_Generales:"Informes Generales",
         Informes_Productos:"Informes Productos",

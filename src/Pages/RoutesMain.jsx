@@ -19,14 +19,14 @@ import RegistroFacturas from "./Settings/RegistroFacturas";
 import Settings from "./Settings/DatosEmpresa";
 import Clientes from "./Clientes";
 import Categorias from "./Productos/Categorias";
-import Informes from "./Informes";
+import Informes from "./Informes/Generales";
 import ProductEdit from "./Productos/Productos/ProductEdit";
 import Notas from "./Ventas/Notas";
 import Monedas from "./Monedas";
 import CategoriasForm from "./Productos/Categorias/CategoriasForm";
 import Proveedores from "./Productos/Proveedores";
 import Marcas from "./Productos/Marcas";
-
+import InformesProductos from './Informes/Productos';
 import Empleados from "./Empleados";
 import ProductosApartados from "./Productos/ProductosApartados";
 import Depositos from "./Productos/Depositos";
@@ -41,39 +41,6 @@ import Entregas from "./Ventas/Entregas";
 import Transferencias from "./Productos/Transferencias";
 import Cuentas from "./Cuentas";
 
-/* 
-import Agenda from "./Agenda";
-import Movimientos from "./Caja/Movimientos/Index";
-import ClientesForm from "./Clientes/ClientesForm";
-import Cuentas from "./Cuentas";
-
-import Depositos from './Productos/Depositos'
-import Empleados from "./Empleados";
-import Medidas from "./Medidas";
-import Monedas from "./Monedas";
-import CategoriasForm from "./Productos/Categorias/CategoriasForm";
-import Compras from "./Productos/Compras";
-import Inventario from "./Productos/Inventario";
-import Productos from "./Productos/Productos";
-import ProductCode from "./Productos/Productos/ProductCode";
-import ProductForm from "./Productos/Productos/ProductForm";
-import ProductFormEdit from "./Productos/Productos/ProductFormEdit";
-import ProductosApartados from "./Productos/ProductosApartados";
-import Proveedores from "./Productos/Proveedores";
-import Impuestos from "./Settings/Impuestos";
-import Info from "./Settings/Info";
-import Turnos from "./Turnos";
-import Users from "./Users";
-import Entregas from "./Ventas/Entregas";
-import EntregasView from "./Ventas/Entregas/EntregasView";
-import Facturas from "./Ventas/Facturas";
-import Notas from "./Ventas/Notas";
-
-import Informes from "./Informes";
-import RegistroFacturas from "./Settings/RegistroFacturas";
-import RegistroMovimientos from "./Caja/RegistroMovimientos";
-import Cajas from "./Caja/Cajas";
-import Transferencias from "./Productos/Transferencias"; */
 
 const RoutesMain = () => {
   const navigate = useNavigate();
@@ -125,7 +92,8 @@ const RoutesMain = () => {
       <Route path={R+'apartados'} element={<PrivateRoute id={18}><ProductosApartados /></PrivateRoute>} />
       <Route path={R+'empleados'} element={<PrivateRoute id={41}><Empleados /></PrivateRoute>} />
       <Route path={R+'monedas'} element={<PrivateRoute id={30}><Monedas /></PrivateRoute>} />
-      <Route path={R+'informes'} element={<PrivateRoute id={44}><Informes /></PrivateRoute>} />
+      <Route path={R+'informes'} element={<PrivateRoute id={63}><Informes /></PrivateRoute>} />
+      <Route path={R+'informesproductos'} element={<PrivateRoute id={64}><InformesProductos /></PrivateRoute>} />
       <Route path={R+'categorias'} element={<PrivateRoute id={10}><Categorias /></PrivateRoute>} />
       <Route path={R+'categorias/new'} element={<PrivateRoute id={11}><CategoriasForm /></PrivateRoute>} />
       <Route path={R+"categorias/edit/:id"} element={<PrivateRoute id={11}><CategoriasForm /></PrivateRoute>} />

@@ -8,7 +8,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import {useInformes} from './InformesProvider';
-import { funciones as Funciones } from '../../Functions';
+import { funciones } from '../../../Functions';
 
 
 export default function Egresos() {
@@ -40,8 +40,8 @@ export default function Egresos() {
               <TableCell component="th" scope="row">
                 {row.detalles_movimiento}
               </TableCell>
-              <TableCell align="right"> { Funciones.fechaActualDMY(row.fecha_movimiento)}</TableCell>
-              <TableCell align="right"> { Funciones.numberSeparator( row.monto_movimiento)}</TableCell>
+              <TableCell align="right"> { funciones.fechaActualDMY(row.fecha_movimiento)}</TableCell>
+              <TableCell align="right"> { funciones.numberSeparator( row.monto_movimiento)}</TableCell>
             </TableRow>
           ))}
         </TableBody>

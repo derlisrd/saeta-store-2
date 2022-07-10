@@ -5,8 +5,8 @@ import {
   createContext,
   useCallback,
 } from "react";
-import { APICALLER } from "../../Services/api";
-import { funciones as Funciones } from "../../Functions";
+import { APICALLER } from "../../../Services/api";
+import { funciones } from "../../../Functions";
 
 const Contexto = createContext();
 
@@ -21,7 +21,7 @@ const InformesProvider = ({ children }) => {
 
   //const [listaCajas,setListaCajas] = useState([]);
 
-  const fechaHoy = Funciones.fechaEs();
+  const fechaHoy = funciones.fechaEs();
   const [fechaMostrar, setFechaMostrar] = useState(fechaHoy);
   
 
@@ -53,7 +53,7 @@ const InformesProvider = ({ children }) => {
       const fechaparalabel = new Date(mesState);
       let meslabel = fechaparalabel.getMonth() + 2;
       let anolabel = fechaparalabel.getFullYear();
-      let diaslabel = Funciones.getDaysInMonth(anolabel,meslabel);
+      let diaslabel = funciones.getDaysInMonth(anolabel,meslabel);
       var now = new Date(anolabel, fechaparalabel.getMonth() + 1, diaslabel); // ejemplo: hasta 31 de octubre
       let fd = new Date(now)
       var fecha_hasta = fd.getFullYear().toString() +"-" +(fd.getMonth() + 1).toString().padStart(2, 0) +"-" +fd.getDate().toString().padStart(2, 0);

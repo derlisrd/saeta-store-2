@@ -6,7 +6,7 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { useInformes } from "./InformesProvider";
-import { funciones as Funciones } from '../../Functions';
+import { funciones } from '../../../Functions';
 
 export default function Ingresos() {
   const { listaMensual } = useInformes();
@@ -35,15 +35,15 @@ export default function Ingresos() {
               </TableCell>
               <TableCell align="right">
                 {" "}
-                {Funciones.fechaActualDMY(row.fecha_movimiento)}
+                {funciones.fechaActualDMY(row.fecha_movimiento)}
               </TableCell>
               <TableCell align="right">
                 {" "}
-                {Funciones.numberSeparator(row.monto_movimiento)}
+                {funciones.numberSeparator(row.monto_movimiento)}
               </TableCell>
               <TableCell align="right">
                 {" "}
-                {Funciones.numberSeparator(row.monto_sin_efectivo)}
+                {funciones.numberSeparator(row.monto_sin_efectivo)}
               </TableCell>
             </TableRow>
           ))}

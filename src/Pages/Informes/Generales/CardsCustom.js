@@ -1,6 +1,6 @@
 import { Grid, Typography, Icon, CardContent, Card, Alert} from "@mui/material";
 import { useInformes } from "./InformesProvider";
-import { funciones as Funciones } from "../../Functions";
+import { funciones } from "../../../Functions";
 export default function CardsCustom() {
   const { ingresosDia, ingresosMes, egresosDia, egresosMes } = useInformes();
   return (
@@ -23,7 +23,7 @@ export default function CardsCustom() {
             </Icon>
             <Typography variant="h6">
               {" "}
-              {Funciones.numberSeparator(ingresosDia)}{" "}
+              {funciones.numberSeparator(ingresosDia)}{" "}
             </Typography>
           </CardContent>
         </Card>
@@ -42,7 +42,7 @@ export default function CardsCustom() {
               trending_down
             </Icon>
             <Typography variant="h6">
-              {Funciones.numberSeparator(egresosDia)}
+              {funciones.numberSeparator(egresosDia)}
             </Typography>
           </CardContent>
         </Card>
@@ -59,7 +59,7 @@ export default function CardsCustom() {
               trending_up
             </Icon>
             <Typography variant="h6">
-              {Funciones.numberSeparator(ingresosMes)}
+              {funciones.numberSeparator(ingresosMes)}
             </Typography>
           </CardContent>
         </Card>
@@ -76,7 +76,7 @@ export default function CardsCustom() {
               trending_down
             </Icon>
             <Typography variant="h6">
-              {Funciones.numberSeparator(egresosMes)}
+              {funciones.numberSeparator(egresosMes)}
             </Typography>
           </CardContent>
         </Card>
