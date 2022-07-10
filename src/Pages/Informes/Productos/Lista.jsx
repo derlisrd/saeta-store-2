@@ -7,24 +7,27 @@ import { useInformesProductos } from "./InformesProductosProvider";
 
 function Lista() {
     
-    const {loadings,listas,lang,fechas,setFechas,funciones} = useInformesProductos()
+    const {loadings,listas,lang,fechas,setFechas,funciones,datos} = useInformesProductos()
     
 
     const [fecha,setFecha] = useState(fechas)
     //id_producto_vendido,nombre_producto,fecha_vendido,precio_vendido,costo_producto_vendido,cantidad_vendido
     const columns = [
         {
-            field: "id_producto_vendido",
+            field: "id_productos_vendido",
             title: "#",
+            noPrint:true
           },
           {
             field: "cantidad_vendido",
             title: "Cantidad",
-            isNumber:true
+            isNumber:true,
+            style:{fontWeight:"bold"}
           },
           {
             field: "nombre_producto",
             title: "Producto",
+            style:{fontWeight:"bold"}
           },
           {
             field: "costo_producto_vendido",
@@ -35,6 +38,12 @@ function Lista() {
             field: "precio_vendido",
             title: "Precio",
             isNumber:true
+          },
+          {
+            field: "lucro_vendido",
+            title: "Lucro",
+            isNumber:true,
+            style:{backgroundColor:"#00ce4f",padding:"6px",borderRadius:"5px",color:'#006226',fontWeight:"bold"}
           },
           {
             field: "fecha_vendido",
@@ -81,13 +90,20 @@ function Lista() {
                 <Button onClick={filtrar} size="large" variant="contained" >Filtrar</Button>
             </Grid>
             <Grid item xs={12}>
-                <Grid container>
-                    <Grid item xs={12} sm={6} md={4}>
-                    <Alert severity="success" variant="outlined" icon={false}>
-                        <Typography variant="h6">
-                            {lang.lucro}: {funciones.numberSeparator(10000)}{" "}
-                        </Typography>
-                    </Alert>
+                <Grid container spacing={1}>
+                    <Grid item xs={12} sm={6} md={3}>
+                        <Alert severity="success" variant="outlined" icon={false}>
+                            <Typography variant="h6">
+                                {lang.lucro}: {funciones.numberSeparator(datos.lucro)}{" "}
+                            </Typography>
+                        </Alert>
+                    </Grid>
+                    <Grid item xs={12} sm={6} md={3}>
+                        <Alert severity="info" variant="outlined" icon={false}>
+                            <Typography variant="h6">
+                                {lang.total_ventas}: {funciones.numberSeparator(datos.vendido)}{" "}
+                            </Typography>
+                        </Alert>
                     </Grid>
                 </Grid>
             </Grid>
@@ -105,6 +121,7 @@ function Lista() {
         Accions={Acciones}
         inputs={filters}
         lang={lang}
+        print
         showOptions
     /> );
 }

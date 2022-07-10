@@ -4,6 +4,7 @@ export const translate = {
         fecha_nacimiento:"Fecha de nacimiento",
         ver_mas:"Ver más",
         lucro:"Lucro",
+        total_ventas:"Total ventas",
         Error_404:"Error 404",
         informes_productos_vendidos:"Informes de productos vendidos",
         sub_informes_productos_vendidos:"Lista e informes de productos vendidos",

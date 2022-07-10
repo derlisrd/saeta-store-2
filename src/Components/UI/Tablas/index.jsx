@@ -1,14 +1,26 @@
-import { TableContainer,Table, TableHead, TableRow, TableCell, TableBody, Box,Typography,Icon,Alert } from '@mui/material'
+import { TableContainer,Table, TableHead, TableRow, TableCell, TableBody, Box,Typography,Icon,Alert, Button } from '@mui/material'
 import { useTablaStyles } from './TablaStyles';
 import TablaLoading from './TablaLoading'
 import { funciones } from '../../../Functions';
 import TableInfo from './TableInfo';
+import printJS from 'print-js';
 
-const Tablas = ({title,subtitle,loading,datas,columns,caption,inputs,Accions,showOptions,lang,icon,sort}) => {
+const Tablas = ({title,subtitle,loading,datas,columns,caption,inputs,Accions,showOptions,lang,icon,sort,print}) => {
     const style = useTablaStyles();
     if(!columns){ console.warn("Missing props 'columns'"); return; }
     if(!datas){ console.warn("Missing props 'datas[]'"); return; }
     if(!Accions){console.warn("Missing props 'Accions'"); return; }
+
+    var columnsArray = [];
+    var headersArray = [];
+
+  columns.forEach((e) => {
+    if (e.noPrint === true) {
+    } else {
+      columnsArray.push({ field: e.field, displayName: e.title });
+      headersArray.push({ label: e.title, key: e.field });
+    }
+  });
 
 return (
       <>
@@ -18,6 +30,26 @@ return (
     
         <Box padding={1} marginBottom={1}>
             {inputs && inputs}
+        </Box>
+        <Box marginBottom={1}>
+            { print &&
+                    <Button
+                    variant="contained"
+                    onClick={() => {
+                    printJS({
+                        printable: datas,
+                        properties: columnsArray,
+                        type: "json",
+                        gridHeaderStyle: "color: red;  border: 2px solid #3971A5;",
+                        gridStyle: "border: 2px solid #3971A5;",
+                        header: `<h3 class="custom-h3">${title}</h3>`,
+                        style: ".custom-h3 { color: red; }",
+                    });
+                    }}
+                >
+                    {lang? lang.imprimir : "Imprimir"}
+                </Button>
+            }
         </Box>
     {
         loading ? <TablaLoading />
