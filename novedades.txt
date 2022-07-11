@@ -198,7 +198,6 @@ CREATE TABLE IF NOT EXISTS `clientes` (
   `telefono_cliente` varchar(150) NOT NULL,
   `email_cliente` varchar(50) DEFAULT NULL,
   `direccion_cliente` text,
-  `fecha_nacimiento` DATETIME NULL,
   `tipo_cliente` int(11) NOT NULL DEFAULT '3' COMMENT '1 mayorista 2 minorista 3 casual',
   `updated_at` datetime DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id_cliente`)
@@ -1066,5 +1065,6 @@ INSERT INTO `users_rols` (`id_users_rol`, `roluser_permiso`, `prioridad_permiso`
 (1, 'Admin', 1, '2022-07-02 22:32:32'),
 (2, 'Vendedor', 2, '2022-07-02 22:32:32'),
 (3, 'Cajero', 2, '2022-07-02 22:32:32'),
-(4, 'Entregador', 3, '2022-07-02 22:32:32');
+(4, 'Entregador', 3, '2022-07-02 22:32:32'),
+(5, 'Gerente', 4, '2022-07-02 22:32:32');
 COMMIT;
