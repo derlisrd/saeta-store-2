@@ -1,16 +1,16 @@
 import {Button,Dialog,DialogActions,DialogContent,DialogTitle,Grid,TextField,Typography, Zoom} from "@mui/material";
-import React, { Fragment, useState } from "react";
+import  { Fragment, useState } from "react";
 import { useCajas } from "./CajasProvider";
-import { useDatosEmpresa } from "../../../Contexts/DatosEmpresaProvider";
+//import { useDatosEmpresa } from "../../../Contexts/DatosEmpresaProvider";
 import NumberFormatCustom from "../../../Components/thirty/NumberFormatCustom";
 import { useEffect } from "react";
 const DialogArqueo = () => {
-  const {dialogs,setDialogs,listaRegistrosMonedas,funciones,valoresMonedas,/* totalSumaMonedasArqueo,*/setTotalSumaMonedasArqueo,lang} = useCajas();
-  const {MONEDA_PRINCIPAL } = useDatosEmpresa();
+  const {dialogs,setDialogs,listaRegistrosMonedas,valoresMonedas,/* totalSumaMonedasArqueo,*/setTotalSumaMonedasArqueo,lang} = useCajas();
+  //const {MONEDA_PRINCIPAL } = useDatosEmpresa();
 
   const [cantidadMoneda, setCantidadMoneda] = useState({});
   const [suma,setSuma] = useState(0)
-  
+  //const [registros,setRegistros] = useState(listaRegistrosMonedas)
 
   const onChange = (e) => {
     const { value, name } = e.target;
@@ -71,7 +71,7 @@ const DialogArqueo = () => {
                             inputComponent: NumberFormatCustom,
                             inputProps: { min: 0 },
                           }} value={cantidadMoneda[e.id_monedas_registro]}
-                          helperText={e.descripcion_registro_moneda} name={e.id_monedas_registro} onChange={onChange}
+                          helperText={`${e.descripcion_registro_moneda} ${e.abreviatura_moneda} `} name={e.id_monedas_registro} onChange={onChange}
                         />
                       </Grid>
                     </Fragment>
@@ -81,9 +81,7 @@ const DialogArqueo = () => {
             }
             <Grid item xs={12}>
               <Typography variant="h6">
-                {lang.total_en_efectivo}:{" "}
-                {funciones.numberSeparator(suma)}{" "}
-                {MONEDA_PRINCIPAL.nombre_moneda}{" "}
+                {lang.total_en_efectivo}:
               </Typography>
             </Grid>
           </DialogContent>

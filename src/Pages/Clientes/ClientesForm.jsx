@@ -1,4 +1,4 @@
-import { Alert, Breadcrumbs, Button, Dialog, DialogActions, DialogContent, DialogTitle, FormControl, FormControlLabel, FormLabel, Grid, LinearProgress, Radio, RadioGroup, TextField, Typography, Zoom } from '@mui/material'
+import { Alert, Button, Dialog, DialogActions, DialogContent, DialogTitle, FormControl, FormControlLabel, FormLabel, Grid, LinearProgress, Radio, RadioGroup, TextField, Typography, Zoom } from '@mui/material'
 import { useEffect,useState } from 'react';
 
 import { useClientes } from './ClientesProvider'
@@ -52,11 +52,7 @@ const ClientesForm = () => {
               {cargando.guardar && <LinearProgress />}
               {errors.error && <Alert severity='error'>{errors.message}</Alert>}
             </Grid>
-            <Grid item xs={12}>
-              <Breadcrumbs separator="›">
-                <Typography variant="overline">{lang.clientes}</Typography>
-              </Breadcrumbs>
-            </Grid>
+
             <Grid item xs={12} sm={6}>
               <TextField
                 autoFocus

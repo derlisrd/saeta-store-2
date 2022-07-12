@@ -329,7 +329,7 @@ const CajasProvider = ({ children }) => {
         }),
           APICALLER.get({table: "users",token: token_user,fields: "nombre_user,id_user"}),
           APICALLER.get({table: "monedas",fields: "nombre_moneda,id_moneda,abreviatura_moneda"}),
-          APICALLER.get({table: "monedas_registros" })  
+          APICALLER.get({table: "monedas_registros",include:"monedas",on:"id_moneda,id_moneda_registro" })  
         ]);
         let usersresponse = val[1];
         if(usersresponse.response==="ok"){

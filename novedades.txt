@@ -563,7 +563,7 @@ CREATE TABLE IF NOT EXISTS `monedas_registros` (
   `descripcion_registro_moneda` varchar(100) NOT NULL,
   `updated_at` datetime DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id_monedas_registro`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4;
 
 --
 -- Volcado de datos para la tabla `monedas_registros`
@@ -584,7 +584,13 @@ INSERT INTO `monedas_registros` (`id_monedas_registro`, `id_moneda_registro`, `v
 (12, 2, 20, '20', '2022-07-04 16:47:38'),
 (13, 2, 10, '10', '2022-07-04 16:47:38'),
 (14, 2, 5, '5', '2022-07-04 16:47:38'),
-(15, 2, 1, '1', '2022-07-04 16:47:38');
+(15, 2, 1, '1', '2022-07-04 16:47:38'),
+(16, 3, 100, '100', '2022-07-11 21:55:04'),
+(17, 3, 50, '50', '2022-07-11 21:55:04'),
+(18, 3, 20, '20', '2022-07-11 21:55:04'),
+(19, 3, 10, '10', '2022-07-11 21:55:04'),
+(20, 3, 5, '5', '2022-07-11 21:55:04'),
+(21, 3, 1, '1', '2022-07-11 21:55:04');
 
 -- --------------------------------------------------------
 

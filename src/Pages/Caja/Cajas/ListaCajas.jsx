@@ -1,13 +1,12 @@
 import {Button,Icon,IconButton,InputAdornment,Stack,TextField,Tooltip} from "@mui/material";
-import React from "react";
-import swal from "sweetalert";
+
 import Tablas from "../../../Components/UI/Tablas";
 import { useCajas } from "./CajasProvider";
 
 
 const ListaCajas = () => {
 
-  const {lista,cargas,dialogs,setDialogs,setFormEdit,setFormAbrir,setFormTransferencia,formTransferencia,setDatosCajaCierre,setTotalSumaMonedasArqueo,lang} = useCajas();
+  const {lista,cargas,dialogs,setDialogs,setFormEdit,setFormAbrir,/* setFormTransferencia,formTransferencia, */setDatosCajaCierre,setTotalSumaMonedasArqueo,lang} = useCajas();
   const columnas = [
     {
       field: "id_caja",
@@ -78,8 +77,6 @@ const ListaCajas = () => {
   }; */
 
   const abrirArqueo = (f) => {
-    console.log(f);
-    return;
     setDatosCajaCierre(f);
     setDialogs({ ...dialogs, arqueo: true });
     setTotalSumaMonedasArqueo(0);

@@ -3,43 +3,43 @@ import { Route, Routes,Navigate,useNavigate } from "react-router-dom";
 import LoadingBackDrop from "../Components/UI/LoadingBackDrop";
 import { useLogin } from "../Contexts/LoginProvider";
 import { env } from "../App/Config/config";
-import NotAutorized from "./404/NotAutorized";
-import ErrorPage from "./404";
-import LoginForm from "./Auth/LoginForm";
-import DashBoard from "./Dashboard";
-import MainPage from "./MainPage";
-import Cajas from "./Caja/Cajas";
-import Ventas from "./Ventas/Vender";
-import Facturas from "./Ventas/Facturas";
-import Users from "./Users";
-import Productos from "./Productos/Productos";
-import ProductosNew from "./Productos/Productos/ProductNew";
-import Tema from "./Settings/Tema";
-import RegistroFacturas from "./Settings/RegistroFacturas";
-import Settings from "./Settings/DatosEmpresa";
-import Clientes from "./Clientes";
-import Categorias from "./Productos/Categorias";
-import Informes from "./Informes/Generales";
-import ProductEdit from "./Productos/Productos/ProductEdit";
-import Notas from "./Ventas/Notas";
-import Monedas from "./Monedas";
-import CategoriasForm from "./Productos/Categorias/CategoriasForm";
-import Proveedores from "./Productos/Proveedores";
-import Marcas from "./Productos/Marcas";
-import InformesProductos from './Informes/Productos';
-import Empleados from "./Empleados";
-import ProductosApartados from "./Productos/ProductosApartados";
-import Depositos from "./Productos/Depositos";
-import Inventario from "./Productos/Inventario";
-import Impuestos from "./Settings/Impuestos";
-import Info from "./Settings/Info";
-import Compras from "./Productos/Compras";
-import Medidas from "./Medidas";
-import Movimientos from "./Caja/Movimientos";
-import RegistroMovimientos from "./Caja/RegistroMovimientos";
-import Entregas from "./Ventas/Entregas";
-import Transferencias from "./Productos/Transferencias";
-import Cuentas from "./Cuentas";
+import NotAutorized from "../Pages/404/NotAutorized";
+import ErrorPage from "../Pages/404";
+import LoginForm from "../Pages/Auth/LoginForm";
+import DashBoard from "../Pages/Dashboard";
+import MainPage from "../Pages/MainPage";
+import Cajas from "../Pages/Caja/Cajas";
+import Ventas from "../Pages/Ventas/Vender";
+import Facturas from "../Pages/Ventas/Facturas";
+import Users from "../Pages/Users";
+import Productos from "../Pages/Productos/Productos";
+import ProductosNew from "../Pages/Productos/Productos/ProductNew";
+import Tema from "../Pages/Settings/Tema";
+import RegistroFacturas from "../Pages/Settings/RegistroFacturas";
+import Settings from "../Pages/Settings/DatosEmpresa";
+import Clientes from "../Pages/Clientes";
+import Categorias from "../Pages/Productos/Categorias";
+import Informes from "../Pages/Informes/Generales";
+import ProductEdit from "../Pages/Productos/Productos/ProductEdit";
+import Notas from "../Pages/Ventas/Notas";
+import Monedas from "../Pages/Monedas";
+import CategoriasForm from "../Pages/Productos/Categorias/CategoriasForm";
+import Proveedores from "../Pages/Productos/Proveedores";
+import Marcas from "../Pages/Productos/Marcas";
+import InformesProductos from '../Pages/Informes/Productos';
+import Empleados from "../Pages/Empleados";
+import ProductosApartados from "../Pages/Productos/ProductosApartados";
+import Depositos from "../Pages/Productos/Depositos";
+import Inventario from "../Pages/Productos/Inventario";
+import Impuestos from "../Pages/Settings/Impuestos";
+import Info from "../Pages/Settings/Info";
+import Compras from "../Pages/Productos/Compras";
+import Medidas from "../Pages/Medidas";
+import Movimientos from "../Pages/Caja/Movimientos";
+import RegistroMovimientos from "../Pages/Caja/RegistroMovimientos";
+import Entregas from "../Pages/Ventas/Entregas";
+import Transferencias from "../Pages/Productos/Transferencias";
+import Cuentas from "../Pages/Cuentas";
 
 
 const RoutesMain = () => {
@@ -76,7 +76,7 @@ const RoutesMain = () => {
   if(loading){
     return <LoadingBackDrop />
   }
-  const R = env.BASEURL +'/';
+  const R = env.BASEURL +`/`;
   return (
     <Routes>
       <Route path={R+"cuentas"} element={<PrivateRoute id={47}><Cuentas /></PrivateRoute>} />
