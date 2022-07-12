@@ -1,14 +1,10 @@
 import { Button, Grid, Stack, Typography } from "@mui/material";
 import React, { useState } from "react";
 import { useBarcode } from "react-barcodes";
-import { useLocation } from "react-router-dom";
+import { useQuery } from "../../../../Hooks/useQuery";
 import printJS from "print-js";
-import Funciones from "../../../../Funciones";
 
-function useQuery() {
-  const { search } = useLocation();
-  return React.useMemo(() => new URLSearchParams(search), [search]);
-}
+
 const ProductCode = () => {
   let query = useQuery();
   const CODIGO = query.get("code") || "no-code";
@@ -49,7 +45,7 @@ const ProductCode = () => {
         <Button variant="outlined" size="large" onClick={add}>
           Agregar Copia
         </Button>
-        <Button variant="outlined" size="large" onClick={()=>Funciones.goto('productos')}>
+        <Button variant="outlined" size="large" onClick={()=>{}}>
           Productos
         </Button>
         </Stack>

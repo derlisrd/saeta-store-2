@@ -40,6 +40,7 @@ import RegistroMovimientos from "../Pages/Caja/RegistroMovimientos";
 import Entregas from "../Pages/Ventas/Entregas";
 import Transferencias from "../Pages/Productos/Transferencias";
 import Cuentas from "../Pages/Cuentas";
+import ProductCode from "../Pages/Productos/Productos/ProductCode";
 
 
 const RoutesMain = () => {
@@ -102,6 +103,7 @@ const RoutesMain = () => {
       <Route path={R+'clientes'} element={<PrivateRoute id={28}><Clientes /></PrivateRoute>} />
       <Route path={R+'settings'} element={<PrivateRoute id={36}><Settings /></PrivateRoute>} />
       <Route path={R+'tema'} element={<PrivateRoute id={72}><Tema /></PrivateRoute>} />
+      <Route path={R+'productos/bc'} element={<PrivateRoute id={65}><ProductCode /></PrivateRoute>} />  
       <Route path={R+'productos/edit/:id'} element={<PrivateRoute id={9}><ProductEdit /></PrivateRoute>} />
       <Route path={R+'productos/new'} element={<PrivateRoute id={9}><ProductosNew /></PrivateRoute>} />
       <Route path={R+'productos'} element={<PrivateRoute id={34}><Productos /></PrivateRoute>} />
