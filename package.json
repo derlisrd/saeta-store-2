@@ -2,7 +2,7 @@
   "name": "saeta-store-2",
   "version": "2.2.0",
   "private": true,
-  "homepage": "./",
+  "homepage": "https://saetapp.com/",
   "dependencies": {
     "@emotion/react": "^11.9.0",
     "@emotion/styled": "^11.8.1",
