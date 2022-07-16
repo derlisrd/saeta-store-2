@@ -100,17 +100,23 @@ const FacturasProvider = ({ children }) => {
     let res = await APICALLER.get({
       table: "facturas",include:"clientes,monedas,users",
       on: `id_cliente_factura,id_cliente,id_moneda,id_moneda_factura,id_user,id_user_factura`,
-      fields: `nro_factura,abreviatura_moneda,nombre_moneda,abreviatura_moneda,valor_moneda,estado_factura,fecha_factura,fecha_cobro_factura,ruc_cliente,nombre_cliente,direccion_cliente,monto_total_factura,tipo_factura,id_factura,nombre_user,obs_factura,descuento_factura`,
+      fields: `valor_moneda_factura,nro_factura,abreviatura_moneda,nombre_moneda,abreviatura_moneda,valor_moneda,estado_factura,fecha_factura,fecha_cobro_factura,ruc_cliente,nombre_cliente,direccion_cliente,monto_total_factura,tipo_factura,id_factura,nombre_user,id_caja_factura,obs_factura,descuento_factura`,
       filtersField:"nro_factura",filtersSearch:inputSearch,
       pagenumber:0,pagesize:10,
     });
     //console.log(res);
     if (res.response === "ok") {
-      setLista(res.results);
+      
+      let arrayresult = [...res.results]
+      let newresult = [];
       let suma = 0;
-      res.results.forEach((element) => {
-        suma += parseFloat(element.monto_total_factura);
+      arrayresult.forEach((elem) => {
+        suma += parseFloat(elem.monto_total_factura);
+        newresult.push({
+          ...elem, monto: parseFloat(elem.monto_total_factura) / parseFloat(elem.valor_moneda_factura)
+      })
       });
+      setLista(newresult);
       setTotal(suma);
     } else {
       console.log(res);
@@ -142,18 +148,24 @@ const FacturasProvider = ({ children }) => {
     const res = await APICALLER.get({
       table: "facturas",include:"clientes,monedas,users",
       on: `id_cliente_factura,id_cliente,id_moneda,id_moneda_factura,id_user,id_user_factura`,
-      fields: `nro_factura,abreviatura_moneda,nombre_moneda,abreviatura_moneda,valor_moneda,estado_factura,fecha_factura,fecha_cobro_factura,ruc_cliente,nombre_cliente,direccion_cliente,monto_total_factura,tipo_factura,id_factura,nombre_user,id_caja_factura,obs_factura,descuento_factura`,
+      fields: `valor_moneda_factura,nro_factura,abreviatura_moneda,nombre_moneda,abreviatura_moneda,valor_moneda,estado_factura,fecha_factura,fecha_cobro_factura,ruc_cliente,nombre_cliente,direccion_cliente,monto_total_factura,tipo_factura,id_factura,nombre_user,id_caja_factura,obs_factura,descuento_factura`,
       where: `fecha_factura,between,'${desdeFecha} 00:00:00',and,'${hastaFecha} 23:59:59' ${moreFilter}`,
       sort: `fecha_factura`,
     });
 
     
     if (res.response === "ok") {
-      setLista(res.results);
+      
+      let arrayresult = [...res.results]
+      let newresult = [];
       let suma = 0;
-      res.results.forEach((element) => {
-        suma += parseFloat(element.monto_total_factura);
+      arrayresult.forEach((elem) => {
+        suma += parseFloat(elem.monto_total_factura);
+        newresult.push({
+          ...elem, monto: parseFloat(elem.monto_total_factura) / parseFloat(elem.valor_moneda_factura)
+      })
       });
+      setLista(newresult);
       setTotal(suma);
     } else {
       console.log(res);

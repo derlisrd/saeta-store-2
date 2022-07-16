@@ -131,7 +131,7 @@ const ProductosProvider = ({ children }) => {
     const res = await Promise.all([APICALLER.get(data),APICALLER.get({table:"depositos"})]);
 
      if (res[1].response === "ok" && res[0].response==="ok") {
-      setCountTotal(res[0].found);
+      setCountTotal(res[0].total);
       setLista({productos:res[0].results,depositos:res[1].results}); 
     } else {
       console.log(res);

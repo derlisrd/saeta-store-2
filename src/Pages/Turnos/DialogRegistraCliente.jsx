@@ -1,14 +1,15 @@
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Grid, Icon, InputAdornment, LinearProgress, TextField } from '@mui/material';
 import React, { useRef, useState } from 'react'
-import { APICALLER } from '../../Api/ApiCaller';
+import { APICALLER } from '../../Services/api';
 
-import { useLogin } from '../../Contextos/LoginProvider';
+import { useLogin } from '../../Contexts/LoginProvider';
 import { useTurnos } from './TurnosProvider'
 
 const DialogRegistraCliente = () => {
 
     const {dialogs,setDialogs,setForm,form} = useTurnos();
-    const {token_user} = useLogin();
+    const {userData} = useLogin();
+    const {token_user} = userData
 
     const initialForm = {
         ruc_cliente: "",

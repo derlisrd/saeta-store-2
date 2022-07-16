@@ -27,6 +27,7 @@ const CajasProvider = ({ children }) => {
 
   const initialDialogs = {
     editar: false,
+    cierre:false,
     abrir: dialogQuery==="open"? true: false,
     cerrar: false,
     nuevo: dialogQuery==="new"? true: false,
@@ -351,12 +352,8 @@ const CajasProvider = ({ children }) => {
 
   useEffect(() => {
     const ca = new AbortController(); let isActive = true;
-    if (isActive) {
-      getLista();
-    }
-    return () => {
-      isActive = false; ca.abort();
-    };
+    if (isActive) {getLista();}
+    return () => {isActive = false; ca.abort();};
   }, [getLista]);
 
   return (

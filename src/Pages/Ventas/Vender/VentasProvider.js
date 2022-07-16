@@ -125,6 +125,7 @@ const VentasProvider = ({ children }) => {
     setDialogs({...dialogs,finalizarVenta:false});
     var LASTNROFACTURA;
     var VALOR_MONEDA = parseFloat(df.datosMoneda.valor_moneda)
+    var NOMBRE_MONEDA = df.datosMoneda.nombre_moneda;
     var DESCUENTO = df.descuento / VALOR_MONEDA;
     var IDCAJAFACTURACION = df.datosFactura.id_caja;
     var TOTAL_A_PAGAR = (df.total / VALOR_MONEDA) - (DESCUENTO);
@@ -162,11 +163,11 @@ const VentasProvider = ({ children }) => {
     
     df.datosFactura.formasPago.forEach(e=>{
       if(e.id_forma_pago==="1") {
-        efectivo += (e.cantidad/VALOR_MONEDA)
-        detallesMov += `Pago con efectivo ${e.cantidad}. `
+        efectivo += (e.cantidad) / VALOR_MONEDA
+        detallesMov += `Pago con efectivo ${(e.cantidad) / VALOR_MONEDA} ${NOMBRE_MONEDA}. `
       }  else{
         sinEfectivo += (e.cantidad/VALOR_MONEDA)
-        detallesMov += `Pago con ${e.descripcion} ${e.cantidad}. `
+        detallesMov += `Pago con ${e.descripcion} ${e.cantidad} ${NOMBRE_MONEDA}. `
       }
       observaciones += e.obs 
     })
@@ -219,7 +220,7 @@ const VentasProvider = ({ children }) => {
         
         //if(cajasMov.response!=="ok") {console.log(cajasMov)}
         // SI ES EN EFECTIVO
-        if (df.datosFactura.id_formaPago === "1") {
+       /*  if (df.datosFactura.id_formaPago === "1") {
           let call_monto = await APICALLER.get({
             table: `cajas_monedas`,
             fields: `monto_caja_moneda,id_cajas_moneda`,
@@ -233,7 +234,28 @@ const VentasProvider = ({ children }) => {
             data: { monto_caja_moneda: nuevo_monto },
             id: id_de_caja_moneda,
           }));
-        }
+        } */
+
+        let call_monto = await APICALLER.get({
+          table: `cajas_monedas`,
+          fields: `monto_caja_moneda,id_cajas_moneda,monto_no_efectivo`,
+          where: `id_caja_moneda,=,${df.datosFactura.id_caja},and,id_moneda_caja_moneda,=,${df.datosMoneda.id_moneda}`,
+        });
+
+
+        let nuevo_monto_efectivo = (efectivo + parseFloat(call_monto.results[0].monto_caja_moneda)) - DESCUENTO;
+        let nuevo_monto_no_efectivo = ( sinEfectivo  + parseFloat(call_monto.results[0].monto_no_efectivo));
+        let id_de_caja_moneda = call_monto.results[0].id_cajas_moneda;
+        promesas.push(APICALLER.update({
+          table: `cajas_monedas`,
+          token: token_user,
+          data: { monto_caja_moneda: nuevo_monto_efectivo,monto_no_efectivo: nuevo_monto_no_efectivo },
+          id: id_de_caja_moneda,
+        }));
+
+
+
+
 
         
       }

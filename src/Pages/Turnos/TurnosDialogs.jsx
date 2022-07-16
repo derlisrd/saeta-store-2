@@ -27,8 +27,8 @@ import React, {
   useState,
   Fragment,
 } from "react";
-import { APICALLER } from "../../Api/ApiCaller";
-import Loading from "../../Componentes/Loading";
+import { APICALLER } from "../../Services/api";
+import LoadingBackDrop  from "../../Components/UI/LoadingBackDrop"; 
 import { useTurnos } from "./TurnosProvider";
 
 const TurnosDialogs = () => {
@@ -125,7 +125,7 @@ const TurnosDialogs = () => {
   return (
     <Dialog open={dialogs.agregar} maxWidth="md" onClose={cerrar} fullWidth>
       {cargando.servicios ? (
-        <Loading />
+        <LoadingBackDrop />
       ) : (
         <Fragment>
           <DialogTitle>

@@ -1,6 +1,6 @@
 import { Button, Stack} from '@mui/material'
 import React from 'react'
-import Tablas from '../../Componentes/Tablas'
+import Tablas from '../../Components/UI/Tablas'
 import { useTurnos } from './TurnosProvider'
 
 const TurnosLista = () => {
@@ -65,15 +65,15 @@ const TurnosLista = () => {
         
         return (
           <Tablas 
-              nombretabla="Turnos"
+              title="Turnos"
               subtitle='Modulo de turnos'
-              bgicono="#3f51b5"
-              cargando={cargando.lista}
-              icono="login"
-              columnas={columnas}
-              filas={FilterData}
-              Acciones={Acciones}
-              search={Search}
+              
+              loading={cargando.lista}
+              icon={{ name:"login" }}
+              columns={columnas}
+              datas={FilterData}
+              Accions={Acciones}
+              inputs={Search}
           />
         )
 }

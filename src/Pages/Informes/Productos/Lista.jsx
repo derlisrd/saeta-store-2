@@ -46,6 +46,12 @@ function Lista() {
             style:{backgroundColor:"#00ce4f",padding:"6px",borderRadius:"5px",color:'#006226',fontWeight:"bold"}
           },
           {
+            field: "total_vendido",
+            title: "Total",
+            isNumber:true,
+            style:{fontWeight:"bold"}
+          },
+          {
             field: "fecha_vendido",
             title: "Fecha",
           },
@@ -61,7 +67,7 @@ function Lista() {
     
     const Acciones = ({rowProps})=>(
         <Stack direction="row" spacing={2}>
-            <Fab size="small"><Icon>settings</Icon></Fab>
+            <Fab size="small"><Icon>visibility</Icon></Fab>
         </Stack>
     )
 

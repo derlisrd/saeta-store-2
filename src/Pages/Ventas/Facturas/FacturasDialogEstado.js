@@ -2,7 +2,7 @@ import {Alert,Dialog,DialogContent,DialogTitle,Grid,Icon, IconButton, Stack,Zoom
 import { useFacturas } from "./FacturasProvider";
 import {funciones} from '../../../Functions'
 const FacturasDialogEstado = () => {
-  const { dialogs, setDialogs, formulario } = useFacturas();
+  const { dialogs, setDialogs, formulario,lang} = useFacturas();
   const cerrar = () => {
     setDialogs({ ...dialogs, estado: false });
   };
@@ -19,11 +19,11 @@ const FacturasDialogEstado = () => {
         <Grid container>
           <Grid item xs={12}>
             <h3>Fecha de venta: {formulario?.fecha_factura}</h3>
-            <h3>Tipo: {formulario?.tipo_factura==="0" ? 'Recibo' : 'Factura'} NRO: {formulario?.nro_factura}</h3>
-            <h3>Cliente: {formulario?.nombre_cliente} {formulario.apellido_cliente} {formulario?.ruc_cliente} </h3>
-            <h3>Vendedor: {formulario?.nombre_user}</h3>
-            <h3>Total: {funciones.numberSeparator(formulario?.monto_total_factura)} {formulario?.abreviatura_moneda}</h3>
-            <h3>Descuento: {funciones.numberSeparator(formulario?.descuento_factura)} {formulario?.abreviatura_moneda}</h3>
+            <h3>{lang.tipo}: {formulario?.tipo_factura==="0" ? 'Recibo' : 'Factura'} NRO: {formulario?.nro_factura}</h3>
+            <h3>{lang.cliente}: {formulario?.nombre_cliente} {formulario.apellido_cliente} {formulario?.ruc_cliente} </h3>
+            <h3>{lang.usuario}: {formulario?.nombre_user}</h3>
+            <h3>{lang.total}: {funciones.numberSeparator(formulario?.monto_total_factura)} {formulario?.abreviatura_moneda}</h3>
+            <h3>{lang.descuento}: {funciones.numberSeparator(formulario?.descuento_factura)} {formulario?.abreviatura_moneda}</h3>
             <h3>Observación: {formulario?.obs_factura}</h3>
           </Grid>
           <Grid item xs={12}>

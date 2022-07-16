@@ -6,7 +6,7 @@ import { useCajas } from "./CajasProvider";
 
 const ListaCajas = () => {
 
-  const {lista,cargas,dialogs,setDialogs,setFormEdit,setFormAbrir,/* setFormTransferencia,formTransferencia, */setDatosCajaCierre,setTotalSumaMonedasArqueo,lang} = useCajas();
+  const {lista,cargas,dialogs,setDialogs,setFormEdit,setFormAbrir, setDatosCajaCierre,/* setFormTransferencia,formTransferencia, setDatosCajaCierre,setTotalSumaMonedasArqueo,*/lang} = useCajas();
   const columnas = [
     {
       field: "id_caja",
@@ -76,11 +76,18 @@ const ListaCajas = () => {
     }
   }; */
 
-  const abrirArqueo = (f) => {
+  /* const abrirArqueo = (f) => {
     setDatosCajaCierre(f);
     setDialogs({ ...dialogs, arqueo: true });
     setTotalSumaMonedasArqueo(0);
-  };
+  }; */
+
+
+  const cierrecaja = f =>{
+    setDatosCajaCierre(f);
+    setDialogs({ ...dialogs, cierre: true });
+  }
+
 
   const Acciones = ({ rowProps }) => (
     <Stack spacing={1} direction="row" justifyContent="center">
@@ -93,7 +100,7 @@ const ListaCajas = () => {
       {rowProps.estado_caja === "open" ? (
         <Tooltip arrow title={lang.cerrar}>
           <IconButton
-            onClick={() => {abrirArqueo(rowProps);}}
+            onClick={() => {cierrecaja(rowProps);}}
           >
             <Icon color="error">close</Icon>
           </IconButton>

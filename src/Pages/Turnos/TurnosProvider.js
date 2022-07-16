@@ -1,12 +1,13 @@
 import React, { createContext, useContext, useEffect, useState,useCallback } from "react";
 import swal from "sweetalert";
-import { APICALLER } from "../../Api/ApiCaller";
-import { useLogin } from "../../Contextos/LoginProvider";
+import { APICALLER } from "../../Services/api";
+import { useLogin } from "../../Contexts/LoginProvider";
 
 const Contexto = createContext();
 
 const TurnosProvider = ({ children }) => {
-  const {token_user} = useLogin();
+  const {userData} = useLogin();
+  const {token_user} = userData
   const [lista, setLista] = useState([]);
   const [listaEmpleados, setListaEmpleados] = useState([]);
   const [listaServicios,setListaServicios] = useState([]);

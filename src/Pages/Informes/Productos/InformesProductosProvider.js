@@ -38,13 +38,15 @@ function InformesProductosProvider({children}) {
         if(res.response==="ok"){
             let result = [...res.results];
             let newresult = [];
-            let lucro = 0, costo = 0, vendido = 0,lucro_vendido=0;
+            let lucro = 0, costo = 0, vendido = 0,lucro_vendido=0,total_vendido;
             result.forEach(elem => {
-                vendido += parseFloat(elem.precio_vendido);
-                costo += parseFloat(elem.costo_producto_vendido);
-                lucro_vendido = parseFloat(elem.precio_vendido) - parseFloat(elem.costo_producto_vendido); 
+                
+                vendido += (parseFloat(elem.precio_vendido) * parseFloat(elem.cantidad_vendido) );
+                costo += parseFloat(elem.costo_producto_vendido)  * parseFloat(elem.cantidad_vendido) ;
+                lucro_vendido = (parseFloat(elem.precio_vendido) - parseFloat(elem.costo_producto_vendido) ) * parseFloat(elem.cantidad_vendido)   ;
+                total_vendido = parseFloat(elem.cantidad_vendido) *   parseFloat(elem.precio_vendido);
                 newresult.push({
-                    ...elem,lucro_vendido
+                    ...elem,lucro_vendido, total_vendido
                 })
             });
             lucro = vendido - costo;

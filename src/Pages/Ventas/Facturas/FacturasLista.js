@@ -84,11 +84,17 @@ const FacturasLista = () => {
     },
     
     {
-      field: "monto_total_factura",
+      field: "monto",
       title: lang.monto,
       isNumber: true,
-      before: MONEDA_PRINCIPAL.abreviatura_moneda,
+      style:{fontWeight:"bold"}
+      /* before: MONEDA_PRINCIPAL.abreviatura_moneda, */
     },
+    {
+      field:"abreviatura_moneda",
+      title:lang.moneda,
+      style:{fontWeight:"bold"}
+    }
   ];
 
   const abrirDetallesFactura = (datos) => {
@@ -126,27 +132,13 @@ const FacturasLista = () => {
 
   const search = (
     <Grid container spacing={3}>
-      <Grid item xs={12}  >
-        <TextField
-          fullWidth
-          label={lang.desde}
-          type="date"
-          defaultValue={desde}
-          onChange={changeDatadesde}
-          name="desdeFecha"
-        />
+      <Grid item xs={12} sm={6} md={3}  >
+        <TextField fullWidth helperText={lang.desde} type="date" defaultValue={desde} onChange={changeDatadesde} name="desdeFecha" />
       </Grid>
-      <Grid item xs={12}  >
-        <TextField
-          fullWidth
-          label={lang.hasta}
-          type="date"
-          defaultValue={hasta}
-          onChange={changeDatahasta}
-          name="hastaFecha"
-        />
+      <Grid item xs={12} sm={6} md={3}>
+        <TextField fullWidth label={lang.hasta} type="date" defaultValue={hasta} onChange={changeDatahasta} name="hastaFecha" />
       </Grid>
-      <Grid item xs={12}  >
+      <Grid item xs={12} sm={6} md={3}>
         <FormControl fullWidth>
           <InputLabel variant="outlined">{lang.opciones_filtro}</InputLabel>
           <Select
@@ -167,7 +159,7 @@ const FacturasLista = () => {
           </Select>
         </FormControl>
       </Grid>
-      <Grid item xs={12} sm={6} >
+      <Grid item xs={12} sm={6} md={3}>
         <Button
           onClick={Filtrar}
           variant="contained"
@@ -178,15 +170,9 @@ const FacturasLista = () => {
         </Button>
       </Grid>
       
-      <Grid item xs={12}>
-        <h3>{lang.total}: {funciones.numberSeparator(total)}{" "}
-        {MONEDA_PRINCIPAL.abreviatura_moneda}{" "}</h3>
-      </Grid>
-    </Grid>
-  );
-
-  const search2 = (<Stack spacing={2} direction={{ xs: 'column', sm: 'row' }}>
-  <TextField
+      
+      <Grid item xs={12} sm={6} md={3}>
+      <TextField
           InputProps={{
             endAdornment: (
               <InputAdornment position="end">
@@ -208,31 +194,31 @@ const FacturasLista = () => {
           onChange={(e) => setInputSearch(e.target.value)}
           label={lang.buscar_por_nro}
         />
-<Button variant="contained" size="large"onClick={()=>go.to('ventas')}>{lang.nueva_venta}</Button>
-</Stack>)
+        </Grid>
+        <Grid item xs={12} sm={6}  md={3}>
+          <Button variant="contained" size="large"onClick={()=>go.to('ventas')}>{lang.nueva_venta}</Button>
+      </Grid>
+      <Grid item xs={12} >
+        <h3>{lang.total}: {funciones.numberSeparator(total)}{" "}
+        {MONEDA_PRINCIPAL.abreviatura_moneda}{" "}</h3>
+      </Grid>
+    </Grid>
+  );
+
 
   return (
-    <Grid container spacing={3}>
-      <Grid item xs={12} sm={12} md={3}>
-          {search}
-      </Grid>
-      <Grid item xs={12} sm={12} md={9}>
-        
+
           <Tablas
             title={lang.facturas}
             icon={{ name:"assignment", }}
             loading={cargando}
-            inputs={search2}
+            inputs={search}
             subtitle={lang.lista_facturas}
             datas={FilterData}
             columns={columnas}
             Accions={Acciones}
             showOptions
           />
-      
-      </Grid>
-     
-    </Grid>
   );
 };
 
