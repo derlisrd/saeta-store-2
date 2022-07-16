@@ -46,7 +46,7 @@ const DashBoard = () => {
 
   return (
     <Grid container spacing={2} >
-      <Grid item xs={12} sm={12} md={12} lg={4} xl={3} >
+      <Grid item xs={12} >
         <Card sx={{ bgcolor: "primary.light"}}>
           <CardContent>
             <Typography variant="button">{message}, {userData.nombre_user}.</Typography>
@@ -63,15 +63,15 @@ const DashBoard = () => {
           <Card >
           <CardHeader
               avatar={
-                <Avatar>
-                  <Icon>{e.icon}</Icon>
+                <Avatar sx={{ bgcolor: e.icon.color }}  >
+                  <Icon>{e.icon.name}</Icon>
                 </Avatar>
               }
-              title= {e.title} 
+              title={<h2>{e.title}</h2>} 
               subheader={e.description}
             />
           <CardContent>
-
+            {e.text}
           </CardContent>
           <CardActions>
             {e.button && <Button variant="contained">{e.buttontext}</Button>}

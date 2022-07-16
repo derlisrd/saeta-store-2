@@ -3,34 +3,38 @@
 export const dashboardlist = [
     {
         id:1,
-        title:"Venta",
+        title:"Ventas",
         description:"",
-        icon:"people",
+        text:(<h5>Hacer una venta nueva</h5>),
+        icon:{name:"sell", color:"primary.main"},
         button:true,
-        buttontext:"Nueva venta"
+        buttontext:"Nueva"
     },
     {
         id:2,
         title:"Cajas",
         description:"",
-        icon:"people",
-        button:false,
-        buttontext:""
+        text:"",
+        icon:{name:"savings", color:"primary.main"},
+        button:true,
+        buttontext:"Ver"
     },
     {
         id:3,
         title:"Clientes",
         description:"",
-        icon:"people",
-        button:false,
-        buttontext:""
+        text:"",
+        icon:{name:"people", color:"primary.main"},
+        button:true,
+        buttontext:"Lista"
     },
     {
         id:4,
-        title:"Listas",
+        title:"Cotizacion",
         description:"",
-        icon:"people",
-        button:false,
-        buttontext:""
+        text:(<h5>Lista de cotizaciones</h5>),
+        icon:{name:"account_balance", color:"primary.main"},
+        button:true,
+        buttontext:"Ver"
     },
 ];
