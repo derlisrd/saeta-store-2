@@ -1,9 +1,0 @@
-{
-    "conexion": {
-        "host": "localhost",
-        "user": "root",
-        "pass": "",
-        "db": "saeta_derlis",
-        "apikey": ""
-    }
-}
