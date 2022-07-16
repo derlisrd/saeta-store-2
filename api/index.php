@@ -7,6 +7,7 @@ require "./vendor/autoload.php";
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
 $dotenv->load();
 
+require "./Config/helper.php";
 require "./Globals/Globals.php";
 require "./Config/DataBaseConnect.php";
 require "./Controllers/Controllers.php";

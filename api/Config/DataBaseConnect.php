@@ -12,11 +12,11 @@ class DataBaseConnect{
 
     static public function connect(){
         
-            $host = $_ENV['DBHOST'];
-            $db = $_ENV['DBNAME'];
-            $user = $_ENV['DBUSER'];
-            $pass = $_ENV['DBPASS'];
-            $apikey = $_ENV['X_API_TOKEN'];
+            $host = env('DBHOST');
+            $db = env('DBNAME');
+            $user = env('DBUSER');
+            $pass = env('DBPASS');
+            $apikey = env('X_API_TOKEN');
         
 
         try {
