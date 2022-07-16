@@ -1,15 +1,14 @@
-import { Button, Card, CardContent, CircularProgress, Grid, Typography } from "@mui/material";
+import { Avatar, Button, Card, CardActions, CardContent, CardHeader, Grid,Icon,Typography } from "@mui/material";
 import { useCallback } from "react";
-import { useEffect,useState } from "react";
+import { useEffect,/* useState */ } from "react";
 import { useLang } from "../../Contexts/LangProvider";
 import { useLogin } from "../../Contexts/LoginProvider";
+import { dashboardlist } from "./dashboardlist";
 const DashBoard = () => {
   const {lang} = useLang();
   const {userData} = useLogin();
-  const [loading,setLoading] = useState({
-    general:true
-  })
-  const [cotizacion,setCotizacion] = useState({
+
+  /* const [cotizacion,setCotizacion] = useState({
     bcp:{
       compra: 0,
       venta: 0
@@ -19,17 +18,18 @@ const DashBoard = () => {
       venta: 0
     },
     fecha:""
-  });
+  }); */
   let ndate = new Date();
   let hours = ndate.getHours();
   let message = hours < 12 ? lang.buen_dia : hours < 18 ? lang.buenas_tardes : lang.buenas_noches;
 
   const getCotizacion = useCallback( async()=>{
-    setLoading({general:true});
+    //setCotizacion([])
+    /* setLoading({general:true});
     let res = await fetch ('https://dolar.melizeche.com/api/1.0/');
     let data = await res.json();
     setCotizacion(data?.dolarpy);
-    setLoading({general:false});
+    setLoading({general:false}); */
   },[])
 
   useEffect(() => {
@@ -57,30 +57,29 @@ const DashBoard = () => {
           </CardContent>
         </Card>
      </Grid>
-     <Grid item xs={12} sm={6} md={6} lg={4} xl={3} >
-     <Card >
+     {
+      dashboardlist.map((e)=>(
+        <Grid key={e.id} item xs={12} sm={6} md={3} lg={3} xl={3} >
+          <Card >
+          <CardHeader
+              avatar={
+                <Avatar>
+                  <Icon>{e.icon}</Icon>
+                </Avatar>
+              }
+              title= {e.title} 
+              subheader={e.description}
+            />
           <CardContent>
-            {
-              loading.general ?
-            <CircularProgress />
-              :
-            (<><Typography variant="h6">COTIZACION DEL DIA DOLAR AMERICANO</Typography>
-            <br />
-            <Typography variant="button">
-              Compra: {cotizacion?.bcp.compra}
-            </Typography>
-            <br />
-            <Typography variant="button">
-              Venta: {cotizacion?.bcp.venta}
-            </Typography>
-            <br />
-            </>)
-          }
-          </CardContent>
-        </Card>
-        
-     </Grid>
 
+          </CardContent>
+          <CardActions>
+            {e.button && <Button variant="contained">{e.buttontext}</Button>}
+          </CardActions>
+        </Card>
+     </Grid>
+      ))
+     }
     </Grid>
   )
 }
