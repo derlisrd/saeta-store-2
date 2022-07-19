@@ -13,6 +13,8 @@ const CierreResumen = ({datos,cargando}) => {
   const FALTANTE = (datos.saldoFinal - arqueo)>0 ? datos.saldoFinal - arqueo : 0  ;
   const SOBRANTE = (arqueo - datos.saldoFinal)> 0 ? arqueo - datos.saldoFinal : 0 ;
 
+
+  
   //console.log(datos);
   return (
     <Grid container spacing={2}>

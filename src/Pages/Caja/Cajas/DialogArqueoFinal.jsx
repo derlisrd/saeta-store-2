@@ -216,6 +216,8 @@ const DialogArqueoFinal = () => {
   const SOBRANTE = totalSumaMonedasArqueo - datos.saldoFinal > 0  ? totalSumaMonedasArqueo - datos.saldoFinal  : 0;
   
 const cerrar = ()=> {setDialogs({...dialogs,arqueoFinal:false}); setTotalSumaMonedasArqueo(0); setValoresMonedas({}); }
+
+
 return (
   <Dialog fullScreen open={dialogs.arqueoFinal} onClose={cerrar}>
     <DialogTitle>

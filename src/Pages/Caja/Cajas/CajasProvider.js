@@ -25,11 +25,14 @@ const CajasProvider = ({ children }) => {
 
   const [valoresMonedas,setValoresMonedas] = useState({})
 
+  const [valoresCierre,setValoresCierre] = useState([]);
+
   const initialDialogs = {
     editar: false,
     cierre:false,
     abrir: dialogQuery==="open"? true: false,
     cerrar: false,
+    resumenfinal:false,
     nuevo: dialogQuery==="new"? true: false,
     transferencia: false,
     arqueo: false,
@@ -384,7 +387,7 @@ const CajasProvider = ({ children }) => {
         setErrors,
         transferir,
         totalSumaMonedasArqueo, setTotalSumaMonedasArqueo,
-        datosCajaCierre,setDatosCajaCierre,arqueo,setArqueo,getLista,dialogQuery,dialogID,lang
+        datosCajaCierre,setDatosCajaCierre,arqueo,setArqueo,getLista,dialogQuery,dialogID,lang,valoresCierre,setValoresCierre
       }}
     >
       {children}
@@ -419,7 +422,7 @@ export const useCajas = () => {
     setErrors,
     transferir,
     totalSumaMonedasArqueo, setTotalSumaMonedasArqueo,
-    datosCajaCierre,setDatosCajaCierre,arqueo,setArqueo,getLista,dialogQuery,dialogID,lang
+    datosCajaCierre,setDatosCajaCierre,arqueo,setArqueo,getLista,dialogQuery,dialogID,lang,valoresCierre,setValoresCierre
   } = useContext(Contexto);
   return {
     cargas,valoresMonedas,setValoresMonedas,
@@ -447,7 +450,7 @@ export const useCajas = () => {
     setErrors,
     transferir,
     totalSumaMonedasArqueo, setTotalSumaMonedasArqueo,
-    datosCajaCierre,setDatosCajaCierre,arqueo,setArqueo,getLista,dialogQuery,dialogID,lang
+    datosCajaCierre,setDatosCajaCierre,arqueo,setArqueo,getLista,dialogQuery,dialogID,lang,valoresCierre,setValoresCierre
   };
 };
 

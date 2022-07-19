@@ -5,21 +5,32 @@ import { useCajas } from './CajasProvider';
 import NumberFormatCustom from "../../../Components/thirty/NumberFormatCustom";
 
 const DialogCierre = () => {
-    const {dialogs,setDialogs,lang,datosCajaCierre,funciones} = useCajas();
+    const {dialogs,setDialogs,lang,datosCajaCierre,funciones,setValoresCierre} = useCajas();
     const [loading,setLoading] = useState(true)
     const [inputsMonedas,setInputMonedas] = useState([])
     const cerrar = ()=>{ setDialogs({...dialogs,cierre:false});}
 
 
     const confirmarCierre = ()=>{
-        setDialogs({ ...dialogs, cierre: false, arqueoFinal: true });
+        setValoresCierre(inputsMonedas);
+        setDialogs({ ...dialogs, cierre: false, resumenfinal: true });
     }
 
-    const getLista = useCallback(async() => {
+    const change = (elem,index) =>{
+        let newinputmonedas = [...inputsMonedas]
+        const {value} = elem.target
+        newinputmonedas[index].cantidad = value;
+        setInputMonedas(newinputmonedas);
+    }
+    
+
+const getLista = useCallback(async() => {
     if(dialogs.cierre){
         let id = datosCajaCierre.id_caja;
         let res = await Promise.all([
-            APICALLER.get({table:"cajas_monedas",include:"monedas",on:"id_moneda_caja_moneda,id_moneda",where:`id_caja_moneda,=,${id}`})
+            APICALLER.get({table:"cajas_monedas",include:"monedas",on:"id_moneda_caja_moneda,id_moneda",where:`id_caja_moneda,=,${id}`,
+            fields:`abreviatura_moneda,nombre_moneda,monto_no_efectivo,id_caja_moneda,id_cajas_moneda`
+        })
             //APICALLER.get({table:"cajas_monedas",include:"monedas",on:"id_moneda_caja_moneda,id_moneda",where:`id_caja_moneda,=,${id}`}),
         ])
         let resp = res[0];
@@ -35,19 +46,15 @@ const DialogCierre = () => {
         }
         setLoading(false)
     }
-  },[datosCajaCierre,dialogs]) 
+},[datosCajaCierre,dialogs]) 
 
-const change = (elem,index) =>{
-    let newinputmonedas = [...inputsMonedas]
-    const {value} = elem.target
-    newinputmonedas[index].cantidad = value;
-    setInputMonedas(newinputmonedas);
-}
+
+
+
 
 useEffect(() => {
     const ca = new AbortController(); let isActive = true;
-    if (isActive) {getLista();}
-    return () => {isActive = false; ca.abort();};
+    if (isActive) {getLista();} return () => {isActive = false; ca.abort();};
   }, [getLista]);
 
 

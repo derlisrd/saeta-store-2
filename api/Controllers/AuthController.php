@@ -201,7 +201,7 @@ class AuthController {
    
 
         try {
-            $decode = JWT::decode($token, new Key($_ENV['SECRET_KEY'], $_ENV['ENCRYTED']));
+            $decode = JWT::decode($token, new Key(env('SECRET_KEY'), env('ENCRYTED')));
 
             if ($decode->aud !== self::Aud() || $decode->iss !== DOMAIN_AUTH) {
                 return false;
@@ -236,7 +236,7 @@ class AuthController {
                 $token,
                 new Key(self::$secret_key,self::$encrypt)
             ); */
-            $decode = JWT::decode($token, new Key($_ENV['SECRET_KEY'], $_ENV['ENCRYTED']));
+            $decode = JWT::decode($token, new Key(env('SECRET_KEY'), env('ENCRYTED')));
 
             if ($decode->aud !== self::Aud() || $decode->iss !== DOMAIN_AUTH) {
                 return false;
@@ -264,7 +264,7 @@ class AuthController {
     public static function GenerateToken($data){
 
         $time = new DateTimeImmutable();
-        $expire = $time->modify('+16 minutes')->getTimestamp();
+        $expire = $time->modify('+30 minutes')->getTimestamp();
         $serverName = DOMAIN_AUTH;
 
         $token = array(

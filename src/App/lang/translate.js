@@ -8,6 +8,7 @@ export const translate = {
         descuento:"Descuento",
         confirmar_cierre:"Confirmar cierre",
         cierre_de_caja:"Cierre de caja",
+        resumen_cierre_caja:"Resumen de cierre de caja",
         Error_404:"Error 404",
         informes_productos_vendidos:"Informes de productos vendidos",
         sub_informes_productos_vendidos:"Lista e informes de productos vendidos",

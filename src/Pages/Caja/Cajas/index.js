@@ -7,8 +7,9 @@ import ListaCajas from './ListaCajas'
 //import DialogArqueo from './DialogArqueo'
 import DialogApertura from './DialogApertura'
 
-import DialogArqueoFinal from './DialogArqueoFinal'
+//import DialogArqueoFinal from './DialogArqueoFinal'
 import DialogCierre from './DialogCierre'
+import ResumenFinal from './ResumenFinal'
 
 const Cajas = () => {
   return (
@@ -18,7 +19,7 @@ const Cajas = () => {
         <DialogApertura />
         <DialogEditar />
         <DialogCierre />
-        <DialogArqueoFinal />
+        <ResumenFinal />
 
     </CajasProvider>
   )
