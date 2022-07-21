@@ -29,7 +29,7 @@ const getLista = useCallback(async() => {
         let id = datosCajaCierre.id_caja;
         let res = await Promise.all([
             APICALLER.get({table:"cajas_monedas",include:"monedas",on:"id_moneda_caja_moneda,id_moneda",where:`id_caja_moneda,=,${id}`,
-            fields:`abreviatura_moneda,nombre_moneda,monto_no_efectivo,id_caja_moneda,id_cajas_moneda,monto_caja_moneda`
+            fields:`abreviatura_moneda,nombre_moneda,monto_no_efectivo,id_caja_moneda,id_cajas_moneda,monto_caja_moneda,id_moneda_caja_moneda,monto_inicial_caja`
         })
             //APICALLER.get({table:"cajas_monedas",include:"monedas",on:"id_moneda_caja_moneda,id_moneda",where:`id_caja_moneda,=,${id}`}),
         ])
@@ -39,7 +39,7 @@ const getLista = useCallback(async() => {
 
             resp.results.forEach(elem => {
                 newresult.push({
-                    ...elem,cantidad:0,monto_caja_moneda: parseFloat(elem.monto_caja_moneda)
+                    ...elem,cantidad:0,monto_caja_moneda: parseFloat(elem.monto_caja_moneda),monto_no_efectivo:parseFloat(elem.monto_no_efectivo),monto_inicial_caja:parseFloat(elem.monto_inicial_caja)
                 })    
             });
             setInputMonedas(newresult)
