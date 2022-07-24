@@ -319,7 +319,29 @@ const CajasProvider = ({ children }) => {
     setCargas({ ...cargas, abrir: false });
   };
 
+  const cerrarCaja = async(registros)=>{
+    let id = datosCajaCierre.id_caja;
+    let promesas = [
+      APICALLER.update({
+        token:token_user,
+        table:"cajas",data:{estado_caja:"close",fecha_cierre:funciones.getFechaHorarioString()},id
+      })
+    ];
 
+    registros.forEach(e => {
+      promesas.push(APICALLER.update({
+        token:token_user,table:"cajas_monedas",id: e.id_cajas_moneda,
+        data:{
+          monto_cierre_caja:e.declarado
+        }
+      }))
+    });
+    let res = await Promise.all(promesas);
+    if(res[0].response==="ok"){
+      setDialogs({...dialogs,resumenfinal:false});
+      getLista()
+    } 
+  }
 
 
   const getLista = useCallback(async()=>{
@@ -363,7 +385,7 @@ const CajasProvider = ({ children }) => {
     <Contexto.Provider
       value={{
         cargas,valoresMonedas,setValoresMonedas,
-        lista,
+        lista,cerrarCaja,
         listaMonedas,
         listaUsers,
         listaRegistrosMonedas,
@@ -398,7 +420,7 @@ const CajasProvider = ({ children }) => {
 export const useCajas = () => {
   const {
     cargas,valoresMonedas,setValoresMonedas,
-    lista,
+    lista,cerrarCaja,
     listaMonedas,
     listaUsers,
     listaRegistrosMonedas,
@@ -426,7 +448,7 @@ export const useCajas = () => {
   } = useContext(Contexto);
   return {
     cargas,valoresMonedas,setValoresMonedas,
-    lista,
+    lista,cerrarCaja,
     listaMonedas,
     listaUsers,
     listaRegistrosMonedas,

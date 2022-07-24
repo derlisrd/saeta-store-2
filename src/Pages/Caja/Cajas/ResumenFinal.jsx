@@ -6,7 +6,7 @@ import ResumenFinalDatos from './ResumenFinalDatos';
 
 const ResumenFinal = () => {
 
-    const {dialogs,setDialogs,lang,datosCajaCierre,valoresCierre} = useCajas();
+    const {dialogs,setDialogs,lang,datosCajaCierre,valoresCierre,cerrarCaja} = useCajas();
     const [cargando,setCargando] = useState(true)
 
     const [datos,setDatos] = useState({
@@ -59,7 +59,8 @@ const ResumenFinal = () => {
                 monto_inicial_caja:parseFloat(i.monto_inicial_caja),
                 total_ingreso:0,
                 total_ingreso_no_efectivo:0,
-                total_egreso:0
+                total_egreso:0,
+                declarado:parseFloat(i.cantidad)
               })
             })
 
@@ -146,7 +147,7 @@ const ResumenFinal = () => {
       <Button variant="contained" size="large" >
        {lang.volver_arqueo}
       </Button>
-      <Button variant="contained" size="large">
+      <Button variant="contained" size="large" onClick={()=>{cerrarCaja(datos.registros)}}>
         {lang.confirmar}
       </Button>
       <Button variant="contained" size="large" onClick={cerrar}>

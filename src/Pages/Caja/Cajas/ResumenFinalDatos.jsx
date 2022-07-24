@@ -3,8 +3,7 @@ import { Fragment } from "react";
 import { useCajas } from "./CajasProvider";
 
 function ResumenFinalDatos({datos}) {
-    const {funciones,lang,valoresCierre} = useCajas();
-    console.log(valoresCierre);
+    const {funciones,lang} = useCajas();
     return (  <Fragment>
         {
             datos.registros.map((dato,index)=>(
@@ -47,7 +46,7 @@ function ResumenFinalDatos({datos}) {
                   {lang.total_egreso} : <b>{funciones.numberFormat(dato.total_egreso)}</b>
                 </Grid>
                 <Grid item xs={12} sm={6} md={3}>
-                  {lang.total_declarado} : <b>{funciones.numberFormat(dato.total_egreso)}</b>
+                  {lang.total_declarado} : <b>{funciones.numberFormat(dato.declarado)}</b>
                 </Grid>
               </Fragment>
             ))
