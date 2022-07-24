@@ -1,11 +1,12 @@
 import { Alert, Button, Dialog, DialogActions, DialogContent, DialogTitle, Grid, LinearProgress, Typography } from '@mui/material';
-import React, { Fragment, useCallback, useEffect,useState } from 'react'
+import  {  useCallback, useEffect,useState } from 'react'
 import { APICALLER } from '../../../Services/api';
 import { useCajas } from './CajasProvider';
+import ResumenFinalDatos from './ResumenFinalDatos';
 
 const ResumenFinal = () => {
 
-    const {dialogs,setDialogs,lang,datosCajaCierre,funciones,valoresCierre} = useCajas();
+    const {dialogs,setDialogs,lang,datosCajaCierre,valoresCierre} = useCajas();
     const [cargando,setCargando] = useState(true)
 
     const [datos,setDatos] = useState({
@@ -38,7 +39,7 @@ const ResumenFinal = () => {
             APICALLER.get({table:'cajas_registros',fields:"id_cajas_registro,descripcion_registro,tipo_registro",where:"tipo_registro,<,2"})
             ])
 
-            let movimiento = promises[0], usuarios =promises[1], facturas = promises[2], registro = promises[3], responsable = usuarios.results[0].nombre_user;
+            let movimiento = promises[0], usuarios =promises[1],  registro = promises[3], responsable = usuarios.results[0].nombre_user;
             
             let registros = registro.results;
             
@@ -100,7 +101,6 @@ const ResumenFinal = () => {
       }, [datosCajaCierre, dialogs,valoresCierre]);
 
 
-      console.log(datos);
 
     useEffect(() => {
         const ca = new AbortController(); let isActive = true;
@@ -118,7 +118,12 @@ const ResumenFinal = () => {
     </DialogTitle>
     <DialogContent dividers>
     <Grid container spacing={2}>
-      
+      {
+        cargando ? <Grid item xs={12}>
+          <LinearProgress />
+        </Grid>
+        :
+        <>
           <Grid item xs={12} sm={12} md={6}>
             <Alert variant='outlined' icon={false}>
               <Typography variant='button'>{lang.nombre_caja}: {datos.nombre_caja}</Typography>
@@ -131,9 +136,9 @@ const ResumenFinal = () => {
             <Typography variant='button'>{lang.fecha_apertura}: {datos.fecha_apertura}</Typography>
             </Alert>
           </Grid>
-
           <ResumenFinalDatos datos={datos} />
-
+        </>
+      }
 
     </Grid>
     </DialogContent>

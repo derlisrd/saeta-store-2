@@ -4,10 +4,11 @@ import { useEffect,/* useState */ } from "react";
 import { useLang } from "../../Contexts/LangProvider";
 import { useLogin } from "../../Contexts/LoginProvider";
 import { dashboardlist } from "./dashboardlist";
+import useGoto from "../../Hooks/useGoto"
 const DashBoard = () => {
   const {lang} = useLang();
   const {userData} = useLogin();
-
+  const navigate = useGoto()
   /* const [cotizacion,setCotizacion] = useState({
     bcp:{
       compra: 0,
@@ -74,7 +75,7 @@ const DashBoard = () => {
             {e.text}
           </CardContent>
           <CardActions>
-            {e.button && <Button variant="contained">{e.buttontext}</Button>}
+            {e.button && <Button variant="contained" onClick={()=>{navigate.to(e.url)}}>{e.buttontext}</Button>}
           </CardActions>
         </Card>
      </Grid>

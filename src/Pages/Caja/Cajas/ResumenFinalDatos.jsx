@@ -1,7 +1,10 @@
 import { Grid,Alert,Typography } from "@mui/material";
 import { Fragment } from "react";
+import { useCajas } from "./CajasProvider";
 
 function ResumenFinalDatos({datos}) {
+    const {funciones,lang,valoresCierre} = useCajas();
+    console.log(valoresCierre);
     return (  <Fragment>
         {
             datos.registros.map((dato,index)=>(
@@ -34,14 +37,17 @@ function ResumenFinalDatos({datos}) {
                   ))
                 }
                 </Grid>
-                <Grid item xs={12} sm={12} md={4}>
-                  TOTAL INGRESO : {dato.total_ingreso}
+                <Grid item xs={12} sm={6} md={3}>
+                  {lang.total_ingreso} : <b>{funciones.numberFormat(dato.total_ingreso)}</b>
                 </Grid>
-                <Grid item xs={12} sm={12} md={4}>
-                  TOTAL SIN EFECTIVO : {dato.total_ingreso_no_efectivo}
+                <Grid item xs={12} sm={6} md={3}>
+                  {lang.total_sin_efectivo} : <b>{funciones.numberFormat(dato.total_ingreso_no_efectivo)}</b>
                 </Grid>
-                <Grid item xs={12} sm={12} md={4}>
-                  TOTAL EGRESO : {dato.total_egreso}
+                <Grid item xs={12} sm={6} md={3}>
+                  {lang.total_egreso} : <b>{funciones.numberFormat(dato.total_egreso)}</b>
+                </Grid>
+                <Grid item xs={12} sm={6} md={3}>
+                  {lang.total_declarado} : <b>{funciones.numberFormat(dato.total_egreso)}</b>
                 </Grid>
               </Fragment>
             ))
