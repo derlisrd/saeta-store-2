@@ -25,9 +25,10 @@ export const dashboardlist = [
         id:3,
         title:"Clientes",
         description:"",
-        text:"",
+        text:(<h5>Listado de clientes</h5>),
         icon:{name:"people", color:"primary.main"},
         button:true,
+        url:"clientes",
         buttontext:"Lista"
     },
     {
@@ -37,6 +38,7 @@ export const dashboardlist = [
         text:(<h5>Lista de cotizaciones</h5>),
         icon:{name:"account_balance", color:"primary.main"},
         button:true,
+        url:"monedas",
         buttontext:"Ver"
     },
 ];

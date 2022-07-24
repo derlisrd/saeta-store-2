@@ -319,6 +319,10 @@ const CajasProvider = ({ children }) => {
     setCargas({ ...cargas, abrir: false });
   };
 
+
+
+
+  
   const cerrarCaja = async(registros)=>{
     let id = datosCajaCierre.id_caja;
     let promesas = [

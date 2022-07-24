@@ -54,9 +54,7 @@ const ListaCajas = () => {
   };
 
   const abrirApertura = (f) => {
-    let fo = {...f}
-    fo.monto_inicial = f.monto_caja;
-    setFormAbrir(fo);
+    setFormAbrir(f);
     setDialogs({ ...dialogs, abrir: true });
   };
 
