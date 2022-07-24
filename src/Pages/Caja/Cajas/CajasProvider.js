@@ -274,9 +274,6 @@ const CajasProvider = ({ children }) => {
   const aperturaCaja = async (f) => {
     setCargas({ ...cargas, abrir: true });
     const IDCAJA = dialogID==="" ? f.id_caja : dialogID;
-    /*const listaCajas = [...lista];
-     let filter = listaCajas.filter(e=> e.id_caja=== IDCAJA)
-    let dataCaja = filter[0]; */
     let formCaja = {
      estado_caja : "open",
      fecha_apertura: funciones.getFechaHorarioString(),
@@ -322,7 +319,7 @@ const CajasProvider = ({ children }) => {
 
 
 
-  
+
   const cerrarCaja = async(registros)=>{
     let id = datosCajaCierre.id_caja;
     let promesas = [
