@@ -36,15 +36,18 @@ const RegistrarMovimiento = () => {
   const getListaRegistros = useCallback(async () => {
     if (dialog.registrar) {
 
-      let res = await Promise.all([await APICALLER.get({
-        table: "cajas",include:'cajas_users',
-        on: "id_caja_caja,id_caja",
-        where: `id_user_caja,=,${id_user},and,estado_caja,=,1`,
-        fields: "nombre_caja,id_caja,monto_caja",
-      }),await APICALLER.get({ table: "cajas_registros",where:"show_registro,=,1" })])
-      
-      res[0].response === "ok" ? setListaCajas(res[0].results) : console.log(res[0]);
-      "ok"===res[1].response?setListaRegistros(res[1].results):console.log(res[1]);
+      let res = await Promise.all([ 
+      APICALLER.get({
+        table: "cajas",include:'cajas_users,cajas_monedas,monedas',
+        on: "id_caja_caja,id_caja,id_caja,id_caja_moneda,id_moneda_caja_moneda,id_moneda",
+        where: `id_user_caja,=,${id_user},and,estado_caja,=,'open'`,
+        fields: "nombre_caja,id_caja,monto_caja_moneda,nombre_moneda,id_caja,id_cajas_moneda"}), 
+      APICALLER.get({ table: "cajas_registros",where:"show_registro,=,1" }),
+      APICALLER.get({ table: "cajas",where: `id_user_caja,=,${id_user},and,estado_caja,=,'open'`})
+    ])
+
+      res[2].response === "ok" ? setListaCajas(res[0].results) : console.log(res[0]);
+      "ok"===res[1].response?setListaRegistros(res[1].results):console.log(res[1]); 
     }
     setCargando(false);
   }, [dialog, id_user]);
