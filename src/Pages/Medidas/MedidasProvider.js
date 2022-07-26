@@ -1,18 +1,14 @@
-import {
-  useState,
-  useEffect,
-  useContext,
-  createContext,
-  useCallback,
-} from "react";
+import {useState,useEffect,useContext,createContext,useCallback} from "react";
 import swal from "sweetalert";
 import { APICALLER } from "../../Services/api";
 import { useLogin } from "../../Contexts/LoginProvider";
+import { useLang } from "../../Contexts/LangProvider";
 
 const Contexto = createContext();
 
 const MedidasProvider = ({ children }) => {
   const { userData } = useLogin();
+  const {lang} = useLang()
   const {token_user} = userData
   const [cargando, setCargando] = useState(true);
   const [lista, setLista] = useState([]);
@@ -36,7 +32,7 @@ const MedidasProvider = ({ children }) => {
       delete form.id_unidad_medida;
       let res = await APICALLER.insert({ table, data, token });
       res.response === "ok"
-        ? swal({ text: "Agregado correctamente", icon: "success", timer: 1800 })
+        ? swal({ text: lang.agregado_correctamente, icon: "success", timer: 1800 })
         : console.log(res);
     } else {
       let res = await APICALLER.update({
@@ -47,7 +43,7 @@ const MedidasProvider = ({ children }) => {
       });
       res.response === "ok"
         ? swal({
-            text: "Actualizado correctamente",
+            text: lang.editado_correctamente,
             icon: "success",
             timer: 1800,
           })
@@ -87,7 +83,7 @@ const MedidasProvider = ({ children }) => {
         Guardar,
         dialog,
         setDialog,
-        Clear,
+        Clear,lang
       }}
     >
       {children}
@@ -106,7 +102,7 @@ export const useMedidas = () => {
     Guardar,
     dialog,
     setDialog,
-    Clear,
+    Clear,lang
   } = useContext(Contexto);
   return {
     cargando,
@@ -118,7 +114,7 @@ export const useMedidas = () => {
     Guardar,
     dialog,
     setDialog,
-    Clear,
+    Clear,lang
   };
 };
 
