@@ -1,19 +1,30 @@
 import { Grid, Icon, InputAdornment, TextField,Checkbox,FormControlLabel, Typography, Tooltip, FormControl, InputLabel, Select, MenuItem, List, ListItemButton, ListItemIcon, ListItemText, Button, ListItem,  ListItemAvatar, IconButton } from "@mui/material";
-import React from "react";
+import React,{useState} from "react";
 import NumberFormatCustom from "../../../../Components/thirty/NumberFormatCustom";
 import { useProductForm } from "./ProductFormProvider";
 
 const Precios = () => {
-  const {change,formulario,changeCheck,listas,dialogs,setDialogs,cargarStock,cantidadRef,stock,borrarStock} = useProductForm();
+  const {change,formulario,changeCheck,listas,dialogs,setDialogs,cargarStock,cantidadRef,stock,borrarStock,lang,setFormulario} = useProductForm();
 
-
+  const [percent,setPercent] = useState(0)
+  const changePercent = e=>{
+    const {value} = e.target
+    let percentaje = parseInt(value);
+    let form = {...formulario}
+    let costo = parseFloat(form.costo_producto) 
+    let precionuevo =  (( costo * percentaje)/100 + costo );
+    form.precio_producto = precionuevo;
+    form.preciom_producto = precionuevo;
+    setFormulario(form);
+    setPercent(value)
+  }
 
   return (
     <Grid container spacing={2} alignItems='center' >
       <Grid item xs={12}>
-        <Typography variant="button">PRECIOS</Typography>
+        <Typography variant="button">{lang.precios}: </Typography>
       </Grid>
-      <Grid item xs={12} sm={12} md={3}>
+      <Grid item xs={12} sm={6} md={3}>
             <TextField
               onChange={change}
               fullWidth
@@ -38,7 +49,7 @@ const Precios = () => {
             />
           </Grid>
 
-          <Grid item xs={12} sm={12} md={3}>
+          <Grid item xs={12} sm={6} md={3}>
             <TextField
               fullWidth
               onChange={change}
@@ -55,13 +66,12 @@ const Precios = () => {
                 inputProps: { min: 0 },
                 inputComponent: NumberFormatCustom,
               }}
-              variant="outlined"
               error={false}
-              helperText="Precio del producto"
+              helperText={lang.precio_del_producto}
             />
           </Grid>
 
-          <Grid item xs={12} sm={12} md={3}>
+          <Grid item xs={12} sm={6} md={3}>
             <TextField
               fullWidth
               onChange={change}
@@ -72,15 +82,32 @@ const Precios = () => {
               InputProps={{
                 startAdornment: (
                   <InputAdornment position="start">
-                    <Icon color="primary">point_of_sale</Icon>
+                    <Icon color="info">point_of_sale</Icon>
                   </InputAdornment>
                 ),
                 inputProps: { min: 0 },
                 inputComponent: NumberFormatCustom,
               }}
-              variant="outlined"
               error={false}
               helperText="Precio margen descuento"
+            />
+          </Grid>
+          <Grid item xs={12} sm={6} md={3}>
+          <TextField
+              fullWidth
+              onChange={changePercent}
+              autoComplete="off"
+              value={percent}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <Icon color="primary">percent</Icon>
+                  </InputAdornment>
+                ),
+                inputProps: { min: 0, max: 100, maxLength:3},
+                inputComponent: NumberFormatCustom,
+              }}
+              helperText={lang.generar_precio_porcentaje}
             />
           </Grid>
             {formulario.tipo_producto==="1" &&<>
@@ -105,12 +132,11 @@ const Precios = () => {
                 inputProps: { min: 0 },
                 inputComponent: NumberFormatCustom,
               }}
-              variant="outlined"
             />
           </Grid>
           <Grid item xs={12} sm={12} md={4}>
             <FormControl fullWidth>
-                  <InputLabel variant="outlined">Almacenado en depósito</InputLabel>
+                  <InputLabel >Almacenado en depósito</InputLabel>
                   <Select name="id_deposito_producto" value={formulario.id_deposito_producto} onChange={change} 
                   >
                     {
