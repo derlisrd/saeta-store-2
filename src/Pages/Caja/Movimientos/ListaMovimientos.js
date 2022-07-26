@@ -5,24 +5,14 @@ import { useState } from "react";
 import { funciones } from "../../../Functions";
 
 const ListaMovimientos = () => {
-  const { lang,
-    setDesdeFecha,
-    setHastaFecha,
-    setDialog,
-    dialog,
-    setForm,
-    lista,
-    fecha,
-    setIdCaja,
-    listaCajas,
-    cargando,
-    movimientos,setTipoRegistro
+  const { lang,setDesdeFecha,setHastaFecha,setDialog,dialog,setForm,lista,fecha,setIdCaja,listaCajas,cargando,movimientos,setTipoRegistro, listaMonedas,setMonedaFilter
   } = useMovimientos();
 
   const [desde, setDesde] = useState(fecha);
   const [hasta, setHasta] = useState(fecha);
   const [idCajita, setIdCajita] = useState("");
   const [idRegistrito,setIdRegistrito] = useState("");
+  const [idMoneda,setIdMoneda] = useState("")
   const changeDatadesde = (e) => setDesde(e.target.value);
   const changeDatahasta = (e) => setHasta(e.target.value);
 
@@ -31,6 +21,7 @@ const ListaMovimientos = () => {
     setDesdeFecha(desde);
     setIdCaja(idCajita);
     setTipoRegistro(idRegistrito);
+    setMonedaFilter(idMoneda);
   };
 
   
@@ -117,7 +108,7 @@ const ListaMovimientos = () => {
           name="hastaFecha"
         />
       </Grid>
-      <Grid item xs={12} sm={6} md={3}>
+      <Grid item xs={12} sm={4} md={2}>
         <FormControl fullWidth>
           <InputLabel>{lang.seleccione_caja}</InputLabel>
           <Select
@@ -136,7 +127,7 @@ const ListaMovimientos = () => {
           </Select>
         </FormControl>
       </Grid>
-      <Grid item xs={12} sm={6} md={3}>
+      <Grid item xs={12} sm={4} md={2}>
         <FormControl fullWidth>
           <InputLabel>{lang.seleccione_movimiento}</InputLabel>
           <Select
@@ -150,6 +141,25 @@ const ListaMovimientos = () => {
               <MenuItem value={"1"}>{lang.ingreso}</MenuItem>
               <MenuItem value={"0"}>{lang.egreso}</MenuItem>
               <MenuItem value={"3"}>{lang.cierre}</MenuItem>
+              
+          </Select>
+        </FormControl>
+      </Grid>
+      <Grid item xs={12} sm={4} md={2}>
+        <FormControl fullWidth>
+          <InputLabel>{lang.moneda}</InputLabel>
+          <Select
+            name="id_moneda_movimiento"
+            onChange={(e) => { setIdMoneda(e.target.value)}}
+            value={idMoneda}
+          >
+            <MenuItem value="">Todos</MenuItem>
+
+            {listaMonedas.map((item, index) => (
+              <MenuItem key={index} value={item.id_moneda}>
+                {item.nombre_moneda}
+              </MenuItem>
+            ))}
               
           </Select>
         </FormControl>

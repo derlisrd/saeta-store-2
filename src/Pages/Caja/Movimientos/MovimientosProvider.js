@@ -29,6 +29,8 @@ const MovimientosProvider = ({ children }) => {
   const [listaCajas, setListaCajas] = useState([]);
   const [idCaja, setIdCaja] = useState("");
   const [tipoRegistro,setTipoRegistro] = useState("");
+  const [monedaFilter,setMonedaFilter] = useState("");
+  const [listaMonedas,setListaMonedas] = useState([]);
 
   const initialIngresos = {
     ingresoEfectivo: 0,
@@ -40,16 +42,27 @@ const MovimientosProvider = ({ children }) => {
 
   const getData = useCallback(async () => {
     setCargando(true);
+    const storeMonedas = localStorage.getItem("dataMonedas");
     const existIDCaja = idCaja !== "" ? `,and,id_caja,=,${idCaja}` : "";
     const tipo_Registro = tipoRegistro !== "" ? `,and,tipo_registro,=,${tipoRegistro}` : "";
-    const res = await APICALLER.get({
+    const monedafiltrada = monedaFilter !== "" ? `,and,id_moneda_movimiento,=,${monedaFilter}` : "";
+    let promises = [APICALLER.get({
       table: "cajas_movimientos",
       include: "cajas,cajas_registros,users",
       on: "id_caja,id_caja_movimiento,id_cajas_registro,id_tipo_registro,id_user,id_user_movimiento",
       fields: `nombre_caja,id_cajas_movimiento,nombre_user,tipo_registro,fecha_movimiento,monto_movimiento,monto_sin_efectivo,descripcion_registro,detalles_movimiento`,
-      where: `fecha_movimiento,between,'${desdeFecha} 00:00:00',and,'${hastaFecha} 23:59:59'${existIDCaja} ${tipo_Registro}`,
+      where: `fecha_movimiento,between,'${desdeFecha} 00:00:00',and,'${hastaFecha} 23:59:59'${existIDCaja} ${tipo_Registro} ${monedafiltrada}`,
       sort: "-fecha_movimiento",
-    });
+    })]
+    if(storeMonedas){
+      setListaMonedas(JSON.parse(storeMonedas))
+    }
+    else{
+      promises.push(APICALLER.get({table:"monedas"}));
+    }
+
+    let getpromises = await Promise.all(promises);
+    const res = getpromises[0];
 
     if (res.response === "ok") {
       setLista(res.results);
@@ -72,12 +85,12 @@ const MovimientosProvider = ({ children }) => {
         ingresoTotal: total,
         egresos: egresosE,
       });
-      
+      promises.length>1 && setListaMonedas(promises[1].results)
     } else {
       console.log(res);
     }
     setCargando(false);
-  }, [idCaja, desdeFecha, hastaFecha,tipoRegistro]);
+  }, [idCaja, desdeFecha, hastaFecha,tipoRegistro,monedaFilter]);
 
   const getCajas = useCallback(async () => {
     let cajas = await APICALLER.get({
@@ -121,7 +134,7 @@ const MovimientosProvider = ({ children }) => {
         setIdCaja,setTipoRegistro,
         getData,
         movimientos,
-        form, setForm,initialForm
+        form, setForm,initialForm,listaMonedas,setMonedaFilter
       }}
     >
       {children}
@@ -147,7 +160,7 @@ export const useMovimientos = () => {
     idCaja,
     setIdCaja,setTipoRegistro,
     getData,
-    movimientos,form, setForm,initialForm
+    movimientos,form, setForm,initialForm,listaMonedas,setMonedaFilter
   } = useContext(Contexto);
   return {lang,
     cargando,
@@ -166,7 +179,7 @@ export const useMovimientos = () => {
     idCaja,setTipoRegistro,
     setIdCaja,
     getData,
-    movimientos,form, setForm,initialForm
+    movimientos,form, setForm,initialForm,listaMonedas,setMonedaFilter
   };
 };
 

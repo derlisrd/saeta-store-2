@@ -271,40 +271,40 @@ const CajasProvider = ({ children }) => {
 
 
 
-  const aperturaCaja = async (f) => {
+  const aperturaCaja = async (f,monedas) => {
     setCargas({ ...cargas, abrir: true });
     const IDCAJA = dialogID==="" ? f.id_caja : dialogID;
+
     let formCaja = {
      estado_caja : "open",
      fecha_apertura: funciones.getFechaHorarioString(),
      ult_mov_caja: funciones.getFechaHorarioString(), 
-     monto_inicial: f.monto_inicial,
-     monto_caja: f.monto_inicial
     }
+    let detalles = "Apertura de caja. ";    
+    let promises = [
+      APICALLER.update({table: "cajas",data: formCaja,id: IDCAJA,token: token_user}),
+    ]
+
+    monedas.forEach(e=>{
+      promises.push(APICALLER.update({token:token_user,table:"cajas_monedas",id:e.id_cajas_moneda, 
+      data:{monto_inicial_caja:e.cantidad,monto_caja_moneda:e.cantidad}
+    }))
+      detalles += ` Declarado ${e.nombre_moneda}: ${e.cantidad}`;
+    })
     let mov = {
       id_caja_movimiento: IDCAJA,
       id_user_movimiento: id_user,
       id_tipo_registro: "3", // 3 ES APERTURA DE CAJA
-      monto_movimiento: '0',
-      monto_sin_efectivo: "0",
-      detalles_movimiento: "Apertura de caja",
-      fecha_movimiento: f.fecha_apertura,
+      monto_movimiento: 0,
+      monto_sin_efectivo: 0,
+      detalles_movimiento: detalles,
+      fecha_movimiento: funciones.getFechaHorarioString(),
     }
-    let arqueo = {
-      id_caja_arqueo: IDCAJA,
-      monto_arqueo: f.monto_inicial,
-      tipo_arqueo:"1",
-      id_user_arqueo:id_user,
-      fecha_arqueo:funciones.getFechaHorarioString()
-    }
-    let res = await Promise.all([
-      APICALLER.update({table: "cajas",data: formCaja,id: IDCAJA,token: token_user}),
-      APICALLER.insert({table: "cajas_movimientos",data: mov,token: token_user}), 
-      APICALLER.insert({table:"cajas_arqueos",token:token_user,data:arqueo}) 
-    ])
+    promises.push(APICALLER.insert({table: "cajas_movimientos",data: mov,token: token_user}) )
+    let res = await Promise.all(promises)
     
-    if(res[1].response==='ok' && res[0].response==='ok'){
-      swal({text: lang.caja_abierta_correctamente,icon: "success",}).then(()=>{
+    if(res[0].response==='ok'){
+      swal({text: lang.caja_abierta_correctamente,icon: "success",timer:3000}).then(()=>{
         if(dialogQuery==="open"){
           navigate.to("ventas");
         }
@@ -328,7 +328,7 @@ const CajasProvider = ({ children }) => {
         table:"cajas",data:{estado_caja:"close",fecha_cierre:funciones.getFechaHorarioString()},id
       })
     ];
-
+    let detalles = "Cierre de caja. ";
     registros.forEach(e => {
       promesas.push(APICALLER.update({
         token:token_user,table:"cajas_monedas",id: e.id_cajas_moneda,
@@ -336,12 +336,27 @@ const CajasProvider = ({ children }) => {
           monto_cierre_caja:e.declarado
         }
       }))
+      detalles += ` Declarado ${e.abreviatura_moneda}: ${e.declarado} . `;
     });
+    let datos_cierre = {
+      id_caja_movimiento: id,
+      id_user_movimiento: id_user,
+      id_tipo_registro: "9", // 9 es cierre
+      monto_movimiento: 0,
+      fecha_movimiento: funciones.getFechaHorarioString(),
+      monto_sin_efectivo: 0,
+      detalles_movimiento: detalles
+    };
+
+    promesas.push(APICALLER.insert({token:token_user,table:"cajas_movimientos",data:datos_cierre}));
     let res = await Promise.all(promesas);
     if(res[0].response==="ok"){
       setDialogs({...dialogs,resumenfinal:false});
+      swal({text: lang.caja_cerrada_correctamente,icon: "success",timer:3000})
       getLista()
+      localStorage.removeItem("facturasStorage")
     } 
+     
   }
 
 

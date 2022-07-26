@@ -206,6 +206,7 @@ export const translate = {
         atras:"Atras",
         habilitacion_y_apertura_de_cajas:"Habilitacion y apertura de cajas",
         caja_abierta_correctamente:"Caja abierta correctamente",
+        caja_cerrada_correctamente: "Caja cerrada correctamente",
         opciones:"Opciones",
         lista_de_cajas:"Lista de cajas",
         sin_registros:"Sin registros",

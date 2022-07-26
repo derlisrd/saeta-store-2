@@ -15,7 +15,7 @@ const DialogApertura = () => {
     const change = (e,i) => {
         const { value } = e.target;
         let array = [...inputsMonedas];
-        array[i].cantidad = value
+        array[i].cantidad = parseFloat(value)
         setInputsMonedas(array);
       };
     
@@ -23,50 +23,42 @@ const DialogApertura = () => {
 
 
     const verificar = ()=>{
-        const f = {...formAbrir}
-        delete f.nombre_caja;
-        delete f.nombre_user;
-        delete f.nombre_moneda;
-        delete f.abreviatura_moneda;
-        f.ult_mov_caja = funciones.getFechaHorarioString();
-        f.estado_caja="1";
-        f.fecha_apertura = funciones.getFechaHorarioString()
-        if(parseFloat(f.monto_inicial)<0){
-            setErrors({...errors,abrir:true,abrirMensaje:lang.long_no_negativo});
-            return false;
-          }
         setErrors({...errors,abrir:false,abrirMensaje:""});
-        aperturaCaja(f);
+        const f = {...formAbrir}
+        aperturaCaja(f,inputsMonedas);
     }
 
     const cerrar = ()=>{ setDialogs({...dialogs,abrir:false});  }
 
 
     const getDatas = useCallback(async()=>{
-
       if(dialogs.abrir){
+        
+        let id_caja;
         if(dialogQuery==='open'){
           let listaCajas = [...lista];
           let index = listaCajas.findIndex(e=> e.id_caja === dialogID);
-          if(listaCajas[index]){
+          if(index>=0){
             let f = listaCajas[index];
-            f.monto_inicial = f.monto_caja; 
             setFormAbrir(f);
+            id_caja = f.id_caja;
           }
-        }else{
-          //get monedas
-          let get = await APICALLER.get({table:"cajas_monedas",
-          fields:"monto_cierre_caja,nombre_moneda,abreviatura_moneda,id_cajas_moneda",
-          include:"monedas",on:"id_moneda,id_moneda_caja_moneda",where:`id_caja_moneda,=,${formAbrir.id_caja}`}
-          )
-          let newresult = [];
-          if(get.response==="ok") {
-            get.results.forEach(e=>{
-              newresult.push({...e,cantidad:e.monto_cierre_caja})
-            })
-            setInputsMonedas(newresult)
-          } else{ console.log(get)}
-        }
+        } else { id_caja = formAbrir.id_caja }
+        
+
+         //get monedas
+         let get = await APICALLER.get({table:"cajas_monedas",
+         fields:"monto_cierre_caja,nombre_moneda,abreviatura_moneda,id_cajas_moneda",
+         include:"monedas",on:"id_moneda,id_moneda_caja_moneda",where:`id_caja_moneda,=,${id_caja}`}
+         )
+         let newresult = [];
+         if(get.response==="ok") {
+           get.results.forEach(e=>{
+             newresult.push({...e,cantidad:e.monto_cierre_caja})
+           })
+           setInputsMonedas(newresult)
+         } else{ console.log(get)}
+
       }
       setLoading(false)
     },[dialogQuery,lista,dialogID,setFormAbrir,dialogs,formAbrir]);
