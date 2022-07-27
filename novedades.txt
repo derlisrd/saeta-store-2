@@ -340,6 +340,7 @@ CREATE TABLE IF NOT EXISTS `empresas` (
   `dimension_ticket` int(11) NOT NULL,
   `licencia` date NOT NULL,
   `tipo_nota` int(1) NOT NULL COMMENT '0=ticket 1=nota',
+   `cuota_empresa` tinyint(1) NOT NULL DEFAULT 0,
   `updated_at` datetime DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id_empresa`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
