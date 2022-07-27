@@ -33,7 +33,6 @@ CREATE TABLE IF NOT EXISTS `agendas` (
 DROP TABLE IF EXISTS `cajas`;
 CREATE TABLE IF NOT EXISTS `cajas` (
   `id_caja` int(11) NOT NULL AUTO_INCREMENT,
-  `id_user_caja` int(11) NOT NULL,
   `nombre_caja` varchar(50) NOT NULL,
   `fecha_apertura` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `fecha_cierre` datetime DEFAULT NULL,
