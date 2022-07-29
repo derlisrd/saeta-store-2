@@ -1,4 +1,4 @@
-import {Dialog,DialogTitle,DialogContent,TextField,DialogActions,LinearProgress,Select,MenuItem,FormControl,InputLabel,Button,Zoom, Grid} from "@mui/material";
+import {Dialog,DialogTitle,DialogContent,TextField,DialogActions,LinearProgress,Select,MenuItem,FormControl,InputLabel,Button,Zoom, Grid, Alert} from "@mui/material";
 import { useCallback, useEffect, useState } from "react";
 import { APICALLER } from "../../../Services/api";
 import { useMovimientos } from "./MovimientosProvider";
@@ -8,21 +8,30 @@ import { funciones } from "../../../Functions";
 import swal from "sweetalert";
 
 const RegistrarMovimiento = () => {
-  const { setDialog, dialog, fecha,getData,lang } = useMovimientos();
-  const [listaRegistros, setListaRegistros] = useState([]);
-  const [listaCajas, setListaCajas] = useState([]);
+  const { setDialog, dialog,getData,lang } = useMovimientos();
 
+  const [errors,setErrors] = useState({
+    status:false,
+    message:""
+  });
+  const [listas,setListas] = useState({ 
+    registros:[],
+    cajas:[],
+    monedas:[]
+  }
+  )
   const {userData} = useLogin()
   const { id_user, token_user } = userData;
 
   const [cargando, setCargando] = useState(true);
   const initialFormulario = {
     id_tipo_registro: "",
+    monto_movimiento: "",
+    id_cajas_moneda: "",
     id_caja_movimiento: "",
     motivo_movimiento: "",
   };
   const [formulario, setFormulario] = useState(initialFormulario);
-  const [montoMovimiento, setMontoMovimiento] = useState(0);
 
   const onChange = (e) => {
     const { name, value } = e.target;
@@ -31,95 +40,87 @@ const RegistrarMovimiento = () => {
   const cerrar = () => {
     setDialog({...dialog,registrar:false});
     setFormulario(initialFormulario);
-    setMontoMovimiento(0);
   };
   const getListaRegistros = useCallback(async () => {
     if (dialog.registrar) {
 
-      let res = await Promise.all([ 
+      let promises = await Promise.all([ 
       APICALLER.get({
         table: "cajas",include:'cajas_users,cajas_monedas,monedas',
         on: "id_caja_caja,id_caja,id_caja,id_caja_moneda,id_moneda_caja_moneda,id_moneda",
         where: `id_user_caja,=,${id_user},and,estado_caja,=,'open'`,
-        fields: "nombre_caja,id_caja,monto_caja_moneda,nombre_moneda,id_caja,id_cajas_moneda"}), 
+        fields: "nombre_caja,id_caja,monto_caja_moneda,nombre_moneda,id_caja,id_cajas_moneda,id_moneda,id_cajas_moneda"}), 
       APICALLER.get({ table: "cajas_registros",where:"show_registro,=,1" }),
-      APICALLER.get({ table: "cajas",where: `id_user_caja,=,${id_user},and,estado_caja,=,'open'`})
+      APICALLER.get({ table: "cajas",include:"cajas_users",on:"id_caja_caja,id_caja",where: `id_user_caja,=,${id_user},and,estado_caja,=,'open'`})
     ])
-
-      res[2].response === "ok" ? setListaCajas(res[0].results) : console.log(res[0]);
-      "ok"===res[1].response?setListaRegistros(res[1].results):console.log(res[1]); 
+    
+    if(promises[2].response==="ok"){
+      setListas({
+        cajas: promises[2].results,
+        registros: promises[1].results,
+        monedas: promises[0].results,
+      });
+    }
+    
     }
     setCargando(false);
   }, [dialog, id_user]);
 
-  /*==================================================================*/
-  /*==================================================================*/
-  let VALOR_EN_CAJA = 0;
-  let found = listaCajas.find(e=> e.id_caja === formulario.id_caja_movimiento);
-  VALOR_EN_CAJA = found ? parseFloat(found.monto_caja) : "0";
-  /*==================================================================*/
-  /*==================================================================*/
+
 
   const EfectuarMovimiento = async () => {
-    if (formulario.id_tipo_registro === "") {
+    
+    setErrors({...errors,status:false})
+    let f = {...formulario}
+    if(f.id_caja_movimiento==="" || f.monto_movimiento==="" || f.id_cajas_moneda===""){
+      setErrors({status:true,message: lang.complete_datos_correctamente})
       return false;
     }
-    if (formulario.id_caja_movimiento === "") {
+
+    
+    let datos_cajas_movimientos = {
+      id_caja_movimiento: f.id_caja_movimiento,
+      id_user_movimiento: id_user,
+      id_tipo_registro: f.id_tipo_registro,
+      monto_movimiento: f.monto_movimiento,
+      detalles_movimiento: f.motivo_movimiento,
+      fecha_movimiento: funciones.getFechaHorarioString(),
+    };
+    let foundMoneda = listas.monedas.find( e=> e.id_cajas_moneda === f.id_cajas_moneda);
+    let foundRegistro = listas.registros.find( e=> e.id_cajas_registro === f.id_tipo_registro);
+    
+    let cantidad_actual = parseFloat(foundMoneda.monto_caja_moneda);
+    let cantidad_nueva = 0;
+    
+    
+    if( parseInt(foundRegistro.tipo_registro) === 1){
+      cantidad_nueva = parseFloat(f.monto_movimiento) + cantidad_actual;
+    }
+    if( parseInt(foundRegistro.tipo_registro) === 0){
+      cantidad_nueva =  cantidad_actual - parseFloat(formulario.monto_movimiento);
+    }
+    if(cantidad_nueva < 0){
+      setErrors({status:true,message: lang.no_hay_suficientes_fondos_en_caja})
       return false;
+    }
+    
+    let datos_cajas_monedas = {
+      monto_caja_moneda : cantidad_nueva
     }
 
     setCargando(true);
-    let f = new Date();
-    let fecha_actual = `${fecha} ${f.getHours()}:${f.getMinutes()}:${f.getSeconds()}`;
-    let TIPO_REGISTRO = listaRegistros.find(
-      (item) => item.id_cajas_registro === formulario.id_tipo_registro
-    );
-    // si es 0 entonces va a restar sino suma
-
-    var datos = {
-      id_caja_movimiento: formulario.id_caja_movimiento,
-      id_user_movimiento: id_user,
-      id_tipo_registro: TIPO_REGISTRO.id_cajas_registro,
-      monto_movimiento: montoMovimiento,
-      detalles_movimiento: formulario.motivo_movimiento,
-      fecha_movimiento: fecha_actual,
-    };
-    let datosUpdate = {};
-
-    if (TIPO_REGISTRO.tipo_registro === "0") {
-      if (VALOR_EN_CAJA < montoMovimiento) {
-        console.log("MONTO ES MAYOR A LO QUE HAY");
-        setCargando(false);
-        return false;
-      } else {
-        datosUpdate = {
-          monto_caja: VALOR_EN_CAJA - montoMovimiento,
-        };
-      }
-    } else {
-      datosUpdate = {
-        monto_caja: VALOR_EN_CAJA + montoMovimiento,
-      };
-    }
-
-    let res = await Promise.all([APICALLER.update({
-      table: "cajas",
-      data: datosUpdate,
-      id: formulario.id_caja_movimiento,
-      token: token_user,
-    }),await APICALLER.insert({
-      table: "cajas_movimientos",
-      token: token_user,
-      data: datos,
-    })])
-    if(res[0].response==="ok" && res[1].response==="ok"){
-      swal({text:'Movimiento de caja registrado',icon:'success',timer:1200}).then(()=>{cerrar();getData();})
-    }
-    else{
-      console.log(res)
-    }
+    let promesas = [
+      APICALLER.insert({table:"cajas_movimientos",token:token_user,data:datos_cajas_movimientos}),
+      APICALLER.update({table:"cajas_monedas",token:token_user,data:datos_cajas_monedas,id: foundMoneda.id_cajas_moneda})
+  ]
+   let promises = await Promise.all(promesas)
+   if(promises[0].response==="ok" && promises[1].response==="ok"){
+    swal({text:lang.movimiento_registrado,icon:'success',timer:1300}).then(()=>{cerrar();getData();})
+   } else{
+    console.log(promises);
+   } 
     setCargando(false);
-  };
+  }
 
   useEffect(() => {
     const ca = new AbortController();
@@ -145,6 +146,11 @@ const RegistrarMovimiento = () => {
     <Grid container spacing={2}>
       <Grid item xs={12}>
         {cargando && <LinearProgress />}
+        {errors.status && 
+          <Alert severity="error">
+            {errors.message}
+          </Alert>
+        }
       </Grid>
 
       <Grid item xs={12}>
@@ -157,7 +163,7 @@ const RegistrarMovimiento = () => {
             value={formulario.id_caja_movimiento}
             onChange={onChange}
           >
-            {listaCajas.map((d, index) => (
+            {listas.cajas.map((d, index) => (
               <MenuItem key={index} value={d.id_caja}>
                 {d.nombre_caja}
               </MenuItem>
@@ -165,15 +171,7 @@ const RegistrarMovimiento = () => {
           </Select>
         </FormControl>
       </Grid>
-
-      <Grid item xs={12}>
-        <TextField
-            fullWidth
-            label={lang.monto_efe_caja}
-            disabled
-            value={`${funciones.numberSeparator(VALOR_EN_CAJA)}`}
-          />
-      </Grid>
+            
 
       <Grid item xs={12}>
         <FormControl fullWidth>
@@ -185,7 +183,7 @@ const RegistrarMovimiento = () => {
               value={formulario.id_tipo_registro}
               onChange={onChange}
             >
-              {listaRegistros.map((d, index) => (
+              {listas.registros.map((d, index) => (
                 <MenuItem key={index} value={d.id_cajas_registro}>
                   {d.descripcion_registro} (
                   {d.tipo_registro === "1" ? `Ingreso` : `Retiro`})
@@ -195,24 +193,39 @@ const RegistrarMovimiento = () => {
           </FormControl>
       </Grid>
       <Grid item xs={12}>
+        <FormControl fullWidth>
+            <InputLabel>
+              {lang.selecciona_moneda}
+            </InputLabel>
+            <Select
+              name="id_cajas_moneda"
+              value={formulario.id_cajas_moneda}
+              onChange={onChange}
+            >
+              {listas.monedas.map((d, index) => (
+                <MenuItem key={index} value={d.id_cajas_moneda}>
+                  {d.nombre_moneda} 
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+      </Grid>
+      <Grid item xs={12}>
         <TextField
             fullWidth
             label={lang.monto_movimiento}
-            value={montoMovimiento}
+            value={formulario.monto_movimiento}
+            name="monto_movimiento" autoComplete="off"
             InputProps={{
               inputComponent: NumberFormatCustom,inputProps: { min: 0 }
             }}
-            onChange={(e) => {
-              setMontoMovimiento(
-                e.target.value === "" ? 0 : parseFloat(e.target.value)
-              );
-            }}
+            onChange={onChange}
           />
       </Grid>
       <Grid item xs={12}>
         <TextField
             label={lang.obs_detalles}
-            onChange={onChange}
+            onChange={onChange} autoComplete="off"
             name="motivo_movimiento"
             fullWidth
             value={formulario.motivo_movimiento}
@@ -225,7 +238,6 @@ const RegistrarMovimiento = () => {
           variant="contained"
           disabled={cargando}
           onClick={EfectuarMovimiento}
-          color="primary"
         >
           {lang.registrar}
         </Button>

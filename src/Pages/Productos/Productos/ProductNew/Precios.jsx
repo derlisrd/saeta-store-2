@@ -30,7 +30,7 @@ const Precios = () => {
               fullWidth
               autoFocus
               label="Costo"
-              disabled={formulario.tipo_producto === "2"}
+              
               autoComplete="off"
               name="costo_producto"
               value={formulario.costo_producto}
