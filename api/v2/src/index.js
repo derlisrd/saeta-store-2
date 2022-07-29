@@ -7,8 +7,8 @@ const PORT = process.env.PORT || 8000;
 
 
 
-app.get("/", (req, res) => {
-    res.send("workings");
+app.get("/:table/?id=:id", (req, res) => {
+    res.send(`table ${req.params.table} id ${req.params.id}`);
 });
 
 
