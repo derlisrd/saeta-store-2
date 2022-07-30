@@ -2,8 +2,8 @@
 
 export const dashboardlist = [
     {
-        id:1,
-        title:"Ventas",
+        id:53,
+        title:"ventas",
         description:"",
         text:(<h5>Hacer una venta nueva</h5>),
         icon:{name:"sell", color:"primary.main"},
@@ -12,8 +12,8 @@ export const dashboardlist = [
         buttontext:"Nueva"
     },
     {
-        id:2,
-        title:"Cajas",
+        id:22,
+        title:"cajas",
         description:"",
         text:(<h5>Listado de cajas</h5>),
         icon:{name:"savings", color:"primary.main"},
@@ -22,8 +22,18 @@ export const dashboardlist = [
         buttontext:"Ver"
     },
     {
-        id:3,
-        title:"Clientes",
+        id:24,
+        title:"mov__caja",
+        description:"",
+        text:(<h5>Listado de cajas</h5>),
+        icon:{name:"savings", color:"primary.main"},
+        button:true,
+        url:"movimientos",
+        buttontext:"Ver"
+    },
+    {
+        id:28,
+        title:"clientes",
         description:"",
         text:(<h5>Listado de clientes</h5>),
         icon:{name:"people", color:"primary.main"},
@@ -31,9 +41,10 @@ export const dashboardlist = [
         url:"clientes",
         buttontext:"Lista"
     },
+
     {
-        id:4,
-        title:"Cotizacion",
+        id:30,
+        title:"cotizacion",
         description:"",
         text:(<h5>Lista de cotizaciones</h5>),
         icon:{name:"account_balance", color:"primary.main"},

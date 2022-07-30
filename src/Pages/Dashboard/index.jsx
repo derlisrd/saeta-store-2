@@ -68,7 +68,7 @@ const DashBoard = () => {
                   <Icon>{e.icon.name}</Icon>
                 </Avatar>
               }
-              title={<h2>{e.title}</h2>} 
+              title={<h2>{lang[e.title]}</h2>} 
               subheader={e.description}
             />
           <CardContent>
