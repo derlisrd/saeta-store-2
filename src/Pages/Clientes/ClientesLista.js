@@ -1,11 +1,4 @@
-import {
-  Stack,
-  Icon,
-  IconButton,
-  InputAdornment,
-  TextField,
-  Button,Fab
-} from "@mui/material";
+import {Stack,Icon,IconButton,InputAdornment,TextField,Button,Fab} from "@mui/material";
 import React, { useState } from "react";
 import Tablas from "../../Components/UI/Tablas";
 import ClientesListaPager from "./ClientesListaPager";
@@ -20,9 +13,9 @@ const ClientesLista = () => {
   
 
   const FilterData = lista.filter(
-    (item) =>
-      item.nombre_cliente.toLowerCase().includes(inputSearch.toLowerCase()) ||
-      item.ruc_cliente.toLowerCase().includes(inputSearch.toLowerCase())
+    (e) =>
+      e.nombre_cliente.toLowerCase().includes(inputSearch.toLowerCase()) ||
+      e.ruc_cliente.toLowerCase().includes(inputSearch.toLowerCase())
   ); 
 
   const columns = [

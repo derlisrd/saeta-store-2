@@ -3,6 +3,7 @@
 
 namespace GetController;
 
+use AuthController\AuthController;
 use Models\Models;
 use JsonResponse\JsonResponse;
 
@@ -15,6 +16,12 @@ class GetController {
 
         $TABLE = $table;
 
+        if($TABLE == 'users'){
+            $token = isset($_GET['token']) ? $_GET['token'] : null;
+            $users = new AuthController();
+            echo $users::getUsers($token);
+            return;
+        } 
 
         /*================================================================================================*/
         if(($where!==null) && count($where)<3 ){
@@ -33,6 +40,7 @@ class GetController {
             }
         }
         /*================================================================================================*/
+        
         
 
 
