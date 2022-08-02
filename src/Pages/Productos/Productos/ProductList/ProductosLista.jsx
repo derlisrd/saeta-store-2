@@ -64,6 +64,7 @@ const ProductosLista = () => {
 
  
   const openPhoto = f => { setDialogs({...dialogs,imagen:true}); setFormDetalles(f); }
+
   const Acciones = ({rowProps})=>
   (<Stack direction="row" spacing={1} justifyContent="center">
     <Fab onClick={()=> {openPhoto(rowProps)}}  size="small">
@@ -114,6 +115,7 @@ const ProductosLista = () => {
       </Stack>
     );
 
+    console.log("rendezou")
     const FilterData =  lista.productos.filter(item => item.nombre_producto.toLowerCase().includes(inputSearch.toLowerCase())|| item.codigo_producto.toLowerCase().includes(inputSearch.toLowerCase()));
 
     const sort = {

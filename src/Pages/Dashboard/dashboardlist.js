@@ -32,6 +32,26 @@ export const dashboardlist = [
         buttontext:"Ver"
     },
     {
+        id:63,
+        title:"informes",
+        description:"",
+        text:(<h5>Informes</h5>),
+        icon:{name:"summarize", color:"primary.main"},
+        button:true,
+        url:"informes",
+        buttontext:"Ver"
+    },
+    {
+        id:1,
+        title:"productos",
+        description:"",
+        text:(<h5>Listado de productos</h5>),
+        icon:{name:"precision_manufacturing", color:"primary.main"},
+        button:true,
+        url:"productos",
+        buttontext:"Lista"
+    },
+    {
         id:28,
         title:"clientes",
         description:"",
@@ -41,7 +61,16 @@ export const dashboardlist = [
         url:"clientes",
         buttontext:"Lista"
     },
-
+    {
+        id:34,
+        title:"usuarios",
+        description:"",
+        text:(<h5>Listado de usuarios</h5>),
+        icon:{name:"people_alt", color:"primary.main"},
+        button:true,
+        url:"users",
+        buttontext:"Lista"
+    },
     {
         id:30,
         title:"cotizacion",
