@@ -141,9 +141,14 @@ const VentasProvider = ({ children }) => {
       let nrofac = await APICALLER.get({ table: "empresa_facturas",where: `id_caja_empresa,=,${IDCAJAFACTURACION}`});
       if (nrofac.response === "ok") {
         LASTNROFACTURA = parseInt(nrofac.results[0].last_nro_factura);
-        let LASTNROFACTURADECAJA = parseInt(nrofac.results[0].nro_fin_factura);;
-        if(LASTNROFACTURA>LASTNROFACTURADECAJA){ swal({text:'Talonario de facturas agotado'}); setCargas({ ...cargas, finalizarVenta:false});
-        setDialogs({...dialogs,finalizarVenta:true}); return false;}
+        let LASTNROFACTURADECAJA = parseInt(nrofac.results[0].nro_fin_factura);
+        if(LASTNROFACTURA>LASTNROFACTURADECAJA){ 
+          swal({text:'Talonario de facturas agotado'}); 
+          setCargas({ ...cargas, finalizarVenta:false});
+          setDialogs({...dialogs,finalizarVenta:true}); 
+          return false;
+        }
+
         let idf = nrofac.results[0].id_empresa_factura;
         APICALLER.update({table: "empresa_facturas",token: token_user, id:idf, 
         data: {last_nro_factura: parseInt(LASTNROFACTURA) + 1}});
