@@ -24,13 +24,27 @@ const Precios = () => {
       <Grid item xs={12}>
         <Typography variant="button">{lang.precios}: </Typography>
       </Grid>
+      <Grid item xs={12}>
+        <Tooltip placement="top" title="Preguntar precio a la hora de la venta">
+            <FormControlLabel
+              control={
+                <Checkbox
+                  checked={formulario.preguntar_precio === "1"}
+                  onChange={changeCheck}
+                  name="preguntar_precio"
+                  color="primary"
+                />
+              }
+              label="Preguntar precio"
+            />
+            </Tooltip>
+      </Grid>
       <Grid item xs={12} sm={6} md={3}>
             <TextField
               onChange={change}
               fullWidth
               autoFocus
               label="Costo"
-              
               autoComplete="off"
               name="costo_producto"
               value={formulario.costo_producto}
@@ -119,7 +133,7 @@ const Precios = () => {
               fullWidth
               inputRef={cantidadRef}
               onChange={change}
-              label="Cantidad actual"
+              label={lang.cantidad_actual}
               autoComplete="off"
               name="stock_producto"
               value={formulario.stock_producto}

@@ -5,6 +5,7 @@ export const translate = {
         selecciona_moneda:"Selecciona moneda",
         complete_datos_correctamente:"Complete los datos correctamente",
         movimiento_registrado:"Movimiento de caja registrado",
+        cantidad_actual:"Cantidad actual",
         ver_mas:"Ver más",
         lucro:"Lucro",
         total_ventas:"Total ventas",

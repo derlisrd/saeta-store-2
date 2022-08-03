@@ -47,7 +47,8 @@ const ProductFormProvider = (props) => {
         stock_producto: "0",
         notificar_producto: "0",
         tipo_producto: "1",
-        disponible_producto:"1"
+        disponible_producto:"1",
+        preguntar_producto:"0"
       };
     const initialStock = []
     const [stock,setStock] = useState(initialStock);

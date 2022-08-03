@@ -115,7 +115,6 @@ const ProductosLista = () => {
       </Stack>
     );
 
-    console.log("rendezou")
     const FilterData =  lista.productos.filter(item => item.nombre_producto.toLowerCase().includes(inputSearch.toLowerCase())|| item.codigo_producto.toLowerCase().includes(inputSearch.toLowerCase()));
 
     const sort = {
