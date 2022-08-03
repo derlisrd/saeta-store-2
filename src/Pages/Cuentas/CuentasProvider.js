@@ -49,6 +49,7 @@ const CuentasProvider = ({ children }) => {
      
       let newrecibido_factura = parseFloat(formCobrar.recibido_factura) + monto_cobrado;
       let foundMonedaIndex = listas.monedas.findIndex(e=> e.id_cajas_moneda === id_cajas_moneda);
+      let id_moneda_caja = cajas_monedas[foundMonedaIndex].id_moneda;
       let montoActual = parseFloat(cajas_monedas[foundMonedaIndex].monto_caja_moneda),
       montoActualNoEfectivo = parseFloat(cajas_monedas[foundMonedaIndex].monto_no_efectivo);
       
@@ -59,6 +60,7 @@ const CuentasProvider = ({ children }) => {
       let dataCajaMovimiento = {
         id_caja_movimiento:idcaja,
         id_user_movimiento:id_user,
+        id_moneda_movimiento: id_moneda_caja,
         id_tipo_registro:2, 
         monto_movimiento: id_forma_pago===1 ? monto_cobrado : 0,
         monto_sin_efectivo: id_forma_pago!==1 ? monto_cobrado : 0,
@@ -81,7 +83,7 @@ const CuentasProvider = ({ children }) => {
       setCargando({lista:false,mov:false});
       swal({text:lang.cobrado_correctamente,icon:'success',timer:1800});
       setDialogs({pagar: false,cobrar: false,detalles:false });
-      getLista()
+      getLista() 
 
 
   }
@@ -164,7 +166,7 @@ const CuentasProvider = ({ children }) => {
       APICALLER.get({table: "compras",where: "tipo_factura_compra,=,2,and,estado_compra,=,2"}),
       APICALLER.get({table: "cajas", include:'cajas_users',on:'id_caja_caja,id_caja', where:`id_user_caja,=,${id_user},and,estado_caja,=,'open'`}),
       APICALLER.get({table: "facturas_formas_pagos"}),
-      APICALLER.get({table:"cajas",include:"cajas_monedas,monedas,cajas_users",on:"id_caja,id_caja_moneda,id_moneda,id_moneda_caja_moneda,id_caja,id_caja_caja",where:`id_user_caja,=,${id_user},and,estado_caja,=,'open'`,fields:"nombre_moneda,id_cajas_moneda,id_caja_moneda,abreviatura_moneda,monto_caja_moneda,monto_no_efectivo"})
+      APICALLER.get({table:"cajas",include:"cajas_monedas,monedas,cajas_users",on:"id_caja,id_caja_moneda,id_moneda,id_moneda_caja_moneda,id_caja,id_caja_caja",where:`id_user_caja,=,${id_user},and,estado_caja,=,'open'`,fields:"id_moneda,nombre_moneda,id_cajas_moneda,id_caja_moneda,abreviatura_moneda,monto_caja_moneda,monto_no_efectivo"})
     ]);
     
     let 

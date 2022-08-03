@@ -94,15 +94,6 @@ const CajasProvider = ({ children }) => {
   const initialFormEdit = { id_caja: "", nombre_caja: "" };
   const [formEdit, setFormEdit] = useState(initialFormEdit);
 
-  const initialTransferencia = {
-    id_caja: "",
-    id_caja_transferencia: "",
-    nombre_caja: "",
-    monto_transferir: "0",
-    monto_caja: "",
-    fecha_movimiento:"",
-  };
-  const [formTransferencia, setFormTransferencia] = useState(initialTransferencia);
 
 
 
@@ -208,64 +199,7 @@ const CajasProvider = ({ children }) => {
 
 
   
-  const transferir = async () => {
-    setCargas({ ...cargas, transferencia: true });
-    const found = lista.find(e => e.id_caja === formTransferencia.id_caja_transferencia);
-    let cajaPrincipal = {
-      id_caja: formTransferencia.id_caja,
-      monto_caja:
-        parseFloat(formTransferencia.monto_caja) -
-        parseFloat(formTransferencia.monto_transferir),
-    };
-    let cajaTransferir = {
-      id_caja: formTransferencia.id_caja_transferencia,
-      monto_caja:
-        parseFloat(found.monto_caja) +
-        parseFloat(formTransferencia.monto_transferir),
-    };
-
-    let res = await APICALLER.update({
-      table: "cajas",
-      data: cajaPrincipal,
-      id: formTransferencia.id_caja,
-      token: token_user,
-    });
-    if (res.response === "ok") {
-      let tra = await APICALLER.update({
-        table: "cajas",
-        data: cajaTransferir,
-        id: formTransferencia.id_caja_transferencia,
-        token: token_user,
-      });
-      let datos = {
-        id_caja_movimiento: formTransferencia.id_caja,
-        id_user_movimiento: id_user,
-        id_tipo_registro: "16",
-        fecha_movimiento: funciones.getFechaHorarioString(),
-        monto_movimiento: parseFloat(formTransferencia.monto_transferir),
-        detalles_movimiento: `${lang.transferencia_de_caja} ${formTransferencia.nombre_caja} ${formTransferencia.id_caja} ${lang.a}: ${found.nombre_caja} ${found.id_caja} `,
-      };
-      let mov = await APICALLER.insert({
-        table: "cajas_movimientos",
-        data: datos,
-        token: token_user,
-      });
-      if (tra.response === "ok" && mov.response === "ok") {
-        swal({
-          text: lang.transferido_correctamente,
-          icon: "success",
-          timer: 1200,
-        });
-        getLista(false);
-        setDialogs({ ...dialogs, transferencia: false });
-      } else {
-        console.log(tra, mov);
-      }
-    } else {
-      console.log(res);
-    }
-    setCargas({ ...cargas, transferencia: false });
-  };
+  
 
 
 
@@ -413,9 +347,6 @@ const CajasProvider = ({ children }) => {
         formAbrir,
         setFormAbrir,
         setFormNew,
-        formTransferencia,
-        setFormTransferencia,
-        initialTransferencia,
         initialFormNew,
         funciones,
         agregarCajaNueva,
@@ -423,7 +354,7 @@ const CajasProvider = ({ children }) => {
         aperturaCaja,
         errors,
         setErrors,
-        transferir,
+ 
         totalSumaMonedasArqueo, setTotalSumaMonedasArqueo,
         datosCajaCierre,setDatosCajaCierre,arqueo,setArqueo,getLista,dialogQuery,dialogID,lang,valoresCierre,setValoresCierre
       }}
@@ -448,9 +379,7 @@ export const useCajas = () => {
     formAbrir,
     setFormAbrir,
     setFormNew,
-    formTransferencia,
-    setFormTransferencia,
-    initialTransferencia,
+
     initialFormNew,
     funciones,
     agregarCajaNueva,
@@ -458,7 +387,6 @@ export const useCajas = () => {
     aperturaCaja,
     errors,
     setErrors,
-    transferir,
     totalSumaMonedasArqueo, setTotalSumaMonedasArqueo,
     datosCajaCierre,setDatosCajaCierre,arqueo,setArqueo,getLista,dialogQuery,dialogID,lang,valoresCierre,setValoresCierre
   } = useContext(Contexto);
@@ -476,9 +404,6 @@ export const useCajas = () => {
     formAbrir,
     setFormAbrir,
     setFormNew,
-    formTransferencia,
-    setFormTransferencia,
-    initialTransferencia,
     initialFormNew,
     funciones,
     agregarCajaNueva,
@@ -486,7 +411,6 @@ export const useCajas = () => {
     aperturaCaja,
     errors,
     setErrors,
-    transferir,
     totalSumaMonedasArqueo, setTotalSumaMonedasArqueo,
     datosCajaCierre,setDatosCajaCierre,arqueo,setArqueo,getLista,dialogQuery,dialogID,lang,valoresCierre,setValoresCierre
   };
