@@ -4,7 +4,7 @@
 RewriteEngine On  
 
 # AQUI  ES LA BASE DE TODO
-RewriteBase /api/
+RewriteBase /api/v1/
 
 
 #REDIRECCIONA A HTTPS

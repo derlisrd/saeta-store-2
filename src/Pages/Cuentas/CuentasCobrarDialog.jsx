@@ -9,7 +9,8 @@ const CuentasCobrarDialog = () => {
   const [form,setForm] = useState({
     id_forma_pago:"",
     obs:"",
-    monto_cobrado:""
+    monto_cobrado:"",
+    id_cajas_moneda:""
   })
 
   const change = e=>{
@@ -23,8 +24,11 @@ const CuentasCobrarDialog = () => {
   }
 
   const cerrar = () => {setDialogs({ ...dialogs, cobrar: false });};
-
+  const listaMonedas = listas.monedas
   const montoFaltante = parseFloat(formCobrar.monto_total_factura) - parseFloat(formCobrar.recibido_factura)
+
+
+
   return (
     <Dialog onClose={cerrar} TransitionComponent={Zoom} fullWidth open={dialogs.cobrar}>
       <form onSubmit={cobrar}>
@@ -53,18 +57,18 @@ const CuentasCobrarDialog = () => {
 
             <Grid item xs={12} sm={6} >
               <Alert severity="success" icon={false}>
-                {lang.monto_total}: { funciones.numberFormat( formCobrar.monto_total_factura)}
+                {lang.monto_total}: { funciones.numberFormat( formCobrar.monto_total_factura)}  {formCobrar.abreviatura_moneda}
               </Alert>
             </Grid>
             <Grid item xs={12} sm={6}>
               <Alert severity="success" icon={false}>
-                {lang.monto_recibido}: {funciones.numberFormat(formCobrar.recibido_factura)}
+                {lang.monto_recibido}: {funciones.numberFormat(formCobrar.recibido_factura)} {formCobrar.abreviatura_moneda}
               </Alert>
             </Grid>
 
             <Grid item xs={12} >
               <Alert severity="error" icon={false}>
-                {lang.monto_faltante}: {funciones.numberFormat(montoFaltante)}
+                {lang.monto_faltante}: {funciones.numberFormat(montoFaltante)} {formCobrar.abreviatura_moneda}
               </Alert>
             </Grid>
 
@@ -84,12 +88,26 @@ const CuentasCobrarDialog = () => {
               </FormControl>
             </Grid>
             <Grid item xs={12}>
+              <FormControl fullWidth>
+                <InputLabel >{lang.moneda}</InputLabel>
+                <Select required name="id_cajas_moneda" value={form.id_cajas_moneda}
+                  onChange={change}
+                >
+                  {listaMonedas.map((d, index) => (
+                    <MenuItem key={index} value={d.id_cajas_moneda}>
+                      {d.nombre_moneda}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+            </Grid>
+            <Grid item xs={12}>
               <TextField
                 label={lang.monto_a_cobrar} autoComplete="off" required fullWidth value={form.monto_cobrado} name="monto_cobrado" onChange={change} InputProps={{inputComponent: NumberFormatCustom}}
               />
             </Grid>
             <Grid item xs={12}>
-              <TextField label={lang.observaciones} fullWidth value={form.obs} name="obs" onChange={change}/>
+              <TextField autoComplete="off" label={lang.observaciones} fullWidth value={form.obs} name="obs" onChange={change}/>
             </Grid>
           </Grid>
         </DialogContent>

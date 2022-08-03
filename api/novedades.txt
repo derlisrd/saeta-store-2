@@ -831,7 +831,7 @@ INSERT INTO `permisos_users` (`id_permisos_user`, `id_user_permiso`, `id_permiso
 
 DROP TABLE IF EXISTS `productos`;
 CREATE TABLE IF NOT EXISTS `productos` (
-  `id_producto` int(11) NOT NULL AUTO_INCREMENT,
+  `id_producto` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
   `id_marca_producto` int(5) NOT NULL,
   `id_categoria_producto` int(5) NOT NULL DEFAULT '1',
   `id_impuesto_producto` int(11) NOT NULL COMMENT 'id_impuesto',
@@ -848,8 +848,8 @@ CREATE TABLE IF NOT EXISTS `productos` (
   `notificar_producto` int(1) NOT NULL DEFAULT '0' COMMENT '0=no 1=si',
   `tipo_producto` int(1) NOT NULL DEFAULT '1' COMMENT '1=fisico 2=servicio',
   `disponible_producto` int(1) NOT NULL DEFAULT '1' COMMENT '0=no 1=si',
+  `preguntar_precio` int(1) NOT NULL DEFAULT '0',
   `updated_at` datetime DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id_producto`),
   UNIQUE KEY `codigo_producto` (`codigo_producto`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
