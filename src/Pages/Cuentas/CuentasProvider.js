@@ -52,6 +52,54 @@ const CuentasProvider = ({ children }) => {
      }
 
 
+     /* setCargando({lista:false,mov:true});    
+    
+
+    
+    let idcaja = formCobrar.id_caja_factura;
+    let getcaja = await APICALLER.get({table:"cajas",where:`id_caja,=,${idcaja}`})
+    if(getcaja.response==="ok" && getcaja.found>0){
+     
+      let datoscaja = getcaja.results[0];
+      let montocobrado = parseFloat(datos.monto_cobrado);
+      let montoacumulado = montocobrado + parseFloat(formCobrar.recibido_factura);
+      let montonuevocaja = montocobrado + parseFloat(datoscaja.monto_caja);
+      let montototalfactura = parseFloat(formCobrar.monto_total_factura);
+      let estado = 2;  // 2 no pagado
+      let detalles= `Cobro de ventas a crédito factura nro: ${formCobrar.nro_factura}`;
+      let tipofactura = parseInt(formCobrar.tipo_factura)
+      if(tipofactura===3){
+        detalles = `Cobro de venta a cuota. Ref nro ${formCobrar.nro_factura}`
+      }
+      if(montototalfactura<=montoacumulado){estado = 1; }
+      
+      let datosMov = {
+        id_caja_movimiento:idcaja,
+        id_user_movimiento:id_user,
+        id_tipo_registro:2,
+        monto_movimiento: datos.id_forma_pago==="1" ? montocobrado : 0,
+        monto_sin_efectivo: datos.id_forma_pago!=="1" ? montocobrado : 0,
+        detalles_movimiento: detalles,
+        fecha_movimiento: fecha_actual
+      }
+      
+      await Promise.all([
+         APICALLER.update({table:'facturas',data:{estado_factura:estado,recibido_factura:montoacumulado},id:formCobrar.id_factura,token:token_user}),
+         APICALLER.update({table: "cajas",data: { monto_caja: montonuevocaja, ult_mov_caja: fecha_actual },token: token_user,id:idcaja}),
+         APICALLER.insert({table:'cajas_movimientos',token:token_user,data:datosMov})
+      ])
+      
+      setCargando({lista:false,mov:false});
+      swal({text:lang.cobrado_correctamente,icon:'success',timer:1800});
+      setDialogs({pagar: false,cobrar: false,detalles:false });
+      getLista()
+    }
+    else{
+      console.log(getcaja)
+      setDialogs({pagar: false,cobrar: false,detalles:false });
+      return false;
+    } */
+
 
   }
 
