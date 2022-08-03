@@ -35,70 +35,53 @@ const CuentasProvider = ({ children }) => {
 
   const cobrarCuenta = async(datos)=>{
     
-    console.log(formCobrar,datos);
+
     let monto_cobrado = parseFloat(datos.monto_cobrado),
      id_forma_pago = parseInt(datos.id_forma_pago),
      obs = datos.obs,
      id_cajas_moneda = datos.id_cajas_moneda,
-     cajas_monedas = [...listas.monedas];
+     cajas_monedas = [...listas.monedas],
+     idcaja = formCobrar.id_caja,
+     monto_total_factura = parseFloat(formCobrar.monto_total_factura)
+     ;
      
      // efectivo
-     if(id_forma_pago===1){
-      let recibido_factura = parseFloat(formCobrar.recibido_factura) + monto_cobrado;
-      let foundMonedaIndex = listas.monedas.findIndex(e=> e.id_cajas_moneda === id_cajas_moneda);
-      let montoActual = parseFloat(cajas_monedas[foundMonedaIndex].monto_caja_moneda);
-      
-      
-     }
-
-
-     /* setCargando({lista:false,mov:true});    
-    
-
-    
-    let idcaja = formCobrar.id_caja_factura;
-    let getcaja = await APICALLER.get({table:"cajas",where:`id_caja,=,${idcaja}`})
-    if(getcaja.response==="ok" && getcaja.found>0){
      
-      let datoscaja = getcaja.results[0];
-      let montocobrado = parseFloat(datos.monto_cobrado);
-      let montoacumulado = montocobrado + parseFloat(formCobrar.recibido_factura);
-      let montonuevocaja = montocobrado + parseFloat(datoscaja.monto_caja);
-      let montototalfactura = parseFloat(formCobrar.monto_total_factura);
-      let estado = 2;  // 2 no pagado
-      let detalles= `Cobro de ventas a crédito factura nro: ${formCobrar.nro_factura}`;
-      let tipofactura = parseInt(formCobrar.tipo_factura)
-      if(tipofactura===3){
-        detalles = `Cobro de venta a cuota. Ref nro ${formCobrar.nro_factura}`
-      }
-      if(montototalfactura<=montoacumulado){estado = 1; }
+      let newrecibido_factura = parseFloat(formCobrar.recibido_factura) + monto_cobrado;
+      let foundMonedaIndex = listas.monedas.findIndex(e=> e.id_cajas_moneda === id_cajas_moneda);
+      let montoActual = parseFloat(cajas_monedas[foundMonedaIndex].monto_caja_moneda),
+      montoActualNoEfectivo = parseFloat(cajas_monedas[foundMonedaIndex].monto_no_efectivo);
       
-      let datosMov = {
+      let montoNuevo = id_forma_pago===1 ?  (monto_cobrado + montoActual) : montoActual,
+       monto_no_efectivo = id_forma_pago!==1 ? (monto_cobrado + montoActualNoEfectivo) : montoActualNoEfectivo;
+
+      let dataCajaMoneda = {monto_caja_moneda: montoNuevo,monto_no_efectivo}
+      let dataCajaMovimiento = {
         id_caja_movimiento:idcaja,
         id_user_movimiento:id_user,
-        id_tipo_registro:2,
-        monto_movimiento: datos.id_forma_pago==="1" ? montocobrado : 0,
-        monto_sin_efectivo: datos.id_forma_pago!=="1" ? montocobrado : 0,
-        detalles_movimiento: detalles,
+        id_tipo_registro:2, 
+        monto_movimiento: id_forma_pago===1 ? monto_cobrado : 0,
+        monto_sin_efectivo: id_forma_pago!==1 ? monto_cobrado : 0,
+        detalles_movimiento: obs,
         fecha_movimiento: fecha_actual
       }
+      let dataFactura = {
+        recibido_factura: newrecibido_factura,
+        estado_factura: newrecibido_factura >= monto_total_factura   ? 1 :  2 
+      }
+
       
-      await Promise.all([
-         APICALLER.update({table:'facturas',data:{estado_factura:estado,recibido_factura:montoacumulado},id:formCobrar.id_factura,token:token_user}),
-         APICALLER.update({table: "cajas",data: { monto_caja: montonuevocaja, ult_mov_caja: fecha_actual },token: token_user,id:idcaja}),
-         APICALLER.insert({table:'cajas_movimientos',token:token_user,data:datosMov})
-      ])
+      setCargando({lista:false,mov:true}); 
       
+       await Promise.all([
+        APICALLER.update({table:'facturas',data:dataFactura,id:formCobrar.id_factura,token:token_user}),
+        APICALLER.update({table:'cajas_monedas',data:dataCajaMoneda ,token: token_user,id:id_cajas_moneda}),
+        APICALLER.insert({table:'cajas_movimientos',token:token_user,data:dataCajaMovimiento})
+      ]) 
       setCargando({lista:false,mov:false});
       swal({text:lang.cobrado_correctamente,icon:'success',timer:1800});
       setDialogs({pagar: false,cobrar: false,detalles:false });
       getLista()
-    }
-    else{
-      console.log(getcaja)
-      setDialogs({pagar: false,cobrar: false,detalles:false });
-      return false;
-    } */
 
 
   }
@@ -176,11 +159,12 @@ const CuentasProvider = ({ children }) => {
   const getLista = useCallback(async () => {
 
     let res = await Promise.all([
-      APICALLER.get({table: "facturas",include: "clientes,cajas,monedas,cajas_users",on: "id_caja,id_caja_caja,id_cliente,id_cliente_factura,id_caja,id_caja_factura,id_moneda,id_moneda_factura",where: `tipo_factura,>,1,and,estado_factura,=,2,and,id_user_caja,=,${id_user}`,fields:"id_cliente,nombre_cliente,nro_factura,monto_total_factura,recibido_factura,nombre_caja,abreviatura_moneda,id_user_caja,id_moneda,id_caja"}),
+      APICALLER.get({table: "facturas",include: "clientes,cajas,monedas,cajas_users",on: "id_caja,id_caja_caja,id_cliente,id_cliente_factura,id_caja,id_caja_factura,id_moneda,id_moneda_factura",where: `tipo_factura,>,1,and,estado_factura,=,2,and,id_user_caja,=,${id_user}`,
+      fields:"id_factura,id_cliente,nombre_cliente,nro_factura,monto_total_factura,recibido_factura,nombre_caja,abreviatura_moneda,id_user_caja,id_moneda,id_caja,tipo_factura,estado_factura"}),
       APICALLER.get({table: "compras",where: "tipo_factura_compra,=,2,and,estado_compra,=,2"}),
       APICALLER.get({table: "cajas", include:'cajas_users',on:'id_caja_caja,id_caja', where:`id_user_caja,=,${id_user},and,estado_caja,=,'open'`}),
       APICALLER.get({table: "facturas_formas_pagos"}),
-      APICALLER.get({table:"cajas",include:"cajas_monedas,monedas,cajas_users",on:"id_caja,id_caja_moneda,id_moneda,id_moneda_caja_moneda,id_caja,id_caja_caja",where:`id_user_caja,=,${id_user},and,estado_caja,=,'open'`,fields:"nombre_moneda,id_cajas_moneda,abreviatura_moneda,monto_caja_moneda,monto_no_efectivo"})
+      APICALLER.get({table:"cajas",include:"cajas_monedas,monedas,cajas_users",on:"id_caja,id_caja_moneda,id_moneda,id_moneda_caja_moneda,id_caja,id_caja_caja",where:`id_user_caja,=,${id_user},and,estado_caja,=,'open'`,fields:"nombre_moneda,id_cajas_moneda,id_caja_moneda,abreviatura_moneda,monto_caja_moneda,monto_no_efectivo"})
     ]);
     
     let 

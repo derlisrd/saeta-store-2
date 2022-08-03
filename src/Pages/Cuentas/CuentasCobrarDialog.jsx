@@ -24,7 +24,9 @@ const CuentasCobrarDialog = () => {
   }
 
   const cerrar = () => {setDialogs({ ...dialogs, cobrar: false });};
-  const listaMonedas = listas.monedas
+
+  
+  const listaMonedas = listas.monedas.filter(e=> e.id_caja_moneda === formCobrar.id_caja)
   const montoFaltante = parseFloat(formCobrar.monto_total_factura) - parseFloat(formCobrar.recibido_factura)
 
 
