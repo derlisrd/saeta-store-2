@@ -111,7 +111,7 @@ const RegistrarMovimiento = () => {
       monto_caja_moneda : cantidad_nueva
     }
 
-    /* setCargando(true);
+    setCargando(true);
     let promesas = [
       APICALLER.insert({table:"cajas_movimientos",token:token_user,data:datos_cajas_movimientos}),
       APICALLER.update({table:"cajas_monedas",token:token_user,data:datos_cajas_monedas,id: foundMoneda.id_cajas_moneda})
@@ -121,7 +121,7 @@ const RegistrarMovimiento = () => {
     swal({text:lang.movimiento_registrado,icon:'success',timer:1300}).then(()=>{cerrar();getData();})
    } else{
     console.log(promises);
-   }  */
+   }  
     setCargando(false);
   }
 
@@ -140,7 +140,7 @@ const RegistrarMovimiento = () => {
   }, [getListaRegistros]);
 
 
-  const listaCajasMonedasFiltrada = listas.monedas
+  const listaCajasMonedasFiltrada = listas.monedas.filter(e=>e.id_caja === formulario.id_caja_movimiento ) || [];
 
   return (
     <Dialog fullWidth open={dialog.registrar} onClose={cerrar} TransitionComponent={Zoom}>
