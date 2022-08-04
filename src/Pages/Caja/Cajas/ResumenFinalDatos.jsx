@@ -14,16 +14,21 @@ function ResumenFinalDatos({datos}) {
 
                 
                 <Grid item xs={12} sm={12} md={6}>
-                  <Alert icon={false}>
+                  <Grid container>
                   {
                     dato.registros_movimientos.map((registro,i)=>(
                       (registro.tipo_registro==="1" && (registro.cantidad>0 || registro.no_efectivo>0 )) &&
-                      <span key={i}>
-                        <Typography variant='overline'>{registro.descripcion_registro}:</Typography> <Typography variant='button'>{funciones.numberFormat(registro.cantidad)}</Typography>
-                      </span>
+                      <Fragment key={i}>
+                      <Grid  item xs={12} sm={8} >
+                        <Typography variant='button'>{registro.descripcion_registro}:</Typography> 
+                      </Grid>
+                      <Grid item xs={12} sm={4} >
+                        <Typography variant='button'>{funciones.numberFormat(registro.cantidad)}</Typography>
+                      </Grid>
+                      </Fragment>
                     ))
                   }
-                  </Alert>
+                  </Grid>
                 </Grid>
                 <Grid item xs={12} sm={12} md={6}>
                 {
