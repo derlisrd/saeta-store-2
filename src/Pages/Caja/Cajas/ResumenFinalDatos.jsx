@@ -1,4 +1,4 @@
-import { Grid,Alert,Typography } from "@mui/material";
+import { Grid,Typography } from "@mui/material";
 import { Fragment } from "react";
 import { useCajas } from "./CajasProvider";
 

@@ -97,8 +97,8 @@ const CajasProvider = ({ children }) => {
 
 
 
-  const agregarCajaNueva = async (f,mon) => {
 
+  const agregarCajaNueva = async (f,mon) => {
     setCargas({ ...cargas, nuevo: true });
     let tablecaja = { 
       nombre_caja:f.nombre_caja,
@@ -121,6 +121,7 @@ const CajasProvider = ({ children }) => {
       let cajaformusers = { id_user_caja: IDUSER, id_caja_caja: LASTIDCAJA };
       
       let cajamovimientosForm = {
+        id_caja_movimiento:0,
         id_caja_movimiento: LASTIDCAJA,
         id_user_movimiento: id_user,
         id_tipo_registro: "3", // 3 ES APERTURA DE CAJA
@@ -179,6 +180,7 @@ const CajasProvider = ({ children }) => {
 
 
 
+
   const editarCaja = async (f) => {
     setCargas({ ...cargas, editar: true });
 
@@ -227,6 +229,7 @@ const CajasProvider = ({ children }) => {
     })
     let mov = {
       id_caja_movimiento: IDCAJA,
+      id_moneda_movimiento:0,
       id_user_movimiento: id_user,
       id_tipo_registro: "3", // 3 ES APERTURA DE CAJA
       monto_movimiento: 0,
@@ -254,6 +257,7 @@ const CajasProvider = ({ children }) => {
 
 
 
+
   const cerrarCaja = async(registros)=>{
     let id = datosCajaCierre.id_caja;
     let promesas = [
@@ -274,6 +278,7 @@ const CajasProvider = ({ children }) => {
     });
     let datos_cierre = {
       id_caja_movimiento: id,
+      id_moneda_movimiento: 0,
       id_user_movimiento: id_user,
       id_tipo_registro: "9", // 9 es cierre
       monto_movimiento: 0,
@@ -295,9 +300,7 @@ const CajasProvider = ({ children }) => {
 
 
   const getLista = useCallback(async()=>{
-    
       setCargas({ lista: true });
-      
          let val = await Promise.all([APICALLER.get({
           table: "cajas",include: "users,cajas_users",
           on: "id_user,id_user_caja,id_caja,id_caja_caja",

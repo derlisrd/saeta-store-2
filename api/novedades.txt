@@ -89,17 +89,16 @@ CREATE TABLE IF NOT EXISTS `cajas_monedas` (
 
 DROP TABLE IF EXISTS `cajas_movimientos`;
 CREATE TABLE IF NOT EXISTS `cajas_movimientos` (
-  `id_cajas_movimiento` int(11) NOT NULL AUTO_INCREMENT,
-  `id_moneda_movimiento` int(11) NOT NULL DEFAULT '0' COMMENT 'rel:id_moneda',
+  `id_cajas_movimiento` int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  `id_moneda_movimiento` int(11) NOT NULL COMMENT 'rel:id_moneda',
   `id_caja_movimiento` int(11) NOT NULL COMMENT 'con id_caja de caja',
   `id_user_movimiento` int(11) NOT NULL COMMENT 'con id_user',
   `id_tipo_registro` int(11) NOT NULL COMMENT 'con id_cajas_registro',
   `monto_movimiento` int(11) NOT NULL COMMENT 'valor ingreso/egreso',
-  `monto_sin_efectivo` int(11) NOT NULL DEFAULT '0' COMMENT 'ventas sin efectivo',
+  `monto_sin_efectivo` int(11) NOT NULL DEFAULT 0 COMMENT 'ventas sin efectivo',
   `detalles_movimiento` varchar(100) DEFAULT NULL COMMENT 'motivo y detalles del registro',
-  `fecha_movimiento` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` datetime DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id_cajas_movimiento`)
+  `fecha_movimiento` datetime NOT NULL DEFAULT current_timestamp(),
+  `updated_at` datetime DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------

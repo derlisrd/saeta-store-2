@@ -42,6 +42,7 @@ const RegistrarMovimiento = () => {
     setFormulario(initialFormulario);
   };
   const getListaRegistros = useCallback(async () => {
+   
     if (dialog.registrar) {
 
       let promises = await Promise.all([ 
@@ -77,18 +78,12 @@ const RegistrarMovimiento = () => {
       return false;
     }
 
+   
+  
     
-    let datos_cajas_movimientos = {
-      id_caja_movimiento: f.id_caja_movimiento,
-      id_user_movimiento: id_user,
-      id_tipo_registro: f.id_tipo_registro,
-      monto_movimiento: f.monto_movimiento,
-      detalles_movimiento: f.motivo_movimiento,
-      fecha_movimiento: funciones.getFechaHorarioString(),
-    };
     let foundMoneda = listas.monedas.find( e=> e.id_cajas_moneda === f.id_cajas_moneda);
     let foundRegistro = listas.registros.find( e=> e.id_cajas_registro === f.id_tipo_registro);
-    
+    let id_moneda = foundMoneda.id_moneda
     let cantidad_actual = parseFloat(foundMoneda.monto_caja_moneda);
     let cantidad_nueva = 0;
     
@@ -103,22 +98,30 @@ const RegistrarMovimiento = () => {
       setErrors({status:true,message: lang.no_hay_suficientes_fondos_en_caja})
       return false;
     }
-    
+    let datos_cajas_movimientos = {
+      id_moneda_movimiento: id_moneda,
+      id_caja_movimiento: f.id_caja_movimiento,
+      id_user_movimiento: id_user,
+      id_tipo_registro: f.id_tipo_registro,
+      monto_movimiento: f.monto_movimiento,
+      detalles_movimiento: f.motivo_movimiento,
+      fecha_movimiento: funciones.getFechaHorarioString(),
+    };
     let datos_cajas_monedas = {
       monto_caja_moneda : cantidad_nueva
     }
 
-    setCargando(true);
+    /* setCargando(true);
     let promesas = [
       APICALLER.insert({table:"cajas_movimientos",token:token_user,data:datos_cajas_movimientos}),
       APICALLER.update({table:"cajas_monedas",token:token_user,data:datos_cajas_monedas,id: foundMoneda.id_cajas_moneda})
-  ]
+    ]
    let promises = await Promise.all(promesas)
    if(promises[0].response==="ok" && promises[1].response==="ok"){
     swal({text:lang.movimiento_registrado,icon:'success',timer:1300}).then(()=>{cerrar();getData();})
    } else{
     console.log(promises);
-   } 
+   }  */
     setCargando(false);
   }
 
@@ -127,7 +130,7 @@ const RegistrarMovimiento = () => {
     let isActive = true;
     if (isActive) {
       getListaRegistros();
-      setCargando(false);
+      
     }
     return () => {
       isActive = false;
@@ -135,6 +138,9 @@ const RegistrarMovimiento = () => {
     };
     
   }, [getListaRegistros]);
+
+
+  const listaCajasMonedasFiltrada = listas.monedas
 
   return (
     <Dialog fullWidth open={dialog.registrar} onClose={cerrar} TransitionComponent={Zoom}>
@@ -202,7 +208,7 @@ const RegistrarMovimiento = () => {
               value={formulario.id_cajas_moneda}
               onChange={onChange}
             >
-              {listas.monedas.map((d, index) => (
+              {listaCajasMonedasFiltrada.map((d, index) => (
                 <MenuItem key={index} value={d.id_cajas_moneda}>
                   {d.nombre_moneda} 
                 </MenuItem>
