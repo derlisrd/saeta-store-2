@@ -1,15 +1,18 @@
-import { Grid,Typography } from "@mui/material";
+import { Grid,Alert,Typography } from "@mui/material";
 import { Fragment } from "react";
 import { useCajas } from "./CajasProvider";
+import RegistrosMovimientos from "./components/RegistrosMovimientos";
 
 function ResumenFinalDatos({datos}) {
     const {funciones,lang} = useCajas();
-    return (  <Fragment>
+    return (  <>
         {
             datos.registros.map((dato,index)=>(
               <Fragment key={index}>
                 <Grid item xs={12}>
-                  <Typography variant='button'>{dato.nombre_moneda}: </Typography>
+                  <Alert icon={false} severity="info" >
+                    <Typography variant='button'>{dato.nombre_moneda}: </Typography>
+                  </Alert>
                 </Grid>
 
                 
@@ -18,29 +21,23 @@ function ResumenFinalDatos({datos}) {
                   {
                     dato.registros_movimientos.map((registro,i)=>(
                       (registro.tipo_registro==="1" && (registro.cantidad>0 || registro.no_efectivo>0 )) &&
-                      <Fragment key={i}>
-                      <Grid  item xs={12} sm={8} >
-                        <Typography variant='button'>{registro.descripcion_registro}:</Typography> 
-                      </Grid>
-                      <Grid item xs={12} sm={4} >
-                        <Typography variant='button'>{funciones.numberFormat(registro.cantidad)}</Typography>
-                      </Grid>
-                      </Fragment>
+                      <RegistrosMovimientos key={i} registro={registro} />
                     ))
                   }
                   </Grid>
                 </Grid>
                 <Grid item xs={12} sm={12} md={6}>
-                {
-                  dato.total_egreso>0 &&
-                  dato.registros_movimientos.map((registro,i)=>(
-                    (registro.tipo_registro==="1" && (registro.cantidad>0 || registro.no_efectivo>0 )) &&
-                    <span key={i}>
-                      <Typography variant='overline'>{registro.descripcion_registro}:</Typography> <Typography variant='button'>{funciones.numberFormat(registro.cantidad)}</Typography>
-                    </span>
-                  ))
-                }
+                  <Grid container>
+                  {
+                    dato.total_egreso>0 &&
+                      dato.registros_movimientos.map((registro,i)=>(
+                        (registro.tipo_registro==="0" && (registro.cantidad>0 || registro.no_efectivo>0 )) &&
+                        <RegistrosMovimientos key={i} registro={registro} />
+                      ))
+                  }
+                  </Grid>
                 </Grid>
+
                 <Grid item xs={12} sm={6} md={3}>
                   {lang.total_ingreso} : <b>{funciones.numberFormat(dato.total_ingreso)}</b>
                 </Grid>
@@ -53,10 +50,18 @@ function ResumenFinalDatos({datos}) {
                 <Grid item xs={12} sm={6} md={3}>
                   {lang.total_declarado} : <b>{funciones.numberFormat(dato.declarado)}</b>
                 </Grid>
+                <Grid item xs={12}>
+                  <Alert icon={false} variant="outlined">
+                    <b>BALANCE: </b>
+                  </Alert>
+                </Grid>
+                <Grid item xs={12}>
+
+                </Grid>
               </Fragment>
             ))
           }
-    </Fragment>);
+    </>);
 }
 
 export default ResumenFinalDatos;
