@@ -130,16 +130,25 @@ const VentasProvider = ({ children }) => {
     var IDCAJAFACTURACION = df.datosFactura.id_caja;
     var TOTAL_A_PAGAR = (df.total / VALOR_MONEDA) - (DESCUENTO);
     var FECHA_ACTUAL = Funciones.fechaActualYMD() +" "+ Funciones.getHorarioActualString();
-    if (df.datosFactura.tipoFactura === "0" || df.datosFactura.tipoFactura==="3") {
-      let nrorec = await APICALLER.get({ table: "empresa_recibos" });
-      if (nrorec.response === "ok") {
+
+    var getComprobantes =  await Promise.all([
+      APICALLER.get({ table: "empresa_recibos" }),
+      APICALLER.get({ table: "empresa_facturas",where: `id_caja_empresa,=,${IDCAJAFACTURACION}`})
+    ])
+    let nrorec = getComprobantes[0];
+    let nrofac = getComprobantes[1];
+    var tipoFactura = parseInt(df.datosFactura.tipoFactura)
+
+    if (tipoFactura === 0 || tipoFactura===3) {
+      
+      if (nrorec.response === "ok" && nrorec.found>0) {
         LASTNROFACTURA = nrorec.results[0].last_nro_recibo;
         let idr = nrorec.results[0].id_empresa_recibo;
         APICALLER.update({table: "empresa_recibos",token: token_user,id:idr, data: {last_nro_recibo: parseInt(LASTNROFACTURA) + 1} });
       }
     } else {
-      let nrofac = await APICALLER.get({ table: "empresa_facturas",where: `id_caja_empresa,=,${IDCAJAFACTURACION}`});
-      if (nrofac.response === "ok") {
+      
+      if (nrofac.response === "ok" && nrofac.found>0) {
         LASTNROFACTURA = parseInt(nrofac.results[0].last_nro_factura);
         let LASTNROFACTURADECAJA = parseInt(nrofac.results[0].nro_fin_factura);
         if(LASTNROFACTURA>LASTNROFACTURADECAJA){ 
@@ -152,19 +161,25 @@ const VentasProvider = ({ children }) => {
         let idf = nrofac.results[0].id_empresa_factura;
         APICALLER.update({table: "empresa_facturas",token: token_user, id:idf, 
         data: {last_nro_factura: parseInt(LASTNROFACTURA) + 1}});
+      }else{
+        swal({text:"Esta caja no esta relacionada con ninguna factura. Sera facturada como recibo",timer:10000});
+        LASTNROFACTURA = nrorec.results[0].last_nro_recibo;
+        let idr = nrorec.results[0].id_empresa_recibo;
+        tipoFactura = 0;
+        APICALLER.update({table: "empresa_recibos",token: token_user,id:idr, data: {last_nro_recibo: parseInt(LASTNROFACTURA) + 1} });
       }
     } 
-
+  
 
     
     let efectivo=0,sinEfectivo=0,cambio = 0, observaciones = ""; 
     let objDetalles = {
-      "0": `Venta recibo: ${LASTNROFACTURA}. `,
-      "1": `Venta contado factura: ${LASTNROFACTURA}. `,
-      "2": `Venta credito factura: ${LASTNROFACTURA}. `,
-      "3": `Venta a cuota recibo: ${LASTNROFACTURA}. `
+      0: `Venta recibo: ${LASTNROFACTURA}. `,
+      1: `Venta contado factura: ${LASTNROFACTURA}. `,
+      2: `Venta credito factura: ${LASTNROFACTURA}. `,
+      3: `Venta a cuota recibo: ${LASTNROFACTURA}. `
     }
-    let detallesMov = objDetalles[df.datosFactura.tipoFactura];
+    let detallesMov = objDetalles[tipoFactura];
     
     df.datosFactura.formasPago.forEach(e=>{
       if(e.id_forma_pago==="1") {
@@ -189,7 +204,7 @@ const VentasProvider = ({ children }) => {
     //console.log(efectivo,sinEfectivo,observaciones,detallesMov,cambio)
     // INGRESAMOS AL REGISTRO DE CAJA SI ES CONTADO, SI ES CREDITO IGNORAMOS PQ NO HAY MOVIMIENTO EN CAJA
     var promesas = [];
-    let tipoFactura = parseInt(df.datosFactura.tipoFactura)
+    
     if (tipoFactura!==2 ) {
       //let cajasMov = 
       let totalPagado = parseFloat(df.datosFactura.totalAbonado);
@@ -257,17 +272,11 @@ const VentasProvider = ({ children }) => {
           data: { monto_caja_moneda: nuevo_monto_efectivo,monto_no_efectivo: nuevo_monto_no_efectivo },
           id: id_de_caja_moneda,
         }));
-
-
-
-
-
-        
       }
     }
     Promise.all(promesas)
     //ingresamos a la factura
-    let obj = {
+    let objFactura = {
       id_cliente_factura: df.datosCliente.id_cliente,
       id_user_factura: id_user,
       id_caja_factura: df.datosFactura.id_caja,
@@ -279,7 +288,7 @@ const VentasProvider = ({ children }) => {
       fecha_factura: FECHA_ACTUAL,
       fecha_cobro_factura: df.datosFactura.fecha_cobro_factura +" "+ Funciones.getHorarioActualString(),
       estado_factura: parseInt(df.datosFactura.tipoFactura) < 2 ? 1 : 2,
-      tipo_factura: df.datosFactura.tipoFactura,
+      tipo_factura: tipoFactura,
       recibido_factura:  df.datosFactura.tipoFactura === "2" ? 0 : df.datosFactura.totalAbonado,
       monto_total_factura: df.total,
       iva_factura: df.total_iva,
@@ -289,7 +298,7 @@ const VentasProvider = ({ children }) => {
       descuento_factura: DESCUENTO
     };
 
-    let resInsert = await APICALLER.insert({table:"facturas",data: obj,token:token_user});
+    let resInsert = await APICALLER.insert({table:"facturas",data: objFactura,token:token_user});
 
     if (resInsert.response === "ok") {
       let ID_FACTURA = resInsert.last_id;
@@ -346,6 +355,8 @@ const VentasProvider = ({ children }) => {
       setDialogs({ ...dialogs,imprimirFactura: true, finalizarVenta:false});
     }  
   }
+
+
 
   const valorConvertido = (val,letter=false) =>{
     
@@ -405,6 +416,8 @@ const VentasProvider = ({ children }) => {
     setCargas({ ...cargas, cargandoCliente: false });
   };
 
+
+
   const setearCliente = (datos) => {
     let obj = { ...datosFacturas };
     obj.facturas[indexFactura].datosCliente = datos;
@@ -449,7 +462,7 @@ const VentasProvider = ({ children }) => {
       if (found.length > 0) {
         let cantidadInput = parseFloat(inputCantidad.current.value) +faArray[index].cantidad_producto;
         let stock = faArray[index].stock_producto;
-        if(stock>=cantidadInput || stock===null){
+        if(stock>=cantidadInput || stock===null || isNaN(stock)){
           AgregarCantidad(cantidadInput, index);
         }
         else{
@@ -552,6 +565,8 @@ const VentasProvider = ({ children }) => {
     let ima = pro[1];
     let serv = pro[2];
    
+
+
     if (res.response === "ok") {
       if (res.found > 0 || serv.found>0) {
         if(res.results[0]?.tipo_producto==="1" && res.results[0]?.stock_producto_deposito<=0 ){
@@ -560,8 +575,10 @@ const VentasProvider = ({ children }) => {
         }
         else{
           let insertarEsto = ima.found > 0 ? ima.results[0] : res.found>0 ? res.results[0] : serv.results[0]
+
           insertarProductoTabla(insertarEsto);
         }
+
       } else {
         // ACA SE PUEDE PONER PARA BALANZA
         setErrors({...errors,error: true,mensaje: "Producto no registrado con ese código o sin stock"});
@@ -575,6 +592,8 @@ const VentasProvider = ({ children }) => {
 
 
   const insertarProductoTabla = (prod,cantidad=null) => {
+    let fa = { ...datosFacturas };
+    let df = fa.facturas[indexFactura];
     let cantidadInput = cantidad || parseFloat(inputCantidad.current.value) ;
     let subtotal = parseFloat(prod.precio_producto) * cantidadInput;
     let iva_porcent = parseFloat(prod.porcentaje_impuesto);
@@ -600,6 +619,10 @@ const VentasProvider = ({ children }) => {
       id_producto: prod.id_producto,
       url_imagen: prod?.url_imagen ? prod.url_imagen : ""
     };
+
+    if(prod.preguntar_precio === "1"){
+      openCambiarPrecio(df.itemsFactura.length)
+    }
 
     let fObjInsert = { ...datosFacturas };
     fObjInsert.facturas[indexFactura].itemsFactura.push(obj);

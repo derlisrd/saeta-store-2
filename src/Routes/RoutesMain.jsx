@@ -43,6 +43,7 @@ import Cuentas from "../Pages/Cuentas";
 import ProductCode from "../Pages/Productos/Productos/ProductCode";
 import Agenda from "../Pages/Agenda";
 import Turnos from "../Pages/Turnos";
+import Backup from "../Pages/Backup";
 
 const RoutesMain = () => {
   const navigate = useNavigate();
@@ -118,6 +119,7 @@ const RoutesMain = () => {
       <Route path={R+'dashboard'} element={<PublicRoute><DashBoard /></PublicRoute>} />
       <Route path={R+'info'} element={<PublicRoute><Info /></PublicRoute>} />
       <Route path={R+'cajas'} element={<PrivateRoute id={22}><Cajas /></PrivateRoute>} />
+      <Route path={R+'backup'} element={<PrivateRoute id={65}><Backup /></PrivateRoute>} />
       <Route path={R+'notautorized'} element={<NotAutorized />} />
       <Route path={R} element={<LoginForm />} />
       <Route path="*" element={<ErrorPage />} />

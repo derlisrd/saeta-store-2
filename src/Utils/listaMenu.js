@@ -294,6 +294,13 @@ export const listaMenu = [
             url: `${BASEURL}/tema`,
           },
           {
+            id: 65,
+            title: "copiabackup",
+            icon: "manage_accounts",
+            color: "#a0aec0",
+            url: `${BASEURL}/backup`,
+          },
+          {
             id: 59,
             title: "info_y_ayuda",
             icon: "help",
@@ -301,6 +308,7 @@ export const listaMenu = [
             url: `${BASEURL}/info`,
             private:false
           },
+
         ],
       },  
 ]
