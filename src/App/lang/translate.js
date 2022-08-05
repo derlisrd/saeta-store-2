@@ -6,6 +6,7 @@ export const translate = {
         complete_datos_correctamente:"Complete los datos correctamente",
         movimiento_registrado:"Movimiento de caja registrado",
         cantidad_actual:"Cantidad actual",
+        backup:"Copia de seguridad",
         ver_mas:"Ver más",
         lucro:"Lucro",
         total_ventas:"Total ventas",

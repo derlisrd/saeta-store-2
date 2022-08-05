@@ -121,7 +121,7 @@ const CajasProvider = ({ children }) => {
       let cajaformusers = { id_user_caja: IDUSER, id_caja_caja: LASTIDCAJA };
       
       let cajamovimientosForm = {
-        id_caja_movimiento:0,
+        id_moneda_movimiento:0,
         id_caja_movimiento: LASTIDCAJA,
         id_user_movimiento: id_user,
         id_tipo_registro: "3", // 3 ES APERTURA DE CAJA

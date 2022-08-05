@@ -295,8 +295,8 @@ export const listaMenu = [
           },
           {
             id: 65,
-            title: "copiabackup",
-            icon: "manage_accounts",
+            title: "backup",
+            icon: "backup",
             color: "#a0aec0",
             url: `${BASEURL}/backup`,
           },
