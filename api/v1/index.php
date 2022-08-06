@@ -23,6 +23,21 @@ require "./Routes/JsonResponse.php";
 use ApiRoutes\Routes;
 
 
-Routes::methods();
+Routes::methods(); 
+
+
+
+
+/* include_once 'App/Request.php';
+include_once 'App/Router.php';
+
+
+
+$router = new Router(new Request);
+$router->get('/api/v1/', function() {
+    echo "principal jejeje";
+});
+ */
+
 
 ?>
