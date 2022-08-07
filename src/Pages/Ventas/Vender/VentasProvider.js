@@ -21,6 +21,7 @@ const VentasProvider = ({ children }) => {
   const storage = JSON.parse(localStorage.getItem("facturasStorage"));
   
   const initialErrors = {
+    id_error:null,
     error:false,
     notFound: false,
     notFoundMensaje: "",
@@ -121,6 +122,7 @@ const VentasProvider = ({ children }) => {
   const verificarYEnviarFactura = async () => {
     let fa = { ...datosFacturas };
     let df = fa.facturas[indexFactura];
+    
     setCargas({ ...cargas, finalizarVenta: true});
     setDialogs({...dialogs,finalizarVenta:false});
     var LASTNROFACTURA;

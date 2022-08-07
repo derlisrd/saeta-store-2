@@ -38,8 +38,20 @@ const DialogFinalizar = () => {
     let v = f.id_empleado;
     let e = { ...errors };
     
-    if(fa.datosFactura.formasPago.length<1 && fa.datosFactura.tipoFactura!=="2"){
+    let listaFacturas = fd.listaFacturas,
+    id_caja = fa.datosFactura.id_caja;
+    let found = listaFacturas.findIndex(e=>e.id_caja_empresa === id_caja);
+    if(found<0 && (fa.datosFactura.tipoFactura==="1" || fa.datosFactura.tipoFactura==="2" )){
       e.factura.error = true;
+      e.id_error = 1;
+      e.factura.errorMensaje = lang.no_relacion_con_caja;
+      setErrors(e);
+      return false;
+    }
+    
+
+    if(fa.datosFactura.formasPago.length<1 && fa.datosFactura.tipoFactura!=="2"){
+      e.factura.error = true; 
       e.factura.errorMensaje =
         "Agregue al menos un método de pago";
       setErrors(e);
@@ -47,10 +59,18 @@ const DialogFinalizar = () => {
       return false;
     }
 
+    if (cj === "") {
+      e.factura.error = true;
+      e.id_error = 1;
+      e.factura.errorMensaje = "Seleccione una caja por favor";
+      setErrors(e);
+      return false;
+    }
 
     
     if(! fd.monedasdecajas.some(elem=> elem.id_caja_moneda===f.id_caja && elem.id_moneda_caja_moneda === fa.datosMoneda.id_moneda)){
       e.factura.error = true;
+      e.id_error = 1;
       e.factura.errorMensaje ="Esa moneda no esta habilitada para esta caja";
       setErrors(e);
       cantidadRecibidaRef.current?.focus();
@@ -66,14 +86,10 @@ const DialogFinalizar = () => {
       cantidadRecibidaRef.current?.focus();
       return false;
     }
-    if (cj === "") {
-      e.factura.error = true;
-      e.factura.errorMensaje = "Seleccione una caja por favor";
-      setErrors(e);
-      return false;
-    }
+    
     if (v === "") {
       e.factura.error = true;
+      e.id_error = 2;
       e.factura.errorMensaje = "Seleccione un vendedor por favor";
       setErrors(e);
       return false;
@@ -159,7 +175,7 @@ const DialogFinalizar = () => {
                 <FormControl fullWidth>
                   <InputLabel variant="outlined">Seleccione caja</InputLabel>
                   <Select
-                    error={errors.factura.errorMensaje ==="Seleccione una caja por favor"}
+                    error={errors.id_error === 1}
                     value={fa.datosFactura.id_caja} name="id_caja"onChange={changeInputsDatosFactura} fullWidth
                   >
                     <MenuItem value="" disabled>
@@ -187,10 +203,7 @@ const DialogFinalizar = () => {
                     {lang.seleccione_vendedor}
                   </InputLabel>
                   <Select
-                    error={
-                      errors.factura.errorMensaje ===
-                      "Seleccione un vendedor por favor"
-                    }
+                    error={errors.factura.errorMensaje === "Seleccione un vendedor por favor"}
                     name="id_empleado"
                     onChange={changeInputsDatosFactura}
                     fullWidth

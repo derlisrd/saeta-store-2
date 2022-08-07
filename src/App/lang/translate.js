@@ -1,5 +1,6 @@
 export const translate = {
     es:{
+        no_relacion_con_caja: "Esa caja no esta relacionada con ninguna factura",
         monedas_de_caja:"Monedas de caja",
         fecha_nacimiento:"Fecha de nacimiento",
         selecciona_moneda:"Selecciona moneda",
