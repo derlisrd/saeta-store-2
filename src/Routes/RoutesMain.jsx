@@ -33,7 +33,7 @@ import Depositos from "../Pages/Productos/Depositos";
 import Inventario from "../Pages/Productos/Inventario";
 import Impuestos from "../Pages/Settings/Impuestos";
 import Info from "../Pages/Settings/Info";
-import Compras from "../Pages/Productos/Compras";
+import Compras from "../Pages/Compras";
 import Medidas from "../Pages/Medidas";
 import Movimientos from "../Pages/Caja/Movimientos";
 import RegistroMovimientos from "../Pages/Caja/RegistroMovimientos";
