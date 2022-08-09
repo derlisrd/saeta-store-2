@@ -10,7 +10,7 @@ import Datos from './Datos'
 
 
 const Inputs = () => {
-  const {lang,inputCantidad,inputCodigo,dialogs,setDialogs,consultarCodigoProducto} = useCompras()
+  const {lang,inputCantidad,inputCodigo,consultarCodigoProducto} = useCompras()
 
   
   const agregar = () => {
@@ -18,7 +18,11 @@ const Inputs = () => {
     if(codigo){
       consultarCodigoProducto(codigo);
     }
-    setDialogs({...dialogs,insert:true})
+    
+  }
+
+  const presionaEnterPaBuscar = (e)=>{
+    if (e.key === `Enter`) consultarCodigoProducto(inputCodigo.current.value);  
   }
 
 
@@ -30,7 +34,7 @@ const Inputs = () => {
       <Grid item xs={12} sm={12} >
       <TextFieldCustom
         inputRef={inputCodigo}
-        onKeyPress={()=>{}}
+        onKeyPress={presionaEnterPaBuscar}
         autoComplete="off"
         autoFocus
         name="codigo_producto"

@@ -25,26 +25,52 @@ export default function ComprasProvider({children}) {
     items:false,
     insert:false
   }
+
+  const [errores,setErrores] = useState(initialErrores);
+  const [cargas,setCargas] = useState(initialCargas);
+  const [dialogs,setDialogs] = useState(initialDialogs)
+  const [compras,setCompras] = useState(initialCompras)
+
+  const setearCompras = elem=>{
+    setCompras(elem)
+    localStorage.setItem("compras", JSON.stringify(elem))
+  }
+
+  const insertarProductoTabla = (pro,cant) => {
+    let datas = {...compras}
+    let array = [];
+    let data = {
+      cantidad: cant,
+      codigo_producto: pro.codigo_producto,
+      nombre_producto: pro.nombre_producto,
+      costo_producto: 0,
+      subtotal: 0
+    }
+    array.push(data);
+    datas.items = array;
+
+    setearCompras(datas);
+
+  }
+
   
   const consultarCodigoProducto = async(codigo)=>{
     let promises = await Promise.all([
-      APICALLER.get({table:"productos",where:`codigo_producto,=,'${codigo}',and,tipo_producto,=,1`}),
-      APICALLER.get({table:"productos",where:`codigo_producto,=,'${codigo}',and,tipo_producto,=,1`}),
+      APICALLER.get({table:"productos",
+      fields:"id_producto,codigo_producto,precio_producto,preciom_producto,nombre_producto",
+      where:`codigo_producto,=,'${codigo}',and,tipo_producto,=,1`})
     ])
 
     let res = promises[0];
 
     if(res.response==="ok"){
       if(res.found > 0){
-        
+          insertarProductoTabla(res.results[0],1);
       }
     }
   }
   
-  const [errores,setErrores] = useState(initialErrores);
-  const [cargas,setCargas] = useState(initialCargas);
-  const [dialogs,setDialogs] = useState(initialDialogs)
-  const [compras,setCompras] = useState(initialCompras)
+ 
 
 
 

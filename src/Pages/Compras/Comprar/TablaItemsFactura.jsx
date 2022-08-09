@@ -3,11 +3,14 @@ import React from 'react'
 import { useCompras } from '../ComprasProvider';
 import {StylesTabla} from "./StylesTabla";
 import { columnas } from './TablaColumnas';
+import TableItems from './TableItems';
 
 
 const TablaItemsFactura = () => {
   const classes = StylesTabla();
-  const {lang} = useCompras()
+  const {lang,compras} = useCompras()
+
+
   return (
     <TableContainer className={classes.tableContainer}>
       <Table>
@@ -25,7 +28,7 @@ const TablaItemsFactura = () => {
           </TableRow>
         </TableHead> 
         <TableBody>
-          
+              <TableItems d={compras.items} />
         </TableBody>
       </Table>
     </TableContainer>
