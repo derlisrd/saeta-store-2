@@ -27,7 +27,13 @@ export default function ComprasProvider({children}) {
   }
   
   const consultarCodigoProducto = async(codigo)=>{
-    let res = await APICALLER.get({table:"productos",where:`codigo_producto,=,'${codigo}',and,tipo_producto,=,1`})
+    let promises = await Promise.all([
+      APICALLER.get({table:"productos",where:`codigo_producto,=,'${codigo}',and,tipo_producto,=,1`}),
+      APICALLER.get({table:"productos",where:`codigo_producto,=,'${codigo}',and,tipo_producto,=,1`}),
+    ])
+
+    let res = promises[0];
+
     if(res.response==="ok"){
       if(res.found > 0){
         
