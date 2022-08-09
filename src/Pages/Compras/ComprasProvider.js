@@ -7,7 +7,7 @@ const ComprasContext = createContext();
 export default function ComprasProvider({children}) {
 
   const {lang} = useLang()
-  const initialDialogs = { main:true }
+  const initialDialogs = { main:true,insert:false,finalizar:false }
   const storage = JSON.parse(localStorage.getItem("compras"));
   const inputCodigo = useRef(null);
   const inputCantidad = useRef(null);
@@ -21,7 +21,8 @@ export default function ComprasProvider({children}) {
   }
   const initialCargas = {
     main:true,
-    items:false
+    items:false,
+    insert:false
   }
   
 
@@ -40,6 +41,7 @@ export default function ComprasProvider({children}) {
       });
       localStorage.setItem("compras", values);
     }
+    setCargas({main:false,items:false,insert:false});
   },[])
 
 useEffect(() => {

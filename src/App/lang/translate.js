@@ -1,5 +1,7 @@
 export const translate = {
     es:{
+        finalizar_compras:"Finalizar compra",
+        volver_atras:"Volver atras",
         no_relacion_con_caja: "Esa caja no esta relacionada con ninguna factura",
         monedas_de_caja:"Monedas de caja",
         fecha_nacimiento:"Fecha de nacimiento",
@@ -302,6 +304,8 @@ export const translate = {
         nota_de_pedido:"Nota de pedido",
         nro_de_pedido:"Nro de pedido",
         cuentas_a_pagar:"Cuentas a pagar",
+        hacer_compras: "Hacer compras",
+        lista_compras: "Lista de compras",
         listas_compras:"Lista de compras a pagar",
         cuentas_a_cobrar:"Cuentas a cobrar",
         listas_cuentas_cobrar:"Lista de ventas/facturas a cobrar",
