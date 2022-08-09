@@ -137,6 +137,12 @@ const DatosEmpresa = () => {
             />
         </Grid>
         <Grid item xs={12} >
+          <Button variant="contained" component="label">
+            {lang.subir_logo}
+                <input hidden accept="image/*" multiple type="file" />
+          </Button>
+        </Grid>
+        <Grid item xs={12} >
             <Button size="large" onClick={Guardar} variant="outlined" color="primary" startIcon={<Icon color="primary" >save</Icon>} >
                 Guardar
             </Button>

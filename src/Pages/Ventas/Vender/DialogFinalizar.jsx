@@ -343,7 +343,7 @@ const DialogFinalizar = () => {
               <Grid item sm={12} md={8}>
                 <TextFieldCustom
                   label="Cantidad recibida"
-                  onKeyPress={e => {e.key === "Enter" && verificar();}}
+                  onKeyPress={e => {e.key === "Enter" && AgregarCantidadMetodoPago();}}
                   autoFocus inputRef={cantidadRecibidaRef} disabled={fa.datosFactura.tipoFactura === "2"}
                   autoComplete="off"name="cantidad_recibida"
                   value={fa.datosFactura.cantidad_recibida}

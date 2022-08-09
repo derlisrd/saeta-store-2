@@ -10,10 +10,12 @@ import Datos from './Datos'
 
 
 const Inputs = () => {
-  const {lang,inputCantidad,inputCodigo} = useCompras()
+  const {lang,inputCantidad,inputCodigo,dialogs,setDialogs} = useCompras()
 
   
-
+  const agregar = () => {
+    setDialogs({...dialogs,insert:true})
+  }
 
 
   return (
@@ -59,7 +61,7 @@ const Inputs = () => {
         />
       </Grid>
       <Grid item xs={12} sm={12} >
-        <ButtonCustom variant="contained" fullWidth>{lang.agregar} </ButtonCustom>
+        <ButtonCustom variant="contained" onClick={agregar} fullWidth>{lang.agregar} </ButtonCustom>
       </Grid>
       <Grid item xs={12} sm={12} >
         <Botones />

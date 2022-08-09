@@ -1,5 +1,14 @@
 export const translate = {
     es:{
+        costo:"Costo",
+        stock:"Stock",
+        stock_comprado:"Stock comprado",
+        subir_logo:"Subir logo",
+        insertar_producto_factura:"Insertar Producto a factura",
+        insertar:"Insertar",
+        precio_balcon:"Precio balcon",
+        precio_mayorista:"Precio mayorista",
+        precio_con_descuento:"Precio con descuento",
         finalizar_compras:"Finalizar compra",
         volver_atras:"Volver atras",
         no_relacion_con_caja: "Esa caja no esta relacionada con ninguna factura",
