@@ -10,10 +10,14 @@ import Datos from './Datos'
 
 
 const Inputs = () => {
-  const {lang,inputCantidad,inputCodigo,dialogs,setDialogs} = useCompras()
+  const {lang,inputCantidad,inputCodigo,dialogs,setDialogs,consultarCodigoProducto} = useCompras()
 
   
   const agregar = () => {
+    let codigo = inputCodigo.current.value
+    if(codigo){
+      consultarCodigoProducto(codigo);
+    }
     setDialogs({...dialogs,insert:true})
   }
 

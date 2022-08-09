@@ -1,5 +1,6 @@
 import React, { createContext,useCallback,useContext,useEffect, useRef, useState } from 'react';
 import { useLang } from '../../Contexts/LangProvider';
+import { APICALLER } from '../../Services/api';
 const ComprasContext = createContext();
 
 
@@ -25,7 +26,14 @@ export default function ComprasProvider({children}) {
     insert:false
   }
   
-
+  const consultarCodigoProducto = async(codigo)=>{
+    let res = await APICALLER.get({table:"productos",where:`codigo_producto,=,'${codigo}',and,tipo_producto,=,1`})
+    if(res.response==="ok"){
+      if(res.found > 0){
+        
+      }
+    }
+  }
   
   const [errores,setErrores] = useState(initialErrores);
   const [cargas,setCargas] = useState(initialCargas);
@@ -51,7 +59,7 @@ useEffect(() => {
     return ()=> {isActive = false;ca.abort();}
 }, [getDatas]);    
 
-const value = {lang,setDialogs,dialogs,compras,setCompras,cargas,setCargas,errores,setErrores,inputCantidad,inputCodigo}
+const value = {lang,setDialogs,dialogs,compras,setCompras,cargas,setCargas,errores,setErrores,inputCantidad,inputCodigo,consultarCodigoProducto}
 
   return (
     <ComprasContext.Provider value={value} >
@@ -60,6 +68,6 @@ const value = {lang,setDialogs,dialogs,compras,setCompras,cargas,setCargas,error
   );
 }
 export const useCompras =()=>{
-  const {lang,setDialogs,dialogs,compras,setCompras,cargas,setCargas,errores,setErrores,inputCantidad,inputCodigo} = useContext(ComprasContext);
-  return {lang,setDialogs,dialogs,compras,setCompras,cargas,setCargas,errores,setErrores,inputCantidad,inputCodigo}
+  const {lang,setDialogs,dialogs,compras,setCompras,cargas,setCargas,errores,setErrores,inputCantidad,inputCodigo,consultarCodigoProducto} = useContext(ComprasContext);
+  return {lang,setDialogs,dialogs,compras,setCompras,cargas,setCargas,errores,setErrores,inputCantidad,inputCodigo,consultarCodigoProducto}
 }
