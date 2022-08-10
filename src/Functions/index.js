@@ -6,11 +6,11 @@ export const funciones = {
         return date.setFullYear(parseInt(split[0]),parseInt(split[1]) - 1,parseInt(split[2]));
         //retorna en timestamp ejemplo: 1669932926692
     },
-    getDaysInMonth: (year, month) => {
-        // retorna los dias de cierto mes
-        return new Date(year, month, 0).getDate();
-      },
-      getFechaHorarioString: ()=>{
+    
+    // retorna los dias de cierto mes
+    getDaysInMonth: (year, month) => (  new Date(year, month, 0).getDate() ),
+    
+    getFechaHorarioString: ()=>{
         let date = new Date();
         let fecha =
         date.getFullYear().toString() +
@@ -25,8 +25,9 @@ export const funciones = {
           date.getSeconds().toString().padStart(2, 0);
         let fh = `${fecha} ${hora}`; // retorna 2021-12-30 12:02:03
         return fh;
-      },
-      getHorarioActualString: () => {
+    },
+
+    getHorarioActualString: () => {
         let date = new Date();
         let hora =
           date.getHours().toString().padStart(2, 0) +
@@ -35,8 +36,10 @@ export const funciones = {
           ":" +
           date.getSeconds().toString().padStart(2, 0);
         return hora;
-      },
-      getFechaActualString: () => {
+        //retorna 20:19 por ejemplo
+    },
+
+    getFechaActualString: () => {
         let date = new Date();
         let fecha =
           date.getDate().toString().padStart(2, 0) +
@@ -59,7 +62,7 @@ export const funciones = {
           (date.getMonth() + 1).toString().padStart(2, 0) +
           "-" +
           date.getFullYear().toString();
-        return fecha;
+        return fecha; // retorna formato 10-03-2022
       },
     
       fechaActualYMD: () => {
