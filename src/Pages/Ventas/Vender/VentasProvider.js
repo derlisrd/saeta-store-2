@@ -429,7 +429,6 @@ const VentasProvider = ({ children }) => {
 
   const changeMonedas = e =>{
     let fo = { ...datosFacturas };
-    
     fo.facturas[indexFactura].datosMoneda = e;
     fo.facturas[indexFactura].descuento = 0;
     setearFactura(fo);

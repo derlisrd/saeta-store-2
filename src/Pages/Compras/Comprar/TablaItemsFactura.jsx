@@ -3,6 +3,7 @@ import React from 'react'
 import { useCompras } from '../ComprasProvider';
 import {StylesTabla} from "./StylesTabla";
 import { columnas } from './TablaColumnas';
+import TableEmptyItems from './TableEmptyItems';
 import TableItems from './TableItems';
 
 
@@ -28,7 +29,7 @@ const TablaItemsFactura = () => {
           </TableRow>
         </TableHead> 
         <TableBody>
-              <TableItems d={compras.items} />
+              { compras.items.length === 0 ? <TableEmptyItems colSpan={7} classes={classes} /> : <TableItems d={compras.items} /> }
         </TableBody>
       </Table>
     </TableContainer>

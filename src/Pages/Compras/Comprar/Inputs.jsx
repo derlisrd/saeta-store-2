@@ -10,13 +10,13 @@ import Datos from './Datos'
 
 
 const Inputs = () => {
-  const {lang,inputCantidad,inputCodigo,consultarCodigoProducto} = useCompras()
+  const {lang,inputCantidad,inputCodigo,consultarCodigoProducto,consultarSiExiste} = useCompras()
 
   
   const agregar = () => {
     let codigo = inputCodigo.current.value
     if(codigo){
-      consultarCodigoProducto(codigo);
+      consultarSiExiste(codigo);
     }
     
   }

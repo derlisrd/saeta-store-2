@@ -1,7 +1,8 @@
-import { Alert, AlertTitle, TableCell, TableRow,Icon,IconButton,Typography,Stack, Tooltip } from "@mui/material";
+import { TableCell, TableRow,Icon,IconButton,Typography,Stack, Tooltip } from "@mui/material";
 import { useVentas } from "./VentasProvider";
 import VentasTablaOpciones from "./VentasTablaOpciones";
 import {StylesTabla} from "./StylesTabla";
+import VentasTableVacio from "./VentasTableVacio";
 const VentasTablaItems = () => {
   const classes = StylesTabla();
 
@@ -13,15 +14,9 @@ const VentasTablaItems = () => {
   return (
     <>
       {datosFacturas.facturas[indexFactura]?.itemsFactura.length === 0 ? (
-        <>
-          <TableRow className={classes.tablelist} hover>
-            <TableCell colSpan={7} align="center">
-              <Alert severity="warning" variant="outlined" icon={false}>
-                <AlertTitle>FACTURA VACÍA</AlertTitle>
-              </Alert>
-            </TableCell>
-          </TableRow>
-        </>
+        
+          <VentasTableVacio colSpan={7} classes={classes} />
+        
       ) : (
         items.map((d, i) => (
           <TableRow key={i} className={classes.tablelist}>

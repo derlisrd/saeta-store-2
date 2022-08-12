@@ -305,6 +305,7 @@ export const translate = {
         error_pass:"Error de contraseña",
         edit_usuario:"Editar usuario",
         cambiar_pass:"Cambiar contraseña",
+        no_existe_producto:"No existe ese producto",
         old_pass:"Contraseña antigua",
         long_contrasena_cambiado: "Contraseña cambiada exitosamente, para mayor seguridad, cierre la sesión e inicie nuevamente.",
         permisos:"Permisos",

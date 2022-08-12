@@ -18,7 +18,8 @@ export default function ComprasProvider({children}) {
     active:false
   }
   const initialCompras = {
-    items: storage ? storage.items : []
+    items: storage ? storage.items : [],
+    insertProducto: {}
   }
   const initialCargas = {
     main:true,
@@ -36,20 +37,37 @@ export default function ComprasProvider({children}) {
     localStorage.setItem("compras", JSON.stringify(elem))
   }
 
-  const insertarProductoTabla = (pro,cant) => {
+  const insertarProductoDialog = (pro) => {
     let datas = {...compras}
-    let array = [];
+    let cant = parseFloat(inputCantidad.current.value);
     let data = {
-      cantidad: cant,
       codigo_producto: pro.codigo_producto,
       nombre_producto: pro.nombre_producto,
-      costo_producto: 0,
-      subtotal: 0
+      costo_producto: pro.costo_producto,
+      preciom_producto:pro.preciom_producto,
+      precio_producto:pro.precio_producto
     }
-    array.push(data);
-    datas.items = array;
+    //array.push(data);
+    datas.insertProducto = data;
+    setCompras(datas)
+    setDialogs({...dialogs,insert:true})
+    //setearCompras(datas);
 
-    setearCompras(datas);
+  }
+
+  const consultarSiExiste = (codigo)=>{
+    let fact_compra = {...compras}
+    let items = fact_compra.items;
+    
+    let index = items.findIndex(e => e.codigo_producto.toLowerCase() === codigo.toLowerCase());
+    let found = items.filter(i => i.codigo_producto.toLowerCase() === codigo.toLowerCase());
+    // si ya hay un producto tons aumenta la cantidad
+    if (index >= 0) {
+      console.log(found)
+    }
+    else{
+      consultarCodigoProducto(codigo)
+    }
 
   }
 
@@ -65,7 +83,9 @@ export default function ComprasProvider({children}) {
 
     if(res.response==="ok"){
       if(res.found > 0){
-          insertarProductoTabla(res.results[0],1);
+        insertarProductoDialog(res.results[0])
+      }else{
+        setErrores({active:true,id_error:1,msj:lang.no_existe_producto})
       }
     }
   }
@@ -77,7 +97,8 @@ export default function ComprasProvider({children}) {
   const getDatas = useCallback(async()=>{
     if (!localStorage.getItem("compras")) {
       const values = JSON.stringify({
-        items: []
+        items: [],
+        insertProducto:{}
       });
       localStorage.setItem("compras", values);
     }
@@ -91,7 +112,7 @@ useEffect(() => {
     return ()=> {isActive = false;ca.abort();}
 }, [getDatas]);    
 
-const value = {lang,setDialogs,dialogs,compras,setCompras,cargas,setCargas,errores,setErrores,inputCantidad,inputCodigo,consultarCodigoProducto}
+const value = {lang,setDialogs,dialogs,compras,setCompras,cargas,setCargas,errores,setErrores,inputCantidad,inputCodigo,consultarCodigoProducto,consultarSiExiste}
 
   return (
     <ComprasContext.Provider value={value} >
@@ -100,6 +121,6 @@ const value = {lang,setDialogs,dialogs,compras,setCompras,cargas,setCargas,error
   );
 }
 export const useCompras =()=>{
-  const {lang,setDialogs,dialogs,compras,setCompras,cargas,setCargas,errores,setErrores,inputCantidad,inputCodigo,consultarCodigoProducto} = useContext(ComprasContext);
-  return {lang,setDialogs,dialogs,compras,setCompras,cargas,setCargas,errores,setErrores,inputCantidad,inputCodigo,consultarCodigoProducto}
+  const {lang,setDialogs,dialogs,compras,setCompras,cargas,setCargas,errores,setErrores,inputCantidad,inputCodigo,consultarCodigoProducto,consultarSiExiste} = useContext(ComprasContext);
+  return {lang,setDialogs,dialogs,compras,setCompras,cargas,setCargas,errores,setErrores,inputCantidad,inputCodigo,consultarCodigoProducto,consultarSiExiste}
 }

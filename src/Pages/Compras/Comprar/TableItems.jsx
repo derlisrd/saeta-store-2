@@ -1,6 +1,7 @@
 import { Stack, TableCell, TableRow, Tooltip,IconButton,Icon,Typography } from "@mui/material";
 import React from "react";
 import { StylesTabla } from "./StylesTabla";
+import TableOpciones from "./TableOpciones";
 
 const TableItems = ({d}) => {
   const classes = StylesTabla();
@@ -64,7 +65,7 @@ const TableItems = ({d}) => {
       </TableCell>
 
       <TableCell className={classes.tableitem}>
-       
+              <TableOpciones />
       </TableCell>
     </TableRow>
   );
