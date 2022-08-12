@@ -11,7 +11,6 @@ export default function ComprasProvider({children}) {
   const initialDialogs = { main:true,insert:false,finalizar:false }
   const storage = JSON.parse(localStorage.getItem("compras"));
   const inputCodigo = useRef(null);
-  const inputCantidad = useRef(null);
   const initialErrores = {
     id_error: null,
     msj: "",
@@ -40,8 +39,9 @@ export default function ComprasProvider({children}) {
 
   const insertarProductoDialog = (pro) => {
     let datas = {...compras}
-    let cant = parseFloat(inputCantidad.current.value);
+    //let cant = parseFloat(inputCantidad.current.value);
     let data = {
+
       codigo_producto: pro.codigo_producto,
       nombre_producto: pro.nombre_producto,
       costo_producto: pro.costo_producto,
@@ -114,7 +114,7 @@ useEffect(() => {
     return ()=> {isActive = false;ca.abort();}
 }, [getDatas]);    
 
-const value = {lang,setDialogs,dialogs,compras,setCompras,cargas,setCargas,errores,setErrores,inputCantidad,inputCodigo,consultarCodigoProducto,consultarSiExiste}
+const value = {lang,setDialogs,dialogs,compras,setCompras,cargas,setCargas,errores,setErrores,inputCodigo,consultarCodigoProducto,consultarSiExiste,setearCompras}
 
   return (
     <ComprasContext.Provider value={value} >
@@ -123,6 +123,6 @@ const value = {lang,setDialogs,dialogs,compras,setCompras,cargas,setCargas,error
   );
 }
 export const useCompras =()=>{
-  const {lang,setDialogs,dialogs,compras,setCompras,cargas,setCargas,errores,setErrores,inputCantidad,inputCodigo,consultarCodigoProducto,consultarSiExiste} = useContext(ComprasContext);
-  return {lang,setDialogs,dialogs,compras,setCompras,cargas,setCargas,errores,setErrores,inputCantidad,inputCodigo,consultarCodigoProducto,consultarSiExiste}
+  const {lang,setDialogs,dialogs,compras,setCompras,cargas,setCargas,errores,setErrores,inputCodigo,consultarCodigoProducto,consultarSiExiste,setearCompras} = useContext(ComprasContext);
+  return {lang,setDialogs,dialogs,compras,setCompras,cargas,setCargas,errores,setErrores,inputCodigo,consultarCodigoProducto,consultarSiExiste,setearCompras}
 }

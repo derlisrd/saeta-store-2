@@ -4,7 +4,7 @@ import { useCompras } from '../ComprasProvider'
 
 const DialogInsert = () => {
 
-    const {dialogs,setDialogs,lang,compras} = useCompras();
+    const {dialogs,setDialogs,lang,compras,} = useCompras();
     const initialForm = {
       stock:"",
       costo_producto:"",
@@ -14,6 +14,7 @@ const DialogInsert = () => {
     const [form,setForm] = useState(initialForm)
     const close = ()=>{
         setDialogs({...dialogs,insert:false})
+        setForm(initialForm)
     }
 
     const change = e=>{
@@ -21,13 +22,15 @@ const DialogInsert = () => {
       setForm({ ...form, [name]: value })
     }
 
-    const insertar = () => {
-
+    const insertar = (e) => {
+      e.preventDefault();
+      console.log(form)
     }
     
 
   return (
     <Dialog onClose={close} open={dialogs.insert} fullWidth TransitionComponent={Zoom} >
+      <form onSubmit={insertar}>
       <DialogTitle>
         {lang.insertar_producto_factura}
       </DialogTitle>
@@ -56,9 +59,10 @@ const DialogInsert = () => {
         </Grid>
       </DialogContent>
       <DialogActions>
-        <Button onClick={insertar} variant="contained">{lang.insertar}</Button>
+        <Button type='submit' variant="contained">{lang.insertar}</Button>
         <Button onClick={close} variant="contained">{lang.cancelar}</Button>
       </DialogActions>
+    </form>
     </Dialog>
   )
 }
