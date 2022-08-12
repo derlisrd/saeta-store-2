@@ -46,6 +46,7 @@ const LoginProvider = ({children}) => {
         setUserData(f);
         localStorage.removeItem("facturasStorage");  
         localStorage.removeItem("dataProductos");
+        localStorage.removeItem("compras");
         sessionStorage.setItem("userData", JSON.stringify(f))
         if(remember){
             localStorage.setItem("userData", JSON.stringify(f))

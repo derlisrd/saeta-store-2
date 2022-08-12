@@ -5,6 +5,7 @@ import { useCompras } from '../ComprasProvider';
 import Inputs from './Inputs';
 import TablaItemsFactura from './TablaItemsFactura';
 import LoadingBackDrop from '../../../Components/UI/LoadingBackDrop';
+import PopUpErrores from './PopUpErrores';
 
 const DialogMain = () => {
     const {lang,setDialogs,dialogs,cargas} = useCompras()
@@ -27,6 +28,7 @@ const DialogMain = () => {
 
         </DialogTitle>
         <DialogContent dividers>
+          <PopUpErrores />
           {cargas.main && <LoadingBackDrop />}
           <Grid container spacing={3}>
             <Grid item xs={12} sm={12}  lg={4}>

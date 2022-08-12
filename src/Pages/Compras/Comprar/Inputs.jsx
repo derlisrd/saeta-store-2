@@ -10,7 +10,7 @@ import Datos from './Datos'
 
 
 const Inputs = () => {
-  const {lang,inputCantidad,inputCodigo,consultarCodigoProducto,consultarSiExiste,cargas} = useCompras()
+  const {lang,inputCodigo,consultarSiExiste,cargas} = useCompras()
 
   
   const agregar = () => {
@@ -21,9 +21,8 @@ const Inputs = () => {
     
   }
 
-  const presionaEnterPaBuscar = (e)=>{
-    if (e.key === `Enter`) consultarCodigoProducto(inputCodigo.current.value);  
-  }
+  const presionaEnterPaBuscar = (e)=>{ if (e.key === `Enter`) consultarSiExiste(inputCodigo.current.value);  }
+
 
 
   return (
@@ -38,7 +37,7 @@ const Inputs = () => {
         autoComplete="off"
         autoFocus
         name="codigo_producto"
-        label="Código de Producto"
+        label={lang.codigo_del_producto}
         placeholder="Ctrl + b"
         helperText={lang.ingrese_codigo_pulse_enter}
         fullWidth
@@ -56,17 +55,6 @@ const Inputs = () => {
             </InputAdornment>
           ),
     }} />
-      </Grid>
-      <Grid item xs={12} sm={12} >
-      <TextFieldCustom
-          onKeyPress={()=>{}}
-          inputRef={inputCantidad}
-          type="number"
-          fullWidth
-          name="cantidad"
-          label={lang.cantidad}
-          defaultValue="1"
-        />
       </Grid>
       <Grid item xs={12} sm={12} >
         <ButtonCustom variant="contained" onClick={agregar} fullWidth>{lang.agregar} </ButtonCustom>

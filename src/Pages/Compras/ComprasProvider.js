@@ -1,10 +1,9 @@
 import React, { createContext,useCallback,useContext,useEffect, useRef, useState } from 'react';
 import { useLang } from '../../Contexts/LangProvider';
 import { APICALLER } from '../../Services/api';
+import {funciones} from '../../Functions'
+
 const ComprasContext = createContext();
-
-
-
 export default function ComprasProvider({children}) {
 
   const {lang} = useLang()
@@ -14,6 +13,7 @@ export default function ComprasProvider({children}) {
   const initialErrores = {
     id_error: null,
     msj: "",
+    color:"error",
     active:false
   }
   const initialCompras = {
@@ -41,7 +41,6 @@ export default function ComprasProvider({children}) {
     let datas = {...compras}
     //let cant = parseFloat(inputCantidad.current.value);
     let data = {
-
       codigo_producto: pro.codigo_producto,
       nombre_producto: pro.nombre_producto,
       costo_producto: pro.costo_producto,
@@ -77,7 +76,7 @@ export default function ComprasProvider({children}) {
     setCargas({...cargas,codigo:true})
     let promises = await Promise.all([
       APICALLER.get({table:"productos",
-      fields:"id_producto,codigo_producto,precio_producto,preciom_producto,nombre_producto",
+      fields:"id_producto,codigo_producto,precio_producto,preciom_producto,nombre_producto,costo_producto",
       where:`codigo_producto,=,'${codigo}',and,tipo_producto,=,1`})
     ])
     setCargas({...cargas,codigo:false})
@@ -87,7 +86,7 @@ export default function ComprasProvider({children}) {
       if(res.found > 0){
         insertarProductoDialog(res.results[0])
       }else{
-        setErrores({active:true,id_error:1,msj:lang.no_existe_producto})
+        setErrores({active:true,id_error:1,msj:lang.no_existe_producto,color:"error"})
       }
     }
   }
@@ -114,7 +113,7 @@ useEffect(() => {
     return ()=> {isActive = false;ca.abort();}
 }, [getDatas]);    
 
-const value = {lang,setDialogs,dialogs,compras,setCompras,cargas,setCargas,errores,setErrores,inputCodigo,consultarCodigoProducto,consultarSiExiste,setearCompras}
+const value = {funciones,lang,setDialogs,dialogs,compras,setCompras,cargas,setCargas,errores,setErrores,inputCodigo,consultarCodigoProducto,consultarSiExiste,setearCompras}
 
   return (
     <ComprasContext.Provider value={value} >
@@ -123,6 +122,6 @@ const value = {lang,setDialogs,dialogs,compras,setCompras,cargas,setCargas,error
   );
 }
 export const useCompras =()=>{
-  const {lang,setDialogs,dialogs,compras,setCompras,cargas,setCargas,errores,setErrores,inputCodigo,consultarCodigoProducto,consultarSiExiste,setearCompras} = useContext(ComprasContext);
-  return {lang,setDialogs,dialogs,compras,setCompras,cargas,setCargas,errores,setErrores,inputCodigo,consultarCodigoProducto,consultarSiExiste,setearCompras}
+  const {funciones,lang,setDialogs,dialogs,compras,setCompras,cargas,setCargas,errores,setErrores,inputCodigo,consultarCodigoProducto,consultarSiExiste,setearCompras} = useContext(ComprasContext);
+  return {funciones,lang,setDialogs,dialogs,compras,setCompras,cargas,setCargas,errores,setErrores,inputCodigo,consultarCodigoProducto,consultarSiExiste,setearCompras}
 }

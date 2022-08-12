@@ -4,6 +4,8 @@ export const translate = {
         stock:"Stock",
         stock_comprado:"Stock comprado",
         subir_logo:"Subir logo",
+        costo_anterior:"Costo anterior",
+        codigo_del_producto:"Código de Producto", 
         insertar_producto_factura:"Insertar Producto a factura",
         insertar:"Insertar",
         precio_balcon:"Precio balcon",

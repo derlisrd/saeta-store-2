@@ -1,10 +1,11 @@
-import { Alert, Button, Dialog, DialogActions, DialogContent, DialogTitle, Grid, TextField, Zoom } from '@mui/material'
+import {  Button, Dialog, DialogActions, DialogContent, DialogTitle, Grid, TextField, Zoom } from '@mui/material'
 import {useState} from 'react'
 import { useCompras } from '../ComprasProvider'
+import DialogInsertInfoProducto from './DialogInsertInfoProducto';
 
 const DialogInsert = () => {
 
-    const {dialogs,setDialogs,lang,compras,} = useCompras();
+    const {dialogs,setDialogs,lang} = useCompras();
     const initialForm = {
       stock:"",
       costo_producto:"",
@@ -37,9 +38,8 @@ const DialogInsert = () => {
       <DialogContent dividers>
         <Grid container spacing={2}>
         <Grid item xs={12}>
-          <Alert icon={false}>
-            {compras.insertProducto?.nombre_producto}
-          </Alert>
+          <DialogInsertInfoProducto />
+          
         </Grid>
           <Grid item xs={12} sm={6}>
             <TextField fullWidth name="stock" autoFocus autoComplete="off" value={form.stock} onChange={change} label={lang.stock_comprado}  />
