@@ -24,7 +24,8 @@ export default function ComprasProvider({children}) {
   const initialCargas = {
     main:true,
     items:false,
-    insert:false
+    insert:false,
+    codigo:false
   }
 
   const [errores,setErrores] = useState(initialErrores);
@@ -73,12 +74,13 @@ export default function ComprasProvider({children}) {
 
   
   const consultarCodigoProducto = async(codigo)=>{
+    setCargas({...cargas,codigo:true})
     let promises = await Promise.all([
       APICALLER.get({table:"productos",
       fields:"id_producto,codigo_producto,precio_producto,preciom_producto,nombre_producto",
       where:`codigo_producto,=,'${codigo}',and,tipo_producto,=,1`})
     ])
-
+    setCargas({...cargas,codigo:false})
     let res = promises[0];
 
     if(res.response==="ok"){
@@ -102,7 +104,7 @@ export default function ComprasProvider({children}) {
       });
       localStorage.setItem("compras", values);
     }
-    setCargas({main:false,items:false,insert:false});
+    setCargas({main:false,items:false,insert:false,codigo:false});
   },[])
 
 useEffect(() => {

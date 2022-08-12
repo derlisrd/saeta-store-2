@@ -1,4 +1,4 @@
-import {  Grid, Icon, IconButton, InputAdornment } from '@mui/material'
+import {  CircularProgress, Grid, Icon, IconButton, InputAdornment } from '@mui/material'
 import React from 'react'
 import ButtonCustom from '../../../Components/MuiCustom/ButtonCustom'
 import TextFieldCustom from '../../../Components/MuiCustom/TextFieldCustom'
@@ -10,7 +10,7 @@ import Datos from './Datos'
 
 
 const Inputs = () => {
-  const {lang,inputCantidad,inputCodigo,consultarCodigoProducto,consultarSiExiste} = useCompras()
+  const {lang,inputCantidad,inputCodigo,consultarCodigoProducto,consultarSiExiste,cargas} = useCompras()
 
   
   const agregar = () => {
@@ -52,7 +52,7 @@ const Inputs = () => {
           ),
           endAdornment: (
             <InputAdornment position="end">
-            
+              {cargas.codigo && <CircularProgress size={24} />}
             </InputAdornment>
           ),
     }} />
