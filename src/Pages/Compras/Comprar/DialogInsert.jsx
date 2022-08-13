@@ -1,11 +1,19 @@
 import {  Button, Dialog, DialogActions, DialogContent, DialogTitle, Grid, TextField, Zoom } from '@mui/material'
 import {useState} from 'react'
+import NumberFormatCustom from '../../../Components/thirty/NumberFormatCustom';
 import { useCompras } from '../ComprasProvider'
+import DialogInsertErrores from './DialogInsertErrores';
 import DialogInsertInfoProducto from './DialogInsertInfoProducto';
 
 const DialogInsert = () => {
 
-    const {dialogs,setDialogs,lang} = useCompras();
+    const {dialogs,setDialogs,lang,compras,setearCompras,inputCodigo} = useCompras();
+    const initialErrores ={
+      active:false,
+      msj:"",
+      id_error:null
+    }
+    const [errores,setErrores] = useState(initialErrores)
     const initialForm = {
       stock:"",
       costo_producto:"",
@@ -16,6 +24,8 @@ const DialogInsert = () => {
     const close = ()=>{
         setDialogs({...dialogs,insert:false})
         setForm(initialForm)
+        inputCodigo.current.value = ""
+        inputCodigo.current.focus()
     }
 
     const change = e=>{
@@ -25,7 +35,31 @@ const DialogInsert = () => {
 
     const insertar = (e) => {
       e.preventDefault();
-      console.log(form)
+      let f = {...form}
+      if(f.stock===""){
+        setErrores({active:true,msj:"Inserte la cantidad de stock",id_error:1})
+        return false;
+      }
+      if(f.costo_producto===""){
+        setErrores({active:true,msj:"Inserte costo",id_error:2})
+        return false;
+      }
+      if(f.precio_producto===""){
+        setErrores({active:true,msj:"Inserte precio",id_error:3})
+        return false;
+      }
+      if(f.preciom_producto===""){
+        setErrores({active:true,msj:"Inserte precio mayorista",id_error:4})
+        return false;
+      }
+
+      setErrores({active:false,msj:null,id_error:null})
+
+      let datosnuevos = {...compras}
+      let itemnuevo = {...f, codigo_producto:compras.insertProducto?.codigo_producto, nombre_producto:compras.insertProducto?.nombre_producto,id_producto:compras.insertProducto?.id_producto, }
+      datosnuevos.items.push(itemnuevo)
+      setearCompras(datosnuevos)
+      close()
     }
     
 
@@ -38,22 +72,50 @@ const DialogInsert = () => {
       <DialogContent dividers>
         <Grid container spacing={2}>
         <Grid item xs={12}>
+          <DialogInsertErrores errores={errores} />
+        </Grid>
+        <Grid item xs={12}>
           <DialogInsertInfoProducto />
-          
         </Grid>
           <Grid item xs={12} sm={6}>
-            <TextField fullWidth name="stock" autoFocus autoComplete="off" value={form.stock} onChange={change} label={lang.stock_comprado}  />
+            <TextField
+              error={errores.id_error===1} required
+            InputProps={{
+              inputComponent: NumberFormatCustom,
+              inputProps: { min: 0 },
+            }} 
+            fullWidth name="stock" autoFocus autoComplete="off" value={form.stock} onChange={change} label={lang.stock_comprado}  
+            />
           </Grid>
           <Grid item xs={12} sm={6}>
-            <TextField fullWidth name="costo_producto" autoComplete="off" onChange={change} value={form.costo_producto} label={lang.costo} />
+            <TextField
+            fullWidth name="costo_producto" autoComplete="off" onChange={change} value={form.costo_producto} label={lang.costo} 
+            error={errores.id_error===2} required
+            InputProps={{
+              inputComponent: NumberFormatCustom,
+              inputProps: { min: 0 },
+            }} 
+            />
           </Grid>
 
           <Grid item xs={12} sm={6}>
-            <TextField fullWidth name="precio_producto" helperText={lang.precio_balcon} autoComplete="off" onChange={change} value={form.precio_producto} label={lang.precio} />
+            <TextField
+            error={errores.id_error===3} required
+            InputProps={{
+              inputComponent: NumberFormatCustom,
+              inputProps: { min: 0 },
+            }} 
+             fullWidth name="precio_producto" helperText={lang.precio_balcon} autoComplete="off" onChange={change} value={form.precio_producto} label={lang.precio} />
           </Grid>
 
           <Grid item xs={12} sm={6}>
-            <TextField fullWidth name="preciom_producto" helperText={lang.precio_mayorista} autoComplete="off" onChange={change} value={form.preciom_producto} label={lang.precio_con_descuento} />
+            <TextField
+            error={errores.id_error===4} required
+            InputProps={{
+              inputComponent: NumberFormatCustom,
+              inputProps: { min: 0 },
+            }} 
+            fullWidth name="preciom_producto" helperText={lang.precio_mayorista} autoComplete="off" onChange={change} value={form.preciom_producto} label={lang.precio_con_descuento} />
           </Grid>
 
         </Grid>

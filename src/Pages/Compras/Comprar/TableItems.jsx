@@ -3,10 +3,11 @@ import React from "react";
 import { StylesTabla } from "./StylesTabla";
 import TableOpciones from "./TableOpciones";
 
-const TableItems = ({d}) => {
+const TableItems = ({items}) => {
   const classes = StylesTabla();
   return (
-    <TableRow className={classes.tablelist}>
+    items.map((d,i)=>(
+      <TableRow key={i} className={classes.tablelist}>
       <TableCell className={classes.tableitem}>
         <span className={classes.columname}>COD.</span>
         <span>{d.codigo_producto}</span>
@@ -25,7 +26,7 @@ const TableItems = ({d}) => {
                 <Icon>remove_circle_outline</Icon>
               </IconButton>
             </Tooltip>
-            <Typography variant="h6">{d.cantidad}</Typography>
+            <Typography variant="h6">{d.stock}</Typography>
 
             <IconButton
               onClick={(e) => {
@@ -65,9 +66,10 @@ const TableItems = ({d}) => {
       </TableCell>
 
       <TableCell className={classes.tableitem}>
-              <TableOpciones />
+              <TableOpciones index={i} />
       </TableCell>
     </TableRow>
+    ))
   );
 };
 

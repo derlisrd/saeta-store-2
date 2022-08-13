@@ -6,11 +6,19 @@ import { useCompras } from '../ComprasProvider'
 const Botones = () => {
 
 
-  const {setDialogs,dialogs,compras,lang} = useCompras()
+  const {setDialogs,dialogs,compras,lang,setearCompras,inputCodigo} = useCompras()
 
 
 
   const abrir = ()=>{ setDialogs({...dialogs,finalizar:true})}
+
+  const cancelar = ()=>{
+    let d = {...compras}
+    d.items = []
+    setearCompras(d);
+    inputCodigo.current.value =""
+    inputCodigo.current.focus()
+  }
 
   return (
     <Zoom in={compras.items.length > 0}>
@@ -19,7 +27,7 @@ const Botones = () => {
         <ButtonCustom variant="contained" color="success" onClick={abrir} fullWidth>{lang.finalizar} </ButtonCustom>
       </Grid>
       <Grid item xs={12} sm={6}>
-        <ButtonCustom variant="outlined"  fullWidth>{lang.cancelar} </ButtonCustom>
+        <ButtonCustom variant="outlined" onClick={cancelar}  fullWidth>{lang.cancelar} </ButtonCustom>
       </Grid>
     </Grid>
     </Zoom>
