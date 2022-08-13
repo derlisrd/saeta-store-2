@@ -5,6 +5,7 @@ import {StylesTabla} from "./StylesTabla";
 import { columnas } from './TablaColumnas';
 import TableEmptyItems from './TableEmptyItems';
 import TableItems from './TableItems';
+import TableTotal from './TableTotal';
 
 
 const TablaItemsFactura = () => {
@@ -29,7 +30,10 @@ const TablaItemsFactura = () => {
           </TableRow>
         </TableHead> 
         <TableBody>
-              { compras.items.length === 0 ? <TableEmptyItems colSpan={7} classes={classes} /> : <TableItems items={compras.items} /> }
+              { compras.items.length === 0 ? <TableEmptyItems colSpan={6} classes={classes} /> : <TableItems items={compras.items} /> }
+              {
+                compras.suma>0 && <TableTotal total={(compras.suma)} colSpan={6} />
+              }
         </TableBody>
       </Table>
     </TableContainer>

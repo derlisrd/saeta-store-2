@@ -12,12 +12,8 @@ export const columnas = [
       title: "Descripción",
     },
     {
-      field: "iva_producto",
-      title: "IVA",
-    },
-    {
-      field: "precio_producto",
-      title: "Precio",
+      field: "costo_producto",
+      title: "costo",
     },
     {
       field: "subtotal_precio",

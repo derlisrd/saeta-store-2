@@ -18,6 +18,7 @@ export default function ComprasProvider({children}) {
   }
   const initialCompras = {
     items: storage ? storage.items : [],
+    sumatotal:storage ? storage.sumatotal : 0,
     insertProducto: {}
   }
   const initialCargas = {
@@ -33,14 +34,21 @@ export default function ComprasProvider({children}) {
   const [compras,setCompras] = useState(initialCompras)
 
   const setearCompras = elem=>{
-    setCompras(elem)
-    localStorage.setItem("compras", JSON.stringify(elem))
+    let e = {...elem}
+    let suma = 0;
+    e.items.forEach(d => {
+      suma += parseFloat(d.costo_producto)*parseFloat(d.stock);
+    });
+    e.suma = suma;
+    setCompras(e)
+    localStorage.setItem("compras", JSON.stringify(e))
   }
 
   const insertarProductoDialog = (pro) => {
     let datas = {...compras}
     //let cant = parseFloat(inputCantidad.current.value);
     let data = {
+      id_producto:pro.id_producto,
       codigo_producto: pro.codigo_producto,
       nombre_producto: pro.nombre_producto,
       costo_producto: pro.costo_producto,
@@ -99,7 +107,8 @@ export default function ComprasProvider({children}) {
     if (!localStorage.getItem("compras")) {
       const values = JSON.stringify({
         items: [],
-        insertProducto:{}
+        insertProducto:{},
+        sumatotal:0
       });
       localStorage.setItem("compras", values);
     }

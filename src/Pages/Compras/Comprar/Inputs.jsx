@@ -10,18 +10,31 @@ import Datos from './Datos'
 
 
 const Inputs = () => {
-  const {lang,inputCodigo,consultarSiExiste,cargas} = useCompras()
+  const {lang,inputCodigo,consultarSiExiste,cargas,setErrores} = useCompras()
 
   
   const agregar = () => {
     let codigo = inputCodigo.current.value
-    if(codigo){
+    if(codigo && codigo!==""){
       consultarSiExiste(codigo);
+    }
+    else{
+      setErrores({active:true,msj:"Ingrese el codigo",color:"error",id_error:2})
     }
     
   }
 
-  const presionaEnterPaBuscar = (e)=>{ if (e.key === `Enter`) consultarSiExiste(inputCodigo.current.value);  }
+  const presionaEnterPaBuscar = (e)=>{ 
+    let codigo = inputCodigo.current.value;
+    if (e.key === `Enter` ){
+      if(codigo && codigo!==""){
+        consultarSiExiste(codigo);
+      }
+      else{
+        setErrores({active:true,msj:"Ingrese el codigo",color:"error",id_error:2})
+      }   
+    }
+  }
 
 
 

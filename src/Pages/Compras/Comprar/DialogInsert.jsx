@@ -1,5 +1,5 @@
 import {  Button, Dialog, DialogActions, DialogContent, DialogTitle, Grid, TextField, Zoom } from '@mui/material'
-import {useState} from 'react'
+import {useRef, useState} from 'react'
 import NumberFormatCustom from '../../../Components/thirty/NumberFormatCustom';
 import { useCompras } from '../ComprasProvider'
 import DialogInsertErrores from './DialogInsertErrores';
@@ -8,6 +8,7 @@ import DialogInsertInfoProducto from './DialogInsertInfoProducto';
 const DialogInsert = () => {
 
     const {dialogs,setDialogs,lang,compras,setearCompras,inputCodigo} = useCompras();
+    const inputStock = useRef(null)
     const initialErrores ={
       active:false,
       msj:"",
@@ -32,6 +33,18 @@ const DialogInsert = () => {
       const {value,name} = e.target;
       setForm({ ...form, [name]: value })
     }
+
+
+    const valAnteriores = ()=>{
+      let f = {...form}, c = {...compras};
+      let d = c.insertProducto;
+      f.costo_producto = d.costo_producto;
+      f.precio_producto = d.precio_producto;
+      f.preciom_producto = d.preciom_producto;
+      setForm(f);
+      inputStock.current.focus()
+    }
+
 
     const insertar = (e) => {
       e.preventDefault();
@@ -79,7 +92,7 @@ const DialogInsert = () => {
         </Grid>
           <Grid item xs={12} sm={6}>
             <TextField
-              error={errores.id_error===1} required
+              error={errores.id_error===1} required inputRef={inputStock}
             InputProps={{
               inputComponent: NumberFormatCustom,
               inputProps: { min: 0 },
@@ -121,6 +134,7 @@ const DialogInsert = () => {
         </Grid>
       </DialogContent>
       <DialogActions>
+        <Button onClick={valAnteriores} variant="outlined">{lang.val_anteriores}</Button>
         <Button type='submit' variant="contained">{lang.insertar}</Button>
         <Button onClick={close} variant="contained">{lang.cancelar}</Button>
       </DialogActions>

@@ -1,10 +1,13 @@
 import { Stack, TableCell, TableRow, Tooltip,IconButton,Icon,Typography } from "@mui/material";
 import React from "react";
+import { useCompras } from "../ComprasProvider";
+
 import { StylesTabla } from "./StylesTabla";
 import TableOpciones from "./TableOpciones";
 
 const TableItems = ({items}) => {
   const classes = StylesTabla();
+  const {funciones} = useCompras()
   return (
     items.map((d,i)=>(
       <TableRow key={i} className={classes.tablelist}>
@@ -44,24 +47,16 @@ const TableItems = ({items}) => {
         <span>{d.nombre_producto}</span>
       </TableCell>
 
-      <TableCell className={classes.tableitem}>
-        <span className={classes.columname}>IVA</span>
-        <span>
-
-        </span>
-      </TableCell>
 
       <TableCell className={classes.tableitem}>
-        <span className={classes.columname}>PRECIO</span>
-        <span>
-          
-        </span>
+        <span className={classes.columname}>COSTO</span>
+        <span>{funciones.numberFormat(d.costo_producto)}</span>
       </TableCell>
 
       <TableCell className={classes.tableitem}>
         <span className={classes.columname}>SUBTOTAL</span>
         <span>
-          
+          {funciones.numberFormat(parseFloat(d.costo_producto)*parseFloat(d.stock))}
         </span>
       </TableCell>
 

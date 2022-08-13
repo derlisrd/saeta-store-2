@@ -1,6 +1,8 @@
 export const translate = {
     es:{
         costo:"Costo",
+        borrar_item:"Borrar item",
+        val_anteriores:"Valores anteriores",
         stock:"Stock",
         stock_comprado:"Stock comprado",
         subir_logo:"Subir logo",
