@@ -1,8 +1,10 @@
-import { Dialog, DialogActions, DialogContent, DialogTitle, Icon, IconButton, Tooltip, Zoom,Grid, Typography, FormControl, InputLabel, Select, MenuItem, TextField } from '@mui/material'
+import { Dialog, DialogActions, DialogContent, DialogTitle, Icon, IconButton, Tooltip, Zoom,Grid, Typography, TextField } from '@mui/material'
 import React, { useState } from 'react'
+import { AlertError } from '../../../Components/MuiCustom/AlertsCustom';
 import ButtonCustom from '../../../Components/MuiCustom/ButtonCustom';
 import { useCompras } from '../ComprasProvider';
 import Comprobantes from './Comprobantes';
+import ListaCajas from './ListaCajas';
 
 const DialogFinalizar = () => {
 
@@ -12,7 +14,7 @@ const DialogFinalizar = () => {
     const initialForm = {
       id_forma_pago:"",
       comprobante_nro:"",
-
+      id_cajas_moneda:""
     }
     const initialError = {
       active: false,
@@ -21,6 +23,18 @@ const DialogFinalizar = () => {
     }
     const [error,setError] = useState(initialError);
     const [form,setForm] = useState(initialForm)
+
+    const change = e=>{
+
+    }
+
+    const enviar = ()=>{
+      setError({
+        active:true,
+        msj:"ERROR",
+        id_error:1
+      })
+    }
 
     const close = ()=>{
         setDialogs({...dialogs,finalizar:false})
@@ -44,7 +58,11 @@ const DialogFinalizar = () => {
         </DialogTitle>
       <DialogContent dividers>
       <Grid container spacing={2}>
-
+      <Grid item xs={12}>
+        {
+          error.active && <AlertError>{error.msj}</AlertError>
+        }
+      </Grid>
         <Grid item xs={12}>
             <Typography variant="button">{lang.datos_comprobante}</Typography>
           </Grid>
@@ -52,7 +70,7 @@ const DialogFinalizar = () => {
             <Comprobantes form={form} setForm={setForm} error={error} />
         </Grid>
         <Grid item xs={12} sm={6} md={6} lg={3}>
-            <TextField name="comprobante_nro" label={lang.nro_comprobante} fullWidth />
+            <TextField name="comprobante_nro" value={form.comprobante_nro} onChange={change} label={lang.nro_comprobante} fullWidth />
         </Grid>
 
 
@@ -60,15 +78,15 @@ const DialogFinalizar = () => {
             <Typography variant="button">{lang.caja}</Typography>
           </Grid>
         <Grid item xs={12} sm={6} md={6} lg={3}>
-            <Comprobantes form={form} setForm={setForm} error={error} />
+            <ListaCajas  form={form} setForm={setForm} error={error} />
         </Grid>
         <Grid item xs={12} sm={6} md={6} lg={3}>
-            <TextField name="comprobante_nro" label={lang.nro_comprobante} fullWidth />
+            
         </Grid>
       </Grid>
       </DialogContent>
       <DialogActions>
-          <ButtonCustom variant="contained" color="success" onClick={()=>{}} fullWidth>{lang.finalizar} </ButtonCustom>
+          <ButtonCustom variant="contained" color="success" onClick={enviar} fullWidth>{lang.finalizar} </ButtonCustom>
           <ButtonCustom variant="outlined" onClick={close} fullWidth>{lang.cancelar} </ButtonCustom>
       </DialogActions>
     </Dialog>

@@ -7,7 +7,7 @@ import TableOpciones from "./TableOpciones";
 
 const TableItems = ({items}) => {
   const classes = StylesTabla();
-  const {funciones,compras,setearCompras} = useCompras()
+  const {funciones,compras,setearCompras,inputCodigo} = useCompras()
 
   const restar = i =>{
     let datos = {...compras}
@@ -16,12 +16,14 @@ const TableItems = ({items}) => {
     if(stock > 0) {
       datos.items[i].stock = stock
       setearCompras(datos)
+      inputCodigo.current.focus()
     }
   }
   const sumar = i =>{
     let datos = {...compras}
     datos.items[i].stock = parseFloat(datos.items[i].stock) + 1;
     setearCompras(datos)
+    inputCodigo.current.focus()
   }
 
   return (

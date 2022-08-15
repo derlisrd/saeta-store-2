@@ -3,7 +3,6 @@ export const translate = {
         datos_proveedor:"Datos de proveedor",
         seleccione_comprobante:"Seleccione comprobante",
         credito:"Crédito",
-        recibo:"Recibo",
         factura_credito:"Factura crédito",
         factura_contado:"Factura contado",
         nro_comprobante:"Nro comprobante",

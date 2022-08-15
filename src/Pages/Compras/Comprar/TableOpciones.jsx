@@ -4,13 +4,14 @@ import { useCompras } from '../ComprasProvider'
 
 const TableOpciones = ({index}) => {
 
-  const {setearCompras,lang,compras} = useCompras()
+  const {setearCompras,lang,compras,inputCodigo} = useCompras()
 
 
   const destroy = i=>{
     let d = {...compras}
     d.items.splice(index, 1);
     setearCompras(d)
+    inputCodigo.current.focus()
   }
 
   return (

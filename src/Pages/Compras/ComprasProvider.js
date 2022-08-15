@@ -2,11 +2,15 @@ import React, { createContext,useCallback,useContext,useEffect, useRef, useState
 import { useLang } from '../../Contexts/LangProvider';
 import { APICALLER } from '../../Services/api';
 import {funciones} from '../../Functions'
+import { useLogin } from '../../Contexts/LoginProvider';
 
 const ComprasContext = createContext();
 export default function ComprasProvider({children}) {
 
   const {lang} = useLang()
+  const {userData} = useLogin()
+  const {id_user} = userData
+  
   const initialDialogs = { main:true,insert:false,finalizar:false }
   const storage = JSON.parse(localStorage.getItem("compras"));
   const inputCodigo = useRef(null);
@@ -27,7 +31,10 @@ export default function ComprasProvider({children}) {
     insert:false,
     codigo:false
   }
-
+  const initialDatosCompra = {
+    cajas: []
+  }
+  const [datosCompra,setDatosCompra] = useState(initialDatosCompra)
   const [errores,setErrores] = useState(initialErrores);
   const [cargas,setCargas] = useState(initialCargas);
   const [dialogs,setDialogs] = useState(initialDialogs)
@@ -106,6 +113,8 @@ export default function ComprasProvider({children}) {
 
 
   const getDatas = useCallback(async()=>{
+    let res = await APICALLER.get({table:"cajas",include:"cajas_monedas,monedas,cajas_users",on:"id_caja,id_caja_moneda,id_moneda,id_moneda_caja_moneda,id_caja,id_caja_caja",where:`id_user_caja,=,${id_user},and,estado_caja,=,'open'`,
+    fields:"id_moneda,nombre_moneda,id_cajas_moneda,id_caja_moneda,abreviatura_moneda,monto_caja_moneda,monto_no_efectivo,nombre_caja"})
     if (!localStorage.getItem("compras")) {
       const values = JSON.stringify({
         items: [],
@@ -114,8 +123,10 @@ export default function ComprasProvider({children}) {
       });
       localStorage.setItem("compras", values);
     }
+    
+    res.response==="ok" ? setDatosCompra({cajas:res.results}) : console.log(res);
     setCargas({main:false,items:false,insert:false,codigo:false});
-  },[])
+  },[id_user])
 
 useEffect(() => {
     let isActive = true;
@@ -124,7 +135,7 @@ useEffect(() => {
     return ()=> {isActive = false;ca.abort();}
 }, [getDatas]);    
 
-const value = {funciones,lang,setDialogs,dialogs,compras,setCompras,cargas,setCargas,errores,setErrores,inputCodigo,consultarCodigoProducto,consultarSiExiste,setearCompras}
+const value = {datosCompra,funciones,lang,setDialogs,dialogs,compras,setCompras,cargas,setCargas,errores,setErrores,inputCodigo,consultarCodigoProducto,consultarSiExiste,setearCompras}
 
   return (
     <ComprasContext.Provider value={value} >
@@ -133,6 +144,6 @@ const value = {funciones,lang,setDialogs,dialogs,compras,setCompras,cargas,setCa
   );
 }
 export const useCompras =()=>{
-  const {funciones,lang,setDialogs,dialogs,compras,setCompras,cargas,setCargas,errores,setErrores,inputCodigo,consultarCodigoProducto,consultarSiExiste,setearCompras} = useContext(ComprasContext);
-  return {funciones,lang,setDialogs,dialogs,compras,setCompras,cargas,setCargas,errores,setErrores,inputCodigo,consultarCodigoProducto,consultarSiExiste,setearCompras}
+  const {datosCompra,funciones,lang,setDialogs,dialogs,compras,setCompras,cargas,setCargas,errores,setErrores,inputCodigo,consultarCodigoProducto,consultarSiExiste,setearCompras} = useContext(ComprasContext);
+  return {datosCompra,funciones,lang,setDialogs,dialogs,compras,setCompras,cargas,setCargas,errores,setErrores,inputCodigo,consultarCodigoProducto,consultarSiExiste,setearCompras}
 }
