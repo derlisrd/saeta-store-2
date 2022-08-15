@@ -20,6 +20,7 @@ const Inputs = () => {
     }
     else{
       setErrores({active:true,msj:"Ingrese el codigo",color:"error",id_error:2})
+      inputCodigo.current.focus()
     }
     
   }

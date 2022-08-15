@@ -1,6 +1,13 @@
 export const translate = {
     es:{
         datos_proveedor:"Datos de proveedor",
+        seleccione_comprobante:"Seleccione comprobante",
+        credito:"Crédito",
+        recibo:"Recibo",
+        factura_credito:"Factura crédito",
+        factura_contado:"Factura contado",
+        nro_comprobante:"Nro comprobante",
+        datos_comprobante:"Datos de comprobante",
         costo:"Costo",
         borrar_item:"Borrar item",
         val_anteriores:"Valores anteriores",

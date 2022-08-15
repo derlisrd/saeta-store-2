@@ -64,14 +64,16 @@ export default function ComprasProvider({children}) {
   }
 
   const consultarSiExiste = (codigo)=>{
-    let fact_compra = {...compras}
-    let items = fact_compra.items;
+    let compra = {...compras}
+
     
-    let index = items.findIndex(e => e.codigo_producto.toLowerCase() === codigo.toLowerCase());
-    let found = items.filter(i => i.codigo_producto.toLowerCase() === codigo.toLowerCase());
+    let index = compra.items.findIndex(e => e.codigo_producto.toLowerCase() === codigo.toLowerCase());
+    //let found = compra.items.filter(i => i.codigo_producto.toLowerCase() === codigo.toLowerCase());
     // si ya hay un producto tons aumenta la cantidad
     if (index >= 0) {
-      console.log(found)
+      compra.items[index].stock =  parseFloat(compra.items[index].stock) + 1;
+      setearCompras(compra);
+      inputCodigo.current.value=""
     }
     else{
       consultarCodigoProducto(codigo)

@@ -190,7 +190,7 @@ const Precios = () => {
           </Grid>
           
           <Grid item xs={12}>
-            <Typography variant="button">NOTIFICACION</Typography>
+            <Typography variant="button">NOTIFICACIONES</Typography>
           </Grid>
           <Grid item xs={12} sm={12} md={4}>
             
