@@ -1,4 +1,4 @@
-import { Dialog, DialogActions, DialogContent, DialogTitle, Icon, IconButton, Tooltip, Zoom } from '@mui/material'
+import { Dialog, DialogActions, DialogContent, DialogTitle, Icon, IconButton, Tooltip, Zoom,Grid, Typography } from '@mui/material'
 import React from 'react'
 import ButtonCustom from '../../../Components/MuiCustom/ButtonCustom';
 import { useCompras } from '../ComprasProvider';
@@ -29,7 +29,11 @@ const DialogFinalizar = () => {
 
         </DialogTitle>
       <DialogContent dividers>
-      <h2>FINAZLIAR</h2>
+      <Grid container spacing={2}>
+        <Grid item xs={12}>
+          
+        </Grid>
+      </Grid>
       </DialogContent>
       <DialogActions>
           <ButtonCustom variant="contained" color="success" onClick={()=>{}} fullWidth>{lang.finalizar} </ButtonCustom>

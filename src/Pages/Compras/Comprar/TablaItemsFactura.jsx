@@ -32,7 +32,7 @@ const TablaItemsFactura = () => {
         <TableBody>
               { compras.items.length === 0 ? <TableEmptyItems colSpan={6} classes={classes} /> : <TableItems items={compras.items} /> }
               {
-                compras.suma>0 && <TableTotal total={(compras.suma)} colSpan={6} />
+                compras.sumatotal>0 && <TableTotal total={(compras.sumatotal)} colSpan={6} />
               }
         </TableBody>
       </Table>

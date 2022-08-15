@@ -1,4 +1,4 @@
-import { Grid, Icon, InputAdornment, TextField,Checkbox,FormControlLabel, Typography, Tooltip, FormControl, InputLabel, Select, MenuItem, List, ListItemButton, ListItemIcon, ListItemText, Button, ListItem,  ListItemAvatar, IconButton } from "@mui/material";
+import { Switch, Grid, Icon, InputAdornment, TextField,FormControlLabel, Typography, Tooltip, FormControl, InputLabel, Select, MenuItem, List, ListItemButton, ListItemIcon, ListItemText, Button, ListItem,  ListItemAvatar, IconButton } from "@mui/material";
 import React,{useState} from "react";
 import NumberFormatCustom from "../../../../Components/thirty/NumberFormatCustom";
 import { useProductForm } from "./ProductFormProvider";
@@ -28,7 +28,7 @@ const Precios = () => {
         <Tooltip placement="top" title="Preguntar precio a la hora de la venta">
             <FormControlLabel
               control={
-                <Checkbox
+                <Switch
                   checked={formulario.preguntar_precio === "1"}
                   onChange={changeCheck}
                   name="preguntar_precio"
@@ -215,7 +215,7 @@ const Precios = () => {
           <Tooltip placement="top" title="Al activar, el sistema le notificara que existe un mínimo del producto en stock">
             <FormControlLabel
               control={
-                <Checkbox
+                <Switch
                   checked={formulario.notificar_producto === "1"}
                   onChange={changeCheck}
                   name="notificar_producto"

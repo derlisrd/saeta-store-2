@@ -1,4 +1,4 @@
-import { Alert, AlertTitle, TableCell, TableRow } from "@mui/material";
+import { Alert, TableCell, TableRow, Typography } from "@mui/material";
 import { useCompras } from "../ComprasProvider";
 
 function TableTotal({colSpan,total}) {
@@ -7,7 +7,7 @@ function TableTotal({colSpan,total}) {
     <TableRow>
       <TableCell colSpan={colSpan} align="center">
         <Alert severity="info" variant="outlined" icon={false}>
-          <AlertTitle>{lang.total} : {funciones.numberFormat(total)}</AlertTitle>
+          <Typography variant="button">{lang.total} : {funciones.numberFormat(total)}</Typography>
         </Alert>
       </TableCell>
     </TableRow>

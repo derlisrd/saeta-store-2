@@ -39,7 +39,7 @@ export default function ComprasProvider({children}) {
     e.items.forEach(d => {
       suma += parseFloat(d.costo_producto)*parseFloat(d.stock);
     });
-    e.suma = suma;
+    e.sumatotal = suma;
     setCompras(e)
     localStorage.setItem("compras", JSON.stringify(e))
   }

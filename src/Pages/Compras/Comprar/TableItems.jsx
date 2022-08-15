@@ -7,7 +7,23 @@ import TableOpciones from "./TableOpciones";
 
 const TableItems = ({items}) => {
   const classes = StylesTabla();
-  const {funciones} = useCompras()
+  const {funciones,compras,setearCompras} = useCompras()
+
+  const restar = i =>{
+    let datos = {...compras}
+    let stock = parseFloat(datos.items[i].stock) - 1;
+
+    if(stock > 0) {
+      datos.items[i].stock = stock
+      setearCompras(datos)
+    }
+  }
+  const sumar = i =>{
+    let datos = {...compras}
+    datos.items[i].stock = parseFloat(datos.items[i].stock) + 1;
+    setearCompras(datos)
+  }
+
   return (
     items.map((d,i)=>(
       <TableRow key={i} className={classes.tablelist}>
@@ -21,21 +37,13 @@ const TableItems = ({items}) => {
         <span>
           <Stack direction="row">
             <Tooltip title="Restar 1">
-              <IconButton
-                onClick={(e) => {
-                  
-                }}
-              >
+              <IconButton  onClick={(e) => {restar(i)}}>
                 <Icon>remove_circle_outline</Icon>
               </IconButton>
             </Tooltip>
             <Typography variant="h6">{d.stock}</Typography>
 
-            <IconButton
-              onClick={(e) => {
-                
-              }}
-            >
+            <IconButton onClick={() => {sumar(i)}}>
               <Icon>add_circle_outline</Icon>
             </IconButton>
           </Stack>
