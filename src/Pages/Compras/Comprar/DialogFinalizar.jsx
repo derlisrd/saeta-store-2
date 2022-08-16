@@ -1,7 +1,9 @@
 import { Dialog, DialogActions, DialogContent, DialogTitle, Icon, IconButton, Tooltip, Zoom,Grid, Typography, TextField } from '@mui/material'
+
 import React, { useState } from 'react'
 import { AlertError } from '../../../Components/MuiCustom/AlertsCustom';
 import ButtonCustom from '../../../Components/MuiCustom/ButtonCustom';
+import { DatePickerCustom } from '../../../Components/MuiCustom/DatePickerCustom';
 import { useCompras } from '../ComprasProvider';
 import Comprobantes from './Comprobantes';
 import ListaCajas from './ListaCajas';
@@ -9,12 +11,13 @@ import ListaCajas from './ListaCajas';
 const DialogFinalizar = () => {
 
 
-    const {dialogs,setDialogs,lang} = useCompras();
+    const {dialogs,setDialogs,lang,funciones} = useCompras();
 
     const initialForm = {
       id_forma_pago:"",
       comprobante_nro:"",
-      id_cajas_moneda:""
+      id_cajas_moneda:"",
+      fecha_pago:funciones.fechaActualYMD(),
     }
     const initialError = {
       active: false,
@@ -24,8 +27,9 @@ const DialogFinalizar = () => {
     const [error,setError] = useState(initialError);
     const [form,setForm] = useState(initialForm)
 
-    const change = e=>{
-
+    const change = e=>{ 
+      const {value,name} = e.target
+     setForm({...form,[name]:value})
     }
 
     const enviar = ()=>{
@@ -72,7 +76,12 @@ const DialogFinalizar = () => {
         <Grid item xs={12} sm={6} md={6} lg={3}>
             <TextField name="comprobante_nro" value={form.comprobante_nro} onChange={change} label={lang.nro_comprobante} fullWidth />
         </Grid>
-
+        <Grid item xs={12}>
+            <Typography variant="button">{lang.fecha_pago}</Typography>
+        </Grid>
+        <Grid item xs={12} sm={6} md={6} lg={3}>
+          <DatePickerCustom value={form.fecha_pago} label={lang.fecha_pago} onChange={(d)=>{ setForm({...form,fecha_pago:d})}} name="fecha_pago" />
+        </Grid>
 
         <Grid item xs={12}>
             <Typography variant="button">{lang.caja}</Typography>

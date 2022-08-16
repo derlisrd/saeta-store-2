@@ -62,7 +62,7 @@ export const funciones = {
           (date.getMonth() + 1).toString().padStart(2, 0) +
           "-" +
           date.getFullYear().toString();
-        return fecha; // retorna formato 10-03-2022
+        return fecha; // retorna formato 10-03-2022 dia-mes-ano
       },
     
       fechaActualYMD: () => {
