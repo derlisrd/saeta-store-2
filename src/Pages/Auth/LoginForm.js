@@ -44,11 +44,12 @@ const LoginForm = () => {
     return <LoadingBackDrop />
   }
 
+
   return (
 
     <div className={styles.centerDivLogin}>
     <form onSubmit={enviar} >
-      <Box boxShadow={3} className={styles.formularioLogin} borderRadius={5} maxWidth={360}>
+      <Box boxShadow={3} sx={{ padding:3,backgroundColor: 'background.paper',}}   borderRadius={5} maxWidth={360}>
         <Grid container spacing={2}>
         <Grid item xs={12}>
             <Stack justifyContent="center" alignItems="center" spacing={2}>
