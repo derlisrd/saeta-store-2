@@ -5,6 +5,8 @@ namespace ApiRoutes;
 use Controllers\Controllers;
 use JsonResponse\JsonResponse;
 
+
+
 class Routes {
 
     public static function methods (){

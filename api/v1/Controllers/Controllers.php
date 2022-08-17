@@ -7,6 +7,7 @@ use GetController\GetController;
 use PostController\PostController;
 use PutController\PutController;
 use DeleteController\DeleteController;
+use ExportController;
 
 class Controllers {
 
@@ -15,7 +16,6 @@ class Controllers {
         
         $tableURIArray = explode("/",RAIZ);
         
-        
         $tableArray = array_filter($tableURIArray); // convierte en array
 
         
@@ -23,6 +23,12 @@ class Controllers {
             $table = $tableArray[1];
             $table = explode("?",$table);
             $table = $table[0];
+
+            if($table==='backup'){
+                $export = new ExportController();
+
+                return $export->Export_Database();
+            }
             
             $include = isset($_GET['include']) && !empty($_GET['include'])  ? explode(",",$_GET['include'])  : null;       
             $on = isset($_GET['on']) && !empty($_GET['on'])  ? explode(",",$_GET['on'])  : null;       

@@ -1,18 +1,23 @@
 <?php 
     //ENTER THE RELEVANT INFO BELOW
-    $mysqlUserName      = "root";
-    $mysqlPassword      = "";
-    $mysqlHostName      = "localhost";
-    $DbName             = "laravel";
-    $backup_name        = "mybackup.sql";
-    $tables             = "";
+    
 
    //or add 5th parameter(array) of specific tables:    array("mytable1","mytable2","mytable3") for multiple tables
 
-    Export_Database($mysqlHostName,$mysqlUserName,$mysqlPassword,$DbName,  $tables=false, $backup_name=false );
-
-    function Export_Database($host,$user,$pass,$name,  $tables=false, $backup_name=false )
+    //Export_Database($mysqlHostName,$mysqlUserName,$mysqlPassword,$DbName,  $tables=false, $backup_name=false );
+class ExportController {
+     
+    public function Export_Database()
     {
+        $user      = env('DBUSER');
+        $pass      = env('DBPASS');
+        $host      = env('DBHOST');
+        $name             = env('DBNAME');
+        $backup_name        = "mybackup_seguridad.sql";
+        $tables             = false;
+        
+
+
         $mysqli = new mysqli($host,$user,$pass,$name); 
         $mysqli->select_db($name); 
         $mysqli->query("SET NAMES 'utf8'");
@@ -81,4 +86,6 @@
         header("Content-disposition: attachment; filename=\"".$backup_name."\"");  
         echo $content; exit;
     }
+}
+
 ?>
