@@ -5,7 +5,7 @@ import { useProductForm } from "./ProductFormProvider";
 import useGoto from "../../../../Hooks/useGoto";
 
 const ProductButtonHead = () => {
-  const { cargas,stock,formulario} = useProductForm();
+  const { cargas,stock,formulario,lang} = useProductForm();
   const go = useGoto();
   let GUARDAR_ACTIVO = (formulario.tipo_producto==="1" && stock.length===0) || cargas.guardar
   return (
@@ -16,7 +16,7 @@ const ProductButtonHead = () => {
       alignItems="center"
     >
       <Grid item>
-        <Typography variant="h5">NUEVO</Typography>
+        <Typography variant="h5">{lang.nuevo}</Typography>
       </Grid>
       <Grid item>
         <Grid container  direction="row"  spacing={2} justifyContent="flex-end"  alignItems="flex-start" >

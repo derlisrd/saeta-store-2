@@ -1,4 +1,4 @@
-import { Button, Fab,InputAdornment, Icon, IconButton, Stack, TextField } from '@mui/material';
+import { Button, Fab,InputAdornment, Icon, IconButton, Stack, TextField, Avatar } from '@mui/material';
 import LoadingCenter from '../../Components/UI/LoadingCenter';
 import Tablas from '../../Components/UI/Tablas/'
 import { useUsers } from './UsersProvider';
@@ -8,14 +8,10 @@ const UsersLista = () => {
   const {lista,cargas,lang,deleteUser,setDialogs,dialogs,setearForm} = useUsers()
 
   const columnas = [
-    {
-    field: "id_user",
-    title: lang.id,
-    },
-/*     {
+     {
       title:"Avatar",
-      html: (<Avatar sx={{ bgcolor:"#06f" }}><Icon>person</Icon></Avatar>)
-    }, */
+      html: (<Avatar sx={{ bgcolor:"primary.main" }}><Icon>person</Icon></Avatar>)
+    },
     {
       field: "username_user",
       title: lang.usuario,

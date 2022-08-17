@@ -17,7 +17,7 @@ $countrootpath = strlen($_ENV['ROOTPATH']);
 $request = substr($_SERVER['REQUEST_URI'],$countrootpath);
 define("RAIZ",$request);
 
-define("UPLOADPATH",'Uploads');
+define("UPLOADPATH",env('UPLOADPATH'));
 
 define("API_TOKEN",isset($_SERVER['HTTP_X_API_TOKEN']) ? $_SERVER['HTTP_X_API_TOKEN'] : "");
 

@@ -42,11 +42,11 @@ const VentasTabla = () => {
           <TableRow>
             {columnas.map((d, i) => (
               <TableCell align="left" key={i} className={classes.tablecell}>
-                <Typography variant="overline">{d.title}</Typography>
+                <Typography variant="button">{d.title}</Typography>
               </TableCell>
             ))}
             <TableCell className={classes.tablecell}>
-              <Typography variant="overline" >OPCIONES</Typography>
+              <Typography variant="button" >OPCIONES</Typography>
             </TableCell>
           </TableRow>
         </TableHead> ) }

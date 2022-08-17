@@ -16,7 +16,7 @@ const ProductFormTabs = () => {
   },[tabValue]);
   return (
     <form onSubmit={sendForm}>
-      
+      <Box padding={4} boxShadow={4} borderRadius={4} margin={1} bgcolor="background.paper" >
       <Snackbar
         open={snack.open}
         onClose={() => setSnack({...snack,open:false})}
@@ -27,7 +27,7 @@ const ProductFormTabs = () => {
           {snack.mensaje}
         </Alert>
       </Snackbar>
-      <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+      
         
         <ProductButtonHead />
 
@@ -47,7 +47,7 @@ const ProductFormTabs = () => {
         <Tab label={lang.valores_stock} />
         <Tab label={lang.imagenes} />
       </Tabs>
-    </Box>
+
       <TabPanel value={tabValue} index={0}>
        <Datos />
       </TabPanel>
@@ -57,6 +57,7 @@ const ProductFormTabs = () => {
       <TabPanel value={tabValue} index={2}>
        <Imagenes /> 
       </TabPanel>
+      </Box>
     </form>
   )
 }

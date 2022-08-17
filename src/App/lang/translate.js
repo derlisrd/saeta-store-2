@@ -1,6 +1,7 @@
 export const translate = {
     es:{
         hola:"Hola",
+        nuevo:"Nuevo",
         datos_proveedor:"Datos de proveedor",
         seleccione_comprobante:"Seleccione comprobante",
         credito:"Crédito",

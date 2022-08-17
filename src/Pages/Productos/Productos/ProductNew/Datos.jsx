@@ -73,7 +73,7 @@ const Datos = () => {
           fullWidth    
         />
       </Grid>
-      <Grid item xs={12} sm={12} md={8}>
+      <Grid item xs={12} sm={12} md={12}>
         <TextField  onChange={change} autoComplete="off" name="descripcion_producto" value={formulario.descripcion_producto} label="Descripción detallada" fullWidth />
       </Grid>
       <Grid item xs={12} sm={12} md={4}>

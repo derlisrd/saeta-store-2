@@ -39,7 +39,7 @@ class PostController {
 
             
             
-            $path = "../".UPLOADPATH."/".$data["table"]."/".$data['path']."/";
+            $path = UPLOADPATH."/".$data["table"]."/".$data['path']."/";
             if (!file_exists($path)) {mkdir($path, 0777, true);}
             $imageTmp = $file["image"]["tmp_name"];
             $imageMove = $path.$file["image"]["name"];

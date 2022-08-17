@@ -1,4 +1,4 @@
-import { CircularProgress, Grid, Icon, IconButton, InputAdornment } from "@mui/material";
+import { CircularProgress, Grid, Icon, IconButton, InputAdornment, Stack } from "@mui/material";
 import React from "react";
 import ButtonCustom from "../../../Components/MuiCustom/ButtonCustom";
 import TextFieldCustom from "../../../Components/MuiCustom/TextFieldCustom";
@@ -43,17 +43,29 @@ const Inputs = () => {
           }}
         />
       </Grid>
-      <Grid xs={12} item>
-        <TextFieldCustom
+      <Grid xs={12} md={6} lg={12} item>
+      <Stack direction="row">
+            
+                  <IconButton onClick={(e) => {}}>
+                    <Icon>remove_circle_outline</Icon>
+                  </IconButton>
+                  <TextFieldCustom variant="standard"
           onKeyPress={presionaEnterPaBuscar}
           inputRef={inputCantidad}
-          type="number"
+          type='number'
           name="cantidad"
           label={lang.cantidad}
           defaultValue="1"
-        />
+        />    
+                  
+                  
+                  <IconButton onClick={(e) => {}}>
+                    <Icon>add_circle_outline</Icon>
+                  </IconButton>
+                </Stack>
+        
       </Grid>
-      <Grid xs={12} item>
+      <Grid xs={12} md={6} lg={12} item>
         <ButtonCustom
           variant="contained"
           fullWidth
