@@ -97,14 +97,14 @@ function Lista() {
             </Grid>
             <Grid item xs={12}>
                 <Grid container spacing={1}>
-                    <Grid item xs={12} sm={6} md={3}>
+                    <Grid item xs={12} sm={12} md={6}>
                         <Alert severity="success" variant="outlined" icon={false}>
                             <Typography variant="h6">
                                 {lang.lucro}: {funciones.numberSeparator(datos.lucro)}{" "}
                             </Typography>
                         </Alert>
                     </Grid>
-                    <Grid item xs={12} sm={6} md={3}>
+                    <Grid item xs={12} sm={12} md={6}>
                         <Alert severity="info" variant="outlined" icon={false}>
                             <Typography variant="h6">
                                 {lang.total_ventas}: {funciones.numberSeparator(datos.vendido)}{" "}

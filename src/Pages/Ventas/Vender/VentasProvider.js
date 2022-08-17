@@ -362,12 +362,18 @@ const VentasProvider = ({ children }) => {
 
   const valorConvertido = (val,letter=false) =>{
     
+    if (isNaN(val)) {
+      return '0';
+    }
+
     let fa = { ...datosFacturas };
     let df = fa.facturas[indexFactura];
     if(letter){
       return  Funciones.redondeo2decimales(val / df.datosMoneda.valor_moneda)
     }
+
     return Funciones.numberSeparator( Funciones.redondeo2decimales(val / df.datosMoneda.valor_moneda));
+
   } 
 
 

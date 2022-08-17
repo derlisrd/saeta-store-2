@@ -49,7 +49,7 @@ const LoginForm = () => {
 
     <div className={styles.centerDivLogin}>
     <form onSubmit={enviar} >
-      <Box boxShadow={3} sx={{ padding:3,backgroundColor: 'background.paper',}}   borderRadius={5} maxWidth={360}>
+      <Box boxShadow={3} bgcolor='background.paper' padding={4} borderRadius={5} maxWidth={360}>
         <Grid container spacing={2}>
         <Grid item xs={12}>
             <Stack justifyContent="center" alignItems="center" spacing={2}>
@@ -67,7 +67,7 @@ const LoginForm = () => {
                     <InputAdornment position="start">
                       <Icon color="disabled">perm_identity</Icon>
                     </InputAdornment>
-                  ),}}  autoFocus required name="username_user" label={lang.usuario} value={form.username_user} onChange={change}  />
+                  ),}}  autoFocus autoComplete="off" required name="username_user" label={lang.usuario} value={form.username_user} onChange={change}  />
           </Grid>
           <Grid item xs={12}>
             <TextField inputRef={inputPasswordRef} fullWidth disabled={load.login} required type={typeInput? "password" : "text"} label={lang.contrasena} name="password_user" value={form.password_user} onChange={change}  

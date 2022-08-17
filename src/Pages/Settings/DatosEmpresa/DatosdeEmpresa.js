@@ -20,7 +20,7 @@ const DatosEmpresa = () => {
           {lang.licencia_valida_hasta}: { Funciones.fechaEsDMY( datosEmpresa.licencia)} 
         </Alert>
       </Grid>
-        <Grid item xs={12} sm={6}>
+        <Grid item xs={12} md={6}>
             <TextField
                 autoFocus 
                 label={lang.nombre_de_empresa}
@@ -37,7 +37,7 @@ const DatosEmpresa = () => {
                 name="nombre_empresa"
             />
         </Grid>
-        <Grid item xs={12} sm={6}>
+        <Grid item xs={12} md={6}>
             <TextField 
                 label={lang.propietario}
                 fullWidth
@@ -53,7 +53,7 @@ const DatosEmpresa = () => {
                   name="propietario_empresa"
             />
         </Grid>
-        <Grid item xs={12} sm={6}>
+        <Grid item xs={12} md={6}>
             <TextField 
                 label={lang.ruc_de_empresa}
                 fullWidth
@@ -69,7 +69,7 @@ const DatosEmpresa = () => {
                   name="ruc_empresa"
             />
         </Grid>
-        <Grid item xs={12} sm={6}>
+        <Grid item xs={12} md={6}>
             <TextField 
                 label={lang.direccion}
                 fullWidth
@@ -85,7 +85,7 @@ const DatosEmpresa = () => {
                 name="direccion_empresa"
             />
         </Grid>
-        <Grid item xs={12} sm={6}>
+        <Grid item xs={12} md={6}>
             <TextField 
                 label={lang.telefono}
                 fullWidth
@@ -101,7 +101,7 @@ const DatosEmpresa = () => {
                   name="telefono_empresa"
             />
         </Grid>
-        <Grid item xs={12} sm={6}>
+        <Grid item xs={12} md={6}>
             <TextField 
                 label={lang.categoria}
                 variant="outlined"
@@ -118,7 +118,7 @@ const DatosEmpresa = () => {
                   name="categoria_empresa"
             />
         </Grid>
-        <Grid item xs={12} sm={6}>
+        <Grid item xs={12} md={6}>
             <TextField 
                 label={lang.dim_ticket}
                 helperText={lang.en_mm}

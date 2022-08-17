@@ -19,7 +19,10 @@ export const dashboardlist = [
         icon:{name:"savings", color:"primary.main"},
         button:true,
         url:"cajas",
-        buttontext:"Ver"
+        buttontext:"Ver",
+        card:{
+            bgcolor:'primary.light'
+        }
     },
     {
         id:24,

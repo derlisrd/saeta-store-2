@@ -6,10 +6,10 @@ const IconsButtonsMenu = () => {
 const {changeStateMenu,activeMenu,activeBigMenu,changeStateBigMenu} = useMenu();
   return (
     <>
-    <IconButton sx={{ display: {md:'inline-block',lg:'none' } }} onClick={()=>{changeStateMenu(!activeMenu)}}>
+    <IconButton sx={{ display: {md:'flex',lg:'none' } }} onClick={()=>{changeStateMenu(!activeMenu)}}>
     <Icon color="primary"> {activeMenu ? "keyboard_double_arrow_left": "keyboard_double_arrow_right"}</Icon>
     </IconButton>
-    <IconButton sx={{ display: { xs: 'none',lg:"block" } }} onClick={()=>{changeStateBigMenu(!activeBigMenu)}}>
+    <IconButton sx={{ display: { xs: 'none',lg:"flex" } }} onClick={()=>{changeStateBigMenu(!activeBigMenu)}}>
        <Icon color="primary"> {activeBigMenu ? "keyboard_double_arrow_left": "keyboard_double_arrow_right"}</Icon>
     </IconButton>
     </>

@@ -11,7 +11,7 @@ const TableInfo = ({icon,title,subtitle}) => {
             </Avatar>
         </Box>
         <Box>
-            <Typography variant='h5'>{title}</Typography>
+            <Typography variant='h6'>{title}</Typography>
             <Typography variant='caption'>{subtitle}</Typography>
         </Box>
     </Stack>

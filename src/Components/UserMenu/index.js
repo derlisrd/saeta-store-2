@@ -1,4 +1,4 @@
-import { Icon, IconButton, List, ListItem, ListItemIcon, ListItemText, Menu } from "@mui/material";
+import {Divider,Button, Icon, IconButton, List, ListItem, ListItemIcon, ListItemText, Menu, Stack } from "@mui/material";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import swal from "sweetalert";
@@ -7,7 +7,9 @@ import { useLogin } from "../../Contexts/LoginProvider";
 import {env} from '../../Utils/config'
 
 export default function UserMenu(){
-    const {logOut}= useLogin()
+    const {logOut,userData}= useLogin()
+
+    const {nombre_user} = userData
     const [anchorEl, setAnchorEl] = useState(null);
     const {lang} = useLang();
     const handleClick = e => {setAnchorEl(e.currentTarget);};
@@ -21,25 +23,45 @@ export default function UserMenu(){
     }
   return (
     <>
-        <IconButton onClick={handleClick}><Icon color="inherit" >more_vert</Icon></IconButton>
+      <Divider orientation="vertical" flexItem sx={{ mx:1 }} />
+
+      <Stack sx={{ display:{xs:'none',sm:'flex'} }} direction="row" justifyContent="center" alignItems="center" >
+        <Button size="small" onClick={handleClick} endIcon={<Icon>expand_more</Icon>}  >
+          {lang.hola}, {nombre_user}
+        </Button>
+      </Stack>
+      <Stack sx={{ display:{xs:'flex',sm:'none'} }} direction="row" justifyContent="center" alignItems="center" >
+        <IconButton onClick={handleClick} >
+          <Icon>expand_more</Icon>
+        </IconButton>
+      </Stack>
       <Menu
         anchorEl={anchorEl}
         keepMounted
         open={Boolean(anchorEl)}
         onClose={handleClose}
       >
-        <List>
-            <ListItem button onClick={()=>{handleClose(); navigate(env.BASEURL+'/cajas') }}>
-                <ListItemIcon><Icon>point_of_sale</Icon></ListItemIcon>
-                <ListItemText primary="Arqueo" />
-            </ListItem>
-            <ListItem button onClick={cerrarSesion}>
-                <ListItemIcon><Icon>logout</Icon></ListItemIcon>
-                <ListItemText primary={lang.cerrar} />
-            </ListItem>
-            
+        <List sx={{ p:2 }}>
+          <ListItem
+            button divider
+            onClick={() => {
+              handleClose();
+              navigate(env.BASEURL + "/cajas");
+            }}
+          >
+            <ListItemIcon>
+              <Icon>point_of_sale</Icon>
+            </ListItemIcon>
+            <ListItemText primary="Arqueo" />
+          </ListItem>
+          <ListItem button onClick={cerrarSesion}>
+            <ListItemIcon>
+              <Icon>logout</Icon>
+            </ListItemIcon>
+            <ListItemText primary={lang.cerrar} />
+          </ListItem>
         </List>
       </Menu>
     </>
-  )
+  );
 }

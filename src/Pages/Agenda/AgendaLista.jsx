@@ -1,5 +1,5 @@
 
-import { Button } from "@mui/material";
+import { Box, Button } from "@mui/material";
 import FullCalendar from "@fullcalendar/react";
 import daygridPlugin from "@fullcalendar/daygrid";
 import esLocale from "@fullcalendar/core/locales/es";
@@ -37,6 +37,7 @@ const AgendaLista = () => {
     
 
   return (
+    <Box boxShadow={3} bgcolor='background.paper' padding={4} borderRadius={5}>
     <FullCalendar
       locale={esLocale}
       plugins={[daygridPlugin, interactionPlugin]}
@@ -51,6 +52,7 @@ const AgendaLista = () => {
       
       events={eventos} eventClick={e=>reAgendar(e.event.id)}
     />
+    </Box>
   )
 }
 

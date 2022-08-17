@@ -4,6 +4,7 @@ export const AvaibleColors = [
   { name: "bluesky", color: "#186dc3" },
   { name: "orange", color: "#d76a16" },
   { name: "red",color: "#FF4838"},
+  { name: "bluelight",color: "#2187ab"},
 ];
 export const colores = {
   violet: {
@@ -32,6 +33,20 @@ export const colores = {
       main: "#810058",
       dark: "#65013e",
       contrastText: "#fff",
+    },
+  },
+  bluelight: {
+    primary: {
+      light: "#66b6d21f",
+      main: "#2187ab",
+      dark: "#1a6985",
+      contrastText: "#fff",
+    },
+    secondary: {
+      light: "#ffeb8c",
+      main: "#f6ab4d",
+      dark: "#d76a16",
+      contrastText: "#000",
     },
   },
   bluesky: {

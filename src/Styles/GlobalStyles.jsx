@@ -9,7 +9,8 @@ export const useGlobalStyles = makeStyles((theme)=>({
     MainPaper:{
         margin:"0 20px",paddingTop:"40px",minHeight:'100vh',
         marginTop:theme.mixins.toolbar.minHeight,
-        transition:"all .3s"
+        transition:"all .3s",
+        marginBottom:theme.mixins.toolbar.minHeight,
     },
     centerDivLogin:{
         minHeight:`calc(100vh - 20px)`,

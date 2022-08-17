@@ -24,7 +24,7 @@ const Menu = () => {
     </AppBar>
     </Box>
       <Drawer
-        sx={{ display: { xs: 'none',lg:"block" } }}
+        sx={{ display: { xs: 'none',lg:"flex" } }}
         variant="permanent"
         anchor={sideMenu}
         open={activeBigMenu}
@@ -34,7 +34,7 @@ const Menu = () => {
       </Drawer>
 
     <SwipeableDrawer
-        sx={{ display: { md: 'block',lg:"none" },transform:"all .3s" }}
+        sx={{ display: { md: 'flex',lg:"none" },transform:"all .3s" }}
         anchor={sideMenu}
         open={activeMenu}
         onClose={()=>{changeStateMenu(false)}}

@@ -27,7 +27,7 @@ const MainPage = ({children}) => {
   return (
     <>
     <Menu />
-      <Box className={activeBigMenu ? style.MainPaperExtended : classes.MainPaper}>
+      <Box className={activeBigMenu ? style.MainPaperExtended : classes.MainPaper} padding={3}>
         {children}
       </Box>
     </>

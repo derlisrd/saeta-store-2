@@ -10,7 +10,7 @@ export default function CardsCustom() {
           <Typography variant="overline"></Typography>
         </Alert>
       </Grid>
-      <Grid xs={12} sm={6} md={3} item>
+      <Grid xs={12} sm={12} md={6} lg={3} item>
         <Card>
           <CardContent style={{ textAlign: "center" }}>
             <Alert icon={<Icon>trending_up</Icon>} severity="success">
@@ -29,7 +29,7 @@ export default function CardsCustom() {
         </Card>
       </Grid>
       
-      <Grid xs={12} sm={6} md={3} item>
+      <Grid xs={12} sm={12} md={6} lg={3} item>
         <Card>
           <CardContent style={{ textAlign: "center" }}>
             <Alert icon={<Icon>trending_down</Icon>} severity="error">
@@ -47,7 +47,7 @@ export default function CardsCustom() {
           </CardContent>
         </Card>
       </Grid>
-      <Grid xs={12} sm={6} md={3} item>
+      <Grid xs={12} sm={12} md={6} lg={3} item>
         <Card>
           <CardContent style={{ textAlign: "center" }}>
             <Alert icon={<Icon>trending_up</Icon>} severity="success">
@@ -64,7 +64,7 @@ export default function CardsCustom() {
           </CardContent>
         </Card>
       </Grid>
-      <Grid xs={12} sm={6} md={3} item>
+      <Grid xs={12} sm={12} md={6} lg={3} item>
         <Card>
           <CardContent style={{ textAlign: "center" }}>
             <Alert icon={<Icon>trending_down</Icon>} severity="error">

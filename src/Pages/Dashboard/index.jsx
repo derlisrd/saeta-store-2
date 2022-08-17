@@ -60,8 +60,8 @@ const DashBoard = () => {
      </Grid>
      {
       dashboardlist.map((e)=>(
-        <Grid key={e.id} item xs={12} sm={6} md={3} lg={3} xl={3} >
-          <Card >
+        <Grid key={e.id} item xs={12} sm={6} md={4} lg={4} xl={3} >
+          <Card sx={{ p:2,bgcolor:e.card ? e.card.bgcolor : "background.paper" }} >
           <CardHeader
               avatar={
                 <Avatar sx={{ bgcolor: e.icon.color }}  >
@@ -75,7 +75,7 @@ const DashBoard = () => {
             {e.text}
           </CardContent>
           <CardActions>
-            {e.button && <Button variant="contained" onClick={()=>{navigate.to(e.url)}}>{e.buttontext}</Button>}
+            {e.button && <Button fullWidth startIcon={<Icon>{e.icon.name}</Icon>} variant="contained" onClick={()=>{navigate.to(e.url)}}>{e.buttontext}</Button>}
           </CardActions>
         </Card>
      </Grid>

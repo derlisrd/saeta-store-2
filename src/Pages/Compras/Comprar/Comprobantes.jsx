@@ -5,7 +5,7 @@ function Comprobantes({form,setForm,error}) {
     const {lang} = useCompras()
 
     const change = e =>{
-        setForm({...form,id_forma_pago:e.target.value});
+        setForm({...form,tipo_factura_compra:e.target.value});
     }
 
   return (
@@ -13,7 +13,7 @@ function Comprobantes({form,setForm,error}) {
       <InputLabel>{lang.seleccione_comprobante}</InputLabel>
       <Select
         error={error.id_error === 1}
-        value={form.id_forma_pago} name="id_forma_pago"onChange={change} fullWidth
+        value={form.tipo_factura_compra} name="id_forma_pago"onChange={change} fullWidth
       >
         <MenuItem value="" disabled>
           <em>{lang.seleccione_comprobante}</em>
