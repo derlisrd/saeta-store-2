@@ -1,7 +1,11 @@
 import { Box, Grid, Link, Typography } from '@mui/material'
 import React from 'react'
+import { APIURL } from '../../App/Config/config'
 
 const Backup = () => {
+
+  const url = APIURL+'backup'
+
   return (
     <Box>
      <Grid container spacing={2}>
@@ -10,7 +14,7 @@ const Backup = () => {
         </Grid>
         <Grid item xs={12}>
           
-          <Link href="http://localhost:8000/url_copia_/?token=12334">Descargar copia de seguridad</Link>
+          <Link href={url}>Descargar copia de seguridad</Link>
             
         </Grid>
      </Grid>
