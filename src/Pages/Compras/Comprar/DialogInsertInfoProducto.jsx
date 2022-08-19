@@ -1,4 +1,4 @@
-import { Stack, Typography } from "@mui/material";
+import { Alert, Stack, Typography } from "@mui/material";
 import { useCompras } from "../ComprasProvider";
 
 const DialogInsertInfoProducto = () => {
@@ -23,6 +23,13 @@ const DialogInsertInfoProducto = () => {
           {lang.precio_mayorista}:{" "}
           {funciones.numberFormat(compras.insertProducto?.preciom_producto)}
         </Typography>
+      </Stack>
+      <Stack direction="row" spacing={2} justifyContent="space-between">
+        <Alert severity="warning" icon={false}>
+          <Typography variant="button">
+            {lang.proveedor}: {compras.insertProducto?.nombre_proveedor}
+          </Typography>
+        </Alert>
       </Stack>
     </>
   );

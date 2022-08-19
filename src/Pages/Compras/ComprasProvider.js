@@ -60,7 +60,9 @@ export default function ComprasProvider({children}) {
       nombre_producto: pro.nombre_producto,
       costo_producto: pro.costo_producto,
       preciom_producto:pro.preciom_producto,
-      precio_producto:pro.precio_producto
+      precio_producto:pro.precio_producto,
+      ruc_proveedor:pro.ruc_proveedor,
+      nombre_proveedor:pro.nombre_proveedor
     }
     //array.push(data);
     datas.insertProducto = data;
@@ -92,13 +94,13 @@ export default function ComprasProvider({children}) {
   const consultarCodigoProducto = async(codigo)=>{
     setCargas({...cargas,codigo:true})
     let promises = await Promise.all([
-      APICALLER.get({table:"productos",
-      fields:"id_producto,codigo_producto,precio_producto,preciom_producto,nombre_producto,costo_producto",
+      APICALLER.get({table:"productos",include:"proveedors",on:"id_proveedor,id_proveedor_producto",
+      fields:"id_producto,codigo_producto,precio_producto,preciom_producto,nombre_producto,costo_producto,nombre_proveedor,ruc_proveedor",
       where:`codigo_producto,=,'${codigo}',and,tipo_producto,=,1`})
     ])
     setCargas({...cargas,codigo:false})
     let res = promises[0];
-
+    
     if(res.response==="ok"){
       if(res.found > 0){
         insertarProductoDialog(res.results[0])
