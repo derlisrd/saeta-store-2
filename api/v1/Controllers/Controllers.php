@@ -18,6 +18,7 @@ class Controllers {
         
         $tableArray = array_filter($tableURIArray); // convierte en array
 
+        $TOKEN = isset($_GET['token']) || !empty($_GET['token']) ? $_GET['token'] : null; 
         
         if($tableArray){
             $table = $tableArray[1];
@@ -25,9 +26,12 @@ class Controllers {
             $table = $table[0];
 
             if($table==='backup'){
-                $export = new ExportController();
+                if($TOKEN && AuthController::ValidateToken($TOKEN,false)){
+                    $export = new ExportController();
+                    return $export->Export_Database();
+                }
 
-                return $export->Export_Database();
+                return false;
             }
             
             $include = isset($_GET['include']) && !empty($_GET['include'])  ? explode(",",$_GET['include'])  : null;       
@@ -47,7 +51,7 @@ class Controllers {
                 GetController::GetTabla($table,$include,$on,$fields,$where,$sort,$page,$filters);
             }
             else{
-                $TOKEN = isset($_GET['token']) || !empty($_GET['token']) ? $_GET['token'] : null; 
+                
                 if($TOKEN && AuthController::ValidateToken($TOKEN,false)){
                     GetController::GetTabla($table,$include,$on,$fields,$where,$sort,$page,$filters);
                 }

@@ -13,7 +13,8 @@ class ExportController {
         $pass      = env('DBPASS');
         $host      = env('DBHOST');
         $name             = env('DBNAME');
-        $backup_name        = "mybackup_seguridad.sql";
+        $date  = date('d-m-Y');
+        $backup_name        = $date."_copia.sql";
         $tables             = false;
         
 
