@@ -1,5 +1,5 @@
 import { Dialog, Zoom, DialogActions, Icon, DialogContent } from "@mui/material";
-import ReactToPdf from "react-to-pdf";
+
 import ButtonCustom from "../../../Components/MuiCustom/ButtonCustom";
 import { useVentas } from "./VentasProvider";
 import printJS from "print-js";
@@ -58,8 +58,9 @@ const imprimir = () => {
     printable: "print_factura",
     style: ` .border1 {border:none} 
     .maindiv{margin:20px auto; font-size:10px; font-family:monospace;max-width:198mm;display:flex;flex-direction:column;}
-    .maindiv td{ padding-left:10px;}
-    .collapse{border-collapse:collapse; border-color:silver}
+    .maindiv td{ padding:5px;  }
+    .collapse{border-collapse:collapse; border-color:black;}
+    .p_2{ padding:2 rem;}
     `,
   });
 };
@@ -77,27 +78,27 @@ const imprimir = () => {
             display: "flex",
             justifyContent: "center",
             flexDirection:'column',
-            margin: "25px auto",
+            margin: "8px auto",
             fontFamily: "monospace",
           }}
           id="print_factura"
           className="maindiv"
           ref={refPDF}
         >
-          <table width="740px" align='center' style={{ borderCollapse: "collapse" }} className="collapse" border="1"
-          >
+          <table width="740px" align='center' style={{ borderCollapse: "collapse" }} className="collapse" border="1">
           <tbody>
             <tr>
-              <td width="65%" align="left" colSpan="3" style={{ fontSize:"11px" }}>
-                <h2>{EMPRESA.nombre_empresa}</h2>
+              <td width="65%" align="left" colSpan="3" style={{ fontSize:"11px", padding:"3px"}} className='p_2'>
+                { EMPRESA.logo_url_empresa && <img src={EMPRESA.logo_url_empresa} alt="logo" width={250} height={50}  />}
+                <h1><i>{EMPRESA.nombre_empresa}</i></h1>
                 <p>De: {EMPRESA.propietario_empresa}</p>
                 <p>{EMPRESA.categoria_empresa}</p>
                 <p  className='fontsize9'>
                   Tel:{EMPRESA.telefono_empresa} - {EMPRESA.direccion_empresa}
                 </p>
               </td>
-              <td width="65%" align="left" colSpan="3" style={{ fontSize:"10px" }}>
-              <p>RUC: {EMPRESA?.ruc_empresa}</p>
+              <td width="65%" align="left" colSpan="3" style={{ fontSize:"9px" }}>
+                <p>RUC: {EMPRESA?.ruc_empresa}</p>
                 <p>TIMBRADO NRO: {FACTURA?.timbrado_factura}</p>
                 <p>Inicio vigencia: {FACTURA?.inicio_timbrado}</p>
                 <p>Fin vigencia: {FACTURA?.fin_timbrado} </p>
@@ -120,9 +121,8 @@ const imprimir = () => {
             </tr>
           </tbody>
           </table>
-          <br />
-          <div style={{ minHeight:"600px"}}>
-          <table align='center' width="740px" style={{borderCollapse:"collapse"}} className="collapse" border="1">
+          <div style={{ minHeight:"450px"}}>
+          <table width="740px" align='center' style={{ borderCollapse: "collapse" }} className="collapse" border="1">
                   <thead>
                     <tr align="left">
                       <th width="10%" align="center">
@@ -228,22 +228,7 @@ const imprimir = () => {
       </div>
       </DialogContent>
       <DialogActions>
-          <ReactToPdf
-              targetRef={refPDF}
-              x={8}
-              y={8}
-              filename={`${FACTURA?.nro_datos_factura} ${DF.datosFactura.nro_factura} ${DF.datosCliente.nombre_cliente}.pdf`}
-            >
-              {({ toPdf }) => (
-                <ButtonCustom
-                  variant="outlined"
-                  startIcon={<Icon>picture_as_pdf</Icon>}
-                  onClick={toPdf}
-                >
-                  PDF
-                </ButtonCustom>
-              )}
-            </ReactToPdf>
+          
         <ButtonCustom
           size="large"
           variant="contained"

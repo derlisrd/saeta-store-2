@@ -39,9 +39,14 @@ const ImpresionRecibo = () => {
           }} 
         >
           <thead style={{ fontSize: "11px" }}>
+          <tr>
+              <td align='center'>
+              { EMPRESA.logo_url_empresa && <img src={EMPRESA.logo_url_empresa} alt="logo" width={200} height={40}  />}
+              </td>
+            </tr>
             <tr>
               <td align="center" style={{ fontSize: "15px" }}>
-                {EMPRESA.nombre_empresa}
+                <h2>{EMPRESA.nombre_empresa}</h2>
               </td>
             </tr>
 

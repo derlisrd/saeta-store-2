@@ -36,6 +36,11 @@ const ImprimirTicket = () => {
         >
           <thead style={{ fontSize: "11px" }}>
             <tr>
+              <td align='center'>
+              { EMPRESA.logo_url_empresa && <img src={EMPRESA.logo_url_empresa} alt="logo" width={250} height={50}  />}
+              </td>
+            </tr>
+            <tr>
               <td align="center" style={{ fontSize: "15px" }}>
                 {EMPRESA.nombre_empresa}
               </td>
