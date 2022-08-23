@@ -26,7 +26,8 @@ const SettingsProvider = ({ children }) => {
     telefono_empresa: "",
     direccion_empresa: "",
     licencia: "",
-    categoria_empresa:""
+    categoria_empresa:"",
+    logo_url_empresa:""
   };
 
   const [datosEmpresa, setDatosEmpresa] = useState(

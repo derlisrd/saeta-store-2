@@ -2,6 +2,7 @@ import { Grid,TextField,Icon,Button, InputAdornment,Snackbar,Alert } from "@mui/
 import { useSettings } from "./SettingsProvider"
 import LoadingBackDrop from "../../../Components/UI/LoadingBackDrop";
 import { funciones as Funciones } from "../../../Functions";
+import { TextFieldIconStart } from "../../../Components/MuiCustom/TextFieldIconStart";
 const DatosEmpresa = () => {
 
     const {datosEmpresa,snack,setSnack, Guardar,handleOnchange,cargando,lang} = useSettings()
@@ -21,17 +22,10 @@ const DatosEmpresa = () => {
         </Alert>
       </Grid>
         <Grid item xs={12} md={6}>
-            <TextField
-                autoFocus 
+
+          <TextFieldIconStart autoFocus icon="info"
                 label={lang.nombre_de_empresa}
                 fullWidth
-                InputProps={{
-                    startAdornment: (
-                      <InputAdornment position="start">
-                        <Icon color="primary">info</Icon>
-                      </InputAdornment>
-                    ),
-                  }}
                 value={datosEmpresa.nombre_empresa}
                 onChange={handleOnchange}
                 name="nombre_empresa"
@@ -137,14 +131,20 @@ const DatosEmpresa = () => {
             />
         </Grid>
         <Grid item xs={12} >
+          <TextField label="url_logo" name='logo_url_empresa' onChange={handleOnchange} fullWidth value={datosEmpresa.logo_url_empresa ? datosEmpresa.logo_url_empresa : ''} />
+        </Grid>
+        <Grid item xs={12} >
+          {datosEmpresa.logo_url_empresa && <img src={datosEmpresa.logo_url_empresa} alt="logo" />}
+        </Grid>
+        <Grid item xs={12} >
           <Button variant="contained" component="label">
             {lang.subir_logo}
                 <input hidden accept="image/*" multiple type="file" />
           </Button>
         </Grid>
         <Grid item xs={12} >
-            <Button size="large" onClick={Guardar} variant="outlined" color="primary" startIcon={<Icon color="primary" >save</Icon>} >
-                Guardar
+            <Button size="large" onClick={Guardar} variant="outlined" color="primary" startIcon={<Icon>save</Icon>} >
+                {lang.guardar}
             </Button>
         </Grid>
     </Grid>

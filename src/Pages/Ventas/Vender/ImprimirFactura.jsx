@@ -89,7 +89,7 @@ const imprimir = () => {
           <tbody>
             <tr>
               <td width="65%" align="left" colSpan="3" style={{ fontSize:"11px", padding:"3px"}} className='p_2'>
-                { EMPRESA.logo_url_empresa && <img src={EMPRESA.logo_url_empresa} alt="logo" width={250} height={50}  />}
+                { EMPRESA.logo_url_empresa && <img src={EMPRESA.logo_url_empresa} alt="logo" width={200} height={40}  />}
                 <h1><i>{EMPRESA.nombre_empresa}</i></h1>
                 <p>De: {EMPRESA.propietario_empresa}</p>
                 <p>{EMPRESA.categoria_empresa}</p>

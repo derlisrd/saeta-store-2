@@ -44,7 +44,7 @@ const ImpresionFactura = () => {
       type: "html",
       printable: "print_factura",
       style: ` .border1 {border:none} 
-      .maindiv{margin:0px auto; font-size:10px; font-family:monospace;max-width:198mm;display:flex;flex-direction:column;}
+      .maindiv{margin:0px auto; font-size:9px; font-family:monospace;max-width:198mm;display:flex;flex-direction:column;}
       .maindiv td{ padding-left:10px;}
       .collapse{border-collapse:collapse; border-color:silver}
       `,
@@ -70,7 +70,7 @@ const ImpresionFactura = () => {
             display: "flex",
             justifyContent: "center",
             flexDirection:'column',
-            margin: "0px auto",
+            margin: "10px auto 0",
             fontFamily: "monospace",
           }}
           id="print_factura"
@@ -85,13 +85,13 @@ const ImpresionFactura = () => {
           >
             <tbody>
               <tr>
-                <td width="65%" align="left" colSpan="3" style={{ fontSize:"11px" }}>
+                <td width="65%" align="left" colSpan="3" style={{ fontSize:"10px" }}>
+                { EMPRESA.logo_url_empresa && <img src={EMPRESA.logo_url_empresa} alt="logo" width={200} height={40}  />}
                   <h2>{EMPRESA.nombre_empresa}</h2>
                   <p> De: {EMPRESA.propietario_empresa}</p>
-                  <p> {EMPRESA.categoria_empresa} Tel:{EMPRESA.telefono_empresa} - {EMPRESA.direccion_empresa}
-                  </p>
+                  <small> {EMPRESA.categoria_empresa} Tel:{EMPRESA.telefono_empresa} - {EMPRESA.direccion_empresa}</small>
                 </td>
-                <td width="35%" align="left" valign="top" className="fontsize11" style={{ fontSize:"12px" }}>
+                <td width="35%" align="left" valign="top" className="fontsize11" style={{ fontSize:"10px" }}>
                 <p>RUC: {EMPRESA?.ruc_empresa}</p>
                   <p>TIMBRADO NRO: {DF?.timbrado_factura}</p>
                   <p>Inicio vigencia: {DF?.inicio_timbrado}</p>
@@ -118,8 +118,8 @@ const ImpresionFactura = () => {
             </tbody>
             </table>
           <br/>
-          <div style={{ minHeight:"570px"}}>
-            <table width="740px" style={{ borderCollapse: "collapse" }}className="collapse" border="1">
+          <div style={{ minHeight:"500px",width:"100%"}}>
+            <table width="740" style={{ borderCollapse: "collapse",padding:"2px" }}className="collapse" border="1">
                     <thead>
                       <tr align="left">
                         <th width="10%" align="center">
