@@ -17,7 +17,7 @@ const Backup = () => {
         </Grid>
         <Grid item xs={12}>
           
-          <Link target="_blank" href={url}>Descargar copia de seguridad</Link>
+          <Link href={url}>Descargar copia de seguridad</Link>
             
         </Grid>
      </Grid>
