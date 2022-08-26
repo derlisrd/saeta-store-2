@@ -49,21 +49,21 @@ const RoutesMain = () => {
   const navigate = useNavigate();
   const {userData,loading} = useLogin();
   const {login,permisos} = userData
+  
 
-
-  const PublicRoute = ({children})=> login ? <MainPage>{children}</MainPage> : <Navigate to={"/"} />
+  const PublicRoute = ({children})=> login ? <MainPage>{children}</MainPage> : <Navigate to={env.BASEURL+"/"} />
 
 
   const PrivateRoute = ({children,id})=>{
     if(login && !permisos.some(e => parseInt(e.id_permiso_permiso) === parseInt(id)) ){
-      return <Navigate to={env.BASEURL + "/notautorized"} />
+      return <Navigate to={R + "notautorized"} />
     } 
-    return login ? <MainPage>{children}</MainPage> : <Navigate to={"/"} />
+    return login ? <MainPage>{children}</MainPage> : <Navigate to={env.BASEURL+"/"} />
   }
 
   const verificar = useCallback(()=>{
     if(!login){
-      navigate("/")
+      navigate(env.BASEURL+"/")
     }
   },[login,navigate])
   

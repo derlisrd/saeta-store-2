@@ -6,7 +6,7 @@ import { useGlobalStyles } from "../../Styles/GlobalStyles";
 import LoadingBackDrop from "../../Components/UI/LoadingBackDrop";
 import { LoadingButton } from "@mui/lab";
 import { useLang } from "../../Contexts/LangProvider";
-
+import {env} from '../../App/Config/config'
 const LoginForm = () => {
   const {lang}= useLang();
   const navigate = useNavigate()
@@ -28,7 +28,7 @@ const LoginForm = () => {
   const enviar = e => { e.preventDefault(); logIn(form,recordar);}
 
   const verificar = useCallback(()=>{
-    if(login) navigate("/dashboard")
+    if(login) navigate(env.BASEURL+"/dashboard")
   },[login,navigate])
 
 
