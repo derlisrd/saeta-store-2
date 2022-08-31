@@ -25,10 +25,11 @@ function UsersProvider ({children}){
         setCargas({lista:false,guardar:true})
         let res = await APICALLER.get({table:'users',token:token_user,where:`username_user,=,'${f.username_user}',or,email_user,=,'${f.email_user}'`});
 
-        if(res.response==="ok"){
+        
+         if(res.response==="ok"){
             setCargas({lista:false,guardar:false})
             return res.found;
-        }
+        } 
 
         // si existe returna mayor a cero
        
@@ -116,6 +117,8 @@ function UsersProvider ({children}){
             swal({text:lang.error_pass})
         }
     }
+
+
 
     const editUser = async(f)=>{
         setCargas({...cargas,all:true})
