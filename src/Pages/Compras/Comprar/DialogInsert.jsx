@@ -19,7 +19,8 @@ const DialogInsert = () => {
       stock:"",
       costo_producto:"",
       precio_producto:"",
-      preciom_producto:""
+      preciom_producto:"",
+      id_compras_deposito:"",
     }
     const [form,setForm] = useState(initialForm)
     const close = ()=>{
@@ -41,6 +42,7 @@ const DialogInsert = () => {
       f.costo_producto = d.costo_producto;
       f.precio_producto = d.precio_producto;
       f.preciom_producto = d.preciom_producto;
+      f.id_compras_deposito = d.id_compras_deposito;
       setForm(f);
       inputStock.current.focus()
     }
@@ -59,6 +61,10 @@ const DialogInsert = () => {
       }
       if(f.precio_producto===""){
         setErrores({active:true,msj:"Inserte precio",id_error:3})
+        return false;
+      }
+      if(f.preciom_producto===""){
+        setErrores({active:true,msj:"Inserte precio mayorista",id_error:4})
         return false;
       }
       if(f.preciom_producto===""){
@@ -130,7 +136,9 @@ const DialogInsert = () => {
             }} 
             fullWidth name="preciom_producto" helperText={lang.precio_mayorista} autoComplete="off" onChange={change} value={form.preciom_producto} label={lang.precio_con_descuento} />
           </Grid>
-
+          <Grid item xs={12} sm={6}>
+            
+          </Grid>
         </Grid>
       </DialogContent>
       <DialogActions>

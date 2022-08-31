@@ -32,7 +32,8 @@ export default function ComprasProvider({children}) {
     codigo:false
   }
   const initialDatosCompra = {
-    cajas: []
+    cajas: [],
+    depositos:[]
   }
   const [datosCompra,setDatosCompra] = useState(initialDatosCompra)
   const [errores,setErrores] = useState(initialErrores);
@@ -115,18 +116,25 @@ export default function ComprasProvider({children}) {
 
 
   const getDatas = useCallback(async()=>{
-    let res = await APICALLER.get({table:"cajas",include:"cajas_monedas,monedas,cajas_users",on:"id_caja,id_caja_moneda,id_moneda,id_moneda_caja_moneda,id_caja,id_caja_caja",where:`id_user_caja,=,${id_user},and,estado_caja,=,'open'`,
-    fields:"id_moneda,nombre_moneda,id_cajas_moneda,id_caja_moneda,abreviatura_moneda,monto_caja_moneda,monto_no_efectivo,nombre_caja"})
+    
+
     if (!localStorage.getItem("compras")) {
+      let res = await Promise.all([APICALLER.get({table:"cajas",include:"cajas_monedas,monedas,cajas_users",on:"id_caja,id_caja_moneda,id_moneda,id_moneda_caja_moneda,id_caja,id_caja_caja",where:`id_user_caja,=,${id_user},and,estado_caja,=,'open'`,
+      fields:"id_moneda,nombre_moneda,id_cajas_moneda,id_caja_moneda,abreviatura_moneda,monto_caja_moneda,monto_no_efectivo,nombre_caja"}),
+      APICALLER.get({table:'depositos',fields:"id_deposito,nombre_deposito"})])
+      if(res[0].response==="ok"){
+        setDatosCompra({cajas:res[0].results,depositos:res[1].results})
+      }
       const values = JSON.stringify({
         items: [],
         insertProducto:{},
-        sumatotal:0
+        sumatotal:0,
+        cajas:res[0].results,
+        depositos:res[1].results
       });
       localStorage.setItem("compras", values);
     }
     
-    res.response==="ok" ? setDatosCompra({cajas:res.results}) : console.log(res);
     setCargas({main:false,items:false,insert:false,codigo:false});
   },[id_user])
 
