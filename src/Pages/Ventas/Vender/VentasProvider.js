@@ -899,12 +899,11 @@ const VentasProvider = ({ children }) => {
         }
       }
       
-      if (rMoneda.response === "ok") {
-        var activeMoneda = rMoneda.results.filter(e => e.activo_moneda === "1");
-        var monedas = rMoneda.results
-        var monedasdecajas = cajaMonedas.results;
-
-    }
+          if (rMoneda.response === "ok") {
+            var activeMoneda = rMoneda.results.filter(e => e.activo_moneda === "1");
+            var monedas = rMoneda.results
+            var monedasdecajas = cajaMonedas.results;
+          }
       if(rDepositos.response==='ok'){ var ID_DEPOSITO_ACTIVO = rDepositos.results.length>0 ? rDepositos.results[0].id_deposito : "0" } 
       const initialFacturasLocal = {
         facturas: [

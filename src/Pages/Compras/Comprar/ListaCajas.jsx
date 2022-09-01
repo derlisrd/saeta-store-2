@@ -2,7 +2,7 @@ import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 import { useCompras } from "../ComprasProvider";
 
 const ListaCajas = ({ form, setForm,error }) => {
-  const { lang, datosCompra } = useCompras();
+  const { lang, compras } = useCompras();
   const change = (e) => {
     setForm({ ...form, id_cajas_moneda: e.target.value });
   };
@@ -22,7 +22,7 @@ const ListaCajas = ({ form, setForm,error }) => {
           <em>{lang.seleccione_caja}</em>
         </MenuItem>
        {
-        datosCompra.cajas.map((e,i)=>(
+        compras.cajas.map((e,i)=>(
             <MenuItem key={i} value={e.id_cajas_moneda}>
                 <b>{e.nombre_caja} - {e.nombre_moneda}</b>
             </MenuItem>

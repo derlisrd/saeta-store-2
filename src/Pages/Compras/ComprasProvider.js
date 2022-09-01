@@ -23,7 +23,9 @@ export default function ComprasProvider({children}) {
   const initialCompras = {
     items: storage ? storage.items : [],
     sumatotal:storage ? storage.sumatotal : 0,
-    insertProducto: {}
+    insertProducto: {},
+    cajas:storage ? storage.cajas : [],
+    depositos: storage ? storage.depositos : []
   }
   const initialCargas = {
     main:true,
@@ -31,11 +33,7 @@ export default function ComprasProvider({children}) {
     insert:false,
     codigo:false
   }
-  const initialDatosCompra = {
-    cajas: [],
-    depositos:[]
-  }
-  const [datosCompra,setDatosCompra] = useState(initialDatosCompra)
+
   const [errores,setErrores] = useState(initialErrores);
   const [cargas,setCargas] = useState(initialCargas);
   const [dialogs,setDialogs] = useState(initialDialogs)
@@ -118,20 +116,24 @@ export default function ComprasProvider({children}) {
   const getDatas = useCallback(async()=>{
     
 
-    if (!localStorage.getItem("compras")) {
+    if (localStorage.getItem("compras")===null) {
       let res = await Promise.all([APICALLER.get({table:"cajas",include:"cajas_monedas,monedas,cajas_users",on:"id_caja,id_caja_moneda,id_moneda,id_moneda_caja_moneda,id_caja,id_caja_caja",where:`id_user_caja,=,${id_user},and,estado_caja,=,'open'`,
       fields:"id_moneda,nombre_moneda,id_cajas_moneda,id_caja_moneda,abreviatura_moneda,monto_caja_moneda,monto_no_efectivo,nombre_caja"}),
       APICALLER.get({table:'depositos',fields:"id_deposito,nombre_deposito"})])
       if(res[0].response==="ok"){
-        setDatosCompra({cajas:res[0].results,depositos:res[1].results})
+        setCompras({
+          cajas:res[0].results,
+          depositos:res[1].results, 
+          items: [],
+          insertProducto:{},
+          sumatotal:0,})
       }
       const values = JSON.stringify({
+        cajas:res[0].results,
+        depositos:res[1].results, 
         items: [],
         insertProducto:{},
-        sumatotal:0,
-        cajas:res[0].results,
-        depositos:res[1].results
-      });
+        sumatotal:0,});
       localStorage.setItem("compras", values);
     }
     
@@ -145,7 +147,7 @@ useEffect(() => {
     return ()=> {isActive = false;ca.abort();}
 }, [getDatas]);    
 
-const value = {datosCompra,funciones,lang,setDialogs,dialogs,compras,setCompras,cargas,setCargas,errores,setErrores,inputCodigo,consultarCodigoProducto,consultarSiExiste,setearCompras}
+const value = {funciones,lang,setDialogs,dialogs,compras,setCompras,cargas,setCargas,errores,setErrores,inputCodigo,consultarCodigoProducto,consultarSiExiste,setearCompras}
 
   return (
     <ComprasContext.Provider value={value} >
@@ -154,6 +156,6 @@ const value = {datosCompra,funciones,lang,setDialogs,dialogs,compras,setCompras,
   );
 }
 export const useCompras =()=>{
-  const {datosCompra,funciones,lang,setDialogs,dialogs,compras,setCompras,cargas,setCargas,errores,setErrores,inputCodigo,consultarCodigoProducto,consultarSiExiste,setearCompras} = useContext(ComprasContext);
-  return {datosCompra,funciones,lang,setDialogs,dialogs,compras,setCompras,cargas,setCargas,errores,setErrores,inputCodigo,consultarCodigoProducto,consultarSiExiste,setearCompras}
+  const {funciones,lang,setDialogs,dialogs,compras,setCompras,cargas,setCargas,errores,setErrores,inputCodigo,consultarCodigoProducto,consultarSiExiste,setearCompras} = useContext(ComprasContext);
+  return {funciones,lang,setDialogs,dialogs,compras,setCompras,cargas,setCargas,errores,setErrores,inputCodigo,consultarCodigoProducto,consultarSiExiste,setearCompras}
 }

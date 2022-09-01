@@ -11,7 +11,7 @@ import ListaCajas from './ListaCajas';
 const DialogFinalizar = () => {
 
 
-    const {dialogs,setDialogs,lang,funciones} = useCompras();
+    const {dialogs,setDialogs,lang,funciones,compras} = useCompras();
 
     const initialForm = {
       tipo_factura_compra:"",
@@ -32,12 +32,13 @@ const DialogFinalizar = () => {
      setForm({...form,[name]:value})
     }
 
-    const enviar = ()=>{
-      setError({
-        active:true,
-        msj:"ERROR",
-        id_error:1
-      })
+    const finalizarEnviar = async()=>{
+      //setError({active:true,msj:"ERROR",id_error:1})
+
+      console.log(compras)
+
+
+
     }
 
     const close = ()=>{
@@ -118,7 +119,7 @@ const DialogFinalizar = () => {
         <ButtonCustom
           variant="contained"
           color="success"
-          onClick={enviar}
+          onClick={finalizarEnviar}
           fullWidth
         >
           {lang.finalizar}{" "}

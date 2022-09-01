@@ -1,4 +1,4 @@
-import {  Button, Dialog, DialogActions, DialogContent, DialogTitle, Grid, TextField, Zoom } from '@mui/material'
+import {  Button, Dialog, DialogActions, DialogContent, DialogTitle, FormControl, Grid, InputLabel, MenuItem, Select, TextField, Zoom } from '@mui/material'
 import {useRef, useState} from 'react'
 import NumberFormatCustom from '../../../Components/thirty/NumberFormatCustom';
 import { useCompras } from '../ComprasProvider'
@@ -20,7 +20,7 @@ const DialogInsert = () => {
       costo_producto:"",
       precio_producto:"",
       preciom_producto:"",
-      id_compras_deposito:"",
+      id_compras_deposito:""
     }
     const [form,setForm] = useState(initialForm)
     const close = ()=>{
@@ -42,7 +42,6 @@ const DialogInsert = () => {
       f.costo_producto = d.costo_producto;
       f.precio_producto = d.precio_producto;
       f.preciom_producto = d.preciom_producto;
-      f.id_compras_deposito = d.id_compras_deposito;
       setForm(f);
       inputStock.current.focus()
     }
@@ -137,7 +136,27 @@ const DialogInsert = () => {
             fullWidth name="preciom_producto" helperText={lang.precio_mayorista} autoComplete="off" onChange={change} value={form.preciom_producto} label={lang.precio_con_descuento} />
           </Grid>
           <Grid item xs={12} sm={6}>
-            
+            <FormControl fullWidth>
+                  <InputLabel >
+                    {lang.seleccione_deposito}
+                  </InputLabel>
+                  <Select
+                    name="id_compras_deposito"
+                    onChange={change}
+                    fullWidth
+                    value={form.id_compras_deposito}
+                  >
+                    <MenuItem value="" selected disabled>
+                      {lang.seleccione_deposito}
+                    </MenuItem>
+                    {compras.depositos.map((e, i) => (
+                      <MenuItem value={e.id_deposito} key={i}>
+                        {e.nombre_deposito}
+                      </MenuItem>
+                    ))}
+                    
+                  </Select>
+                </FormControl>
           </Grid>
         </Grid>
       </DialogContent>
