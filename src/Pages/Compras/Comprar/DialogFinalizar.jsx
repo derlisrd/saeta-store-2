@@ -16,8 +16,10 @@ const DialogFinalizar = () => {
     const initialForm = {
       tipo_factura_compra:"",
       comprobante_nro:"",
+      id_proveedor_compra:"",
       id_cajas_moneda:"",
       fecha_pago:funciones.fechaActualYMD(),
+      fecha:funciones.fechaActualYMD()
     }
     const initialError = {
       active: false,
@@ -35,11 +37,32 @@ const DialogFinalizar = () => {
     const finalizarEnviar = async()=>{
       //setError({active:true,msj:"ERROR",id_error:1})
 
-      console.log(compras)
+      let estado_compra = 0;
+
+        let nform = {
+          id_proveedor_compra: form.id_proveedor_compra,
+          tipo_factura_compra: form.tipo_factura_compra,
+          fecha_pago_compra:form.fecha_pago,
+          nro_factura_compra:form.comprobante_nro,
+          fecha_compra:form.fecha,
+          total_factura_compra:compras.sumatotal,
+          estado_compra
+        }
+
+        let nitems = {
+          id_item_compra : "", // id_compra
+          precio_compra: "",
+          precio_venta: "",
+          preciom_venta:"",
+          cantidad_compra:""
+        }
+
 
 
 
     }
+
+
 
     const close = ()=>{
         setDialogs({...dialogs,finalizar:false})
