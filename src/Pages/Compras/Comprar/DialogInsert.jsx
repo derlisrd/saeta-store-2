@@ -16,10 +16,11 @@ const DialogInsert = () => {
     }
     const [errores,setErrores] = useState(initialErrores)
     const initialForm = {
-      stock:"",
-      costo_producto:"",
-      precio_producto:"",
-      preciom_producto:"",
+      id_producto:"",
+      precio_compra: "",
+      precio_venta: "",
+      preciom_venta:"",
+      cantidad_compra:"",
       id_compras_deposito:""
     }
     const [form,setForm] = useState(initialForm)
@@ -39,9 +40,9 @@ const DialogInsert = () => {
     const valAnteriores = ()=>{
       let f = {...form}, c = {...compras};
       let d = c.insertProducto;
-      f.costo_producto = d.costo_producto;
-      f.precio_producto = d.precio_producto;
-      f.preciom_producto = d.preciom_producto;
+      f.precio_compra = d.costo_producto;
+      f.precio_venta = d.precio_producto;
+      f.preciom_venta = d.preciom_producto;
       setForm(f);
       inputStock.current.focus()
     }
@@ -54,20 +55,20 @@ const DialogInsert = () => {
         setErrores({active:true,msj:"Inserte la cantidad de stock",id_error:1})
         return false;
       }
-      if(f.costo_producto===""){
+      if(f.precio_compra===""){
         setErrores({active:true,msj:"Inserte costo",id_error:2})
         return false;
       }
-      if(f.precio_producto===""){
+      if(f.precio_venta===""){
         setErrores({active:true,msj:"Inserte precio",id_error:3})
         return false;
       }
-      if(f.preciom_producto===""){
+      if(f.preciom_venta===""){
         setErrores({active:true,msj:"Inserte precio mayorista",id_error:4})
         return false;
       }
-      if(f.preciom_producto===""){
-        setErrores({active:true,msj:"Inserte precio mayorista",id_error:4})
+      if(f.id_compras_deposito===""){
+        setErrores({active:true,msj:"Inserte el deposito",id_error:5})
         return false;
       }
 
@@ -102,12 +103,12 @@ const DialogInsert = () => {
               inputComponent: NumberFormatCustom,
               inputProps: { min: 0 },
             }} 
-            fullWidth name="stock" autoFocus autoComplete="off" value={form.stock} onChange={change} label={lang.stock_comprado}  
+            fullWidth name="cantidad_compra" autoFocus autoComplete="off" value={form.cantidad_compra} onChange={change} label={lang.stock_comprado}  
             />
           </Grid>
           <Grid item xs={12} sm={6}>
             <TextField
-            fullWidth name="costo_producto" autoComplete="off" onChange={change} value={form.costo_producto} label={lang.costo} 
+            fullWidth name="precio_compra" autoComplete="off" onChange={change} value={form.precio_compra} label={lang.costo} 
             error={errores.id_error===2} required
             InputProps={{
               inputComponent: NumberFormatCustom,
@@ -123,7 +124,7 @@ const DialogInsert = () => {
               inputComponent: NumberFormatCustom,
               inputProps: { min: 0 },
             }} 
-             fullWidth name="precio_producto" helperText={lang.precio_balcon} autoComplete="off" onChange={change} value={form.precio_producto} label={lang.precio} />
+             fullWidth name="precio_venta" helperText={lang.precio_balcon} autoComplete="off" onChange={change} value={form.precio_venta} label={lang.precio} />
           </Grid>
 
           <Grid item xs={12} sm={6}>
@@ -133,7 +134,7 @@ const DialogInsert = () => {
               inputComponent: NumberFormatCustom,
               inputProps: { min: 0 },
             }} 
-            fullWidth name="preciom_producto" helperText={lang.precio_mayorista} autoComplete="off" onChange={change} value={form.preciom_producto} label={lang.precio_con_descuento} />
+            fullWidth name="preciom_venta" helperText={lang.precio_mayorista} autoComplete="off" onChange={change} value={form.preciom_venta} label={lang.precio_con_descuento} />
           </Grid>
           <Grid item xs={12} sm={6}>
             <FormControl fullWidth>

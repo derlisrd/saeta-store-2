@@ -48,16 +48,7 @@ const DialogFinalizar = () => {
           total_factura_compra:compras.sumatotal,
           estado_compra
         }
-
-        let nitems = {
-          id_item_compra : "", // id_compra
-          precio_compra: "",
-          precio_venta: "",
-          preciom_venta:"",
-          cantidad_compra:""
-        }
-
-
+        
 
 
     }

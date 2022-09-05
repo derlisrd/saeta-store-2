@@ -57,11 +57,9 @@ export default function ComprasProvider({children}) {
       id_producto:pro.id_producto,
       codigo_producto: pro.codigo_producto,
       nombre_producto: pro.nombre_producto,
-      costo_producto: pro.costo_producto,
-      preciom_producto:pro.preciom_producto,
-      precio_producto:pro.precio_producto,
-      ruc_proveedor:pro.ruc_proveedor,
-      nombre_proveedor:pro.nombre_proveedor
+      precio_compra: pro.costo_producto,
+      preciom_venta:pro.preciom_producto,
+      precio_venta:pro.precio_producto,
     }
     //array.push(data);
     datas.insertProducto = data;
