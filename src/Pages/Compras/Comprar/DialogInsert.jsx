@@ -16,7 +16,7 @@ const DialogInsert = () => {
     }
     const [errores,setErrores] = useState(initialErrores)
     const initialForm = {
-      id_producto:"",
+      id_producto_compra:"",
       precio_compra: "",
       precio_venta: "",
       preciom_venta:"",
