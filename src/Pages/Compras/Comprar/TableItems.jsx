@@ -43,7 +43,7 @@ const TableItems = ({items}) => {
                 <Icon>remove_circle_outline</Icon>
               </IconButton>
             </Tooltip>
-            <Typography variant="h6">{d.stock}</Typography>
+            <Typography variant="h6">{d.cantidad_compra}</Typography>
 
             <IconButton onClick={() => {sumar(i)}}>
               <Icon>add_circle_outline</Icon>
@@ -60,13 +60,13 @@ const TableItems = ({items}) => {
 
       <TableCell className={classes.tableitem}>
         <span className={classes.columname}>COSTO</span>
-        <span>{funciones.numberFormat(d.costo_producto)}</span>
+        <span>{funciones.numberFormat(d.precio_compra)}</span>
       </TableCell>
 
       <TableCell className={classes.tableitem}>
         <span className={classes.columname}>SUBTOTAL</span>
         <span>
-          {funciones.numberFormat(parseFloat(d.costo_producto)*parseFloat(d.stock))}
+          {funciones.numberFormat(parseFloat(d.precio_compra)*parseFloat(d.cantidad_compra))}
         </span>
       </TableCell>
 

@@ -40,9 +40,9 @@ const DialogInsert = () => {
     const valAnteriores = ()=>{
       let f = {...form}, c = {...compras};
       let d = c.insertProducto;
-      f.precio_compra = d.costo_producto;
-      f.precio_venta = d.precio_producto;
-      f.preciom_venta = d.preciom_producto;
+      f.precio_compra = d.precio_compra;
+      f.precio_venta = d.precio_venta;
+      f.preciom_venta = d.preciom_venta;
       setForm(f);
       inputStock.current.focus()
     }
@@ -51,7 +51,7 @@ const DialogInsert = () => {
     const insertar = (e) => {
       e.preventDefault();
       let f = {...form}
-      if(f.stock===""){
+      if(f.cantidad_compra===""){
         setErrores({active:true,msj:"Inserte la cantidad de stock",id_error:1})
         return false;
       }
@@ -75,7 +75,11 @@ const DialogInsert = () => {
       setErrores({active:false,msj:null,id_error:null})
 
       let datosnuevos = {...compras}
-      let itemnuevo = {...f, codigo_producto:compras.insertProducto?.codigo_producto, nombre_producto:compras.insertProducto?.nombre_producto,id_producto:compras.insertProducto?.id_producto, }
+      let itemnuevo = {...f, 
+        codigo_producto:compras.insertProducto?.codigo_producto, 
+        nombre_producto:compras.insertProducto?.nombre_producto,
+        id_producto:compras.insertProducto?.id_producto, 
+      }
       datosnuevos.items.push(itemnuevo)
       setearCompras(datosnuevos)
       close()

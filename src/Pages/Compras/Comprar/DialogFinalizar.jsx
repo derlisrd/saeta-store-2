@@ -4,6 +4,8 @@ import React, { Fragment, useState } from 'react'
 import { AlertError } from '../../../Components/MuiCustom/AlertsCustom';
 import ButtonCustom from '../../../Components/MuiCustom/ButtonCustom';
 import { DatePickerCustom } from '../../../Components/MuiCustom/DatePickerCustom';
+import { APICALLER } from '../../../Services/api';
+import Proveedores from './Proveedores';
 import { useCompras } from '../ComprasProvider';
 import Comprobantes from './Comprobantes';
 import ListaCajas from './ListaCajas';
@@ -11,7 +13,7 @@ import ListaCajas from './ListaCajas';
 const DialogFinalizar = () => {
 
 
-    const {dialogs,setDialogs,lang,funciones,compras} = useCompras();
+    const {dialogs,setDialogs,lang,funciones,compras,token_user} = useCompras();
 
     const initialForm = {
       tipo_factura_compra:"",
@@ -35,7 +37,7 @@ const DialogFinalizar = () => {
     }
 
     const finalizarEnviar = async()=>{
-      //setError({active:true,msj:"ERROR",id_error:1})
+      setError({active:false,msj:"ERROR",id_error:1})
 
       let estado_compra = 0;
 
@@ -49,6 +51,23 @@ const DialogFinalizar = () => {
           estado_compra
         }
         
+         let res = await APICALLER.insert({table:"compras",data:nform,token:token_user})
+         
+        if(res.response==="ok"){
+          let id = res.last_id;
+          let promises = [];
+          compras.items.forEach(e => {
+            promises.push(
+              APICALLER.insert({table:"compras_items",token:token_user,
+              data:{...e,id_item_compra: id
+              }
+            })
+            )
+          });
+
+          Promise.all(promises);
+
+        } 
 
 
     }
@@ -83,8 +102,12 @@ const DialogFinalizar = () => {
             <Typography variant="button">{lang.datos_comprobante}</Typography>
           </Grid>
           <Grid item xs={12} sm={6} md={6} lg={3}>
+            <Proveedores form={form} setForm={setForm} error={error} />
+          </Grid>
+          <Grid item xs={12} sm={6} md={6} lg={3}>
             <Comprobantes form={form} setForm={setForm} error={error} />
           </Grid>
+
           <Grid item xs={12} sm={6} md={6} lg={3}>
             <TextField
               name="comprobante_nro"

@@ -9,6 +9,7 @@ export const translate = {
         fecha_pago:"Fecha de pago",
         factura_credito:"Factura crédito",
         factura_contado:"Factura contado",
+        seleccione_proveedor:"Seleccione proveedor",
         nro_comprobante:"Nro comprobante",
         datos_comprobante:"Datos de comprobante",
         costo:"Costo",

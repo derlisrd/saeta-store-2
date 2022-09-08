@@ -5,6 +5,7 @@ import { useLogin } from "../../../Contexts/LoginProvider";
 import {funciones as Funciones} from "../../../Functions";
 import {useLang} from '../../../Contexts/LangProvider'
 import { useNavigate } from "react-router-dom";
+import { env } from "../../../App/Config/config";
 
 const Contexto = createContext();
 
@@ -336,12 +337,18 @@ const VentasProvider = ({ children }) => {
             }
           }))
             let ncantidad = parseFloat(e.stock_producto) - parseFloat(e.cantidad_producto);
-            insertsPromises.push(APICALLER.update({table:'productos_depositos',data:{stock_producto_deposito:ncantidad},id:e.id_productos_deposito,token:token_user}));
+            insertsPromises.push(APICALLER.update(
+              {
+                table:'productos_depositos',data:{stock_producto_deposito:ncantidad},
+                id:e.id_productos_deposito,token:token_user
+              }
+            ));
           }
         }
         //item.response !== "ok" && console.log(item);
       });
       // insertando con promisses
+      
       Promise.all(insertsPromises)
     } else {
       console.log(resInsert);
@@ -560,9 +567,9 @@ const VentasProvider = ({ children }) => {
       where: `codigo_producto,=,'${codigo}',and,id_deposito_deposito,=,${fa.depositoActivo}`,
     }),APICALLER.get({
       table: "productos",
-      include: "impuestos,productos_images",
-      on: "id_impuesto_producto,id_impuesto,id_producto,id_image_producto",
-      where: `codigo_producto,=,'${codigo}'`,
+      include: "impuestos,productos_images,productos_depositos",
+      on: "id_impuesto_producto,id_impuesto,id_producto,id_image_producto,id_producto,id_producto_deposito",
+      where: `codigo_producto,=,'${codigo}',and,id_deposito_deposito,=,${fa.depositoActivo}`,
     }),
     APICALLER.get({ table: "productos",
     include: "impuestos",
@@ -572,8 +579,7 @@ const VentasProvider = ({ children }) => {
     let ima = pro[1];
     let serv = pro[2];
    
-
-
+    
     if (res.response === "ok") {
       if (res.found > 0 || serv.found>0) {
         if(res.results[0]?.tipo_producto==="1" && res.results[0]?.stock_producto_deposito<=0 ){
@@ -599,6 +605,7 @@ const VentasProvider = ({ children }) => {
 
 
   const insertarProductoTabla = (prod,cantidad=null) => {
+    
     let fa = { ...datosFacturas };
     let df = fa.facturas[indexFactura];
     let cantidadInput = cantidad || parseFloat(inputCantidad.current.value) ;
@@ -877,7 +884,7 @@ const VentasProvider = ({ children }) => {
         if (rc.found < 1) {
           swal({text:"Debe habilitar una caja.",icon:"warning"})
           .then(()=>{
-            navigate("/cajas?dialog=new");
+            navigate(env.BASEURL+"/cajas?dialog=new");
           })
           return false;
         } else {

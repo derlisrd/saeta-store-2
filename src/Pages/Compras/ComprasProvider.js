@@ -9,7 +9,7 @@ export default function ComprasProvider({children}) {
 
   const {lang} = useLang()
   const {userData} = useLogin()
-  const {id_user} = userData
+  const {id_user,token_user} = userData
   
   const initialDialogs = { main:true,insert:false,finalizar:false }
   const storage = JSON.parse(localStorage.getItem("compras"));
@@ -25,7 +25,8 @@ export default function ComprasProvider({children}) {
     sumatotal:storage ? storage.sumatotal : 0,
     insertProducto: {},
     cajas:storage ? storage.cajas : [],
-    depositos: storage ? storage.depositos : []
+    depositos: storage ? storage.depositos : [],
+    proveedores: storage ? storage.proveedores : []
   }
   const initialCargas = {
     main:true,
@@ -43,7 +44,7 @@ export default function ComprasProvider({children}) {
     let e = {...elem}
     let suma = 0;
     e.items.forEach(d => {
-      suma += parseFloat(d.costo_producto)*parseFloat(d.stock);
+      suma += parseFloat(d.precio_compra)*parseFloat(d.cantidad_compra);
     });
     e.sumatotal = suma;
     setCompras(e)
@@ -51,21 +52,22 @@ export default function ComprasProvider({children}) {
   }
 
   const insertarProductoDialog = (pro) => {
-    let datas = {...compras}
+    let store = {...compras}
     //let cant = parseFloat(inputCantidad.current.value);
     let data = {
-      id_producto:pro.id_producto,
+      id_producto_compra:pro.id_producto,
       codigo_producto: pro.codigo_producto,
       nombre_producto: pro.nombre_producto,
       precio_compra: pro.costo_producto,
       preciom_venta:pro.preciom_producto,
       precio_venta:pro.precio_producto,
+      nombre_proveedor:pro.nombre_proveedor
     }
     //array.push(data);
-    datas.insertProducto = data;
-    setCompras(datas)
+    store.insertProducto = data;
+    
     setDialogs({...dialogs,insert:true})
-    //setearCompras(datas);
+    setearCompras(store);
 
   }
 
@@ -115,24 +117,26 @@ export default function ComprasProvider({children}) {
     
 
     if (localStorage.getItem("compras")===null) {
-      let res = await Promise.all([APICALLER.get({table:"cajas",include:"cajas_monedas,monedas,cajas_users",on:"id_caja,id_caja_moneda,id_moneda,id_moneda_caja_moneda,id_caja,id_caja_caja",where:`id_user_caja,=,${id_user},and,estado_caja,=,'open'`,
+      let res = await Promise.all([
+      APICALLER.get({table:"cajas",include:"cajas_monedas,monedas,cajas_users",on:"id_caja,id_caja_moneda,id_moneda,id_moneda_caja_moneda,id_caja,id_caja_caja",where:`id_user_caja,=,${id_user},and,estado_caja,=,'open'`,
       fields:"id_moneda,nombre_moneda,id_cajas_moneda,id_caja_moneda,abreviatura_moneda,monto_caja_moneda,monto_no_efectivo,nombre_caja"}),
-      APICALLER.get({table:'depositos',fields:"id_deposito,nombre_deposito"})])
+      APICALLER.get({table:'depositos',fields:"id_deposito,nombre_deposito"}),
+      APICALLER.get({table:"proveedors"})
+    ])
+
       if(res[0].response==="ok"){
-        setCompras({
+        let datasresponse = {
           cajas:res[0].results,
           depositos:res[1].results, 
+          proveedores:res[2].results,
           items: [],
           insertProducto:{},
-          sumatotal:0,})
+          sumatotal:0,}  
+        setCompras(datasresponse)
+        const values = JSON.stringify(datasresponse);
+        localStorage.setItem("compras", values);
       }
-      const values = JSON.stringify({
-        cajas:res[0].results,
-        depositos:res[1].results, 
-        items: [],
-        insertProducto:{},
-        sumatotal:0,});
-      localStorage.setItem("compras", values);
+      
     }
     
     setCargas({main:false,items:false,insert:false,codigo:false});
@@ -145,7 +149,7 @@ useEffect(() => {
     return ()=> {isActive = false;ca.abort();}
 }, [getDatas]);    
 
-const value = {funciones,lang,setDialogs,dialogs,compras,setCompras,cargas,setCargas,errores,setErrores,inputCodigo,consultarCodigoProducto,consultarSiExiste,setearCompras}
+const value = {token_user,funciones,lang,setDialogs,dialogs,compras,setCompras,cargas,setCargas,errores,setErrores,inputCodigo,consultarCodigoProducto,consultarSiExiste,setearCompras}
 
   return (
     <ComprasContext.Provider value={value} >
@@ -154,6 +158,6 @@ const value = {funciones,lang,setDialogs,dialogs,compras,setCompras,cargas,setCa
   );
 }
 export const useCompras =()=>{
-  const {funciones,lang,setDialogs,dialogs,compras,setCompras,cargas,setCargas,errores,setErrores,inputCodigo,consultarCodigoProducto,consultarSiExiste,setearCompras} = useContext(ComprasContext);
-  return {funciones,lang,setDialogs,dialogs,compras,setCompras,cargas,setCargas,errores,setErrores,inputCodigo,consultarCodigoProducto,consultarSiExiste,setearCompras}
+  const {token_user,funciones,lang,setDialogs,dialogs,compras,setCompras,cargas,setCargas,errores,setErrores,inputCodigo,consultarCodigoProducto,consultarSiExiste,setearCompras} = useContext(ComprasContext);
+  return {token_user,funciones,lang,setDialogs,dialogs,compras,setCompras,cargas,setCargas,errores,setErrores,inputCodigo,consultarCodigoProducto,consultarSiExiste,setearCompras}
 }
