@@ -41,7 +41,7 @@ const DialogFinalizar = () => {
 
       let estado_compra = 0;
 
-        let nform = {
+         let nform = {
           id_proveedor_compra: form.id_proveedor_compra,
           tipo_factura_compra: form.tipo_factura_compra,
           fecha_pago_compra:form.fecha_pago,
@@ -59,15 +59,21 @@ const DialogFinalizar = () => {
           compras.items.forEach(e => {
             promises.push(
               APICALLER.insert({table:"compras_items",token:token_user,
-              data:{...e,id_item_compra: id
+              data:{
+                id_item_compra:id,
+                id_producto_compra:e.id_producto_compra,
+                precio_compra:e.precio_compra,
+                preciom_venta:e.preciom_venta,
+                precio_venta:e.precio_venta,
+                cantidad_compra:e.cantidad_compra,
+
               }
             })
             )
           });
-
           Promise.all(promises);
-
         } 
+        console.log(compras.items);
 
 
     }

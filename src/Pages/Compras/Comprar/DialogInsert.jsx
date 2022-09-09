@@ -78,8 +78,9 @@ const DialogInsert = () => {
       let itemnuevo = {...f, 
         codigo_producto:compras.insertProducto?.codigo_producto, 
         nombre_producto:compras.insertProducto?.nombre_producto,
-        id_producto:compras.insertProducto?.id_producto, 
+        id_producto_compra:compras.insertProducto?.id_producto_compra, 
       }
+
       datosnuevos.items.push(itemnuevo)
       setearCompras(datosnuevos)
       close()

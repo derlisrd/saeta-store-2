@@ -56,7 +56,7 @@ const RoutesMain = () => {
 
   const PrivateRoute = ({children,id})=>{
     if(login && !permisos.some(e => parseInt(e.id_permiso_permiso) === parseInt(id)) ){
-      return <Navigate to={R + "notautorized"} />
+      return <Navigate to={env.BASEURL + "/notautorized"} />
     } 
     return login ? <MainPage>{children}</MainPage> : <Navigate to={env.BASEURL+"/"} />
   }

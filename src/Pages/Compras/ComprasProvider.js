@@ -65,7 +65,6 @@ export default function ComprasProvider({children}) {
     }
     //array.push(data);
     store.insertProducto = data;
-    
     setDialogs({...dialogs,insert:true})
     setearCompras(store);
 
@@ -73,8 +72,6 @@ export default function ComprasProvider({children}) {
 
   const consultarSiExiste = (codigo)=>{
     let compra = {...compras}
-
-    
     let index = compra.items.findIndex(e => e.codigo_producto.toLowerCase() === codigo.toLowerCase());
     //let found = compra.items.filter(i => i.codigo_producto.toLowerCase() === codigo.toLowerCase());
     // si ya hay un producto tons aumenta la cantidad
@@ -86,7 +83,6 @@ export default function ComprasProvider({children}) {
     else{
       consultarCodigoProducto(codigo)
     }
-
   }
 
   
@@ -102,6 +98,7 @@ export default function ComprasProvider({children}) {
     
     if(res.response==="ok"){
       if(res.found > 0){
+        //console.log(res.results[0])
         insertarProductoDialog(res.results[0])
       }else{
         setErrores({active:true,id_error:1,msj:lang.no_existe_producto,color:"error"})

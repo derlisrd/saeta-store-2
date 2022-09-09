@@ -72,7 +72,7 @@ const LoginProvider = ({children}) => {
             rol_user:null,
             username_user:null,
             remember:false,
-            permisos:[],});
+            permisos:[]});
         setearEmpresa({mode:false })
         localStorage.removeItem("userData");
         sessionStorage.removeItem("userData");
