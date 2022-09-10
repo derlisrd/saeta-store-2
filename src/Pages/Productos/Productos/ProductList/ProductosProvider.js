@@ -128,7 +128,7 @@ const ProductosProvider = ({ children }) => {
       sort:"-id_producto", }
     }
 
-    const res = await Promise.all([APICALLER.get(data),APICALLER.get({table:"depositos"})]);
+    const res = await Promise.all([APICALLER.get(data),APICALLER.get({table:"depositos",where:"tipo_deposito,=,1"})]);
 
      if (res[1].response === "ok" && res[0].response==="ok") {
       setCountTotal(res[0].total);

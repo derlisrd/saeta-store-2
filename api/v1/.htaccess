@@ -9,8 +9,9 @@ RewriteBase /api/v1/
 
 #REDIRECCIONA A HTTPS
 
-RewriteCond %{HTTPS} off
-RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+#DESACTIVAR SI TIENE SSL
+#RewriteCond %{HTTPS} off
+#RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 
 <Files dbdata.json>
 Order allow,deny
