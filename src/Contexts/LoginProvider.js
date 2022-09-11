@@ -85,18 +85,19 @@ const LoginProvider = ({children}) => {
         let res = promise[0];
         let emp = promise[1];
         let mon = promise[2];
-        let dataMonedas = mon.results;
-        let dataEmpresa = emp.results[0];
-        let today = new Date();
-        let fechaLicencia = funciones.splitFecha(dataEmpresa.licencia)
-
-        if(today >= fechaLicencia){
-            setLoad({login:false,active:true,msj:"Su licencia ha vencido. Por favor contacte con el proveedor."});
-            return false;
-        }
-        setearEmpresa({mode:true,empresa:dataEmpresa,monedas:dataMonedas})
+        
 
         if(res.response==="ok" && res.found>0){
+            let dataMonedas = mon.results;
+            let dataEmpresa = emp.results[0];
+            let today = new Date();
+            let fechaLicencia = funciones.splitFecha(dataEmpresa.licencia)
+
+            if(today >= fechaLicencia){
+                setLoad({login:false,active:true,msj:"Su licencia ha vencido. Por favor contacte con el proveedor."});
+                return false;
+            }
+            setearEmpresa({mode:true,empresa:dataEmpresa,monedas:dataMonedas})
             let d = res.results[0];
             let permisosData = await APICALLER.get({table:"permisos_users",where:`id_user_permiso,=,${d.id_user}`,fields:"id_permiso_permiso"});
             let datas = {...d,
@@ -105,8 +106,6 @@ const LoginProvider = ({children}) => {
                 username_user:CifrarTexto(d.username_user),
                 permisos: permisosData.response==="ok" ? permisosData.results : []
             }
-            
-        
             
             setearLogin(datas,remember);
             setLoad({login:false,active:false,msj:null});
