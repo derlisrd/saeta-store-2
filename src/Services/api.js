@@ -82,7 +82,7 @@ export const APICALLER = {
       return await res.data;
     } catch (error) {
       console.log(error);
-      const err = [{ results:null, response: `error`, message: error }];
+      const err = { results:null, response: `error`, message: error.message };
       return err;
     }
   },
