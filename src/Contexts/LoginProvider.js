@@ -111,6 +111,7 @@ const LoginProvider = ({children}) => {
             setLoad({login:false,active:false,msj:null});
         }
         else{
+            console.log(res);
             setLoad({login:false,active:true,msj:res.message});
         }
     }
