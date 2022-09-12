@@ -236,7 +236,7 @@ const VentasProvider = ({ children }) => {
             id_tipo_registro: 17, // 17 DESCUENTO
             monto_movimiento: DESCUENTO, // forma de pago efectivo  es 1
             monto_sin_efectivo: 0,
-            detalles_movimiento:`Descuento de venta de ${DESCUENTO}`,
+            detalles_movimiento:`Descuento de venta de ${DESCUENTO} NRO: ${LASTNROFACTURA}.`,
             fecha_movimiento: Funciones.getFechaHorarioString(),
           }}))
         }

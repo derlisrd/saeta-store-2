@@ -20,7 +20,7 @@ const DialogFinalizar = () => {
 
   //const HACERVENTA = permisos.some(e=> parseInt(e.id_permiso_permiso)=== 51);
   //const HACERNOTA = permisos.some(e=> parseInt(e.id_permiso_permiso)=== 50);
-  const HACERDESCUENTO = permisos.some(e=> parseInt(e.id_permiso_permiso)=== 71);
+  const HACERDESCUENTO = permisos.some(e=> parseInt(e.id_permiso_permiso)=== 62);
 
   const cerrar = () => {
     if (!cargas.finalizarVenta) {
