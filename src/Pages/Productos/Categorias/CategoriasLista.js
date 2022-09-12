@@ -125,7 +125,7 @@ const CategoriasLista = () => {
           color="secondary"
           size="small"
           onClick={() => {
-            borrarRegistro();
+            borrarRegistro(rowProps.id_categoria);
           }}
         >
           <Icon>delete</Icon>

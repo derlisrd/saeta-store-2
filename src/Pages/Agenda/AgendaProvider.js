@@ -15,8 +15,10 @@ import React, {
     const [eventos, setEventos] = useState([]);
     const [lista,setLista] = useState([]);
     const {userData} = useLogin();
-    const {token_user} = userData;
+    const {token_user,id_user} = userData;
     const initialForm = {
+      id_user_agenda:id_user,
+      id_cliente_agenda:"",
       descripcion_agenda: "",
       fecha_inicio_agenda: "",
       fecha_fin_agenda: "",
