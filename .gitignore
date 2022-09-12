@@ -1,7 +1,7 @@
 .gitignore
 .env
 /api/vendor
-/api/vendor/*
+/api/v1/vendor/*
 /api/v2/vendor
 /api/v2/node_modules
 /api/.env
