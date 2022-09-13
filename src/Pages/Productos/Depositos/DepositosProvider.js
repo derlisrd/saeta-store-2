@@ -40,6 +40,7 @@ const DepositosProvider = ({ children }) => {
         let newobj = {id_deposito:res.last_id,nombre_deposito:form.nombre_deposito}
         obj.depositos.push(newobj);
         localStorage.setItem("dataProductos",JSON.stringify(obj));  
+        localStorage.removeItem("facturasStorage");
       }
       getLista();
       swal({ text: lang.agregado_correctamente, icon: "success", timer: 1200 });    
@@ -85,6 +86,7 @@ const DepositosProvider = ({ children }) => {
           let index = obj.depositos.findIndex(e=> e.id_deposito=== form.id_deposito);
           obj.depositos[index].nombre_deposito = form.nombre_deposito;
           localStorage.setItem("dataProductos",JSON.stringify(obj));
+          localStorage.removeItem("facturasStorage");
         }
     }
     else{

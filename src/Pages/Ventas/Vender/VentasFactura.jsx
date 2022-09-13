@@ -41,7 +41,7 @@ const VentasFactura = () => {
       <Grid item >
         <InfoCliente /> <InfoNota /> 
       </Grid>
-      <Grid item xs={12} sm={3} md={3}>
+      <Grid item xs={12} sm={4} md={4}>
         <InfoDeposito />
       </Grid>
       <Grid item xs={12} sm={3}>

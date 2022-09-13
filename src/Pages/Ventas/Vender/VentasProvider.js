@@ -100,6 +100,7 @@ const VentasProvider = ({ children }) => {
     monedasdecajas:[], 
     monedaActiva: {},
     depositoActivo:'',
+    alldepositos:true,
     listaCajas: [],
     listaVendedores: [],
     listaDepositos:[],
@@ -368,19 +369,15 @@ const VentasProvider = ({ children }) => {
 
 
   const valorConvertido = (val,letter=false) =>{
-    
     if (isNaN(val)) {
       return '0';
     }
-
     let fa = { ...datosFacturas };
     let df = fa.facturas[indexFactura];
     if(letter){
       return  Funciones.redondeo2decimales(val / df.datosMoneda.valor_moneda)
     }
-
     return Funciones.numberSeparator( Funciones.redondeo2decimales(val / df.datosMoneda.valor_moneda));
-
   } 
 
 
@@ -560,16 +557,25 @@ const VentasProvider = ({ children }) => {
   const consultarPorCodigo = async (codigo) => {
     let fa = {...datosFacturas.facturas[indexFactura]}; 
     setCargas({ ...cargas, cargandoProducto: true });
+    let alldepositos = datosFacturas.alldepositos;
+    var where = "";
+    if(alldepositos){
+      where = `codigo_producto,=,'${codigo}',and,stock_producto_deposito,>,0`;
+    }
+    else{
+      where = `codigo_producto,=,'${codigo}',and,id_deposito_deposito,=,${fa.depositoActivo}`
+    }
+
     let pro = await Promise.all([APICALLER.get({
       table: "productos",
       include: "impuestos,productos_depositos",
       on: "id_impuesto_producto,id_impuesto,id_producto,id_producto_deposito",
-      where: `codigo_producto,=,'${codigo}',and,id_deposito_deposito,=,${fa.depositoActivo}`,
+      where: where,
     }),APICALLER.get({
       table: "productos",
       include: "impuestos,productos_images,productos_depositos",
       on: "id_impuesto_producto,id_impuesto,id_producto,id_image_producto,id_producto,id_producto_deposito",
-      where: `codigo_producto,=,'${codigo}',and,id_deposito_deposito,=,${fa.depositoActivo}`,
+      where: where,
     }),
     APICALLER.get({ table: "productos",
     include: "impuestos",
@@ -579,6 +585,7 @@ const VentasProvider = ({ children }) => {
     let ima = pro[1];
     let serv = pro[2];
    
+    //console.log(res);
     
     if (res.response === "ok") {
       if (res.found > 0 || serv.found>0) {
@@ -598,7 +605,7 @@ const VentasProvider = ({ children }) => {
       }
     } else {
       console.log(res);
-    }
+    } 
     setCargas({ ...cargas, cargandoProducto: false });
   };
 
@@ -958,7 +965,8 @@ const VentasProvider = ({ children }) => {
         listaCajas: rCajas.response === "ok" ? rCajas.results : [],
         listaFacturas: FACTURALISTA,
         listaVendedores: rVendedores.response === "ok" ? rVendedores.results : [],
-        listaDepositos: rDepositos.response==='ok'? rDepositos.results : []
+        listaDepositos: rDepositos.response==='ok'? rDepositos.results : [],
+        alldepositos:true
       };
       setDatosFacturas(initialFacturasLocal);
       const val = JSON.stringify(initialFacturasLocal);

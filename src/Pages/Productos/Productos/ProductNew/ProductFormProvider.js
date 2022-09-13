@@ -166,6 +166,7 @@ const ProductFormProvider = (props) => {
     }
     
     const reiniciarTodo = ()=>{
+        localStorage.removeItem("facturasStorage");
         setTabValue(0);
         setStock([]);
         setFormulario(initialForm);
