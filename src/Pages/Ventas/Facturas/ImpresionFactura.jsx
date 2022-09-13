@@ -86,8 +86,8 @@ const ImpresionFactura = () => {
             <tbody>
               <tr>
                 <td width="65%" align="left" colSpan="3" style={{ fontSize:"10px" }}>
-                { EMPRESA.logo_url_empresa && <img src={EMPRESA.logo_url_empresa} alt="logo" width={200} height={40}  />}
-                  <h2>{EMPRESA.nombre_empresa}</h2>
+                { EMPRESA.logo_url_empresa ? <img src={EMPRESA.logo_url_empresa} alt="logo" width={200} height={40}  /> : <h2>{EMPRESA.nombre_empresa}</h2> }
+                  
                   <p> De: {EMPRESA.propietario_empresa}</p>
                   <small> {EMPRESA.categoria_empresa} Tel:{EMPRESA.telefono_empresa} - {EMPRESA.direccion_empresa}</small>
                 </td>

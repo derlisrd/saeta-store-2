@@ -35,7 +35,7 @@ const AgendaLista = () => {
         return <LoadingBackDrop />
       }
     
-
+//
   return (
     <Box boxShadow={3} bgcolor='background.paper' padding={4} borderRadius={5}>
     <FullCalendar
@@ -43,14 +43,18 @@ const AgendaLista = () => {
       plugins={[daygridPlugin, interactionPlugin]}
       dayCellContent={addCellcontent}
       editable={true}
-      
       eventTimeFormat={{
         hour: "numeric",
         minute: "2-digit",
         meridiem: false,
       }}
-      
-      events={eventos} eventClick={e=>reAgendar(e.event.id)}
+      headerToolbar={{ 
+        left: "title prev,next today",
+        right: "dayGridMonth,dayGrid"
+      }}
+      events={eventos}
+      dateClick={e=>console.log(e)} 
+      eventClick={e=>reAgendar(e.event.id)}
     />
     </Box>
   )

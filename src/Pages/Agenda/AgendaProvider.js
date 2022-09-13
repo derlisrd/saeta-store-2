@@ -16,6 +16,13 @@ import React, {
     const [lista,setLista] = useState([]);
     const {userData} = useLogin();
     const {token_user,id_user} = userData;
+    const initialCliente = {
+      active:false,
+      nombre:null,
+      doc:null,
+      id_cliente_agenda:null
+    }
+    const [cliente,setCliente] = useState(initialCliente);
     const initialForm = {
       id_user_agenda:id_user,
       id_cliente_agenda:"",
@@ -25,8 +32,11 @@ import React, {
       horario_agenda: "12:00",
       color_agenda: "#0066cc",
     };
-  
-    const [form, setForm] = useState(initialForm);
+    const [dates,setDates] = useState({
+      fecha_inicio_agenda: "",
+      fecha_fin_agenda: "",
+    })
+    //const [form, setForm] = useState(initialForm);
     const initialCargas = {
       general: true,
     };
@@ -34,7 +44,8 @@ import React, {
   
     const initialDialogs = {
       agregar: false,
-      editar:false
+      editar:false,
+      buscarCliente:false
     };
   
     const [dialogs, setDialogs] = useState(initialDialogs);
@@ -43,12 +54,17 @@ import React, {
   
   
     const addEvent = useCallback(
-      (date) => {
-        setForm({descripcion_agenda: "",
-        fecha_inicio_agenda: date,
-        fecha_fin_agenda: date,
-        horario_agenda: "12:00",
-        color_agenda: "#0066cc"});
+      (f) => {
+        let today = new Date();
+        let agenda = new Date(f);
+        if(agenda<today){
+          swal({icon:"error",text:"No se puede agendar en el pasado"});
+          return false;
+        }
+        setDates({
+          fecha_inicio_agenda: f,
+          fecha_fin_agenda: f,
+        })
         setDialogs({ ...dialogs, agregar: true });
       },
       [dialogs]
@@ -80,61 +96,46 @@ import React, {
     }, []);
   
   
-    const updateAgenda = useCallback(async()=>{
+    const updateAgenda = useCallback(async(form)=>{
       let res = await APICALLER.update({table:"agendas",data:form,token:token_user,id:form.id_agenda});
       if(res.response==="ok"){
         swal({text:'Reagendado correctamente', icon:'success',timer:1400});
         setDialogs({ ...dialogs, editar: false });
-        setForm({descripcion_agenda: "",
-        fecha_inicio_agenda: "",
-        fecha_fin_agenda: "",
-        horario_agenda: "12:00",
-        color_agenda: "#0066cc"})
+
         getEvents();
       }
       else{
         console.log(res);
       }
-    }, [form,token_user,getEvents,dialogs]);
+    }, [token_user,getEvents,dialogs]);
   
-    const borrarAgenda = useCallback(async ()=>{
+    const borrarAgenda = useCallback(async (form)=>{
   
       let res = await APICALLER.delete({table:'agendas',id:form.id_agenda,token:token_user});
       if(res.response==='ok'){
         swal({text:'Borrado correctamente', icon:'success',timer:1400});
         setDialogs({ ...dialogs, editar: false });
-        setForm({descripcion_agenda: "",
-        fecha_inicio_agenda: "",
-        fecha_fin_agenda: "",
-        horario_agenda: "12:00",
-        color_agenda: "#0066cc"})
+        
         getEvents();
       }else{
         console.log(res)
       }
-    },[dialogs,form,getEvents,token_user] )
+    },[dialogs,getEvents,token_user] )
   
   
-    const insertarAgendar = useCallback(async()=>{
-      if(form.descripcion_agenda===""){
-        return false;
-      }
+    const insertarAgendar = useCallback(async(form)=>{
+
       let res = await APICALLER.insert({table:"agendas",data:form,token:token_user});
       if(res.response==="ok"){
+        swal({text:"Agendado correctamente", icon:"success", timer:2000});
         setDialogs({ ...dialogs, agregar: false });
-        setForm({descripcion_agenda: "",
-        fecha_inicio_agenda: "",
-        fecha_fin_agenda: "",
-        horario_agenda: "12:00",
-        color_agenda: "#0066cc"})
         getEvents();
-  
       }
       else{
         console.log(res)
       }
     
-    },[dialogs,form,token_user,getEvents]);
+    },[dialogs,token_user,getEvents]);
   
     
   
@@ -156,12 +157,13 @@ import React, {
           eventos,lista,
           addEvent,
           loading,
-          form,
-          setForm,
+          //form,setForm,
+          cliente,setCliente,initialCliente,
           initialForm,
           dialogs,
           setDialogs,
-          insertarAgendar,updateAgenda,borrarAgenda
+          insertarAgendar,updateAgenda,borrarAgenda,
+          dates,setDates
         }}
       >
         {children}
@@ -174,23 +176,25 @@ import React, {
       eventos,lista,
       addEvent,
       loading,
-      form,
-      setForm,
+      //form,setForm,
+      cliente,setCliente,initialCliente,
       initialForm,
       dialogs,
       setDialogs,
-      insertarAgendar,updateAgenda,borrarAgenda
+      insertarAgendar,updateAgenda,borrarAgenda,
+      dates,setDates
     } = useContext(Contexto);
     return {
       eventos,lista,
       addEvent,
       loading,
-      form,
-      setForm,
+      //form,setForm,
+      cliente,setCliente,initialCliente,
       initialForm,
       dialogs,
       setDialogs,
-      insertarAgendar,updateAgenda,borrarAgenda
+      insertarAgendar,updateAgenda,borrarAgenda,
+      dates,setDates
     };
   };
   
