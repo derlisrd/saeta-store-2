@@ -1,4 +1,4 @@
-import { Alert, Button, Fab, Grid, Icon, Stack, TextField, Typography } from "@mui/material";
+import { Alert, Button, Fab, FormControl, Grid, Icon, InputLabel, MenuItem, Select, Stack, TextField, Typography } from "@mui/material";
 import { useState } from "react";
 import Tablas from "../../../Components/UI/Tablas";
 import { useInformesProductos } from "./InformesProductosProvider";
@@ -91,6 +91,18 @@ function Lista() {
                     label={lang.hasta}
                     name="hasta"
                 />
+            </Grid>
+            <Grid item xs={12} sm={6} md={2}>
+            <FormControl fullWidth>
+            <InputLabel> Tipo: </InputLabel>
+            <Select
+                name=""
+                onChange={(e) => { console.log(e.target.value)}}
+                
+            >
+                <MenuItem value="">Todos</MenuItem>
+            </Select>
+            </FormControl>
             </Grid>
             <Grid item xs={12} sm={6} md={2}>
                 <Button onClick={filtrar} size="large" variant="contained" >Filtrar</Button>
