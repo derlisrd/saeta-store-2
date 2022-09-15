@@ -1,10 +1,10 @@
 <?php
 
+use App\Http\Controllers\GetController;
 use Illuminate\Support\Facades\Route;
 
-/*
-Route::get('/', function () {
-    return view('welcome');
+
+Route::get("/users",function(){
+
 });
- */
-Route::get('/{table}',)->name('GetTables');
+Route::get('/{table}',[GetController::class,'getTable'])->name('GetTables');

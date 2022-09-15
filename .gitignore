@@ -8,7 +8,8 @@
 /node_modules
 /package-lock.json
 /api/test.php
-
+/api/v4/vendor
+/api/v4/vendor/*
 
 /build
 /api-2
