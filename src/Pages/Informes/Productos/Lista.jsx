@@ -7,9 +7,9 @@ import { useInformesProductos } from "./InformesProductosProvider";
 
 function Lista() {
     
-    const {loadings,listas,lang,fechas,setFechas,funciones,datos} = useInformesProductos()
+    const {loadings,listas,lang,fechas,setFechas,funciones,datos,tipo,setTipo} = useInformesProductos()
     
-
+    
     const [fecha,setFecha] = useState(fechas)
     //id_producto_vendido,nombre_producto,fecha_vendido,precio_vendido,costo_producto_vendido,cantidad_vendido
     const columns = [
@@ -96,11 +96,13 @@ function Lista() {
             <FormControl fullWidth>
             <InputLabel> Tipo: </InputLabel>
             <Select
-                name=""
-                onChange={(e) => { console.log(e.target.value)}}
+                name="tipo" value={tipo}
+                onChange={(e) => { setTipo(e.target.value)}}
                 
             >
                 <MenuItem value="">Todos</MenuItem>
+                <MenuItem value="1">Productos</MenuItem>
+                <MenuItem value="2">Servicios</MenuItem>
             </Select>
             </FormControl>
             </Grid>

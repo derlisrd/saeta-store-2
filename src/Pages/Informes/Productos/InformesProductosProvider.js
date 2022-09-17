@@ -25,16 +25,21 @@ function InformesProductosProvider({children}) {
     }
 
     const [fechas,setFechas] = useState(initialFechas)
-
+    const [tipo,setTipo] = useState("");
     const [loadings,setLoadings] = useState(initialLoadings)
     const [listas,setListas] = useState(initialListas)
     const [datos,setDatos] = useState(initialDatos) 
     
     const getData = useCallback(async()=>{
         setLoadings({listas:true})
+        let where_tipo_producto = "";
+        if(tipo!==""){
+            where_tipo_producto = ",and,tipo_producto,=,"+tipo
+        }
+
         let res = await APICALLER.get({table:"productos_vendidos",include:"productos",on:"id_producto,id_producto_vendido",
         fields:"id_productos_vendido,nombre_producto,fecha_vendido,precio_vendido,costo_producto_vendido,cantidad_vendido",
-        where:`fecha_vendido,between,'${fechas.desde} 00:00:00',and,'${fechas.hasta} 23:59:59'`});
+        where:`fecha_vendido,between,'${fechas.desde} 00:00:00',and,'${fechas.hasta} 23:59:59'${where_tipo_producto}`});
         if(res.response==="ok"){
             let result = [...res.results];
             let newresult = [];
@@ -56,7 +61,7 @@ function InformesProductosProvider({children}) {
 
         }else {console.log(res);}
         setLoadings({listas:false})
-    },[fechas])
+    },[fechas,tipo])
     
     useEffect(() => {
         const ca = new AbortController();
@@ -71,7 +76,7 @@ function InformesProductosProvider({children}) {
       }, [getData]);
     
     const values = {
-        loadings,lang,listas,fechas,setFechas,funciones,datos
+        loadings,lang,listas,fechas,setFechas,funciones,datos,tipo,setTipo
     }
     return (
     <Contexto.Provider value={values}>
@@ -82,8 +87,8 @@ function InformesProductosProvider({children}) {
 
 export function useInformesProductos(){
 
-    const {loadings,lang,listas,fechas,setFechas,funciones,datos} = useContext(Contexto)
-    return {loadings,lang,listas,fechas,setFechas,funciones,datos}
+    const {loadings,lang,listas,fechas,setFechas,funciones,datos,tipo,setTipo} = useContext(Contexto)
+    return {loadings,lang,listas,fechas,setFechas,funciones,datos,tipo,setTipo}
 }
 
 export default InformesProductosProvider;
