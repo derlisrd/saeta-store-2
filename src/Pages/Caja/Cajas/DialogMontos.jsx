@@ -6,7 +6,7 @@ import { useCajas } from './CajasProvider'
 
 const DialogMontos = () => {
     
-    const {dialogs,setDialogs,idCaja} = useCajas()
+    const {dialogs,setDialogs,idCaja,funciones} = useCajas()
     const [loading,setLoading] = useState(true)
     const [lista,setLista] = useState([])
     const {lang} = useLang()
@@ -49,7 +49,7 @@ const DialogMontos = () => {
                 {
                     lista.map((e,i)=>(
                     <Grid item xs={6} key={i}>                    
-                      <b>{lang.monto}:</b> {e.monto_caja_moneda} {e.nombre_moneda}
+                      <b>{lang.monto}:</b> {funciones.numberFormat(e.monto_caja_moneda)} {e.nombre_moneda}
                     </Grid>
                     ))
                 }
