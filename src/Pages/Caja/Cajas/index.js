@@ -10,11 +10,13 @@ import DialogApertura from './DialogApertura'
 
 import DialogCierre from './DialogCierre'
 import ResumenFinal from './ResumenFinal'
+import DialogMontos from './DialogMontos'
 
 const Cajas = () => {
   return (
     <CajasProvider>
         <ListaCajas />
+        <DialogMontos />
         <DialogNuevo />
         <DialogApertura />
         <DialogEditar />

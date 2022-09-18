@@ -37,6 +37,7 @@ const CajasProvider = ({ children }) => {
     transferencia: false,
     arqueo: false,
     arqueoFinal: false,
+    montos:false
   };
   const [dialogs, setDialogs] = useState(initialDialogs);
   const initialErrors = {
@@ -94,7 +95,7 @@ const CajasProvider = ({ children }) => {
   const initialFormEdit = { id_caja: "", nombre_caja: "" };
   const [formEdit, setFormEdit] = useState(initialFormEdit);
 
-
+  const [idCaja,setIdCaja] = useState("");
 
 
 
@@ -336,7 +337,7 @@ const CajasProvider = ({ children }) => {
 
   return (
     <Contexto.Provider
-      value={{
+      value={{idCaja,setIdCaja,
         cargas,valoresMonedas,setValoresMonedas,
         lista,cerrarCaja,
         listaMonedas,
@@ -368,7 +369,7 @@ const CajasProvider = ({ children }) => {
 };
 
 export const useCajas = () => {
-  const {
+  const {idCaja,setIdCaja,
     cargas,valoresMonedas,setValoresMonedas,
     lista,cerrarCaja,
     listaMonedas,
@@ -393,7 +394,7 @@ export const useCajas = () => {
     totalSumaMonedasArqueo, setTotalSumaMonedasArqueo,
     datosCajaCierre,setDatosCajaCierre,arqueo,setArqueo,getLista,dialogQuery,dialogID,lang,valoresCierre,setValoresCierre
   } = useContext(Contexto);
-  return {
+  return {idCaja,setIdCaja,
     cargas,valoresMonedas,setValoresMonedas,
     lista,cerrarCaja,
     listaMonedas,

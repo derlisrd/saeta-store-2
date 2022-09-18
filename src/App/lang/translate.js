@@ -10,6 +10,9 @@ export const translate = {
         factura_credito:"Factura crédito",
         factura_contado:"Factura contado",
         seleccione_proveedor:"Seleccione proveedor",
+        monto:"Monto",
+        montos:"Montos",
+        
         nro_comprobante:"Nro comprobante",
         datos_comprobante:"Datos de comprobante",
         costo:"Costo",
@@ -253,7 +256,7 @@ export const translate = {
         indique_caja_a_transferir:"Indique la caja a la que desea transferir",
         no_hay_suficientes_fondos_en_caja:"En la caja no hay suficientes fondos",
         transferencia_caja_a_caja:"Transferencia de caja en caja",
-        monto:"Monto",
+        
         monto_a_transferir:"Monto a transferir",
         transferir_a:"Transferir a",
         transferir:"Transferir",

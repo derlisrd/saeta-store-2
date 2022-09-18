@@ -6,7 +6,7 @@ import { useCajas } from "./CajasProvider";
 
 const ListaCajas = () => {
 
-  const {lista,cargas,dialogs,setDialogs,setFormEdit,setFormAbrir, setDatosCajaCierre,/* setFormTransferencia,formTransferencia, setDatosCajaCierre,setTotalSumaMonedasArqueo,*/lang} = useCajas();
+  const {setIdCaja,lista,cargas,dialogs,setDialogs,setFormEdit,setFormAbrir, setDatosCajaCierre,/* setFormTransferencia,formTransferencia, setDatosCajaCierre,setTotalSumaMonedasArqueo,*/lang} = useCajas();
   const columnas = [
     {
       field: "id_caja",
@@ -58,6 +58,10 @@ const ListaCajas = () => {
     setDialogs({ ...dialogs, abrir: true });
   };
 
+  const verMontos = (r)=>{
+    setIdCaja(r.id_caja)
+    setDialogs({ ...dialogs, montos: true });
+  }
   /* const abrirTransferencia = (f) => {
     if(f.estado_caja==="0"){
       swal({text:"Una caja cerrada no puede transferir"});
@@ -90,7 +94,12 @@ const ListaCajas = () => {
   const Acciones = ({ rowProps }) => (
     <Stack spacing={1} direction="row" justifyContent="center">
 
-      <Tooltip arrow title="Editar">
+      <Tooltip arrow title={lang.montos}>
+        <IconButton onClick={() => verMontos(rowProps)}>
+          <Icon>visibility</Icon>
+        </IconButton>
+      </Tooltip>
+      <Tooltip arrow title={lang.editar}>
         <IconButton onClick={() => abrirEditar(rowProps)}>
           <Icon color="info">edit</Icon>
         </IconButton>
