@@ -118,7 +118,7 @@ const ImpresionFactura = () => {
             </tbody>
             </table>
           <br/>
-          <div style={{ minHeight:"500px",width:"100%"}}>
+          <div style={{ width:"100%"}}>
             <table width="740" style={{ borderCollapse: "collapse",padding:"2px" }}className="collapse" border="1">
                     <thead>
                       <tr align="left">

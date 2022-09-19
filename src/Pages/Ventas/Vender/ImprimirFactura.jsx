@@ -89,8 +89,8 @@ const imprimir = () => {
           <tbody>
             <tr>
               <td width="65%" align="left" colSpan="3" style={{ fontSize:"11px", padding:"3px"}} className='p_2'>
-                { EMPRESA.logo_url_empresa && <img src={EMPRESA.logo_url_empresa} alt="logo" width={200} height={40}  />}
-                <h1><i>{EMPRESA.nombre_empresa}</i></h1>
+                { EMPRESA.logo_url_empresa ? <img src={EMPRESA.logo_url_empresa} alt="logo" width={200} height={40}  /> : <h2>{EMPRESA.nombre_empresa}</h2> }
+                
                 <p>De: {EMPRESA.propietario_empresa}</p>
                 <p>{EMPRESA.categoria_empresa}</p>
                 <p  className='fontsize9'>
@@ -121,7 +121,7 @@ const imprimir = () => {
             </tr>
           </tbody>
           </table>
-          <div style={{ minHeight:"450px"}}>
+          <div >
           <table width="740px" align='center' style={{ borderCollapse: "collapse" }} className="collapse" border="1">
                   <thead>
                     <tr align="left">
