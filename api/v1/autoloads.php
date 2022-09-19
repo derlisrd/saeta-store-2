@@ -21,3 +21,8 @@ require "./Controllers/AuthController.php";
 require "./Models/Models.php";
 require "./Routes/Routes.php";
 require "./Routes/JsonResponse.php";
+
+
+
+/* include_once 'App/Request.php';
+include_once 'App/Router.php'; */
