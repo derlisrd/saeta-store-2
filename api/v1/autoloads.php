@@ -14,6 +14,7 @@ require "./Config/DataBaseConnect.php";
 require "./Controllers/Controllers.php";
 require "./Controllers/GetController.php";
 require "./Controllers/ExportController.php";
+require "./Controllers/PDFController.php";
 require "./Controllers/PutController.php";
 require "./Controllers/PostController.php";
 require "./Controllers/DeleteController.php";

@@ -7,6 +7,7 @@ use GetController\GetController;
 use PostController\PostController;
 use PutController\PutController;
 use DeleteController\DeleteController;
+use PDFController\PDFController;
 use ExportController;
 
 class Controllers {
@@ -32,6 +33,14 @@ class Controllers {
                 }
 
                 return false;
+            }
+
+            if($table==='pdf'){
+                $pdf = new PDFController();
+
+                return $pdf->factura(['name'=>'nome_archivo.pdf']);
+
+                
             }
             
             $include = isset($_GET['include']) && !empty($_GET['include'])  ? explode(",",$_GET['include'])  : null;       

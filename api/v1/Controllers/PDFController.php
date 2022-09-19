@@ -1,9 +1,17 @@
+<?php
+
+namespace PDFController;
 use Dompdf\Dompdf;
 
-$nome_arquivo = "nome_arquivo";
-$dompdf = new Dompdf();
-$html= 'conteudo HTML '; //Insira o seu HTML dentro desta variável
-$dompdf->loadHtml($html);
-$dompdf->setPaper('A4', 'landscape');
-$dompdf->render();
-$dompdf->stream($nome_arquivo);
+class PDFController {
+
+    public function factura($array){
+        $name = $array['name'];
+        $dompdf = new Dompdf();
+        $html= 'conteudo HTML '; //Insira o seu HTML dentro desta variável
+        $dompdf->loadHtml($html);
+        $dompdf->setPaper('A4','portrait');
+        $dompdf->render();
+        $dompdf->stream($name);
+    }
+}
