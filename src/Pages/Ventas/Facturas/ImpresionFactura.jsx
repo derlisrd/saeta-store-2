@@ -1,10 +1,11 @@
-import { Dialog, DialogActions, Zoom, Icon, Stack, CircularProgress, DialogContent   } from "@mui/material";
+import { Dialog, DialogActions, Zoom, Icon, Stack, CircularProgress, DialogContent,Link   } from "@mui/material";
 import ButtonCustom  from "../../../Components/MuiCustom/ButtonCustom";
 import printJS from "print-js";
 //import ReactToPdf from "react-to-pdf";
 import React, { useRef } from "react";
 import { useFacturas } from "./FacturasProvider";
 import {funciones} from "../../../Functions";
+import { APIURL } from "../../../App/Config/config";
 
 const ImpresionFactura = () => {
   const { dialogs, setDialogs, formulario, itemsFactura,cargandoFactura } = useFacturas();
@@ -12,7 +13,9 @@ const ImpresionFactura = () => {
   const EMPRESA = JSON.parse(localStorage.getItem("dataEmpresa"));
   const DF = { ...formulario };
 
-
+  const id = DF?.id_factura;
+  const url_pdf = APIURL+'pdf/'+id;
+ 
   let TOTAL5 = 0;
   let TOTAL10 = 0;
   let TOTALIVA5 = 0;
@@ -244,6 +247,15 @@ const ImpresionFactura = () => {
                 </ButtonCustom>
               )}
             </ReactToPdf> */}
+            <ButtonCustom
+                  component={Link}
+                  href={url_pdf}
+                  startIcon={<Icon>picture_as_pdf</Icon>}
+                  onClick={()=>{}}
+                >
+                  PDF
+            </ButtonCustom>
+
         <ButtonCustom
           variant="contained"
           color="primary"
