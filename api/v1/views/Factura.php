@@ -71,11 +71,13 @@
     .items .head td{
         padding:5px;
         background-color: #c0c0c0;
-        text-align: center;
+        text-align: right;
+        border-bottom: 1px solid silver;
     }
     .items .item td{
         font-weight: lighter;
-        padding-left: 3px;
+        padding: 0 3px 1px 1px;
+        text-align: right;
     }
 
     .subtotales td{
