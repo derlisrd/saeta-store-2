@@ -36,13 +36,13 @@ class Controllers {
             }
 
             if($table==='pdf'){
-                $pdf = new PDFController();
+                
                 $id = $tableArray[2];
                 $factura = 'facturas';
                 $items = 'facturas_items';
-                
+                $datos = ['name'=>'nome'];
                 //GetController::GetTabla($factura,null,null,null,"id_factura,=,$id",null,null,null);
-                return;
+                return PDFController::factura($datos);
                 //return $pdf->factura(['name'=>'nome_archivo.pdf']);                
             }
             
