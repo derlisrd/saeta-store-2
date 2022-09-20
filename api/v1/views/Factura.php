@@ -1,3 +1,4 @@
+<html>
 <style>
     * {
         font-family: monospace;
@@ -5,11 +6,20 @@
         padding: 0;
         box-sizing: border-box;
     }
-
+    .text-center{
+        text-align: center;
+    }
     .w-100{
         width: 100%;
     }
-
+    .bg-smoke{
+        background-color: #f5f5f5;
+    }
+    .border-trl{
+        border-top: 1px solid silver;
+        border-right: 1px solid silver;
+        border-left: 1px solid silver;
+    }
 
     .container {
         width: 205mm;
@@ -17,16 +27,11 @@
     }
 
     .cabezera {
-        border-top: 1px solid silver;
-        border-right: 1px solid silver;
-        border-left: 1px solid silver;
         width: 100%;
     }
 
     .cabezera .titulos {
-        width: 65%;
-        text-align: center;
-        background-color: #f5f5f5;
+        width: 65%;        
         padding: 8px;
         border-right: 1px solid silver;
     }
@@ -71,9 +76,7 @@
     .items .item{
         font-weight: lighter;
     }
-    .subtotales{
-        background-color: #f5f5f5;
-    }
+
     .subtotales td{
         padding: 5px;
         border-top: 1px solid silver;
@@ -97,14 +100,14 @@
     }
 </style>
 <div class="container">
-    <table class="cabezera">
+    <table class="cabezera border-trl">
         <tr>
-            <td class="titulos">
+            <td class="titulos bg-smoke text-center">
                 <h2>TITULO DEL NEGOCIO</h2>
                 <h4>Si existe algun propietario </h4>
                 <h4>ACTIVIDADES DE FOTOGRAFIA Y PORTALES WEB Tel:0983202090 - CALLE JOEL EULOGIO ESTIGARRIBIA</h4>
             </td>
-            <td class="datos">
+            <td class="datos bg-smoke text-center">
                 <h3>TIMBRADO NRO: 15674140</h3>
                 <h4>RUC: 4937724-8</h4>
                 <h4>Inicio vigencia: 2022-06-06</h4>
@@ -163,7 +166,7 @@
             <td>0</td>
             <td>55.000</td>
         </tr>
-        <tr class="subtotales">
+        <tr class="subtotales bg-smoke">
             <td colspan="3">
                 SUBTOTAL:
             </td>
@@ -192,3 +195,4 @@
         </tr>
     </table>
 </div>
+</html>
