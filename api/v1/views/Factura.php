@@ -73,8 +73,9 @@
         background-color: #c0c0c0;
         text-align: center;
     }
-    .items .item{
+    .items .item td{
         font-weight: lighter;
+        padding-left: 3px;
     }
 
     .subtotales td{

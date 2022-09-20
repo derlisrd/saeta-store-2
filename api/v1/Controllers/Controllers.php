@@ -37,10 +37,13 @@ class Controllers {
 
             if($table==='pdf'){
                 $pdf = new PDFController();
-
-                return $pdf->factura(['name'=>'nome_archivo.pdf']);
-
+                $id = $tableArray[2];
+                $factura = 'facturas';
+                $items = 'facturas_items';
                 
+                //GetController::GetTabla($factura,null,null,null,"id_factura,=,$id",null,null,null);
+                return;
+                //return $pdf->factura(['name'=>'nome_archivo.pdf']);                
             }
             
             $include = isset($_GET['include']) && !empty($_GET['include'])  ? explode(",",$_GET['include'])  : null;       
