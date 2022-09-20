@@ -38,12 +38,9 @@ class Controllers {
             if($table==='pdf'){
                 
                 $id = $tableArray[2];
-                $factura = 'facturas';
-                $items = 'facturas_items';
-                $datos = ['name'=>'nome'];
-                //GetController::GetTabla($factura,null,null,null,"id_factura,=,$id",null,null,null);
+                $datos = ["id"=>$id];
                 return PDFController::factura($datos);
-                //return $pdf->factura(['name'=>'nome_archivo.pdf']);                
+                
             }
             
             $include = isset($_GET['include']) && !empty($_GET['include'])  ? explode(",",$_GET['include'])  : null;       

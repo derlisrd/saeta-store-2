@@ -9,6 +9,9 @@
     .text-center{
         text-align: center;
     }
+    .text-right{
+        text-align: right;
+    }
     .w-100{
         width: 100%;
     }
@@ -95,10 +98,10 @@
     }
     .datos_graficos .grafica{
         width: 65%;
-        padding: 8px;
+        padding: 4px;
     }
     .datos_graficos .fiscales{
-        padding: 8px;
+        padding: 4px;
         border-left: 1px solid silver;
     }
 </style>
@@ -173,27 +176,28 @@
             <td colspan="3">
                 SUBTOTAL:
             </td>
-            <td> 0 </td>
-            <td> 0 </td>
-            <td> 0 </td>
+            <td class="text-right"> 0 </td>
+            <td class="text-right"> 0 </td>
+            <td class="text-right"> 0 </td>
         </tr>
         <tr class="total">
             <td colspan="5">
                 TOTAL: NOVENCIENTOS CUARENTA Y CUATRO MIL
             </td>
-            <td> 30000000 </td>
+            <td class="text-right"> 30000000 </td>
         </tr>
     </table>
 
     <table class="datos_graficos">
         <tr>
             <td class="grafica" valign="top">
-                AUTOIMPRESOR FECHA POR ORDEN TAL Y CUAL
+                <small>AUTOIMPRESOR FECHA POR ORDEN TAL Y CUAL</small>
             </td>
             <td class="fiscales">
-                ORIGINAL: CLIENTE
+                <small>ORIGINAL: CLIENTE
                 DUPLICADO: ARCHIVO TRIBUTARIO
                 TRIPLICADO: CONTABILIDAD NO VALIDO PARA CREDITO FISCAL
+                </small>
             </td>
         </tr>
     </table>
