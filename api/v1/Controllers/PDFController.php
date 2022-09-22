@@ -8,7 +8,7 @@ use Models\Models;
 class PDFController {
 
     public static function factura($array){
-        $name = "fatura";
+
         $dompdf = new Dompdf();
         $id = $array["id"];
 
