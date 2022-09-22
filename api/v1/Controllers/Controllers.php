@@ -35,12 +35,14 @@ class Controllers {
                 return false;
             }
 
-            if($table==='pdf'){
+            if($table==='pdf_factura'){
                 
                 $id = $tableArray[2];
-                $datos = ["id"=>$id];
-                return PDFController::factura($datos);
-                
+                if(isset($id)){
+                    $datos = ["id"=>$id];
+                    return PDFController::factura($datos);
+                }
+                return false;
             }
             
             $include = isset($_GET['include']) && !empty($_GET['include'])  ? explode(",",$_GET['include'])  : null;       

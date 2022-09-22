@@ -148,7 +148,7 @@ class PDFController {
         </div>
         </html>';
         
-         $dompdf->loadHtml($html);
+        $dompdf->loadHtml($html);
         $dompdf->setPaper('A4','portrait');
         $dompdf->render();
         $dompdf->stream($df['fecha_factura']); 

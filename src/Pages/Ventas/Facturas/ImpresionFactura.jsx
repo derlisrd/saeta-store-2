@@ -14,7 +14,7 @@ const ImpresionFactura = () => {
   const DF = { ...formulario };
 
   const id = DF?.id_factura;
-  const url_pdf = APIURL+'pdf/'+id;
+  const url_pdf = APIURL+'pdf_factura/'+id;
  
   let TOTAL5 = 0;
   let TOTAL10 = 0;
