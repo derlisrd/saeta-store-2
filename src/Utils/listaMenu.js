@@ -202,6 +202,13 @@ export const listaMenu = [
             icon: `app_registration`,
             color: "#a0aec0",
          },
+         {
+          id: 66,
+          title: "comisiones",
+          url: `${BASEURL}/comisiones`,
+          icon: `point_of_sale`,
+          color: "#a0aec0",
+        },
         ],
       },{
         id: 47,

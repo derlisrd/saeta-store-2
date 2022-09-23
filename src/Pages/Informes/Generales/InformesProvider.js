@@ -45,8 +45,6 @@ const InformesProvider = ({ children }) => {
   const getDatas = useCallback(async () => {
     setCargando(true)
     // RESULTADO DIARIO
-
-
     /************
       PARA LABEL 
       *****************/
@@ -75,9 +73,10 @@ const InformesProvider = ({ children }) => {
       let sumaIngresoDia = 0;
       let sumaEgresoDia = 0;
       setLista(res.results);  
+      console.log(res.results);  
       res.results.forEach((item) => {
         if (item.tipo_registro === "1") {
-          sumaIngresoDia += parseFloat(item.monto_movimiento);
+          sumaIngresoDia += parseFloat(item.monto_movimiento) + parseFloat(item.monto_sin_efectivo);
         } else if (item.tipo_registro === "0") {
           sumaEgresoDia += parseFloat(item.monto_movimiento);
         }
@@ -134,9 +133,7 @@ const InformesProvider = ({ children }) => {
               suma_diariosIngresos += parseFloat(
                 result[indice].monto_movimiento
               );
-              sumaIngresosTotalMes += parseFloat(
-                result[indice].monto_movimiento
-              );
+              sumaIngresosTotalMes += parseFloat(result[indice].monto_movimiento) + parseFloat(result[indice].monto_sin_efectivo);
             } else if (tipo === 0) {
               suma_diariosEgresos += parseFloat(
                 result[indice].monto_movimiento

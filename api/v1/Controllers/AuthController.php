@@ -267,7 +267,7 @@ class AuthController {
     public static function GenerateToken($data){
 
         $time = new DateTimeImmutable();
-        $expire = $time->modify('+60 minutes')->getTimestamp();
+        $expire = $time->modify('+1440 minutes')->getTimestamp();
         $serverName = DOMAIN_AUTH;
 
         $token = array(

@@ -44,6 +44,7 @@ import ProductCode from "../Pages/Productos/Productos/ProductCode";
 import Agenda from "../Pages/Agenda";
 import Turnos from "../Pages/Turnos";
 import Backup from "../Pages/Backup";
+import Comisiones from "../Pages/Caja/Comisiones";
 
 const RoutesMain = () => {
   const navigate = useNavigate();
@@ -82,6 +83,7 @@ const RoutesMain = () => {
   const R = env.BASEURL +`/`;
   return (
     <Routes>
+      <Route path={R+"comisiones"} element={<PrivateRoute id={66}><Comisiones /></PrivateRoute>} />
       <Route path={R+"cuentas"} element={<PrivateRoute id={47}><Cuentas /></PrivateRoute>} />
       <Route path={R+"turnos"} element={<PrivateRoute id={51}><Turnos /></PrivateRoute>} />
       <Route path={R+"agenda"} element={<PrivateRoute id={51}><Agenda /></PrivateRoute>} />

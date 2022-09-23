@@ -28,7 +28,7 @@ const LoginProvider = ({children}) => {
     }
     const [userData,setUserData] = useState( storage ? storage : initialUserData);    
     
-    setInterval(async()=>{
+    /* setInterval(async()=>{
         const store = JSON.parse(sessionStorage.getItem("userData")) || JSON.parse(localStorage.getItem("userData"));
         if(userData.login && store){
             let res = await APICALLER.ReValidateToken(userData.token_user);
@@ -39,7 +39,7 @@ const LoginProvider = ({children}) => {
                 sessionStorage.setItem("userData", JSON.stringify(f))
             }
         };
-    }, 900000)
+    }, 900000) */
     
     
     const setearLogin = (f,remember)=>{

@@ -325,10 +325,10 @@ const VentasProvider = ({ children }) => {
        
 
         if(df.datosFactura.entregado_items==='1'){
-          if(e.tipo_producto === 1){
-            insertsPromises.push(APICALLER.insert({table:'productos_vendidos',token:token_user,
+          insertsPromises.push(APICALLER.insert({table:'productos_vendidos',token:token_user,
             data:{
               id_producto_vendido:e.id_producto,
+              tipo_producto_vendido:e.tipo_producto,
               id_factura_vendido: ID_FACTURA,
               id_cliente_vendido: df.datosCliente.id_cliente,
               costo_producto_vendido:e.costo_producto,
@@ -337,6 +337,7 @@ const VentasProvider = ({ children }) => {
               fecha_vendido:FECHA_ACTUAL
             }
           }))
+          if(e.tipo_producto === 1){
             let ncantidad = parseFloat(e.stock_producto) - parseFloat(e.cantidad_producto);
             insertsPromises.push(APICALLER.update(
               {

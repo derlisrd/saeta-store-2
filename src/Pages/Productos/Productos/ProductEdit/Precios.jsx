@@ -12,7 +12,7 @@ const Precios = () => {
               onChange={change}
               fullWidth
               label="Costo"
-              disabled={formulario.tipo_producto === "2"}
+             
               autoComplete="off"
               name="costo_producto"
               value={formulario.costo_producto}
@@ -25,7 +25,7 @@ const Precios = () => {
                 inputProps: { min: 0 },
                 inputComponent: NumberFormatCustom,
               }}
-              variant="outlined"
+              
               error={false}
               helperText="Costo del producto"
             />

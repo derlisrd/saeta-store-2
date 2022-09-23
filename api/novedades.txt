@@ -729,6 +729,7 @@ INSERT INTO `permisos` (`id_permiso`, `clave_permiso`, `descripcion_permiso`, `u
 (63, 'InformesGenerales', 'Ver informes generales con graficos', '2022-07-02 22:50:40'),
 (64, 'InformesProductos', 'Ver informes por productos', '2022-07-02 22:50:40'),
 (65, 'CopiasdeSeguridad', 'Hacer copias de seguridad', '2022-07-02 22:50:40'),
+(66, 'Comisiones', 'Ver comisiones', '2022-07-02 22:50:40'),
 (72, 'Tema', 'Editar Temas', '2022-07-02 22:50:40');
 
 -- --------------------------------------------------------
