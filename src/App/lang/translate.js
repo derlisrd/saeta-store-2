@@ -12,7 +12,7 @@ export const translate = {
         seleccione_proveedor:"Seleccione proveedor",
         monto:"Monto",
         montos:"Montos",
-        
+        seleccione_empleado:"Seleccione empleado",
         nro_comprobante:"Nro comprobante",
         datos_comprobante:"Datos de comprobante",
         costo:"Costo",

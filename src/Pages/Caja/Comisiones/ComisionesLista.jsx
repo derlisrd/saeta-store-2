@@ -2,29 +2,32 @@ import { useComisiones } from "./ComisionesProvider";
 import Tablas from '../../../Components/UI/Tablas'
 import {columns} from './columns'
 import { useLang } from "../../../Contexts/LangProvider";
-import { Button, FormControl, Grid, Icon, InputLabel, MenuItem, Select, TextField, Tooltip } from "@mui/material";
+import { Button, FormControl, Grid, Icon, IconButton, InputLabel, MenuItem, Select, TextField, Tooltip } from "@mui/material";
+import { funciones } from "../../../Functions";
+import { useState } from "react";
 
 function ComisionesLista(){
 
-    const {datos,loading} = useComisiones();
+    const {datos,loading,applyFilters} = useComisiones();
     const {lang} = useLang()
+    const today = funciones.fechaActualYMD();
+    const filtradoInitial = {
+      desde:today,
+      hasta:today,
+      id_empleado:""
+    }
+    const [filtrado,setFiltrado] = useState(filtradoInitial)
 
-    const changeDatadesde = e=>{
-
+    const changeFiltrado = e=>{
+      const {name,value} = e.target
+      setFiltrado({...filtrado,[name]:value})
     }
 
-    const changeDatahasta = e=>{
 
-    }
 
-    const Filtrar = ()=>{
-
-    }
     const Acciones = ({rowProps})=>(
         <Tooltip arrow title={lang.presione_mas_detalles}>
-      <Button onClick={()=>console.log(rowProps)} variant="outlined"  color="primary">
-        {lang.ver_mas}
-      </Button>
+      <IconButton onClick={()=>{console.log(rowProps)}}><Icon>visibility</Icon></IconButton>
     </Tooltip>
     )
     const search =(<Grid container spacing={2} alignItems="center">
@@ -33,9 +36,9 @@ function ComisionesLista(){
         fullWidth
         label={lang.desde}
         type="date"
-        onChange={changeDatadesde}
-        name="desdeFecha"
-        
+        onChange={changeFiltrado}
+        name="desde"
+        defaultValue={filtrado.desde}
       />
     </Grid>
     <Grid item xs={12} sm={6} md={2}>
@@ -43,23 +46,21 @@ function ComisionesLista(){
           fullWidth
           label={lang.hasta}
           type="date"
-          onChange={changeDatahasta}
-          name="hastaFecha"
-          
+          onChange={changeFiltrado}
+          name="hasta"
+          defaultValue={filtrado.hasta}
         />
       </Grid>
-      <Grid item xs={12} sm={4} md={2}>
+      <Grid item xs={12} sm={4} md={3}>
         <FormControl fullWidth>
           <InputLabel>{lang.seleccione_empleado}</InputLabel>
           <Select
             name="id_empleado"
-            onChange={(e) => {
-              
-            }}
-            
+            onChange={changeFiltrado}
+            value={filtrado.id_empleado}
           >
             <MenuItem value="">{lang.todos}</MenuItem>
-            {[].map((item, index) => (
+            {datos.empleados.map((item, index) => (
               <MenuItem key={index} value={item.id_empleado}>
                 {item.nombre_empleado}{item.apellido_empleado}
               </MenuItem>
@@ -67,9 +68,9 @@ function ComisionesLista(){
           </Select>
         </FormControl>
       </Grid>
-      <Grid item xs={12} sm={6} md={5}>
+      <Grid item >
         <Button
-          onClick={Filtrar}
+          onClick={()=>{applyFilters(filtrado)}}
           variant="contained"
           size="large"
           startIcon={<Icon>filter_list</Icon>}
