@@ -62,7 +62,7 @@ function ComisionesLista(){
             <MenuItem value="">{lang.todos}</MenuItem>
             {datos.empleados.map((item, index) => (
               <MenuItem key={index} value={item.id_empleado}>
-                {item.nombre_empleado}{item.apellido_empleado}
+                {item.nombre_empleado} {item.apellido_empleado}
               </MenuItem>
             ))}
           </Select>

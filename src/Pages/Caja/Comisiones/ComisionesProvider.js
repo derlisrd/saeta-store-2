@@ -1,10 +1,13 @@
 import {createContext,useState,useCallback,useEffect,useContext} from 'react';
+import { funciones } from '../../../Functions';
 import { APICALLER } from '../../../Services/api';
 
 const Contexto = createContext();
 
 function ComisionesProvider({children}){
 
+
+    const today = funciones.fechaActualYMD();
     const initialDatos = {
         lista: [],
         empleados:[]
@@ -45,7 +48,8 @@ function ComisionesProvider({children}){
                 table:'facturas',
                 include:'facturas_items,empleados,productos',
                 on:`id_empleado_factura,id_empleado,id_factura,id_items_factura,id_producto,id_producto_factura`,
-                fields:'nombre_empleado,apellido_empleado,porcentaje_comision_factura,id_facturas_item,nombre_producto,porcentaje_comision,fecha_factura'
+                fields:'nombre_empleado,apellido_empleado,porcentaje_comision_factura,id_facturas_item,nombre_producto,porcentaje_comision,fecha_factura',
+                where: `fecha_factura,between,'${today} 00:00:00',and,'${today} 23:59:59'`
             }),
             APICALLER.get({table:"empleados",fields:"nombre_empleado,apellido_empleado,id_empleado"})
         ]);
@@ -60,7 +64,7 @@ function ComisionesProvider({children}){
         setLoading({
             lista:false
         })
-    },[]);
+    },[today]);
 
 
     useEffect(() => {
