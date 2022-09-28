@@ -103,7 +103,7 @@ useEffect(() => {
           <Grid item xs={12}>
             <TextField
               autoFocus required fullWidth autoComplete="off"
-              name="nombre_caja"
+              name="nombre_caja" disabled={cargas.nuevo}
               value={form.nombre_caja}
               onChange={onChange}
               label={lang.nombre_de_caja}
@@ -119,7 +119,7 @@ useEffect(() => {
                 onChange={onChange}
                 name="id_user_caja"
                 value={form.id_user_caja}
-                fullWidth
+                fullWidth disabled={cargas.nuevo}
               >
                 {listaUsers.map((d) => (
                   <MenuItem key={d.id_user} value={d.id_user}>
@@ -161,7 +161,7 @@ useEffect(() => {
         </Grid>
       </DialogContent>
       <DialogActions>
-      <Button variant="contained" size="large"  onClick={verificar}>{lang.abrir}</Button>
+      <Button variant="contained" size="large" disabled={cargas.nuevo}  onClick={verificar}>{lang.abrir}</Button>
         <Button variant="contained" size="large"  onClick={cerrar}>
           {lang.cancelar}
         </Button>

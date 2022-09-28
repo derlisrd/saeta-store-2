@@ -1,4 +1,5 @@
-import { Typography,Grid,Card,CardContent,Icon, TextField,Alert, Box} from "@mui/material";
+import { Typography,Grid,Card,CardContent,Icon, TextField,Alert, Box, FormControl, InputLabel, Select, MenuItem} from "@mui/material";
+
 import  LoadingBackDrop from "../../../Components/UI/LoadingBackDrop";
 import { funciones } from "../../../Functions";
 import CardsCustom from "./CardsCustom";
@@ -8,23 +9,38 @@ import { useInformes } from "./InformesProvider";
 import Ingresos from "./Ingresos";
 
 const InformesGenerales = () => {
-  const { fechaMostrar, cargando, mesState,setMesState} = useInformes();
+  const { fechaMostrar, cargando, mesState,setMesState,tipo,setTipo} = useInformes();
 
+  
+
+  
+  const changeMes = e=>setMesState(e.target.value);
+  
   if (cargando) {
     return <LoadingBackDrop />;
   }
-
-  const changeMes = e=>setMesState(e.target.value);
-
   return (
     <Box padding={3} maxWidth="xl" >
       <Grid container spacing={2}>
-        <Grid item xs={12} sm={6}>
+        <Grid item xs={12} sm={12}>
           <Typography variant="h6">Informes gráficos</Typography>
           <Typography variant="button">{fechaMostrar}</Typography>
         </Grid>
-        <Grid item xs={12} sm={12} md={6}>
-          <TextField type="month" helperText="Seleccionar mes" onChange={changeMes} value={mesState} />
+        <Grid item xs={12} sm={6} md={3}>
+          <TextField type="month" fullWidth helperText="Seleccionar mes" onChange={changeMes} value={mesState} />
+        </Grid>
+        <Grid item xs={12} sm={6} md={3}>
+          <FormControl fullWidth>
+                <InputLabel> Tipo: </InputLabel>
+                    <Select
+                        name="tipo" value={tipo}
+                        onChange={(e) => { setTipo(e.target.value)}}
+                    >
+                        <MenuItem value="">Todos</MenuItem>
+                        <MenuItem value="1">Efectivo</MenuItem>
+                        <MenuItem value="2">Sin efectivo</MenuItem>
+                    </Select>
+          </FormControl>
         </Grid>
         <Grid item xs={12}>
           <CardsCustom />

@@ -52,11 +52,11 @@ function ResumenFinalDatos({datos}) {
                 </Grid>
                 <Grid item xs={12}>
                   <Alert icon={false} variant="outlined">
-                    <b>BALANCE: </b>
+                    <b>BALANCE: 0 </b>
                   </Alert>
                 </Grid>
                 <Grid item xs={12}>
-
+                  
                 </Grid>
               </Fragment>
             ))

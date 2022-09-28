@@ -84,6 +84,13 @@ export const listaMenu = [
             color: "#a0aec0",
           },
           {
+            id: 67,
+            title: "formas_de_pago",
+            url: `${BASEURL}/formaspago`,
+            icon: "account_balance_wallet",
+            color: "#a0aec0",
+          },
+          {
             id: 16,
             title: "entregas",
             url: `${BASEURL}/entregas`,

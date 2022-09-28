@@ -20,7 +20,7 @@ const DialogMontos = () => {
                 table:"cajas_monedas",
                 include:"monedas",
                 on:"id_moneda_caja_moneda,id_moneda",
-                fields:"nombre_moneda,monto_caja_moneda",
+                fields:"nombre_moneda,monto_caja_moneda,monto_no_efectivo",
                 where:`id_caja_moneda,=,${idCaja}`
             })
             res.response==="ok" ? setLista(res.results) : console.log(res);
@@ -50,6 +50,8 @@ const DialogMontos = () => {
                     lista.map((e,i)=>(
                     <Grid item xs={6} key={i}>                    
                       <b>{lang.monto}:</b> {funciones.numberFormat(e.monto_caja_moneda)} {e.nombre_moneda}
+                      <br/>
+                      <b>{lang.sin_efectivo}:</b> {funciones.numberFormat(e.monto_no_efectivo)} {e.nombre_moneda}
                     </Grid>
                     ))
                 }

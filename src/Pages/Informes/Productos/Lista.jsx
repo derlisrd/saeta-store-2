@@ -93,18 +93,17 @@ function Lista() {
                 />
             </Grid>
             <Grid item xs={12} sm={6} md={2}>
-            <FormControl fullWidth>
-            <InputLabel> Tipo: </InputLabel>
-            <Select
-                name="tipo" value={tipo}
-                onChange={(e) => { setTipo(e.target.value)}}
-                
-            >
-                <MenuItem value="">Todos</MenuItem>
-                <MenuItem value="1">Productos</MenuItem>
-                <MenuItem value="2">Servicios</MenuItem>
-            </Select>
-            </FormControl>
+                <FormControl fullWidth>
+                <InputLabel> Tipo: </InputLabel>
+                    <Select
+                        name="tipo" value={tipo}
+                        onChange={(e) => { setTipo(e.target.value)}}
+                    >
+                        <MenuItem value="">Todos</MenuItem>
+                        <MenuItem value="1">Productos</MenuItem>
+                        <MenuItem value="2">Servicios</MenuItem>
+                    </Select>
+                </FormControl>
             </Grid>
             <Grid item xs={12} sm={6} md={2}>
                 <Button onClick={filtrar} size="large" variant="contained" >Filtrar</Button>

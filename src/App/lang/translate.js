@@ -50,6 +50,8 @@ export const translate = {
         total_ingreso:"Total ingreso",
         total_egreso:"Total egreso",
         total_sin_efectivo:"Total sin efectivo",
+        porcentaje_descuento:"Porcentaje de descuento",
+        descripcion:"Descripción",
         total_declarado:"Total declarado",
         precios:"Precios",
         precio_del_producto:"Precio del producto",

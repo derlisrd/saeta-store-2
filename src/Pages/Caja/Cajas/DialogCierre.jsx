@@ -87,6 +87,9 @@ useEffect(() => {
                         </Grid>
                         <Grid item xs={12} sm={4} >
                             <Typography variant="body1">
+                                Monto inicial: {funciones.numberFormat(e.monto_inicial_caja)} {e.abreviatura_moneda}
+                            </Typography>
+                            <Typography variant="body1">
                                 No efectivo: {funciones.numberFormat(e.monto_no_efectivo)} {e.abreviatura_moneda}
                             </Typography>
                         </Grid>

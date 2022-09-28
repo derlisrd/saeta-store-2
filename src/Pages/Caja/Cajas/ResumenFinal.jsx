@@ -30,13 +30,14 @@ const ResumenFinal = () => {
     
           let promises = await Promise.all([
             APICALLER.get({
-              table: "cajas_movimientos", include:"cajas,cajas_registros,monedas ",
+              table: "cajas_movimientos", include:"cajas,cajas_registros,monedas",
               on:"id_caja,id_caja_movimiento,id_moneda_movimiento,id_moneda,id_tipo_registro,id_cajas_registro",
               fields:"id_moneda_movimiento,id_tipo_registro,id_cajas_movimiento, detalles_movimiento, descripcion_registro,nombre_caja,monto_movimiento,monto_sin_efectivo,id_caja,id_cajas_registro,abreviatura_moneda,id_moneda",
               where:`id_caja_movimiento,=,${ID_CAJA},and,fecha_movimiento,>=,'${rescate_fecha_apertura}'`}),
             APICALLER.get({table:'cajas_users',include:"users",on:"id_user_caja,id_user",where:`id_caja_caja,=,${ID_CAJA}`,fields:'nombre_user'}),
             APICALLER.get({table:"facturas",include:"facturas_formas_pagos",on:"id_facturas_formas_pago,id_forma_pago_factura",where:`id_caja_factura,=,${ID_CAJA},and,fecha_factura,>=,'${rescate_fecha_apertura}',and,tipo_factura,<>,2`}),
-            APICALLER.get({table:'cajas_registros',fields:"id_cajas_registro,descripcion_registro,tipo_registro",where:"tipo_registro,<,2"})
+            APICALLER.get({table:'cajas_registros',fields:"id_cajas_registro,descripcion_registro,tipo_registro",where:"tipo_registro,<,2"}),
+            APICALLER.get({table:"cajas_monedas",where:`id_caja_moneda,=,${ID_CAJA}`})
             ])
 
             let movimiento = promises[0], usuarios =promises[1],  registro = promises[3], responsable = usuarios.results[0].nombre_user;
@@ -44,7 +45,8 @@ const ResumenFinal = () => {
             let registros = registro.results;
             
             let movimientos = movimiento.results
-            var cajas = [];
+            let cajas = [];
+
             cajas_monedas.forEach(i=>{ 
               let registros_movimientos = [];
               registros.forEach(e=>{
@@ -134,7 +136,9 @@ const ResumenFinal = () => {
           </Grid>
           <Grid item xs={12} sm={12} md={6}>
             <Alert variant='outlined' icon={false}>
-            <Typography variant='button'>{lang.fecha_apertura}: {datos.fecha_apertura}</Typography>
+              <Typography variant='button'>{lang.fecha_apertura}: {datos.fecha_apertura}</Typography>
+              <br />
+              
             </Alert>
           </Grid>
           <ResumenFinalDatos datos={datos} />

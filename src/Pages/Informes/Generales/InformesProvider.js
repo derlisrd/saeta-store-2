@@ -29,7 +29,7 @@ const InformesProvider = ({ children }) => {
 
   const mesActual = mesState +"-" +"01".toString();
   
-
+  const [tipo,setTipo] = useState(""); // efectivo, no efectivo, sin filtro
   const [ingresosDia, setIngresosDia] = useState(0);
   const [ingresosMes, setIngresosMes] = useState(0);
   const [egresosDia, setEgresosDia] = useState(0);
@@ -54,7 +54,7 @@ const InformesProvider = ({ children }) => {
       let diaslabel = funciones.getDaysInMonth(anolabel,meslabel);
       var now = new Date(anolabel, fechaparalabel.getMonth() + 1, diaslabel); // ejemplo: hasta 31 de octubre
       let fd = new Date(now)
-      var fecha_hasta = fd.getFullYear().toString() +"-" +(fd.getMonth() + 1).toString().padStart(2, 0) +"-" +fd.getDate().toString().padStart(2, 0);
+      let fecha_hasta = fd.getFullYear().toString() +"-" +(fd.getMonth() + 1).toString().padStart(2, 0) +"-" +fd.getDate().toString().padStart(2, 0);
 
     let promesa = await Promise.all([APICALLER.get({
       table: "cajas_movimientos",include:"cajas_registros",
@@ -67,16 +67,18 @@ const InformesProvider = ({ children }) => {
       fields: `*`,
       where: `fecha_movimiento,between,'${mesActual} 00:00:00',and,'${fecha_hasta} 23:59:59'`,
     })])
-
+    console.log(promesa);
     let res = promesa[0];
     if (res.response === "ok") {
       let sumaIngresoDia = 0;
       let sumaEgresoDia = 0;
       setLista(res.results);  
-      console.log(res.results);  
+      //console.log(res.results);  
       res.results.forEach((item) => {
         if (item.tipo_registro === "1") {
+          
           sumaIngresoDia += parseFloat(item.monto_movimiento) + parseFloat(item.monto_sin_efectivo);
+
         } else if (item.tipo_registro === "0") {
           sumaEgresoDia += parseFloat(item.monto_movimiento);
         }
@@ -192,7 +194,7 @@ const InformesProvider = ({ children }) => {
         datosEgresosDiariosMes,
         datosIngresosDiariosMes,
         labelDiarioMes,
-        fechaMostrar,setFechaMostrar,mesState,setMesState
+        fechaMostrar,setFechaMostrar,mesState,setMesState,tipo,setTipo
       }}
     >
       {children}
@@ -212,7 +214,7 @@ export const useInformes = () => {
     egresosMes,
     datosEgresosDiariosMes,
     datosIngresosDiariosMes,
-    labelDiarioMes,fechaMostrar,setFechaMostrar,mesState,setMesState
+    labelDiarioMes,fechaMostrar,setFechaMostrar,mesState,setMesState,tipo,setTipo
   } = useContext(Contexto);
   return {
     cargando,
@@ -225,7 +227,7 @@ export const useInformes = () => {
     egresosMes,
     datosEgresosDiariosMes,
     datosIngresosDiariosMes,
-    labelDiarioMes,fechaMostrar,setFechaMostrar,mesState,setMesState
+    labelDiarioMes,fechaMostrar,setFechaMostrar,mesState,setMesState,tipo,setTipo
   };
 };
 
