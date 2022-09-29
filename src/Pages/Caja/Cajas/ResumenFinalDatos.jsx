@@ -5,13 +5,14 @@ import RegistrosMovimientos from "./components/RegistrosMovimientos";
 
 function ResumenFinalDatos({datos}) {
     const {funciones,lang} = useCajas();
+    
     return (  <>
         {
             datos.registros.map((dato,index)=>(
               <Fragment key={index}>
                 <Grid item xs={12}>
                   <Alert icon={false} severity="info" >
-                    <Typography variant='button'>{dato.nombre_moneda}: </Typography>
+                    <Typography variant='button'>{dato.nombre_moneda}: {lang.monto_inicial} {funciones.numberFormat(dato.monto_inicial_caja)}  </Typography>
                   </Alert>
                 </Grid>
 
@@ -52,7 +53,7 @@ function ResumenFinalDatos({datos}) {
                 </Grid>
                 <Grid item xs={12}>
                   <Alert icon={false} variant="outlined">
-                    <b>BALANCE: 0 </b>
+                    <b>BALANCE: { (dato.monto_inicial_caja + dato.total_ingreso)-(dato.total_egreso)-(dato.declarado)} </b>
                   </Alert>
                 </Grid>
                 <Grid item xs={12}>

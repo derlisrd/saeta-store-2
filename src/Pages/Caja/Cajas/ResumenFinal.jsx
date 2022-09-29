@@ -24,6 +24,7 @@ const ResumenFinal = () => {
     const getMovimientosCaja = useCallback(async () => {
         if (dialogs.resumenfinal) {
           setCargando(true);
+          //console.log(valoresCierre)
           let cajas_monedas = [...valoresCierre]
           let ID_CAJA = datosCajaCierre.id_caja;
           let rescate_fecha_apertura = datosCajaCierre.fecha_apertura;
@@ -37,7 +38,6 @@ const ResumenFinal = () => {
             APICALLER.get({table:'cajas_users',include:"users",on:"id_user_caja,id_user",where:`id_caja_caja,=,${ID_CAJA}`,fields:'nombre_user'}),
             APICALLER.get({table:"facturas",include:"facturas_formas_pagos",on:"id_facturas_formas_pago,id_forma_pago_factura",where:`id_caja_factura,=,${ID_CAJA},and,fecha_factura,>=,'${rescate_fecha_apertura}',and,tipo_factura,<>,2`}),
             APICALLER.get({table:'cajas_registros',fields:"id_cajas_registro,descripcion_registro,tipo_registro",where:"tipo_registro,<,2"}),
-            APICALLER.get({table:"cajas_monedas",where:`id_caja_moneda,=,${ID_CAJA}`})
             ])
 
             let movimiento = promises[0], usuarios =promises[1],  registro = promises[3], responsable = usuarios.results[0].nombre_user;

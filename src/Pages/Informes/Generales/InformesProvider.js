@@ -64,10 +64,9 @@ const InformesProvider = ({ children }) => {
     }),APICALLER.get({
       table: "cajas_movimientos",include:"cajas_registros",
       on: "id_tipo_registro,id_cajas_registro",
-      fields: `*`,
       where: `fecha_movimiento,between,'${mesActual} 00:00:00',and,'${fecha_hasta} 23:59:59'`,
     })])
-    console.log(promesa);
+    //console.log(promesa);
     let res = promesa[0];
     if (res.response === "ok") {
       let sumaIngresoDia = 0;
