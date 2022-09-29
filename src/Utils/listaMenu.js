@@ -84,6 +84,13 @@ export const listaMenu = [
             color: "#a0aec0",
           },
           {
+            id: 66,
+            title: "comisiones",
+            url: `${BASEURL}/comisiones`,
+            icon: `paid`,
+            color: "#a0aec0",
+          },
+          {
             id: 67,
             title: "formas_de_pago",
             url: `${BASEURL}/formaspago`,
@@ -209,13 +216,6 @@ export const listaMenu = [
             icon: `app_registration`,
             color: "#a0aec0",
          },
-         {
-          id: 66,
-          title: "comisiones",
-          url: `${BASEURL}/comisiones`,
-          icon: `point_of_sale`,
-          color: "#a0aec0",
-        },
         ],
       },{
         id: 47,

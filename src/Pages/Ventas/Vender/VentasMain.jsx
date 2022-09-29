@@ -36,7 +36,7 @@ const VentasMain = () => {
             </IconButton>
           </Tooltip>
 
-         {lang.nueva_venta} | {lang.total}: {valorConvertido(fa.total)} {ABM}
+         {lang.nueva_venta} | {lang.total}: { fa.total ? valorConvertido(fa.total) : ""} {ABM}
         </DialogTitle>
         <DialogContent>
           <SnackAlert

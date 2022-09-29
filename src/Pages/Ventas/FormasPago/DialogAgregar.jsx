@@ -1,4 +1,4 @@
-import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Grid, LinearProgress, TextField } from "@mui/material"
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Grid, LinearProgress, TextField, Zoom } from "@mui/material"
 import { useState } from "react"
 import { useLang } from "../../../Contexts/LangProvider"
 import { useLogin } from "../../../Contexts/LoginProvider"
@@ -36,7 +36,7 @@ function DialogAgregar (){
 
 
     return(
-        <Dialog fullWidth onClose={close} open={dialogs.agregar}>
+        <Dialog fullWidth onClose={close} open={dialogs.agregar} TransitionComponent={Zoom}>
             <DialogTitle>
                 {lang.agregar}
             </DialogTitle>

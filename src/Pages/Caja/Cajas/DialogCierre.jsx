@@ -26,6 +26,7 @@ const DialogCierre = () => {
 
 const getLista = useCallback(async() => {
     if(dialogs.cierre){
+        setLoading(true)
         let id = datosCajaCierre.id_caja;
         let res = await Promise.all([
             APICALLER.get({table:"cajas_monedas",include:"monedas",on:"id_moneda_caja_moneda,id_moneda",where:`id_caja_moneda,=,${id}`,
@@ -68,8 +69,9 @@ useEffect(() => {
             <Grid item xs={12}>
                 {loading && <LinearProgress />}
             </Grid>
-
+            
             {
+                !loading && 
                 inputsMonedas.map((e,i)=>(
                     <Fragment key={i}>
                         <Grid item xs={12} sm={4} >

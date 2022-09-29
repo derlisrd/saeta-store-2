@@ -136,7 +136,12 @@ export const funciones = {
         var nro = parseFloat(numero);
         return Math.round(nro);
       },
-      numberFormat: n=> parseFloat(n).toLocaleString("de-DE"),
+      numberFormat: n=> {
+        if(isNaN(n) || !n){
+          return " "
+        }
+        return parseFloat(n).toLocaleString("de-DE")
+      },
       SacarPunto: str=> str.replace(/[.\s]/g,''),
       ComaPorPunto: str=> str.replace(/[,\s]/g,'.'),
       numberSeparator: (nro) => parseFloat(nro).toLocaleString("de-DE"),
