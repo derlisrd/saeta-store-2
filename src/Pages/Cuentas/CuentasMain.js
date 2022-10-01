@@ -32,7 +32,7 @@ const CuentasMain = () => {
         }}
       >
         <Tab label="Cuentas a cobrar" />
-        <Tab label="Cuentas a pagar" />
+        {/* <Tab label="Cuentas a pagar" /> */}
       </Tabs>
       
       <TabPanel value={tabValue} index={0}>

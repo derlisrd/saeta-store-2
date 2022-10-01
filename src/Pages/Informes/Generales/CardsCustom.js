@@ -2,12 +2,14 @@ import { Grid, Typography, Icon, CardContent, Card, Alert} from "@mui/material";
 import { useInformes } from "./InformesProvider";
 import { funciones } from "../../../Functions";
 export default function CardsCustom() {
-  const { ingresosDia, ingresosMes, egresosDia, egresosMes } = useInformes();
+  const { ingresosDia, ingresosMes, egresosDia, egresosMes,tipoIngreso } = useInformes();
   return (
     <Grid container spacing={1}>
       <Grid item xs={12}>
         <Alert variant="outlined" severity="info">
-          <Typography variant="overline"></Typography>
+          <Typography variant="overline">
+            {tipoIngreso === "1" ? "Ingresos en efectivo" : tipoIngreso ==="2" ? "Ingresos sin efectivo" : "Ingresos totales del mes"}
+          </Typography>
         </Alert>
       </Grid>
       <Grid xs={12} sm={12} md={6} lg={3} item>

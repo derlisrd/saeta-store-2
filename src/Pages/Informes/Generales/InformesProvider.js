@@ -29,7 +29,7 @@ const InformesProvider = ({ children }) => {
 
   const mesActual = mesState +"-" +"01".toString();
   
-  const [tipo,setTipo] = useState(""); // efectivo, no efectivo, sin filtro
+  const [tipoIngreso,setTipoIngreso] = useState(""); // efectivo, no efectivo, sin filtro
   const [ingresosDia, setIngresosDia] = useState(0);
   const [ingresosMes, setIngresosMes] = useState(0);
   const [egresosDia, setEgresosDia] = useState(0);
@@ -75,8 +75,15 @@ const InformesProvider = ({ children }) => {
       //console.log(res.results);  
       res.results.forEach((item) => {
         if (item.tipo_registro === "1") {
-          
-          sumaIngresoDia += parseFloat(item.monto_movimiento) + parseFloat(item.monto_sin_efectivo);
+          if(tipoIngreso === ""){
+            sumaIngresoDia += parseFloat(item.monto_movimiento) + parseFloat(item.monto_sin_efectivo);
+          }
+          else if(tipoIngreso === "1"){
+            sumaIngresoDia += parseFloat(item.monto_movimiento)
+          }
+          else{
+            sumaIngresoDia += parseFloat(item.monto_sin_efectivo);
+          }
 
         } else if (item.tipo_registro === "0") {
           sumaEgresoDia += parseFloat(item.monto_movimiento);
@@ -113,37 +120,35 @@ const InformesProvider = ({ children }) => {
       let indiceparalabel = 1;
       for (let d = new Date(mesActual);d <= new Date(fecha_hasta) ;d.setDate(d.getDate() + 1)) {
         fecha_mostrar =
-          d.getFullYear().toString() +
-          "-" +
-          (d.getMonth() + 1).toString().padStart(2, 0) +
-          "-" +
-          d.getDate().toString().padStart(2, 0);
-
+          d.getFullYear().toString() +"-" +(d.getMonth() + 1).toString().padStart(2, 0) +"-" +d.getDate().toString().padStart(2, 0);
         label_array.push(indiceparalabel.toString().padStart(2, 0));
         indiceparalabel++;
         
-
         let suma_diariosEgresos = 0;
         let suma_diariosIngresos = 0;
 
         while (sw && countResult > 0 && indice < countResult) {
           let fecha_comparar = result[indice].fecha_movimiento.substr(0, 10);
-          let tipo = parseInt(result[indice].tipo_registro);
+          let tipo_registro = parseInt(result[indice].tipo_registro);
           if (fecha_comparar === fecha_mostrar) {
-            if (tipo === 1) {
-              suma_diariosIngresos += parseFloat(
-                result[indice].monto_movimiento
-              );
-              sumaIngresosTotalMes += parseFloat(result[indice].monto_movimiento) + parseFloat(result[indice].monto_sin_efectivo);
-            } else if (tipo === 0) {
-              suma_diariosEgresos += parseFloat(
-                result[indice].monto_movimiento
-              );
-              sumaEgresosTotalMes += parseFloat(
-                result[indice].monto_movimiento
-              );
+            if (tipo_registro === 1) {
+              if(tipoIngreso === ""){
+                suma_diariosIngresos += parseFloat(result[indice].monto_movimiento) + parseFloat(result[indice].monto_sin_efectivo);
+                sumaIngresosTotalMes += parseFloat(result[indice].monto_movimiento) + parseFloat(result[indice].monto_sin_efectivo);
+              }
+              else if(tipoIngreso === "1"){
+                suma_diariosIngresos += parseFloat(result[indice].monto_movimiento) 
+                sumaIngresosTotalMes += parseFloat(result[indice].monto_movimiento)
+              }
+              else{
+                suma_diariosIngresos +=  parseFloat(result[indice].monto_sin_efectivo);
+                sumaIngresosTotalMes +=  parseFloat(result[indice].monto_sin_efectivo);
+              }
+              
+            } else if (tipo_registro === 0) {
+              suma_diariosEgresos += parseFloat(result[indice].monto_movimiento);
+              sumaEgresosTotalMes += parseFloat(result[indice].monto_movimiento);
             }
-
             indice++;
           } else {
             sw = false;
@@ -167,7 +172,7 @@ const InformesProvider = ({ children }) => {
       console.log(res);
     }
     setCargando(false)
-  }, [mesActual, fecha,mesState]);
+  }, [mesActual, fecha,mesState,tipoIngreso]);
 
   
   useEffect(() => {
@@ -193,7 +198,7 @@ const InformesProvider = ({ children }) => {
         datosEgresosDiariosMes,
         datosIngresosDiariosMes,
         labelDiarioMes,
-        fechaMostrar,setFechaMostrar,mesState,setMesState,tipo,setTipo
+        fechaMostrar,setFechaMostrar,mesState,setMesState,tipoIngreso,setTipoIngreso
       }}
     >
       {children}
@@ -213,7 +218,7 @@ export const useInformes = () => {
     egresosMes,
     datosEgresosDiariosMes,
     datosIngresosDiariosMes,
-    labelDiarioMes,fechaMostrar,setFechaMostrar,mesState,setMesState,tipo,setTipo
+    labelDiarioMes,fechaMostrar,setFechaMostrar,mesState,setMesState,tipoIngreso,setTipoIngreso
   } = useContext(Contexto);
   return {
     cargando,
@@ -226,7 +231,7 @@ export const useInformes = () => {
     egresosMes,
     datosEgresosDiariosMes,
     datosIngresosDiariosMes,
-    labelDiarioMes,fechaMostrar,setFechaMostrar,mesState,setMesState,tipo,setTipo
+    labelDiarioMes,fechaMostrar,setFechaMostrar,mesState,setMesState,tipoIngreso,setTipoIngreso
   };
 };
 

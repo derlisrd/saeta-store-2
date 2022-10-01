@@ -9,7 +9,7 @@ import { useInformes } from "./InformesProvider";
 import Ingresos from "./Ingresos";
 
 const InformesGenerales = () => {
-  const { fechaMostrar, cargando, mesState,setMesState,tipo,setTipo} = useInformes();
+  const { fechaMostrar, cargando, mesState,setMesState,tipoIngreso,setTipoIngreso} = useInformes();
 
   
 
@@ -33,8 +33,8 @@ const InformesGenerales = () => {
           <FormControl fullWidth>
                 <InputLabel> Tipo: </InputLabel>
                     <Select
-                        name="tipo" value={tipo}
-                        onChange={(e) => { setTipo(e.target.value)}}
+                        name="tipoIngreso" value={tipoIngreso}
+                        onChange={(e) => { setTipoIngreso(e.target.value)}}
                     >
                         <MenuItem value="">Todos</MenuItem>
                         <MenuItem value="1">Efectivo</MenuItem>
@@ -53,13 +53,13 @@ const InformesGenerales = () => {
             </CardContent>
           </Card>
         </Grid>
-        <Grid item xs={12} sm={12} md={6}>
+        <Grid item xs={12} sm={12} md={12} xl={6}>
           <Alert severity="success" icon={<Icon>credit_score</Icon>}>
             <Typography variant="h6">Ingresos mes { funciones.fechaMesEs(mesState) }</Typography>
           </Alert>
           <Ingresos />
         </Grid>
-        <Grid item xs={12} sm={12} md={6}>
+        <Grid item xs={12} sm={12} md={12} xl={6}>
           <Alert severity="error" icon={<Icon>local_atm</Icon>}>
             {" "}
             <Typography variant="h6">Egresos mes { funciones.fechaMesEs(mesState) }</Typography>{" "}

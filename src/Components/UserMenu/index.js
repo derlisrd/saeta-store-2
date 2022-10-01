@@ -2,13 +2,14 @@ import {Divider,Button, Icon, IconButton, List, ListItem, ListItemIcon, ListItem
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import swal from "sweetalert";
+import { useDatosEmpresa } from "../../Contexts/DatosEmpresaProvider";
 import {useLang} from "../../Contexts/LangProvider";
 import { useLogin } from "../../Contexts/LoginProvider";
 import {env} from '../../Utils/config'
 
 export default function UserMenu(){
     const {logOut,userData}= useLogin()
-
+    const {EMPRESA} = useDatosEmpresa()
     const {nombre_user} = userData
     const [anchorEl, setAnchorEl] = useState(null);
     const {lang} = useLang();
@@ -42,17 +43,20 @@ export default function UserMenu(){
         onClose={handleClose}
       >
         <List sx={{ p:2 }}>
+          <ListItem >
+            <ListItemIcon>
+              <Icon>add_business</Icon>
+            </ListItemIcon>
+            <ListItemText primary={EMPRESA.nombre_empresa} />
+          </ListItem>
           <ListItem
             button divider
-            onClick={() => {
-              handleClose();
-              navigate(env.BASEURL + "/cajas");
-            }}
+            onClick={() => {navigate(env.BASEURL + "/cajas");}}
           >
             <ListItemIcon>
               <Icon>point_of_sale</Icon>
             </ListItemIcon>
-            <ListItemText primary="Arqueo" />
+            <ListItemText primary={lang.arqueos} />
           </ListItem>
           <ListItem button onClick={cerrarSesion}>
             <ListItemIcon>
