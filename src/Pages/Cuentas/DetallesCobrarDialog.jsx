@@ -1,10 +1,9 @@
 import { Button, Dialog,DialogActions,DialogContent,DialogTitle,Icon,Zoom } from '@mui/material'
-import React from 'react'
 import printJS from "print-js";
 import { useCuentas } from './CuentasProvider'
 import { useDatosEmpresa } from '../../Contexts/DatosEmpresaProvider';
 
-const DetallesDialog = () => {
+const DetallesCobrarDialog = () => {
     const {dialogs,setDialogs,funciones, lang,formCobrar} = useCuentas()
     const {EMPRESA,MONEDAS} = useDatosEmpresa()
 
@@ -15,18 +14,18 @@ const DetallesDialog = () => {
     }
 
     function imprimir(){
-        printJS({ type: "html", printable: "print",style:'.textMono{font-family:monospace}' });
+        printJS({ type: "html", printable: "print",style:'*{font-family:monospace}' });
     }
 
     let monedaactual= MONEDAS.filter(e=> parseInt(e.id_moneda) === parseInt(formCobrar.id_moneda_caja))
     let mon = monedaactual[0]
-
+    const montoFaltante = parseFloat(formCobrar.monto_total_factura) - parseFloat(formCobrar.recibido_factura)
   return (
     <Dialog onClose={cerrar} TransitionComponent={Zoom} fullWidth open={dialogs.detalles}>
         <DialogTitle>{lang.detalles}</DialogTitle>
         <DialogContent dividers>
             <div id="print">
-                <table>
+                <table width="350px">
                     <thead>
                         <tr>
                             <td>
@@ -52,12 +51,15 @@ const DetallesDialog = () => {
                         </tr>
                         <tr>
                             <td>
-                                <strong>{lang.monto_recibido}: {funciones.numberFormat(formCobrar.monto_total_factura)} {mon?.abreviatura_moneda} </strong>
+                                <strong>{lang.monto_recibido}: {funciones.numberFormat(formCobrar.recibido_factura)} {formCobrar.abreviatura_moneda}</strong>
                             </td>
                         </tr>
                         <tr>
                             <td>
-                                <strong>{lang.monto_faltante}: {funciones.numberFormat(formCobrar.monto_total_factura)} {mon?.abreviatura_moneda} </strong>
+                                <strong>
+                                {lang.monto_faltante}: {funciones.numberFormat(montoFaltante)} {formCobrar.abreviatura_moneda}
+                                    
+                                </strong>
                             </td>
                         </tr>
                     </thead>
@@ -76,4 +78,4 @@ const DetallesDialog = () => {
   )
 }
 
-export default DetallesDialog
+export default DetallesCobrarDialog
