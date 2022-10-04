@@ -2,13 +2,14 @@ import { useComisiones } from "./ComisionesProvider";
 import Tablas from '../../../Components/UI/Tablas'
 import {columns} from './columns'
 import { useLang } from "../../../Contexts/LangProvider";
-import { Button, FormControl, Grid, Icon, IconButton, InputLabel, MenuItem, Select, TextField, Tooltip } from "@mui/material";
+import { Alert, Button, FormControl, Grid, Icon, IconButton, InputLabel, MenuItem, Select, TextField, Tooltip } from "@mui/material";
 import { funciones } from "../../../Functions";
 import { useState } from "react";
 
 function ComisionesLista(){
 
     const {datos,loading,applyFilters} = useComisiones();
+    
     const {lang} = useLang()
     const today = funciones.fechaActualYMD();
     const filtradoInitial = {
@@ -26,10 +27,10 @@ function ComisionesLista(){
 
 
     const Acciones = ({rowProps})=>(
-        <Tooltip arrow title={lang.presione_mas_detalles}>
+    <Tooltip arrow title={lang.presione_mas_detalles}>
       <IconButton onClick={()=>{console.log(rowProps)}}><Icon>visibility</Icon></IconButton>
-    </Tooltip>
-    )
+    </Tooltip>)
+    
     const search =(<Grid container spacing={2} alignItems="center">
     <Grid item xs={12} sm={6} md={2}>
       <TextField
@@ -77,6 +78,16 @@ function ComisionesLista(){
         >
           {lang.filtrar}
         </Button>
+      </Grid>
+      <Grid item xs={12} sm={12} md={6}>
+        <Alert icon={false}>
+          Total: {funciones.numberFormat(datos.total)}
+        </Alert>
+      </Grid>
+      <Grid item xs={12} sm={12} md={6}>
+        <Alert icon={false}>
+          Total comisión: {funciones.numberFormat( datos.totalComision)}
+        </Alert>
       </Grid>
     </Grid>
     )

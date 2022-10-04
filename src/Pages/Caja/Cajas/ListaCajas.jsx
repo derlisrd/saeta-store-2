@@ -1,11 +1,12 @@
 import {Button,Icon,IconButton,InputAdornment,Stack,TextField,Tooltip} from "@mui/material";
 
 import Tablas from "../../../Components/UI/Tablas";
+import { useLogin } from "../../../Contexts/LoginProvider";
 import { useCajas } from "./CajasProvider";
 
 
 const ListaCajas = () => {
-
+  const {userData} = useLogin()
   const {setIdCaja,lista,cargas,dialogs,setDialogs,setFormEdit,setFormAbrir, setDatosCajaCierre,/* setFormTransferencia,formTransferencia, setDatosCajaCierre,setTotalSumaMonedasArqueo,*/lang} = useCajas();
   const columnas = [
     {
@@ -58,9 +59,12 @@ const ListaCajas = () => {
     setDialogs({ ...dialogs, abrir: true });
   };
 
-  const verMontos = (r)=>{
-    setIdCaja(r.id_caja)
-    setDialogs({ ...dialogs, montos: true });
+  const verMontos = (f)=>{
+    if(f.id_user_caja === userData.id_user)
+    {
+      setIdCaja(f.id_caja)
+      setDialogs({ ...dialogs, montos: true });
+    }
   }
   /* const abrirTransferencia = (f) => {
     if(f.estado_caja==="0"){
@@ -86,8 +90,12 @@ const ListaCajas = () => {
 
 
   const cierrecaja = f =>{
-    setDatosCajaCierre(f);
-    setDialogs({ ...dialogs, cierre: true });
+    
+    if(f.id_user_caja === userData.id_user)
+    {
+      setDatosCajaCierre(f);
+      setDialogs({ ...dialogs, cierre: true }); 
+    }
   }
 
 

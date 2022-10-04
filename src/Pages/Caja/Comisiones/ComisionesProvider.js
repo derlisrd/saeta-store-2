@@ -10,7 +10,9 @@ function ComisionesProvider({children}){
     const today = funciones.fechaActualYMD();
     const initialDatos = {
         lista: [],
-        empleados:[]
+        empleados:[],
+        total:0,
+        totalComision:0
     }
     const initialLoading = {
         lista: true,
@@ -30,11 +32,20 @@ function ComisionesProvider({children}){
                 table:'facturas',
                 include:'facturas_items,empleados,productos',
                 on:`id_empleado_factura,id_empleado,id_factura,id_items_factura,id_producto,id_producto_factura`,
-                fields:'nombre_empleado,apellido_empleado,porcentaje_comision_factura,id_facturas_item,nombre_producto,porcentaje_comision,fecha_factura',
+                fields:'nombre_empleado,apellido_empleado,porcentaje_comision_factura,id_facturas_item,nombre_producto,porcentaje_comision,fecha_factura,precio_producto_factura,costo_producto',
                 where
             })
+            let comision = 0;
+            let total = 0;
             if(res.response==="ok"){
-                setDatos({...datos,lista:res.results})
+                let resultado = res.results;
+                
+                resultado.forEach(e => {
+                    comision += parseFloat(e.porcentaje_comision_factura) * ( parseFloat(e.precio_producto_factura) - parseFloat(e.costo_producto) )/ 100
+                    total += parseFloat(e.precio_producto_factura)
+                });
+                setDatos({...datos,lista:res.results,total:total,totalComision:comision})
+
             }
         
         setLoading({
@@ -58,7 +69,9 @@ function ComisionesProvider({children}){
         if(res.response==='ok'){
             setDatos({
                 lista:res.results,
-                empleados: emp.results
+                empleados: emp.results,
+                total:0,
+                totalComision:0
             })
         }else{ console.log(res)}
         setLoading({
@@ -79,9 +92,7 @@ function ComisionesProvider({children}){
         datos,loading,applyFilters
     }
     return(<Contexto.Provider value={values}>
-        {
-            children
-        }
+        {children}
     </Contexto.Provider>)
 }
 export const useComisiones = ()=>{

@@ -305,7 +305,7 @@ const CajasProvider = ({ children }) => {
          let val = await Promise.all([APICALLER.get({
           table: "cajas",include: "users,cajas_users",
           on: "id_user,id_user_caja,id_caja,id_caja_caja",
-          fields:"nombre_caja,id_caja,estado_caja,nombre_user,fecha_apertura",
+          fields:"nombre_caja,id_caja,estado_caja,nombre_user,fecha_apertura,id_user_caja",
         }),
           APICALLER.get({table: "users",token: token_user,fields: "nombre_user,id_user"}),
           APICALLER.get({table: "monedas",fields: "nombre_moneda,id_moneda,abreviatura_moneda"}),
