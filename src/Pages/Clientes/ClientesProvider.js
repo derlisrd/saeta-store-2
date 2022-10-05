@@ -36,7 +36,6 @@ const ClientesProvider = ({ children }) => {
         telefono_cliente:"",
         direccion_cliente:"",
         email_cliente:"",
-        nacimiento_cliente:""
   };
   const [formulario, setFormulario] = useState(initialFormulario);
 
@@ -69,6 +68,7 @@ const ClientesProvider = ({ children }) => {
   
   const agregar = async(f)=>{
     setCargando({guardar:true})
+    
     let resp = await APICALLER.get({table:"clientes",where:`ruc_cliente,=,'${f.ruc_cliente}'`});
     if(resp.found>0){
       setErrors({error:true,message:lang.cliente_existente_doc,id:"ruc"})
@@ -76,6 +76,9 @@ const ClientesProvider = ({ children }) => {
       return false;
     }
     delete f.id_cliente
+    if(f.nacimiento_cliente ===null) {
+      delete f.nacimiento_cliente
+    }
     let res = await APICALLER.insert({
       table: "clientes",
       data: f,
@@ -108,33 +111,36 @@ const ClientesProvider = ({ children }) => {
   }
 
   const BorrarCliente = async (data) => {
-    const {id, nombre} = data;
+    const {id_cliente, nombre_cliente} = data;
+    
     swal({
       buttons: {
         cancel: lang.cancelar,
         confirm: lang.ok,
       },
       icon: "warning",
-      text: `${lang.cliente}: ${nombre}. ${lang.warn_no_podra_recuperar}`,
+      text: `${lang.cliente}: ${nombre_cliente}. ${lang.warn_no_podra_recuperar}`,
       title: lang.q_desea_eliminar,
     }).then(async (e) => {
       if (e) {
         let res = await APICALLER.delete({
           table: `clientes`,
-          id: id,
+          id: id_cliente,
           token: token_user,
         });
 
         if (res.response === "ok") {
           //ListarDeNuevo();
           let array = [...lista];
-          let index = lista.findIndex((e) => e.id_cliente === id);
+          let index = lista.findIndex((e) => e.id_cliente === id_cliente);
           array.splice(index, 1);
           setLista(array);
           swal({
             icon: "success",
             text: lang.borrado_correctamente,
           });
+        }else{
+          console.log(res);
         }
       }
     });

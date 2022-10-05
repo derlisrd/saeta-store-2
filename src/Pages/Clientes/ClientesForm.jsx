@@ -1,6 +1,6 @@
 import { Alert, Button, Dialog, DialogActions, DialogContent, DialogTitle, FormControl, FormControlLabel, FormLabel, Grid, LinearProgress, Radio, RadioGroup, TextField, Zoom } from '@mui/material'
 import { useEffect,useState } from 'react';
-
+import { funciones } from '../../Functions';
 import { useClientes } from './ClientesProvider'
 
 const ClientesForm = () => {
@@ -13,7 +13,7 @@ const ClientesForm = () => {
         telefono_cliente:"",
         direccion_cliente:"",
         email_cliente:"",
-        nacimiento_cliente:""
+        nacimiento_cliente: funciones.fechaActualDMY()
     }
 
     const [form,setForm] = useState(initialFormulario)
@@ -26,6 +26,8 @@ const ClientesForm = () => {
         editar(form)
       }
     }
+
+
     
     const onChange = e=>{
         const {value,name} = e.target;
@@ -35,6 +37,7 @@ const ClientesForm = () => {
     }
     const cerrar = ()=>{ setDialogs({...dialogs,form:false});  }
     
+
     useEffect(() => {
       setForm(formulario)
     }, [formulario])
@@ -115,9 +118,6 @@ const ClientesForm = () => {
                 }
                 label={lang.correo_electronico}
               />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <TextField fullWidth name="nacimiento_cliente" value={form.nacimiento_cliente} type="date" onChange={onChange} helperText={lang.fecha_nacimiento} />
             </Grid>
             <Grid item xs={12} sm={6}>
               <FormControl component="fieldset">
