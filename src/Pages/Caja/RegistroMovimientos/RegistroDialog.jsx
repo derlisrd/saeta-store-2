@@ -1,11 +1,14 @@
-import { Radio,Dialog, DialogContent, DialogTitle, FormControlLabel, FormLabel, Grid,  TextField, DialogActions, Button,Zoom } from '@mui/material'
+import { Radio,Dialog, DialogContent, DialogTitle, FormControlLabel, FormLabel, Grid,  TextField, DialogActions, Button,Zoom, LinearProgress } from '@mui/material'
 import swal from 'sweetalert'
 import { APICALLER } from '../../../Services/api'
 import { useLogin } from '../../../Contexts/LoginProvider'
 import { useRegistroMovimientos } from './RegistroMovimientosProvider'
+import { useState } from 'react'
 
 const RegistroDialog = () => {
-  const {token_user} = useLogin()
+  const {userData} = useLogin()
+  const {token_user} = userData
+  const [cargando,setCargando] = useState(false)
     const {dialogs,setDialogs,form,setForm,initialForm,getLista,lang} = useRegistroMovimientos()
 
     const cerrar = ()=>{
@@ -15,6 +18,7 @@ const RegistroDialog = () => {
 
     const enviarForm = async(e)=>{
       e.preventDefault();
+      setCargando(true)
       if(form.id_cajas_registro === ''){
         delete form.id_cajas_registro;
         let res = await APICALLER.insert({table:'cajas_registros',data:form,token:token_user});
@@ -28,6 +32,7 @@ const RegistroDialog = () => {
           swal({icon:'success',timer:1500,text:'Actualizado correctamente'});
         }else{ console.log(res)}
       }
+      setCargando(false)
       setForm(initialForm)
       setDialogs({...dialogs,agregar:false});
       getLista();
@@ -47,6 +52,9 @@ const RegistroDialog = () => {
       <DialogContent dividers>
         
         <Grid container spacing={2}>
+        <Grid item xs={12}>
+          {cargando && <LinearProgress />}
+        </Grid>
           <Grid item xs={12}>
             <TextField
               fullWidth
@@ -65,8 +73,9 @@ const RegistroDialog = () => {
                   value="0"
                   control={
                     <Radio
+                      checked={form.tipo_registro==="0"}
                       name="tipo_registro"
-                      checked={form.tipo_registro === "0"}
+                      value={form.tipo_registro}
                       onChange={onChange}
                       color="primary"
                     />
@@ -79,7 +88,8 @@ const RegistroDialog = () => {
                   control={
                     <Radio
                       name="tipo_registro"
-                      checked={form.tipo_producto === "1"}
+                      checked={form.tipo_registro==="1"}
+                      value={form.tipo_producto}
                       onChange={onChange}
                       color="primary"
                     />

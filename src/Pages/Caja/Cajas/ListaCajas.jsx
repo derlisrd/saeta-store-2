@@ -60,7 +60,8 @@ const ListaCajas = () => {
   };
 
   const verMontos = (f)=>{
-    if(f.id_user_caja === userData.id_user)
+    
+    if(f.id_user_caja === userData.id_user || userData.rol_user==="1")
     {
       setIdCaja(f.id_caja)
       setDialogs({ ...dialogs, montos: true });
@@ -91,7 +92,7 @@ const ListaCajas = () => {
 
   const cierrecaja = f =>{
     
-    if(f.id_user_caja === userData.id_user)
+    if(f.id_user_caja === userData.id_user || userData.rol_user==="1")
     {
       setDatosCajaCierre(f);
       setDialogs({ ...dialogs, cierre: true }); 
