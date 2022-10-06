@@ -182,6 +182,8 @@ const CajasProvider = ({ children }) => {
 
 
 
+  
+
   const editarCaja = async (f) => {
     setCargas({ ...cargas, editar: true });
 

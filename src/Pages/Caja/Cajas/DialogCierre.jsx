@@ -1,4 +1,4 @@
-import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Grid, LinearProgress, TextField, Typography } from '@mui/material'
+import { Button, Checkbox, Dialog, DialogActions, DialogContent, DialogTitle, FormControlLabel, Grid, LinearProgress, TextField, Typography } from '@mui/material'
 import React, { Fragment, useCallback, useEffect,useState } from 'react'
 import { APICALLER } from '../../../Services/api';
 import { useCajas } from './CajasProvider';
@@ -20,6 +20,7 @@ const DialogCierre = () => {
         let newinputmonedas = [...inputsMonedas]
         const {value} = elem.target
         newinputmonedas[index].cantidad = value;
+        
         setInputMonedas(newinputmonedas);
     }
     
@@ -94,6 +95,9 @@ useEffect(() => {
                             <Typography variant="body1">
                                 No efectivo: {funciones.numberFormat(e.monto_no_efectivo)} {e.abreviatura_moneda}
                             </Typography>
+                        </Grid>
+                        <Grid item xs={12} sm={12} >
+                            <FormControlLabel control={<Checkbox name={`no_`} />} label="Cerar no efectivo" />
                         </Grid>
                     </Fragment>
                 ))

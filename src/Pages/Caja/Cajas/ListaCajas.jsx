@@ -50,8 +50,11 @@ const ListaCajas = () => {
   ];
 
   const abrirEditar = (f) => {
+    if(f.id_user_caja === userData.id_user || userData.rol_user==="1")
+    {
     setFormEdit({ nombre_caja: f.nombre_caja, id_caja: f.id_caja });
     setDialogs({ ...dialogs, editar: true });
+    }
   };
 
   const abrirApertura = (f) => {
