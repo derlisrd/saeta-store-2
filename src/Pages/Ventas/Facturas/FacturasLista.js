@@ -2,7 +2,7 @@
 import { useState } from "react";
 import Tablas from "../../../Components/UI/Tablas";
 import { useFacturas } from "./FacturasProvider";
-import {Button,Icon,TextField,Select,FormControl,InputLabel,MenuItem,Grid,IconButton,InputAdornment, Tooltip, Stack} from "@mui/material";
+import {Button,Icon,TextField,Select,FormControl,InputLabel,MenuItem,Grid,IconButton,InputAdornment, Tooltip, Stack, Alert} from "@mui/material";
 
 import { useDatosEmpresa } from "../../../Contexts/DatosEmpresaProvider";
 import useGoto from "../../../Hooks/useGoto";
@@ -89,6 +89,11 @@ const FacturasLista = () => {
       isNumber: true,
       style:{fontWeight:"bold"}
       /* before: MONEDA_PRINCIPAL.abreviatura_moneda, */
+    },
+    {
+      field:'descuento_factura',
+      isNumber:true,
+      title:lang.descuento
     },
     {
       field:"abreviatura_moneda",
@@ -198,9 +203,12 @@ const FacturasLista = () => {
         <Grid item xs={12} sm={6}  md={3}>
           <Button variant="contained" size="large"onClick={()=>go.to('ventas')}>{lang.nueva_venta}</Button>
       </Grid>
-      <Grid item xs={12} >
-        <h3>{lang.total}: {funciones.numberSeparator(total)}{" "}
-        {MONEDA_PRINCIPAL.abreviatura_moneda}{" "}</h3>
+      <Grid item xs={12} sm={6} md={3} >
+        <Alert icon={false}>{lang.total}: {funciones.numberSeparator(total.facturas)}{" "}
+        {MONEDA_PRINCIPAL.abreviatura_moneda}</Alert>
+      </Grid>
+      <Grid item xs={12} sm={6} md={3} >
+        <Alert icon={false} severity="info">{lang.descuento}: {funciones.numberSeparator(total.descuentos)}{" "} {MONEDA_PRINCIPAL.abreviatura_moneda}</Alert>
       </Grid>
     </Grid>
   );

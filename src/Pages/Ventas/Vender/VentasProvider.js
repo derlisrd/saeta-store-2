@@ -181,7 +181,7 @@ const VentasProvider = ({ children }) => {
       0: `Venta recibo: ${LASTNROFACTURA}. `,
       1: `Venta contado factura: ${LASTNROFACTURA}. `,
       2: `Venta credito factura: ${LASTNROFACTURA}. `,
-      3: `Venta a cuota recibo: ${LASTNROFACTURA}. `
+      3: `Venta cuota recibo: ${LASTNROFACTURA}. `
     }
     let detallesMov = objDetalles[tipoFactura];
     
@@ -227,7 +227,8 @@ const VentasProvider = ({ children }) => {
             fecha_movimiento: Funciones.getFechaHorarioString(),
           },
         }))
-        if(DESCUENTO>0){
+
+        /* if(DESCUENTO>0){
           promesas.push(APICALLER.insert({table: "cajas_movimientos",
           token: token_user,
           data: {
@@ -240,7 +241,7 @@ const VentasProvider = ({ children }) => {
             detalles_movimiento:`Descuento de venta de ${DESCUENTO} NRO: ${LASTNROFACTURA}.`,
             fecha_movimiento: Funciones.getFechaHorarioString(),
           }}))
-        }
+        } */
         
         //if(cajasMov.response!=="ok") {console.log(cajasMov)}
         // SI ES EN EFECTIVO

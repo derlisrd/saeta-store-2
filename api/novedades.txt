@@ -923,6 +923,7 @@ CREATE TABLE IF NOT EXISTS `productos_vendidos` (
   `precio_vendido` float NOT NULL,
   `costo_producto_vendido` float not null,
   `cantidad_vendido` float NOT NULL,
+  `tipo_producto_vendido` TINYINT(1) NOT NULL,
   `fecha_vendido` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` datetime DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id_productos_vendido`)
