@@ -269,7 +269,7 @@ const VentasProvider = ({ children }) => {
         });
         
 
-         let nuevo_monto_efectivo = (efectivo + parseFloat(call_monto.results[0].monto_caja_moneda)) - DESCUENTO;
+         let nuevo_monto_efectivo = (efectivo + parseFloat(call_monto.results[0].monto_caja_moneda)) //- DESCUENTO;
         let nuevo_monto_no_efectivo = ( sinEfectivo  + parseFloat(call_monto.results[0].monto_no_efectivo));
        
         let id_de_caja_moneda = call_monto.results[0].id_cajas_moneda;
