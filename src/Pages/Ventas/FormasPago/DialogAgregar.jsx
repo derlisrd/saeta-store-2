@@ -46,7 +46,7 @@ function DialogAgregar (){
                         {loading && <LinearProgress /> }
                     </Grid>
                     <Grid item xs={12}>
-                        <TextField fullWidth onChange={change} name="descripcion_forma_pago" value={form.descripcion_forma_pago} label={lang.descripcion} disabled={loading} />
+                        <TextField autoFocus fullWidth onChange={change} name="descripcion_forma_pago" value={form.descripcion_forma_pago} label={lang.descripcion} disabled={loading} />
                     </Grid>
                     <Grid item xs={12}>
                         <TextField onChange={change} name="porcentaje_descuento_pago" value={form.porcentaje_descuento_pago} helperText={lang.porcentaje_descuento} disabled={loading} />

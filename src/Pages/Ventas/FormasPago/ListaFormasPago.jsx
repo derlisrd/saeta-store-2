@@ -5,7 +5,7 @@ import { useFormasPago } from "./FormasPagoProvider"
 
 
 const ListaFormasPago = () => {
-    const {lista,setDialogs,dialogs,cargas} = useFormasPago();
+    const {lista,setDialogs,dialogs,cargas,setFormEdit} = useFormasPago();
     const {lang} = useLang()
   const columns=[
         {
@@ -21,15 +21,17 @@ const ListaFormasPago = () => {
         title: "Porcentaje descuento"
       }
     ]
+    const showEditar = (f)=>{
+      setFormEdit(f)
+      setDialogs({...dialogs,editar:true})
+    }
 
     const Acciones = ({rowProps})=>(
       <Stack direction="row" justifyContent='center' spacing={2}>
         <IconButton
-      onClick={() => {
-        console.log(rowProps);
-      }}
+      onClick={() => { showEditar(rowProps);}}
       >
-        <Icon>visibility</Icon>
+        <Icon>edit</Icon>
       </IconButton>
       </Stack>
     )

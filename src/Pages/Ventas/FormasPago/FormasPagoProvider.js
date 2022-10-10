@@ -6,11 +6,13 @@ const Contexto = createContext()
 const FormasPagoProvider = ({children}) => {
 
     const initialDialogs = {
-      agregar:false
+      agregar:false,
+      editar:false
     }
     const initialCargas = { 
       lista:true
     }
+    const [formEdit,setFormEdit] = useState({})
     const [lista,setLista] = useState([])
     const [dialogs,setDialogs] = useState(initialDialogs)
     const [cargas,setCargas] = useState(initialCargas)
@@ -28,7 +30,7 @@ const FormasPagoProvider = ({children}) => {
     },[getLista])
 
     const values = {
-        lista,dialogs,setDialogs,cargas,getLista
+        lista,dialogs,setDialogs,cargas,getLista,formEdit,setFormEdit
     }
 
     return (
@@ -40,8 +42,8 @@ const FormasPagoProvider = ({children}) => {
   
 
   export function useFormasPago(){
-    const {lista,dialogs,setDialogs,cargas,getLista} = useContext(Contexto)
-    return {lista,dialogs,setDialogs,cargas,getLista}
+    const {lista,dialogs,setDialogs,cargas,getLista,formEdit,setFormEdit} = useContext(Contexto)
+    return {lista,dialogs,setDialogs,cargas,getLista,formEdit,setFormEdit}
   }
 
   export default FormasPagoProvider

@@ -176,7 +176,8 @@ const VentasProvider = ({ children }) => {
   
 
     
-    let efectivo=0,sinEfectivo=0,cambio = 0, observaciones = ""; 
+    let efectivo=0,sinEfectivo=0,cambio = 0,  observaciones = "";
+
     let objDetalles = {
       0: `Venta recibo: ${LASTNROFACTURA}. `,
       1: `Venta contado factura: ${LASTNROFACTURA}. `,
@@ -195,14 +196,14 @@ const VentasProvider = ({ children }) => {
       }
       observaciones += e.obs 
     })
-    observaciones += DESCUENTO>0 ? ` Descuento ${DESCUENTO}` : "";
+    observaciones += DESCUENTO>0 ? ` Descuento: ${DESCUENTO} ` : "";
     
     /* if(efectivo>df.total){ */
     if(efectivo> TOTAL_A_PAGAR){
       cambio = efectivo - TOTAL_A_PAGAR;
       /* cambio = efectivo - df.total; */
     }
-    
+   
     efectivo = efectivo - cambio;
     
     //console.log(efectivo,sinEfectivo,observaciones,detallesMov,cambio)
@@ -223,7 +224,7 @@ const VentasProvider = ({ children }) => {
             id_tipo_registro: 1, // 1 VENTA CONTADO REVISAR TABLA
             monto_movimiento: efectivo, // forma de pago efectivo  es 1
             monto_sin_efectivo: sinEfectivo,
-            detalles_movimiento:detallesMov,
+            detalles_movimiento:detallesMov + observaciones,
             fecha_movimiento: Funciones.getFechaHorarioString(),
           },
         }))
@@ -266,17 +267,18 @@ const VentasProvider = ({ children }) => {
           fields: `monto_caja_moneda,id_cajas_moneda,monto_no_efectivo`,
           where: `id_caja_moneda,=,${df.datosFactura.id_caja},and,id_moneda_caja_moneda,=,${df.datosMoneda.id_moneda}`,
         });
+        
 
-
-        let nuevo_monto_efectivo = (efectivo + parseFloat(call_monto.results[0].monto_caja_moneda)) - DESCUENTO;
+         let nuevo_monto_efectivo = (efectivo + parseFloat(call_monto.results[0].monto_caja_moneda)) - DESCUENTO;
         let nuevo_monto_no_efectivo = ( sinEfectivo  + parseFloat(call_monto.results[0].monto_no_efectivo));
+       
         let id_de_caja_moneda = call_monto.results[0].id_cajas_moneda;
         promesas.push(APICALLER.update({
           table: `cajas_monedas`,
           token: token_user,
           data: { monto_caja_moneda: nuevo_monto_efectivo,monto_no_efectivo: nuevo_monto_no_efectivo },
           id: id_de_caja_moneda,
-        }));
+        })); 
       }
     }
     Promise.all(promesas)
