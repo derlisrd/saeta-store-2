@@ -1,5 +1,10 @@
-#12-09-2022
+--12092022
 ALTER TABLE `agendas` ADD `id_user_agenda` INT NOT NULL COMMENT 'id_user' AFTER `id_agenda`, ADD `id_cliente_agenda` INT NULL COMMENT 'id_cliente' AFTER `id_user_agenda`;
 
-#16-09-2022
+--16-09-2022
 ALTER TABLE `productos_vendidos` ADD `tipo_producto_vendido` TINYINT(1) NOT NULL AFTER `cantidad_vendido`;
+
+--10102022
+ALTER TABLE `cajas_arqueos` CHANGE `monto_arqueo` `monto_efectivo_arqueo` FLOAT NOT NULL;
+ALTER TABLE `cajas_arqueos` ADD `monto_noefectivo_arqueo` FLOAT NOT NULL AFTER `monto_efectivo_arqueo`;
+ALTER TABLE `cajas_arqueos` ADD `id_moneda_arqueo` INT NOT NULL COMMENT 'id_moneda' AFTER `id_caja_arqueo`;

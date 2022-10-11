@@ -278,6 +278,18 @@ const CajasProvider = ({ children }) => {
         }
       }))
       detalles += ` Declarado ${e.abreviatura_moneda}: ${e.declarado} . `;
+
+      console.log(e);
+      /* promesas.push(APICALLER.insert({
+        table:"cajas_arqueos",token:token_user,data:{
+          monto_efectivo_arqueo:e.declarado,
+          id_caja_arqueo: e.id_caja,
+          id_moneda_arqueo: e.id_moneda,
+          monto_noefectivo_arqueo: e.total_ingreso_no_efectivo,
+          tipo_arqueo:0,
+          fecha_arqueo:funciones.getFechaHorarioString()
+        }
+      })) */
     });
     let datos_cierre = {
       id_caja_movimiento: id,
