@@ -176,7 +176,7 @@ const VentasProvider = ({ children }) => {
   
 
     
-    let efectivo=0,sinEfectivo=0,cambio = 0,  observaciones = "";
+    let efectivo=0,sinEfectivo=0,cambio = 0, porcentaje_descuento_pago = 0,  observaciones = "";
 
     let objDetalles = {
       0: `Venta recibo: ${LASTNROFACTURA}. `,
@@ -191,8 +191,10 @@ const VentasProvider = ({ children }) => {
         efectivo += (e.cantidad) / VALOR_MONEDA
         detallesMov += `Pago con efectivo ${(e.cantidad) / VALOR_MONEDA} ${NOMBRE_MONEDA}. `
       }  else{
-        sinEfectivo += (e.cantidad/VALOR_MONEDA)
+        porcentaje_descuento_pago = parseFloat(e.descuento)>0 ?  ((e.cantidad/VALOR_MONEDA) * parseFloat(e.descuento) / 100) : 0
+        sinEfectivo += (e.cantidad/VALOR_MONEDA) - porcentaje_descuento_pago;
         detallesMov += `Pago con ${e.descripcion} ${e.cantidad} ${NOMBRE_MONEDA}. `
+        detallesMov += parseFloat(e.descuento)>0 ? ` Descuento de interes ${e.descuento}. ` : ''
       }
       observaciones += e.obs 
     })
@@ -765,6 +767,7 @@ const VentasProvider = ({ children }) => {
         da.formasPago.push({
           id_forma_pago: da.id_formaPago,
           obs:da.obs_pago,
+          descuento: des[0].porcentaje_descuento_pago,
           cantidad: isNaN(valor) ? 0 : parseFloat(valor) ,
           descripcion: des[0].descripcion_forma_pago || ""
         });
@@ -910,7 +913,7 @@ const VentasProvider = ({ children }) => {
           else{
             swal({text:"Debe abrir caja.",icon:"warning"})
             .then(()=>{
-              navigate(`/cajas?dialog=open&id=${res[0].results[0].id_caja}`);
+              navigate(env.BASEURL+`/cajas?dialog=open&id=${res[0].results[0].id_caja}`);
             })
             return false;
           }
