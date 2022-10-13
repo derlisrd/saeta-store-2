@@ -882,7 +882,8 @@ const VentasProvider = ({ children }) => {
         APICALLER.get({ table: "facturas_formas_pagos" }),
         APICALLER.get({ table: "empleados",fields:"id_empleado,nombre_empleado,apellido_empleado" }),
         APICALLER.get({table:"depositos",where:"tipo_deposito,=,1"}),
-        APICALLER.get({table:"cajas_monedas",include:"cajas,monedas,cajas_users",on:"id_caja_moneda,id_caja,id_moneda,id_moneda_caja_moneda,id_caja,id_caja_caja",where: `id_user_caja,=,${id_user}`})
+        APICALLER.get({table:"cajas_monedas",include:"cajas,monedas,cajas_users",on:"id_caja_moneda,id_caja,id_moneda,id_moneda_caja_moneda,id_caja,id_caja_caja",where: `id_user_caja,=,${id_user}`}),
+        APICALLER.get({table: "cajas",include:"cajas_users", on:"id_caja,id_caja_caja",where: `id_user_caja,=,${id_user},and,estado_caja,=,'open'`}),
       ])
       let cajaMonedas = res[5];
       let rDepositos = res[4];  
@@ -893,7 +894,7 @@ const VentasProvider = ({ children }) => {
       var ACTIVEFACTURA = false;
       var FACTURALISTA = [];
       var rc = res[0];
-      
+      var cajasOpened = res[6]
       if (rc.response === "ok") {
         if (rc.found < 1) {
           swal({text:"Debe habilitar una caja.",icon:"warning"})
@@ -903,7 +904,7 @@ const VentasProvider = ({ children }) => {
           return false;
         } else {
           if( (rc.results.some(e => e.estado_caja==="open"))){
-            let IDCAJAFACTURA = res[0].results[0].id_caja;
+            let IDCAJAFACTURA = rCajas.results[0].id_caja;
             let fac = await APICALLER.get({table: "empresa_facturas",where: `id_caja_empresa,=,${IDCAJAFACTURA}`});
             if (fac.found > 0) {
               ACTIVEFACTURA = true;
@@ -940,7 +941,7 @@ const VentasProvider = ({ children }) => {
               tipoCliente: "1",
               tipoFactura: "0",
               ordenCompra: "",
-              id_caja: rCajas.response === "ok" && rCajas.found===1 ? rCajas.results[0].id_caja : "",
+              id_caja: cajasOpened.response === "ok" && cajasOpened.found===1 ? cajasOpened.results[0].id_caja : "",
               id_empleado: rVendedores.response === "ok" && rVendedores.found===1 ? rVendedores.results[0].id_empleado : "",
               obs_pago: "",
               id_formaPago: "1",
@@ -969,9 +970,9 @@ const VentasProvider = ({ children }) => {
         listaMonedas: monedas,//rMoneda.response === "ok" ? rMoneda.results : [],
         monedasdecajas: monedasdecajas,
         monedaActiva: activeMoneda.length > 0 ? activeMoneda[0] : {},
-        listaCajas: rCajas.response === "ok" ? rCajas.results : [],
+        listaCajas: cajasOpened.response === "ok" ? cajasOpened.results : [],
         listaFacturas: FACTURALISTA,
-        listaVendedores: rVendedores.response === "ok" ? rVendedores.results : [],
+        listaVendedores: rVendedores.response === "ok" ? (rVendedores.results) : [],
         listaDepositos: rDepositos.response==='ok'? rDepositos.results : [],
         alldepositos:true
       };

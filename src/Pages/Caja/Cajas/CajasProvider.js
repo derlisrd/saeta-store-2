@@ -269,6 +269,7 @@ const CajasProvider = ({ children }) => {
         table:"cajas",data:{estado_caja:"close",fecha_cierre:funciones.getFechaHorarioString()},id
       })
     ];
+
     let detalles = "Cierre de caja. ";
     registros.forEach(e => {
       promesas.push(APICALLER.update({
