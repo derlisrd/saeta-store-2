@@ -13,15 +13,18 @@ const DialogCierre = () => {
 
     const confirmarCierre = ()=>{
         setValoresCierre(inputsMonedas);
-        setDialogs({ ...dialogs, cierre: false, resumenfinal: true });
+        console.log(inputsMonedas)
+        //setDialogs({ ...dialogs, cierre: false, resumenfinal: true });
     }
 
     const change = (elem,index) =>{
         let newinputmonedas = [...inputsMonedas]
         const {value} = elem.target
         newinputmonedas[index].cantidad = value;
-        
         setInputMonedas(newinputmonedas);
+    }
+    const changeCheck = (e,id)=>{
+        console.log(e.target.checked,id)
     }
     
 
@@ -41,7 +44,13 @@ const getLista = useCallback(async() => {
 
             resp.results.forEach(elem => {
                 newresult.push({
-                    ...elem,cantidad:0,monto_caja_moneda: parseFloat(elem.monto_caja_moneda),monto_no_efectivo:parseFloat(elem.monto_no_efectivo),monto_inicial_caja:parseFloat(elem.monto_inicial_caja)
+                    ...elem,
+                    cantidad:0,
+                    monto_caja_moneda: parseFloat(elem.monto_caja_moneda),
+                    monto_no_efectivo:parseFloat(elem.monto_no_efectivo),
+                    monto_inicial_caja:parseFloat(elem.monto_inicial_caja),
+                    cerrar_no_efectivo: false,
+                    id:elem.id_cajas_moneda
                 })    
             });
             setInputMonedas(newresult)
@@ -97,7 +106,7 @@ useEffect(() => {
                             </Typography>
                         </Grid>
                         <Grid item xs={12} sm={12} >
-                            <FormControlLabel control={<Checkbox name={`no_`} />} label="Cerar no efectivo" />
+                            <FormControlLabel control={<Checkbox onChange={(el)=>{changeCheck(el,e.id_moneda_caja_moneda)}} />} label="Cerrar no efectivo" />
                         </Grid>
                     </Fragment>
                 ))
