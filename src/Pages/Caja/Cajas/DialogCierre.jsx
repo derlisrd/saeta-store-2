@@ -13,8 +13,8 @@ const DialogCierre = () => {
 
     const confirmarCierre = ()=>{
         setValoresCierre(inputsMonedas);
-        console.log(inputsMonedas)
-        //setDialogs({ ...dialogs, cierre: false, resumenfinal: true });
+        //console.log(inputsMonedas)
+        setDialogs({ ...dialogs, cierre: false, resumenfinal: true });
     }
 
     const change = (elem,index) =>{
@@ -24,7 +24,10 @@ const DialogCierre = () => {
         setInputMonedas(newinputmonedas);
     }
     const changeCheck = (e,id)=>{
-        console.log(e.target.checked,id)
+        let newinputsmonedas = [...inputsMonedas];
+        let index = inputsMonedas.findIndex(e=> e.id = id)
+        newinputsmonedas[index].cerrar_no_efectivo = e.target.checked;
+        setInputMonedas(newinputsmonedas)
     }
     
 
@@ -106,7 +109,7 @@ useEffect(() => {
                             </Typography>
                         </Grid>
                         <Grid item xs={12} sm={12} >
-                            <FormControlLabel control={<Checkbox onChange={(el)=>{changeCheck(el,e.id_moneda_caja_moneda)}} />} label="Cerrar no efectivo" />
+                            <FormControlLabel control={<Checkbox onChange={(el)=>{changeCheck(el,e.id)}} />} label="Cerrar no efectivo" />
                         </Grid>
                     </Fragment>
                 ))
