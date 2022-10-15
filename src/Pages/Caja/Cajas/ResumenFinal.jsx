@@ -55,6 +55,7 @@ const ResumenFinal = () => {
               cajas.push({
                 id_moneda_caja_moneda: i.id_moneda_caja_moneda,
                 id_cajas_moneda: i.id_cajas_moneda,
+                cerrar_no_efectivo: i.cerrar_no_efectivo,
                 abreviatura_moneda: i.abreviatura_moneda,
                 nombre_moneda: i.nombre_moneda,
                 registros_movimientos,
@@ -62,7 +63,8 @@ const ResumenFinal = () => {
                 total_ingreso:0,
                 total_ingreso_no_efectivo:0,
                 total_egreso:0,
-                declarado:parseFloat(i.cantidad)
+                declarado:parseFloat(i.cantidad),
+
               })
             })
 

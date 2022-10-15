@@ -272,26 +272,26 @@ const CajasProvider = ({ children }) => {
 
     let detalles = "Cierre de caja. ";
     registros.forEach(e => {
+      let data = e.cerrar_no_efectivo ? {monto_cierre_caja:e.declarado} : {monto_cierre_caja:e.declarado,monto_no_efectivo:0}  
       promesas.push(APICALLER.update({
         token:token_user,table:"cajas_monedas",id: e.id_cajas_moneda,
-        data:{
-          monto_cierre_caja:e.declarado
-        }
+        data
       }))
       detalles += ` Declarado ${e.abreviatura_moneda}: ${e.declarado} . `;
 
-      console.log(e);
-      /* promesas.push(APICALLER.insert({
+      promesas.push(APICALLER.insert({
         table:"cajas_arqueos",token:token_user,data:{
+          id_moneda_arqueo: e.id_moneda_caja_moneda,
+          id_caja_arqueo: id,
+          id_user_arqueo: id_user,
           monto_efectivo_arqueo:e.declarado,
-          id_caja_arqueo: e.id_caja,
-          id_moneda_arqueo: e.id_moneda,
           monto_noefectivo_arqueo: e.total_ingreso_no_efectivo,
           tipo_arqueo:0,
           fecha_arqueo:funciones.getFechaHorarioString()
         }
-      })) */
+      }))
     });
+
     let datos_cierre = {
       id_caja_movimiento: id,
       id_moneda_movimiento: 0,
@@ -302,8 +302,8 @@ const CajasProvider = ({ children }) => {
       monto_sin_efectivo: 0,
       detalles_movimiento: detalles
     };
-
     promesas.push(APICALLER.insert({token:token_user,table:"cajas_movimientos",data:datos_cierre}));
+    
     let res = await Promise.all(promesas);
     if(res[0].response==="ok"){
       setDialogs({...dialogs,resumenfinal:false});

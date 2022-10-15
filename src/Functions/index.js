@@ -138,7 +138,7 @@ export const funciones = {
       },
       numberFormat: n=> {
         if(isNaN(n) || !n){
-          return " "
+          return "0"
         }
         return parseFloat(n).toLocaleString("de-DE")
       },
