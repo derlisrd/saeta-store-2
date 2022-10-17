@@ -75,7 +75,7 @@ const RegistroDialog = () => {
                     <Radio
                       checked={form.tipo_registro==="0"}
                       name="tipo_registro"
-                      value={form.tipo_registro}
+                      
                       onChange={onChange}
                       color="primary"
                     />
@@ -89,7 +89,7 @@ const RegistroDialog = () => {
                     <Radio
                       name="tipo_registro"
                       checked={form.tipo_registro==="1"}
-                      value={form.tipo_producto}
+                      
                       onChange={onChange}
                       color="primary"
                     />

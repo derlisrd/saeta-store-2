@@ -1,5 +1,5 @@
 
-import { Box } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import Menu from "../Components/Menu"
 import { useMenu } from "../Contexts/MenuProvider";
 import { useGlobalStyles } from "../Styles/GlobalStyles"

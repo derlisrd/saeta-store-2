@@ -50,7 +50,7 @@ export default function UserMenu(){
             <ListItemText primary={EMPRESA.nombre_empresa} />
           </ListItem>
           <ListItem
-            button divider
+            button 
             onClick={() => {navigate(env.BASEURL + "/cajas");}}
           >
             <ListItemIcon>
@@ -62,7 +62,7 @@ export default function UserMenu(){
             <ListItemIcon>
               <Icon>logout</Icon>
             </ListItemIcon>
-            <ListItemText primary={lang.cerrar} />
+            <ListItemText primary={lang.salir} />
           </ListItem>
         </List>
       </Menu>

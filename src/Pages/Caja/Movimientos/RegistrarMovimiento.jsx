@@ -1,4 +1,4 @@
-import {Dialog,DialogTitle,DialogContent,TextField,DialogActions,LinearProgress,Select,MenuItem,FormControl,InputLabel,Button,Zoom, Grid, Alert} from "@mui/material";
+import {Dialog,DialogTitle,DialogContent,TextField,DialogActions,LinearProgress,Select,MenuItem,FormControl,InputLabel,Button,Zoom, Grid, Alert, FormControlLabel, FormLabel, Radio} from "@mui/material";
 import { useCallback, useEffect, useState } from "react";
 import { APICALLER } from "../../../Services/api";
 import { useMovimientos } from "./MovimientosProvider";
@@ -30,6 +30,7 @@ const RegistrarMovimiento = () => {
     id_cajas_moneda: "",
     id_caja_movimiento: "",
     motivo_movimiento: "",
+    tipo_movimiento:"1"
   };
   const [formulario, setFormulario] = useState(initialFormulario);
 
@@ -228,6 +229,35 @@ const RegistrarMovimiento = () => {
             onChange={onChange}
           />
       </Grid>
+      <Grid item xs={12}>
+            <FormLabel component="legend">Tipo: </FormLabel>
+                <FormControlLabel
+                  value="1"
+                  control={
+                    <Radio
+                      checked={formulario.tipo_movimiento==="1"}
+                      name="tipo_movimiento"
+                      onChange={onChange}
+                      color="primary"
+                    />
+                  }
+                  label="EFECTIVO"
+                  labelPlacement="end"
+                />
+                <FormControlLabel
+                  value="0"
+                  control={
+                    <Radio
+                      name="tipo_movimiento"
+                      checked={formulario.tipo_movimiento==="0"}
+                      onChange={onChange}
+                      color="primary"
+                    />
+                  }
+                  label="NO EFECTIVO"
+                  labelPlacement="end"
+                />
+          </Grid>
       <Grid item xs={12}>
         <TextField
             label={lang.obs_detalles}

@@ -108,7 +108,7 @@ const ListaMovimientos = () => {
           name="hastaFecha"
         />
       </Grid>
-      <Grid item xs={12} sm={4} md={2}>
+      <Grid item xs={12} sm={4} md={3}>
         <FormControl fullWidth>
           <InputLabel>{lang.seleccione_caja}</InputLabel>
           <Select
@@ -127,7 +127,7 @@ const ListaMovimientos = () => {
           </Select>
         </FormControl>
       </Grid>
-      <Grid item xs={12} sm={4} md={2}>
+      <Grid item xs={12} sm={4} md={3}>
         <FormControl fullWidth>
           <InputLabel>{lang.seleccione_movimiento}</InputLabel>
           <Select
