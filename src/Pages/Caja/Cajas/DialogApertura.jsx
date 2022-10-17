@@ -45,19 +45,21 @@ const DialogApertura = () => {
           }
         } else { id_caja = formAbrir.id_caja }
         
-
-         //get monedas
-         let get = await APICALLER.get({table:"cajas_monedas",
-         fields:"monto_cierre_caja,nombre_moneda,abreviatura_moneda,id_cajas_moneda",
-         include:"monedas",on:"id_moneda,id_moneda_caja_moneda",where:`id_caja_moneda,=,${id_caja}`}
-         )
-         let newresult = [];
-         if(get.response==="ok") {
-           get.results.forEach(e=>{
-             newresult.push({...e,cantidad:e.monto_cierre_caja})
-           })
-           setInputsMonedas(newresult)
-         } else{ console.log(get)}
+        if(id_caja) {
+          let get = await APICALLER.get({table:"cajas_monedas",
+          fields:"monto_cierre_caja,nombre_moneda,abreviatura_moneda,id_cajas_moneda",
+          include:"monedas",on:"id_moneda,id_moneda_caja_moneda",where:`id_caja_moneda,=,${id_caja}`}
+          )
+          let newresult = [];
+          if(get.response==="ok") {
+            get.results.forEach(e=>{
+              newresult.push({...e,cantidad:e.monto_cierre_caja})
+            })
+            setInputsMonedas(newresult)
+          } else{ console.log(get)}
+        }
+        
+        
 
       }
       setLoading(false)
