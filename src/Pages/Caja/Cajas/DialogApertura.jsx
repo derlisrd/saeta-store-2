@@ -32,6 +32,7 @@ const DialogApertura = () => {
 
 
     const getDatas = useCallback(async()=>{
+      setLoading(false)
       if(dialogs.abrir){
         
         let id_caja;
@@ -58,9 +59,6 @@ const DialogApertura = () => {
             setInputsMonedas(newresult)
           } else{ console.log(get)}
         }
-        
-        
-
       }
       setLoading(false)
     },[dialogQuery,lista,dialogID,setFormAbrir,dialogs,formAbrir]);

@@ -272,10 +272,9 @@ const CajasProvider = ({ children }) => {
 
     let detalles = "Cierre de caja. ";
     registros.forEach(e => {
-      let data = e.cerrar_no_efectivo ? {monto_cierre_caja:e.declarado} : {monto_cierre_caja:e.declarado,monto_no_efectivo:0}  
+      let data = e.cerrar_no_efectivo ?  {monto_cierre_caja:e.declarado,monto_no_efectivo:0} : {monto_cierre_caja:e.declarado} ;  
       promesas.push(APICALLER.update({
-        token:token_user,table:"cajas_monedas",id: e.id_cajas_moneda,
-        data
+        token:token_user,table:"cajas_monedas",id: e.id_cajas_moneda,data
       }))
       detalles += ` Declarado ${e.abreviatura_moneda}: ${e.declarado} . `;
 
@@ -292,6 +291,7 @@ const CajasProvider = ({ children }) => {
       }))
     });
 
+    
     let datos_cierre = {
       id_caja_movimiento: id,
       id_moneda_movimiento: 0,

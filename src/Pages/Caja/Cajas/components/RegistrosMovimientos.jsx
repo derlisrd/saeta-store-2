@@ -11,7 +11,7 @@ const RegistrosMovimientos = ({ registro }) => {
       </Grid>
       <Grid item xs={4} sm={4}>
         <Typography variant="button">
-          {funciones.numberFormat(registro.cantidad)}
+          {funciones.numberFormat(registro.cantidad + registro.no_efectivo)}
         </Typography>
       </Grid>
     </>
