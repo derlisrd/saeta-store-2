@@ -169,13 +169,14 @@ const TemaProvider = ({children})=>{
           MuiListItem:{
             styleOverrides:{
               root:{
-                borderRadius:"10px",
+                borderRadius:"0 10px 10px 0",
                 transition:'all 0.02s linear',
                 "&.Mui-selected":{
                   backgroundColor: tema.mode==="light"? colores[tema.colors].primary.light : colores[tema.colors].primary.main,
                   "& span":{
                     /* fontWeight:"bold", */
-                    color:tema.mode==="light"? colores[tema.colors].primary.main : colorText
+                    color:tema.mode==="light"? colores[tema.colors].primary.main : colorText,
+                    borderLeft:`3px solid ${colores[tema.colors].primary.main}`,
                   }
                 },
                 "&:hover": {
