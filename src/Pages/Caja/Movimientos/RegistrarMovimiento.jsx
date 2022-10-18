@@ -51,7 +51,7 @@ const RegistrarMovimiento = () => {
         table: "cajas",include:'cajas_users,cajas_monedas,monedas',
         on: "id_caja_caja,id_caja,id_caja,id_caja_moneda,id_moneda_caja_moneda,id_moneda",
         where: `id_user_caja,=,${id_user},and,estado_caja,=,'open'`,
-        fields: "nombre_caja,id_caja,monto_caja_moneda,nombre_moneda,id_caja,id_cajas_moneda,id_moneda,id_cajas_moneda"}), 
+        fields: "nombre_caja,id_caja,monto_caja_moneda,monto_no_efectivo,nombre_moneda,id_caja,id_cajas_moneda,id_moneda,id_cajas_moneda"}), 
       APICALLER.get({ table: "cajas_registros",where:"show_registro,=,1" }),
       APICALLER.get({ table: "cajas",include:"cajas_users",on:"id_caja_caja,id_caja",where: `id_user_caja,=,${id_user},and,estado_caja,=,'open'`})
     ])
@@ -79,13 +79,15 @@ const RegistrarMovimiento = () => {
       return false;
     }
 
-   
-  
     
+    let tipo_movimiento = f.tipo_movimiento;
+
     let foundMoneda = listas.monedas.find( e=> e.id_cajas_moneda === f.id_cajas_moneda);
+    
+    
     let foundRegistro = listas.registros.find( e=> e.id_cajas_registro === f.id_tipo_registro);
     let id_moneda = foundMoneda.id_moneda
-    let cantidad_actual = parseFloat(foundMoneda.monto_caja_moneda);
+    let cantidad_actual = tipo_movimiento === 1 ? parseFloat(foundMoneda.monto_caja_moneda) :  parseFloat(foundMoneda.monto_no_efectivo);
     let cantidad_nueva = 0;
     
     
@@ -99,6 +101,7 @@ const RegistrarMovimiento = () => {
       setErrors({status:true,message: lang.no_hay_suficientes_fondos_en_caja})
       return false;
     }
+
     let datos_cajas_movimientos = {
       id_moneda_movimiento: id_moneda,
       id_caja_movimiento: f.id_caja_movimiento,
@@ -125,6 +128,10 @@ const RegistrarMovimiento = () => {
    }  
     setCargando(false);
   }
+
+
+
+
 
   useEffect(() => {
     const ca = new AbortController();
