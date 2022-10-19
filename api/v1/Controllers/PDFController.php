@@ -22,17 +22,23 @@ class PDFController {
         id_cliente_factura = id_cliente and
         id_factura = $id";
 
-        $pdf = Models::GET($query,"facturas");
+        $pdf = Models::GET_INTERNO($query,"facturas");
         $pdf = json_decode($pdf,true);
+        
         $df = ($pdf['results'][0]);
+
+
         $query_items = "SELECT nombre_producto,cantidad_producto,precio_producto_factura,porcentaje_impuesto 
         FROM facturas_items,productos,impuestos 
         WHERE 
         id_impuesto_factura = id_impuesto and
         id_producto_factura = id_producto and
         id_items_factura =  $id";
-        $items = Models::GET($query_items,"facturas_items");
+        
+        $items = Models::GET_INTERNO($query_items,"facturas_items");
         $items = json_decode($items,true);
+       
+       
         $items_results = $items['results'];
 
         $items_html = '';

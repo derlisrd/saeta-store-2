@@ -10,6 +10,7 @@ use PDO;
 class Models {
 
     
+    
     public static function GET($sql,$table){
 
         try {
@@ -33,7 +34,7 @@ class Models {
     }
     public static function GET_INTERNO($sql){
         try {
-            $stmt = DataBaseConnect::connect()->prepare($sql);
+            $stmt = DataBaseConnect::connect_interno()->prepare($sql);
             $stmt->execute();
             $results = $stmt->fetchAll(PDO::FETCH_CLASS);
             DataBaseConnect::CloseConnect();
