@@ -40,6 +40,7 @@ class Controllers {
                 $id = $tableArray[2];
                 if(isset($id)){
                     $datos = ["id"=>$id];
+                    
                     return PDFController::factura($datos);
                 }
                 return false;

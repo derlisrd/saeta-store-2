@@ -21,13 +21,20 @@ class PDFController {
         id_caja_factura = id_caja_empresa and
         id_cliente_factura = id_cliente and
         id_factura = $id";
+        
+       
 
         $pdf = Models::GET_INTERNO($query,"facturas");
-        $pdf = json_decode($pdf,true);
         
-        $df = ($pdf['results'][0]);
+        
 
+        //$pdf = json_encode($pdf);
 
+        //$df = ($pdf['results'][0]);
+        $df = $pdf[0];
+        
+        
+        
         $query_items = "SELECT nombre_producto,cantidad_producto,precio_producto_factura,porcentaje_impuesto 
         FROM facturas_items,productos,impuestos 
         WHERE 
@@ -36,10 +43,10 @@ class PDFController {
         id_items_factura =  $id";
         
         $items = Models::GET_INTERNO($query_items,"facturas_items");
-        $items = json_decode($items,true);
-       
-       
-        $items_results = $items['results'];
+
+        $items_results = $items;
+
+        
 
         $items_html = '';
         $subtotal0 = 0;

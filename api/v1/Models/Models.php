@@ -36,7 +36,7 @@ class Models {
         try {
             $stmt = DataBaseConnect::connect_interno()->prepare($sql);
             $stmt->execute();
-            $results = $stmt->fetchAll(PDO::FETCH_CLASS);
+            $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
             DataBaseConnect::CloseConnect();
             return($results);
         } catch (\Throwable $th) {
