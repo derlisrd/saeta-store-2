@@ -9,7 +9,7 @@ const UtilsMenu = () => {
   const {EMPRESA} = useDatosEmpresa()
   return (
     <Stack direction="row"  alignItems="center">
-      <Typography sx={{ display:{sm:"none",md:"inherit"} }} variant="subtitle2"> {EMPRESA.nombre_empresa ?? ''}</Typography>
+      <Typography sx={{ display:{xs:"none",md:"inherit"} }} variant="button"> {EMPRESA.nombre_empresa ?? ''}</Typography>
       <LangMenu />
       <ChangeThemeMenu />  
       <UserMenu />    

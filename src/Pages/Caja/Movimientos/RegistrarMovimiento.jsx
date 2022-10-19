@@ -80,7 +80,7 @@ const RegistrarMovimiento = () => {
     }
 
     
-    let tipo_movimiento = f.tipo_movimiento;
+    let tipo_movimiento = parseInt(f.tipo_movimiento);
 
     let foundMoneda = listas.monedas.find( e=> e.id_cajas_moneda === f.id_cajas_moneda);
     
@@ -88,32 +88,39 @@ const RegistrarMovimiento = () => {
     let foundRegistro = listas.registros.find( e=> e.id_cajas_registro === f.id_tipo_registro);
     let id_moneda = foundMoneda.id_moneda
     let cantidad_actual = tipo_movimiento === 1 ? parseFloat(foundMoneda.monto_caja_moneda) :  parseFloat(foundMoneda.monto_no_efectivo);
-    let cantidad_nueva = 0;
+    let cantidad_nueva;
     
     
     if( parseInt(foundRegistro.tipo_registro) === 1){
       cantidad_nueva = parseFloat(f.monto_movimiento) + cantidad_actual;
     }
+
     if( parseInt(foundRegistro.tipo_registro) === 0){
       cantidad_nueva =  cantidad_actual - parseFloat(formulario.monto_movimiento);
     }
+
     if(cantidad_nueva < 0){
       setErrors({status:true,message: lang.no_hay_suficientes_fondos_en_caja})
       return false;
     }
+
+    
 
     let datos_cajas_movimientos = {
       id_moneda_movimiento: id_moneda,
       id_caja_movimiento: f.id_caja_movimiento,
       id_user_movimiento: id_user,
       id_tipo_registro: f.id_tipo_registro,
-      monto_movimiento: f.monto_movimiento,
-      detalles_movimiento: f.motivo_movimiento,
+      monto_movimiento: tipo_movimiento === 1 ? f.monto_movimiento : 0,
+      monto_sin_efectivo: tipo_movimiento === 0 ? f.monto_movimiento : 0,
+      detalles_movimiento: f.motivo_movimiento ,
       fecha_movimiento: funciones.getFechaHorarioString(),
     };
-    let datos_cajas_monedas = {
-      monto_caja_moneda : cantidad_nueva
-    }
+
+    
+    let datos_cajas_monedas = tipo_movimiento === 1 ? { monto_caja_moneda : cantidad_nueva} : { monto_no_efectivo : cantidad_nueva}
+
+    
 
     setCargando(true);
     let promesas = [
@@ -167,7 +174,7 @@ const RegistrarMovimiento = () => {
         }
       </Grid>
 
-      <Grid item xs={12}>
+      <Grid item xs={12} sm={6}>
       <FormControl fullWidth>
           <InputLabel >
             {lang.seleccione_caja}
@@ -185,7 +192,24 @@ const RegistrarMovimiento = () => {
           </Select>
         </FormControl>
       </Grid>
-            
+      <Grid item xs={12} sm={6}>
+        <FormControl fullWidth>
+            <InputLabel>
+              {lang.selecciona_moneda}
+            </InputLabel>
+            <Select
+              name="id_cajas_moneda"
+              value={formulario.id_cajas_moneda}
+              onChange={onChange}
+            >
+              {listaCajasMonedasFiltrada.map((d, index) => (
+                <MenuItem key={index} value={d.id_cajas_moneda}>
+                  {d.nombre_moneda} 
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+      </Grid>     
 
       <Grid item xs={12}>
         <FormControl fullWidth>
@@ -206,24 +230,7 @@ const RegistrarMovimiento = () => {
             </Select>
           </FormControl>
       </Grid>
-      <Grid item xs={12}>
-        <FormControl fullWidth>
-            <InputLabel>
-              {lang.selecciona_moneda}
-            </InputLabel>
-            <Select
-              name="id_cajas_moneda"
-              value={formulario.id_cajas_moneda}
-              onChange={onChange}
-            >
-              {listaCajasMonedasFiltrada.map((d, index) => (
-                <MenuItem key={index} value={d.id_cajas_moneda}>
-                  {d.nombre_moneda} 
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-      </Grid>
+      
       <Grid item xs={12}>
         <TextField
             fullWidth

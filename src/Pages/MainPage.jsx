@@ -13,7 +13,9 @@ const MainPage = ({children}) => {
   const classes = useGlobalStyles();
   const useStyles = makeStyles((theme)=>({
     MainPaperExtended:{ // menu abierto en modo wide ejej
-      margin:"0 20px",padding:theme.spacing(1),minHeight:`calc(100vh - ${theme.mixins.toolbar.minHeight}px)`,
+      margin:"15px 15px 0 15px",
+      /* padding:theme.spacing(1), */
+      minHeight:`calc(100vh - ${theme.mixins.toolbar.minHeight}px)`,
       paddingTop:"40px",
       marginTop:theme.mixins.toolbar.minHeight,
       [theme.breakpoints.up("lg")]: {
@@ -27,7 +29,7 @@ const MainPage = ({children}) => {
   return (
     <>
     <Menu />
-      <Box className={activeBigMenu ? style.MainPaperExtended : classes.MainPaper} padding={3}>
+      <Box className={activeBigMenu ? style.MainPaperExtended : classes.MainPaper} paddingY={1} paddingX={0}>
         {children}
       </Box>
     </>

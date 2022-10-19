@@ -94,8 +94,8 @@ CREATE TABLE IF NOT EXISTS `cajas_movimientos` (
   `id_caja_movimiento` int(11) NOT NULL COMMENT 'con id_caja de caja',
   `id_user_movimiento` int(11) NOT NULL COMMENT 'con id_user',
   `id_tipo_registro` int(11) NOT NULL COMMENT 'con id_cajas_registro',
-  `monto_movimiento` int(11) NOT NULL COMMENT 'valor ingreso/egreso',
-  `monto_sin_efectivo` int(11) NOT NULL DEFAULT 0 COMMENT 'ventas sin efectivo',
+  `monto_movimiento` float NOT NULL COMMENT 'valor ingreso/egreso',
+  `monto_sin_efectivo` float NOT NULL DEFAULT 0 COMMENT 'ventas sin efectivo',
   `detalles_movimiento` text COMMENT 'motivo y detalles del registro',
   `fecha_movimiento` datetime NOT NULL DEFAULT current_timestamp(),
   `updated_at` datetime DEFAULT current_timestamp()
