@@ -7,6 +7,7 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { useInformes } from "./InformesProvider";
 import { funciones } from '../../../Functions';
+import { Typography } from "@mui/material";
 
 export default function Ingresos() {
   const { listaMensual } = useInformes();
@@ -22,7 +23,6 @@ export default function Ingresos() {
         <TableHead>
           <TableRow>
             <TableCell>Descripción</TableCell>
-            <TableCell align="right">Fecha</TableCell>
             <TableCell align="right">Monto</TableCell>
             <TableCell align="right">Sin efectivo</TableCell>
           </TableRow>
@@ -31,11 +31,8 @@ export default function Ingresos() {
           {FilterArray.map((row, i) => (
             <TableRow key={i}>
               <TableCell component="th" scope="row">
-                {row.detalles_movimiento}
-              </TableCell>
-              <TableCell align="right">
-                {" "}
-                {funciones.fechaActualDMY(row.fecha_movimiento)}
+                <Typography variant="body1" display="block"> {row.detalles_movimiento}</Typography>
+                <Typography variant="caption" display="block"> Fecha: {funciones.fechaActualDMY(row.fecha_movimiento)}</Typography>
               </TableCell>
               <TableCell align="right">
                 {" "}

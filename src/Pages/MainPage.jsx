@@ -1,5 +1,5 @@
 
-import { Box } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import Menu from "../Components/Menu"
 import { useMenu } from "../Contexts/MenuProvider";
 import { useGlobalStyles } from "../Styles/GlobalStyles"
@@ -31,6 +31,9 @@ const MainPage = ({children}) => {
     <Menu />
       <Box className={activeBigMenu ? style.MainPaperExtended : classes.MainPaper}  >
         {children}
+        <Box p={1} m={1}>
+          <Typography component="div" sx={{ position:"fixed", bottom:10, right:15, opacity:"0.2" }} variant="subtitle2">Desarrollado por el equipo de 9 tres cuarto</Typography>
+        </Box>
       </Box>
     </>
   )
