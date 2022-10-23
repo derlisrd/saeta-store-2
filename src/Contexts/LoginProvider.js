@@ -89,6 +89,7 @@ const LoginProvider = ({children}) => {
 
         if(res.response==="ok" && res.found>0){
             let dataMonedas = mon.results;
+            
             let dataEmpresa = emp.results[0];
             let today = new Date();
             let fechaLicencia = funciones.splitFecha(dataEmpresa.licencia)

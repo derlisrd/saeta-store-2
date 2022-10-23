@@ -15,6 +15,8 @@ SET time_zone = "-04:00";
 DROP TABLE IF EXISTS `agendas`;
 CREATE TABLE IF NOT EXISTS `agendas` (
   `id_agenda` int(11) NOT NULL AUTO_INCREMENT,
+  `id_user_agenda` INT NOT NULL COMMENT 'id_user',
+  `id_cliente_agenda` INT NULL COMMENT 'id_cliente',
   `descripcion_agenda` varchar(200) NOT NULL,
   `fecha_inicio_agenda` date NOT NULL,
   `fecha_fin_agenda` date NOT NULL,
@@ -54,8 +56,10 @@ DROP TABLE IF EXISTS `cajas_arqueos`;
 CREATE TABLE IF NOT EXISTS `cajas_arqueos` (
   `id_cajas_arqueo` int(11) NOT NULL AUTO_INCREMENT   PRIMARY KEY ,
   `id_caja_arqueo` int(11) NOT NULL COMMENT 'con id_caja',
+  `id_moneda_arqueo` INT NOT NULL COMMENT 'id_moneda',
   `id_user_arqueo` int(11) NOT NULL COMMENT 'id_user',
-  `monto_arqueo` float NOT NULL,
+  `monto_efectivo_arqueo` float NOT NULL,
+  `monto_noefectivo_arqueo` FLOAT NOT NULL,
   `tipo_arqueo` int(1) NOT NULL COMMENT '0=cierre 1=aper',
   `fecha_arqueo` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'fecha de movimiento',
   `updated_at` datetime DEFAULT CURRENT_TIMESTAMP
@@ -191,12 +195,11 @@ INSERT INTO `categorias` (`id_categoria`, `id_padre_categoria`, `nombre_categori
 DROP TABLE IF EXISTS `clientes`;
 CREATE TABLE IF NOT EXISTS `clientes` (
   `id_cliente` int(11) NOT NULL AUTO_INCREMENT,
-  `ruc_cliente` varchar(20) DEFAULT NULL,
+  `ruc_cliente` varchar(20),
   `nombre_cliente` varchar(150) NOT NULL,
-  `nacimiento_cliente` date DEFAULT CURRENT_TIMESTAMP,
-  `telefono_cliente` varchar(150) NOT NULL,
+  `telefono_cliente` varchar(150) DEFAULT  NULL,
   `email_cliente` varchar(50) DEFAULT NULL,
-  `direccion_cliente` text,
+  `direccion_cliente` text DEFAULT NULL,
   `tipo_cliente` int(11) NOT NULL DEFAULT '3' COMMENT '1 mayorista 2 minorista 3 casual',
   `updated_at` datetime DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id_cliente`)
@@ -206,8 +209,8 @@ CREATE TABLE IF NOT EXISTS `clientes` (
 -- Volcado de datos para la tabla `clientes`
 --
 
-INSERT INTO `clientes` (`id_cliente`, `ruc_cliente`, `nombre_cliente`, `nacimiento_cliente`, `telefono_cliente`, `email_cliente`, `direccion_cliente`, `tipo_cliente`, `updated_at`) VALUES
-(1, 'X', 'SIN NOMBRE', NULL, '0', NULL, NULL, 3, '2022-07-05 01:31:43');
+INSERT INTO `clientes` (`id_cliente`, `ruc_cliente`, `nombre_cliente`, `telefono_cliente`, `email_cliente`, `direccion_cliente`, `tipo_cliente`, `updated_at`) VALUES
+(1, 'X', 'SIN NOMBRE', '0', NULL, NULL, 3, '2022-07-05 01:31:43');
 
 -- --------------------------------------------------------
 
@@ -1082,13 +1085,8 @@ INSERT INTO `users_rols` (`id_users_rol`, `roluser_permiso`, `prioridad_permiso`
 COMMIT;
 
 
-ALTER TABLE `agendas` ADD `id_user_agenda` INT NOT NULL COMMENT 'id_user' AFTER `id_agenda`, ADD `id_cliente_agenda` INT NULL COMMENT 'id_cliente' AFTER `id_user_agenda`;
 
 
-ALTER TABLE `productos_vendidos` ADD `tipo_producto_vendido` TINYINT(1) NOT NULL AFTER `cantidad_vendido`;
 
 
-ALTER TABLE `cajas_arqueos` CHANGE `monto_arqueo` `monto_efectivo_arqueo` FLOAT NOT NULL;
-ALTER TABLE `cajas_arqueos` ADD `monto_noefectivo_arqueo` FLOAT NOT NULL AFTER `monto_efectivo_arqueo`;
-ALTER TABLE `cajas_arqueos` ADD `id_moneda_arqueo` INT NOT NULL COMMENT 'id_moneda' AFTER `id_caja_arqueo`;
 ALTER TABLE `clientes` ADD INDEX(`ruc_cliente`);
