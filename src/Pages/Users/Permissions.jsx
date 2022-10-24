@@ -22,11 +22,11 @@ const Permissions = () => {
         
         let data = {id_user_permiso:id_user,id_permiso_permiso:idPermiso}
         let res = await APICALLER.insert({table:`permisos_users`,data,token:token_user})
-        res.response!=="ok" && console.log(res)
+        !res.response && console.log(res)
       }
       else{
         let res = await APICALLER.delete({token:token_user,table:`permisos_users`,namecolumns:`id_user_permiso,id_permiso_permiso`,ids:`${id_user},${idPermiso}`})
-        res.response!=="ok" && console.log(res)
+        !res.response && console.log(res)
       }
       setCargando(false)
     };

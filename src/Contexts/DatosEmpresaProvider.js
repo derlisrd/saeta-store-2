@@ -31,7 +31,7 @@ const DatosEmpresaProvider = ({children}) => {
             APICALLER.get({table:'empresas'})
         ])
           let res = promise[0],emp = promise[1];
-          if(res.response==="ok" && emp.response==="ok"){
+          if(res.response && emp.response){
             SET_EMPRESA(emp.results[0])
             localStorage.setItem("dataEmpresa",JSON.stringify(emp.results[0]))
             let monedafiltrada = res.results.filter(e=> e.activo_moneda==="1" ||e.activo_moneda===1)

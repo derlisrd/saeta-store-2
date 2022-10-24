@@ -87,7 +87,7 @@ const LoginProvider = ({children}) => {
         let mon = promise[2];
         
 
-        if(res.response==="ok" && res.found>0){
+        if(res.response && res.found>0){
             let dataMonedas = mon.results;
             
             let dataEmpresa = emp.results[0];
@@ -105,7 +105,7 @@ const LoginProvider = ({children}) => {
                 login:true,
                 token_user:CifrarTexto(d.token_user),
                 username_user:CifrarTexto(d.username_user),
-                permisos: permisosData.response==="ok" ? permisosData.results : []
+                permisos: permisosData.response ? permisosData.results : []
             }
             
             setearLogin(datas,remember);
