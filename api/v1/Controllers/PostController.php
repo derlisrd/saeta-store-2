@@ -103,7 +103,7 @@ class PostController {
             }  
         }
         else{
-            echo JsonResponse::jsonResponseError("Error",200,"File no uploaded!");
+            echo JsonResponse::jsonResponseError(false,404,"File no uploaded!");
         }
        
     }

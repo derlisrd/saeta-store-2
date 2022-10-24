@@ -49,7 +49,7 @@ class AuthController {
                 // verificamos si la contra es igual
                 if (password_verify($password, $res[0]->password_user)) {
                     if($res[0]->estado_user==0){
-                        echo JsonResponse::jsonResponseError("Error",200,"User inactive");
+                        echo JsonResponse::jsonResponseError(true,403,"User inactive");
                     }else{
                         $data_pa_token = array(
                             "id_user" => $res[0]->id_user,
@@ -68,21 +68,21 @@ class AuthController {
                             "rol_user"=>$res[0]->rol_user,
                             "token_user" => $token,
                         );
-                        echo JsonResponse::jsonResponseGET(array($result),"ok",200,1);
+                        echo JsonResponse::jsonResponseGET(array($result),true,200,1);
                     }
                 } // si no es igual aumentamos los try intentos
                 else {
                     $try = $res[0]->try_user + 1;
                     $data = ["try_user" => $try];
                     PutController::UpdateTable(USERS_TABLE,$res[0]->id_user,json_encode($data,true),null,false);
-                    echo JsonResponse::jsonResponseError("Error",200,"Password invalid.");
+                    echo JsonResponse::jsonResponseError(false,403,"Password invalid.");
                     return;
                 }
             } else {
-                echo JsonResponse::jsonResponseError("Error",200,"Your accounts has be blocked.");
+                echo JsonResponse::jsonResponseError(false,403,"Your accounts has be blocked.");
             }
         } else {
-            echo JsonResponse::jsonResponseError("Error",200,"User doesn't exist.");
+            echo JsonResponse::jsonResponseError(false,404,"User doesn't exist.");
             return;
         }
 
@@ -112,7 +112,7 @@ class AuthController {
             $res = $stmt->fetchAll(PDO::FETCH_CLASS);
             return $res;
         } catch (\Throwable $th) {
-            echo JsonResponse::jsonResponseError("Error",200,$th->getMessage());
+            echo JsonResponse::jsonResponseError(false,404,$th->getMessage());
             return;
             die();
         }
@@ -131,7 +131,7 @@ class AuthController {
         }
         catch (\Throwable $th) {
             
-            echo JsonResponse::jsonResponseError("Error",200,$th->getMessage());
+            echo JsonResponse::jsonResponseError(false,404,$th->getMessage());
             return;
             die();
         }
@@ -150,20 +150,20 @@ class AuthController {
             
             if (!empty($res) && count($res) > 0 && $res != null) {
                 if (password_verify($password, $res[0]->password_user)) {
-                    echo JsonResponse::jsonResponseGET([],"ok",200,1,1);
+                    echo JsonResponse::jsonResponseGET([],true,200,1,1);
                 }
                 else{
-                    echo JsonResponse::jsonResponseError("Error",200,"Error password");
+                    echo JsonResponse::jsonResponseError(false,403,"Error password");
                 }
             }
             else{
-                echo JsonResponse::jsonResponseError("Error",200,"No user found");
+                echo JsonResponse::jsonResponseError(false,403,"No user found");
             }
             
 
         } catch (\Throwable $th) {
             
-            echo JsonResponse::jsonResponseError("Error",200,$th->getMessage());
+            echo JsonResponse::jsonResponseError(false,200,$th->getMessage());
             return;
             die();
         }
@@ -191,7 +191,7 @@ class AuthController {
             PostController::InsertTable(USERS_TABLE,$data);
         }
         else{
-            echo JsonResponse::jsonResponseError("Error",200,"Ya existe ese usuario.");
+            echo JsonResponse::jsonResponseError(true,200,"Ya existe ese usuario.");
         }
         
         
@@ -219,14 +219,14 @@ class AuthController {
                 if($json){
                     $data = self::GetData($token);
                     $response = self::GenerateToken($data);
-                    echo JsonResponse::jsonResponseGET($response,"ok",200,1); 
+                    echo JsonResponse::jsonResponseGET($response,true,200,1); 
                 }
                 return true;
             }
 
         } catch (\Exception $e) {
 
-            echo JsonResponse::jsonResponseError("Error",200,$e->getMessage());
+            echo JsonResponse::jsonResponseError(false,200,$e->getMessage());
             return false;
             die();
         }

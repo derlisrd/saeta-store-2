@@ -51,7 +51,7 @@ class JsonResponse {
             "response" =>$response,            
             "status"=> $status,
             "message"=>$message,
-            "error"=>false,
+            "error"=>!$response,
             "last_id"=>$last_id,
             "results"=>$results
         );
@@ -76,7 +76,7 @@ class JsonResponse {
                 "message"=>$message,
                 "response" =>$response,
                 "status"=> $status,
-                "error"=>false,
+                "error"=> !$response,
             );
         }
         
