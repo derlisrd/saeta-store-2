@@ -60,7 +60,7 @@ class JsonResponse {
     }
 
 
-    public static function jsonResponseError (string $response,int $status,String $message, string $sql=null){
+    public static function jsonResponseError ($response,int $status,String $message, string $sql=null){
         
         if($sql){
             $json = array(

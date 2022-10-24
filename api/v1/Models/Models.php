@@ -23,11 +23,11 @@ class Models {
             $stmt2->execute();
             $results2 = $stmt2->fetchAll(PDO::FETCH_ASSOC);
             $total = intval($results2[0]['COUNT(*)']);
-            return JsonResponse::jsonResponseGET($results,"ok",200,$found,$total);
+            return JsonResponse::jsonResponseGET($results,true,200,$found,$total);
             
             DataBaseConnect::CloseConnect();
         } catch (\Throwable $th) {
-            return JsonResponse::jsonResponseError("Error",404,$th->getMessage(),$sql);
+            return JsonResponse::jsonResponseError(false,404,$th->getMessage(),$sql);
             die();
         }
 
@@ -56,11 +56,11 @@ class Models {
             $stmt = DataBaseConnect::connect()->prepare("SELECT * from $table order by $idcolumn desc limit 1");
             $stmt->execute();
             $last = $stmt->fetchAll(PDO::FETCH_ASSOC);
-            return JsonResponse::jsonResponsePOST("ok",200,"Inserted",$last[0][$idcolumn],$last);
+            return JsonResponse::jsonResponsePOST(true,200,"Inserted",$last[0][$idcolumn],$last);
             DataBaseConnect::CloseConnect();
             
         } catch (\Throwable $th) {
-            return JsonResponse::jsonResponseError("Error",404,$th->getMessage(),$sql);
+            return JsonResponse::jsonResponseError(false,404,$th->getMessage(),$sql);
             die();
         }
 
@@ -74,10 +74,10 @@ class Models {
         try {
             $stmt = DataBaseConnect::connect()->prepare($sql);
             $stmt->execute();
-            return JsonResponse::jsonResponsePUT("ok",200,"Updated!");
+            return JsonResponse::jsonResponsePUT(true,200,"Updated!");
             DataBaseConnect::CloseConnect();
         } catch (\Throwable $th) {
-            return JsonResponse::jsonResponseError("Error",404,$th->getMessage(),$sql);
+            return JsonResponse::jsonResponseError(false,404,$th->getMessage(),$sql);
             die();
         }
 
@@ -89,10 +89,10 @@ class Models {
         try {
             $stmt = DataBaseConnect::connect()->prepare($sql);
             $stmt->execute();
-            return JsonResponse::jsonResponsePUT("ok",200,"Deleted!");
+            return JsonResponse::jsonResponsePUT(true,200,"Deleted!");
             DataBaseConnect::CloseConnect();
         } catch (\Throwable $th) {
-            return JsonResponse::jsonResponseError("Error",404,$th->getMessage(),$sql);
+            return JsonResponse::jsonResponseError(false,404,$th->getMessage(),$sql);
             die();
         }
 
