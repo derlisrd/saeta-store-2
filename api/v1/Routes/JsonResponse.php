@@ -14,7 +14,7 @@ class JsonResponse {
                 "response" =>$response,
                 "results"=>$results,
                 "status"=> $status,
-                "error"=>false,
+                "error"=>!$response,
                 "message"=>null
             );
         }
@@ -25,7 +25,7 @@ class JsonResponse {
                 "results"=>$results,
                 "status"=> $status,
                 "total"=>$total,
-                "error"=>false,
+                "error"=>!$response,
                 "message"=>null
             );
         }
@@ -39,7 +39,7 @@ class JsonResponse {
             "response" =>$response,            
             "status"=> $status,
             "message"=>$message,
-            "error"=>false,
+            "error"=>!$response,
         );
     
     return json_encode($json,http_response_code($status));
@@ -68,7 +68,7 @@ class JsonResponse {
                 "response" =>$response,
                 "status"=> $status,
                 "sql"=>$sql,
-                "error"=>false,
+                "error"=>!$response,
             );
         }
         else{

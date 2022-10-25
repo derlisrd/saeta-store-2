@@ -32,12 +32,12 @@ class Routes {
                 break;
 
                 default:
-                    print JsonResponse::jsonResponseError("Error",200,"Method invalid");
+                    print JsonResponse::jsonResponseError(false,404,"Method invalid");
                 break;
             }
         }
         else{
-            print JsonResponse::jsonResponseError("Error",200,"Method invalid");
+            print JsonResponse::jsonResponseError(false,404,"Method invalid");
         }
     }
 

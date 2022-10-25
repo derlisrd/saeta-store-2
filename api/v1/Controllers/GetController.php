@@ -25,7 +25,7 @@ class GetController {
 
         /*================================================================================================*/
         if(($where!==null) && count($where)<3 ){
-            echo JsonResponse::jsonResponseError("Error",404,"An error has occurred in where params.");
+            echo JsonResponse::jsonResponseError(false,404,"An error has occurred in where params.");
             return;
         }
         else{

@@ -68,13 +68,13 @@ class Controllers {
                     GetController::GetTabla($table,$include,$on,$fields,$where,$sort,$page,$filters);
                 }
                 else{
-                    if($TOKEN===null) { echo  JsonResponse::jsonResponseError("Error",404,"Token invalid"); }
+                    if($TOKEN===null) { echo  JsonResponse::jsonResponseError(false,404,"Token invalid"); }
                 }
             }
             
         }
         else{
-            echo JsonResponse::jsonResponseError("Error",404,"Not found");
+            echo JsonResponse::jsonResponseError(false,404,"Not found");
             
         }
         
@@ -119,7 +119,7 @@ class Controllers {
                 AuthController::UpdatePassword($data);
             }
             else{
-                echo JsonResponse::jsonResponseError("Error",404,"No method exits");
+                echo JsonResponse::jsonResponseError(false,404,"No method exits");
             }
 
         }
@@ -132,7 +132,7 @@ class Controllers {
                     PostController::UploadImages($_FILES,$_POST);
                 }
                 else{
-                    if($TOKEN===null) { echo  JsonResponse::jsonResponseError("Error",404,"Token invalid"); }
+                    if($TOKEN===null) { echo  JsonResponse::jsonResponseError(false,404,"Token invalid"); }
                 }
             }
             else{
@@ -141,7 +141,7 @@ class Controllers {
                     PostController::InsertTable($table,$data);
                 }
                 else{
-                    if($TOKEN===null) { echo  JsonResponse::jsonResponseError("Error",404,"Token invalid"); }
+                    if($TOKEN===null) { echo  JsonResponse::jsonResponseError(false,404,"Token invalid"); }
                 }
             }
             
@@ -169,7 +169,7 @@ class Controllers {
             PutController::UpdateTable($table,$id,$data,$set);
         }
         else{
-            if($TOKEN===null) { echo  JsonResponse::jsonResponseError("Error",404 || !empty($_GET['token']),"Token invalid"); }
+            if($TOKEN===null) { echo  JsonResponse::jsonResponseError(false,404 || !empty($_GET['token']),"Token invalid"); }
         }
 
         
@@ -207,7 +207,7 @@ class Controllers {
             }
         }  
         else{
-            if($TOKEN===null) { echo  JsonResponse::jsonResponseError("Error",404,"Token invalid"); }
+            if($TOKEN===null) { echo  JsonResponse::jsonResponseError(false,404,"Token invalid"); }
         } 
 
     } 
