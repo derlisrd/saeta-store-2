@@ -68,7 +68,7 @@ const InformesProvider = ({ children }) => {
     })])
     //console.log(promesa);
     let res = promesa[0];
-    if (res.response === "ok") {
+    if (res.response ) {
       let sumaIngresoDia = 0;
       let sumaEgresoDia = 0;
       setLista(res.results);  
@@ -101,7 +101,7 @@ const InformesProvider = ({ children }) => {
       // RESULTADO DE MES
     const resm = promesa[1];
 
-    if (resm.response === "ok") {
+    if (resm.response ) {
       setListaMensual(resm.results);
       let datosIngresos = [];
       let datosEgresos = [];

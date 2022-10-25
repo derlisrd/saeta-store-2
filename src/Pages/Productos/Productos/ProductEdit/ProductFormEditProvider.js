@@ -78,7 +78,7 @@ const ProductFormEditProvider = (props) => {
       if(code===formulario.codigo_producto) return false;
       let res = await APICALLER.get({table: `productos`,where: `codigo_producto,=,'${formulario.codigo_producto}'`,fields: `id_producto`});
   
-      if (res.response === "ok") {
+      if (res.response ) {
         if (res.found > 0) {
           if(res.results[0].id_producto === id){
             setSnack({open:false,id_code:"",mensaje:"",severity:"success",send:true});
@@ -103,7 +103,7 @@ const ProductFormEditProvider = (props) => {
        if(borrar){
          setCargas({main:false,guardar:true});
           let res = await APICALLER.deleteImage({table:"productos_images",path:id,token:token_user,idImage:idImage});
-         if(res.response==="ok"){
+         if(res.response){
            swal({text:lang.borrado_correctamente,timer:1200,icon:"success"});
           }else{
             console.log(res);
@@ -156,7 +156,7 @@ const ProductFormEditProvider = (props) => {
               portada = "0";
             })
           }
-          if(res.response==="ok"){
+          if(res.response){
             swal({text:"Actualizado correctamente",icon:'success',timer:2000}).then(()=>{
               navigate.to(`productos`);
             });
@@ -180,7 +180,7 @@ const ProductFormEditProvider = (props) => {
       })])
 
      
-      if(re[1].response==='ok' && re[1].found>0){ 
+      if(re[1].response && re[1].found>0){ 
         let sto = localStorage.getItem("dataProductos");
         if(sto===null){
           let va = await Promise.all([

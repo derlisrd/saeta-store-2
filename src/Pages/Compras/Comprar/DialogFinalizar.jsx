@@ -53,7 +53,7 @@ const DialogFinalizar = () => {
         
          let res = await APICALLER.insert({table:"compras",data:nform,token:token_user})
          
-        if(res.response==="ok"){
+        if(res.response){
           let id = res.last_id;
           let promises = [];
           compras.items.forEach(e => {

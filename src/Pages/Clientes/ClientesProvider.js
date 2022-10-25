@@ -48,7 +48,7 @@ const ClientesProvider = ({ children }) => {
     };
     let res = await APICALLER.get(config);
     setPage(0);
-    if (res.results.length > 0 && res.response === "ok") {
+    if (res.results.length > 0 && res.response ) {
       setLista(res.results);
     }
     setCargando(false);
@@ -84,7 +84,7 @@ const ClientesProvider = ({ children }) => {
       data: f,
       token: token_user,
     });
-    res.response==='ok' ? swal({text:lang.agregado_correctamente,timer:1300,icon:"success"}) : console.log(res);
+    res.response ? swal({text:lang.agregado_correctamente,timer:1300,icon:"success"}) : console.log(res);
     setFormulario(initialFormulario)
     setDialogs({form:false})
     getLista();
@@ -104,7 +104,7 @@ const ClientesProvider = ({ children }) => {
       token: token_user,
       id: f.id_cliente,
     });
-    res.response==='ok' ? swal({text:lang.actualizado_correctamente,timer:1300,icon:"success"}) : console.log(res);
+    res.response ? swal({text:lang.actualizado_correctamente,timer:1300,icon:"success"}) : console.log(res);
     setDialogs({form:false})
     setFormulario(initialFormulario)
     getLista();
@@ -129,7 +129,7 @@ const ClientesProvider = ({ children }) => {
           token: token_user,
         });
 
-        if (res.response === "ok") {
+        if (res.response) {
           //ListarDeNuevo();
           let array = [...lista];
           let index = lista.findIndex((e) => e.id_cliente === id_cliente);
@@ -158,7 +158,7 @@ const ClientesProvider = ({ children }) => {
       pagesize: limite,
     };
     let res = await APICALLER.get(data);
-    if (res.response === "ok") {
+    if (res.response) {
       setLista(res.results);
       setCountTotal(res.total)
       

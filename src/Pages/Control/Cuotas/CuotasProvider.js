@@ -17,7 +17,7 @@ const CuotasProvider = ({children}) => {
   const getLista = useCallback(async()=>{
     setCargando(true);
     let res = await APICALLER.get({table:"cuotas"});
-    res.response==="ok" ? setLista(res.results) : console.log(res);
+    res.response ? setLista(res.results) : console.log(res);
     setCargando(false)
   },[]);
 
@@ -45,7 +45,7 @@ const CuotasProvider = ({children}) => {
       }
       setDialogs({form:false});
       setForm(initialForm)
-      if(res.response==="ok"){
+      if(res.response){
         swal({text,timer:1400,icon:"success"});
         getLista();
       }

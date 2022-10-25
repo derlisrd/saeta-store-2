@@ -16,7 +16,7 @@ function DialogDepositos() {
         let nombre = name.current.value;
         if(nombre!==""){
         let res = await APICALLER.insert({table:'depositos',data:{nombre_deposito:nombre},token:token_user})
-        if(res.response==="ok"){
+        if(res.response){
             let nuevo = {id_deposito: res.last_id, nombre_deposito:nombre}
             list.depositos.push(nuevo);
             form.id_deposito_producto = res.last_id;

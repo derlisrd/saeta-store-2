@@ -23,7 +23,7 @@ const DialogMontos = () => {
                 fields:"nombre_moneda,monto_caja_moneda,monto_no_efectivo",
                 where:`id_caja_moneda,=,${idCaja}`
             })
-            res.response==="ok" ? setLista(res.results) : console.log(res);
+            res.response ? setLista(res.results) : console.log(res);
             setLoading(false)
         }
     },[dialogs.montos,idCaja])

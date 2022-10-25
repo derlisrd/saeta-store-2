@@ -38,7 +38,7 @@ const TransferenciasForm = () => {
     setListaProductos([]);
     let id_producto = value.id_producto; let codigo_producto = value.codigo_producto; let nombre_producto = value.nombre_producto;
     let res = await APICALLER.get({table:'productos_depositos',include:'depositos',on:'id_deposito_deposito,id_deposito',where:`id_producto_deposito,=,${id_producto}`});
-    if(res.response==='ok'){
+    if(res.response){
       setFormulario({
         id_producto,codigo_producto,nombre_producto,stock:res.results
       });

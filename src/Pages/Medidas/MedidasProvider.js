@@ -31,7 +31,7 @@ const MedidasProvider = ({ children }) => {
     if (form.id_unidad_medida === "") {
       delete form.id_unidad_medida;
       let res = await APICALLER.insert({ table, data, token });
-      res.response === "ok"
+      res.response 
         ? swal({ text: lang.agregado_correctamente, icon: "success", timer: 1800 })
         : console.log(res);
     } else {
@@ -41,7 +41,7 @@ const MedidasProvider = ({ children }) => {
         token,
         id: form.id_unidad_medida,
       });
-      res.response === "ok"
+      res.response 
         ? swal({
             text: lang.editado_correctamente,
             icon: "success",
@@ -55,7 +55,7 @@ const MedidasProvider = ({ children }) => {
   const getLista = useCallback(async () => {
     //setCargando(true)
     var res = await APICALLER.get({ table: "unidad_medidas" });
-    res.response === "ok" ? setLista(res.results) : console.log(res);
+    res.response  ? setLista(res.results) : console.log(res);
     setCargando(false);
   }, []);
 

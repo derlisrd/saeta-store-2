@@ -22,13 +22,13 @@ const RegistroDialog = () => {
       if(form.id_cajas_registro === ''){
         delete form.id_cajas_registro;
         let res = await APICALLER.insert({table:'cajas_registros',data:form,token:token_user});
-        if(res.response === 'ok'){
+        if(res.response ){
           swal({icon:'success',timer:1500,text:'Agregado correctamente'});
         }else{ console.log(res)}
       }else{
         let res = await APICALLER.update({table:'cajas_registros',
         data:form,id:form.id_cajas_registro,token:token_user});
-        if(res.response === 'ok'){
+        if(res.response){
           swal({icon:'success',timer:1500,text:'Actualizado correctamente'});
         }else{ console.log(res)}
       }

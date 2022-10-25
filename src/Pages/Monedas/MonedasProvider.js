@@ -16,7 +16,7 @@ const MonedasProvider = ({children}) => {
         const local = localStorage.getItem("dataMonedas");
         if(local===null){
           const res = await APICALLER.get({table:`monedas`})
-          if(res.response==="ok" ){
+          if(res.response ){
             let result = res.results;
             let moneda= result.filter(e=> parseInt(e.activo_moneda)===1)
             setLista(result)

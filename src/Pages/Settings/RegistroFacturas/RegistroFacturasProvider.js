@@ -25,7 +25,7 @@ const RegistroFacturasProvider = ({ children }) => {
       data: form,
       token: token_user,
     });
-    if (res.response === "ok") {
+    if (res.response ) {
       getDatas();
       swal({icon:"success", text:lang.registrado_correctamente, timer:1200})
       localStorage.removeItem("facturasStorage");
@@ -42,8 +42,8 @@ const RegistroFacturasProvider = ({ children }) => {
     
     let fac = res[1],
     caj = res[0];
-    fac.response==='ok'? setListaFacturas(fac.results) : console.log(fac);
-    caj.response==='ok'? setListaCajas(caj.results) : console.log(caj);
+    fac.response ? setListaFacturas(fac.results) : console.log(fac);
+    caj.response ? setListaCajas(caj.results) : console.log(caj);
     setCargando({lista:false,save:false})
   }, []);
 

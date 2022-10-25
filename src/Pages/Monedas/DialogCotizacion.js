@@ -42,7 +42,7 @@ const DialogCotizacion = () => {
       data: data,
       token: token_user,
     });
-     if (res.response === "ok") {
+     if (res.response ) {
       let index = lista.findIndex(i => i.id_moneda === datosMonedas.id_moneda);
       let array = [...lista];
       array[index].valor_moneda = data.valor_moneda;

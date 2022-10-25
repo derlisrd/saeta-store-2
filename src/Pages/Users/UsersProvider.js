@@ -26,7 +26,7 @@ function UsersProvider ({children}){
         let res = await APICALLER.get({table:'users',token:token_user,where:`username_user,=,'${f.username_user}',or,email_user,=,'${f.email_user}'`});
 
         
-         if(res.response==="ok"){
+         if(res.response){
             setCargas({lista:false,guardar:false})
             return res.found;
         } 
@@ -77,10 +77,10 @@ function UsersProvider ({children}){
         if(pregunta){
             let resp = await confirmPassword({})
             
-           if(resp.response==="ok"){
+           if(resp.response){
             setCargas({...cargas,all:true})
             let res = await Promise.all([APICALLER.delete({table: "users",id: ID,token: token_user}),APICALLER.delete({table:'permisos_users',namecolumns:`id_user_permiso`,ids:ID,token:token_user})]);
-                if(res[0].response==="ok"){
+                if(res[0].response){
                     setCargas({...cargas,all:false})
                     swal({icon:'success',timer:2000,text:lang.borrado_correctamente});
                     getLista()
@@ -100,10 +100,10 @@ function UsersProvider ({children}){
         let resp = await confirmPassword({})
         setCargas({...cargas,all:true})
 
-        if(resp.response==="ok"){
+        if(resp.response){
             
             let res = await APICALLER.register({ datos:f });
-            if(res.response==='ok'){
+            if(res.response){
                 setCargas({...cargas,all:false})
                 swal({icon:'success',timer:2000,text:lang.agregado_correctamente});
                 getLista()
@@ -124,10 +124,10 @@ function UsersProvider ({children}){
         setCargas({...cargas,all:true})
         let resp = await confirmPassword({})
 
-        if(resp.response==="ok"){
+        if(resp.response){
             
             let res = await APICALLER.update({ table:'users',token: token_user,data: f,id:f.id_user});
-            if(res.response==='ok'){
+            if(res.response){
                 setCargas({...cargas,all:false})
                 swal({icon:'success',timer:2000,text:lang.actualizado_correctamente});
                 setCargas({...cargas,all:false})
@@ -152,10 +152,10 @@ function UsersProvider ({children}){
         //console.log(f,formulario);
         let resp = await confirmPassword({user,pass})
 
-        if(resp.response==="ok"){
+        if(resp.response){
             let data = {password_user: passnew,id_user: formulario.id_user}
             let res = await APICALLER.updatePassword(data);
-            if(res.response==="ok"){
+            if(res.response){
               swal({icon:"success",text:lang.long_contrasena_cambiado,timer:6000});
               setCargas({...cargas,all:false})
             }
@@ -189,7 +189,7 @@ function UsersProvider ({children}){
         let user = promises[0];
         let rol = promises[1];
         let per = promises[2];
-        if(user.response==='ok' && rol.response==='ok'){
+        if(user.response && rol.response){
             setLista({
                 users:user.results,
                 rols:rol.results,

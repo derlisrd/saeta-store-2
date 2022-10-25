@@ -145,14 +145,14 @@ const VentasProvider = ({ children }) => {
 
     if (tipoFactura === 0 || tipoFactura===3) {
       
-      if (nrorec.response === "ok" && nrorec.found>0) {
+      if (nrorec.response  && nrorec.found>0) {
         LASTNROFACTURA = nrorec.results[0].last_nro_recibo;
         let idr = nrorec.results[0].id_empresa_recibo;
         APICALLER.update({table: "empresa_recibos",token: token_user,id:idr, data: {last_nro_recibo: parseInt(LASTNROFACTURA) + 1} });
       }
     } else {
       
-      if (nrofac.response === "ok" && nrofac.found>0) {
+      if (nrofac.response  && nrofac.found>0) {
         LASTNROFACTURA = parseInt(nrofac.results[0].last_nro_factura);
         let LASTNROFACTURADECAJA = parseInt(nrofac.results[0].nro_fin_factura);
         if(LASTNROFACTURA>LASTNROFACTURADECAJA){ 
@@ -246,7 +246,7 @@ const VentasProvider = ({ children }) => {
           }}))
         } */
         
-        //if(cajasMov.response!=="ok") {console.log(cajasMov)}
+        //if(!cajasMov.response) {console.log(cajasMov)}
         // SI ES EN EFECTIVO
        /*  if (df.datosFactura.id_formaPago === "1") {
           let call_monto = await APICALLER.get({
@@ -309,7 +309,7 @@ const VentasProvider = ({ children }) => {
 
     let resInsert = await APICALLER.insert({table:"facturas",data: objFactura,token:token_user});
 
-    if (resInsert.response === "ok") {
+    if (resInsert.response ) {
       let ID_FACTURA = resInsert.last_id;
       let insertsPromises = [];
 
@@ -352,7 +352,7 @@ const VentasProvider = ({ children }) => {
             ));
           }
         }
-        //item.response !== "ok" && console.log(item);
+        // !item.response  && console.log(item);
       });
       // insertando con promisses
       
@@ -422,7 +422,7 @@ const VentasProvider = ({ children }) => {
       setearCliente(Cliente);
     } else {
       let res = await APICALLER.get({table:"clientes",where:`ruc_cliente,=,'${doc}'`,fields: "id_cliente,nombre_cliente,ruc_cliente,direccion_cliente"});
-      if (res.response === "ok") {
+      if (res.response ) {
         if (res.found > 0) {
           setearCliente(res.results[0]);
         } else {
@@ -509,7 +509,7 @@ const VentasProvider = ({ children }) => {
       where:`id_notas_pedido_item,=,${codigo}`})
     ]);
     let nota = res[0]; let items = res[1];
-    if(nota.found>0 && nota.response==="ok" && items.found>0 && items.response==="ok"){
+    if(nota.found>0 && nota.response && items.found>0 && items.response){
       fa.facturas[indexFactura].depositoActivo = nota.results[0].id_deposito_pedido;
       items.results.forEach(e=>{
         insertarProductoTabla(e,parseFloat(e.cantidad_item))
@@ -545,7 +545,7 @@ const VentasProvider = ({ children }) => {
       }
       //console.log(fa);
       let ins = await APICALLER.insert({token:token_user,table:"notas_pedidos",data}) 
-      if(ins.response==="ok"){
+      if(ins.response){
         let lastid= ins.last_id;
         setIDNotaPedido(ins.last_id);
         let promesas = [];
@@ -593,7 +593,7 @@ const VentasProvider = ({ children }) => {
    
     //console.log(res);
     
-    if (res.response === "ok") {
+    if (res.response ) {
       if (res.found > 0 || serv.found>0) {
         if(res.results[0]?.tipo_producto==="1" && res.results[0]?.stock_producto_deposito<=0 ){
           setErrors({...errors,error: true, mensaje: `No hay stock de ${res.results[0].nombre_producto} en el deposito`,
@@ -895,7 +895,7 @@ const VentasProvider = ({ children }) => {
       var FACTURALISTA = [];
       var rc = res[0];
       var cajasOpened = res[6]
-      if (rc.response === "ok") {
+      if (rc.response ) {
         if (rc.found < 1) {
           swal({text:"Debe habilitar una caja.",icon:"warning"})
           .then(()=>{
@@ -921,12 +921,12 @@ const VentasProvider = ({ children }) => {
         }
       }
       
-          if (rMoneda.response === "ok") {
+          if (rMoneda.response ) {
             var activeMoneda = rMoneda.results.filter(e => e.activo_moneda === "1");
             var monedas = rMoneda.results
             var monedasdecajas = cajaMonedas.results;
           }
-      if(rDepositos.response==='ok'){ var ID_DEPOSITO_ACTIVO = rDepositos.results.length>0 ? rDepositos.results[0].id_deposito : "0" } 
+      if(rDepositos.response ){ var ID_DEPOSITO_ACTIVO = rDepositos.results.length>0 ? rDepositos.results[0].id_deposito : "0" } 
       const initialFacturasLocal = {
         facturas: [
           {
@@ -941,8 +941,8 @@ const VentasProvider = ({ children }) => {
               tipoCliente: "1",
               tipoFactura: "0",
               ordenCompra: "",
-              id_caja: cajasOpened.response === "ok" && cajasOpened.found===1 ? cajasOpened.results[0].id_caja : "",
-              id_empleado: rVendedores.response === "ok" && rVendedores.found===1 ? rVendedores.results[0].id_empleado : "",
+              id_caja: cajasOpened.response  && cajasOpened.found===1 ? cajasOpened.results[0].id_caja : "",
+              id_empleado: rVendedores.response  && rVendedores.found===1 ? rVendedores.results[0].id_empleado : "",
               obs_pago: "",
               id_formaPago: "1",
               cantidad_recibida: "",
@@ -966,14 +966,14 @@ const VentasProvider = ({ children }) => {
         ],
         facturaActiva: ACTIVEFACTURA,
         indexFactura: 0,
-        listaFormasPago: rFormasPago.response === "ok" ? rFormasPago.results : [],
-        listaMonedas: monedas,//rMoneda.response === "ok" ? rMoneda.results : [],
+        listaFormasPago: rFormasPago.response  ? rFormasPago.results : [],
+        listaMonedas: monedas,//rMoneda.response  ? rMoneda.results : [],
         monedasdecajas: monedasdecajas,
         monedaActiva: activeMoneda.length > 0 ? activeMoneda[0] : {},
-        listaCajas: cajasOpened.response === "ok" ? cajasOpened.results : [],
+        listaCajas: cajasOpened.response  ? cajasOpened.results : [],
         listaFacturas: FACTURALISTA,
-        listaVendedores: rVendedores.response === "ok" ? (rVendedores.results) : [],
-        listaDepositos: rDepositos.response==='ok'? rDepositos.results : [],
+        listaVendedores: rVendedores.response  ? (rVendedores.results) : [],
+        listaDepositos: rDepositos.response ? rDepositos.results : [],
         alldepositos:true
       };
       setDatosFacturas(initialFacturasLocal);

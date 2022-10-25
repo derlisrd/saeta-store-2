@@ -13,7 +13,7 @@ const NotasProvider = ({children}) => {
     const getLista = useCallback(async()=>{
         setCargas(true)
         let res = await APICALLER.get({table:"notas_pedidos",include:"clientes",on:"id_cliente,id_cliente_pedido"});
-        res.response==="ok" ? setLista(res.results) : console.log(res);
+        res.response ? setLista(res.results) : console.log(res);
         setCargas(false)
     },[])
 

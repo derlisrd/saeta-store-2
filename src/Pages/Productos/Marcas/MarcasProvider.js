@@ -25,7 +25,7 @@ const MarcasProvider = ({ children }) => {
     if(formulario.id_marca===""){
       delete formulario.id_marca;
       res = await APICALLER.insert({table,data:formulario, token: token_user});
-      if(res.response==="ok"){
+      if(res.response){
         if(storage){
           let obj = {...storage}
           let newobj = {id_marca:res.last_id,nombre_marca:formulario.nombre_marca}
@@ -43,7 +43,7 @@ const MarcasProvider = ({ children }) => {
         localStorage.setItem("dataProductos",JSON.stringify(obj));
       }
     }
-    res.response==="ok" ? swal({icon:"success",text:`${msj}`,timer:1300}) : console.log(res)
+    res.response ? swal({icon:"success",text:`${msj}`,timer:1300}) : console.log(res)
     getLista()
     setOpenDialog(false)
     setFormulario(initial);
@@ -55,11 +55,11 @@ const MarcasProvider = ({ children }) => {
       async(e)=>{
         if(e){
           let res = await APICALLER.get({table:`productos`,where:`id_marca_producto,=,${id}`})
-          if(res.response==="ok"){ 
+          if(res.response){ 
             if(res.found>0) { swal({icon:`error`, text:lang.no_se_puede_borrar}) }
             else{
               let res = await APICALLER.delete({table:'marcas',id:id,token:token_user});
-              res.response!=="ok" && console.log(res);
+              !res.response && console.log(res);
               let array = [...lista];
               let index = array.findIndex((e) => e.id_marca === id);
               array.splice(index, 1);
@@ -81,7 +81,7 @@ const MarcasProvider = ({ children }) => {
 
   const getLista = useCallback( async()=>{
     let res = await APICALLER.get({table:`marcas`})
-    res.response==="ok" ? setLista(res.results) : console.log(res);
+    res.response ? setLista(res.results) : console.log(res);
     setCargando(false)
   },[]);
   useEffect(() => {

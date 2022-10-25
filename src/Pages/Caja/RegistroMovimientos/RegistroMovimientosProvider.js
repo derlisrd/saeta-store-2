@@ -18,7 +18,7 @@ const RegistroMovimientosProvider = ({ children }) => {
 
   const getLista = useCallback( async()=>{
     let res = await APICALLER.get({table:'cajas_registros',where:`show_registro,=,1`});
-    res.response==="ok" ? setLista(res.results) : console.log(res);
+    res.response ? setLista(res.results) : console.log(res);
     setLoading(false)
   },[]);
 

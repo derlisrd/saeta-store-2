@@ -55,12 +55,12 @@ const TurnosProvider = ({ children }) => {
 
   const getEmpleados = useCallback(async()=>{
     let res= await APICALLER.get({table:"empleados"});
-    res.response === "ok" ? setListaEmpleados(res.results) : console.log(res);
+    res.response  ? setListaEmpleados(res.results) : console.log(res);
   },[])
 
   const getServicios = useCallback(async()=>{
     let res= await APICALLER.get({table:"productos",where:'tipo_producto,=,2',fields:"nombre_producto,id_producto"});
-    res.response === "ok" ? setListaServicios(res.results) : console.log(res);
+    res.response  ? setListaServicios(res.results) : console.log(res);
   },[]);
 
 
@@ -77,7 +77,7 @@ const TurnosProvider = ({ children }) => {
       where:`id_turno_servicio,=,${f.id_turno}`
     });
     
-    if(res.response==="ok"){
+    if(res.response){
       fe.servicios = res.results
     }else console.log(res);
     setFormEdit(fe);
@@ -94,7 +94,7 @@ const TurnosProvider = ({ children }) => {
       fields:'nombre_cliente,fecha_tomada,fecha_turno,estado_turno,id_turno,id_cliente_turno,horario_turno,nombre_empleado,id_empleado_turno'
     });
 
-    res.response === "ok" ? setLista(res.results) : console.log(res);
+    res.response  ? setLista(res.results) : console.log(res);
     setCargando({lista:false,servicios:true});
   },[])
 
@@ -111,7 +111,7 @@ const TurnosProvider = ({ children }) => {
     delete f.servicios;
     
     let res = await APICALLER.insert({table:'turnos',data:f,token:token_user});
-    if(res.response==='ok'){
+    if(res.response){
       fs.servicios.forEach(async(e)=>{
         await APICALLER.insert({table:"turnos_servicios",data:{id_turno_servicio:res.last_id,id_servicio_turno:e.id_producto},token:token_user });
       })
@@ -133,7 +133,7 @@ const TurnosProvider = ({ children }) => {
     delete f.nombre_producto;
     delete f.servicios;
     let res = await APICALLER.update({ table:'turnos', data:f, id:f.id_turno, token:token_user})
-    if(res.response==='ok'){
+    if(res.response){
       getLista();
       swal({text:'Actualizado',icon:'success',timer:1300});
     }else{

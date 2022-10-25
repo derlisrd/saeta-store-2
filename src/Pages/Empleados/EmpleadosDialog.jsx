@@ -26,7 +26,7 @@ const EmpleadosDialog = () => {
       if(form.id_empleado === ''){
         delete form.id_empleado;
         let res = await APICALLER.insert({token:token_user,table:'empleados',data:form});
-        if(res.response==='ok'){
+        if(res.response){
           swal({icon:'success',timer:1500,text:lang.agregado_correctamente});
         }else{
           console.log(res);
@@ -35,7 +35,7 @@ const EmpleadosDialog = () => {
       }else{
         
         let res = await APICALLER.update({token:token_user,table:"empleados",id:form.id_empleado,data:form});
-        if(res.response==='ok'){
+        if(res.response){
           swal({icon:'success',timer:1500,text:lang.actualizado_correctamente});
         }else{
           console.log(res);

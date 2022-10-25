@@ -18,7 +18,7 @@ const DialogCategorias = () => {
         let nombre = name.current.value; 
         if(nombre!==""){
         let res = await APICALLER.insert({table:'categorias',data:{nombre_categoria:nombre,tipo_categoria:tipo},token:token_user})
-        if(res.response==="ok"){
+        if(res.response){
             let nuevo = {id_categoria: res.last_id, nombre_categoria:nombre,tipo_categoria:tipo}
             list.categorias.push(nuevo);
             form.id_categoria_producto = res.last_id;

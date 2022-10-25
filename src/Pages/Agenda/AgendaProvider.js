@@ -74,7 +74,7 @@ import React, {
     const getEvents = useCallback(async () => {
       setLoading({ general: true });
       let res = await APICALLER.get({ table: "agendas" });
-      if (res.response === "ok") {
+      if (res.response) {
         setLista(res.results);
         let nEvents = [];
         res.results.forEach((e) => {
@@ -98,7 +98,7 @@ import React, {
   
     const updateAgenda = useCallback(async(form)=>{
       let res = await APICALLER.update({table:"agendas",data:form,token:token_user,id:form.id_agenda});
-      if(res.response==="ok"){
+      if(res.response){
         swal({text:'Reagendado correctamente', icon:'success',timer:1400});
         setDialogs({ ...dialogs, editar: false });
 
@@ -112,7 +112,7 @@ import React, {
     const borrarAgenda = useCallback(async (form)=>{
   
       let res = await APICALLER.delete({table:'agendas',id:form.id_agenda,token:token_user});
-      if(res.response==='ok'){
+      if(res.response){
         swal({text:'Borrado correctamente', icon:'success',timer:1400});
         setDialogs({ ...dialogs, editar: false });
         
@@ -126,7 +126,7 @@ import React, {
     const insertarAgendar = useCallback(async(form)=>{
 
       let res = await APICALLER.insert({table:"agendas",data:form,token:token_user});
-      if(res.response==="ok"){
+      if(res.response){
         swal({text:"Agendado correctamente", icon:"success", timer:2000});
         setDialogs({ ...dialogs, agregar: false });
         getEvents();

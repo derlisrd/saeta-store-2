@@ -106,7 +106,7 @@ const ProductFormProvider = (props) => {
          setCargas({...cargas,guardar:true});
          delete f.stock_producto; delete f.id_deposito_producto;
         let res = await APICALLER.insert({table: "productos",data: f,token: token_user});
-        if (res.response === "ok") {
+        if (res.response ) {
           
             if(images.length>0){
               let portada ="1";
@@ -185,7 +185,7 @@ const ProductFormProvider = (props) => {
           
           const res = await APICALLER.get({table: "productos",where: `codigo_producto,=,'${valorCodigo}'`});
 
-          if(res.response==="ok"){
+          if(res.response){
             setCargas({...cargas,verificarCodigo:false});
           }
           if (res.found > 0) {

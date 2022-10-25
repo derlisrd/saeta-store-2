@@ -52,7 +52,7 @@ const DialogApertura = () => {
           include:"monedas",on:"id_moneda,id_moneda_caja_moneda",where:`id_caja_moneda,=,${id_caja}`}
           )
           let newresult = [];
-          if(get.response==="ok") {
+          if(get.response) {
             get.results.forEach(e=>{
               newresult.push({...e,cantidad:e.monto_cierre_caja})
             })

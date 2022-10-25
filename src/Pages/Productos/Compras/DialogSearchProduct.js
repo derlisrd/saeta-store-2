@@ -27,7 +27,7 @@ const DialogSearchProduct = () => {
           filtersField:"nombre_producto",filtersSearch:txt,
           pagesize:"10"
         });
-        (res.response==="ok") ?  setListaBuscaProducto(res.results) : console.log(res) 
+        (res.response) ?  setListaBuscaProducto(res.results) : console.log(res) 
       }, 500);
 
     }else{

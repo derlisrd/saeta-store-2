@@ -42,7 +42,7 @@ const Inventario = () => {
       where: `tipo_producto,=,1`,
     };
     let res = await APICALLER.get(config);
-    if (res.response === "ok" && res.found > 0) {
+    if (res.response  && res.found > 0) {
       insertaProducto(null, res.results[0]);
     } else {
       swal({text: "No hay producto con ese codigo",timer: 1500, icon: "error"});
@@ -75,7 +75,7 @@ const Inventario = () => {
     } else {
       setTimeout(async () => {
         let res = await APICALLER.get({table: "productos",filtersField:"nombre_producto,codigo_producto",filtersSearch:txt,pagesize:'20',where:"tipo_producto,=,1"});
-        res.response === "ok" ? setListaBuscaProducto(res.results) : console.log(res);
+        res.response  ? setListaBuscaProducto(res.results) : console.log(res);
         setCargando(false);
       }, 500);
     }
@@ -85,7 +85,7 @@ const Inventario = () => {
     setListaBuscaProducto([]);
     let id = value.id_producto;
     let res = await APICALLER.get({table:'productos_depositos',include:'depositos',on:'id_deposito_deposito,id_deposito',where:`id_producto_deposito,=,${id}`});
-    if(res.response==='ok'){
+    if(res.response){
       setListaStock(res.results);
       setFormulario(value);
     }else{console.log(res)}

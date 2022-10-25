@@ -64,7 +64,7 @@ const DialogRegistroCliente = () => {
         if(res.found===0){
 
             const ins = await APICALLER.insert({table:"clientes",data:formCliente,token:token_user})
-            if(ins.response==="ok"){ 
+            if(ins.response){ 
                
               
             let fa = {...datosFacturas}

@@ -21,7 +21,7 @@ const TransferenciasProvider = ({children}) => {
     const getLista = useCallback(async()=>{
       setCargas({lista:true,transferencia:false})
       let res = await APICALLER.get({table:"depositos",where:"tipo_deposito,=,1"});
-      res.response==="ok" ? setListaDeposito(res.results) : console.log(res);
+      res.response ? setListaDeposito(res.results) : console.log(res);
     },[]);
 
     const transferir = async()=>{
@@ -44,16 +44,16 @@ const TransferenciasProvider = ({children}) => {
       setCargas({lista:false,transferencia:true})
       let apartado = {stock_producto_deposito:stockNuevo}
       let res = await Promise.all([APICALLER.update({table:'productos_depositos',id:id_productos_deposito,data:apartado,token:token_user}),APICALLER.get({table:'productos_depositos',where:`id_producto_deposito,=,${id_producto},and,id_deposito_deposito,=,${idDeposito}`})])
-      if(res[1].response==="ok"){
+      if(res[1].response){
         if(res[1].found>0){
           let id_depo = res[1].results[0].id_productos_deposito;
           let stockNuevoTransferido = cantidadNueva + parseFloat(res[1].results[0].stock_producto_deposito);
           let resu = await APICALLER.update({table:'productos_depositos',id:id_depo,data:{stock_producto_deposito:stockNuevoTransferido},token:token_user});
-          resu.response!=='ok' && console.log(resu);
+          resu.response && console.log(resu);
         }else{
           let inser = {stock_producto_deposito:cantidadNueva,id_producto_deposito:id_producto,id_deposito_deposito:idDeposito}
           let resi = await APICALLER.insert({table:"productos_depositos",data:inser,token:token_user})
-          resi.response!=='ok' && console.log(resi);
+          resi.response && console.log(resi);
         }
       }else{
         console.log(res);

@@ -51,14 +51,14 @@ const SettingsProvider = ({ children }) => {
     };
     localStorage.setItem("dataEmpresa", JSON.stringify(datosEmpresa));
     const res = await APICALLER.update(datas);
-    res.response === "ok" ? setSnack(true) : console.log(res);
+    res.response  ? setSnack(true) : console.log(res);
     setCargando(false);
   };
 
   const getData = useCallback(async () => {
     if (localStorage.getItem("dataEmpresa") === null) {
       let res = await APICALLER.get({ table: "empresas" });
-      if(res.response === "ok") {
+      if(res.response ) {
        if(res.found > 0){
          setDatosEmpresa(res.results[0]);
          localStorage.setItem("dataEmpresa",JSON.stringify(res.results[0]))

@@ -32,12 +32,12 @@ const CategoriasProvider = ({ children }) => {
           let cons = promise[0] ;
           let resC = promise[1] ;
           if(cons.found>0 || resC.found >0){
-            cons.response==="ok" ? swal({icon:"error",title:lang.error,text:"No se puede borrar porque tiene productos/categorias en ella"}) : console.log(cons);
+            cons.response ? swal({icon:"error",title:lang.error,text:"No se puede borrar porque tiene productos/categorias en ella"}) : console.log(cons);
           }
           else{
             const res = await APICALLER.delete({table:"categorias",id:id,token:token_user})
             swal({icon:"success",text:"Borrado correctamente"})
-            if(res.response==="ok"){
+            if(res.response){
               if(storage){
                 let obj = {...storage}
                 let index = obj.categorias.findIndex(e=> e.id_categoria=== id);

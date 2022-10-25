@@ -32,7 +32,7 @@ const ProductosApartadosProvider = ({children})=>{
         }
         setCargando({...cargando,apartar:true});
         let res = await APICALLER.get({table:"productos",where:`codigo_producto,=,'${codigo}'`,fields:'id_producto,codigo_producto'});
-        if(res.response==="ok" && res.found>0){
+        if(res.response && res.found>0){
             let productoForm = res.results[0];
             let stc = await APICALLER.get({table:"productos_depositos",where:`id_producto_deposito,=,${productoForm.id_producto},and,id_deposito_deposito,=${id_deposito}`})
 
@@ -53,7 +53,7 @@ const ProductosApartadosProvider = ({children})=>{
                         APICALLER.update({table:"productos_depositos",token:token_user,data:{stock_producto_deposito:sobrante},id:id_productos_deposito}),
                         APICALLER.insert({table:"productos_apartados",token:token_user,data:apartado})
                     ])
-                    if(re[0].response==="ok" && re[1].response==="ok"){
+                    if(re[0].response && re[1].response){
                         setErrores({...errores,error:true,color:"success",mensaje:"Apartado correctamente",id:""});
                         setDialogs(initialDialogs)
                         getLista();
@@ -81,7 +81,7 @@ const ProductosApartadosProvider = ({children})=>{
             let cantidad = parseFloat(fila.cantidad_apartado);
             let resstock = await APICALLER.get({table:'productos_depositos',where:`id_productos_deposito,=,${id_deposito_producto_apartado}`})
             let stock;
-            if(resstock.response==='ok' && resstock.found>0){ stock = parseFloat(resstock.results[0].stock_producto_deposito)} else{
+            if(resstock.response && resstock.found>0){ stock = parseFloat(resstock.results[0].stock_producto_deposito)} else{
                 console.log(resstock);return false;
             }
             
@@ -92,7 +92,7 @@ const ProductosApartadosProvider = ({children})=>{
                 id:id_deposito_producto_apartado,token:token_user,data:{stock_producto_deposito:nuevo}}),
                 APICALLER.delete({table:"productos_apartados",id:id_apartado,token:token_user}),
             ])
-            if(res[0].response==='ok'){
+            if(res[0].response){
                 //console.log(res);
                 getLista();
             }  
@@ -105,7 +105,7 @@ const ProductosApartadosProvider = ({children})=>{
         fields:`id_producto,id_producto_apartado,nombre_cliente,cantidad_apartado,codigo_producto,nombre_producto,nombre_user,id_productos_apartado,nombre_deposito,id_deposito,id_productos_apartado,id_deposito_producto_apartado`}),
         APICALLER.get({table:"depositos",where:'tipo_deposito,=,1',fields:"id_deposito,nombre_deposito"})
     ])
-        if(res[0].response==="ok" && res[1].response==="ok"){
+        if(res[0].response && res[1].response){
             setLista(res[0].results)
             setListaDepositos(res[1].results);
         }

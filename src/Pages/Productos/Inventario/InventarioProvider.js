@@ -80,7 +80,7 @@ const InventarioProvider = ({children})=>{
     }
     const getLista = useCallback(async()=>{
         let res = await APICALLER.get({table:"depositos",where:'tipo_deposito,=,1'});
-        if(res.response==='ok' && res.found>0) {
+        if(res.response && res.found>0) {
             setListaDepositos(res.results);
             //setIdDeposito(res.results[0].id_deposito);
         }else{

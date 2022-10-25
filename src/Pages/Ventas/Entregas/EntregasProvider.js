@@ -27,7 +27,7 @@ const EntregasProvider = ({ children }) => {
             on: "id_factura,id_items_factura,id_cliente,id_cliente_factura,id_producto,id_producto_factura",
             where:`nro_factura,=,${nro},and,tipo_producto,=,1,and,tipo_factura,=,${tipoFactura},and,entregado_item,=,0`
           }); 
-          if(res.response==="ok") {
+          if(res.response) {
              setLista(res.results) 
           }
           else{
@@ -41,7 +41,7 @@ const EntregasProvider = ({ children }) => {
   const getPendientes = useCallback(async()=>{
     let res = await APICALLER.get({table:'facturas_items',include:'productos,facturas',on:'id_producto,id_producto_factura,id_factura,id_items_factura',
     where:'entregado_item,=,0',fields:'codigo_producto,cantidad_producto,nombre_producto,entregado_item,nro_factura'})
-    if(res.response==="ok") {
+    if(res.response) {
       setListaPendientes(res.results) 
    }
    else{

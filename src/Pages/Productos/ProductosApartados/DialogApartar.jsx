@@ -25,7 +25,7 @@ const DialogApartar = () => {
     setErrores({...errores,error:false});
     setCargando(true);
     let res = await APICALLER.get({table:"clientes",where:`ruc_cliente,=,'${doc}'`});
-      if(res.response==="ok"){
+      if(res.response){
         if(res.found>0){
           setDatosCliente(res.results[0]);
           

@@ -70,11 +70,11 @@ const FacturasProvider = ({ children }) => {
     on:'id_producto,id_producto_factura,id_impuesto,id_impuesto_factura',
     where:`id_items_factura,=,${fila.id_factura}`});
     
-    resF.response==="ok" ? setItemsFactura(resF.results) : console.log(resF);
+    resF.response ? setItemsFactura(resF.results) : console.log(resF);
     
     if(fila.tipo_factura!=="0"){ 
       let res = await APICALLER.get({table:'empresa_facturas',where:`id_caja_empresa,=,${fila.id_caja_factura}`});
-      if(res.response==="ok") {
+      if(res.response) {
         let ef = res.results[0];
         let form = {...fila}
         form.timbrado_factura = ef.timbrado_factura;
@@ -108,7 +108,7 @@ const FacturasProvider = ({ children }) => {
       pagenumber:0,pagesize:10,
     });
     //console.log(res);
-    if (res.response === "ok") {
+    if (res.response ) {
       
       let arrayresult = [...res.results]
       let newresult = [];
@@ -162,7 +162,7 @@ const FacturasProvider = ({ children }) => {
     });
 
     
-    if (res.response === "ok") {
+    if (res.response ) {
       
       let arrayresult = [...res.results]
       let newresult = [];

@@ -35,7 +35,7 @@ const ProveedoresProvider = ({children}) => {
     if(formulario.id_proveedor===""){
       delete formulario.id_proveedor;
       res = await APICALLER.insert({table,data:formulario, token: token_user});
-      if(res.response==="ok"){
+      if(res.response){
         if(storage){
           let obj = {...storage}
           let newobj = {id_proveedor:res.last_id,nombre_proveedor:formulario.nombre_proveedor}
@@ -54,7 +54,7 @@ const ProveedoresProvider = ({children}) => {
       }
     }
 
-    res.response==="ok" ? swal({icon:"success",text:msj}) : console.log(res)
+    res.response ? swal({icon:"success",text:msj}) : console.log(res)
     getLista()
     setOpenDialog(false)
     setFormulario(initial)
@@ -67,7 +67,7 @@ const ProveedoresProvider = ({children}) => {
       async(e)=>{
         if(e){
           let res = await APICALLER.get({table:`productos`,where:`id_proveedor_producto,=,${id}`})
-          if(res.response==="ok"){ 
+          if(res.response){ 
             if(res.found>0) { swal({icon:`error`, text:lang.no_puede_borrar_productos}) }
             else{
               await APICALLER.delete({table:'proveedors',id:id,token:token_user});
@@ -97,7 +97,7 @@ const ProveedoresProvider = ({children}) => {
     pagesize: limite,})
     
     
-    if (res.response === "ok") {
+    if (res.response ) {
      setCountTotal(res.total);
      if (res.found > 0) {
        setLista(res.results);

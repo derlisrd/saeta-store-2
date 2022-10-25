@@ -25,7 +25,7 @@ function DialogAgregar (){
         setLoading(true)
         
         let res = await APICALLER.insert({table:"facturas_formas_pagos",token:token_user,data:form})
-        if(res.response==="ok"){
+        if(res.response){
             getLista()
             setForm(initialForm)
             close();

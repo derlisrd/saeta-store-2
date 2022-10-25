@@ -68,7 +68,7 @@ const EntregasView = () => {
     let res = await Promise.all([APICALLER.update({token:token_user,table:'facturas_items',id,data: { entregado_item: "1" }}),
     APICALLER.update({token:token_user,table:'productos',data:{stock_producto: nuevo_stock_producto},id:id_producto})])
     
-    if (res[0].response === "ok" && res[1].response === "ok") {
+    if (res[0].response  && res[1].response ) {
       setCargandoCheck(false);
       arrP.splice(indexP,1);
       arr.splice(index, 1);

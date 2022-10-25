@@ -56,7 +56,7 @@ const RegistrarMovimiento = () => {
       APICALLER.get({ table: "cajas",include:"cajas_users",on:"id_caja_caja,id_caja",where: `id_user_caja,=,${id_user},and,estado_caja,=,'open'`})
     ])
     
-    if(promises[2].response==="ok"){
+    if(promises[2].response){
       setListas({
         cajas: promises[2].results,
         registros: promises[1].results,
@@ -128,7 +128,7 @@ const RegistrarMovimiento = () => {
       APICALLER.update({table:"cajas_monedas",token:token_user,data:datos_cajas_monedas,id: foundMoneda.id_cajas_moneda})
     ]
    let promises = await Promise.all(promesas)
-   if(promises[0].response==="ok" && promises[1].response==="ok"){
+   if(promises[0].response && promises[1].response){
     swal({text:lang.movimiento_registrado,icon:'success',timer:1300}).then(()=>{cerrar();getData();})
    } else{
     console.log(promises);

@@ -28,7 +28,7 @@ const AgendaDialog = () => {
     setLoads({inputbuscacliente:true})
     let res = await APICALLER.get({table:"clientes",where:`ruc_cliente,=,'${doc}'`});
 
-    if(res.response==="ok"){
+    if(res.response){
       if(res.found===0){
         setCliente(initialCliente)
         setError({active:true,message: "No existe ese documento en los registros."})

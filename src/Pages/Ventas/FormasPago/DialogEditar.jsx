@@ -33,7 +33,7 @@ function DialogEditar() {
             descripcion_forma_pago: f.descripcion_forma_pago,
             porcentaje_descuento_pago: f.porcentaje_descuento_pago
         }})
-        if(res.response==="ok"){
+        if(res.response){
             swal({text:lang.actualizado_correctamente,icon:"success"})
         }
         getLista()

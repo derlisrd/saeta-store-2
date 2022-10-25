@@ -18,7 +18,7 @@ const DialogMarcas = () => {
         if(nombre!=="" && nombre!==null ){
         let res = await APICALLER.insert({table:'marcas',data:{nombre_marca:nombre},token:token_user})
         //console.log(res);
-        if(res.response==="ok"){
+        if(res.response){
             let nuevo = {id_marca: res.last_id, nombre_marca:nombre}
             list.marcas.push(nuevo);
             form.id_marca_producto = res.last_id;

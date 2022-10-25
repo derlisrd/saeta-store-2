@@ -88,7 +88,7 @@ const TurnosDialogs = () => {
       filtersSearch: txt,
       filtersField: "nombre_cliente",
     });
-    res.response === "ok" ? setListaClientes(res.results) : console.log(res);
+    res.response ? setListaClientes(res.results) : console.log(res);
   };
   const insertClient = (e, value) => {
     setForm({

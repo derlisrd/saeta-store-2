@@ -52,7 +52,7 @@ const DialogRegistraCliente = () => {
         if(res.found===0){
           try {
             const ins = await APICALLER.insert({table:"clientes",data:formCliente,token:token_user})
-            if(ins.response==="ok"){ 
+            if(ins.response){ 
               let ID_CLIENTE = ins.last_id;
               setForm({...form,id_cliente_turno:ID_CLIENTE,nombre_cliente:nombre_cliente.current.value});
               cerrar()

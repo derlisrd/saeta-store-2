@@ -14,7 +14,7 @@ const ProductoImages = () => {
         setCargando(true);
         if(dialogs.imagen){
         let res = await APICALLER.get({table:"productos_images",where:`id_image_producto,=,${formDetalles.id_producto},and,portada_imagen_producto,=,1`});
-        if(res.found>0 && res.response==="ok"){
+        if(res.found>0 && res.response){
             setImagen(res.results[0]);
         }else{
             setDialogs({detalles:false,code:false,imagen:false,stock:false});

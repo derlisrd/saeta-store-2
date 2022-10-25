@@ -96,7 +96,7 @@ export default function ComprasProvider({children}) {
     setCargas({...cargas,codigo:false})
     let res = promises[0];
     
-    if(res.response==="ok"){
+    if(res.response){
       if(res.found > 0){
         //console.log(res.results[0])
         insertarProductoDialog(res.results[0])
@@ -121,7 +121,7 @@ export default function ComprasProvider({children}) {
       APICALLER.get({table:"proveedors"})
     ])
 
-      if(res[0].response==="ok"){
+      if(res[0].response){
         let datasresponse = {
           cajas:res[0].results,
           depositos:res[1].results, 

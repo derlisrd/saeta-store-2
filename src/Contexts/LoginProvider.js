@@ -32,7 +32,7 @@ const LoginProvider = ({children}) => {
         const store = JSON.parse(sessionStorage.getItem("userData")) || JSON.parse(localStorage.getItem("userData"));
         if(userData.login && store){
             let res = await APICALLER.ReValidateToken(userData.token_user);
-            if(res.response==='ok'){
+            if(res.response){
                 let f = {...userData}
                 f.token_user = CifrarTexto(res.results);
                 setUserData(f);
@@ -122,7 +122,7 @@ const LoginProvider = ({children}) => {
         setLoading(true);
         if (userData.login) {
             let res = await APICALLER.validateToken(userData.token_user);
-            if (res.found > 0 && res.response === "ok") {
+            if (res.found > 0 && res.response ) {
                 
             }else{
                 logOut()

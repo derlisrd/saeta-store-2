@@ -116,7 +116,7 @@ const CajasProvider = ({ children }) => {
       token: token_user,
     });
 
-    if (res.response === "ok") {
+    if (res.response) {
       let LASTIDCAJA = res.last_id;
       let IDUSER = f.id_user_caja;
       let cajaformusers = { id_user_caja: IDUSER, id_caja_caja: LASTIDCAJA };
@@ -158,7 +158,7 @@ const CajasProvider = ({ children }) => {
       let cajares = await Promise.all(promesas);
       
       
-      if(cajares[0].response==="ok" && cajares[1].response==="ok"){
+      if(cajares[0].response && cajares[1].response){
         swal({
           text: lang.agregado_habilitado_correctamente,
           timer: 1200,
@@ -193,7 +193,7 @@ const CajasProvider = ({ children }) => {
       id: f.id_caja,
       token: token_user,
     });
-    if (res.response === "ok") {
+    if (res.response) {
       swal({ text: lang.editado_correctamente, icon: "success", timer: 1200 });
       getLista(false);
       setDialogs({ ...dialogs, editar: false });
@@ -243,7 +243,7 @@ const CajasProvider = ({ children }) => {
     promises.push(APICALLER.insert({table: "cajas_movimientos",data: mov,token: token_user}) )
     let res = await Promise.all(promises)
     
-    if(res[0].response==='ok'){
+    if(res[0].response){
       swal({text: lang.caja_abierta_correctamente,icon: "success",timer:3000}).then(()=>{
         if(dialogQuery==="open"){
           navigate.to("ventas");
@@ -305,7 +305,7 @@ const CajasProvider = ({ children }) => {
     promesas.push(APICALLER.insert({token:token_user,table:"cajas_movimientos",data:datos_cierre}));
     
     let res = await Promise.all(promesas);
-    if(res[0].response==="ok"){
+    if(res[0].response){
       setDialogs({...dialogs,resumenfinal:false});
       swal({text: lang.caja_cerrada_correctamente,icon: "success",timer:3000})
       getLista()
@@ -327,7 +327,7 @@ const CajasProvider = ({ children }) => {
           APICALLER.get({table: "monedas_registros",include:"monedas",on:"id_moneda,id_moneda_registro" })  
         ]);
         let usersresponse = val[1];
-        if(usersresponse.response==="ok"){
+        if(usersresponse.response){
           setLista(val[0].results);
           setListaUsers(val[1].results);
           setListaMonedas(val[2].results)

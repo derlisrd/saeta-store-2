@@ -23,8 +23,8 @@ const AsistenciasProvider = ({children}) => {
         APICALLER.get({table:"alumnos"}),
         APICALLER.get({table:"asistencias",include:"alumnos",on:"id_alumno,id_alumno_asistencia",where:`fecha_asistencia,=,'${fechaActual}'`})
       ])
-      res[0].response==="ok" ? setLista(res[0].results) : console.log(res);
-      res[1].response==="ok" ? setListaAsistencia(res[1].results) : console.log(res);
+      res[0].response ? setLista(res[0].results) : console.log(res);
+      res[1].response ? setListaAsistencia(res[1].results) : console.log(res);
       if(res[1].found>0){
         setTomado(true);
       }else{

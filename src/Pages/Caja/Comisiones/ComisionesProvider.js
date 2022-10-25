@@ -37,7 +37,7 @@ function ComisionesProvider({children}){
             })
             let comision = 0;
             let total = 0;
-            if(res.response==="ok"){
+            if(res.response){
                 let resultado = res.results;
                 
                 resultado.forEach(e => {
@@ -66,7 +66,7 @@ function ComisionesProvider({children}){
         ]);
         let res = promises[0];
         let emp = promises[1]
-        if(res.response==='ok'){
+        if(res.response){
             setDatos({
                 lista:res.results,
                 empleados: emp.results,

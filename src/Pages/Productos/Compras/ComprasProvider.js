@@ -132,7 +132,7 @@ const ComprasProvider = ({ children }) => {
             APICALLER.update({table:`cajas`,token:token_user,data:{ monto_caja: nuevo_monto },id: datosCompra.idCaja,}),
             APICALLER.insert({table:"cajas_movimientos",data:datos,token:token_user})
         ])
-          if(pro[0].response!=="ok" || pro[1].response!=="ok") {console.log(pro[0],pro[1])}
+          if(!pro[0].response || !pro[1].response) {console.log(pro[0],pro[1])}
         }
       
         let call = [];
@@ -163,7 +163,7 @@ const ComprasProvider = ({ children }) => {
           estado_compra: datosCompra.tipo_factura,
         };
         let compra = await APICALLER.insert({table:"compras",data:datosC,token:token_user});
-        compra.response !== "ok" && console.log(compra);
+        !compra.response  && console.log(compra);
 
         const ID_COMPRA = await compra.last_id;
         let callap = [];
@@ -263,7 +263,7 @@ const ComprasProvider = ({ children }) => {
         fields:"id_producto,id_productos_deposito,codigo_producto,nombre_producto,tipo_producto,stock_producto_deposito,nombre_proveedor,ruc_proveedor,porcentaje_impuesto,id_producto,costo_producto,preciom_producto,precio_producto, descripcion_medida",
         where: `codigo_producto,=,'${codigo}',and,id_deposito_deposito,=,${idDeposito}`,
       });
-      if (res.response === "ok") {
+      if (res.response) {
         if (res.found > 0) {
           
           if (res.results[0].tipo_producto === "2") {
@@ -297,7 +297,7 @@ const ComprasProvider = ({ children }) => {
     if (!localStorage.getItem("compras")) {
       let dep = await APICALLER.get({table:'depositos',where:'tipo_deposito,=,1'});
       let id = '';
-      if(dep.response==='ok'){
+      if(dep.response){
         id = dep.found>0? dep.results[0].id_deposito : "";
         setListaDepositos(dep.results);
       } 
@@ -309,7 +309,7 @@ const ComprasProvider = ({ children }) => {
         total_factura: 0,
         idCaja: "",
         itemsFactura: [],
-        listaDepositos:dep.response==="ok" ? dep.results : [],
+        listaDepositos:dep.response ? dep.results : [],
         idDeposito: id
       });
       localStorage.setItem("compras", values);
@@ -325,7 +325,7 @@ const ComprasProvider = ({ children }) => {
       fields: "id_caja,nombre_caja,monto_caja",
     });
 
-    res.response === "ok" ? setListaCajas(res.results) : console.log(res);
+    res.response  ? setListaCajas(res.results) : console.log(res);
     setCargando(false)
   }, [id_user]);
 

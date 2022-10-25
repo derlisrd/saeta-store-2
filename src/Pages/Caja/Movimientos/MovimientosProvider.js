@@ -64,7 +64,7 @@ const MovimientosProvider = ({ children }) => {
     let getpromises = await Promise.all(promises);
     const res = getpromises[0];
 
-    if (res.response === "ok") {
+    if (res.response) {
       setLista(res.results);
       let efectivo = 0;
       let egresosE = 0;
@@ -97,7 +97,7 @@ const MovimientosProvider = ({ children }) => {
       table: `cajas`,
       fields: `id_caja,nombre_caja`,
     });
-    cajas.response === "ok" ? setListaCajas(cajas.results) : console.log(cajas);
+    cajas.response ? setListaCajas(cajas.results) : console.log(cajas);
   }, []);
 
   useEffect(() => {

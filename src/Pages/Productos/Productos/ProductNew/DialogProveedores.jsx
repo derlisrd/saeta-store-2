@@ -20,7 +20,7 @@ const DialogProveedores = () => {
         if(nombre!=="" && doc !=="" && doc!==null && nombre!==null ){
         let res = await APICALLER.insert({table:'proveedors',data:{nombre_proveedor:nombre,ruc_proveedor:doc,telefono_proveedor:"0"},token:token_user})
         //console.log(res);
-        if(res.response==="ok"){
+        if(res.response){
             let nuevo = {id_proveedor: res.last_id, nombre_proveedor:nombre}
             list.proveedores.push(nuevo);
             form.id_proveedor_producto = res.last_id;

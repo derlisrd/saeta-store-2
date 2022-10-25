@@ -96,7 +96,7 @@ const CuentasProvider = ({ children }) => {
     setCargando({lista:false,mov:true});
     let idcaja = f.id_caja;
     let getcaja = await APICALLER.get({table:"cajas",where:`id_caja,=,${idcaja},and,estado_caja,=,'open'`});
-    if(getcaja.response==="ok" && getcaja.found>0){
+    if(getcaja.response && getcaja.found>0){
       let montopagado = parseFloat(formPagar.total_factura_compra);
       let montoactualencaja = parseFloat(getcaja.results[0].monto_caja);
       let montodescontado = montoactualencaja - montoactualencaja;
@@ -144,7 +144,7 @@ const CuentasProvider = ({ children }) => {
       filtersField:"nombre_cliente,ruc_cliente",
       filtersSearch:`${f}`,
       })
-    if(res.response==="ok"){
+    if(res.response){
       let totalaCobrar=0, totalrecibido = 0, montototal = 0;
       res.results.forEach(e => {
         totalrecibido += parseFloat(e.recibido_factura)
@@ -178,7 +178,7 @@ const CuentasProvider = ({ children }) => {
      resFormas=res[3],
      resMonedas=res[4];
 
-    if(resPagar.response==='ok' && resCajas.response==='ok' && resFormas.response==='ok'){
+    if(resPagar.response && resCajas.response && resFormas.response){
       let totalaCobrar=0, totalrecibido = 0, montototal = 0;
       resCobrar.results.forEach(e => {
         totalrecibido += parseFloat(e.recibido_factura)

@@ -57,7 +57,7 @@ const DialogBuscarProducto = () => {
           where:`id_deposito_deposito,=,${deposito},and,codigo_producto,='${codigo}'`})]);
           let img = pro[0];
           let dep = pro[1];
-          if(img.response==='ok' && img.found>0){
+          if(img.response && img.found>0){
             if(cantidadInput<= parseFloat(dep.results[0].stock_producto_deposito) )
             {
               insertarProductoTabla(img.results[0]);  
@@ -65,7 +65,7 @@ const DialogBuscarProducto = () => {
               swal({text:`No hay ${cantidadInput} en stock`});  
             }
           }
-            else if(dep.response==="ok" && dep.found>0){
+            else if(dep.response && dep.found>0){
               if(cantidadInput<= parseFloat(dep.results[0].stock_producto_deposito) )
               {
                 insertarProductoTabla(dep.results[0]);

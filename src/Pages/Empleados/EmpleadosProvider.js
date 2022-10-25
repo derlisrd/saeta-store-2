@@ -32,8 +32,8 @@ const EmpleadosProvider = ({children}) => {
         const storage = JSON.parse(localStorage.getItem("facturasStorage"));
         let res = await Promise.all([APICALLER.get({table:"empleados"}),APICALLER.get({table:'empleados_rols'})])
         
-        res[0].response === 'ok' ? setLista(res[0].results) : console.log(res);
-        res[1].response === 'ok' ? setListaRols(res[1].results) : console.log(res);
+        res[0].response  ? setLista(res[0].results) : console.log(res);
+        res[1].response  ? setListaRols(res[1].results) : console.log(res);
         if(storage){
           let arr = {...storage}
           arr.listaVendedores = res[0].results;

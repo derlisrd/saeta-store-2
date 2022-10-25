@@ -13,7 +13,7 @@ const ImpuestoProvider = ({children})=>{
     const getLista = useCallback(async()=>{
 
         let res = await APICALLER.get({table:"impuestos"});
-        res.response==="ok" ? setLista(res.results) : console.log(res) 
+        res.response ? setLista(res.results) : console.log(res) 
         setCargando(false)
     },[])
 

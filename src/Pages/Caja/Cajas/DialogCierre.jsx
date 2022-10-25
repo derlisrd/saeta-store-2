@@ -43,7 +43,7 @@ const getLista = useCallback(async() => {
         ])
         let resp = res[0];
         let newresult = [];
-        if(resp.response==="ok"){
+        if(resp.response){
 
             resp.results.forEach(elem => {
                 newresult.push({

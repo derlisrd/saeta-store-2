@@ -46,7 +46,7 @@ const ProductosProvider = ({ children }) => {
     let e = await swal({icon: "warning",title: lang.q_borrar,text: `${lang.borrar} ${nombre}?`,buttons: [lang.cancelar, lang.ok],dangerMode: true});
       if (e) {
         const res = await APICALLER.delete({table: `productos`,id: id,token: token_user});
-        if (res.response === "ok") {
+        if (res.response ) {
           Promise.all([
             APICALLER.delete({table: `productos_images`,namecolumns:"id_image_producto",ids:id,token: token_user}),
             APICALLER.delete({table: `productos_depositos`,namecolumns:"id_producto_deposito",ids:id,token: token_user})
@@ -67,7 +67,7 @@ const ProductosProvider = ({ children }) => {
     setCargando({...cargando,stock:true});
     let id = producto.id_producto;
     let res = await APICALLER.get({table:"productos_depositos",include:"depositos",on:"id_deposito,id_deposito_deposito",where:`id_producto_deposito,=,${id}`})
-    if(res.response==="ok"){
+    if(res.response){
       setFormStock({medida:producto.descripcion_medida,codigo_producto:producto.codigo_producto,nombre_producto:producto.nombre_producto,listaStock:res.results});
     }
     setCargando({...cargando,stock:false});
@@ -94,7 +94,7 @@ const ProductosProvider = ({ children }) => {
       pagesize: limite,
       sort:"-nombre_producto"
     });
-    if (res.found > 0 && res.response === "ok") {
+    if (res.found > 0 && res.response ) {
       setLista({...lista,productos:res.results});
     } else {
       console.log(res);
@@ -130,7 +130,7 @@ const ProductosProvider = ({ children }) => {
 
     const res = await Promise.all([APICALLER.get(data),APICALLER.get({table:"depositos",where:"tipo_deposito,=,1"})]);
 
-     if (res[1].response === "ok" && res[0].response==="ok") {
+     if (res[1].response  && res[0].response) {
       setCountTotal(res[0].total);
       setLista({productos:res[0].results,depositos:res[1].results}); 
     } else {

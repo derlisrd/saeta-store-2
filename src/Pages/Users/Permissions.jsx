@@ -37,7 +37,7 @@ const Permissions = () => {
       if(id_user!==null && dialogs.permissions){
         setCargando(true)
         let res = await APICALLER.get({table:`permisos_users`,where:`id_user_permiso,=,${id_user}`})
-        if(res.response==="ok") {
+        if(res.response) {
             let result = res.results;
             let listinha = lista.permisos;
             let permisos = [...listinha];

@@ -59,7 +59,7 @@ const CategoriasForm = () => {
         token: token_user,
         id: id,
       });
-      if(res.response === "ok"){
+      if(res.response){
         swal({ icon: "success", text: lang.actualizado_correctamente,timer:1300 }).then(()=>{
         if(storage){
           let array = {...storage}
@@ -79,7 +79,7 @@ const CategoriasForm = () => {
         data: formulario,
         token: token_user,
       });
-      if (res.response === "ok") {
+      if (res.response ) {
         swal({ icon: "success", text:lang.agregado_correctamente,timer:1300 })
         if(storage){
             let array = {...storage}

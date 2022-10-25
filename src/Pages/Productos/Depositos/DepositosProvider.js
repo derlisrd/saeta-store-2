@@ -34,7 +34,7 @@ const DepositosProvider = ({ children }) => {
     delete form.id_deposito;
     setCargando(true);
     let res = await APICALLER.insert({table,data:form,token:token_user});
-    if(res.response==="ok"){
+    if(res.response){
       if(storage){
         let obj = {...storage}
         let newobj = {id_deposito:res.last_id,nombre_deposito:form.nombre_deposito}
@@ -59,7 +59,7 @@ const DepositosProvider = ({ children }) => {
     }).then( async(e) => {
       if (e) {
         let res = await APICALLER.delete({table,id:fila.id_deposito,token:token_user})
-        if(res.response==="ok"){
+        if(res.response){
             swal({ text: lang.borrado_correctamente, timer: 1800, icon: "success" });
             let array = [...lista];
             let index = array.findIndex((e) => e.id_deposito === fila.id_deposito);
@@ -78,7 +78,7 @@ const DepositosProvider = ({ children }) => {
   const editar = async () => {
     setCargando(true);
     let res = await APICALLER.update({table,data:form,id:form.id_deposito,token:token_user});
-    if(res.response==="ok"){
+    if(res.response){
         swal({icon:'success',text:lang.actualizado_correctamente,timer:1200});
         getLista();
         if(storage){
@@ -97,7 +97,7 @@ const DepositosProvider = ({ children }) => {
 
   const getLista = useCallback(async () => {
     let res = await APICALLER.get({ table,where:"tipo_deposito,=,1" });
-    res.response === "ok" ? setLista(res.results) : console.log(res);
+    res.response  ? setLista(res.results) : console.log(res);
     setCargando(false);
   }, []);
 

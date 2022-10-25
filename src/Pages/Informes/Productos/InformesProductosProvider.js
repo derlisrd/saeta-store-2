@@ -40,7 +40,7 @@ function InformesProductosProvider({children}) {
         let res = await APICALLER.get({table:"productos_vendidos",include:"productos",on:"id_producto,id_producto_vendido",
         fields:"id_productos_vendido,nombre_producto,fecha_vendido,precio_vendido,costo_producto_vendido,cantidad_vendido",
         where:`fecha_vendido,between,'${fechas.desde} 00:00:00',and,'${fechas.hasta} 23:59:59'${where_tipo_producto}`});
-        if(res.response==="ok"){
+        if(res.response){
             let result = [...res.results];
             let newresult = [];
             let lucro = 0, costo = 0, vendido = 0,lucro_vendido=0,total_vendido;
