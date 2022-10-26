@@ -75,7 +75,7 @@ class AuthController {
                     $try = $res[0]->try_user + 1;
                     $data = ["try_user" => $try];
                     PutController::UpdateTable(USERS_TABLE,$res[0]->id_user,json_encode($data,true),null,false);
-                    echo JsonResponse::jsonResponseError(false,403,"Password invalid.");
+                    echo JsonResponse::jsonResponseError(false,200,"Password invalid.");
                     return;
                 }
             } else {
