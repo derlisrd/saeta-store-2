@@ -25,11 +25,11 @@ class DataBaseConnect{
                 self::$CON->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
                 self::$CON->exec("set names utf8");
             }else{
-                $response = JsonResponse::jsonResponseError("Error",404,"Not autorized api token");
+                $response = JsonResponse::jsonResponseError(false,404,"Not autorized api token");
                 die($response);
             }
         } catch (PDOException $e) {
-            $response = JsonResponse::jsonResponseError("Error",404,$e->getMessage());
+            $response = JsonResponse::jsonResponseError(false,404,$e->getMessage());
             die($response);
         }
 
@@ -54,7 +54,7 @@ class DataBaseConnect{
             self::$CON->exec("set names utf8");
         
     } catch (PDOException $e) {
-        $response = JsonResponse::jsonResponseError("Error",404,$e->getMessage());
+        $response = JsonResponse::jsonResponseError(false,404,$e->getMessage());
         die($response);
     }
 

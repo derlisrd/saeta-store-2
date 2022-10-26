@@ -15,6 +15,7 @@ const MainPage = ({children}) => {
     MainPaperExtended:{ // menu abierto en modo wide ejej
       margin:"20px 15px 0 15px",
       /* padding:theme.spacing(1), */
+      "::-webkit-scrollbar": {width: "0px"},
       minHeight:`calc(100vh - ${theme.mixins.toolbar.minHeight}px)`,
       padding:"30px 5px 10px 5px ",
       marginTop:theme.mixins.toolbar.minHeight,

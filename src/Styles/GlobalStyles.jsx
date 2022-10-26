@@ -13,6 +13,7 @@ export const useGlobalStyles = makeStyles((theme)=>({
         marginTop:theme.mixins.toolbar.minHeight,
         transition:"all .3s",
         marginBottom:theme.mixins.toolbar.minHeight,
+        "&::-webkit-scrollbar": {width: "0px"}
     },
     centerDivLogin:{
         minHeight:`calc(100vh - 20px)`,
@@ -38,7 +39,7 @@ export const useGlobalStyles = makeStyles((theme)=>({
     },
     selected: {
         "& span":{
-          color: theme.palette.primary.main,
+          color: theme.palette.primary.light,
         }
       },
     submenu:{

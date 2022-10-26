@@ -32,7 +32,7 @@ class Routes {
                 break;
 
                 default:
-                    print JsonResponse::jsonResponseError(false,404,"Method invalid");
+                    print JsonResponse::jsonResponseError(false,200,"Method invalid");
                 break;
             }
         }

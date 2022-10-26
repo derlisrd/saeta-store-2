@@ -16,19 +16,6 @@ export const APICALLER = {
       return { response: "Error", message: thrown };
     }
   },
-  getPromise: ({table,sort = "",pagenumber = "",pagesize = "",fields = "",where = "",include = "",on = "",token = "",filtersSearch = "",filtersField = ""}) => {
-    return new Promise((resolve, reject) => {
-      try {
-        let tk = DescifrarTexto(token);
-        let URLFINAL = `${APIURL}${table}?where=${where}&sort=${sort}&page[number]=${pagenumber}&page[size]=${pagesize}&fields=${fields}&include=${include}&on=${on}&token=${tk}&filters[search]=${filtersSearch}&filters[field]=${filtersField}`;
-        fetch(URLFINAL, { headers: { "X-Api-Token": XAPITOKEN } })
-          .then((response) => response.json())
-          .then((data) => resolve(data));
-      } catch (error) {
-        reject(error);
-      }
-    });
-  },
   
   deleteImage: async ({ table, path, idImage, token }) => {
     try {

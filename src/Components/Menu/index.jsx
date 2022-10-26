@@ -24,7 +24,7 @@ const Menu = () => {
     </AppBar>
     </Box>
       <Drawer
-        sx={{ display: { xs: 'none',lg:"flex" } }}
+        sx={{ display: { xs: 'none',lg:"inherit" } }}
         variant="permanent"
         anchor={sideMenu}
         open={activeBigMenu}
