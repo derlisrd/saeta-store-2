@@ -49,7 +49,8 @@ class AuthController {
                 // verificamos si la contra es igual
                 if (password_verify($password, $res[0]->password_user)) {
                     if($res[0]->estado_user==0){
-                        echo JsonResponse::jsonResponseError(true,403,"User inactive");
+                        echo JsonResponse::jsonResponseError(false,200,"User inactive");
+                        return;
                     }else{
                         $data_pa_token = array(
                             "id_user" => $res[0]->id_user,
@@ -64,6 +65,7 @@ class AuthController {
                         $result = array(
                             "id_user" => $res[0]->id_user,
                             "email_user"=>$res[0]->email_user,
+                            "name"=>$res[0]->name_user,
                             "username_user"=>$res[0]->username_user,
                             "nombre_user" => $res[0]->nombre_user,
                             "rol_user"=>$res[0]->rol_user,
