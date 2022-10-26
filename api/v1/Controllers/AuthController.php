@@ -79,10 +79,10 @@ class AuthController {
                     return;
                 }
             } else {
-                echo JsonResponse::jsonResponseError(false,403,"Your accounts has be blocked.");
+                echo JsonResponse::jsonResponseError(false,200,"Your accounts has be blocked.");
             }
         } else {
-            echo JsonResponse::jsonResponseError(false,404,"User doesn't exist.");
+            echo JsonResponse::jsonResponseError(false,200,"User doesn't exist.");
             return;
         }
 
