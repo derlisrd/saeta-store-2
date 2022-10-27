@@ -70,7 +70,7 @@ const LoginForm = () => {
                   ),}}  autoFocus autoComplete="off" required name="username_user" label={lang.usuario} value={form.username_user} onChange={change}  />
           </Grid>
           <Grid item xs={12}>
-            <TextField inputRef={inputPasswordRef} fullWidth disabled={load.login} required type={typeInput? "password" : "text"} label={lang.contrasena} name="password_user" value={form.password_user} onChange={change}  
+            <TextField autoComplete="off" inputRef={inputPasswordRef} fullWidth disabled={load.login} required type={typeInput? "password" : "text"} label={lang.contrasena} name="password_user" value={form.password_user} onChange={change}  
               InputProps={{
                 startAdornment: (
                   <InputAdornment position="start">

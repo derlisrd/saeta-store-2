@@ -42,6 +42,7 @@ export const translate = {
         lucro:"Lucro",
         total_ventas:"Total ventas",
         descuento:"Descuento",
+        config_empresa: "Config. de empresa",
         confirmar_cierre:"Confirmar cierre",
         cierre_de_caja:"Cierre de caja",
         resumen_cierre_caja:"Resumen de cierre de caja",

@@ -51,6 +51,16 @@ export default function UserMenu(){
           </ListItem>
           <ListItem
             button 
+            onClick={() => {navigate(env.BASEURL + "/settings");}}
+          >
+            <ListItemIcon>
+              <Icon>settings</Icon>
+            </ListItemIcon>
+            <ListItemText primary={lang.config_empresa} />
+          </ListItem>
+          
+          <ListItem
+            button 
             onClick={() => {navigate(env.BASEURL + "/cajas");}}
           >
             <ListItemIcon>
