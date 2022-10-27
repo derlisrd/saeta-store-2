@@ -21,7 +21,7 @@ const TemaProvider = ({children})=>{
 
     const drawerWidth = 275;
     const colorText = tema.mode==='light' ? "#4e4d4d" : "#fff";
-    const PaperBgColor = tema.mode==='light' ? "#fff" : "#212b36";
+    const PaperBgColor = tema.mode==='light' ? "#fff" : "#0d1117";
     const DefaultBgColor = tema.mode==='light' ? "#f9f9f9" : "#161c24";
 
 
