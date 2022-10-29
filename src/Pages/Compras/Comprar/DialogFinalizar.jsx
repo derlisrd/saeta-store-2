@@ -1,4 +1,4 @@
-import { Dialog, DialogActions, DialogContent, DialogTitle, Icon, IconButton, Tooltip, Zoom,Grid, Typography, TextField } from '@mui/material'
+import { Dialog, DialogActions, DialogContent, DialogTitle, Icon, IconButton, Tooltip, Zoom,Grid, Typography, TextField, LinearProgress } from '@mui/material'
 import { Fragment, useState } from 'react'
 import { AlertError } from '../../../Components/MuiCustom/AlertsCustom';
 import ButtonCustom from '../../../Components/MuiCustom/ButtonCustom';
@@ -12,8 +12,8 @@ import ListaCajas from './ListaCajas';
 const DialogFinalizar = () => {
 
 
-    const {dialogs,setDialogs,lang,funciones,compras,token_user} = useCompras();
-
+    const {dialogs,setDialogs,lang,funciones,compras,token_user,setearCompras,inputCodigo} = useCompras();
+    const [isLoading,setIsLoading] = useState(false)
     const initialForm = {
       tipo_factura_compra:"",
       comprobante_nro:"",
@@ -53,6 +53,7 @@ const DialogFinalizar = () => {
           estado_compra
         }
         
+        setIsLoading(true)
         let res = await APICALLER.insert({table:"compras",data:nformcompra,token:token_user})
          
         if(res.response){
@@ -78,9 +79,14 @@ const DialogFinalizar = () => {
             }))
           });
           Promise.all(promises);
-
-          
         } 
+        setIsLoading(false)
+        let d = {...compras}
+        d.items = []
+        setearCompras(d);
+        setDialogs({...dialogs,finalizar:false})
+        inputCodigo.current.value =""
+        inputCodigo.current.focus()
     }
 
 
@@ -106,6 +112,9 @@ const DialogFinalizar = () => {
       </DialogTitle>
       <DialogContent dividers>
         <Grid container spacing={2}>
+        <Grid item xs={12}>
+            {isLoading && <LinearProgress />}
+          </Grid>
           <Grid item xs={12}>
             {error.active && <AlertError>{error.msj}</AlertError>}
           </Grid>
