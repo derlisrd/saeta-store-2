@@ -1,4 +1,4 @@
-import { Button, Grid, Stack, Typography } from "@mui/material";
+import { Box, Button, Grid, Stack, Typography } from "@mui/material";
 import React, { useState } from "react";
 import { useBarcode } from "react-barcodes";
 import { useQuery } from "../../../../Hooks/useQuery";
@@ -28,6 +28,7 @@ const ProductCode = () => {
     printJS({ type: "html", printable: "print_code" });
   };
   return (
+    <Box p={2} boxShadow={4} borderRadius={4} m={1} bgcolor="background.paper">
     <Grid
       container
       spacing={2}
@@ -58,6 +59,7 @@ const ProductCode = () => {
         </div>
       </Grid>
     </Grid>
+    </Box>
   );
 };
 

@@ -1,4 +1,4 @@
-import {Alert,Autocomplete,Container,Grid,TextField,Typography,Button,CircularProgress,LinearProgress,IconButton,Icon,List,ListItem,ListItemAvatar,ListItemText,FormControl,InputLabel,Select,MenuItem} from "@mui/material";
+import {Alert,Autocomplete,Container,Grid,TextField,Typography,Button,CircularProgress,LinearProgress,IconButton,Icon,List,ListItem,ListItemAvatar,ListItemText,FormControl,InputLabel,Select,MenuItem, Box} from "@mui/material";
 import React, { useState, useRef } from "react";
 
 import { APICALLER } from "../../../Services/api";
@@ -102,6 +102,7 @@ const Inventario = () => {
   }
   return (
     <Container>
+      <Box p={2} boxShadow={4} borderRadius={4} m={1} bgcolor="background.paper">
       <Grid container spacing={2}>
         <Grid item xs={12}>
           {load2 && <LinearProgress color="primary" />}
@@ -204,6 +205,7 @@ const Inventario = () => {
           </>
         )}
       </Grid>
+      </Box>
     </Container>
   );
 };

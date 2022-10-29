@@ -54,7 +54,6 @@ const DashBoard = () => {
             <br />
             <Typography variant="overline">Bienvenido nuevamente</Typography>
             <br />
-            <Button variant="contained">{lang.iniciar}</Button>
           </CardContent>
         </Card>
      </Grid>

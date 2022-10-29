@@ -15,7 +15,8 @@ class JsonResponse {
                 "results"=>$results,
                 "status"=> $status,
                 "error"=>!$response,
-                "message"=>null
+                "message"=>null,
+                "first"=>$results[0] ?? null
             );
         }
         else{
@@ -26,7 +27,8 @@ class JsonResponse {
                 "status"=> $status,
                 "total"=>$total,
                 "error"=>!$response,
-                "message"=>null
+                "message"=>null,
+                "first"=>$results[0] ?? null
             );
         }
         

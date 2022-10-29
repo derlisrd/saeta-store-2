@@ -11,17 +11,18 @@ const TableItems = ({items}) => {
 
   const restar = i =>{
     let datos = {...compras}
-    let stock = parseFloat(datos.items[i].stock) - 1;
+    let stock = parseFloat(datos.items[i].cantidad_compra) - 1;
 
+    
     if(stock > 0) {
-      datos.items[i].stock = stock
+      datos.items[i].cantidad_compra = stock
       setearCompras(datos)
       inputCodigo.current.focus()
     }
   }
   const sumar = i =>{
     let datos = {...compras}
-    datos.items[i].stock = parseFloat(datos.items[i].stock) + 1;
+    datos.items[i].cantidad_compra = parseFloat(datos.items[i].cantidad_compra) + 1;
     setearCompras(datos)
     inputCodigo.current.focus()
   }

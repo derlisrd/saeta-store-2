@@ -167,11 +167,11 @@ export const APICALLER = {
     }
   },
 
-  update: async ({ table, data, id, token }) => {
+  update: async ({ table, data, id, token,operator }) => {
     try {
       let tk = DescifrarTexto(token);
       const res = await Axios({
-        url: `${APIURL}${table}/${id}/?token=${tk}`,
+        url: `${APIURL}${table}/${id}/?token=${tk}&operator=${operator}`,
         method: "PUT",
         data: JSON.stringify(data),
         headers: { "X-Api-Token": XAPITOKEN },

@@ -1,6 +1,5 @@
 import { Dialog, DialogActions, DialogContent, DialogTitle, Icon, IconButton, Tooltip, Zoom,Grid, Typography, TextField } from '@mui/material'
-
-import React, { Fragment, useState } from 'react'
+import { Fragment, useState } from 'react'
 import { AlertError } from '../../../Components/MuiCustom/AlertsCustom';
 import ButtonCustom from '../../../Components/MuiCustom/ButtonCustom';
 import { DatePickerCustom } from '../../../Components/MuiCustom/DatePickerCustom';
@@ -21,7 +20,7 @@ const DialogFinalizar = () => {
       id_proveedor_compra:"",
       id_cajas_moneda:"",
       fecha_pago:funciones.fechaActualYMD(),
-      fecha:funciones.fechaActualYMD()
+      fecha:funciones.getFechaHorarioString()
     }
     const initialError = {
       active: false,
@@ -36,12 +35,15 @@ const DialogFinalizar = () => {
      setForm({...form,[name]:value})
     }
 
+
+
+
     const finalizarEnviar = async()=>{
-      setError({active:false,msj:"ERROR",id_error:1})
+      setError({active:false,msj:"",id_error:0})
 
       let estado_compra = 0;
 
-         let nform = {
+         let nformcompra = {
           id_proveedor_compra: form.id_proveedor_compra,
           tipo_factura_compra: form.tipo_factura_compra,
           fecha_pago_compra:form.fecha_pago,
@@ -51,7 +53,7 @@ const DialogFinalizar = () => {
           estado_compra
         }
         
-         let res = await APICALLER.insert({table:"compras",data:nform,token:token_user})
+        let res = await APICALLER.insert({table:"compras",data:nformcompra,token:token_user})
          
         if(res.response){
           let id = res.last_id;
@@ -66,16 +68,19 @@ const DialogFinalizar = () => {
                 preciom_venta:e.preciom_venta,
                 precio_venta:e.precio_venta,
                 cantidad_compra:e.cantidad_compra,
-
               }
             })
             )
+            promises.push(APICALLER.update({
+              table:'productos_depositos',id:e.id_productos_deposito,
+              token: token_user,
+              data: { stock_producto_deposito: e.stock_producto_deposito }
+            }))
           });
           Promise.all(promises);
+
+          
         } 
-        console.log(compras.items);
-
-
     }
 
 

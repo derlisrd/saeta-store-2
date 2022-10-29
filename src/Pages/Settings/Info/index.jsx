@@ -1,16 +1,13 @@
 import { Alert, Box, Grid, Icon, Typography,Link } from '@mui/material'
-import React from 'react'
 
 const Info = () => {
   return (
-    <Box p={1} boxShadow={4} borderRadius={4} m={1} bgcolor="background.paper">
-      <h2>INFORMACION Y AYUDA <Icon color='primary'>help</Icon></h2>
+    <Box p={2} boxShadow={4} borderRadius={4} m={1} bgcolor="background.paper">
       <Grid container spacing={3}>
-
       <Grid item xs={12}>
         <Alert icon={false}>
           <Typography variant='h6'>
-            Sistema de ventas, facturación e inventario. <Link underline="hover" href="https://wa.me/595983202090" rel="noreferrer" target="_blank"> CONTACTO: 0983 202090</Link>
+            Sistema de ventas, facturación e inventario. <Link underline="hover" href="https://wa.me/595983202090" rel="noreferrer" target="_blank"> Contacto: 0983 202090</Link>
           </Typography>
         </Alert>
       </Grid>

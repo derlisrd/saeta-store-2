@@ -1,4 +1,3 @@
-import React from 'react';
 import Comprar from './Comprar';
 import ComprasProvider from './ComprasProvider';
 

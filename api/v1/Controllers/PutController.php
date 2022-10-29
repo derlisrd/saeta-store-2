@@ -9,13 +9,13 @@ use Models\Models;
 class PutController {
 
 
-    public static function UpdateTable($table,$id,$data,$set=null,$resp=true){
+    public static function UpdateTable($table,$id,$data,$set=null,$resp=true,$operator="="){
 
         
         $valor = json_decode($data, true);
         $SET = "SET ";
         foreach ($valor as $key => $value) {
-            $SET .= $key. "='" . $value. "', ";
+            $SET .= $key. " $operator '" . $value. "', ";
         }
         if($set!==null){
             $set = explode(",",$set);

@@ -1,4 +1,4 @@
-import { Tabs, Tab } from "@mui/material";
+import { Tabs, Tab, Box } from "@mui/material";
 import { useState } from "react";
 import { useLang } from "../../../Contexts/LangProvider";
 import DatosEmpresa from "./DatosdeEmpresa";
@@ -14,7 +14,7 @@ const SettingsMain = () => {
         )
       }
   return (
-    <>
+    <Box p={2} boxShadow={4} borderRadius={4} m={1} bgcolor="background.paper">
     <Tabs
         indicatorColor="primary"
         textColor="primary"
@@ -29,7 +29,7 @@ const SettingsMain = () => {
         <DatosEmpresa />
       </TabPanel>
 
-    </>
+    </Box>
   )
 }
 

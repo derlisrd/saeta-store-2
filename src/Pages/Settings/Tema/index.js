@@ -7,7 +7,7 @@ const Tema = () => {
   const fontSizeGeneral = parseInt(tema.fontSize.general);
   const fontSizeMenu = parseInt(tema.fontSize.menu);
   return (
-    <Box>
+    <Box p={2} boxShadow={4} borderRadius={4} m={1} bgcolor="background.paper">
       <Grid container spacing={2}>
       <Grid item xs={12}>
         <Typography variant="h6">{lang.tema_y_colores}</Typography>

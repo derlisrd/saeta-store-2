@@ -35,7 +35,6 @@ const ProductFormTabs = () => {
           {
             cargas.guardar && <LinearProgress />
           }
-          
         </Stack>
         {cargas.main ?  <LinearProgress /> : <> 
       <Tabs
@@ -59,7 +58,7 @@ const ProductFormTabs = () => {
        <Imagenes /> 
       </TabPanel>
       </>}
-      
+
       </Box>
     </form>
   )

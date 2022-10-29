@@ -1,6 +1,7 @@
-import {  Button, Dialog, DialogActions, DialogContent, DialogTitle, FormControl, Grid, InputLabel, MenuItem, Select, TextField, Zoom } from '@mui/material'
+import {  Button, Dialog, DialogActions, DialogContent, DialogTitle, FormControl, Grid, InputLabel, LinearProgress, MenuItem, Select, TextField, Zoom } from '@mui/material'
 import {useRef, useState} from 'react'
 import NumberFormatCustom from '../../../Components/thirty/NumberFormatCustom';
+import { APICALLER } from '../../../Services/api';
 import { useCompras } from '../ComprasProvider'
 import DialogInsertErrores from './DialogInsertErrores';
 import DialogInsertInfoProducto from './DialogInsertInfoProducto';
@@ -8,6 +9,7 @@ import DialogInsertInfoProducto from './DialogInsertInfoProducto';
 const DialogInsert = () => {
 
     const {dialogs,setDialogs,lang,compras,setearCompras,inputCodigo} = useCompras();
+    const [isLoading,setIsLoading] = useState(false)
     const inputStock = useRef(null)
     const initialErrores ={
       active:false,
@@ -17,6 +19,7 @@ const DialogInsert = () => {
     const [errores,setErrores] = useState(initialErrores)
     const initialForm = {
       id_producto_compra:"",
+      id_productos_deposito: "",
       precio_compra: "",
       precio_venta: "",
       preciom_venta:"",
@@ -40,6 +43,7 @@ const DialogInsert = () => {
     const valAnteriores = ()=>{
       let f = {...form}, c = {...compras};
       let d = c.insertProducto;
+      f.id_producto_compra = d.id_producto_compra;
       f.precio_compra = d.precio_compra;
       f.precio_venta = d.precio_venta;
       f.preciom_venta = d.preciom_venta;
@@ -48,9 +52,10 @@ const DialogInsert = () => {
     }
 
 
-    const insertar = (e) => {
+    const insertar = async (e) => {
       e.preventDefault();
       let f = {...form}
+      let fo = {...compras.insertProducto}
       if(f.cantidad_compra===""){
         setErrores({active:true,msj:"Inserte la cantidad de stock",id_error:1})
         return false;
@@ -73,14 +78,29 @@ const DialogInsert = () => {
       }
 
       setErrores({active:false,msj:null,id_error:null})
+      setIsLoading(true)
+
+      let res = await APICALLER.get({
+        table:'productos_depositos',
+        where:`id_producto_deposito,=,${fo.id_producto_compra},and,id_deposito_deposito,=,${f.id_compras_deposito}`
+      })
+      let stock_producto_deposito, id_productos_deposito;
+
+      if(res.response){
+        stock_producto_deposito = parseFloat(f.cantidad_compra) + parseFloat(res.first.stock_producto_deposito)
+        id_productos_deposito = res.first.id_productos_deposito
+      }
 
       let datosnuevos = {...compras}
-      let itemnuevo = {...f, 
+      let itemnuevo = {...f,
+        stock_producto_deposito,
+        id_productos_deposito,
+        cantidad_compra: parseFloat(f.cantidad_compra), 
         codigo_producto:compras.insertProducto?.codigo_producto, 
         nombre_producto:compras.insertProducto?.nombre_producto,
         id_producto_compra:compras.insertProducto?.id_producto_compra, 
       }
-
+      setIsLoading(false)
       datosnuevos.items.push(itemnuevo)
       setearCompras(datosnuevos)
       close()
@@ -95,6 +115,9 @@ const DialogInsert = () => {
       </DialogTitle>
       <DialogContent dividers>
         <Grid container spacing={2}>
+        <Grid item xs={12}>
+          {isLoading && <LinearProgress />}
+        </Grid>  
         <Grid item xs={12}>
           <DialogInsertErrores errores={errores} />
         </Grid>

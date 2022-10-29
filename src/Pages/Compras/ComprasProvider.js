@@ -56,6 +56,7 @@ export default function ComprasProvider({children}) {
     //let cant = parseFloat(inputCantidad.current.value);
     let data = {
       id_producto_compra:pro.id_producto,
+      id_productos_deposito: pro.id_productos_deposito,
       codigo_producto: pro.codigo_producto,
       nombre_producto: pro.nombre_producto,
       precio_compra: pro.costo_producto,
@@ -89,7 +90,9 @@ export default function ComprasProvider({children}) {
   const consultarCodigoProducto = async(codigo)=>{
     setCargas({...cargas,codigo:true})
     let promises = await Promise.all([
-      APICALLER.get({table:"productos",include:"proveedors",on:"id_proveedor,id_proveedor_producto",
+      APICALLER.get({table:"productos",
+      include:"proveedors",
+      on:"id_proveedor,id_proveedor_producto",
       fields:"id_producto,codigo_producto,precio_producto,preciom_producto,nombre_producto,costo_producto,nombre_proveedor,ruc_proveedor",
       where:`codigo_producto,=,'${codigo}',and,tipo_producto,=,1`})
     ])

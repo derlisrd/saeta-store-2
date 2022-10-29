@@ -162,11 +162,11 @@ class Controllers {
         $id = isset($tableArray[2]) ? $tableArray[2] : null;
         $data = file_get_contents("php://input");    
         $set = isset($_GET['set']) && !empty($_GET['set']) ? $_GET['set'] : null;
-    
+        $operator = isset($_GET['operator']) && !empty($_GET['operator']) ? $_GET['operator'] : null;
         
         $TOKEN = isset($_GET['token']) || !empty($_GET['token']) ? $_GET['token'] : null; 
         if(!$TOKEN==null && AuthController::ValidateToken($TOKEN,false)){            
-            PutController::UpdateTable($table,$id,$data,$set);
+            PutController::UpdateTable($table,$id,$data,$set,$operator);
         }
         else{
             if($TOKEN===null) { echo  JsonResponse::jsonResponseError(false,404 || !empty($_GET['token']),"Token invalid"); }

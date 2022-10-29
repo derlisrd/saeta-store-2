@@ -1,4 +1,4 @@
-import { Tabs,Tab,  } from '@mui/material'
+import { Tabs,Tab,Box  } from '@mui/material'
 import {useState} from 'react'
 import EntregasLista from "./EntregasLista"
 import EntregasPendientes from './EntregasPendientes'
@@ -12,7 +12,7 @@ const EntregasMain = () => {
       )
     }
     return (
-        <>
+      <Box p={2} boxShadow={4} borderRadius={4} m={1} bgcolor="background.paper">
         <Tabs
             indicatorColor="primary"
             textColor="primary"
@@ -34,7 +34,7 @@ const EntregasMain = () => {
           </TabPanel>
     
           
-        </>
+        </Box>
       )
 }
 
