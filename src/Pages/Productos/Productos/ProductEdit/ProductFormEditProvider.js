@@ -184,12 +184,12 @@ const ProductFormEditProvider = (props) => {
         let sto = localStorage.getItem("dataProductos");
         if(sto===null){
           let va = await Promise.all([
-            APICALLER.getPromise({table: `categorias`,fields: `id_categoria,nombre_categoria,id_padre_categoria,tipo_categoria`,sort:'-nombre_categoria'}),
-            APICALLER.getPromise({table: "proveedors",fields: "id_proveedor,nombre_proveedor"}),
-            APICALLER.getPromise({table: `marcas`,fields: `id_marca,nombre_marca`}),
-            APICALLER.getPromise({table: `unidad_medidas`}),
-            APICALLER.getPromise({table: `impuestos`}),
-             APICALLER.getPromise({table: `depositos`,sort:"-id_deposito"}) 
+            APICALLER.get({table: `categorias`,fields: `id_categoria,nombre_categoria,id_padre_categoria,tipo_categoria`,sort:'-nombre_categoria'}),
+            APICALLER.get({table: "proveedors",fields: "id_proveedor,nombre_proveedor"}),
+            APICALLER.get({table: `marcas`,fields: `id_marca,nombre_marca`}),
+            APICALLER.get({table: `unidad_medidas`}),
+            APICALLER.get({table: `impuestos`}),
+             APICALLER.get({table: `depositos`,sort:"-id_deposito"}) 
         ]);
             let list = {categorias:va[0].results,proveedores:va[1].results,marcas:va[2].results,medidas:va[3].results,impuestos:va[4].results}
             setearListas(list) 

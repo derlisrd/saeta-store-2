@@ -19,6 +19,7 @@ const ProductFormEditTabs = () => {
       }
   return (
     <form onSubmit={sendForm}>
+      <Box p={2} boxShadow={4} borderRadius={4} m={1} bgcolor="background.paper" >
       {cargas.main && <LoadingBackDrop /> }
       <Snackbar
         open={snack.open}
@@ -50,6 +51,7 @@ const ProductFormEditTabs = () => {
         <Tab label="IMAGENES" />
       </Tabs>
     </Box>
+
       <TabPanel value={tabValue} index={0}>
        <Datos />
       </TabPanel>
@@ -59,6 +61,7 @@ const ProductFormEditTabs = () => {
       <TabPanel value={tabValue} index={2}>
         <Imagenes />
       </TabPanel>
+      </Box>
     </form>
   )
 }

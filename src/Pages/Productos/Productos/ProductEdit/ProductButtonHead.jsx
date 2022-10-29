@@ -15,7 +15,7 @@ const ProductButtonHead = () => {
       alignItems="center"
     >
       <Grid item>
-        <Typography variant="h5"> {lang.editar_producto} </Typography>
+        <Typography variant="h6"> {lang.editar_producto} </Typography>
       </Grid>
       <Grid item>
         <Grid
@@ -27,8 +27,6 @@ const ProductButtonHead = () => {
         >
           <Grid item>
             <ButtonCustom
-              onClick={() => {}}
-              color="primary"
               variant="contained"
               type="submit"
               disabled={cargas.guardar}
@@ -39,7 +37,7 @@ const ProductButtonHead = () => {
           <Grid item>
             <ButtonCustom
               color="error"
-              variant="contained"
+              variant="outlined"
               onClick={() => {go.to("productos")}}
               disabled={cargas.guardar}
             >

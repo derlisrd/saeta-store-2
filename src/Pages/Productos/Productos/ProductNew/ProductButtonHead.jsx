@@ -15,20 +15,18 @@ const ProductButtonHead = () => {
       justifyContent="space-between"
       alignItems="center"
     >
-      <Grid item>
-        <Typography variant="h5">{lang.nuevo}</Typography>
+      <Grid item xs={12}>
+        <Typography variant="h6">{lang.nuevo}</Typography>
       </Grid>
-      <Grid item>
+      <Grid item xs={12}>
         <Grid container  direction="row"  spacing={2} justifyContent="flex-end"  alignItems="flex-start" >
           <Grid item>
             <ButtomCustom
-              onClick={() => {}}
-              color="primary"
               type="submit"
               variant="outlined"
               disabled={GUARDAR_ACTIVO}
             >
-              GUARDAR
+              {lang.guardar}
             </ButtomCustom>
           </Grid>
           <Grid item>
@@ -38,7 +36,7 @@ const ProductButtonHead = () => {
               variant="outlined"
               disabled={cargas.guardar}
             >
-              Cerrar
+              {lang.cerrar}
             </ButtomCustom>
           </Grid>
         </Grid>

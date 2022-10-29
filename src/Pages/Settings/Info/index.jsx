@@ -3,9 +3,9 @@ import React from 'react'
 
 const Info = () => {
   return (
-    <Box>
+    <Box p={1} boxShadow={4} borderRadius={4} m={1} bgcolor="background.paper">
       <h2>INFORMACION Y AYUDA <Icon color='primary'>help</Icon></h2>
-      <Grid container>
+      <Grid container spacing={3}>
 
       <Grid item xs={12}>
         <Alert icon={false}>
@@ -16,7 +16,7 @@ const Info = () => {
       </Grid>
         <Grid item xs={12}>
           <Alert variant='outlined' severity='info' icon={<Icon>done</Icon>}>
-            <Typography variant='overline'>Sistema desarrollado por Derlis Ruiz Diaz.</Typography>
+            <Typography variant='subtitle2'>Sistema desarrollado por Derlis Ruiz Diaz.</Typography>
           </Alert>
         </Grid>
       </Grid>

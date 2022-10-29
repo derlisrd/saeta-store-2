@@ -1,4 +1,4 @@
-import { Alert, Autocomplete, Button, CircularProgress, Grid, Icon, IconButton, List, ListItem, ListItemAvatar, ListItemText, TextField, Tooltip, Typography } from '@mui/material'
+import { Alert, Autocomplete, Box, Button, CircularProgress, Grid, Icon, IconButton, List, ListItem, ListItemAvatar, ListItemText, TextField, Tooltip, Typography } from '@mui/material'
 import React, { useState,useRef } from 'react'
 import { APICALLER } from '../../../Services/api';
 import { useTransferencias } from './TransferenciasProvider';
@@ -22,7 +22,7 @@ const TransferenciasForm = () => {
     } else {
       setTimeout(async () => {
         let res = await APICALLER.get({table: "productos",filtersField:"nombre_producto,codigo_producto",filtersSearch:txt,pagesize:'20',fields:"nombre_producto,codigo_producto,id_producto"});
-        res.response === "ok" ? setListaProductos(res.results) : console.log(res);
+        res.response ? setListaProductos(res.results) : console.log(res);
         setLoadAuto(false);
       }, 500);
     }
@@ -54,7 +54,7 @@ const TransferenciasForm = () => {
   }
   
   return (
-    <>
+    <Box p={2} borderRadius={4} m={1} boxShadow={4} bgcolor="background.paper">
       <h2>Transferencias de productos</h2>
       <Grid container spacing={2}>
         <Grid item sm={12}>
@@ -122,7 +122,7 @@ const TransferenciasForm = () => {
           </>
         )}
       </Grid>
-    </>
+    </Box>
   )
 }
 

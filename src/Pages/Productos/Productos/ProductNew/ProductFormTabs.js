@@ -16,7 +16,7 @@ const ProductFormTabs = () => {
   },[tabValue]);
   return (
     <form onSubmit={sendForm}>
-      <Box padding={4} boxShadow={4} borderRadius={4} margin={1} bgcolor="background.paper" >
+      <Box p={2} boxShadow={4} borderRadius={4} m={1} bgcolor="background.paper" >
       <Snackbar
         open={snack.open}
         onClose={() => setSnack({...snack,open:false})}
@@ -35,8 +35,9 @@ const ProductFormTabs = () => {
           {
             cargas.guardar && <LinearProgress />
           }
-          {cargas.main &&  <LinearProgress />}
+          
         </Stack>
+        {cargas.main ?  <LinearProgress /> : <> 
       <Tabs
         indicatorColor="primary"
         textColor="primary"
@@ -57,6 +58,8 @@ const ProductFormTabs = () => {
       <TabPanel value={tabValue} index={2}>
        <Imagenes /> 
       </TabPanel>
+      </>}
+      
       </Box>
     </form>
   )

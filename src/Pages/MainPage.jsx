@@ -1,5 +1,5 @@
 
-import { Box, Typography } from "@mui/material";
+import { Box } from "@mui/material";
 import Menu from "../Components/Menu"
 import { useMenu } from "../Contexts/MenuProvider";
 import { useGlobalStyles } from "../Styles/GlobalStyles"
@@ -13,10 +13,10 @@ const MainPage = ({children}) => {
   const classes = useGlobalStyles();
   const useStyles = makeStyles((theme)=>({
     MainPaperExtended:{ // menu abierto en modo wide ejej
-      margin:"20px 15px 0 15px",
+      margin:"20px 10px 0 10px",
       /* padding:theme.spacing(1), */
       minHeight:`calc(100vh - ${theme.mixins.toolbar.minHeight}px)`,
-      padding:"30px 5px 10px 5px ",
+      padding:"30px 0px 10px 0px ",
       marginTop:theme.mixins.toolbar.minHeight,
       [theme.breakpoints.up("lg")]: {
         marginRight:drawerWidth+20,
@@ -28,12 +28,9 @@ const MainPage = ({children}) => {
   const style = useStyles();
   return (
     <>
-    <Menu />
+      <Menu />
       <Box className={activeBigMenu ? style.MainPaperExtended : classes.MainPaper}  >
         {children}
-        <Box p={1} m={1}>
-          <Typography component="div" sx={{ position:"fixed", bottom:10, right:15, opacity:"0.2" }} variant="subtitle2">Desarrollado por el equipo de 9 tres cuarto</Typography>
-        </Box>
       </Box>
     </>
   )

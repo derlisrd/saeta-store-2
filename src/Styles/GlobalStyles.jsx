@@ -7,8 +7,8 @@ export const useGlobalStyles = makeStyles((theme)=>({
         backdropFilter:"blur(2px)",
       },
     MainPaper:{
-        margin:"15px 15px 0 15px",
-        padding:"30px 5px 10px 5px ",
+        margin:"15px 10px 10px 10px",
+        padding:"30px 0 10px 0",
         minHeight:'100vh',
         marginTop:theme.mixins.toolbar.minHeight,
         transition:"all .3s",
