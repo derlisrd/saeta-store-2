@@ -10,8 +10,7 @@ export const funciones = {
     // retorna los dias de cierto mes
     getDaysInMonth: (year, month) => (  new Date(year, month, 0).getDate() ),
     
-    getFechaHorarioString: ()=>{
-        let date = new Date();
+    getFechaHorarioString: (date = new Date())=>{
         let fecha =
         date.getFullYear().toString() +
           "-" +

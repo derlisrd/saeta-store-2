@@ -40,8 +40,9 @@ const DialogFinalizar = () => {
 
     const finalizarEnviar = async()=>{
       setError({active:false,msj:"",id_error:0})
+      let f = {...form}
 
-      let estado_compra = 0;
+      let estado_compra = parseInt(f.tipo_factura_compra) > 1 ? 2 : 1 ;
 
          let nformcompra = {
           id_proveedor_compra: form.id_proveedor_compra,
@@ -148,7 +149,7 @@ const DialogFinalizar = () => {
                   value={form.fecha_pago}
                   label={lang.fecha_pago}
                   onChange={(d) => {
-                    setForm({ ...form, fecha_pago: d });
+                    setForm({ ...form, fecha_pago: funciones.getFechaHorarioString( d ) });
                   }}
                   name="fecha_pago"
                 />
