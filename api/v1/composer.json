@@ -2,6 +2,7 @@
     "require": {
         "firebase/php-jwt": "^6.2",
         "vlucas/phpdotenv": "^5.4",
-        "dompdf/dompdf": "^2.0"
+        "dompdf/dompdf": "^2.0",
+        "luecano/numero-a-letras": "^3.0"
     }
 }

@@ -29,6 +29,10 @@ class ComposerStaticInit60318f9ff41b79c628c9493c3092045c
         array (
             'Masterminds\\' => 12,
         ),
+        'L' => 
+        array (
+            'Luecano\\NumeroALetras\\' => 22,
+        ),
         'G' => 
         array (
             'GrahamCampbell\\ResultType\\' => 26,
@@ -73,6 +77,10 @@ class ComposerStaticInit60318f9ff41b79c628c9493c3092045c
         'Masterminds\\' => 
         array (
             0 => __DIR__ . '/..' . '/masterminds/html5/src',
+        ),
+        'Luecano\\NumeroALetras\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/luecano/numero-a-letras/src',
         ),
         'GrahamCampbell\\ResultType\\' => 
         array (

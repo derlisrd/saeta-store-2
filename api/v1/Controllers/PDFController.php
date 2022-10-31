@@ -2,7 +2,7 @@
 namespace PDFController;
 
 use Dompdf\Dompdf;
-use Helper\Helper;
+use Luecano\NumeroALetras\NumeroALetras;
 use Models\Models;
 
 class PDFController {
@@ -10,6 +10,7 @@ class PDFController {
     public static function factura($array){
 
         $dompdf = new Dompdf();
+        $formatter = new NumeroALetras();
         $id = $array["id"];
 
         $query = "SELECT 
@@ -72,7 +73,7 @@ class PDFController {
             </tr>';
             $items_html .= $add;
         }
-        $numero_total_letras = Helper::NumberToLetterES($df['monto_total_factura']);
+        $numero_total_letras = $formatter->toWords($df['monto_total_factura']);
         $propietario = $df['propietario_empresa'] == '' ? '' :  'De: '.$df['propietario_empresa'];
         $condicion_venta = $df['tipo_factura'] == '1' ? 'Contado' : 'Credito';
         $html = '<html><style>*{font-family:monospace;margin:0;padding:0;box-sizing:border-box}table{font-family:monospace;}.text-center{text-align:center}.text-right{text-align:right}.w-100{width:100%}.bg-smoke{background-color:#f5f5f5}.border-trl{border-top:1px solid #000;border-right:1px solid #000;border-left:1px solid #000}.container{width:204mm;margin:2mm auto 0}.cabezera{width:100%}.cabezera .titulos{width:65%;padding:8px;border-right:1px solid silver}.cabezera .datos{text-align:center;background-color:#f5f5f5;padding:8px}.datos_cliente{width:100%;border:1px solid silver}.datos_cliente .cliente{text-align:left;padding:8px;border-right:1px solid silver}.datos_cliente .factura{text-align:center;padding:8px}.items{width:100%;border-right:1px solid silver;border-left:1px solid silver}.items .head{font-weight:700}.items .head td{padding:5px;background-color:silver;text-align:right;border-bottom:1px solid silver}.items .item td{font-weight:lighter;padding:0 3px 1px 1px;text-align:right}.subtotales td{padding:5px;border-top:1px solid silver}.total td{border-top:1px solid silver;padding:5px}.datos_graficos{width:100%;border:1px solid #000}.datos_graficos .grafica{width:65%;padding:4px}.datos_graficos .fiscales{padding:4px;border-left:1px solid silver}</style>
@@ -140,7 +141,7 @@ class PDFController {
                 </tr>
                 <tr class="total">
                     <td colspan="5">
-                        <small>TOTAL: '.$numero_total_letras.'</small>
+                        <small>Total: '.$numero_total_letras.'</small>
                     </td>
                     <td class="text-right"> '.number_format($df['monto_total_factura'], 2, ',', '.').' </td>
                 </tr>
@@ -164,7 +165,7 @@ class PDFController {
         $dompdf->loadHtml($html);
         $dompdf->setPaper('A4','portrait');
         $dompdf->render();
-        $dompdf->stream($df['fecha_factura']); 
+        $dompdf->stream($df['fecha_factura']."_".$df['nro_factura']); 
     }
 
     

@@ -200,8 +200,8 @@ const ImpresionFactura = () => {
                 <tr>
                   <td width="70%" colSpan="3">
                     <b>
-                      TOTAL A PAGAR: {DF.abreviatura_moneda} {" "}
-                      {funciones.NumeroALetras(TOTAL, "")}
+                      Letras: 
+                      {funciones.NumeroALetras(TOTAL, "")} {DF.abreviatura_moneda} 
                     </b>
                   </td>
                   <td width="30%" align="right">
