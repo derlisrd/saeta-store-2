@@ -66,10 +66,10 @@ class PDFController {
             $add = '<tr class="item">
             <td>'.$i['cantidad_producto'].'</td>
             <td><small>'.$i['nombre_producto'].'</small></td>
-            <td>'.$precio.'</td>
-            <td>'.$imp0.'</td>
-            <td>'.$imp5.'</td>
-            <td>'.$imp10.'</td>
+            <td><small>'.$precio.'</small></td>
+            <td><small>'.$imp0.'</small></td>
+            <td><small>'.$imp5.'</small></td>
+            <td><small>'.$imp10.'</small></td>
             </tr>';
             $items_html .= $add;
         }
@@ -83,7 +83,7 @@ class PDFController {
                     <td class="titulos bg-smoke text-center">
                         <h3>'.$df['nombre_empresa'].'</h3>
                         <h5>'.$propietario.' </h5>
-                        <small>'.$df['categoria_empresa']. '</small>
+                        <small>'.$df['categoria_empresa']. '</small><br />
                         <small>'.$df['direccion_empresa'].' Tel:'.$df['telefono_empresa']. '</small>
                     </td>
                     <td class="datos bg-smoke text-center">
@@ -129,9 +129,9 @@ class PDFController {
                     <td colspan="3">
                         SUBTOTAL:
                     </td>
-                    <td class="text-right"> '.$subtotal0.' </td>
-                    <td class="text-right"> '.$subtotal5.' </td>
-                    <td class="text-right"> '.$subtotal10.' </td>
+                    <td class="text-right"> <small>'.$subtotal0.'</small> </td>
+                    <td class="text-right"> <small>'.$subtotal5.'</small> </td>
+                    <td class="text-right"> <small>'.$subtotal10.'</small> </td>
                 </tr>
                 <tr class="total">
                     <td colspan="5">
