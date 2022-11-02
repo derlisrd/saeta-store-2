@@ -46,6 +46,7 @@ import Turnos from "../Pages/Turnos";
 import Backup from "../Pages/Backup";
 import Comisiones from "../Pages/Caja/Comisiones";
 import FormasPago from "../Pages/Ventas/FormasPago";
+import Profile from "../Pages/Profile";
 
 const RoutesMain = () => {
   const navigate = useNavigate();
@@ -84,6 +85,7 @@ const RoutesMain = () => {
   const R = env.BASEURL +`/`;
   return (
     <Routes>
+      <Route path={R+"profile"} element={<PublicRoute><Profile /></PublicRoute>} />
       <Route path={R+"formaspago"} element={<PrivateRoute id={67}><FormasPago /></PrivateRoute>} />
       <Route path={R+"comisiones"} element={<PrivateRoute id={66}><Comisiones /></PrivateRoute>} />
       <Route path={R+"cuentas"} element={<PrivateRoute id={47}><Cuentas /></PrivateRoute>} />

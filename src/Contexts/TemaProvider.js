@@ -142,10 +142,17 @@ const TemaProvider = ({children})=>{
             styleOverrides:{
               root:{
                 borderRadius:"8px",
+                borderWidth:0
               }
             }
           },
-
+          MuiInputBase:{
+            styleOverrides:{
+              root:{
+                border:'none'
+              }
+            }
+          },
 
           MuiListItemIcon:{
             styleOverrides:{

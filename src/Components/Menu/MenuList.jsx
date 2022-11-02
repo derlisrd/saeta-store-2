@@ -1,4 +1,4 @@
-import { Box, Toolbar,  } from "@mui/material"
+import { Box, Divider, Toolbar, Typography,  } from "@mui/material"
 import {  makeStyles} from '@mui/styles'
 import { useMenu } from "../../Contexts/MenuProvider";
 import { useTheme } from "../../Contexts/TemaProvider";
@@ -23,8 +23,9 @@ const MenuList = () => {
   return (
     <Box className={style.menu}>
       <Toolbar>
-        <IconsButtonsMenu />
+         <IconsButtonsMenu /> <Typography variant="h6">Sistema</Typography>
       </Toolbar>
+      <Divider />
       <Lists />
     </Box>
   )

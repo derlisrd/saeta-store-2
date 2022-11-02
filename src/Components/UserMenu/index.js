@@ -1,4 +1,4 @@
-import {Divider,Button, Icon, IconButton, List, ListItem, ListItemIcon, ListItemText, Menu, Stack } from "@mui/material";
+import {Divider,Button, Icon, IconButton, List, ListItem, ListItemIcon, ListItemText, Menu, Stack, Avatar } from "@mui/material";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import swal from "sweetalert";
@@ -6,7 +6,7 @@ import { useDatosEmpresa } from "../../Contexts/DatosEmpresaProvider";
 import {useLang} from "../../Contexts/LangProvider";
 import { useLogin } from "../../Contexts/LoginProvider";
 import {env} from '../../Utils/config'
-
+import Man from '../../Assets/img/man.svg'
 export default function UserMenu(){
     const {logOut,userData}= useLogin()
     const {EMPRESA} = useDatosEmpresa()
@@ -28,7 +28,7 @@ export default function UserMenu(){
 
       <Stack sx={{ display:{xs:'none',sm:'flex'} }} direction="row" justifyContent="center" alignItems="center" >
         <Button size="small" onClick={handleClick} endIcon={<Icon>expand_more</Icon>}  >
-          {lang.hola}, {nombre_user}
+          <Avatar alt={nombre_user} src={Man} />
         </Button>
       </Stack>
       <Stack sx={{ display:{xs:'flex',sm:'none'} }} direction="row" justifyContent="center" alignItems="center" >
@@ -43,6 +43,16 @@ export default function UserMenu(){
         onClose={handleClose}
       >
         <List sx={{ p:2 }}>
+        <ListItem 
+        button 
+        onClick={() => {navigate(env.BASEURL + "/profile");}}
+        >
+            <ListItemIcon>
+              <Avatar alt={nombre_user} src={Man} />
+            </ListItemIcon>
+            <ListItemText primary={nombre_user} />
+          </ListItem>
+          <Divider />
           <ListItem >
             <ListItemIcon>
               <Icon>add_business</Icon>

@@ -1,6 +1,6 @@
 import { Typography,Grid,Card,CardContent,Icon, TextField,Alert, Box, FormControl, InputLabel, Select, MenuItem} from "@mui/material";
 
-import  LoadingBackDrop from "../../../Components/UI/LoadingBackDrop";
+import LoadingLinear from "../../../Components/UI/LoadingLinear";
 import { funciones } from "../../../Functions";
 import CardsCustom from "./CardsCustom";
 import Egresos from "./Egresos";
@@ -17,7 +17,7 @@ const InformesGenerales = () => {
   const changeMes = e=>setMesState(e.target.value);
   
   if (cargando) {
-    return <LoadingBackDrop />;
+    return <LoadingLinear />;
   }
   return (
     <Box padding={3} maxWidth="xl" >

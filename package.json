@@ -34,6 +34,7 @@
     "react-csv": "^2.0.3",
     "react-data-export": "^0.6.0",
     "react-dom": "^18.0.0",
+    "react-icons": "^4.6.0",
     "react-number-format": "^4.9.3",
     "react-router-dom": "^6.3.0",
     "react-scripts": "5.0.1",
