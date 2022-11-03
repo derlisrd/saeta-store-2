@@ -156,11 +156,11 @@ class AuthController {
                     echo JsonResponse::jsonResponseGET([],true,200,1,1);
                 }
                 else{
-                    echo JsonResponse::jsonResponseError(false,403,"Error password");
+                    echo JsonResponse::jsonResponseError(false,200,"Error password");
                 }
             }
             else{
-                echo JsonResponse::jsonResponseError(false,403,"No user found");
+                echo JsonResponse::jsonResponseError(false,200,"No user found");
             }
             
 
@@ -245,13 +245,16 @@ class AuthController {
             $decode = JWT::decode($token, new Key(env('SECRET_KEY'), env('ENCRYTED')));
 
             if ($decode->aud !== self::Aud() || $decode->iss !== DOMAIN_AUTH) {
+                echo JsonResponse::jsonResponseError(false,200,"out");
                 return false;
                 die();
             } else {
 
                 if($json){
-                    //$res = self::GetData($token);
-                    $res = [$decode->data];
+                    $res = self::GetData($token);
+                    
+                    //$res = $decode->data;
+                    //echo $res;
                     echo JsonResponse::jsonResponseGET($res,true,200,1); 
                 }
                 return true;
@@ -259,7 +262,7 @@ class AuthController {
 
         } catch (\Exception $e) {
 
-            echo JsonResponse::jsonResponseError("Error",200,$e->getMessage());
+            echo JsonResponse::jsonResponseError(false,200,$e->getMessage());
             return false;
             die();
         }

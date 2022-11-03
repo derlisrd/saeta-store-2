@@ -47,6 +47,7 @@ import Backup from "../Pages/Backup";
 import Comisiones from "../Pages/Caja/Comisiones";
 import FormasPago from "../Pages/Ventas/FormasPago";
 import Profile from "../Pages/Profile";
+import ScrollToTop from "../Components/ScrollToUp";
 
 const RoutesMain = () => {
   const navigate = useNavigate();
@@ -61,7 +62,7 @@ const RoutesMain = () => {
     if(login && !permisos.some(e => parseInt(e.id_permiso_permiso) === parseInt(id)) ){
       return <Navigate to={env.BASEURL + "/notautorized"} />
     } 
-    return login ? <MainPage>{children}</MainPage> : <Navigate to={env.BASEURL+"/"} />
+    return login ? <MainPage> <ScrollToTop /> {children}</MainPage> : <Navigate to={env.BASEURL+"/"} />
   }
 
   const verificar = useCallback(()=>{

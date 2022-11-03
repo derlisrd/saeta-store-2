@@ -36,9 +36,7 @@ const DashBoard = () => {
   useEffect(() => {
     const ca = new AbortController();
     let isActive = true;
-    if (isActive) {
-      getCotizacion()
-    }
+    if (isActive) {getCotizacion()}
     return () => {
       isActive = false;
       ca.abort();

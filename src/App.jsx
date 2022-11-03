@@ -1,7 +1,6 @@
 import LangProvider from "./Contexts/LangProvider";
 import {QueryClient,QueryClientProvider} from '@tanstack/react-query'
 import Pages from "./Pages";
-
 const queryClient = new QueryClient()
 
 function App() {

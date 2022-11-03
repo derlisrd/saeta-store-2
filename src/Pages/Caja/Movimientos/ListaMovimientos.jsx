@@ -3,6 +3,7 @@ import {TextField,Button,Icon,Grid,FormControl,InputLabel,Select, MenuItem,Toolt
 import { useMovimientos } from "./MovimientosProvider";
 import { useState } from "react";
 import { funciones } from "../../../Functions";
+import { DatePickerCustom } from "../../../Components/MuiCustom/DatePickerCustom";
 
 const ListaMovimientos = () => {
   const { lang,setDesdeFecha,setHastaFecha,setDialog,dialog,setForm,lista,fecha,setIdCaja,listaCajas,cargando,movimientos,setTipoRegistro, listaMonedas,setMonedaFilter
@@ -13,7 +14,10 @@ const ListaMovimientos = () => {
   const [idCajita, setIdCajita] = useState("");
   const [idRegistrito,setIdRegistrito] = useState("");
   const [idMoneda,setIdMoneda] = useState("")
-  const changeDatadesde = (e) => setDesde(e.target.value);
+  const changeDatadesde = (e) => {
+    setDesde(funciones.getDateDMY(e))
+    //setDesde(e.target.value)
+  };
   const changeDatahasta = (e) => setHasta(e.target.value);
 
   const Filtrar = () => {
@@ -89,13 +93,14 @@ const ListaMovimientos = () => {
   const search = (
     <Grid container spacing={2} alignItems="center">
       <Grid item xs={12} sm={6} md={2}>
-        <TextField
-          fullWidth
-          label={lang.desde}
-          type="date"
-          defaultValue={desde}
-          onChange={changeDatadesde}
-          name="desdeFecha"
+        
+        <DatePickerCustom 
+        fullWidth
+        label={lang.desde}
+        value={ (desde)}
+        defaultValue={desde}
+        onChange={changeDatadesde}
+        name="desdeFecha"
         />
       </Grid>
       <Grid item xs={12} sm={6} md={2}>

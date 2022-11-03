@@ -6,7 +6,7 @@ import { useDatosEmpresa } from "../../Contexts/DatosEmpresaProvider";
 import {useLang} from "../../Contexts/LangProvider";
 import { useLogin } from "../../Contexts/LoginProvider";
 import {env} from '../../Utils/config'
-import Man from '../../Assets/img/man.svg'
+import Man from '../../App/Assets/man.svg'
 export default function UserMenu(){
     const {logOut,userData}= useLogin()
     const {EMPRESA} = useDatosEmpresa()

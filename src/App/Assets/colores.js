@@ -5,8 +5,29 @@ export const AvaibleColors = [
   { name: "orange", color: "#d76a16" },
   { name: "red",color: "#FF4838"},
   { name: "bluelight",color: "#2187ab"},
+  { name: "new",color: "#2065D1"},
 ];
 export const colores = {
+
+  new: {
+    primary:{
+      lighter: '#D1E9FC',
+      light: '#76B0F1',
+      main: '#2065D1',
+      dark: '#103996',
+      darker: '#061B64',
+      contrastText: '#fff',
+    },
+    secondary:{
+      lighter: '#D6E4FF',
+      light: '#84A9FF',
+      main: '#3366FF',
+      dark: '#1939B7',
+      darker: '#091A7A',
+      contrastText: '#fff',
+    }
+  },
+
   violet: {
     primary: {
       light: "#512da81f",

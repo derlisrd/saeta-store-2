@@ -11,9 +11,10 @@ export function DatePickerCustom({label,value,onChange,...rest}) {
   return (
     <LocalizationProvider adapterLocale={esES}  dateAdapter={AdapterDateFns}>
       <DatePicker
+        inputFormat="dd-MM-yyyy"
         label={label}
         value={value}
-        mask="__/__/____"
+        mask="__-__-____"
         onChange={onChange}
         {...rest}
         renderInput={(params) => <TextField {...params} />}

@@ -2,6 +2,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { createContext, useContext, useState, useEffect } from "react";
 import CssBaseline from '@mui/material/CssBaseline';
 import {colores,AvaibleColors} from "../App/Assets/colores.js"
+
 const ContextTheme = createContext();
 
 
@@ -24,6 +25,7 @@ const TemaProvider = ({children})=>{
     const PaperBgColor = tema.mode==='light' ? "#fff" : "#0d1117";
     const DefaultBgColor = tema.mode==='light' ? "#f9f9f9" : "#161c24";
 
+    const FONT_PRIMARY = 'Montserrat'; // Google Font
 
     const changeColor = cor =>{
       let json = {...tema,defaultColor:cor,currentColor: colores[cor].primary.main,colors:cor}
@@ -76,7 +78,7 @@ const TemaProvider = ({children})=>{
           fontSize: parseInt(tema.fontSize.general),
           fontWeightMedium:"bold",
           fontWeightRegular:"500",
-          fontFamily:"Montserrat",
+          fontFamily:FONT_PRIMARY,
           caption:{
             fontSize:12,
           },
@@ -95,6 +97,16 @@ const TemaProvider = ({children})=>{
                 color:colorText,
               }
             }
+          },
+          MuiBackdrop: {
+            styleOverrides: {
+              root: {
+                
+              },
+              invisible: {
+                background: 'transparent',
+              },
+            },
           },
           MuiTypography:{
             defaultProps:{

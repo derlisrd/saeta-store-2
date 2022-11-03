@@ -52,7 +52,7 @@ const LoginProvider = ({children}) => {
         }
     }
 
-    const {isLoading,data} = useQuery('revalidate', revalidate)
+    const {isLoading,data} = useQuery(['revalidate'], revalidate)
 
     console.log(isLoading,data)
     
