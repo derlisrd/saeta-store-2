@@ -252,7 +252,7 @@ class AuthController {
                 if($json){
                     //$res = self::GetData($token);
                     $res = [$decode->data];
-                    echo JsonResponse::jsonResponseGET($res,"ok",200,1); 
+                    echo JsonResponse::jsonResponseGET($res,true,200,1); 
                 }
                 return true;
             }

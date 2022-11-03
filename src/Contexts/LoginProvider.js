@@ -3,6 +3,7 @@ import { APICALLER } from '../Services/api';
 import {  env } from "../Utils/config";
 import CryptoJS from "crypto-js";
 import { funciones } from '../Functions';
+import { useQuery } from '@tanstack/react-query';
 const LoginContext = createContext()
 
 const LoginProvider = ({children}) => {
@@ -41,6 +42,19 @@ const LoginProvider = ({children}) => {
         };
     }, 900000) */
     
+    
+
+    const revalidate = async()=>{
+        const store = JSON.parse(sessionStorage.getItem("userData")) || JSON.parse(localStorage.getItem("userData"));
+        if(userData.login && store){
+            let res = await APICALLER.validateToken(store.token_user)
+            return res
+        }
+    }
+
+    const {isLoading,data} = useQuery('revalidate', revalidate)
+
+    console.log(isLoading,data)
     
     const setearLogin = (f,remember)=>{
         setUserData(f);
