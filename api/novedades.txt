@@ -24,7 +24,7 @@ CREATE TABLE IF NOT EXISTS `agendas` (
   `color_agenda` varchar(10) NOT NULL,
   `updated_at` datetime DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id_agenda`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ;
 
 -- --------------------------------------------------------
 
@@ -44,7 +44,7 @@ CREATE TABLE IF NOT EXISTS `cajas` (
   `ult_mov_caja` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` datetime DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id_caja`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+);
 
 -- --------------------------------------------------------
 
@@ -63,7 +63,7 @@ CREATE TABLE IF NOT EXISTS `cajas_arqueos` (
   `tipo_arqueo` int(1) NOT NULL COMMENT '0=cierre 1=aper',
   `fecha_arqueo` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'fecha de movimiento',
   `updated_at` datetime DEFAULT CURRENT_TIMESTAMP
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ;
 
 -- --------------------------------------------------------
 
@@ -83,7 +83,7 @@ CREATE TABLE IF NOT EXISTS `cajas_monedas` (
   `active_moneda_caja` int(1) NOT NULL COMMENT 'activo',
   `updated_at` datetime DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id_cajas_moneda`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+);
 
 -- --------------------------------------------------------
 
@@ -103,7 +103,7 @@ CREATE TABLE IF NOT EXISTS `cajas_movimientos` (
   `detalles_movimiento` text COMMENT 'motivo y detalles del registro',
   `fecha_movimiento` datetime NOT NULL DEFAULT current_timestamp(),
   `updated_at` datetime DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+);
 
 -- --------------------------------------------------------
 
@@ -119,7 +119,7 @@ CREATE TABLE IF NOT EXISTS `cajas_registros` (
   `show_registro` int(1) NOT NULL COMMENT '0=no 1=si',
   `updated_at` datetime DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id_cajas_registro`)
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4;
+) ;
 
 --
 -- Volcado de datos para la tabla `cajas_registros`
@@ -158,7 +158,7 @@ CREATE TABLE IF NOT EXISTS `cajas_users` (
   `id_caja_caja` int(11) NOT NULL COMMENT 'id_caja',
   `updated_at` datetime DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id_cajas_user`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ;
 
 -- --------------------------------------------------------
 
@@ -176,7 +176,7 @@ CREATE TABLE IF NOT EXISTS `categorias` (
   `tipo_categoria` tinyint(1) NOT NULL DEFAULT '1' COMMENT '1=artic 2=serv',
   `updated_at` datetime DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id_categoria`)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
+) ;
 
 --
 -- Volcado de datos para la tabla `categorias`
@@ -195,15 +195,15 @@ INSERT INTO `categorias` (`id_categoria`, `id_padre_categoria`, `nombre_categori
 DROP TABLE IF EXISTS `clientes`;
 CREATE TABLE IF NOT EXISTS `clientes` (
   `id_cliente` int(11) NOT NULL AUTO_INCREMENT,
-  `ruc_cliente` varchar(20),
+  `ruc_cliente` varchar(20) UNIQUE,
   `nombre_cliente` varchar(150) NOT NULL,
   `telefono_cliente` varchar(150) DEFAULT  NULL,
-  `email_cliente` varchar(50) DEFAULT NULL,
+  `email_cliente` varchar(100) DEFAULT NULL,
   `direccion_cliente` text DEFAULT NULL,
   `tipo_cliente` int(11) NOT NULL DEFAULT '3' COMMENT '1 mayorista 2 minorista 3 casual',
   `updated_at` datetime DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id_cliente`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
+) ;
 
 --
 -- Volcado de datos para la tabla `clientes`
@@ -230,7 +230,7 @@ CREATE TABLE IF NOT EXISTS `compras` (
   `estado_compra` int(1) NOT NULL COMMENT '1=pagado 2=nopagado',
   `updated_at` datetime DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id_compra`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
+) ;
 
 -- --------------------------------------------------------
 
@@ -249,7 +249,7 @@ CREATE TABLE IF NOT EXISTS `compras_items` (
   `cantidad_compra` float NOT NULL,
   `updated_at` datetime DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id_compras_item`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
+) ;
 
 -- --------------------------------------------------------
 
@@ -291,7 +291,7 @@ CREATE TABLE IF NOT EXISTS `empleados` (
   `tipo_salario` int(1) NOT NULL COMMENT '1=jornal 2=comision',
   `updated_at` datetime DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id_empleado`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
+) ;
 
 --
 -- Volcado de datos para la tabla `empleados`
@@ -312,7 +312,7 @@ CREATE TABLE IF NOT EXISTS `empleados_rols` (
   `descripcion_rol` varchar(30) NOT NULL,
   `updated_at` datetime DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id_empleados_rol`)
-) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ;
 
 --
 -- Volcado de datos para la tabla `empleados_rols`
@@ -346,7 +346,7 @@ CREATE TABLE IF NOT EXISTS `empresas` (
    `logo_url_empresa` text ,
   `updated_at` datetime DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id_empresa`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
+) ;
 
 --
 -- Volcado de datos para la tabla `empresas`
@@ -378,7 +378,7 @@ CREATE TABLE IF NOT EXISTS `empresa_facturas` (
   `obs_empresa_factura` text NOT NULL COMMENT 'observaciones',
   `updated_at` datetime DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id_empresa_factura`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ;
 
 -- --------------------------------------------------------
 
@@ -392,7 +392,7 @@ CREATE TABLE IF NOT EXISTS `empresa_recibos` (
   `last_nro_recibo` int(11) NOT NULL,
   `updated_at` datetime DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id_empresa_recibo`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
+);
 
 --
 -- Volcado de datos para la tabla `empresa_recibos`
@@ -431,7 +431,7 @@ CREATE TABLE IF NOT EXISTS `facturas` (
   `obs_factura` text NOT NULL COMMENT 'info de pago',
   `updated_at` datetime DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id_factura`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
+);
 
 -- --------------------------------------------------------
 
@@ -446,7 +446,7 @@ CREATE TABLE IF NOT EXISTS `facturas_formas_pagos` (
   `porcentaje_descuento_pago` float NOT NULL DEFAULT 0 COMMENT 'descuento',
   `updated_at` datetime DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id_facturas_formas_pago`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4;
+) ;
 
 --
 -- Volcado de datos para la tabla `facturas_formas_pagos`
@@ -479,7 +479,7 @@ CREATE TABLE IF NOT EXISTS `facturas_items` (
   `entregado_item` int(1) NOT NULL DEFAULT '0' COMMENT '0=no 1=si 2=servicio',
   `updated_at` datetime DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id_facturas_item`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ;
 
 -- --------------------------------------------------------
 
@@ -494,7 +494,7 @@ CREATE TABLE IF NOT EXISTS `impuestos` (
   `porcentaje_impuesto` float NOT NULL,
   `updated_at` datetime DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id_impuesto`)
-) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
+);
 
 --
 -- Volcado de datos para la tabla `impuestos`
@@ -517,7 +517,7 @@ CREATE TABLE IF NOT EXISTS `marcas` (
   `nombre_marca` varchar(100) NOT NULL,
   `updated_at` datetime DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id_marca`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
+);
 
 --
 -- Volcado de datos para la tabla `marcas`
@@ -541,7 +541,7 @@ CREATE TABLE IF NOT EXISTS `monedas` (
   `activo_moneda` int(11) NOT NULL DEFAULT '0',
   `updated_at` datetime DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id_moneda`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4;
+) ;
 
 --
 -- Volcado de datos para la tabla `monedas`
@@ -567,7 +567,7 @@ CREATE TABLE IF NOT EXISTS `monedas_registros` (
   `descripcion_registro_moneda` varchar(100) NOT NULL,
   `updated_at` datetime DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id_monedas_registro`)
-) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4;
+) ;
 
 --
 -- Volcado de datos para la tabla `monedas_registros`
@@ -611,7 +611,7 @@ CREATE TABLE IF NOT EXISTS `notas_items` (
   `cantidad_item` float NOT NULL,
   `updated_at` datetime DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id_notas_item`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ;
 
 -- --------------------------------------------------------
 
@@ -628,7 +628,7 @@ CREATE TABLE IF NOT EXISTS `notas_pedidos` (
   `fecha_pedido` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` datetime DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id_notas_pedido`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ;
 
 -- --------------------------------------------------------
 
@@ -645,7 +645,7 @@ CREATE TABLE IF NOT EXISTS `pedidos` (
   `obs_pedido` text NOT NULL,
   `updated_at` datetime DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id_pedido`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ;
 
 -- --------------------------------------------------------
 
@@ -660,7 +660,7 @@ CREATE TABLE IF NOT EXISTS `permisos` (
   `descripcion_permiso` varchar(100) NOT NULL,
   `updated_at` datetime DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id_permiso`)
-) ENGINE=MyISAM AUTO_INCREMENT=73 DEFAULT CHARSET=utf8mb4;
+) ;
 
 --
 -- Volcado de datos para la tabla `permisos`
@@ -749,7 +749,7 @@ CREATE TABLE IF NOT EXISTS `permisos_users` (
   `id_permiso_permiso` int(11) NOT NULL COMMENT 'con id permiso',
   `updated_at` datetime DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id_permisos_user`)
-) ENGINE=MyISAM AUTO_INCREMENT=73 DEFAULT CHARSET=utf8mb4;
+) ;
 
 --
 -- Volcado de datos para la tabla `permisos_users`
@@ -843,8 +843,8 @@ CREATE TABLE IF NOT EXISTS `productos` (
   `id_impuesto_producto` int(11) NOT NULL COMMENT 'id_impuesto',
   `id_proveedor_producto` int(11) NOT NULL COMMENT 'con id_proveedor',
   `id_unidad_medida_producto` int(11) NOT NULL COMMENT 'id_unidad de medida',
-  `codigo_producto` varchar(255) NOT NULL,
-  `nombre_producto` varchar(50) NOT NULL,
+  `codigo_producto` varchar(150) NOT NULL,
+  `nombre_producto` varchar(150) NOT NULL,
   `descripcion_producto` text,
   `costo_producto` float NOT NULL,
   `porcentaje_comision` float NOT NULL DEFAULT '0' COMMENT 'comsion',
@@ -857,7 +857,7 @@ CREATE TABLE IF NOT EXISTS `productos` (
   `preguntar_precio` int(1) NOT NULL DEFAULT '0',
   `updated_at` datetime DEFAULT CURRENT_TIMESTAMP,
   UNIQUE KEY `codigo_producto` (`codigo_producto`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ;
 
 -- --------------------------------------------------------
 
@@ -876,7 +876,7 @@ CREATE TABLE IF NOT EXISTS `productos_apartados` (
   `cantidad_apartado` int(11) NOT NULL,
   `updated_at` datetime DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id_productos_apartado`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ;
 
 -- --------------------------------------------------------
 
@@ -892,7 +892,7 @@ CREATE TABLE IF NOT EXISTS `productos_depositos` (
   `stock_producto_deposito` float NOT NULL,
   `updated_at` datetime DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id_productos_deposito`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
+) ;
 
 -- --------------------------------------------------------
 
@@ -909,7 +909,7 @@ CREATE TABLE IF NOT EXISTS `productos_images` (
   `url_imagen` text NOT NULL,
   `updated_at` datetime DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id_productos_image`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
+) ;
 
 -- --------------------------------------------------------
 
@@ -930,7 +930,7 @@ CREATE TABLE IF NOT EXISTS `productos_vendidos` (
   `fecha_vendido` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` datetime DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id_productos_vendido`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ;
 
 -- --------------------------------------------------------
 
@@ -946,7 +946,7 @@ CREATE TABLE IF NOT EXISTS `proveedors` (
   `telefono_proveedor` varchar(100) NOT NULL,
   `updated_at` datetime DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id_proveedor`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
+) ;
 
 --
 -- Volcado de datos para la tabla `proveedors`
@@ -967,7 +967,7 @@ CREATE TABLE IF NOT EXISTS `registros` (
   `detalles_registro` text NOT NULL,
   `fecha_registro` datetime NOT NULL,
   PRIMARY KEY (`id_registro`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ;
 
 -- --------------------------------------------------------
 
@@ -986,7 +986,7 @@ CREATE TABLE IF NOT EXISTS `turnos` (
   `estado_turno` int(1) NOT NULL COMMENT '0=no 1=espera 2=fin',
   `updated_at` datetime NOT NULL,
   PRIMARY KEY (`id_turno`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ;
 
 -- --------------------------------------------------------
 
@@ -1001,7 +1001,7 @@ CREATE TABLE IF NOT EXISTS `turnos_servicios` (
   `id_servicio_turno` int(11) NOT NULL COMMENT 'id_producto serv',
   `updated_at` datetime DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id_turnos_servicio`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ;
 
 -- --------------------------------------------------------
 
@@ -1016,7 +1016,7 @@ CREATE TABLE IF NOT EXISTS `unidad_medidas` (
   `simbolo_medida` varchar(10) NOT NULL,
   `updated_at` datetime DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id_unidad_medida`)
-) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4;
+) ;
 
 --
 -- Volcado de datos para la tabla `unidad_medidas`
@@ -1048,7 +1048,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   `last_login_user` datetime DEFAULT CURRENT_TIMESTAMP,
   `updated_at` datetime DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id_user`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
+) ;
 
 --
 -- Volcado de datos para la tabla `users`
@@ -1070,7 +1070,7 @@ CREATE TABLE IF NOT EXISTS `users_rols` (
   `prioridad_permiso` int(1) NOT NULL,
   `updated_at` datetime DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id_users_rol`)
-) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4;
+) ;
 
 --
 -- Volcado de datos para la tabla `users_rols`
@@ -1087,6 +1087,3 @@ COMMIT;
 
 
 
-
-
-ALTER TABLE `clientes` ADD INDEX(`ruc_cliente`);

@@ -1,28 +1,32 @@
 import Tablas from "../../../Components/UI/Tablas";
-import {TextField,Button,Icon,Grid,FormControl,InputLabel,Select, MenuItem,Tooltip,Typography,Alert} from "@mui/material";
+import {Button,Icon,Grid,FormControl,InputLabel,Select, MenuItem,Tooltip,Typography,Alert} from "@mui/material";
 import { useMovimientos } from "./MovimientosProvider";
 import { useState } from "react";
 import { funciones } from "../../../Functions";
 import { DatePickerCustom } from "../../../Components/MuiCustom/DatePickerCustom";
 
 const ListaMovimientos = () => {
-  const { lang,setDesdeFecha,setHastaFecha,setDialog,dialog,setForm,lista,fecha,setIdCaja,listaCajas,cargando,movimientos,setTipoRegistro, listaMonedas,setMonedaFilter
+  const { lang,setDesdeFecha,setHastaFecha,setDialog,dialog,setForm,lista,setIdCaja,listaCajas,cargando,movimientos,setTipoRegistro, listaMonedas,setMonedaFilter
   } = useMovimientos();
 
-  const [desde, setDesde] = useState(fecha);
-  const [hasta, setHasta] = useState(fecha);
+
+  const today = new Date()
+
+  const [desde, setDesde] = useState(today);
+  const [hasta, setHasta] = useState(today);
+
+
+
   const [idCajita, setIdCajita] = useState("");
   const [idRegistrito,setIdRegistrito] = useState("");
   const [idMoneda,setIdMoneda] = useState("")
-  const changeDatadesde = (e) => {
-    setDesde(funciones.getDateDMY(e))
-    //setDesde(e.target.value)
-  };
-  const changeDatahasta = (e) => setHasta(e.target.value);
+
+  const changeDatadesde = (e) => setDesde(e)
+  const changeDatahasta = (e) => setHasta(e);
 
   const Filtrar = () => {
-    setHastaFecha(hasta);
-    setDesdeFecha(desde);
+    setHastaFecha(funciones.getDateYMD( hasta ));
+    setDesdeFecha(funciones.getDateYMD( desde ));
     setIdCaja(idCajita);
     setTipoRegistro(idRegistrito);
     setMonedaFilter(idMoneda);
@@ -104,14 +108,17 @@ const ListaMovimientos = () => {
         />
       </Grid>
       <Grid item xs={12} sm={6} md={2}>
-        <TextField
-          fullWidth
-          label={lang.hasta}
-          type="date"
-          defaultValue={hasta}
-          onChange={changeDatahasta}
-          name="hastaFecha"
+
+
+      <DatePickerCustom 
+        fullWidth
+        label={lang.hasta}
+        value={hasta}
+        defaultValue={hasta}
+        onChange={changeDatahasta}
+        name="hastaFecha"
         />
+
       </Grid>
       <Grid item xs={12} sm={4} md={3}>
         <FormControl fullWidth>

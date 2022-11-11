@@ -1,20 +1,15 @@
-import { TextField } from "@mui/material";
-import { DatePicker } from "@mui/x-date-pickers";
-import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
+import "dayjs/locale/es-mx";
+import TextField from "@mui/material/TextField";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import esES  from 'date-fns/locale/es';
+import { DatePicker } from "@mui/x-date-pickers";
 
-export function DatePickerCustom({label,value,onChange,...rest}) {
-
-
-  
+export function DatePickerCustom({ label, value, onChange, ...rest }) {
   return (
-    <LocalizationProvider adapterLocale={esES}  dateAdapter={AdapterDateFns}>
+    <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="es-mx">
       <DatePicker
-        inputFormat="dd-MM-yyyy"
         label={label}
         value={value}
-        mask="__-__-____"
         onChange={onChange}
         {...rest}
         renderInput={(params) => <TextField {...params} />}
