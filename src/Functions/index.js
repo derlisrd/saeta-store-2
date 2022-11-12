@@ -10,6 +10,21 @@ export const funciones = {
     // retorna los dias de cierto mes
     getDaysInMonth: (year, month) => (  new Date(year, month, 0).getDate() ),
     
+    firstDay: ()=>{
+      //primer dia del mes
+      let inputDate = new Date();
+      return new Date(inputDate.getFullYear(),inputDate.getMonth(),1)
+    },
+    firstDayYMD: ()=>{
+      //primer dia del mes
+      let inputDate = new Date();
+      let date=  new Date(inputDate.getFullYear(),inputDate.getMonth(),1)
+      return [
+        date.getFullYear(),
+        (date.getMonth() + 1).toString().padStart(2, 0),
+        (date.getDate().toString().padStart(2, 0))
+      ].join('-');
+    },
     getDateYMD : (d)=>{
       let date = new Date(d)
       return [

@@ -6,6 +6,7 @@ import {Button,Icon,TextField,Select,FormControl,InputLabel,MenuItem,Grid,IconBu
 
 import { useDatosEmpresa } from "../../../Contexts/DatosEmpresaProvider";
 import useGoto from "../../../Hooks/useGoto";
+import { DatePickerCustom } from "../../../Components/MuiCustom/DatePickerCustom";
 
 
 
@@ -26,12 +27,12 @@ const FacturasLista = () => {
   const go = useGoto();
 
 
-  const changeDatadesde = (e) => setDesde(e.target.value);
-  const changeDatahasta = (e) => setHasta(e.target.value);
+  const changeDatadesde = (e) => setDesde(e);
+  const changeDatahasta = (e) => setHasta(e);
 
   const Filtrar = () => {
-    setHastaFecha(hasta);
-    setDesdeFecha(desde);
+    setHastaFecha(funciones.getDateYMD( hasta ));
+    setDesdeFecha(funciones.getDateYMD( desde ));
     setFiltro(tipoFiltro);
   };
 
@@ -138,10 +139,25 @@ const FacturasLista = () => {
   const search = (
     <Grid container spacing={3}>
       <Grid item xs={12} sm={6} md={3}  >
-        <TextField fullWidth helperText={lang.desde} type="date" defaultValue={desde} onChange={changeDatadesde} name="desdeFecha" />
+        <DatePickerCustom 
+        fullWidth
+        label={lang.desde}
+        value={ (desde)}
+        defaultValue={desde}
+        onChange={changeDatadesde}
+        name="desdeFecha"
+        />
+
       </Grid>
       <Grid item xs={12} sm={6} md={3}>
-        <TextField fullWidth label={lang.hasta} type="date" defaultValue={hasta} onChange={changeDatahasta} name="hastaFecha" />
+      <DatePickerCustom 
+        fullWidth
+        label={lang.hasta}
+        value={hasta}
+        defaultValue={hasta}
+        onChange={changeDatahasta}
+        name="hastaFecha"
+        />
       </Grid>
       <Grid item xs={12} sm={6} md={3}>
         <FormControl fullWidth>

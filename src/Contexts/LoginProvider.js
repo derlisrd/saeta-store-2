@@ -3,6 +3,7 @@ import { APICALLER } from '../Services/api';
 import {  env } from "../Utils/config";
 import CryptoJS from "crypto-js";
 import { funciones } from '../Functions';
+
 const LoginContext = createContext()
 
 const LoginProvider = ({children}) => {
@@ -40,16 +41,10 @@ const LoginProvider = ({children}) => {
             }
         };
     }, 900000) */
-    
+
     
 
-    /* const revalidate = async()=>{
-        const store = JSON.parse(sessionStorage.getItem("userData")) || JSON.parse(localStorage.getItem("userData"));
-        if(userData.login && store){
-            let res = await APICALLER.validateToken(store.token_user)
-            return res
-        }
-    } */
+    
 
 
     
@@ -96,8 +91,6 @@ const LoginProvider = ({children}) => {
         let res = promise[0];
         let emp = promise[1];
         let mon = promise[2];
-        
-
         if(res.response && res.found>0){
             let dataMonedas = mon.results;
             
@@ -118,7 +111,6 @@ const LoginProvider = ({children}) => {
                 username_user:CifrarTexto(d.username_user),
                 permisos: permisosData.response ? permisosData.results : []
             }
-            
             setearLogin(datas,remember);
             setLoad({login:false,active:false,msj:null});
         }
@@ -142,17 +134,12 @@ const LoginProvider = ({children}) => {
         setLoading(false)
     },[userData,logOut])
 
+
+
     useEffect(() => {
         const ca = new AbortController(); let isActive = true;
-        if (isActive) {
-
-          verificar();
-         
-        }
-        return () => {
-          isActive = false;
-          ca.abort();
-        };
+        if (isActive) {verificar();}
+        return () => {isActive = false;ca.abort();};
       }, [verificar]);
       const values = {userData,logIn,logOut,load,loading,Descifrar}
 
