@@ -1,4 +1,5 @@
 import { Collapse, Icon, List, ListItem, ListItemIcon, ListItemText } from "@mui/material"
+import SimpleBar from 'simplebar-react';
 import { useMenu } from "../../Contexts/MenuProvider"
 import { Link,useLocation } from "react-router-dom";
 import { listaMenu } from "../../Utils/listaMenu";
@@ -23,6 +24,7 @@ const Lists = () => {
   const goTo = ()=>{changeStateMenu(false);}
   const style = useGlobalStyles();
   return(
+    <SimpleBar style={{ maxHeight: "100vh" }}>
     <List component="nav">
       {
         listaMenu.map((e,index)=>(
@@ -82,6 +84,7 @@ const Lists = () => {
         )
       }
     </List>
+    </SimpleBar>
   )
 }
     

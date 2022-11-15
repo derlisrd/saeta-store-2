@@ -31,9 +31,12 @@ const FacturasLista = () => {
   const changeDatahasta = (e) => setHasta(e);
 
   const Filtrar = () => {
-    setHastaFecha(funciones.getDateYMD( hasta ));
-    setDesdeFecha(funciones.getDateYMD( desde ));
-    setFiltro(tipoFiltro);
+    
+    /* setHastaFecha(funciones.getDateYMD( hasta ));
+      setDesdeFecha(funciones.getDateYMD( desde )); */
+      setHastaFecha( hasta );
+      setDesdeFecha( desde );
+    setFiltro(tipoFiltro); 
   };
 
   const FilterData = lista.filter(

@@ -236,14 +236,16 @@ const TemaProvider = ({children})=>{
               ".swal-button--cancel":{backgroundColor:colores[tema.colors].secondary.main+"!important",color:colores[tema.colors].secondary.contrastText},
               ".swal-text":{color: colorText+"!important" },
               ".swal-modal":{backgroundColor: PaperBgColor+" !important",border:'1px solid #666'},
-              "::-webkit-scrollbar": {width: "0"},
-              "::-webkit-scrollbar-track": {background: "none"},
-              "::-webkit-scrollbar-thumb": {backgroundColor: PaperBgColor,borderRadius:"3px"},
-              "::-webkit-scrollbar-thumb:hover": {backgroundColor: "rgba(99, 115, 129, 0.48)"}
+              "::-webkit-scrollbar": {width: 0}
             }
           }
         }
       });
+
+      /* "::-webkit-scrollbar": {width: "5px"},
+              "::-webkit-scrollbar-track": {background: "silver"},
+              "::-webkit-scrollbar-thumb": {backgroundColor: PaperBgColor,borderRadius:"3px"},
+              "::-webkit-scrollbar-thumb:hover": {backgroundColor: "rgba(99, 115, 129, 0.48)"} */
 
       
       

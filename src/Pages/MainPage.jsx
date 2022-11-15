@@ -1,11 +1,11 @@
-
+import SimpleBar from 'simplebar-react';
 import { Box } from "@mui/material";
 import Menu from "../Components/Menu"
 import { useMenu } from "../Contexts/MenuProvider";
 import { useGlobalStyles } from "../Styles/GlobalStyles"
 import {  makeStyles} from '@mui/styles'
 import { useTheme } from "../Contexts/TemaProvider";
-
+import 'simplebar-react/dist/simplebar.min.css';
 
 const MainPage = ({children}) => {
   const {activeBigMenu} = useMenu()
@@ -27,12 +27,12 @@ const MainPage = ({children}) => {
   }))
   const style = useStyles();
   return (
-    <>
+    <SimpleBar style={{ maxHeight: "100vh" }}>
       <Menu />
       <Box className={activeBigMenu ? style.MainPaperExtended : classes.MainPaper}  >
         {children}
       </Box>
-    </>
+    </SimpleBar>
   )
 }
 

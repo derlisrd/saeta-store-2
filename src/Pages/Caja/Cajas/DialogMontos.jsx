@@ -16,6 +16,7 @@ const DialogMontos = () => {
 
     const getDatas = useCallback(async()=>{
         if(dialogs.montos){
+            setLoading(true)
             let res = await APICALLER.get({
                 table:"cajas_monedas",
                 include:"monedas",
@@ -41,12 +42,12 @@ const DialogMontos = () => {
         </DialogTitle>
         <DialogContent dividers>
             <Grid container>
-                <Grid item xs={12}>
                     {
-                        loading && <LinearProgress />
-                    }
+                        loading ? 
+                <Grid item xs={12}>
+                        <LinearProgress />
                 </Grid>
-                {
+                    :
                     lista.map((e,i)=>(
                     <Grid item xs={6} key={i}>                    
                       <b>{lang.monto}:</b> {funciones.numberFormat(e.monto_caja_moneda)} {e.nombre_moneda}

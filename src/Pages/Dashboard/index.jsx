@@ -17,7 +17,8 @@ import useGoto from "../../Hooks/useGoto";
 import { funciones } from "../../Functions";
 import { APICALLER } from "../../Services/api";
 import LoadingLinear from "../../Components/UI/LoadingLinear";
-
+import ventas from '../../App/Assets/ventas.svg'
+import dinero from '../../App/Assets/dinero.svg'
 
 const DashBoard = () => {
   const { lang } = useLang();
@@ -113,7 +114,7 @@ const DashBoard = () => {
     <Container maxWidth='xl'>
     <Grid container spacing={2}>
       <Grid item xs={12} sm={6} md={5}>
-        <Card sx={{ bgcolor:'primary.light',p:2}}>
+        <Card sx={{ bgcolor:'background.paper',p:2}}>
           <CardHeader
             avatar={
               <Avatar sx={{ bgcolor: deepOrange[500] }} variant="rounded" >
@@ -126,10 +127,9 @@ const DashBoard = () => {
           <CardContent>
             <Stack direction="row" justifyContent="space-between" alignItems="flex-start">
             <Typography variant="h5">{funciones.numberFormat(datas.ventasHoy)} Gs</Typography>
-            <Icon sx={{ fontSize:90,color: deepOrange[600] }} >sell</Icon>
+            <img src={ventas} alt="ventas" width={120} height={120} />
             </Stack>  
           </CardContent>
-          <CardActions></CardActions>
         </Card>
       </Grid>
 
@@ -146,7 +146,7 @@ const DashBoard = () => {
           <CardContent>
             <Stack direction="row" justifyContent="space-between" alignItems="flex-start">
             <Typography variant="h5">{funciones.numberFormat(datas.ventasMes)} Gs</Typography>
-            <Icon sx={{ fontSize:100,color: green[600] }} >bar_chart</Icon>
+            <img src={dinero} alt="ventas" width={120} height={120} />
             </Stack>  
           </CardContent>
           

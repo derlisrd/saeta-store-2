@@ -19,6 +19,8 @@ define("RAIZ",$request);
 
 define("UPLOADPATH",env('UPLOADPATH'));
 
+define("UPLOADPATHNAME",env('UPLOADPATHNAME'));
+
 define("API_TOKEN",isset($_SERVER['HTTP_X_API_TOKEN']) ? $_SERVER['HTTP_X_API_TOKEN'] : "");
 
 define("PROTOCOLO",$protocol);

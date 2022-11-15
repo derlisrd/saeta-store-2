@@ -21,10 +21,11 @@ const AgendaLista = () => {
       const reAgendar = id => {
         let listaEventos = [...lista];
         let find = listaEventos.find(elem => elem.id_agenda === id );
-        if(find){
+        //console.log(find)
+         if(find){
           setForm(find);
           setDialogs({...dialogs,editar:true});
-        }
+        } 
       }
     
       const addCellcontent = (a) => {

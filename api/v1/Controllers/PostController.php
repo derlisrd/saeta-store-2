@@ -43,7 +43,7 @@ class PostController {
             if (!file_exists($path)) {mkdir($path, 0777, true);}
             $imageTmp = $file["image"]["tmp_name"];
             $imageMove = $path.$file["image"]["name"];
-            $imageURLbase = PROTOCOLO.DOMINIO.UPLOADPATH."/".$data["table"]."/".$data['path']."/".$file["image"]["name"];
+            $imageURLbase = PROTOCOLO.DOMINIO.UPLOADPATHNAME."/".$data["table"]."/".$data['path']."/".$file["image"]["name"];
             $table = $data['table'];
             $campos = "url_imagen,";
             $values = "'$imageURLbase',";

@@ -36,7 +36,7 @@ import React, {
       fecha_inicio_agenda: "",
       fecha_fin_agenda: "",
     })
-    //const [form, setForm] = useState(initialForm);
+    const [form, setForm] = useState(initialForm);
     const initialCargas = {
       general: true,
     };
@@ -45,7 +45,8 @@ import React, {
     const initialDialogs = {
       agregar: false,
       editar:false,
-      buscarCliente:false
+      buscarCliente:false,
+      registrarCliente:false
     };
   
     const [dialogs, setDialogs] = useState(initialDialogs);
@@ -110,16 +111,14 @@ import React, {
     }, [token_user,getEvents,dialogs]);
   
     const borrarAgenda = useCallback(async (form)=>{
-  
-      let res = await APICALLER.delete({table:'agendas',id:form.id_agenda,token:token_user});
+     let res = await APICALLER.delete({table:'agendas',id:form.id_agenda,token:token_user});
       if(res.response){
         swal({text:'Borrado correctamente', icon:'success',timer:1400});
         setDialogs({ ...dialogs, editar: false });
-        
         getEvents();
       }else{
         console.log(res)
-      }
+      } 
     },[dialogs,getEvents,token_user] )
   
   
@@ -157,7 +156,7 @@ import React, {
           eventos,lista,
           addEvent,
           loading,
-          //form,setForm,
+          form,setForm,
           cliente,setCliente,initialCliente,
           initialForm,
           dialogs,
@@ -176,7 +175,7 @@ import React, {
       eventos,lista,
       addEvent,
       loading,
-      //form,setForm,
+      form,setForm,
       cliente,setCliente,initialCliente,
       initialForm,
       dialogs,
@@ -188,7 +187,7 @@ import React, {
       eventos,lista,
       addEvent,
       loading,
-      //form,setForm,
+      form,setForm,
       cliente,setCliente,initialCliente,
       initialForm,
       dialogs,
