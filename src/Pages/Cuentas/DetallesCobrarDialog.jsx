@@ -7,8 +7,6 @@ const DetallesCobrarDialog = () => {
     const {dialogs,setDialogs,funciones, lang,formCobrar} = useCuentas()
     const {EMPRESA,MONEDAS} = useDatosEmpresa()
 
-    
-
     function cerrar(){
         setDialogs({...dialogs,detalles:false})
     }
@@ -20,6 +18,8 @@ const DetallesCobrarDialog = () => {
     let monedaactual= MONEDAS.filter(e=> parseInt(e.id_moneda) === parseInt(formCobrar.id_moneda_caja))
     let mon = monedaactual[0]
     const montoFaltante = parseFloat(formCobrar.monto_total_factura) - parseFloat(formCobrar.recibido_factura)
+
+
   return (
     <Dialog onClose={cerrar} TransitionComponent={Zoom} fullWidth open={dialogs.detalles}>
         <DialogTitle>{lang.detalles}</DialogTitle>

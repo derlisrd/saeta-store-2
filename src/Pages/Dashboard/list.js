@@ -1,6 +1,6 @@
 
 
-export const dashboardlist = [
+export const list = [
     {
         id:53,
         title:"ventas",

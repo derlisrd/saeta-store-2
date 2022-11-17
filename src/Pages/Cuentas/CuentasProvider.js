@@ -160,7 +160,7 @@ const CuentasProvider = ({ children }) => {
 
   const getLista = useCallback(async () => {
 
-    let res = await Promise.all([
+    let [resCobrar,resPagar,resCajas,resFormas,resMonedas] = await Promise.all([
       APICALLER.get({table: "facturas",include: "clientes,cajas,monedas,cajas_users",
       on: "id_caja,id_caja_caja,id_cliente,id_cliente_factura,id_caja,id_caja_factura,id_moneda,id_moneda_factura",
       where: `estado_factura,=,2`,
@@ -168,15 +168,13 @@ const CuentasProvider = ({ children }) => {
       APICALLER.get({table: "compras",where: "tipo_factura_compra,=,2,and,estado_compra,=,2"}),
       APICALLER.get({table: "cajas", include:'cajas_users',on:'id_caja_caja,id_caja', where:`id_user_caja,=,${id_user},and,estado_caja,=,'open'`}),
       APICALLER.get({table: "facturas_formas_pagos"}),
-      APICALLER.get({table:"cajas",include:"cajas_monedas,monedas,cajas_users",on:"id_caja,id_caja_moneda,id_moneda,id_moneda_caja_moneda,id_caja,id_caja_caja",where:`id_user_caja,=,${id_user},and,estado_caja,=,'open'`,fields:"id_moneda,nombre_moneda,id_cajas_moneda,id_caja_moneda,abreviatura_moneda,monto_caja_moneda,monto_no_efectivo"})
+      APICALLER.get({table:"cajas_monedas",include:"monedas",
+      on:"id_moneda_caja_moneda,id_moneda",
+      fields:"id_moneda,nombre_moneda,id_cajas_moneda,id_caja_moneda,abreviatura_moneda,monto_caja_moneda,monto_no_efectivo,valor_moneda"}) 
     ]);
-    
-    let 
-     resCobrar=res[0],
-     resPagar=res[1],
-     resCajas=res[2], 
-     resFormas=res[3],
-     resMonedas=res[4];
+    /* APICALLER.get({table:"cajas",include:"cajas_monedas,monedas,cajas_users",
+      on:"id_caja,id_caja_moneda,id_moneda,id_moneda_caja_moneda,id_caja,id_caja_caja",where:`id_user_caja,=,${id_user},and,estado_caja,=,'open'`,
+      fields:"id_moneda,nombre_moneda,id_cajas_moneda,id_caja_moneda,abreviatura_moneda,monto_caja_moneda,monto_no_efectivo"}) */
 
     if(resPagar.response && resCajas.response && resFormas.response){
       let totalaCobrar=0, totalrecibido = 0, montototal = 0;

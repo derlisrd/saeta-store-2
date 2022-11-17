@@ -262,7 +262,7 @@ CREATE TABLE IF NOT EXISTS `depositos` (
   `tipo_deposito` int(1) NOT NULL DEFAULT '1' COMMENT '0=serv 1=fis',
   `updated_at` datetime DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id_deposito`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
+) ;
 
 --
 -- Volcado de datos para la tabla `depositos`
@@ -1053,7 +1053,7 @@ CREATE TABLE IF NOT EXISTS `users` (
 --
 
 INSERT INTO `users` (`id_user`, `nombre_user`, `username_user`, `password_user`, `email_user`, `rol_user`, `estado_user`, `fecha_creacion_user`, `try_user`, `last_login_user`, `updated_at`) VALUES
-(1, 'Mantenimiento', 'admin', '$2y$10$r9N/3VBsUfvTTb0rKrqP2OiqNjBG4m.RN8yKLwmi0zgYoiH3ZdrtG', 'derlisruizdiaz@hotmail.com', 1, 1, '2021-06-06 15:05:53', 0, '2022-07-05 05:24:35', '2022-07-05 05:24:35');
+(1, 'Admin', 'admin', '$2y$10$r9N/3VBsUfvTTb0rKrqP2OiqNjBG4m.RN8yKLwmi0zgYoiH3ZdrtG', 'derlisruizdiaz@hotmail.com', 1, 1, '2021-06-06 15:05:53', 0, '2022-07-05 05:24:35', '2022-07-05 05:24:35');
 
 -- --------------------------------------------------------
 
