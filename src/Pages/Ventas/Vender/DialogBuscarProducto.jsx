@@ -47,7 +47,7 @@ const DialogBuscarProducto = () => {
         }else{
           setCargando(true);
           if(tipo===1){
-          let pro = await Promise.all([ APICALLER.get({
+          const [img,dep] = await Promise.all([ APICALLER.get({
             table: "productos",
             include: "impuestos,productos_images,productos_depositos",
             on: "id_impuesto_producto,id_impuesto,id_producto,id_image_producto,id_producto,id_producto_deposito",
@@ -55,8 +55,6 @@ const DialogBuscarProducto = () => {
           }), APICALLER.get({table:'productos', include: "impuestos,productos_depositos",
           on: "id_impuesto_producto,id_impuesto,id_producto,id_producto_deposito",
           where:`id_deposito_deposito,=,${deposito},and,codigo_producto,='${codigo}'`})]);
-          let img = pro[0];
-          let dep = pro[1];
           if(img.response && img.found>0){
             if(cantidadInput<= parseFloat(dep.results[0].stock_producto_deposito) )
             {
@@ -105,12 +103,14 @@ const DialogBuscarProducto = () => {
               filtersField:"nombre_producto,codigo_producto",filtersSearch:txt,pagesize:'20'
             })]) ;
             setListaBuscaProducto(res[0].results);
-          }, 500);
+            setLoad(false)
+
+          }, 700);
 
         }else{
           setListaBuscaProducto([])
         }
-        setLoad(false)
+        
       },[])
 
     return (

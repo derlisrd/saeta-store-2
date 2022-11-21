@@ -1,14 +1,14 @@
 import { Grid,TextField,Icon,Button, InputAdornment,Snackbar,Alert } from "@mui/material"
 import { useSettings } from "./SettingsProvider"
-import LoadingBackDrop from "../../../Components/UI/LoadingBackDrop";
 import { funciones as Funciones } from "../../../Functions";
 import { TextFieldIconStart } from "../../../Components/MuiCustom/TextFieldIconStart";
+import LoadingLinear from "../../../Components/UI/LoadingLinear";
 const DatosEmpresa = () => {
 
     const {datosEmpresa,snack,setSnack, Guardar,handleOnchange,cargando,lang} = useSettings()
 
     if(cargando){
-      return <LoadingBackDrop />
+      return <LoadingLinear />
     }
   return (
       <>

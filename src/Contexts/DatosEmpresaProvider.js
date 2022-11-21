@@ -5,7 +5,8 @@ const Contexto = createContext()
 
 const DatosEmpresaProvider = ({children}) => {
 
-    const storageEmpresa = JSON.parse(localStorage.getItem("dataEmpresa"));
+    const {dataEmpresa } = useLogin()
+    const storageEmpresa = dataEmpresa || JSON.parse(localStorage.getItem("dataEmpresa"));
     const storageMoneda = JSON.parse(localStorage.getItem("dataMonedas"));
 
 
@@ -49,15 +50,11 @@ const DatosEmpresaProvider = ({children}) => {
     },[login])
 
     useEffect(() => {
-        const ca = new AbortController();
-        let isActive = true;
+        const ca = new AbortController(); let isActive = true;
         if (isActive) {
           getDatos();
         }
-        return () => {
-          isActive = false;
-          ca.abort();
-        };
+        return () => {isActive = false;ca.abort();};
       }, [getDatos]);
 
   return (

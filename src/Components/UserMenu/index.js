@@ -8,9 +8,11 @@ import { useLogin } from "../../Contexts/LoginProvider";
 import {env} from '../../Utils/config'
 import Man from '../../App/Assets/man.svg'
 import empresa from '../../App/Assets/empresa.svg'
+import useGoto from '../../Hooks/useGoto'
 
 export default function UserMenu(){
     const {logOut,userData}= useLogin()
+    const nav = useGoto()
     const {EMPRESA} = useDatosEmpresa()
     const {nombre_user,email_user} = userData
     const [anchorEl, setAnchorEl] = useState(null);
@@ -46,7 +48,9 @@ export default function UserMenu(){
       >
         <Stack direction="column" minWidth={300} p={2} m={1} spacing={1}>
           <Stack direction="row" spacing={1} m={1}>
+            <IconButton onClick={()=>{ nav.to('profile') }}>
             <Avatar src={Man}  alt={nombre_user} />
+            </IconButton>
             <Stack direction="column">
               <Typography variant="button">{nombre_user}</Typography>
               <Typography variant="caption">{email_user}</Typography>

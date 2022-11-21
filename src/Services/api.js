@@ -4,18 +4,7 @@ import { APIURL, XAPITOKEN, SECRETO } from "../Utils/config";
 export const DescifrarTexto = (text) =>  CryptoJS.AES.decrypt(text, SECRETO).toString(CryptoJS.enc.Utf8);
 
 export const APICALLER = {
-  get: async ({table,sort = "",pagenumber = "",pagesize = "",fields = "",where = "",include = "",on = "",token = "",filtersSearch = "",filtersField = ""}) => {
-    try {
-      let tk = DescifrarTexto(token);
-      let URLFINAL = `${APIURL}${table}?where=${where}&sort=${sort}&page[number]=${pagenumber}&page[size]=${pagesize}&fields=${fields}&include=${include}&on=${on}&token=${tk}&filters[search]=${filtersSearch}&filters[field]=${filtersField}`;
-      const res = await fetch(URLFINAL, {
-        headers: { "X-Api-Token": XAPITOKEN },
-      });
-      return await res.json();
-    } catch (thrown) {
-      return { response: "Error", message: thrown };
-    }
-  },
+  
   
   deleteImage: async ({ table, path, idImage, token }) => {
     try {
@@ -100,7 +89,7 @@ export const APICALLER = {
       });
       return await res.data;
     } catch (error) {
-      const err = [{ results: `error`, response: `error`, message: error }];
+      const err = { results: null, response:  false, message: error };
       return err;
     }
   },
@@ -115,7 +104,7 @@ export const APICALLER = {
       });
       return await res.data;
     } catch (error) {
-      const err = [{ results: `error`, response: `error`, message: error }];
+      const err = { results: null, response:  false, message: error };
       return err;
     }
   },
@@ -130,7 +119,7 @@ export const APICALLER = {
       });
       return await res.data;
     } catch (error) {
-      const err = [{ results: `error`, response: `error`, message: error }];
+      const err = { results: null, response:  false, message: error };
       return err;
     }
   },
@@ -146,8 +135,21 @@ export const APICALLER = {
       });
       return await res.data;
     } catch (error) {
-      const err = [{ results: `error`, response: `error`, message: error }];
+      const err = { results: null, response:  false, message: error };
       return err;
+    }
+  },
+
+  get: async ({table,sort = "",pagenumber = "",pagesize = "",fields = "",where = "",include = "",on = "",token = "",filtersSearch = "",filtersField = ""}) => {
+    try {
+      let tk = DescifrarTexto(token);
+      let URLFINAL = `${APIURL}${table}?where=${where}&sort=${sort}&page[number]=${pagenumber}&page[size]=${pagesize}&fields=${fields}&include=${include}&on=${on}&token=${tk}&filters[search]=${filtersSearch}&filters[field]=${filtersField}`;
+      const res = await fetch(URLFINAL, {
+        headers: { "X-Api-Token": XAPITOKEN },
+      });
+      return await res.json();
+    } catch (error) {
+      return { results: null, response:  false, message: error };
     }
   },
 
@@ -162,7 +164,7 @@ export const APICALLER = {
       });
       return await res.data;
     } catch (error) {
-      const err = [{ results: `error`, response: `error` }];
+      const err = { results: null, response:  false, message: error };
       return err;
     }
   },
@@ -178,7 +180,7 @@ export const APICALLER = {
       });
       return await res.data;
     } catch (error) {
-      const err = [{ results: `error`, response: `error`, message: error }];
+      const err = { results: null, response:  false, message: error };
       return err;
     }
   },
@@ -195,7 +197,7 @@ export const APICALLER = {
       });
       return await res.data;
     } catch (error) {
-      const err = [{ results: `error`, response: `error`, message: error }];
+      const err = { results: null, response:  false, message: error };
       return err;
     }
   },

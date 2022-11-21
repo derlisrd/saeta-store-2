@@ -21,7 +21,7 @@ const DashboardList = () => {
       return (
         <Container maxWidth='xl'>
         <Grid container spacing={2}>
-          <Grid item xs={12} sm={6} md={5}>
+          <Grid item xs={12} sm={6} md={4} >
             <Card sx={{ bgcolor:'background.paper',p:2}}>
               <CardHeader
                 avatar={
@@ -41,7 +41,7 @@ const DashboardList = () => {
             </Card>
           </Grid>
     
-          <Grid item xs={12} sm={6} md={7}>
+          <Grid item xs={12} sm={6} md={4} >
             <Card sx={{ height:'100%', p:2 }} >
               <CardHeader
                 avatar={
@@ -55,6 +55,26 @@ const DashboardList = () => {
                 <Stack direction="row" justifyContent="space-between" alignItems="flex-start">
                 <Typography variant="h5">{funciones.numberFormat(datas.ventasMes)} Gs</Typography>
                 <img src={dinero} alt="ventas" width={120} height={120} />
+                </Stack>  
+              </CardContent>
+              
+            </Card>
+          </Grid>
+          <Grid item xs={12} sm={12} md={4} >
+            <Card sx={{ height:'100%', p:2 }} >
+              <CardHeader
+                avatar={
+                  <Avatar sx={{ bgcolor: green[500]}} variant="rounded" >
+                    <Icon sx={{ fontSize:30 }}>bar_chart</Icon>
+                  </Avatar>
+                }
+                title={<h2>Dólar</h2>}
+              />
+              <CardContent>
+                <Stack direction="column" justifyContent="space-between" alignItems="flex-start">
+                <Typography variant="h6" display="block" >Compra: {datas.cotizacion.compra}  Gs</Typography>
+                <Typography variant="h6">Venta: {datas.cotizacion.venta} Gs</Typography>
+                
                 </Stack>  
               </CardContent>
               

@@ -13,7 +13,7 @@ const Contexto = createContext();
 
 const SettingsProvider = ({ children }) => {
   const storage = JSON.parse(localStorage.getItem("dataEmpresa"));
-  const { userData } = useLogin();
+  const { userData,setDataEmpresa } = useLogin();
   const {token_user} = userData
   const {lang} = useLang()
   const [cargando, setCargando] = useState(true);
@@ -50,8 +50,10 @@ const SettingsProvider = ({ children }) => {
       id: datosEmpresa.id_empresa,
     };
     localStorage.setItem("dataEmpresa", JSON.stringify(datosEmpresa));
+    
     const res = await APICALLER.update(datas);
     res.response  ? setSnack(true) : console.log(res);
+    setDataEmpresa(datosEmpresa)
     setCargando(false);
   };
 
@@ -69,16 +71,11 @@ const SettingsProvider = ({ children }) => {
   }, []);
 
   useEffect(() => {
-    let isActive = true;
-    const ca = new AbortController();
+    let isActive = true; const ca = new AbortController();
     if (isActive) {
       getData();
     }
-
-    return () => {
-      isActive = false;
-      ca.abort();
-    };
+    return () => { isActive = false; ca.abort(); };
   }, [getData]);
 
   return (

@@ -12,6 +12,8 @@ const LoginProvider = ({children}) => {
     const Descifrar = t => CryptoJS.AES.decrypt(t, env.SECRETO).toString(CryptoJS.enc.Utf8);
     const storage = JSON.parse(sessionStorage.getItem("userData")) || JSON.parse(localStorage.getItem("userData"));
     const [loading,setLoading] = useState(true);
+    const storageEmpresa = JSON.parse(localStorage.getItem("dataEmpresa")) || {}
+    const [dataEmpresa,setDataEmpresa] = useState(storageEmpresa)
     const [load,setLoad] = useState({
         login:false,
         msj:null,
@@ -43,11 +45,6 @@ const LoginProvider = ({children}) => {
     }, 900000) */
 
     
-
-    
-
-
-    
     const setearLogin = (f,remember)=>{
         setUserData(f);
         localStorage.removeItem("facturasStorage");  
@@ -64,9 +61,11 @@ const LoginProvider = ({children}) => {
         if(mode){
             localStorage.setItem("dataEmpresa", JSON.stringify(empresa))
             localStorage.setItem("dataMonedas", JSON.stringify(monedas))
+            setDataEmpresa(empresa)
         }else{
             localStorage.removeItem("dataEmpresa");
             localStorage.removeItem("dataMonedas");    
+            setDataEmpresa({})
         }
     }
     const logOut = useCallback(()=>{
@@ -87,10 +86,8 @@ const LoginProvider = ({children}) => {
 
     const logIn = async(f,remember)=>{
         setLoad({login:true,active:false,msj:null});
-        let promise = await Promise.all([APICALLER.login(f),APICALLER.get({table:"empresas"}),APICALLER.get({table:"monedas"})]);
-        let res = promise[0];
-        let emp = promise[1];
-        let mon = promise[2];
+        let [res,emp,mon] = await Promise.all([APICALLER.login(f),APICALLER.get({table:"empresas"}),APICALLER.get({table:"monedas"})]);
+        
         if(res.response && res.found>0){
             let dataMonedas = mon.results;
             
@@ -108,7 +105,7 @@ const LoginProvider = ({children}) => {
             let datas = {...d,
                 login:true,
                 token_user:CifrarTexto(d.token_user),
-                username_user:CifrarTexto(d.username_user),
+                username_user:(d.username_user),
                 permisos: permisosData.response ? permisosData.results : []
             }
             setearLogin(datas,remember);
@@ -141,7 +138,8 @@ const LoginProvider = ({children}) => {
         if (isActive) {verificar();}
         return () => {isActive = false;ca.abort();};
       }, [verificar]);
-      const values = {userData,logIn,logOut,load,loading,Descifrar}
+
+      const values = {userData,logIn,logOut,load,loading,Descifrar,dataEmpresa,setDataEmpresa}
 
       
   return (
@@ -153,8 +151,8 @@ const LoginProvider = ({children}) => {
 
 
 export const useLogin = ()=>{
-    const {userData,logIn,logOut,load,loading,Descifrar} = useContext(LoginContext);
-    return {userData,logIn,logOut,load,loading,Descifrar}
+    const {userData,logIn,logOut,load,loading,Descifrar,dataEmpresa,setDataEmpresa} = useContext(LoginContext);
+    return {userData,logIn,logOut,load,loading,Descifrar,dataEmpresa,setDataEmpresa}
 }
 
 export default LoginProvider

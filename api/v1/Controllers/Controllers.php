@@ -45,6 +45,18 @@ class Controllers {
                 }
                 return false;
             }
+
+            if($table==='view_pdf_factura'){
+                
+                $id = $tableArray[2];
+                if(isset($id)){
+                    $datos = ["id"=>$id];
+                    
+                    return PDFController::view($datos);
+                }
+                return false;
+            }
+
             
             $include = isset($_GET['include']) && !empty($_GET['include'])  ? explode(",",$_GET['include'])  : null;       
             $on = isset($_GET['on']) && !empty($_GET['on'])  ? explode(",",$_GET['on'])  : null;       

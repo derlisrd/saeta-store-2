@@ -13,20 +13,29 @@ function DashboardProvider({children}) {
       movimientos:[],
       productos:[],
       masvendidos:[],
-      falta:[]
+      falta:[],
+      cotizacion:{
+        venta:0,
+        compra:0
+      }
     });
 
     const getLista = useCallback(async () => {
         setIsLoading(true);
         //setCotizacion([])
         /* setLoading({general:true});
-        let res = await fetch ('https://dolar.melizeche.com/api/1.0/');
-        let data = await res.json();
+        
         setCotizacion(data?.dolarpy);
         setLoading({general:false}); */
+
+        const cotizacion = async()=>{
+            let res = await fetch ('https://dolar.melizeche.com/api/1.0/');
+            return await res.json();
+        }
+
         let today = funciones.fechaActualYMD();
         let first = funciones.firstDayYMD();
-        let [ventashoy,ventasmes,mov,pro,masv,faltante] = await Promise.all([
+        let [ventashoy,ventasmes,mov,pro,masv,faltante,coti] = await Promise.all([
         APICALLER.get({
             table: "facturas",
             fields: "SUM(monto_total_factura) as total",
@@ -56,7 +65,8 @@ function DashboardProvider({children}) {
             table: "productos", include:'productos_depositos',on:'id_producto,id_producto_deposito',
             fields: "nombre_producto,stock_producto_deposito", sort:'-stock_producto_deposito',
             pagesize:5
-        })
+        }),
+        cotizacion(),
         ]);
         
         
@@ -67,7 +77,12 @@ function DashboardProvider({children}) {
             movimientos:mov.results,
             productos: pro.results,
             masvendidos: masv.results,
-            falta: faltante.results
+            falta: faltante.results,
+            cotizacion: {
+                compra: coti.dolarpy.cambioschaco.compra,
+                venta: coti.dolarpy.cambioschaco.venta
+            }
+
         });
         }
 
@@ -75,7 +90,7 @@ function DashboardProvider({children}) {
 
     }, []);
 
-
+    
 
     const values = {datas,isLoading}
 

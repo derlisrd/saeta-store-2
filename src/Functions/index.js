@@ -379,7 +379,7 @@ export const funciones = {
       var cientos = Math.floor(num / divisor);
       var resto = num - cientos * divisor;
     
-      var strMillones = Seccion(num, divisor, "UN MILLON DE", "MILLONES DE");
+      var strMillones = Seccion(num, divisor, "UN MILLON ", "MILLONES ");
       var strMiles = Miles(resto);
     
       if (strMillones === "") return strMiles;

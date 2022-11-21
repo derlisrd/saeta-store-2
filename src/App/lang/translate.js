@@ -1,6 +1,12 @@
 export const translate = {
     es:{
         hola:"Hola",
+        perfil:'Perfil',
+        clave:"Contraseña",
+        clave_actual:"Contraseña actual",
+        clave_nueva: "Contraseña nueva",
+        repetir_clave_nueva: "Repetir contraseña nueva",
+        almenos8:"Al menos 8 caracteres",
         nuevo:"Nuevo",
         seleccione_deposito: "Seleccione depósito",
         datos_proveedor:"Datos de proveedor",
