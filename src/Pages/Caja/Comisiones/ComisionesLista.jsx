@@ -2,7 +2,7 @@ import { useComisiones } from "./ComisionesProvider";
 import Tablas from '../../../Components/UI/Tablas'
 import {columns} from './columns'
 import { useLang } from "../../../Contexts/LangProvider";
-import { Alert, Button, FormControl, Grid, Icon, IconButton, InputLabel, MenuItem, Select, TextField, Tooltip } from "@mui/material";
+import { Alert, Button, FormControl, Grid, Icon,  InputLabel, MenuItem, Select, Stack, TextField } from "@mui/material";
 import { funciones } from "../../../Functions";
 import { useState } from "react";
 
@@ -27,9 +27,16 @@ function ComisionesLista(){
 
 
     const Acciones = ({rowProps})=>(
-    <Tooltip arrow title={lang.presione_mas_detalles}>
-      <IconButton onClick={()=>{console.log(rowProps)}}><Icon>visibility</Icon></IconButton>
-    </Tooltip>)
+    <Stack spacing={1} direction="row">
+      {
+        rowProps.pagado_comision === '0' ?
+        <Button variant="contained" onClick={()=>{console.log(rowProps)}}>Pagar</Button>
+        :
+        <Button variant="contained" color="secondary" onClick={()=>{console.log(rowProps)}}>Recibo</Button>
+      }
+
+      <Button variant="contained">Detalles</Button>
+    </Stack>)
     
     const search =(<Grid container spacing={2} alignItems="center">
     <Grid item xs={12} sm={6} md={2}>

@@ -107,14 +107,14 @@ export const funciones = {
       },
     
       fechaActualYMD: () => {
-        let date = new Date();
-        let fecha =
-          date.getFullYear().toString() +
-          "-" +
-          (date.getMonth() + 1).toString().padStart(2, 0) +
-          "-" +
-          date.getDate().toString().padStart(2, 0);
-        return fecha; /** RETORNA   2020-01-20 */
+        let date = new Date()
+      return [
+        date.getFullYear(),
+        (date.getMonth() + 1).toString().padStart(2, 0),
+        (date.getDate().toString().padStart(2, 0)),
+      ].join('-');
+
+         /** RETORNA   2020-01-20 */
       },
       HoraActualHMS: () => {
         let f = new Date();
@@ -149,6 +149,17 @@ export const funciones = {
         let month = date.substr(-2,2);
         // retorna los dias de cierto mes
         return new Date(year, month, 0).getDate();
+      },
+      fechaYMDMySQLtoEs : (fecha)=>{
+        let split = fecha.split('-');
+        let y = split[0], m = parseInt(split[1]) - 1 , d = split[2] ;
+        let newfecha = new Date(y,m,d)
+        var options = {
+          year: "numeric",
+          month: "long",
+          day: "numeric",
+        };
+        return newfecha.toLocaleDateString("es-ES", options);
       },
       fechaEsDMY: (f = null) => {
         var fecha;

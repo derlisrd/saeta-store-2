@@ -1,4 +1,4 @@
-import { Grid, Icon, InputAdornment, TextField,Checkbox,FormControlLabel, FormControl, InputLabel, Select, MenuItem } from "@mui/material";
+import { Grid, Icon, InputAdornment, TextField,Checkbox,FormControlLabel, FormControl, InputLabel, Select, MenuItem, Tooltip, Switch } from "@mui/material";
 import React from "react";
 import NumberFormatCustom from "../../../../Components/thirty/NumberFormatCustom";
 import { useProductFormEdit } from "./ProductFormEditProvider";
@@ -7,6 +7,21 @@ const Precios = () => {
   const {change,formulario,changeCheck} = useProductFormEdit();
   return (
     <Grid container spacing={2}>
+      <Grid item xs={12}>
+        <Tooltip placement="top" title="Preguntar precio a la hora de la venta">
+            <FormControlLabel
+              control={
+                <Switch
+                  checked={formulario.preguntar_precio === "1"}
+                  onChange={changeCheck}
+                  name="preguntar_precio"
+                  color="primary"
+                />
+              }
+              label="Preguntar precio"
+            />
+            </Tooltip>
+      </Grid>
       <Grid item xs={12} sm={4} md={4}>
             <TextField
               onChange={change}

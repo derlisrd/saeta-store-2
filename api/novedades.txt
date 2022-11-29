@@ -911,6 +911,16 @@ CREATE TABLE IF NOT EXISTS `productos_images` (
 
 -- --------------------------------------------------------
 
+CREATE TABLE `productos_precios` (
+  `id_productos_precio` int NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  `id_producto_precio` int NOT NULL COMMENT 'con id_producto',
+  `precio` float NOT NULL,
+  `precio_m` float NOT NULL,
+  `precio_active` int NOT NULL DEFAULT '0' COMMENT '0 no 1 si',
+  `updated_at` datetime DEFAULT CURRENT_TIMESTAMP
+);
+
+
 --
 -- Estructura de tabla para la tabla `productos_vendidos`
 --

@@ -18,7 +18,7 @@ const DatosEmpresa = () => {
     <Grid container spacing={2} >
       <Grid item xs={12}>
         <Alert severity="info">
-          {lang.licencia_valida_hasta}: { Funciones.fechaEsDMY( datosEmpresa.licencia)} 
+          {lang.licencia_valida_hasta}: { Funciones.fechaYMDMySQLtoEs( datosEmpresa.licencia)} 
         </Alert>
       </Grid>
         <Grid item xs={12} md={6}>

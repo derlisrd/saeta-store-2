@@ -50,6 +50,7 @@ const ProductFormEditProvider = (props) => {
         preciom_producto: "0",
         minimo_producto: "0",
         porcentaje_comision:"0",
+        preguntar_precio:"0",
         stock_producto: "0",
         notificar_producto: "",
         tipo_producto: "1",
@@ -174,10 +175,13 @@ const ProductFormEditProvider = (props) => {
     const traerDatos = useCallback(async()=>{
     
       
-      let re = await Promise.all([APICALLER.get({table:'productos_images',where:`id_image_producto,=,${id}`}),APICALLER.get({table: `productos`,where: `id_producto,=,${id}`,
-      fields: `id_producto,id_unidad_medida_producto,codigo_producto,nombre_producto,descripcion_producto,id_categoria_producto,id_proveedor_producto,notificar_producto,
-      costo_producto,precio_producto,preciom_producto,id_impuesto_producto,tipo_producto,minimo_producto,id_marca_producto,porcentaje_comision,disponible_producto`
-      })])
+      let re = await Promise.all([
+        APICALLER.get({table:'productos_images',where:`id_image_producto,=,${id}`}),
+        APICALLER.get({table: `productos`,where: `id_producto,=,${id}`,
+        fields: `id_producto,id_unidad_medida_producto,codigo_producto,nombre_producto,descripcion_producto,id_categoria_producto,id_proveedor_producto,notificar_producto,
+        costo_producto,precio_producto,preciom_producto,id_impuesto_producto,tipo_producto,minimo_producto,id_marca_producto,porcentaje_comision,disponible_producto,preguntar_precio`
+        })
+      ])
 
      
       if(re[1].response && re[1].found>0){ 

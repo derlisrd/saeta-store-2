@@ -107,7 +107,7 @@ return (
                                             data[column.field].substr(0,25)
                                             }
                                             {
-                                                column.after && column.after
+                                                column.after ?? ''
                                             }
                                             </span>
                                     </TableCell>

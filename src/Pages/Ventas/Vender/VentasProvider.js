@@ -327,6 +327,20 @@ const VentasProvider = ({ children }) => {
             entregado_item: e.tipo_producto === "2" ? "2" : df.datosFactura.entregado_items,
           },
         }));
+
+        insertsPromises.push(APICALLER.insert({
+          table: "comisions",token: token_user,
+          data: {
+            id_factura_comision: ID_FACTURA,
+            id_empleado_comision: df.datosFactura.id_empleado,
+            id_producto_comision: e.id_producto,
+            porcentaje: e.porcentaje_comision,
+            cantidad_vendido_comision: e.cantidad_producto,
+            precio_vendido_comision: e.precio_guardado,
+            comision_valor:  ( e.precio_guardado * e.cantidad_producto * e.porcentaje_comision) / 100 ,
+            fecha_comision: Funciones.getFechaHorarioString(),
+          },
+        }));
        
 
         if(df.datosFactura.entregado_items==='1'){
@@ -572,7 +586,7 @@ const VentasProvider = ({ children }) => {
       where = `codigo_producto,=,'${codigo}',and,id_deposito_deposito,=,${fa.depositoActivo}`
     }
 
-    let pro = await Promise.all([APICALLER.get({
+    let [res,ima,serv] = await Promise.all([APICALLER.get({
       table: "productos",
       include: "impuestos,productos_depositos",
       on: "id_impuesto_producto,id_impuesto,id_producto,id_producto_deposito",
@@ -587,11 +601,7 @@ const VentasProvider = ({ children }) => {
     include: "impuestos",
     on: "id_impuesto_producto,id_impuesto",
     where: `codigo_producto,=,'${codigo}',and,tipo_producto,=,2`})])
-    let res = pro[0];
-    let ima = pro[1];
-    let serv = pro[2];
-   
-    //console.log(res);
+    
     
     if (res.response ) {
       if (res.found > 0 || serv.found>0) {
@@ -601,7 +611,6 @@ const VentasProvider = ({ children }) => {
         }
         else{
           let insertarEsto = ima.found > 0 ? ima.results[0] : res.found>0 ? res.results[0] : serv.results[0]
-
           insertarProductoTabla(insertarEsto);
         }
 

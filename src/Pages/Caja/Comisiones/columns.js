@@ -1,6 +1,6 @@
 export const columns = [
     {
-      field: "id_facturas_item",
+      field: "id_comision",
       title: "ID",
     },
     {
@@ -11,21 +11,27 @@ export const columns = [
       field: "nombre_empleado",
       title: "Nombre",
     },
-    
     {
       field: "nombre_producto",
       title: "Producto",
     },
     {
-      field: "porcentaje_comision_factura",
-      title: "Comision",
+      field: "precio_vendido_comision",
+      title: "Precio",
+      isNumber:true
     },
     {
-      field: "porcentaje_comision",
-      title: "Porcentaje",
+      field: "comision_valor",
+      title: "Comisión",
+      isNumber:true
     },
     {
-      field: "fecha_factura",
+      field: "porcentaje",
+      title: "Porc.",
+      after: ' %'
+    },
+    {
+      field: "fecha_comision",
       title: "Fecha",
     },
   ];
