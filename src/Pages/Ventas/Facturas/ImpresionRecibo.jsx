@@ -1,16 +1,19 @@
 import { Dialog,DialogActions,Zoom,Icon, CircularProgress, Stack } from '@mui/material'
 import printJS from "print-js";
 import ButtonCustom from '../../../Components/MuiCustom/ButtonCustom'
+import { useDatosEmpresa } from '../../../Contexts/DatosEmpresaProvider';
 import {funciones} from '../../../Functions';
 import { useFacturas } from './FacturasProvider'
 const ImpresionRecibo = () => {
 
+  const {EMPRESA} = useDatosEmpresa()
   const {dialogs,setDialogs,formulario,itemsFactura,cargandoFactura} = useFacturas();
-  const EMPRESA = JSON.parse( localStorage.getItem('dataEmpresa') );
+  
     const imprimir = () => {
       printJS({ type: "html", printable: "print",style:'.textMono{font-family:monospace}' });
     };
 
+    
   const widthDimension = EMPRESA.dimension_ticket+"mm";
 
   const DF = {...formulario}

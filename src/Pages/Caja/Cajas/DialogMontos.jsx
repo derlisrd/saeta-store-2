@@ -1,4 +1,4 @@
-import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Grid, LinearProgress } from '@mui/material'
+import { Alert, AlertTitle, Button, Dialog, DialogActions, DialogContent, DialogTitle, Grid, LinearProgress } from '@mui/material'
 import {useState,useEffect,useCallback} from 'react'
 import { useLang } from '../../../Contexts/LangProvider'
 import { APICALLER } from '../../../Services/api'
@@ -41,7 +41,7 @@ const DialogMontos = () => {
             {lang.montos}
         </DialogTitle>
         <DialogContent dividers>
-            <Grid container>
+            <Grid container spacing={2}>
                     {
                         loading ? 
                 <Grid item xs={12}>
@@ -49,10 +49,13 @@ const DialogMontos = () => {
                 </Grid>
                     :
                     lista.map((e,i)=>(
-                    <Grid item xs={6} key={i}>                    
-                      <b>{lang.monto}:</b> {funciones.numberFormat(e.monto_caja_moneda)} {e.nombre_moneda}
-                      <br/>
-                      <b>{lang.sin_efectivo}:</b> {funciones.numberFormat(e.monto_no_efectivo)} {e.nombre_moneda}
+                    <Grid item xs={6} key={i}>
+                        <Alert icon={false} variant="outlined">
+                        <AlertTitle>{e.nombre_moneda}</AlertTitle>
+                        <b>{lang.monto}:</b> {funciones.numberFormat(e.monto_caja_moneda)}
+                        <br/>
+                        <b>{lang.sin_efectivo}:</b> {funciones.numberFormat(e.monto_no_efectivo)}
+                      </Alert>
                     </Grid>
                     ))
                 }

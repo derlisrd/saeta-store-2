@@ -1,4 +1,5 @@
 import {createContext,useState,useCallback,useEffect,useContext} from 'react';
+import { useLogin } from '../../../Contexts/LoginProvider';
 import { funciones } from '../../../Functions';
 import { APICALLER } from '../../../Services/api';
 
@@ -6,21 +7,21 @@ const Contexto = createContext();
 
 function ComisionesProvider({children}){
 
-
-    const initialDialogs = {
-        pagar:false, recibo:false
-    }
+    const {userData} = useLogin()
+    const {token_user,id_user} = userData
+    const initialDialogs = {pagar:false, recibo:false}
     const [dialogs,setDialogs] = useState(initialDialogs)
-    const initialFormPagar = {
-
-    }
+    const initialFormPagar = {}
     const initialFormRecibo = {}
+    const initialFormCaja = {id_caja_movimiento:''}
     const [formPagar,setFormPagar] = useState(initialFormPagar)
     const [formRecibo,setFormRecibo] = useState(initialFormRecibo)
-
+    const [formCaja,setFormCaja] = useState(initialFormCaja)
     const today = funciones.fechaActualYMD();
     const initialDatos = {
         lista: [],
+        monedas:[],
+        cajas:[],
         empleados:[],
         total:0,
         totalComision:0
@@ -51,28 +52,28 @@ function ComisionesProvider({children}){
             if(res.response){
                 let resultado = res.results;
                 resultado.forEach(e => {
-                    comision += parseFloat(e.porcentaje) * ( parseFloat(e.precio_vendido_comision) - parseFloat(e.costo_producto) )/ 100
+                    comision += parseFloat(e.porcentaje) * ( parseFloat(e.precio_vendido_comision)  )/ 100
                     total += parseFloat(e.precio_vendido_comision)
                 });
                 setDatos({...datos,lista:res.results,total:total,totalComision:comision})
-
             }
-        
         setLoading({
             lista:false
         })
     }
 
     const getData = useCallback(async () => {
-        let [res,emp] = await Promise.all([
+        let [res,emp,caja,moneda] = await Promise.all([
             APICALLER.get({
                 table:'comisions',
                 include:'empleados,productos',
                 on:`id_empleado_comision,id_empleado,id_producto_comision,id_producto`,
                 fields:'porcentaje,precio_vendido_comision,costo_producto,nombre_empleado,apellido_empleado,fecha_comision,pagado_comision,nombre_producto,id_comision,comision_valor',
-                where: `fecha_comision,between,'${today} 00:00:00',and,'${today} 23:59:59'`
+                where: `fecha_comision,between,'${today} 00:00:00',and,'${today} 23:59:59'`,sort:'id_comision'
             }),
-            APICALLER.get({table:"empleados",fields:"nombre_empleado,apellido_empleado,id_empleado"})
+            APICALLER.get({table:"empleados",fields:"nombre_empleado,apellido_empleado,id_empleado"}),
+            APICALLER.get({table: "cajas",where: `estado_caja,=,'open'`}),
+            APICALLER.get({table:'cajas',include:'cajas_monedas,monedas',on:'id_caja,id_caja_moneda,id_moneda,id_moneda_caja_moneda',where: `estado_caja,=,'open'`})
         ]);
 
         //console.log(res)
@@ -81,7 +82,9 @@ function ComisionesProvider({children}){
                 lista:res.results,
                 empleados: emp.results,
                 total:0,
-                totalComision:0
+                totalComision:0,
+                cajas:caja.results,
+                monedas:moneda.results
             })
         }else{ console.log(res)} 
         setLoading({
@@ -99,15 +102,15 @@ function ComisionesProvider({children}){
       }, [getData]);
 
     const values = {
-        datos,loading,applyFilters,setDialogs,dialogs,formPagar,setFormPagar,formRecibo,setFormRecibo
+        datos,loading,applyFilters,setDialogs,dialogs,formPagar,setFormPagar,formRecibo,setFormRecibo,formCaja,setFormCaja
     }
     return(<Contexto.Provider value={values}>
         {children}
     </Contexto.Provider>)
 }
 export const useComisiones = ()=>{
-    const {datos,loading,applyFilters,setDialogs,dialogs,formPagar,setFormPagar,formRecibo,setFormRecibo} = useContext(Contexto);
-    return {datos,loading,applyFilters,setDialogs,dialogs,formPagar,setFormPagar,formRecibo,setFormRecibo}
+    const {datos,loading,applyFilters,setDialogs,dialogs,formPagar,setFormPagar,formRecibo,setFormRecibo,formCaja,setFormCaja} = useContext(Contexto);
+    return {datos,loading,applyFilters,setDialogs,dialogs,formPagar,setFormPagar,formRecibo,setFormRecibo,formCaja,setFormCaja}
 }
 
 export default ComisionesProvider;

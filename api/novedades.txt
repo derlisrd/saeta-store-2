@@ -12,7 +12,7 @@ SET time_zone = "-04:00";
 
 DROP TABLE IF EXISTS `agendas`;
 CREATE TABLE IF NOT EXISTS `agendas` (
-  `id_agenda` int(11) NOT NULL AUTO_INCREMENT,
+  `id_agenda` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
   `id_user_agenda` INT NOT NULL COMMENT 'id_user',
   `id_cliente_agenda` INT NULL COMMENT 'id_cliente',
   `descripcion_agenda` varchar(200) NOT NULL,
@@ -21,7 +21,6 @@ CREATE TABLE IF NOT EXISTS `agendas` (
   `horario_agenda` time NOT NULL,
   `color_agenda` varchar(10) NOT NULL,
   `updated_at` datetime DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id_agenda`)
 ) ;
 
 -- --------------------------------------------------------
@@ -151,11 +150,10 @@ INSERT INTO `cajas_registros` (`id_cajas_registro`, `descripcion_registro`, `tip
 
 DROP TABLE IF EXISTS `cajas_users`;
 CREATE TABLE IF NOT EXISTS `cajas_users` (
-  `id_cajas_user` int(11) NOT NULL AUTO_INCREMENT,
+  `id_cajas_user` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
   `id_user_caja` int(11) NOT NULL COMMENT 'id_user',
   `id_caja_caja` int(11) NOT NULL COMMENT 'id_caja',
   `updated_at` datetime DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id_cajas_user`)
 ) ;
 
 -- --------------------------------------------------------
@@ -166,14 +164,13 @@ CREATE TABLE IF NOT EXISTS `cajas_users` (
 
 DROP TABLE IF EXISTS `categorias`;
 CREATE TABLE IF NOT EXISTS `categorias` (
-  `id_categoria` int(11) NOT NULL AUTO_INCREMENT,
+  `id_categoria` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
   `id_padre_categoria` int(11) NOT NULL DEFAULT '0',
   `nombre_categoria` varchar(30) NOT NULL,
   `imagen_categoria` text,
   `publicado_categoria` tinyint(1) NOT NULL DEFAULT '1',
   `tipo_categoria` tinyint(1) NOT NULL DEFAULT '1' COMMENT '1=artic 2=serv',
   `updated_at` datetime DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id_categoria`)
 ) ;
 
 --
@@ -192,7 +189,7 @@ INSERT INTO `categorias` (`id_categoria`, `id_padre_categoria`, `nombre_categori
 
 DROP TABLE IF EXISTS `clientes`;
 CREATE TABLE IF NOT EXISTS `clientes` (
-  `id_cliente` int(11) NOT NULL AUTO_INCREMENT,
+  `id_cliente` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
   `ruc_cliente` varchar(20) UNIQUE,
   `nombre_cliente` varchar(150) NOT NULL,
   `telefono_cliente` varchar(150) DEFAULT  NULL,
@@ -200,25 +197,32 @@ CREATE TABLE IF NOT EXISTS `clientes` (
   `direccion_cliente` text DEFAULT NULL,
   `tipo_cliente` int(11) NOT NULL DEFAULT '3' COMMENT '1 mayorista 2 minorista 3 casual',
   `updated_at` datetime DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id_cliente`)
 ) ;
 
---
--- Volcado de datos para la tabla `clientes`
---
 
 INSERT INTO `clientes` (`id_cliente`, `ruc_cliente`, `nombre_cliente`, `telefono_cliente`, `email_cliente`, `direccion_cliente`, `tipo_cliente`, `updated_at`) VALUES
 (1, 'X', 'SIN NOMBRE', '0', NULL, NULL, 3, '2022-07-05 01:31:43');
 
--- --------------------------------------------------------
 
---
--- Estructura de tabla para la tabla `compras`
---
+DROP TABLE IF EXISTS `compras`;
+CREATE TABLE `comisions` (
+  `id_comision` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `id_empleado_comision` int NOT NULL COMMENT 'id_empleado',
+  `id_producto_comision` int NOT NULL COMMENT 'id_producto',
+  `id_factura_comision` int NOT NULL COMMENT 'id_factura',
+  `porcentaje` int NOT NULL,
+  `cantidad_vendido_comision` float NOT NULL,
+  `precio_vendido_comision` float NOT NULL,
+  `comision_valor` float NOT NULL,
+  `fecha_comision` datetime NOT NULL,
+  `pagado_comision` int NOT NULL DEFAULT '0',
+  `updated_at` datetime DEFAULT CURRENT_TIMESTAMP
+);
+
 
 DROP TABLE IF EXISTS `compras`;
 CREATE TABLE IF NOT EXISTS `compras` (
-  `id_compra` int(11) NOT NULL AUTO_INCREMENT,
+  `id_compra` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
   `id_proveedor_compra` int(11) NOT NULL COMMENT 'con id_proveedor',
   `tipo_factura_compra` int(1) NOT NULL COMMENT '1=contado 2=credito',
   `fecha_pago_compra` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -226,8 +230,7 @@ CREATE TABLE IF NOT EXISTS `compras` (
   `fecha_compra` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `total_factura_compra` float NOT NULL,
   `estado_compra` int(1) NOT NULL COMMENT '1=pagado 2=nopagado',
-  `updated_at` datetime DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id_compra`)
+  `updated_at` datetime DEFAULT CURRENT_TIMESTAMP
 ) ;
 
 -- --------------------------------------------------------
@@ -910,7 +913,7 @@ CREATE TABLE IF NOT EXISTS `productos_images` (
 ) ;
 
 -- --------------------------------------------------------
-
+DROP TABLE IF EXISTS `productos_precios`;
 CREATE TABLE `productos_precios` (
   `id_productos_precio` int NOT NULL PRIMARY KEY AUTO_INCREMENT,
   `id_producto_precio` int NOT NULL COMMENT 'con id_producto',

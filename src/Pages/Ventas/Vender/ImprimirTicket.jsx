@@ -3,11 +3,13 @@ import React from 'react'
 import { useVentas } from './VentasProvider'
 import ButtonCustom from "../../../Components/MuiCustom/ButtonCustom";
 import printJS from "print-js";
+import { useDatosEmpresa } from '../../../Contexts/DatosEmpresaProvider';
 
 const ImprimirTicket = () => {
     const {dialogs,setDialogs,indexFactura,datosFacturas,Funciones,cerrarDialogFactura,valorConvertido} = useVentas();
     
-    const EMPRESA = JSON.parse( localStorage.getItem('dataEmpresa') );
+    //const EMPRESA = JSON.parse( localStorage.getItem('dataEmpresa') );
+    const {EMPRESA} = useDatosEmpresa()
     const imprimir = () => {
       printJS({ type: "html", printable: "print_factura", style:"#print_factura{font-family:monospace}" });
     };

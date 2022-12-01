@@ -59,7 +59,7 @@ const DatosEmpresaProvider = ({children}) => {
 
   return (
     <Contexto.Provider
-        value={{MONEDA_PRINCIPAL,SET_MONEDA_PRINCIPAL,EMPRESA,MONEDAS}}
+        value={{MONEDA_PRINCIPAL,SET_MONEDA_PRINCIPAL,EMPRESA,MONEDAS,SET_EMPRESA}}
     >
         {children}
     </Contexto.Provider>
@@ -67,8 +67,8 @@ const DatosEmpresaProvider = ({children}) => {
 }
 
 export const useDatosEmpresa = ()=>{
-    const {MONEDA_PRINCIPAL,SET_MONEDA_PRINCIPAL,EMPRESA,MONEDAS} = useContext(Contexto)
-    return {MONEDA_PRINCIPAL,SET_MONEDA_PRINCIPAL,EMPRESA,MONEDAS}
+    const {MONEDA_PRINCIPAL,SET_MONEDA_PRINCIPAL,EMPRESA,MONEDAS,SET_EMPRESA} = useContext(Contexto)
+    return {MONEDA_PRINCIPAL,SET_MONEDA_PRINCIPAL,EMPRESA,MONEDAS,SET_EMPRESA}
 }
 
 export default DatosEmpresaProvider

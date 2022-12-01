@@ -8,11 +8,13 @@ import {
 import { APICALLER } from "../../../Services/api";
 import { useLogin } from "../../../Contexts/LoginProvider";
 import { useLang } from "../../../Contexts/LangProvider";
+import { useDatosEmpresa } from "../../../Contexts/DatosEmpresaProvider";
 
 const Contexto = createContext();
 
 const SettingsProvider = ({ children }) => {
-  const storage = JSON.parse(localStorage.getItem("dataEmpresa"));
+  //const storage = JSON.parse(localStorage.getItem("dataEmpresa"));
+  const {SET_EMPRESA,EMPRESA} = useDatosEmpresa()
   const { userData,setDataEmpresa } = useLogin();
   const {token_user} = userData
   const {lang} = useLang()
@@ -30,9 +32,7 @@ const SettingsProvider = ({ children }) => {
     logo_url_empresa:""
   };
 
-  const [datosEmpresa, setDatosEmpresa] = useState(
-    storage ? storage : initialState
-  );
+  const [datosEmpresa, setDatosEmpresa] = useState(EMPRESA ?? initialState);
 
   const [snack, setSnack] = useState(false);
 
@@ -50,7 +50,7 @@ const SettingsProvider = ({ children }) => {
       id: datosEmpresa.id_empresa,
     };
     localStorage.setItem("dataEmpresa", JSON.stringify(datosEmpresa));
-    
+    SET_EMPRESA(datosEmpresa)
     const res = await APICALLER.update(datas);
     res.response  ? setSnack(true) : console.log(res);
     setDataEmpresa(datosEmpresa)

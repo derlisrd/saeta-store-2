@@ -2,35 +2,49 @@ import { useComisiones } from "./ComisionesProvider";
 import Tablas from '../../../Components/UI/Tablas'
 import {columns} from './columns'
 import { useLang } from "../../../Contexts/LangProvider";
-import { Alert, Button, FormControl, Grid, Icon,  InputLabel, MenuItem, Select, Stack, TextField } from "@mui/material";
+import { Alert, Button, FormControl, Grid, Icon,  InputLabel, MenuItem, Select, Stack } from "@mui/material";
 import { funciones } from "../../../Functions";
 import { useState } from "react";
+import { DatePickerCustom } from "../../../Components/MuiCustom/DatePickerCustom";
 
 function ComisionesLista(){
 
-    const {datos,loading,applyFilters} = useComisiones();
+    const {datos,loading,applyFilters,setDialogs,dialogs,setFormPagar} = useComisiones();
     
     const {lang} = useLang()
     const today = funciones.fechaActualYMD();
+    const [desde, setDesde] = useState(today);
+    const [hasta, setHasta] = useState(today);
+
     const filtradoInitial = {
       desde:today,
       hasta:today,
-      id_empleado:""
+      id_empleado:"",
+      pagado_comision:''
     }
     const [filtrado,setFiltrado] = useState(filtradoInitial)
 
+    const changeDatadesde = (e) => setDesde(e)
+    const changeDatahasta = (e) => setHasta(e);
+    
     const changeFiltrado = e=>{
       const {name,value} = e.target
       setFiltrado({...filtrado,[name]:value})
     }
+    const aplicarFiltros = ()=>{
+      applyFilters({desde:desde,hasta:hasta,id_empleado: filtrado.id_empleado})
+    }
 
-
+    const pagar = f=>{
+      setDialogs({...dialogs,pagar:true})
+      setFormPagar(f)
+    }
 
     const Acciones = ({rowProps})=>(
     <Stack spacing={1} direction="row">
       {
         rowProps.pagado_comision === '0' ?
-        <Button variant="contained" onClick={()=>{console.log(rowProps)}}>Pagar</Button>
+        <Button variant="contained" onClick={()=>{pagar(rowProps)}}>Pagar</Button>
         :
         <Button variant="contained" color="secondary" onClick={()=>{console.log(rowProps)}}>Recibo</Button>
       }
@@ -40,23 +54,23 @@ function ComisionesLista(){
     
     const search =(<Grid container spacing={2} alignItems="center">
     <Grid item xs={12} sm={6} md={2}>
-      <TextField
+      <DatePickerCustom 
         fullWidth
         label={lang.desde}
-        type="date"
-        onChange={changeFiltrado}
+        value={desde}
+        defaultValue={desde}
+        onChange={changeDatadesde}
         name="desde"
-        defaultValue={filtrado.desde}
-      />
+        />
     </Grid>
     <Grid item xs={12} sm={6} md={2}>
-        <TextField
-          fullWidth
-          label={lang.hasta}
-          type="date"
-          onChange={changeFiltrado}
-          name="hasta"
-          defaultValue={filtrado.hasta}
+        <DatePickerCustom 
+        fullWidth
+        value={hasta}
+        label={lang.hasta}
+        onChange={changeDatahasta}
+        name="hasta"
+        defaultValue={hasta}
         />
       </Grid>
       <Grid item xs={12} sm={4} md={3}>
@@ -76,9 +90,23 @@ function ComisionesLista(){
           </Select>
         </FormControl>
       </Grid>
+      <Grid item xs={12} sm={4} md={2}>
+      <FormControl fullWidth>
+          <InputLabel>{lang.seleccione_estado}</InputLabel>
+          <Select
+            name="id_empleado"
+            onChange={changeFiltrado}
+            value={filtrado.pagado_comision}
+          >
+              <MenuItem value="">{lang.seleccione_estado}</MenuItem>
+              <MenuItem value='0'>{lang.nopagado}</MenuItem>
+              <MenuItem value='1'>{lang.pagado}</MenuItem>
+          </Select>
+        </FormControl>
+      </Grid>
       <Grid item >
         <Button
-          onClick={()=>{applyFilters(filtrado)}}
+          onClick={aplicarFiltros}
           variant="contained"
           size="large"
           startIcon={<Icon>filter_list</Icon>}
@@ -86,15 +114,18 @@ function ComisionesLista(){
           {lang.filtrar}
         </Button>
       </Grid>
-      <Grid item xs={12} sm={12} md={6}>
+      <Grid item xs={12} sm={12} md={4}>
         <Alert icon={false}>
           Total: {funciones.numberFormat(datos.total)}
         </Alert>
       </Grid>
-      <Grid item xs={12} sm={12} md={6}>
+      <Grid item xs={12} sm={12} md={4}>
         <Alert icon={false}>
           Total comisión: {funciones.numberFormat( datos.totalComision)}
         </Alert>
+      </Grid>
+      <Grid item xs={12} md={2}>
+          <Button variant="contained" size="large" disabled={filtrado.id_empleado===''} >Pagar todo</Button>
       </Grid>
     </Grid>
     )
@@ -102,7 +133,6 @@ function ComisionesLista(){
     return(<>
         <Tablas
             columns={columns}
-
             datas={datos.lista}
             Accions={Acciones}
             title={lang.comisiones}
