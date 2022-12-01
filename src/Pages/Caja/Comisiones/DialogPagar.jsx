@@ -28,6 +28,9 @@ const DialogPagar = () => {
       setErrors({status:true,message: lang.complete_datos_correctamente})
       return false;
     }
+
+    let montoApagar = parseFloat(formPagar.comision_valor);
+
     setCargando(false)
     console.log(formPagar)
   }
