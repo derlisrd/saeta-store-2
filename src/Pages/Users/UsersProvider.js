@@ -6,7 +6,7 @@ import swal from "sweetalert";
 const UsersContext = createContext();
 
 function UsersProvider ({children}){
-    const {userData,Descifrar} = useLogin();
+    const {userData/*, Descifrar */} = useLogin();
     const {lang} = useLang()
     const {token_user} = userData;
     const initialCargas = {lista:true,guardar:false,all:false}
@@ -40,7 +40,8 @@ function UsersProvider ({children}){
 
         let clave, users;
         if(user==="" && pass === ""){
-            users = Descifrar(userData.username_user);
+            //users = Descifrar(userData.username_user);
+            users = (userData.username_user);
             clave = await swal({
                 title: lang.confirmar_contra,
                 icon: "info",
@@ -98,6 +99,8 @@ function UsersProvider ({children}){
 
     const newUser = async(f)=>{
         let resp = await confirmPassword({})
+        
+        
         setCargas({...cargas,all:true})
 
         if(resp.response){
@@ -113,6 +116,7 @@ function UsersProvider ({children}){
             }
         }
         else{
+            console.log(resp)
             setCargas({...cargas,all:false})
             swal({text:lang.error_pass})
         }
@@ -122,6 +126,8 @@ function UsersProvider ({children}){
 
     const editUser = async(f)=>{
         setCargas({...cargas,all:true})
+        
+        
         let resp = await confirmPassword({})
 
         if(resp.response){

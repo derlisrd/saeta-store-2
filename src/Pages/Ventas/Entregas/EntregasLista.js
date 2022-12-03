@@ -1,4 +1,4 @@
-import {Button,Grid,Typography,Icon,Avatar,TextField,Container,CircularProgress,InputAdornment,FormControl,InputLabel,Select,MenuItem} from "@mui/material";
+import {Button,Grid,Typography,Icon,Avatar,TextField,CircularProgress,InputAdornment,FormControl,InputLabel,Select,MenuItem} from "@mui/material";
 import { useState } from "react";
 import { useEntregas } from "./EntregasProvider";
 import EntregasView from "./EntregasView";
@@ -26,8 +26,8 @@ const EntregasLista = () => {
   };
 
   return (
-    <Container disableGutters>
-      <Grid container spacing={2} justify="flex-start" alignItems="flex-start">
+    
+      <Grid container spacing={2} >
         <Grid item xs={12} md={1}>
           <Avatar
             variant="rounded"
@@ -101,7 +101,6 @@ const EntregasLista = () => {
           
         </Grid>
       </Grid>
-    </Container>
   );
 };
 

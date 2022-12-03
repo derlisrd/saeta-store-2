@@ -45,14 +45,8 @@ const EmpleadosProvider = ({children}) => {
     useEffect(() => {
         const ca = new AbortController();
         let isActive = true;
-        if (isActive) {
-            getLista()
-        }
-    
-        return () => {
-          isActive = false;
-          ca.abort();
-        };
+        if (isActive) {getLista()}
+        return () => {isActive = false; ca.abort();};
       }, [getLista]);
   return (
     <Contexto.Provider value={{lang,lista,getLista,loading,dialogs,setDialogs,form,setForm,initialForm,listaRols  }}>

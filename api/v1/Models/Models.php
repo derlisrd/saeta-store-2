@@ -46,9 +46,7 @@ class Models {
     }
 
 
-    public static function insertOrUpdate(){
-        
-    }
+
 
 
     public static function POST($sql,$table){

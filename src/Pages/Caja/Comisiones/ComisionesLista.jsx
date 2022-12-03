@@ -9,20 +9,14 @@ import { DatePickerCustom } from "../../../Components/MuiCustom/DatePickerCustom
 
 function ComisionesLista(){
 
-    const {datos,loading,applyFilters,setDialogs,dialogs,setFormPagar} = useComisiones();
+    const {datos,loading,applyFilters,setDialogs,dialogs,setFormPagar,setFormRecibo,setFiltrado,filtrado} = useComisiones();
     
     const {lang} = useLang()
     const today = funciones.fechaActualYMD();
     const [desde, setDesde] = useState(today);
     const [hasta, setHasta] = useState(today);
 
-    const filtradoInitial = {
-      desde:today,
-      hasta:today,
-      id_empleado:"",
-      pagado_comision:''
-    }
-    const [filtrado,setFiltrado] = useState(filtradoInitial)
+    
 
     const changeDatadesde = (e) => setDesde(e)
     const changeDatahasta = (e) => setHasta(e);
@@ -32,9 +26,17 @@ function ComisionesLista(){
       setFiltrado({...filtrado,[name]:value})
     }
     const aplicarFiltros = ()=>{
-      applyFilters({desde:desde,hasta:hasta,id_empleado: filtrado.id_empleado})
+      applyFilters({desde:desde,hasta:hasta,id_empleado: filtrado.id_empleado,pagado_comision:filtrado.pagado_comision})
     }
 
+    const recibo = f=>{
+      setDialogs({...dialogs,recibo:true})
+      setFormRecibo(f)
+    }
+
+    const pagarTodo = ()=>{
+      setDialogs({...dialogs,pagartodo:true})
+    }
     const pagar = f=>{
       setDialogs({...dialogs,pagar:true})
       setFormPagar(f)
@@ -46,10 +48,8 @@ function ComisionesLista(){
         rowProps.pagado_comision === '0' ?
         <Button variant="contained" onClick={()=>{pagar(rowProps)}}>Pagar</Button>
         :
-        <Button variant="contained" color="secondary" onClick={()=>{console.log(rowProps)}}>Recibo</Button>
+        <Button variant="contained" color="secondary" onClick={()=>{recibo(rowProps)}}>Recibo</Button>
       }
-
-      <Button variant="contained">Detalles</Button>
     </Stack>)
     
     const search =(<Grid container spacing={2} alignItems="center">
@@ -125,7 +125,7 @@ function ComisionesLista(){
         </Alert>
       </Grid>
       <Grid item xs={12} md={2}>
-          <Button variant="contained" size="large" disabled={filtrado.id_empleado===''} >Pagar todo</Button>
+          <Button variant="contained" size="large" onClick={()=>{ pagarTodo() }} disabled={filtrado.id_empleado===''} >{lang.pagar_todo}</Button>
       </Grid>
     </Grid>
     )

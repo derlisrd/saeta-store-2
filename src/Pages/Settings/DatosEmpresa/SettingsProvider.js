@@ -19,7 +19,8 @@ const SettingsProvider = ({ children }) => {
   const {token_user} = userData
   const {lang} = useLang()
   const [cargando, setCargando] = useState(true);
-
+  const [images,setImages] = useState([]);
+  const [imagesURL,setImagesURL] = useState([]);
   const initialState = {
     id_empresa: "",
     nombre_empresa: "",
@@ -42,6 +43,16 @@ const SettingsProvider = ({ children }) => {
   };
 
   const Guardar = async () => {
+    
+    /* if(images.length>0){
+      images.forEach(e=>{
+        let data = {id_empresa:1,logo_url_empresa:e.name}
+
+        APICALLER.uploadImage({table:"empresas",file:e,data,token:token_user,path:'logo'});
+
+      })
+    } */
+    
     setCargando(true);
     let datas = {
       table: "empresas",
@@ -54,7 +65,7 @@ const SettingsProvider = ({ children }) => {
     const res = await APICALLER.update(datas);
     res.response  ? setSnack(true) : console.log(res);
     setDataEmpresa(datosEmpresa)
-    setCargando(false);
+    setCargando(false); 
   };
 
   const getData = useCallback(async () => {
@@ -88,7 +99,7 @@ const SettingsProvider = ({ children }) => {
         handleOnchange,
         Guardar,
         snack,
-        setSnack,lang
+        setSnack,lang,setImages,imagesURL,setImagesURL,images
       }}
     >
       {children}
@@ -105,7 +116,7 @@ export const useSettings = () => {
     handleOnchange,
     Guardar,
     snack,
-    setSnack,lang
+    setSnack,lang,setImages,imagesURL,setImagesURL,images
   } = useContext(Contexto);
   return {
     cargando,
@@ -115,7 +126,7 @@ export const useSettings = () => {
     handleOnchange,
     Guardar,
     snack,
-    setSnack,lang
+    setSnack,lang,setImages,imagesURL,setImagesURL,images
   };
 };
 

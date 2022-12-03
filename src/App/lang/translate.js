@@ -10,6 +10,8 @@ export const translate = {
         pagar_comision:'Pagar comisión',
         nopagado:'No pagado',
         seleccione_estado:'Seleccione estado',
+        pagar_todo:'Pagar todo',
+        empleado:'Empleado',
         nuevo:"Nuevo",
         seleccione_deposito: "Seleccione depósito",
         datos_proveedor:"Datos de proveedor",

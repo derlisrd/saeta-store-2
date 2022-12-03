@@ -1,11 +1,35 @@
-import { Grid,TextField,Icon,Button, InputAdornment,Snackbar,Alert } from "@mui/material"
+import { Grid,TextField,Icon,Button, InputAdornment,Snackbar,Alert, Stack, Avatar } from "@mui/material"
 import { useSettings } from "./SettingsProvider"
 import { funciones as Funciones } from "../../../Functions";
 import { TextFieldIconStart } from "../../../Components/MuiCustom/TextFieldIconStart";
 import LoadingLinear from "../../../Components/UI/LoadingLinear";
 const DatosEmpresa = () => {
 
-    const {datosEmpresa,snack,setSnack, Guardar,handleOnchange,cargando,lang} = useSettings()
+    const {datosEmpresa,snack,setSnack, Guardar,handleOnchange,cargando,lang,imagesURL,/* setImages,setImagesURL,images */} = useSettings()
+
+    
+
+    /* const deleteImage = e =>{
+      let fileArray = [...images]; // images file
+      let imagesArray = [...imagesURL]; // images url
+      fileArray.splice(e, 1);
+      imagesArray.splice(e,1);
+      setImages(fileArray)
+      setImagesURL(imagesArray);
+    } */
+
+    /* const changeImage = (e) => {
+      let fileObj = [];
+      let fileArray = [...images]; // images file
+      let imagesArray = [...imagesURL]; // images url
+      fileObj.push(e.target.files);
+      for (let i = 0; i < fileObj[0].length; i++) {
+        imagesArray.push(URL.createObjectURL(fileObj[0][i]));
+        fileArray.push(fileObj[0][i]);
+      }
+      setImages(fileArray)
+      setImagesURL(imagesArray);
+    }; */
 
     if(cargando){
       return <LoadingLinear />
@@ -135,12 +159,40 @@ const DatosEmpresa = () => {
         </Grid>
         <Grid item xs={12} >
           {datosEmpresa.logo_url_empresa && <img src={datosEmpresa.logo_url_empresa} alt="logo" />}
+
+          
         </Grid>
+        <Grid item>
+        <div style={{ display:"flex",flexWrap:"wrap",flexDirection:'row', gap:"10px",justifyContent:"center" }}>
+        {(imagesURL || []).map((url, i) => (
+          <Stack key={i} direction="column" sx={{ padding:"5px",border:"1px solid whitesmoke",borderRadius:'3px' }}>
+            <Avatar
+              variant="square"
+              alt="..."
+              src={url}
+              sx={{ width: 256, height: 256 }}
+            />
+          </Stack>
+            ))}
+        </div>
+      </Grid>
         <Grid item xs={12} >
-          <Button variant="contained" component="label">
-            {lang.subir_logo}
-                <input hidden accept="image/*" multiple type="file" />
-          </Button>
+          
+          {/* <label htmlFor="btn-upload">
+            <input
+              id="btn-upload"
+              name="btn-upload"
+              style={{ display: "none" }}
+              type="file"
+              onChange={changeImage}
+              multiple
+              accept="image/jpeg, image/png"
+            />
+            <Button startIcon={<Icon>image</Icon>}  variant="outlined" component="span">
+              {lang.subir_logo}
+            </Button>
+          </label> */}
+        
         </Grid>
         <Grid item xs={12} >
             <Button size="large" onClick={Guardar} variant="outlined" color="primary" startIcon={<Icon>save</Icon>} >

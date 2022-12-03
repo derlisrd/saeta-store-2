@@ -1,5 +1,4 @@
 import { Dialog, Zoom,Icon, DialogActions } from '@mui/material'
-import React from 'react'
 import { useVentas } from './VentasProvider'
 import ButtonCustom from "../../../Components/MuiCustom/ButtonCustom";
 import printJS from "print-js";
@@ -15,7 +14,7 @@ const ImprimirTicket = () => {
     };
 
     const DF = datosFacturas.facturas[indexFactura];
-    
+    const widthDimension = EMPRESA.dimension_ticket+"mm";
     const cerrar = ()=>{ 
       setDialogs({...dialogs,imprimirTicket:false});
       cerrarDialogFactura();
@@ -32,7 +31,7 @@ const ImprimirTicket = () => {
         <table
           border="0"
           style={{
-            width: `${EMPRESA.dimesion_ticket}`,
+            width: widthDimension,
             borderCollapse: "collapse",
           }} 
         >

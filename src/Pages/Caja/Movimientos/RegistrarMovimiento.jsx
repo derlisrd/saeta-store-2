@@ -122,18 +122,18 @@ const RegistrarMovimiento = () => {
 
     
 
-    setCargando(true);
-    let promesas = [
-      APICALLER.insert({table:"cajas_movimientos",token:token_user,data:datos_cajas_movimientos}),
-      APICALLER.update({table:"cajas_monedas",token:token_user,data:datos_cajas_monedas,id: foundMoneda.id_cajas_moneda})
-    ]
-   let promises = await Promise.all(promesas)
-   if(promises[0].response && promises[1].response){
-    swal({text:lang.movimiento_registrado,icon:'success',timer:1300}).then(()=>{cerrar();getData();})
-   } else{
-    console.log(promises);
-   }  
-    setCargando(false);
+      setCargando(true);
+      let promesas = [
+        APICALLER.insert({table:"cajas_movimientos",token:token_user,data:datos_cajas_movimientos}),
+        APICALLER.update({table:"cajas_monedas",token:token_user,data:datos_cajas_monedas,id: foundMoneda.id_cajas_moneda})
+      ]
+      let promises = await Promise.all(promesas)
+      if(promises[0].response && promises[1].response){
+        swal({text:lang.movimiento_registrado,icon:'success',timer:1300}).then(()=>{cerrar();getData();})
+      } else{
+        console.log(promises);
+      }  
+      setCargando(false);
   }
 
 

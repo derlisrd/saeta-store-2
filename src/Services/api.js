@@ -42,7 +42,7 @@ export const APICALLER = {
       });
       return await res.data;
     } catch (error) {
-      const err = [{ results: `error`, response: `error` }];
+      const err = { results: `error`, response: `error` };
       return err;
     }
   },

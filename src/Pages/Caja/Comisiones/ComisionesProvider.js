@@ -1,5 +1,5 @@
 import {createContext,useState,useCallback,useEffect,useContext} from 'react';
-import { useLogin } from '../../../Contexts/LoginProvider';
+//import { useLogin } from '../../../Contexts/LoginProvider';
 import { funciones } from '../../../Functions';
 import { APICALLER } from '../../../Services/api';
 
@@ -7,9 +7,9 @@ const Contexto = createContext();
 
 function ComisionesProvider({children}){
 
-    const {userData} = useLogin()
-    const {token_user,id_user} = userData
-    const initialDialogs = {pagar:false, recibo:false}
+    //const {userData} = useLogin()
+    //const {token_user,id_user} = userData
+    const initialDialogs = {pagar:false, recibo:false,pagartodo:false}
     const [dialogs,setDialogs] = useState(initialDialogs)
     const initialFormPagar = {}
     const initialFormRecibo = {}
@@ -31,7 +31,11 @@ function ComisionesProvider({children}){
     }
     const [datos,setDatos] = useState(initialDatos)
     const [loading,setLoading] = useState(initialLoading)
-
+    const filtradoInitial = {
+        id_empleado:"",
+        pagado_comision:''
+      }
+    const [filtrado,setFiltrado] = useState(filtradoInitial)
     const applyFilters = async(obj)=>{
         setLoading({lista:true})
         let where;
@@ -44,7 +48,7 @@ function ComisionesProvider({children}){
                 table:'comisions',
                 include:'empleados,productos',
                 on:`id_empleado_comision,id_empleado,id_producto_comision,id_producto`,
-                fields:'porcentaje,precio_vendido_comision,costo_producto,nombre_empleado,apellido_empleado,fecha_comision,pagado_comision,nombre_producto,id_comision,comision_valor',
+                fields:'id_empleado,porcentaje,precio_vendido_comision,costo_producto,nombre_empleado,apellido_empleado,fecha_comision,pagado_comision,nombre_producto,id_comision,comision_valor',
                 where
             })
             let comision = 0;
@@ -68,7 +72,7 @@ function ComisionesProvider({children}){
                 table:'comisions',
                 include:'empleados,productos',
                 on:`id_empleado_comision,id_empleado,id_producto_comision,id_producto`,
-                fields:'porcentaje,precio_vendido_comision,costo_producto,nombre_empleado,apellido_empleado,fecha_comision,pagado_comision,nombre_producto,id_comision,comision_valor',
+                fields:'id_empleado,porcentaje,precio_vendido_comision,costo_producto,nombre_empleado,apellido_empleado,fecha_comision,pagado_comision,nombre_producto,id_comision,comision_valor',
                 where: `fecha_comision,between,'${today} 00:00:00',and,'${today} 23:59:59'`,sort:'id_comision'
             }),
             APICALLER.get({table:"empleados",fields:"nombre_empleado,apellido_empleado,id_empleado"}),
@@ -102,15 +106,15 @@ function ComisionesProvider({children}){
       }, [getData]);
 
     const values = {
-        datos,loading,applyFilters,setDialogs,dialogs,formPagar,setFormPagar,formRecibo,setFormRecibo,formCaja,setFormCaja
+        datos,loading,applyFilters,setDialogs,dialogs,formPagar,setFormPagar,formRecibo,setFormRecibo,formCaja,setFormCaja,getData,setFiltrado,filtrado
     }
     return(<Contexto.Provider value={values}>
         {children}
     </Contexto.Provider>)
 }
 export const useComisiones = ()=>{
-    const {datos,loading,applyFilters,setDialogs,dialogs,formPagar,setFormPagar,formRecibo,setFormRecibo,formCaja,setFormCaja} = useContext(Contexto);
-    return {datos,loading,applyFilters,setDialogs,dialogs,formPagar,setFormPagar,formRecibo,setFormRecibo,formCaja,setFormCaja}
+    const {datos,loading,applyFilters,setDialogs,dialogs,formPagar,setFormPagar,formRecibo,setFormRecibo,formCaja,setFormCaja,getData,setFiltrado,filtrado} = useContext(Contexto);
+    return {datos,loading,applyFilters,setDialogs,dialogs,formPagar,setFormPagar,formRecibo,setFormRecibo,formCaja,setFormCaja,getData,setFiltrado,filtrado}
 }
 
 export default ComisionesProvider;

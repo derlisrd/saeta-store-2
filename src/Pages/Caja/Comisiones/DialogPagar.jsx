@@ -3,38 +3,90 @@ import { useLang } from '../../../Contexts/LangProvider'
 import { useComisiones } from './ComisionesProvider'
 import {useState} from 'react'
 import NumberFormatCustom from '../../../Components/thirty/NumberFormatCustom'
+import { funciones } from '../../../Functions'
+import { useLogin } from '../../../Contexts/LoginProvider'
+import { APICALLER } from '../../../Services/api'
+import swal from 'sweetalert'
 
 const DialogPagar = () => {
 
   const {lang} = useLang()
-  const { dialogs,setDialogs,formPagar,datos } = useComisiones()
-
-  const [form,setForm] = useState({
+  const { dialogs,setDialogs,formPagar,datos,getData } = useComisiones()
+  const {userData} = useLogin()
+  const {id_user,token_user} = userData
+  const initialForm = {
     id_caja_movimiento : '',
     id_cajas_moneda : '',
     tipo_movimiento : '1',
     motivo_movimiento:''
-  }) 
+  }
+  const [form,setForm] = useState(initialForm) 
 
   const [errors,setErrors] = useState({status:false,message:''})
   const [cargando,setCargando] = useState(false)
 
   const onChange = e=>{ const {value,name} = e.target; setForm({...form,[name]:value})}
 
-  const pagar = ()=>{
+  const pagar = async ()=>{
     setErrors({...errors,status:false})
     let f = {...form}
     if(f.id_caja_movimiento==="" || f.id_cajas_moneda===""){
       setErrors({status:true,message: lang.complete_datos_correctamente})
       return false;
     }
-
+    let tipo_movimiento = parseInt(f.tipo_movimiento)
     let montoApagar = parseFloat(formPagar.comision_valor);
+    let foundMoneda = datos.monedas.find( e=> e.id_cajas_moneda === f.id_cajas_moneda);
+    let id_moneda = foundMoneda.id_moneda
 
-    setCargando(false)
-    console.log(formPagar)
+    let cantidad_actual = tipo_movimiento === 1 ? parseFloat(foundMoneda.monto_caja_moneda) :  parseFloat(foundMoneda.monto_no_efectivo);
+
+    let cantidad_nueva = cantidad_actual - montoApagar;
+
+    if(cantidad_nueva < 0){
+      setErrors({status:true,message: lang.no_hay_suficientes_fondos_en_caja})
+      return false;
+    }
+    //console.log(foundMoneda)
+    let datos_cajas_movimientos = {
+      id_moneda_movimiento: id_moneda,
+      id_caja_movimiento: f.id_caja_movimiento,
+      id_user_movimiento: id_user,
+      id_tipo_registro: 8, // otros pagos
+      monto_movimiento: tipo_movimiento === 1 ? montoApagar : 0,
+      monto_sin_efectivo: tipo_movimiento === 0 ? montoApagar : 0,
+      detalles_movimiento: 'Pago de comisión. Registro interno: '+formPagar.id_empleado+'. ' + f.motivo_movimiento,
+      fecha_movimiento: funciones.getFechaHorarioString(),
+    };
+
+    let datos_cajas_monedas = tipo_movimiento === 1 ? { monto_caja_moneda : cantidad_nueva} : { monto_no_efectivo : cantidad_nueva} 
+
+   
+    setCargando(true);
+      let promesas = [
+        APICALLER.insert({table:"cajas_movimientos",token:token_user,data:datos_cajas_movimientos}),
+        APICALLER.update({table:"cajas_monedas",token:token_user,data:datos_cajas_monedas,id: foundMoneda.id_cajas_moneda}),
+        APICALLER.update({table:'comisions',token:token_user,data:{pagado_comision:1},id: formPagar.id_comision})
+      ]
+      let promises = await Promise.all(promesas)
+      if(promises[0].response && promises[1].response){
+        swal({text:lang.movimiento_registrado,icon:'success',timer:1300}).then(()=>{
+          cerrar();
+          getData();
+        })
+      } else{
+        console.log(promises);
+      }  
+      setCargando(false);
+    
   }
-  const cerrar = ()=> { setDialogs({...dialogs,pagar:false})}
+
+
+
+  const cerrar = ()=> { 
+    setDialogs({...dialogs,pagar:false})
+    setForm(initialForm)
+  }
 
   const listaCajasMonedasFiltrada =  datos.monedas.filter(e=>e.id_caja === form.id_caja_movimiento ) || [];
 

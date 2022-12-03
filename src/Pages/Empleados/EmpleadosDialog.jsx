@@ -43,6 +43,7 @@ const EmpleadosDialog = () => {
       }
       setDialogs({...dialogs,agregar:false});
       setLoad(false)
+      setForm(initialForm)
       getLista();
     }
 

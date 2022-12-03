@@ -1,14 +1,4 @@
-SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-START TRANSACTION;
-SET time_zone = "-04:00";
 
-
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `agendas`
---
 
 DROP TABLE IF EXISTS `agendas`;
 CREATE TABLE IF NOT EXISTS `agendas` (
@@ -20,14 +10,9 @@ CREATE TABLE IF NOT EXISTS `agendas` (
   `fecha_fin_agenda` date NOT NULL,
   `horario_agenda` time NOT NULL,
   `color_agenda` varchar(10) NOT NULL,
-  `updated_at` datetime DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` datetime DEFAULT CURRENT_TIMESTAMP
 ) ;
 
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `cajas`
---
 
 DROP TABLE IF EXISTS `cajas`;
 CREATE TABLE IF NOT EXISTS `cajas` (
@@ -43,11 +28,6 @@ CREATE TABLE IF NOT EXISTS `cajas` (
   PRIMARY KEY (`id_caja`)
 );
 
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `cajas_arqueos`
---
 
 DROP TABLE IF EXISTS `cajas_arqueos`;
 CREATE TABLE IF NOT EXISTS `cajas_arqueos` (
@@ -153,7 +133,7 @@ CREATE TABLE IF NOT EXISTS `cajas_users` (
   `id_cajas_user` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
   `id_user_caja` int(11) NOT NULL COMMENT 'id_user',
   `id_caja_caja` int(11) NOT NULL COMMENT 'id_caja',
-  `updated_at` datetime DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` datetime DEFAULT CURRENT_TIMESTAMP
 ) ;
 
 -- --------------------------------------------------------
@@ -170,7 +150,7 @@ CREATE TABLE IF NOT EXISTS `categorias` (
   `imagen_categoria` text,
   `publicado_categoria` tinyint(1) NOT NULL DEFAULT '1',
   `tipo_categoria` tinyint(1) NOT NULL DEFAULT '1' COMMENT '1=artic 2=serv',
-  `updated_at` datetime DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` datetime DEFAULT CURRENT_TIMESTAMP
 ) ;
 
 --
@@ -196,7 +176,7 @@ CREATE TABLE IF NOT EXISTS `clientes` (
   `email_cliente` varchar(100) DEFAULT NULL,
   `direccion_cliente` text DEFAULT NULL,
   `tipo_cliente` int(11) NOT NULL DEFAULT '3' COMMENT '1 mayorista 2 minorista 3 casual',
-  `updated_at` datetime DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` datetime DEFAULT CURRENT_TIMESTAMP
 ) ;
 
 
@@ -490,11 +470,10 @@ CREATE TABLE IF NOT EXISTS `facturas_items` (
 
 DROP TABLE IF EXISTS `impuestos`;
 CREATE TABLE IF NOT EXISTS `impuestos` (
-  `id_impuesto` int(11) NOT NULL AUTO_INCREMENT,
+  `id_impuesto` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
   `nombre_impuesto` varchar(25) NOT NULL,
   `porcentaje_impuesto` float NOT NULL,
-  `updated_at` datetime DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id_impuesto`)
+  `updated_at` datetime DEFAULT CURRENT_TIMESTAMP
 );
 
 --

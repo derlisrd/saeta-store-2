@@ -29,6 +29,8 @@ class PostController {
 
     }
 
+    
+    
 
 /** codigo momentaneo para subir foto a productos images, pq este debe ser dinamico */
     public static function UploadImages($file,$data){
@@ -53,8 +55,14 @@ class PostController {
             }
             $campos = substr($campos,0,-1);
             $values = substr($values,0,-1);
-            $sql = "INSERT INTO $table ($campos) VALUES ($values)";
-
+            
+            $NEWVALUES = '';
+            foreach (json_decode($data["data"], true) as $key => $value) {
+                $NEWVALUES .= $key. "=" . $value. "',";
+            }
+            $NEWVALUES = substr($NEWVALUES,0,-1);
+            //$sql = "INSERT INTO $table ($campos) VALUES ($values)";
+            $sql = "INSERT INTO $table ($campos) VALUES ($values) ON DUPLICATE KEY UPDATE $NEWVALUES ";
 
             
              if(move_uploaded_file($imageTmp,$imageMove)){
