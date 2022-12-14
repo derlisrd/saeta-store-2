@@ -334,7 +334,7 @@ CREATE TABLE IF NOT EXISTS `empresas` (
 --
 
 INSERT INTO `empresas` (`id_empresa`, `nombre_empresa`, `propietario_empresa`, `ruc_empresa`, `direccion_empresa`, `telefono_empresa`, `impuesto_empresa`, `categoria_empresa`, `dimension_ticket`, `licencia`, `tipo_nota`, `updated_at`) VALUES
-(1, 'DERLIS RUIZ DIAZ', 'Derlis Ruiz Diaz', '4937724-8', 'CALLE JOEL EULOGIO ESTIGARRIBIA', '0983202090', 'IVA', 'ACTIVIDADES DE FOTOGRAFIA Y PORTALES WEB', 80, '2022-12-01', 0, '2022-07-02 22:27:54');
+(1, 'DERLIS RUIZ DIAZ', 'Derlis Ruiz Diaz', '4937724-8', 'CALLE JOEL EULOGIO ESTIGARRIBIA', '0983202090', 'IVA', 'ACTIVIDADES DE FOTOGRAFIA Y PORTALES WEB', 80, '2023-12-01', 0, '2022-07-02 22:27:54');
 
 -- --------------------------------------------------------
 
