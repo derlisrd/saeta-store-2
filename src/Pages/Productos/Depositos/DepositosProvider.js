@@ -40,8 +40,9 @@ const DepositosProvider = ({ children }) => {
         let newobj = {id_deposito:res.last_id,nombre_deposito:form.nombre_deposito}
         obj.depositos.push(newobj);
         localStorage.setItem("dataProductos",JSON.stringify(obj));  
-        localStorage.removeItem("facturasStorage");
       }
+        localStorage.removeItem("facturasStorage");
+        localStorage.removeItem("compras");
       getLista();
       swal({ text: lang.agregado_correctamente, icon: "success", timer: 1200 });    
     }

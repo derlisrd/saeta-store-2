@@ -1,7 +1,7 @@
 <?php
 header('Access-Control-Allow-Origin: *');
 header("Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept,X-Api-Token,Authorization");
-header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE');
+header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE,OPTIONS');
 
 require "./vendor/autoload.php";
 
@@ -18,6 +18,7 @@ require "./Controllers/PDFController.php";
 require "./App/Helper.php";
 require "./Controllers/PutController.php";
 require "./Controllers/PostController.php";
+require './Controllers/OptionsController.php';
 require "./Controllers/DeleteController.php";
 require "./Controllers/AuthController.php";
 require "./Models/Models.php";

@@ -341,7 +341,7 @@ const DialogFinalizar = () => {
                   label="Observaciones de pago"
                 />
               </Grid>
-              <Grid item sm={12} md={8}>
+              <Grid item xs={12} sm={12} md={8}>
                 <TextFieldCustom
                   label="Cantidad recibida"
                   onKeyPress={e => {e.key === "Enter" && AgregarCantidadMetodoPago();}}
@@ -358,10 +358,10 @@ const DialogFinalizar = () => {
                   }}
                 />
               </Grid>
-              <Grid item sm={12} md={4}>
+              <Grid item xs={12} sm={12} md={4}>
                 <ButtonCustom disabled={fa.datosFactura.tipoFactura === "2"} variant="outlined"
                   onClick={() => {AgregarCantidadMetodoPago(); }}
-                  startIcon={<Icon>add</Icon>}
+                  startIcon={<Icon>add</Icon>} fullWidth
                 >
                   {lang.agregar}
                 </ButtonCustom>

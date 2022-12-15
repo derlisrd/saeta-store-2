@@ -51,9 +51,9 @@ export const APICALLER = {
     try {
       const res = await Axios({
         url: `${APIURL}Auth/Login`,
-        method: "POST",
+        method: "post",
         data: JSON.stringify(datas),
-        headers: { "X-Api-Token": XAPITOKEN },
+        headers: { "x-api-token": XAPITOKEN , 'Content-Type': 'application/json' },
       });
       return await res.data;
     } catch (error) {
@@ -61,6 +61,8 @@ export const APICALLER = {
       const err = { results:null, response: `error`, message: error.message };
       return err;
     }
+
+    
   },
 
   ReValidateToken : async(token)=>{
@@ -175,6 +177,23 @@ export const APICALLER = {
       const res = await Axios({
         url: `${APIURL}${table}/${id}/?token=${tk}&operator=${operator}`,
         method: "PUT",
+        data: JSON.stringify(data),
+        headers: { "X-Api-Token": XAPITOKEN },
+      });
+      return await res.data;
+    } catch (error) {
+      const err = { results: null, response:  false, message: error };
+      return err;
+    }
+  },
+
+  updateOrInsert: async ({ table, data, id=null, token })=>{
+    try {
+      let tk = DescifrarTexto(token);
+      let urlor = id ? `${APIURL}${table}/${id}/?token=${tk}` : `${APIURL}${table}/?token=${tk}` ;
+      const res = await Axios({
+        url: urlor,
+        method: "OPTIONS",
         data: JSON.stringify(data),
         headers: { "X-Api-Token": XAPITOKEN },
       });

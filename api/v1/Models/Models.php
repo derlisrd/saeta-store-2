@@ -46,7 +46,26 @@ class Models {
     }
 
 
+    public static function OPTIONS($sql, $table){
 
+        try {
+            $stmt = DataBaseConnect::connect()->prepare($sql);
+            $stmt->execute();
+            
+            $idcolumn = "id_".substr($table,0,-1);
+            $stmt = DataBaseConnect::connect()->prepare("SELECT * from $table order by $idcolumn desc limit 1");
+            $stmt->execute();
+            $last = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            return JsonResponse::jsonResponseOPTIONS(true,200,"Inserted or updated");
+            DataBaseConnect::CloseConnect();
+            
+        } catch (\Throwable $th) {
+            return JsonResponse::jsonResponseError(false,404,$th->getMessage(),$sql);
+            die();
+        }
+
+
+    }
 
 
     public static function POST($sql,$table){

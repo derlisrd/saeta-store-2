@@ -73,21 +73,37 @@ const DialogFinalizar = () => {
               }
             })
             )
-            promises.push(APICALLER.update({
-              table:'productos_depositos',id:e.id_productos_deposito,
+            
+            promises.push(
+              APICALLER.updateOrInsert({
+              table:'productos_depositos',
+              id:e.id_productos_deposito ?? null,
               token: token_user,
-              data: { stock_producto_deposito: e.stock_producto_deposito }
-            }))
+              data: { 
+                stock_producto_deposito: e.stock_producto_deposito, id_producto_deposito:e.id_producto_compra, id_deposito_deposito: e.id_compras_deposito,
+               }
+            })
+            )
+
+
           });
+
+
           Promise.all(promises);
+
+
         } 
         setIsLoading(false)
+        
+
         let d = {...compras}
         d.items = []
         setearCompras(d);
         setDialogs({...dialogs,finalizar:false})
         inputCodigo.current.value =""
-        inputCodigo.current.focus()
+        inputCodigo.current.focus() 
+
+
     }
 
 

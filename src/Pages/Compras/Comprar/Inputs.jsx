@@ -10,7 +10,7 @@ import Datos from './Datos'
 
 
 const Inputs = () => {
-  const {lang,inputCodigo,consultarSiExiste,cargas,setErrores} = useCompras()
+  const {lang,inputCodigo,consultarSiExiste,cargas,setErrores,setDialogs,dialogs} = useCompras()
 
   
   const agregar = () => {
@@ -58,7 +58,7 @@ const Inputs = () => {
         InputProps={{
           startAdornment: (
             <InputAdornment position="start">
-              <IconButton onClick={()=>{}}>
+              <IconButton onClick={()=>{setDialogs({...dialogs,buscarProducto:true})}}>
                 <Icon>search</Icon>
               </IconButton>
             </InputAdornment>

@@ -35,6 +35,19 @@ class JsonResponse {
         return json_encode($json,http_response_code($status));
     }
 
+    public static function jsonResponseOPTIONS($response,$status,$message){
+
+
+        $json = array(
+            "response" =>$response,            
+            "status"=> $status,
+            "message"=>$message,
+            "error"=>!$response,
+        );
+
+        return json_encode($json,http_response_code($status));
+    }
+
     public static function jsonResponsePUT ($response,$status,$message){
         
         $json = array(

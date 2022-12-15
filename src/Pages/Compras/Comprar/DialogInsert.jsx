@@ -87,8 +87,8 @@ const DialogInsert = () => {
       let stock_producto_deposito, id_productos_deposito;
 
       if(res.response){
-        stock_producto_deposito = parseFloat(f.cantidad_compra) + parseFloat(res.first.stock_producto_deposito)
-        id_productos_deposito = res.first.id_productos_deposito
+        stock_producto_deposito = parseFloat(f.cantidad_compra) + parseFloat(res.first.stock_producto_deposito ?? 0)
+        id_productos_deposito = res.first.id_productos_deposito ?? null
       }
 
       let datosnuevos = {...compras}

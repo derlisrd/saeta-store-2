@@ -27,6 +27,10 @@ class Routes {
                     Controllers::put();
                 break;
 
+                case 'OPTIONS':
+                    Controllers::options();
+                break;
+
                 case 'DELETE':
                     Controllers::delete();
                 break;

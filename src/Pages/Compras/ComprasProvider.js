@@ -11,7 +11,7 @@ export default function ComprasProvider({children}) {
   const {userData} = useLogin()
   const {id_user,token_user} = userData
   
-  const initialDialogs = { main:true,insert:false,finalizar:false }
+  const initialDialogs = { main:true,insert:false,finalizar:false,buscarProducto:false}
   const storage = JSON.parse(localStorage.getItem("compras"));
   const inputCodigo = useRef(null);
   const initialErrores = {
