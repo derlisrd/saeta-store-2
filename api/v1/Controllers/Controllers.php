@@ -165,7 +165,7 @@ class Controllers {
     }
 
 
-    public static function options(){
+    public static function patch(){
         
         $TOKEN = isset($_GET['token']) || !empty($_GET['token']) ? $_GET['token'] : null;
 

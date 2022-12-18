@@ -51,7 +51,7 @@ export const APICALLER = {
     try {
       const res = await Axios({
         url: `${APIURL}Auth/Login`,
-        method: "post",
+        method: "POST",
         data: JSON.stringify(datas),
         headers: { "x-api-token": XAPITOKEN , 'Content-Type': 'application/json' },
       });
@@ -60,10 +60,9 @@ export const APICALLER = {
       console.log(error);
       const err = { results:null, response: `error`, message: error.message };
       return err;
-    }
+    }    
+  }, 
 
-    
-  },
 
   ReValidateToken : async(token)=>{
     try {
@@ -193,7 +192,7 @@ export const APICALLER = {
       let urlor = id ? `${APIURL}${table}/${id}/?token=${tk}` : `${APIURL}${table}/?token=${tk}` ;
       const res = await Axios({
         url: urlor,
-        method: "OPTIONS",
+        method: "PATCH",
         data: JSON.stringify(data),
         headers: { "X-Api-Token": XAPITOKEN },
       });

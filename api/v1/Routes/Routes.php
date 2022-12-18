@@ -27,9 +27,9 @@ class Routes {
                     Controllers::put();
                 break;
 
-                case 'OPTIONS':
-                    Controllers::options();
-                break;
+                case 'PATCH':
+                    Controllers::patch();
+                break; 
 
                 case 'DELETE':
                     Controllers::delete();
