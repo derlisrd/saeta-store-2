@@ -1073,7 +1073,3 @@ INSERT INTO `users_rols` (`id_users_rol`, `roluser_permiso`, `prioridad_permiso`
 (4, 'Entregador', 3, '2022-07-02 22:32:32'),
 (5, 'Gerente', 4, '2022-07-02 22:32:32');
 COMMIT;
-
-
-
-

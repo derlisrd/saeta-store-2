@@ -1,15 +1,12 @@
-
 import { useRef, useState } from 'react';
-
-
-
-// material
 import { Menu, MenuItem, IconButton, ListItemIcon, ListItemText,Icon } from '@mui/material'
+import useGoto from '../../../Hooks/useGoto';
 
 
-// ----------------------------------------------------------------------
+
 
 export default function MoreMenu({borrar,abrir,filaProps}) {
+  const navigate = useGoto()
   const ref = useRef(null);
   const [isOpen, setIsOpen] = useState(false);
 
@@ -29,6 +26,12 @@ export default function MoreMenu({borrar,abrir,filaProps}) {
         anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
         transformOrigin={{ vertical: 'top', horizontal: 'right' }}
       >
+        <MenuItem onClick={()=>{ navigate.to('deposito/'+filaProps.id_deposito) }}  sx={{ color: 'text.secondary' }}>
+          <ListItemIcon>
+          <Icon color="primary">content_paste</Icon>
+          </ListItemIcon>
+          <ListItemText primary="Lista de productos" primaryTypographyProps={{ variant: 'body2' }} />
+        </MenuItem>
         <MenuItem onClick={()=>{abrir(filaProps)}}  sx={{ color: 'text.secondary' }}>
           <ListItemIcon>
           <Icon color="primary">mode_edit</Icon>
