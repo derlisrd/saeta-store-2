@@ -758,6 +758,7 @@ const VentasProvider = ({ children }) => {
   const borrarItem = (index) => {
     let facturaObj = { ...datosFacturas };
     facturaObj.facturas[indexFactura].itemsFactura.splice(index, 1);
+    setIndexPrecioCambiar(index - 1);
     hacerTotal(facturaObj);
   };
   
