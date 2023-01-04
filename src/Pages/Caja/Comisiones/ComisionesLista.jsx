@@ -94,7 +94,7 @@ function ComisionesLista(){
       <FormControl fullWidth>
           <InputLabel>{lang.seleccione_estado}</InputLabel>
           <Select
-            name="id_empleado"
+            name="pagado_comision"
             onChange={changeFiltrado}
             value={filtrado.pagado_comision}
           >
