@@ -7,7 +7,7 @@ use Models\Models;
 class PostController {
 
 
-    public static function InsertTable($table,$data){
+    public static function InsertTable($table,$data,$response_json=true){
 
         
         $valor = json_decode($data, true);
@@ -25,7 +25,10 @@ class PostController {
 
         $sql = "INSERT INTO $table $CAMPOS $VALUES";
         $response = Models::POST($sql,$table);
-        echo $response;
+        if($response_json){
+            echo $response;
+        }
+        
 
     }
 

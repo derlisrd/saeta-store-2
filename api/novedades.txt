@@ -1084,3 +1084,10 @@ CREATE TABLE `productos_registros` (
   `fecha_cargada` date DEFAULT NULL,
   `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
+
+CREATE TABLE `users_registros` (
+  `id_users_registro` bigint NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  `id_user_registro` int NOT NULL COMMENT 'id_user',
+  `fecha_login` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
+);

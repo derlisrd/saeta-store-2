@@ -62,6 +62,9 @@ class AuthController {
                         $data = '{"try_user": "0","last_login_user":"' .$last_login.'"}';
                         
                         PutController::UpdateTable(USERS_TABLE,$res[0]->id_user,$data,null,false);
+                        $registro_data = '{"id_user_registro":"'.$res[0]->id_user.'","fecha_login": "'.$last_login.'"}';
+                        
+                        PostController::InsertTable('users_registros',$registro_data,false);
                         $result = array(
                             "id_user" => $res[0]->id_user,
                             "email_user"=>$res[0]->email_user,
