@@ -86,6 +86,11 @@ export default function ComprasProvider({children}) {
     }
   }
 
+  const enfocarInput = ()=>{
+    setDialogs(initialDialogs)
+    inputCodigo.current.focus();
+  }
+
   
   const consultarCodigoProducto = async(codigo)=>{
     setCargas({...cargas,codigo:true})
@@ -149,7 +154,7 @@ useEffect(() => {
     return ()=> {isActive = false;ca.abort();}
 }, [getDatas]);    
 
-const value = {token_user,funciones,lang,setDialogs,dialogs,compras,setCompras,cargas,setCargas,errores,setErrores,inputCodigo,consultarCodigoProducto,consultarSiExiste,setearCompras}
+const value = {enfocarInput,insertarProductoDialog,token_user,funciones,lang,setDialogs,dialogs,compras,setCompras,cargas,setCargas,errores,setErrores,inputCodigo,consultarCodigoProducto,consultarSiExiste,setearCompras}
 
   return (
     <ComprasContext.Provider value={value} >
@@ -158,6 +163,6 @@ const value = {token_user,funciones,lang,setDialogs,dialogs,compras,setCompras,c
   );
 }
 export const useCompras =()=>{
-  const {token_user,funciones,lang,setDialogs,dialogs,compras,setCompras,cargas,setCargas,errores,setErrores,inputCodigo,consultarCodigoProducto,consultarSiExiste,setearCompras} = useContext(ComprasContext);
-  return {token_user,funciones,lang,setDialogs,dialogs,compras,setCompras,cargas,setCargas,errores,setErrores,inputCodigo,consultarCodigoProducto,consultarSiExiste,setearCompras}
+  const {enfocarInput,insertarProductoDialog,token_user,funciones,lang,setDialogs,dialogs,compras,setCompras,cargas,setCargas,errores,setErrores,inputCodigo,consultarCodigoProducto,consultarSiExiste,setearCompras} = useContext(ComprasContext);
+  return {enfocarInput,insertarProductoDialog,token_user,funciones,lang,setDialogs,dialogs,compras,setCompras,cargas,setCargas,errores,setErrores,inputCodigo,consultarCodigoProducto,consultarSiExiste,setearCompras}
 }

@@ -12,7 +12,11 @@ export default function MoreMenu({rowData}) {
   const id = rowData.id_producto;
   const close = () => {setIsOpen(false);}
   const openStock = ()=>{ setDialogs({...dialogs,stock:true}); getStock(rowData); close(); }
-  const openDetails = ()=>{ setDialogs({...dialogs,details:true}); }
+  const openDetails = (t)=>{ 
+    if(parseInt(t.tipo_producto) === 1){
+      navigate.to(`productos/${rowData.id_producto}`)
+    }
+  }
   //onClick={()=> {Funciones.goto(`productos/bc?code=${rowData.codigo_producto}`)}} onClick={()=> {openPhoto(rowData)}}
   return (
     <>
@@ -34,7 +38,7 @@ export default function MoreMenu({rowData}) {
           <ListItemIcon><Icon color="success">inventory</Icon></ListItemIcon>
           <ListItemText primary="Stock" primaryTypographyProps={{ variant: 'body2' }} />
         </MenuItem>
-        <MenuItem onClick={()=> { openDetails()}}  sx={{ color: 'text.secondary' }}>
+        <MenuItem onClick={()=> { openDetails(rowData) }}  sx={{ color: 'text.secondary' }}>
           <ListItemIcon>
           <Icon color="primary">info</Icon>
           </ListItemIcon>

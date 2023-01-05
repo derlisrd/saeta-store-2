@@ -49,6 +49,7 @@ import FormasPago from "../Pages/Ventas/FormasPago";
 import Profile from "../Pages/Profile";
 import ScrollToTop from "../Components/ScrollToUp";
 import ListaProductos from "../Pages/Productos/Depositos/ListaProductosDeposito";
+import RegistrosProductos from "../Pages/Productos/Productos/RegistrosProductos";
 
 const RoutesMain = () => {
   const navigate = useNavigate();
@@ -118,6 +119,7 @@ const RoutesMain = () => {
       <Route path={R+'productos/edit/:id'} element={<PrivateRoute id={9}><ProductEdit /></PrivateRoute>} />
       <Route path={R+'productos/new'} element={<PrivateRoute id={9}><ProductosNew /></PrivateRoute>} />
       <Route path={R+'productos'} element={<PrivateRoute id={34}><Productos /></PrivateRoute>} />
+      <Route path={R+'productos/:id'} element={<PrivateRoute id={34}><RegistrosProductos /></PrivateRoute>} />
       <Route path={R+'depositos'} element={<PrivateRoute id={39}><Depositos /></PrivateRoute>} />
       <Route path={R+'deposito/:id'} element={<PrivateRoute id={34}><ListaProductos /></PrivateRoute>} />
       <Route path={R+'users'} element={<PrivateRoute id={34}><Users /></PrivateRoute>} />

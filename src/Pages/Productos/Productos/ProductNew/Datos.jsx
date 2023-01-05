@@ -60,9 +60,9 @@ const Datos = () => {
       <Grid item xs={12} >
             <Typography variant="button">INFORMACION DE PRODUCTO</Typography>
           </Grid>
-      <Grid item xs={12} sm={12} md={4}>
-        <TextField          required          error={snack.id==="nombre_producto"}
-          disabled={cargas.guardar}          onChange={change}          inputRef={inputNombre}
+      <Grid item xs={12} sm={12} md={8}>
+        <TextField required error={snack.id==="nombre_producto"}
+          disabled={cargas.guardar} fullWidth         onChange={change}          inputRef={inputNombre}
           label="Nombre"autoComplete="off" name="nombre_producto" value={formulario.nombre_producto}          InputProps={{
             startAdornment: (
               <InputAdornment position="start">
@@ -70,7 +70,6 @@ const Datos = () => {
               </InputAdornment>
             ),
           }}
-          fullWidth    
         />
       </Grid>
       <Grid item xs={12} sm={12} md={12}>

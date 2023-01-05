@@ -73,6 +73,18 @@ const DialogFinalizar = () => {
               }
             })
             )
+
+            promises.push(
+              APICALLER.insert({table:"productos_registros",token:token_user,
+              data:{
+                id_producto_registro:e.id_producto_compra,
+                id_deposito_registro:e.id_compras_deposito,
+                cantidad_cargada: e.cantidad_compra,
+                fecha_cargada: form.fecha,
+                
+              }
+            })
+            )
             
             promises.push(
               APICALLER.updateOrInsert({

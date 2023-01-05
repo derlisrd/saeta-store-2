@@ -3,6 +3,7 @@ import { useLocation } from 'react-router-dom';
 import { APICALLER } from '../../../../Services/api';
 import {useLogin} from "../../../../Contexts/LoginProvider";
 import { useLang } from '../../../../Contexts/LangProvider';
+import { funciones } from '../../../../Functions';
 
 const ProductFormContexto = createContext();
 function useQuery() {
@@ -33,7 +34,7 @@ const ProductFormProvider = (props) => {
         id_categoria_producto: "",
         id_proveedor_producto: "",
         id_marca_producto: "",
-        id_impuesto_producto: "",
+        id_impuesto_producto: "2",
         id_unidad_medida_producto: "",
         id_deposito_producto: "",
         codigo_producto: CODIGO,//CODIGO_PRODUCTO_COMPRA,
@@ -85,6 +86,7 @@ const ProductFormProvider = (props) => {
     };
     const sendForm = async(e) =>{
         setEnviado(true);
+        const fecha_today = funciones.fechaActualYMD();
         e.preventDefault(); let f = {...formulario}
         if(f.codigo_producto==='') {
           setTabValue(0); 
@@ -106,6 +108,7 @@ const ProductFormProvider = (props) => {
          setCargas({...cargas,guardar:true});
          delete f.stock_producto; delete f.id_deposito_producto;
         let res = await APICALLER.insert({table: "productos",data: f,token: token_user});
+        
         if (res.response ) {
           
             if(images.length>0){
@@ -120,12 +123,18 @@ const ProductFormProvider = (props) => {
               stock.forEach(e=>{
                 let data = {id_producto_deposito: res.last_id, id_deposito_deposito:e.id_deposito_deposito,stock_producto_deposito: e.stock_producto_deposito}
                 APICALLER.insert({table:"productos_depositos",token:token_user,data})
+                APICALLER.insert({table:'productos_registros',token:token_user,data:{
+                  id_producto_registro: res.last_id,id_deposito_registro:e.id_deposito_deposito,cantidad_cargada:e.stock_producto_deposito,
+                  fecha_cargada:fecha_today
+                }})
               })
+
             }
             
             setSnack({open:true,mensaje:"Guardado correctamente",severity:"success"});
             reiniciarTodo();
-        }else{
+        }
+        else{
           console.log(res);
         }
         

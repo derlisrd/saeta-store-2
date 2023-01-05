@@ -1073,3 +1073,14 @@ INSERT INTO `users_rols` (`id_users_rol`, `roluser_permiso`, `prioridad_permiso`
 (4, 'Entregador', 3, '2022-07-02 22:32:32'),
 (5, 'Gerente', 4, '2022-07-02 22:32:32');
 COMMIT;
+
+-- novedades enero 2023
+
+CREATE TABLE `productos_registros` (
+  `id_productos_registro` int NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  `id_producto_registro` int NOT NULL COMMENT 'id_producto',
+  `id_deposito_registro` int NOT NULL COMMENT 'id_deposito',
+  `cantidad_cargada` float DEFAULT NULL,
+  `fecha_cargada` date DEFAULT NULL,
+  `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
