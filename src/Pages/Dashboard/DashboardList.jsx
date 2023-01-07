@@ -21,6 +21,9 @@ const DashboardList = () => {
       return (
         <Container maxWidth='xl'>
         <Grid container spacing={2}>
+          <Grid item xs={12} >
+
+          </Grid>
           <Grid item xs={12} sm={6} md={4} >
             <Card sx={{ bgcolor:'background.paper',p:2}}>
               <CardHeader
@@ -99,7 +102,7 @@ const DashboardList = () => {
                         <Stack direction="row" spacing={1} alignItems="center" >
                         <Avatar><Icon>shopping_bag</Icon></Avatar>
                           <Stack>
-                          <Typography variant="subtitle2">{e.descripcion_registro}</Typography>
+                          <Typography variant="subtitle2">{e.descripcion_registro} {e.fecha_movimiento}</Typography>
                           <Typography variant="caption" >{e.detalles_movimiento}</Typography>
                           </Stack>
                         </Stack>

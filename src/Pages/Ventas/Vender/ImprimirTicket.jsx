@@ -3,14 +3,16 @@ import { useVentas } from './VentasProvider'
 import ButtonCustom from "../../../Components/MuiCustom/ButtonCustom";
 import printJS from "print-js";
 import { useDatosEmpresa } from '../../../Contexts/DatosEmpresaProvider';
+import { funciones } from '../../../Functions';
+
 
 const ImprimirTicket = () => {
-    const {dialogs,setDialogs,indexFactura,datosFacturas,Funciones,cerrarDialogFactura,valorConvertido} = useVentas();
+    const {dialogs,setDialogs,indexFactura,datosFacturas,cerrarDialogFactura,valorConvertido} = useVentas();
     
     //const EMPRESA = JSON.parse( localStorage.getItem('dataEmpresa') );
     const {EMPRESA} = useDatosEmpresa()
     const imprimir = () => {
-      printJS({ type: "html", printable: "print_factura", style:"#print_factura{font-family:monospace}" });
+      printJS({ type: "html", printable: "print_factura", style:"#print_factura{font-family:monospace; padding:0; margin:0;}" });
     };
 
     const DF = datosFacturas.facturas[indexFactura];
@@ -21,6 +23,7 @@ const ImprimirTicket = () => {
   }
 
   
+
 
   return (
     <Dialog open={dialogs.imprimirTicket}
@@ -35,7 +38,7 @@ const ImprimirTicket = () => {
             borderCollapse: "collapse",
           }} 
         >
-          <thead style={{ fontSize: "11px" }}>
+          <thead style={{ fontSize: "10px" }}>
             <tr>
               <td align='center'>
               { EMPRESA.logo_url_empresa && <img src={EMPRESA.logo_url_empresa} alt="logo" width={250} height={50}  />}
@@ -55,12 +58,12 @@ const ImprimirTicket = () => {
             </tr>
             <tr>
               <td align="center">
-                <strong> RECIBO NRO: {DF.datosFactura.nro_factura}</strong>
+                <strong> Recibo: {DF.datosFactura.nro_factura}</strong>
               </td>
             </tr>
             <tr>
               <td align="center">
-                <strong> {DF.datosFactura.tipoFactura==="3" && "CREDITO CUOTA" }</strong>
+                <strong> {DF.datosFactura.tipoFactura==="3" && "CREDITO CUOTA"  }</strong>
               </td>
             </tr>
             <tr>
@@ -68,20 +71,16 @@ const ImprimirTicket = () => {
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>
-                <hr />
-              </td>
-            </tr>
+          <tr><td align='center'>{"-------------"}</td></tr>
             <tr>
               <td>
                 <table width="100%">
                 <tbody>
-                    <tr style={{ fontSize: "11px" }}>
-                      <td>CA</td>
-                      <td>DESC</td>
-                      <td>PRE</td>
-                      <td>SUBT</td>
+                    <tr style={{ fontSize: "10px" }}>
+                      <td><b>C</b></td>
+                      <td><b>desc</b></td>
+                      <td><b>pre</b></td>
+                      <td><b>sub</b></td>
                       
                     </tr>
                     {DF.itemsFactura.map((item, i) => (
@@ -102,24 +101,20 @@ const ImprimirTicket = () => {
                 </table>
               </td>
             </tr>
-            <tr>
-              <td>
-                <hr />
-              </td>
-            </tr>
+            <tr><td align='center'>{"-------------"}</td></tr>
             <tr>
               <td >
-              <table width="100%" style={{ fontSize: "12px" }}>
+              <table width="100%" style={{ fontSize: "11px" }}>
                   <tbody>
-                  <tr><th>SUBTOTAL: {valorConvertido(DF.total)} {DF.datosMoneda.abreviatura_moneda}</th></tr>
-                    {DF.descuento>0&&<tr><th> DESCUENTO: -{valorConvertido(DF.descuento)} </th></tr>}
+                  <tr><td><b>Sub: {valorConvertido(DF.total)} {DF.datosMoneda.abreviatura_moneda}</b></td></tr>
+                    {DF.descuento>0&&<tr><td> Descuento: -{valorConvertido(DF.descuento)} </td></tr>}
                     <tr>
-                      <th>TOTAL A PAGAR: {valorConvertido(DF.total-DF.descuento)}{" "}{DF.datosMoneda.abreviatura_moneda}</th>
+                      <td><b>Total: {valorConvertido(DF.total-DF.descuento)}{" "}{DF.datosMoneda.abreviatura_moneda}</b></td>
                     </tr>
                     <tr>
-                      <th>ABONADO: {valorConvertido(DF.datosFactura.totalAbonado)} {DF.datosMoneda.abreviatura_moneda}</th>
+                      <td><b>Abonado: {valorConvertido(DF.datosFactura.totalAbonado)} {DF.datosMoneda.abreviatura_moneda}</b></td>
                     </tr>
-                    <tr>
+                    {/* <tr>
                       <th>
                         LETRAS:  {" "}
                         {Funciones.NumeroALetras(
@@ -127,41 +122,27 @@ const ImprimirTicket = () => {
                           DF.datosMoneda.abreviatura_moneda
                         )}
                       </th>
-                    </tr>
+                    </tr> */}
                   </tbody>
                 </table>
               </td>
             </tr>
-            <tr>
-              <td>
-                <hr />
-              </td>
-            </tr>
           </tbody>
-          <tfoot style={{ fontSize: "11px" }}>
-            <tr>
-              <td align="left">CLIENTE: {DF.datosCliente.nombre_cliente}</td>
+          <tfoot style={{ fontSize: "10px" }}>
+          <tr>
+              <td align='center'>{"-------------"}</td>
             </tr>
             <tr>
-              <td align="left">DOC: {DF.datosCliente.ruc_cliente}</td>
+              <td align="left">Cliente: {DF.datosCliente.nombre_cliente}</td>
             </tr>
             <tr>
-              <td align="left">FECHA EMISION: {DF.datosFactura.fecha_factura}</td>
+              <td align="left">Doc: {DF.datosCliente.ruc_cliente}</td>
             </tr>
             <tr>
-              <td>
-                <hr />
-              </td>
-            </tr>
-            <tr>
-              <td align="center">
-                Los datos impresos requieren un cuidado especial. Para ello
-                evite exponer al calor y humedad en exceso, luz solar o lámparas
-              </td>
+              <td align="left">Fecha:  { funciones.fechaActualDMY( DF.datosFactura.fecha_factura )}</td>
             </tr>
             <tr>
               <td align="center">
-                {" "}
                 *{EMPRESA.nombre_empresa} agradece su compra *
               </td>
             </tr>

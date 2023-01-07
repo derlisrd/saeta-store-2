@@ -18,6 +18,8 @@ const InventarioProvider = ({children})=>{
     const initialForm = {id_productos_deposito:"",id_producto:'',codigo_producto: '', nombre_producto: '', stock_producto_deposito: '',nuevoStock:false}
     const inputCorregir = useRef(null);
     const [formulario,setFormulario] = useState(initialForm)
+    
+    
     const cambiarDeposito = (deposito)=>{
         setIdDeposito(deposito);
         setFormulario(initialForm)
@@ -58,8 +60,8 @@ const InventarioProvider = ({children})=>{
         setIdDeposito("");
         setCantidadNueva("");
         inputCorregir.current.focus();
-
     }
+
 
     const finalizarCorreccion = ()=>{
         const table = "productos_depositos"; const token = token_user;
@@ -78,6 +80,9 @@ const InventarioProvider = ({children})=>{
         setFormulario(initialForm);
         swal({text:"Corregido correctamente",timer:1200});
     }
+
+
+
     const getLista = useCallback(async()=>{
         let res = await APICALLER.get({table:"depositos",where:'tipo_deposito,=,1'});
         if(res.response && res.found>0) {
@@ -94,13 +99,8 @@ const InventarioProvider = ({children})=>{
     useEffect(() => {
         let isActive = true;
         const ca = new AbortController();
-        if (isActive) {
-          getLista()
-        }
-        return () => {
-          isActive = false;
-          ca.abort();
-        };
+        if (isActive) {getLista()}
+        return () => {isActive = false;ca.abort();};
       }, [getLista]);
 
 

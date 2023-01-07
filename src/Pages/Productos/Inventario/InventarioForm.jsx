@@ -11,7 +11,7 @@ const Inventario = () => {
   const { setFormulario, formulario, initialForm,load,listaStock,setListaStock,listaDepositos,setIdDeposito,idDeposito,corregirLista,inputCorregir,setCantidadNueva,cantidadNueva,finalizarCorreccion } = useInventario();
   const buscaProductoTxt = useRef(null);
   
-  
+  const [detallesRegistro,setDetallesRegistro] = useState([]);
   const [listaBuscaProducto, setListaBuscaProducto] = useState([]);
   const [inputValue, setInputValue] = useState("");
   const [cargando, setCargando] = useState(false);
@@ -22,6 +22,7 @@ const Inventario = () => {
   const Cancelar = () => {
     setFormulario(initialForm);
     setIdDeposito("");
+    setDetallesRegistro([])
     setListaBuscaProducto([]);
     buscaProductoTxt.current.focus();
   };
@@ -64,6 +65,7 @@ const Inventario = () => {
           />
   }; */
 
+
   // buscador con con input text field
   const buscarProductos = async (e) => {
     let txt = e.target.value;
@@ -74,7 +76,9 @@ const Inventario = () => {
       setCargando(false);
     } else {
       setTimeout(async () => {
-        let res = await APICALLER.get({table: "productos",filtersField:"nombre_producto,codigo_producto",filtersSearch:txt,pagesize:'20',where:"tipo_producto,=,1"});
+        let res = await APICALLER.get({table: "productos",
+        filtersField:"nombre_producto,codigo_producto",
+        filtersSearch:txt,pagesize:'20',where:"tipo_producto,=,1"});
         res.response  ? setListaBuscaProducto(res.results) : console.log(res);
         setCargando(false);
       }, 500);
@@ -84,15 +88,20 @@ const Inventario = () => {
   const insertaProducto = async(e, value) => {
     setListaBuscaProducto([]);
     let id = value.id_producto;
-    let res = await APICALLER.get({table:'productos_depositos',include:'depositos',on:'id_deposito_deposito,id_deposito',where:`id_producto_deposito,=,${id}`});
+    let [res,reg] = await Promise.all([
+      APICALLER.get({table:'productos_depositos',include:'depositos',on:'id_deposito_deposito,id_deposito',where:`id_producto_deposito,=,${id}`}),
+      APICALLER.get({table:'productos_registros',where:`id_producto_registro,=,${id}`}),
+    ])
     if(res.response){
       setListaStock(res.results);
+      setDetallesRegistro(reg.results);
       setFormulario(value);
     }else{console.log(res)}
     setInputValue("");
     setCargando(false);
     inputCorregir.current?.focus();
   };
+
   if(load){
     return <Grid container spacing={2} alignItems="center">
     <Grid item xs={12}>
@@ -100,6 +109,7 @@ const Inventario = () => {
     </Grid>
     </Grid>
   }
+  console.log(detallesRegistro)
   return (
     <Container>
       <Box p={2} boxShadow={4} borderRadius={4} m={1} bgcolor="background.paper">
@@ -114,7 +124,7 @@ const Inventario = () => {
           </Typography>
         </Grid>
         
-        <Grid item sm={12} md={6}>
+        <Grid item xs={12} sm={12} md={12}>
           <Autocomplete
             disabled={formulario?.nombre_producto ? true : false}
             loading={cargando} loadingText="Cargando..." noOptionsText="No hay productos con ese nombre"
@@ -140,27 +150,38 @@ const Inventario = () => {
         </Grid>
         {formulario?.nombre_producto !== "" && (
           <>
-            <Grid item xs={12}>
+            <Grid item xs={12} sm={12} md={6}>
               <Alert icon={false} severity="info">
-                <Typography variant="button">
+                <Typography variant="button" display="block">
                   CODIGO: <u>{formulario?.codigo_producto}</u>
                 </Typography>
-              </Alert>
-            </Grid>
-            <Grid item xs={12}>
-              <Alert icon={false} severity="success">
                 <Typography variant="button">
                   Producto: <u>{formulario?.nombre_producto}</u>
                 </Typography>
               </Alert>
             </Grid>
-            <Grid item sm={12} md={3} >
+
+            <Grid item xs={12} sm={12} md={6}>
+              <Typography variant="button" display="block">
+                  Registro:
+              </Typography>
+                {
+                      detallesRegistro.map((d) => (
+                        <Typography variant="button" key={d.id_productos_registro} display="block">
+                          Fecha: {d.fecha_cargada} Cantidad: {d.cantidad_cargada}
+                        </Typography>
+                      ))
+                    }
+            </Grid>
+
+            <Grid item xs={12} sm={12} md={6} >
               <TextField fullWidth
                 label="Cantidad" name="cantidadNueva" onChange={e=> setCantidadNueva(e.target.value)} value={cantidadNueva}
                 inputRef={inputCorregir} InputProps={{inputComponent: NumberFormatCustom}}
               />
             </Grid>
-            <Grid item sm={12} md={3} >
+
+            <Grid item xs={12} sm={12} md={6} >
               <FormControl fullWidth>
                   <InputLabel variant="outlined">Elegir depósito</InputLabel>
                   <Select name="id_deposito_producto" value={idDeposito} onChange={(e)=>{setIdDeposito(e.target.value); inputCorregir.current?.focus();}} >
@@ -179,6 +200,9 @@ const Inventario = () => {
               <Button variant="outlined" onClick={corregirLista} size="large">Corregir</Button>
             </Grid>
             <Grid item xs={12}>
+            <Typography variant="button" display="block">
+                  Cantidad actual:
+              </Typography>
             <List>
             {listaStock.map((e, i) => (
               

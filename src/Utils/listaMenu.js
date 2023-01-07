@@ -275,6 +275,13 @@ export const listaMenu = [
             color: "#a0aec0",
             url: `${BASEURL}/users`,
           },
+          {
+            id: 34,
+            title: "actividad",
+            icon: "sync_alt",
+            color: "#a0aec0",
+            url: `${BASEURL}/actividad`,
+          },
         ],
       },
     

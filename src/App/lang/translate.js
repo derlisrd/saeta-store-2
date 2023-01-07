@@ -13,6 +13,7 @@ export const translate = {
         pagar_todo:'Pagar todo',
         empleado:'Empleado',
         producto:'Producto',
+        actividad:'Actividad',
         nuevo:"Nuevo",
         seleccione_deposito: "Seleccione depósito",
         datos_proveedor:"Datos de proveedor",
