@@ -2,7 +2,7 @@ import { Dialog, DialogActions, Zoom, Icon, Stack, CircularProgress, DialogConte
 import ButtonCustom  from "../../../Components/MuiCustom/ButtonCustom";
 import printJS from "print-js";
 //import ReactToPdf from "react-to-pdf";
-import React, { useRef } from "react";
+import  { useRef } from "react";
 import { useFacturas } from "./FacturasProvider";
 import {funciones} from "../../../Functions";
 import { APIURL } from "../../../App/Config/config";

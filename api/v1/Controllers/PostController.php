@@ -33,7 +33,25 @@ class PostController {
     }
 
     
-    
+    public static function uploadJustOneImage($file){
+
+        $path = UPLOADPATH."/";
+        if (!file_exists($path)) {mkdir($path, 0777, true);}
+
+        $imageTmp = $file["image"]["tmp_name"];
+        $name = $file["image"]["name"];
+        $imageMove = $path.$name;
+        $url = PROTOCOLO.DOMINIO.UPLOADPATHNAME.'/'.$name;
+        if(move_uploaded_file($imageTmp,$imageMove)){
+            echo JsonResponse::jsonResponsePOST(true,200,'Upload',0,[
+                'url'=>$url
+            ]);
+            
+        }else{
+            echo JsonResponse::jsonResponseError(false,404,"File no uploaded!");
+        }
+
+    }
 
 /** codigo momentaneo para subir foto a productos images, pq este debe ser dinamico */
     public static function UploadImages($file,$data){

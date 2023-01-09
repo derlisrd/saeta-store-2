@@ -20,7 +20,7 @@ const VentasProvider = ({ children }) => {
   const {token_user, id_user,permisos} = userData;
   const {lang} = useLang();
   const storage = JSON.parse(localStorage.getItem("facturasStorage"));
-  
+  const [lastID,setLastID] = useState('');
   const initialErrors = {
     id_error:null,
     error:false,
@@ -173,7 +173,7 @@ const VentasProvider = ({ children }) => {
         APICALLER.update({table: "empresa_recibos",token: token_user,id:idr, data: {last_nro_recibo: parseInt(LASTNROFACTURA) + 1} });
       }
     } 
-  
+    setLastID(LASTNROFACTURA)
 
     
     let efectivo=0,sinEfectivo=0,cambio = 0, porcentaje_descuento_pago = 0,  observaciones = "";
@@ -1047,7 +1047,7 @@ const VentasProvider = ({ children }) => {
     cerrarDialogFactura,
     insertarProductoTabla,restarCantidad,sumarCantidad,
     AgregarCantidadMetodoPago,borrarMetodoPago,changeMonedas,Anotar,CargarNota,permisos,cambiarDeposito,
-    MetodoDescuento,lang,IDNotaPedido,valorConvertido
+    MetodoDescuento,lang,IDNotaPedido,valorConvertido,lastID
   }
 
 
@@ -1087,7 +1087,7 @@ export const useVentas = () => {
     cerrarDialogFactura,
     insertarProductoTabla,restarCantidad,sumarCantidad,
     AgregarCantidadMetodoPago,borrarMetodoPago,changeMonedas,Anotar,CargarNota,permisos,cambiarDeposito,
-    MetodoDescuento,lang,IDNotaPedido,valorConvertido
+    MetodoDescuento,lang,IDNotaPedido,valorConvertido,lastID
 
   } = useContext(Contexto);
   return {id_user,token_user,
@@ -1120,7 +1120,7 @@ export const useVentas = () => {
     cerrarDialogFactura,
     insertarProductoTabla,restarCantidad,sumarCantidad,
     AgregarCantidadMetodoPago,borrarMetodoPago,changeMonedas,Anotar,CargarNota,permisos,cambiarDeposito,
-    MetodoDescuento,lang,IDNotaPedido,valorConvertido
+    MetodoDescuento,lang,IDNotaPedido,valorConvertido,lastID
   };
 };
 

@@ -43,9 +43,11 @@ class PutController {
 
     }
 
-    public static function datenow($format){
-        $date = new DateTime(date('Y-m-d H:i:s'), new DateTimeZone(TIME_ZONE));
-        return $date->format($format);
+    private static function datenow($format){
+        /* $date = new DateTime(date('Y-m-d H:i:s'), new DateTimeZone(TIME_ZONE));
+        return $date->format($format); */
+        date_default_timezone_set(TIME_ZONE);
+        return date($format);
     }
 
 }

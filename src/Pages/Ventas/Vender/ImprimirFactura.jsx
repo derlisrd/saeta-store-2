@@ -1,9 +1,11 @@
-import { Dialog, Zoom, DialogActions, Icon, DialogContent } from "@mui/material";
+import { Dialog, Zoom, DialogActions, Icon, DialogContent,Link } from "@mui/material";
 
 import ButtonCustom from "../../../Components/MuiCustom/ButtonCustom";
 import { useVentas } from "./VentasProvider";
 import printJS from "print-js";
 import { useRef } from "react";
+import { APIURL } from "../../../App/Config/config";
+
 const ImprimirFactura = () => {
   const refPDF = useRef(null);
   const {
@@ -11,7 +13,7 @@ const ImprimirFactura = () => {
     cerrarDialogFactura,
     indexFactura,
     datosFacturas,
-    Funciones,
+    Funciones,lastID
   } = useVentas();
 
   const EMPRESA = JSON.parse(localStorage.getItem("dataEmpresa"));
@@ -27,6 +29,7 @@ const ImprimirFactura = () => {
   let TOTALIVA5 = 0;
   let TOTALIVA10 = 0;
   let EXENTAS = 0;
+  const url_pdf = APIURL+'pdf_factura/'+lastID;
 
   DF.itemsFactura.forEach(e => {
     let subtotal = e.precio_guardado*(e.cantidad_producto);
@@ -228,7 +231,14 @@ const imprimir = () => {
       </div>
       </DialogContent>
       <DialogActions>
-          
+        <ButtonCustom
+                  component={Link}
+                  href={url_pdf}
+                  startIcon={<Icon>picture_as_pdf</Icon>}
+                  onClick={()=>{}}
+                >
+                  PDF
+            </ButtonCustom>
         <ButtonCustom
           size="large"
           variant="contained"

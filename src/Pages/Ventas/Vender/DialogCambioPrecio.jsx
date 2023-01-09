@@ -9,7 +9,9 @@ import { useVentas } from "./VentasProvider";
 const DialogCambioPrecio = () => {
   const {dialogs,setDialogs,datosFacturas,indexFactura,indexPrecioCambiar,errors,setErrors,cambiarPrecio,setIndexPrecioCambiar,valorConvertido} = useVentas();
   const cerrar = () => {
+    
     setDialogs({ ...dialogs, cambiarPrecio: false });setErrors({...errors,cambioPrecio:false,cambioPrecioMensaje:""});
+    setInputPrecio('')
     setIndexPrecioCambiar(-1);
   }
   const input = useRef(null);
@@ -18,6 +20,10 @@ const DialogCambioPrecio = () => {
   const pr = indexPrecioCambiar < 0 ? null : fd.itemsFactura[indexPrecioCambiar];
 
   const verificar = ()=>{
+    if(inputPrecio===''){
+      setErrors({...errors,cambioPrecio:true,cambioPrecioMensaje:"Ingrese el precio"});
+      return false;
+    }
     let valueprecio = parseFloat(inputPrecio) * parseFloat(fd.datosMoneda.valor_moneda) ;
     if(valueprecio < pr.preciom_producto){
       setErrors({...errors,cambioPrecio:true,cambioPrecioMensaje:"El precio no puede ser menor que el establecido"});
@@ -25,6 +31,7 @@ const DialogCambioPrecio = () => {
     }
     else{
       cambiarPrecio(indexPrecioCambiar,valueprecio);
+      
       cerrar();
     }
   }
@@ -89,7 +96,7 @@ const DialogCambioPrecio = () => {
         </Grid>
       </DialogContent>
       <DialogActions>
-        <ButtonCustom variant="outlined" color="primary" onClick={verificar}>
+        <ButtonCustom variant="outlined" color="primary" disabled={inputPrecio===''} onClick={verificar}>
           CAMBIAR
         </ButtonCustom>
         <ButtonCustom variant="outlined" color="secondary" onClick={cerrar}>

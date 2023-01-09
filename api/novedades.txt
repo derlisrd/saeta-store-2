@@ -178,7 +178,7 @@ CREATE TABLE IF NOT EXISTS `clientes` (
   `tipo_cliente` int(11) NOT NULL DEFAULT '3' COMMENT '1 mayorista 2 minorista 3 casual',
   `updated_at` datetime DEFAULT CURRENT_TIMESTAMP
 ) ;
-
+ALTER TABLE `clientes` ADD `nacimiento_cliente` DATE NULL DEFAULT NULL AFTER `direccion_cliente`;
 
 INSERT INTO `clientes` (`id_cliente`, `ruc_cliente`, `nombre_cliente`, `telefono_cliente`, `email_cliente`, `direccion_cliente`, `tipo_cliente`, `updated_at`) VALUES
 (1, 'X', 'SIN NOMBRE', '0', NULL, NULL, 3, '2022-07-05 01:31:43');
@@ -823,8 +823,8 @@ CREATE TABLE IF NOT EXISTS `productos` (
   `id_impuesto_producto` int(11) NOT NULL COMMENT 'id_impuesto',
   `id_proveedor_producto` int(11) NOT NULL COMMENT 'con id_proveedor',
   `id_unidad_medida_producto` int(11) NOT NULL COMMENT 'id_unidad de medida',
-  `codigo_producto` varchar(150) NOT NULL,
-  `nombre_producto` varchar(150) NOT NULL,
+  `codigo_producto` varchar(200) NOT NULL,
+  `nombre_producto` varchar(200) NOT NULL,
   `descripcion_producto` text,
   `costo_producto` float NOT NULL,
   `porcentaje_comision` float NOT NULL DEFAULT '0' COMMENT 'comsion',
@@ -839,6 +839,7 @@ CREATE TABLE IF NOT EXISTS `productos` (
   UNIQUE KEY `codigo_producto` (`codigo_producto`)
 ) ;
 
+ALTER TABLE `productos` ADD `valor_comision` FLOAT NULL DEFAULT '0' AFTER `porcentaje_comision`;
 -- --------------------------------------------------------
 
 --

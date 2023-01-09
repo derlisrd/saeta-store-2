@@ -22,6 +22,27 @@ export const APICALLER = {
     }
   },
 
+  uploadJustOneImage : async({file,token})=>{
+    let formData = new FormData();
+    formData.append("image", file);
+    try {
+      let tk = DescifrarTexto(token);
+      const res = await Axios({
+        url: `${APIURL}uploadJustOneImage/?token=${tk}`,
+        method: "POST",
+        data: formData,
+        headers: {
+          "Content-Type": "multipart/form-data",
+          "X-Api-Token": XAPITOKEN,
+        },
+      });
+      return await res.data;
+    } catch (error) {
+      const err = { results: null, response: false, message: error,error:true };
+      return err;
+    }
+  },
+
   uploadImage: async ({ file, token, table = "", data, path = Date.now() }) => {
     var formData = new FormData();
     formData.append("table", table);
@@ -42,7 +63,7 @@ export const APICALLER = {
       });
       return await res.data;
     } catch (error) {
-      const err = { results: `error`, response: `error` };
+      const err = { results: null, response: false, message: error,error:true };
       return err;
     }
   },

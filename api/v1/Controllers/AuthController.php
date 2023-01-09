@@ -21,8 +21,10 @@ class AuthController {
 
 
     private static function datenow($format){
-        $date = new DateTime(date('Y-m-d H:i:s'), new DateTimeZone(TIME_ZONE));
-        return $date->format($format);
+        /* $date = new DateTime(date('Y-m-d H:i:s'), new DateTimeZone(TIME_ZONE));
+        return $date->format($format); */
+        date_default_timezone_set(TIME_ZONE);
+        return date($format);
     }
 
     public static function getUsers (String $token, String $id = null){

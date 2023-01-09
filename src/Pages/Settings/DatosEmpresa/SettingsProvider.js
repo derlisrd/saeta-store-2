@@ -44,15 +44,6 @@ const SettingsProvider = ({ children }) => {
 
   const Guardar = async () => {
     
-    /* if(images.length>0){
-      images.forEach(e=>{
-        let data = {id_empresa:1,logo_url_empresa:e.name}
-
-        APICALLER.uploadImage({table:"empresas",file:e,data,token:token_user,path:'logo'});
-
-      })
-    } */
-    
     setCargando(true);
     let datas = {
       table: "empresas",

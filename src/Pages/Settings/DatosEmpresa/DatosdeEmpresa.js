@@ -3,11 +3,15 @@ import { useSettings } from "./SettingsProvider"
 import { funciones as Funciones } from "../../../Functions";
 import { TextFieldIconStart } from "../../../Components/MuiCustom/TextFieldIconStart";
 import LoadingLinear from "../../../Components/UI/LoadingLinear";
+import { APICALLER } from "../../../Services/api";
+import { useLogin } from "../../../Contexts/LoginProvider";
+import { useState } from "react";
 const DatosEmpresa = () => {
 
-    const {datosEmpresa,snack,setSnack, Guardar,handleOnchange,cargando,lang,imagesURL,/* setImages,setImagesURL,images */} = useSettings()
+    const {userData} = useLogin()
+    const {snack,setSnack, Guardar,handleOnchange,cargando,lang,setDatosEmpresa,datosEmpresa} = useSettings()
 
-    
+    const [loadindImg,setLoadindImg] = useState(false)
 
     /* const deleteImage = e =>{
       let fileArray = [...images]; // images file
@@ -16,10 +20,10 @@ const DatosEmpresa = () => {
       imagesArray.splice(e,1);
       setImages(fileArray)
       setImagesURL(imagesArray);
-    } */
+    }  */ 
 
-    /* const changeImage = (e) => {
-      let fileObj = [];
+    const changeImage = async(e) => {
+      /* let fileObj = [];
       let fileArray = [...images]; // images file
       let imagesArray = [...imagesURL]; // images url
       fileObj.push(e.target.files);
@@ -28,8 +32,15 @@ const DatosEmpresa = () => {
         fileArray.push(fileObj[0][i]);
       }
       setImages(fileArray)
-      setImagesURL(imagesArray);
-    }; */
+      setImagesURL(imagesArray);*/
+      let file = (e.target.files[0])
+      setLoadindImg(true)
+      let res = await APICALLER.uploadJustOneImage({file, token:userData.token_user})
+      if(res.response){
+        setDatosEmpresa({...datosEmpresa,logo_url_empresa:res.results.url})
+      }
+      setLoadindImg(false)
+    };
 
     if(cargando){
       return <LoadingLinear />
@@ -158,40 +169,23 @@ const DatosEmpresa = () => {
           <TextField label="url_logo" name='logo_url_empresa' onChange={handleOnchange} fullWidth value={datosEmpresa.logo_url_empresa ? datosEmpresa.logo_url_empresa : ''} />
         </Grid>
         <Grid item xs={12} >
-          {datosEmpresa.logo_url_empresa && <img src={datosEmpresa.logo_url_empresa} alt="logo" />}
-
-          
+          {datosEmpresa.logo_url_empresa && <img src={datosEmpresa.logo_url_empresa} alt="logo" />}          
         </Grid>
-        <Grid item>
-        <div style={{ display:"flex",flexWrap:"wrap",flexDirection:'row', gap:"10px",justifyContent:"center" }}>
-        {(imagesURL || []).map((url, i) => (
-          <Stack key={i} direction="column" sx={{ padding:"5px",border:"1px solid whitesmoke",borderRadius:'3px' }}>
-            <Avatar
-              variant="square"
-              alt="..."
-              src={url}
-              sx={{ width: 256, height: 256 }}
-            />
-          </Stack>
-            ))}
-        </div>
-      </Grid>
         <Grid item xs={12} >
           
-          {/* <label htmlFor="btn-upload">
+          <label htmlFor="btn-upload">
             <input
-              id="btn-upload"
-              name="btn-upload"
               style={{ display: "none" }}
               type="file"
               onChange={changeImage}
-              multiple
               accept="image/jpeg, image/png"
             />
-            <Button startIcon={<Icon>image</Icon>}  variant="outlined" component="span">
-              {lang.subir_logo}
+            
+            <Button startIcon={<Icon>file_upload</Icon>} disabled={loadindImg}  variant="outlined" component="span">
+              { !loadindImg ? lang.subir_logo : lang.cargando}
             </Button>
-          </label> */}
+            
+          </label>
         
         </Grid>
         <Grid item xs={12} >

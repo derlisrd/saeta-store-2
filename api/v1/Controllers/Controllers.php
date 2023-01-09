@@ -107,8 +107,6 @@ class Controllers {
         $data = file_get_contents("php://input");
 
 
-        
-        
 
         if($table === "Auth"){
             $method = $tableArray[2];
@@ -140,7 +138,15 @@ class Controllers {
         else{
 
             $TOKEN = isset($_GET['token']) || !empty($_GET['token']) ? $_GET['token'] : null;
-             
+            
+            if($table === "uploadJustOneImage"){
+                if(!$TOKEN==null && AuthController::ValidateToken($TOKEN,false)){
+                    PostController::uploadJustOneImage($_FILES);
+                }
+                return;
+            }
+            
+
             if($table === "Upload"){
                 if(!$TOKEN==null && AuthController::ValidateToken($TOKEN,false)){
                     PostController::UploadImages($_FILES,$_POST);
