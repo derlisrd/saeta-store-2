@@ -23,6 +23,7 @@ const ImpresionFactura = () => {
   let TOTALIVA = 0;
   let TOTAL = 0;
   let EXENTAS = 0;
+  
 
   itemsFactura.forEach((e) => {
     let subtotal = parseFloat(e.precio_producto_factura) * parseFloat(e.cantidad_producto);
@@ -39,8 +40,10 @@ const ImpresionFactura = () => {
     }
     
   });
+  TOTAL -= parseFloat(DF.descuento_factura)
   TOTALIVA = TOTALIVA5 + TOTALIVA10;
 
+  
 
   const imprimir = () => {
     printJS({
@@ -198,6 +201,10 @@ const ImpresionFactura = () => {
               <table width="740px" style={{ borderCollapse: "collapse" }}className="collapse" border="1">
                 <tbody>
                 <tr>
+                    <td>Descuentos: </td>
+                  <td colSpan="3" align="right"> {funciones.numberSeparator(DF.descuento_factura)} </td>
+                </tr>
+                <tr>
                   <td width="70%" colSpan="3">
                     <b>
                       Letras: 
@@ -232,21 +239,6 @@ const ImpresionFactura = () => {
       )}
       </DialogContent>
       <DialogActions>
-      {/* <ReactToPdf
-              targetRef={refPDF}
-              x={8} y={8}
-              filename={`${DF?.nro_datos_factura} ${DF.nro_factura}.pdf`}
-            >
-              {({ toPdf }) => (
-                <ButtonCustom
-                  variant="outlined"
-                  startIcon={<Icon>picture_as_pdf</Icon>}
-                  onClick={toPdf}
-                >
-                  PDF
-                </ButtonCustom>
-              )}
-            </ReactToPdf> */}
             <ButtonCustom
                   component={Link}
                   href={url_pdf}

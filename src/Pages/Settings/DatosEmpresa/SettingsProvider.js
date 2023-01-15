@@ -30,7 +30,9 @@ const SettingsProvider = ({ children }) => {
     direccion_empresa: "",
     licencia: "",
     categoria_empresa:"",
-    logo_url_empresa:""
+    logo_url_empresa:"",
+    mensaje_recibo_empresa:"",
+    tipo_papel:""
   };
 
   const [datosEmpresa, setDatosEmpresa] = useState(EMPRESA ?? initialState);

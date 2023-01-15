@@ -322,9 +322,10 @@ CREATE TABLE IF NOT EXISTS `empresas` (
   `categoria_empresa` varchar(200) NOT NULL,
   `dimension_ticket` int(11) NOT NULL,
   `licencia` date NOT NULL,
-  `tipo_nota` int(1) NOT NULL COMMENT '0=ticket 1=nota',
-   `cuota_empresa` tinyint(1) NOT NULL DEFAULT 0,
-   `logo_url_empresa` text ,
+  `tipo_papel` tinyint(1) NOT NULL COMMENT '0=ticket 1=A4',
+  `mensaje_recibo_empresa` varchar(200) DEFAULT NULL,
+  `cuota_empresa` tinyint(1) NOT NULL DEFAULT 0,
+  `logo_url_empresa` text ,
   `updated_at` datetime DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id_empresa`)
 ) ;

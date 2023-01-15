@@ -194,20 +194,25 @@ const imprimir = () => {
                         <td width="10%" align="center">{Funciones.numberSeparator(TOTAL5)}</td>
                         <td width="10%" align="center">{Funciones.numberSeparator(TOTAL10)}</td>
                     </tr>
+                    
                     </tbody>
                 </table>
                 <br/>
               <table align='center' width="740px"  style={{borderCollapse:"collapse"}} className="collapse" border="1">
                 <tbody>
-            <tr>
-              <td width="70%" colSpan="3">
+                  <tr>
+                    <td>Descuentos: </td>
+                  <td colSpan="3" align="right"> {Funciones.numberSeparator(DF.descuento)} </td>
+                </tr>
+              <tr>
+                <td width="70%" colSpan="3">
                 <b>
                   TOTAL A PAGAR: {DF.datosMoneda.abreviatura_moneda} {" "}
-                  {Funciones.NumeroALetras(DF.total, "")}
+                  {Funciones.NumeroALetras((DF.total - DF.descuento), "")}
                 </b>
               </td>
               <td width="30%" align="right">
-                <b>{Funciones.numberSeparator(DF.total)}</b>
+                <b>{Funciones.numberSeparator(DF.total - DF.descuento)}</b>
               </td>
             </tr>
             <tr>

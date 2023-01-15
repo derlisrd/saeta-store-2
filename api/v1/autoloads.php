@@ -6,7 +6,7 @@ header('Access-Control-Allow-Methods: POST,GET, PUT, DELETE, OPTIONS'); */
 header('Access-Control-Allow-Origin: *');
 header("Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept,X-Api-Token");
 header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE, PATCH');
-header('content-type: application/json; charset=utf-8');
+/* header('content-type: application/json; charset=utf-8'); */
 
 require "./vendor/autoload.php";
 

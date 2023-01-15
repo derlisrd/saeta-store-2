@@ -1,8 +1,8 @@
 import React, { useRef } from "react";
-import { useVentas } from "./VentasProvider";
+import { useVentas } from "../VentasProvider";
 import printJS from "print-js";
 import { Dialog, DialogActions, DialogContent, DialogTitle, Icon, Zoom } from "@mui/material";
-import ButtonCustom from "../../../Components/MuiCustom/ButtonCustom";
+import ButtonCustom from "../../../../Components/MuiCustom/ButtonCustom";
 import ReactToPdf from "react-to-pdf";
 
 function ImprimirNotaPedido() {

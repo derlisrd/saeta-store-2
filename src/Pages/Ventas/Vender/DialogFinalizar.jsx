@@ -243,7 +243,7 @@ const DialogFinalizar = () => {
                   control={
                     <Radio checked={fa.datosFactura.tipoFactura === "0" || fa.datosCliente.ruc_cliente === "0"}/>
                   }
-                  label="TICKET RECIBO" labelPlacement="end"
+                  label="RECIBO" labelPlacement="end"
                 />
                 <FormControlLabel
                   value="1" disabled={

@@ -62,6 +62,7 @@ const FacturasLista = () => {
     {
       field: "estado_factura",
       title: lang.estado,
+      noPrint:true,
       items: { 0: "Anulado", 1: "Cobrado", 2: "Cobranza pendiente" },
       compareField: "estado_factura",
       styleFieldCondition: "estado_factura",
@@ -102,6 +103,7 @@ const FacturasLista = () => {
     {
       field:"abreviatura_moneda",
       title:lang.moneda,
+      noPrint:true,
       style:{fontWeight:"bold"}
     }
   ];
@@ -245,6 +247,8 @@ const FacturasLista = () => {
             columns={columnas}
             Accions={Acciones}
             showOptions
+            print
+            caption={`Total: ${funciones.numberSeparator(total.facturas)}`}
           />
   );
 };

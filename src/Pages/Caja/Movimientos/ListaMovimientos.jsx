@@ -235,6 +235,7 @@ const ListaMovimientos = () => {
         datas={lista}
         loading={cargando}
         showOptions
+        print
       />
     </>
   );

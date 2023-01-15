@@ -173,7 +173,7 @@ const VentasProvider = ({ children }) => {
         APICALLER.update({table: "empresa_recibos",token: token_user,id:idr, data: {last_nro_recibo: parseInt(LASTNROFACTURA) + 1} });
       }
     } 
-    setLastID(LASTNROFACTURA)
+    
 
     
     let efectivo=0,sinEfectivo=0,cambio = 0, porcentaje_descuento_pago = 0,  observaciones = "";
@@ -311,6 +311,7 @@ const VentasProvider = ({ children }) => {
 
     if (resInsert.response ) {
       let ID_FACTURA = resInsert.last_id;
+      setLastID(ID_FACTURA);
       let insertsPromises = [];
 
       df.itemsFactura.forEach(async (e) => {

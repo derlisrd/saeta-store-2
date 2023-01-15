@@ -1,6 +1,6 @@
-import { Grid,TextField,Icon,Button, InputAdornment,Snackbar,Alert, Stack, Avatar } from "@mui/material"
+import { Grid,TextField,Icon,Button, InputAdornment,Snackbar,Alert, FormControl, RadioGroup, FormControlLabel, Radio, FormLabel } from "@mui/material"
 import { useSettings } from "./SettingsProvider"
-import { funciones as Funciones } from "../../../Functions";
+import { funciones  } from "../../../Functions";
 import { TextFieldIconStart } from "../../../Components/MuiCustom/TextFieldIconStart";
 import LoadingLinear from "../../../Components/UI/LoadingLinear";
 import { APICALLER } from "../../../Services/api";
@@ -53,7 +53,7 @@ const DatosEmpresa = () => {
     <Grid container spacing={2} >
       <Grid item xs={12}>
         <Alert severity="info">
-          {lang.licencia_valida_hasta}: { Funciones.fechaYMDMySQLtoEs( datosEmpresa.licencia)} 
+          {lang.licencia_valida_hasta}: { funciones.fechaYMDMySQLtoEs( datosEmpresa.licencia)} 
         </Alert>
       </Grid>
         <Grid item xs={12} md={6}>
@@ -148,33 +148,51 @@ const DatosEmpresa = () => {
             />
         </Grid>
         <Grid item xs={12} md={6}>
-            <TextField 
-                label={lang.dim_ticket}
-                helperText={lang.en_mm}
-                fullWidth
-                type='number'
-                InputProps={{
-                    startAdornment: (
-                      <InputAdornment position="start">
-                        <Icon color="primary">print</Icon>
-                      </InputAdornment>
-                    ),
-                  }}
-                  value={datosEmpresa.dimension_ticket}
-                  onChange={handleOnchange}
-                  name="dimension_ticket"
+          <FormControl>
+            <FormLabel id="tipo_papel">Tipo de papel</FormLabel>
+            <RadioGroup
+              row aria-labelledby="tipo_papel" name="tipo_papel" onChange={handleOnchange}
+            >
+              <FormControlLabel value="0" checked={datosEmpresa.tipo_papel === "0"} control={<Radio />} label="Ticket" />
+              <FormControlLabel value="1" checked={datosEmpresa.tipo_papel === "1"}  control={<Radio />} label="A4" />
+            </RadioGroup>
+          </FormControl>
+        </Grid>
+        <Grid item xs={12} md={6}>
+            <TextField
+              disabled={datosEmpresa.tipo_papel === "1"}  
+              label={lang.dim_ticket}
+              helperText={lang.en_mm}
+              fullWidth
+              type='number'
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <Icon color="primary">print</Icon>
+                  </InputAdornment>),
+                }}
+              value={datosEmpresa.dimension_ticket}
+              onChange={handleOnchange}
+              name="dimension_ticket"
             />
         </Grid>
+        <Grid item xs={12}>
+          <TextField label="Mensaje en el recibo" name="mensaje_recibo_empresa" onChange={handleOnchange} value={datosEmpresa.mensaje_recibo_empresa} fullWidth />
+        </Grid>
+        
         <Grid item xs={12} >
           <TextField label="url_logo" name='logo_url_empresa' onChange={handleOnchange} fullWidth value={datosEmpresa.logo_url_empresa ? datosEmpresa.logo_url_empresa : ''} />
         </Grid>
+        
         <Grid item xs={12} >
           {datosEmpresa.logo_url_empresa && <img src={datosEmpresa.logo_url_empresa} alt="logo" />}          
         </Grid>
         <Grid item xs={12} >
           
-          <label htmlFor="btn-upload">
+          <label htmlFor="btn_upload">
             <input
+              name="btn_upload"
+              id="btn_upload"
               style={{ display: "none" }}
               type="file"
               onChange={changeImage}
