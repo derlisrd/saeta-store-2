@@ -1,6 +1,7 @@
 import { Dialog, DialogContent, Grid, TextField,Chip,Stack, DialogActions, Button, DialogTitle, CircularProgress, Tooltip, IconButton, Icon, InputAdornment, Zoom, Alert } from "@mui/material";
 import { Box } from "@mui/system";
 import { useRef,useState } from "react";
+import { funciones } from "../../Functions";
 import { APICALLER } from "../../Services/api";
 import { useAgenda } from "./AgendaProvider";
 
@@ -26,7 +27,7 @@ const AgendaDialog = () => {
 
   const searchCliente = async(doc)=>{
     setLoads({inputbuscacliente:true})
-    let res = await APICALLER.get({table:"clientes",where:`ruc_cliente,=,'${doc}'`});
+    let res = await APICALLER.get({table:"clientes",where:`ruc_cliente,=,'${doc}'`,fields:'nombre,ruc_cliente'});
 
     if(res.response){
       if(res.found===0){
@@ -79,7 +80,9 @@ const AgendaDialog = () => {
     }
 
     let today = new Date();
-    if((new Date(f.fecha_fin_agenda))<today ||  (new Date(f.inicio_fin_agenda))<today )
+    let spliInicio = funciones.splitFecha(f.fecha_inicio_agenda)
+    let spliFin = funciones.splitFecha(f.fecha_fin_agenda)
+    if((spliInicio)<today ||  (spliFin)<today )
     {
       setError({active:true, message:"No se puede agendar en el pasado"});
       return false;
@@ -91,7 +94,7 @@ const AgendaDialog = () => {
     }
 
     insertarAgendar(f)
-
+    cerrar();
   }
 
   return (
@@ -122,7 +125,7 @@ const AgendaDialog = () => {
           <Grid item xs={12}>
             {
               cliente.active &&
-              <Alert>
+              <Alert icon={false}>
                 {cliente.doc}: {cliente.nombre } 
               </Alert>
             }

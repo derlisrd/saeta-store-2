@@ -8,6 +8,7 @@ import React, {
   import swal from "sweetalert";
   import { APICALLER } from "../../Services/api";
   import { useLogin } from "../../Contexts/LoginProvider";
+import { funciones } from "../../Functions";
   
   const Contexto = createContext();
   
@@ -57,8 +58,10 @@ import React, {
     const addEvent = useCallback(
       (f) => {
         let today = new Date();
-        let agenda = new Date(f);
-        if(agenda<today){
+        //let agenda = new Date(f);
+        let spl= funciones.splitFecha(f)
+        
+        if(spl<today){
           swal({icon:"error",text:"No se puede agendar en el pasado"});
           return false;
         }

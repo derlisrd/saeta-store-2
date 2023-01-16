@@ -14,6 +14,7 @@ export const translate = {
         empleado:'Empleado',
         producto:'Producto',
         actividad:'Actividad',
+        nombre_completo:"Nombre completo",
         nuevo:"Nuevo",
         seleccione_deposito: "Seleccione depósito",
         datos_proveedor:"Datos de proveedor",

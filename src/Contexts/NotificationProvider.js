@@ -19,6 +19,7 @@ function NotificationProvider({children}){
     
     const refreshDatas = async()=>{
         setIsLoading(false)
+        console.log('notificaionc');
     }
 
 

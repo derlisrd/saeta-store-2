@@ -55,47 +55,44 @@ const ClientesForm = () => {
               {cargando.guardar && <LinearProgress />}
               {errors.error && <Alert severity='error'>{errors.message}</Alert>}
             </Grid>
-
-            <Grid item xs={12} sm={6}>
+            <Grid item xs={12} sm={12}>
               <TextField
+                fullWidth autoComplete="off"
                 autoFocus
-                onChange={onChange}
-                name="nombre_cliente"
-                required
-                value={form.nombre_cliente && form.nombre_cliente}
-                fullWidth
-                label={lang.nombre}
-              />
-            </Grid>
-
-            <Grid item xs={12} sm={6}>
-              <TextField
-                fullWidth
                 required error={errors.id==="ruc"}
                 onChange={onChange}
                 name="ruc_cliente"
-                disabled={formulario.id_cliente!==null}
                 value={form.ruc_cliente}
                 label={lang.ruc_de_empresa}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
               <TextField
+                onChange={onChange}
+                name="nombre_cliente"
+                required
+                value={form.nombre_cliente}
+                fullWidth autoComplete="off"
+                label={lang.nombre_completo}
+              />
+            </Grid>
+
+            
+            <Grid item xs={12} sm={6}>
+              <TextField
                 name="telefono_cliente"
                 label={lang.nro_telefono}
                 onChange={onChange}
                 value={
-                  form.telefono_cliente !== null
-                    ? form.telefono_cliente
-                    : ``
+                  form.telefono_cliente ?? ""
                 }
-                fullWidth
+                fullWidth autoComplete="off"
               />
             </Grid>
             <Grid item xs={12} sm={6}>
 
             <TextField
-              fullWidth
+              fullWidth autoComplete="off"
               label={lang.direccion}
               onChange={onChange}
               name="direccion_cliente"
@@ -108,7 +105,7 @@ const ClientesForm = () => {
               </Grid>
             <Grid item xs={12} sm={6}>
               <TextField
-                fullWidth type="email"
+                fullWidth autoComplete="off" type="email"
                 onChange={onChange}
                 name="email_cliente"
                 value={
@@ -120,9 +117,12 @@ const ClientesForm = () => {
               />
             </Grid>
             <Grid item xs={12} sm={6}>
+
+            </Grid>
+            <Grid item xs={12} sm={12}>
               <FormControl component="fieldset">
                 <FormLabel component="legend">{lang.tipo}:</FormLabel>
-                <RadioGroup
+                <RadioGroup row
                   name="tipo_cliente"
                   value={form.tipo_cliente}
                   onChange={onChange}

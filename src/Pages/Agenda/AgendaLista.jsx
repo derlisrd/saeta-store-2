@@ -54,7 +54,7 @@ const AgendaLista = () => {
         right: "dayGridMonth,dayGrid"
       }}
       events={eventos}
-      dateClick={e=>console.log(e)} 
+      dateClick={e=>{}} 
       eventClick={e=>reAgendar(e.event.id)}
     />
     </Box>
