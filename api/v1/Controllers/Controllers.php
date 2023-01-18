@@ -7,6 +7,7 @@ use GetController\GetController;
 use PostController\PostController;
 use PutController\PutController;
 use DeleteController\DeleteController;
+use ExcelController\ExcelController;
 use PDFController\PDFController;
 use ExportController;
 use OptionsController\OptionsController;
@@ -45,6 +46,13 @@ class Controllers {
                     
                     return PDFController::factura($datos);
                 }
+                return false;
+            }
+
+            if($table === "generateReport"){
+                
+                ExcelController::generateReport();
+                
                 return false;
             }
 
@@ -145,6 +153,8 @@ class Controllers {
                 }
                 return;
             }
+            
+            
             
 
             if($table === "Upload"){

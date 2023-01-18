@@ -51,6 +51,7 @@ import ScrollToTop from "../Components/ScrollToUp";
 import ListaProductos from "../Pages/Productos/Depositos/ListaProductosDeposito";
 import RegistrosProductos from "../Pages/Productos/Productos/RegistrosProductos";
 import RegistroActividad from "../Pages/Settings/RegistroActividad";
+import Reportes from "../Pages/Ventas/Reportes";
 
 const RoutesMain = () => {
   const navigate = useNavigate();
@@ -129,6 +130,7 @@ const RoutesMain = () => {
       <Route path={R+'facturas'} element={<PrivateRoute id={5}><Facturas /></PrivateRoute>} />
       <Route path={R+'notaspedidos'} element={<PrivateRoute id={6}><Notas /></PrivateRoute>} />
       <Route path={R+'ventas'} element={<PrivateRoute id={1}><Ventas /></PrivateRoute>} />
+      <Route path={R+'reportes'} element={<PrivateRoute id={68}><Reportes /></PrivateRoute>} />
       <Route path={R+'dashboard'} element={<PublicRoute><DashBoard /></PublicRoute>} />
       <Route path={R+'info'} element={<PublicRoute><Info /></PublicRoute>} />
       <Route path={R+'cajas'} element={<PrivateRoute id={22}><Cajas /></PrivateRoute>} />

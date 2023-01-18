@@ -188,6 +188,7 @@ export const funciones = {
         var nro = parseFloat(numero);
         return Math.round(nro);
       },
+      cerosantes:(num,totalLength)=>( String(num).padStart(totalLength, '0') ),
       numberFormat: n=> {
         if(isNaN(n) || !n){
           return "0"

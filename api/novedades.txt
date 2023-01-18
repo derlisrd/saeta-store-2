@@ -170,7 +170,7 @@ INSERT INTO `categorias` (`id_categoria`, `id_padre_categoria`, `nombre_categori
 DROP TABLE IF EXISTS `clientes`;
 CREATE TABLE IF NOT EXISTS `clientes` (
   `id_cliente` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  `ruc_cliente` varchar(20) UNIQUE,
+  `ruc_cliente` varchar(20) UNIQUE KEY,
   `nombre_cliente` varchar(150) NOT NULL,
   `telefono_cliente` varchar(150) DEFAULT  NULL,
   `email_cliente` varchar(100) DEFAULT NULL,
@@ -334,7 +334,7 @@ CREATE TABLE IF NOT EXISTS `empresas` (
 -- Volcado de datos para la tabla `empresas`
 --
 
-INSERT INTO `empresas` (`id_empresa`, `nombre_empresa`, `propietario_empresa`, `ruc_empresa`, `direccion_empresa`, `telefono_empresa`, `impuesto_empresa`, `categoria_empresa`, `dimension_ticket`, `licencia`, `tipo_nota`, `updated_at`) VALUES
+INSERT INTO `empresas` (`id_empresa`, `nombre_empresa`, `propietario_empresa`, `ruc_empresa`, `direccion_empresa`, `telefono_empresa`, `impuesto_empresa`, `categoria_empresa`, `dimension_ticket`, `licencia`, `tipo_papel`, `updated_at`) VALUES
 (1, 'DERLIS RUIZ DIAZ', 'Derlis Ruiz Diaz', '4937724-8', 'CALLE JOEL EULOGIO ESTIGARRIBIA', '0983202090', 'IVA', 'ACTIVIDADES DE FOTOGRAFIA Y PORTALES WEB', 80, '2023-12-01', 0, '2022-07-02 22:27:54');
 
 -- --------------------------------------------------------
@@ -715,6 +715,7 @@ INSERT INTO `permisos` (`id_permiso`, `clave_permiso`, `descripcion_permiso`, `u
 (65, 'CopiasdeSeguridad', 'Hacer copias de seguridad', '2022-07-02 22:50:40'),
 (66, 'Comisiones', 'Ver comisiones', '2022-07-02 22:50:40'),
 (67, 'FormasPago', 'Alterar formas de pago', '2022-07-02 22:50:40'),
+(68, 'GenerarReportes', 'Generar Reportes', '2022-07-02 22:50:40'),
 (72, 'Tema', 'Editar Temas', '2022-07-02 22:50:40');
 
 -- --------------------------------------------------------
@@ -911,7 +912,7 @@ CREATE TABLE `productos_precios` (
 
 DROP TABLE IF EXISTS `productos_vendidos`;
 CREATE TABLE IF NOT EXISTS `productos_vendidos` (
-  `id_productos_vendido` int(11) NOT NULL AUTO_INCREMENT,
+  `id_productos_vendido` int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
   `id_producto_vendido` int(11) NOT NULL COMMENT 'con id_producto',
   `id_factura_vendido` int(11) NOT NULL COMMENT 'con id_factura',
   `id_cliente_vendido` int(11) NOT NULL COMMENT 'con id_cliente',
@@ -920,8 +921,7 @@ CREATE TABLE IF NOT EXISTS `productos_vendidos` (
   `cantidad_vendido` float NOT NULL,
   `tipo_producto_vendido` TINYINT(1) NOT NULL,
   `fecha_vendido` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` datetime DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id_productos_vendido`)
+  `updated_at` datetime DEFAULT CURRENT_TIMESTAMP
 ) ;
 
 -- --------------------------------------------------------
@@ -932,12 +932,11 @@ CREATE TABLE IF NOT EXISTS `productos_vendidos` (
 
 DROP TABLE IF EXISTS `proveedors`;
 CREATE TABLE IF NOT EXISTS `proveedors` (
-  `id_proveedor` int(11) NOT NULL AUTO_INCREMENT,
+  `id_proveedor` int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
   `ruc_proveedor` varchar(20) DEFAULT NULL,
   `nombre_proveedor` varchar(100) NOT NULL,
   `telefono_proveedor` varchar(100) NOT NULL,
   `updated_at` datetime DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id_proveedor`)
 ) ;
 
 --
@@ -949,19 +948,21 @@ INSERT INTO `proveedors` (`id_proveedor`, `ruc_proveedor`, `nombre_proveedor`, `
 
 -- --------------------------------------------------------
 
---
--- Estructura de tabla para la tabla `registros`
---
-
-DROP TABLE IF EXISTS `registros`;
-CREATE TABLE IF NOT EXISTS `registros` (
-  `id_registro` int(11) NOT NULL AUTO_INCREMENT,
-  `detalles_registro` text NOT NULL,
-  `fecha_registro` datetime NOT NULL,
-  PRIMARY KEY (`id_registro`)
-) ;
-
 -- --------------------------------------------------------
+CREATE TABLE `reportes` (
+  `id_reporte` int NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  `factura_id` int NOT NULL COMMENT 'id_factura',
+  `ruc_cliente_reporte` varchar(100)  NOT NULL,
+  `numero_factura_reporte` varchar(255)  NOT NULL,
+  `fecha_factura_reporte` DATE NOT NULL,
+  `monto_exenta_reporte` float NOT NULL,
+  `monto_cinco_reporte` float NOT NULL,
+  `monto_diez_reporte` float NOT NULL,
+  `monto_total_reporte` float NOT NULL,
+  `condicion_venta` varchar(30)  NOT NULL,
+  `updated_at` datetime DEFAULT CURRENT_TIMESTAMP
+);
+
 
 --
 -- Estructura de tabla para la tabla `turnos`

@@ -104,6 +104,13 @@ export const listaMenu = [
             icon: "delivery_dining",
             color: "#a0aec0",
           },
+          {
+            id: 16,
+            title: "reportes",
+            url: `${BASEURL}/reportes`,
+            icon: "summarize",
+            color: "#a0aec0",
+          },
         ],
       },
       {

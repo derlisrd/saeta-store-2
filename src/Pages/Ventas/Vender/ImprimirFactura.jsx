@@ -19,10 +19,9 @@ const ImprimirFactura = () => {
   const EMPRESA = JSON.parse(localStorage.getItem("dataEmpresa"));
   const DF = datosFacturas.facturas[indexFactura];
   const DF2 = {...datosFacturas}
-
   // found caja relacionada con la factura
   const foundIndex = DF2.listaFacturas.findIndex(e => e.id_caja_empresa===DF.datosFactura.id_caja);
-  const FACTURA = DF2.listaFacturas[foundIndex] ? DF2.listaFacturas[foundIndex] : {}  ;
+  const FACTURA = DF2.listaFacturas[foundIndex] ??  {}  ;
   
   let TOTAL5 = 0;
   let TOTAL10 = 0;

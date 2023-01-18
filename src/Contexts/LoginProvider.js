@@ -121,13 +121,18 @@ const LoginProvider = ({children}) => {
     const verificar = useCallback(async()=>{
         setLoading(true);
         if (userData.login) {
+        setInterval(async() => {
+              console.log('verify')
+        
             let res = await APICALLER.validateToken(userData.token_user);
             if (res.found > 0 && res.response ) {
                 
             }else{
                 logOut()
             }
+        }, 300000);
         }
+        
         setLoading(false)
     },[userData,logOut])
 

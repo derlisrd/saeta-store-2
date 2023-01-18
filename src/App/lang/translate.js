@@ -25,6 +25,7 @@ export const translate = {
         factura_contado:"Factura contado",
         seleccione_proveedor:"Seleccione proveedor",
         monto:"Monto",
+        reportes:'Reportes',
         montos:"Montos",
         seleccione_empleado:"Seleccione empleado",
         nro_comprobante:"Nro comprobante",

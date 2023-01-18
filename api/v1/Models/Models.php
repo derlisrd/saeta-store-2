@@ -32,6 +32,19 @@ class Models {
         }
 
     }
+
+    public static function GET_INTERNO_OBJECT($sql){
+        try {
+            $con = DataBaseConnect::connect_interno();
+            $sentencia = $con->prepare($sql, [PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL]);
+            $sentencia->execute();
+            return $sentencia->fetchObject();
+            DataBaseConnect::CloseConnect();
+        } catch (\Throwable $th) {
+            throw $th;
+        }
+    }
+
     public static function GET_INTERNO($sql){
         try {
             $stmt = DataBaseConnect::connect_interno()->prepare($sql);

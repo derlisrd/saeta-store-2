@@ -6,12 +6,14 @@ import {funciones as Funciones} from "../../../Functions";
 import {useLang} from '../../../Contexts/LangProvider'
 import { useNavigate } from "react-router-dom";
 import { env } from "../../../App/Config/config";
+import { useDatosEmpresa } from "../../../Contexts/DatosEmpresaProvider";
 
 const Contexto = createContext();
 
 
 const VentasProvider = ({ children }) => {
   const navigate = useNavigate();
+  const {EMPRESA} = useDatosEmpresa()
   /* VARIABLES CONSTANTES, ESTADOS E INPUT*************************/
   const inputCodigo = useRef(null);
   const inputCantidad = useRef(null);
@@ -48,7 +50,9 @@ const VentasProvider = ({ children }) => {
   };
   const [cargas, setCargas] = useState(initialCargas);
   
-  const initialDialogs={main:!0,nota:!1,buscarProducto:!1,cambiarPrecio:!1,buscarCliente:!1,registrarCliente:!1,finalizarVenta:!1,imprimirNotaPedido:!1,imprimirTicket:!1,imprimirFactura:!1,imprimirPresupuesto:!1,ayuda:!1,cambioCliente:!1,abrirCaja:!1,imagen:!1};
+  const initialDialogs={main:!0,nota:!1,buscarProducto:!1,cambiarPrecio:!1,buscarCliente:!1,registrarCliente:!1,finalizarVenta:!1,imprimirNotaPedido:!1,
+    imprimirTicketRecibo:!1,imprimirTicketFactura:!1,imprimirFacturaA4:!1,imprimirReciboA4:!1,
+    imprimirPresupuesto:!1,ayuda:!1,cambioCliente:!1,abrirCaja:!1,imagen:!1};
   const [dialogs, setDialogs] = useState(initialDialogs);
   const [IDNotaPedido,setIDNotaPedido] = useState("");
   const [indexFactura, setIndexFactura] = useState(storage ? storage.indexFactura : 0);
@@ -381,10 +385,24 @@ const VentasProvider = ({ children }) => {
     setCargas({ ...cargas, finalizarVenta: false});
    
     if ( tipoFactura === 0 || tipoFactura===3) {
-      setDialogs({ ...dialogs, imprimirTicket: true, finalizarVenta:false });
+      //RECIBO
+      if(EMPRESA.tipo_papel === '0')
+      {
+        setDialogs({ ...dialogs, imprimirTicketRecibo: true, finalizarVenta:false });
+      }else{
+        setDialogs({ ...dialogs, imprimirReciboA4: true, finalizarVenta:false });
+      }
     } else {
-      setDialogs({ ...dialogs,imprimirFactura: true, finalizarVenta:false});
+      //FACTURA
+      if(EMPRESA.tipo_papel === '0')
+      {
+        setDialogs({ ...dialogs, imprimirTicketFactura: true, finalizarVenta:false });
+      }else{
+        setDialogs({ ...dialogs, imprimirFacturaA4: true, finalizarVenta:false });
+      }
     }  
+
+
   }
 
 
