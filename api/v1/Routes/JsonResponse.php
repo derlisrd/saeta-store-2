@@ -5,6 +5,15 @@ namespace JsonResponse;
 
 class JsonResponse {
 
+    public static function jsonMessage($response,$status,$msj=""){
+        $json = [
+            'response'=>$response,
+            'status'=>$status,
+            'message'=>$msj,
+            'error'=>!$response
+        ];
+        return json_encode($json,http_response_code($status));
+    }
 
     public static function jsonResponseGET ($results,$response,$status,$found,$total=null){
         

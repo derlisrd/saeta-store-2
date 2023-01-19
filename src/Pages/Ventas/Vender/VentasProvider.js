@@ -89,6 +89,9 @@ const VentasProvider = ({ children }) => {
         total: 0,
         depositoActivo:storage ? storage.facturas[indexFactura].depositoActivo : "",
         total_iva: 0,
+        iva_5:0,
+        iva_10:0,
+        iva_exenta:0,
         descuento:0,
         guardado: false,
         datosMoneda: {},
@@ -305,6 +308,9 @@ const VentasProvider = ({ children }) => {
       recibido_factura:  df.datosFactura.tipoFactura === "2" ? 0 : df.datosFactura.totalAbonado,
       monto_total_factura: df.total,
       iva_factura: df.total_iva,
+      iva_exenta:df.iva_exenta,
+      iva_5:df.iva_5,
+      iva_10:df.iva_10,
       obs_factura: observaciones, /// ##############,
       retencion_iva_factura: df.datosFactura.retencion_iva_factura,
       orden_compra: df.datosFactura.ordenCompra,
@@ -433,6 +439,9 @@ const VentasProvider = ({ children }) => {
         total: 0,
         descuento:0,
         total_iva: 0,
+        iva_5:0,
+        iva_10:0,
+        iva_exenta:0,
         fecha_factura: Funciones.getFechaActualString(),
         horario_factura: Funciones.getHorarioActualString(),
         guardado: false,
@@ -450,7 +459,7 @@ const VentasProvider = ({ children }) => {
 
   const consultarCliente = async (doc) => {
     setCargas({ ...cargas, cargandoCliente: true });
-    let Cliente = {id_cliente: "1",nombre_cliente: "SIN NOMBRE",direccion_cliente:"",ruc_cliente: "0"};
+    let Cliente = {id_cliente: "1",nombre_cliente: "SIN NOMBRE",direccion_cliente:"",ruc_cliente: "X"};
     if (doc === "") {
       setearCliente(Cliente);
     } else {
@@ -686,13 +695,27 @@ const VentasProvider = ({ children }) => {
   };
 
   const hacerTotal = (fObj) => {
-    let suma = 0; let iva = 0;
+    let suma = 0; let iva_total = 0;
+    let iva_10=0; let iva_5 = 0; let iva_exenta = 0; 
+    
     fObj.facturas[indexFactura].itemsFactura.forEach(e => {
       suma += e.subtotal_precio;
-      iva += e.iva_total_producto;
+      iva_total += e.iva_total_producto;
+      
+      if(e.iva_porcentaje === 10){
+        iva_10 += e.precio_guardado * e.cantidad_producto;
+      }else if(e.iva_porcentaje === 5){ 
+        iva_5 += e.precio_guardado * e.cantidad_producto * e.cantidad_producto;
+      }else{
+        iva_exenta += e.precio_guardado * e.cantidad_producto;
+      }
     });
+
     fObj.facturas[indexFactura].total = suma;
-    fObj.facturas[indexFactura].total_iva = iva;
+    fObj.facturas[indexFactura].total_iva = iva_total;
+    fObj.facturas[indexFactura].iva_10 = iva_10;
+    fObj.facturas[indexFactura].iva_5 = iva_5;
+    fObj.facturas[indexFactura].iva_exenta = iva_exenta;
     setearFactura(fObj);
   };
 
@@ -869,6 +892,9 @@ const VentasProvider = ({ children }) => {
       total: 0,
       descuento:0,
       total_iva: 0,
+      iva_5:0,
+      iva_10:0,
+      iva_exenta:0,
       fecha_factura: Funciones.getFechaActualString(),
       horario_factura: Funciones.getHorarioActualString(),
       guardado: false,
@@ -962,6 +988,9 @@ const VentasProvider = ({ children }) => {
             itemsFactura: [],
             total: 0,
             total_iva: 0,
+            iva_5:0,
+            iva_10:0,
+            iva_exenta:0,
             descuento:0,
             guardado: false,
             datosMoneda: activeMoneda.length > 0 ? activeMoneda[0] : {},

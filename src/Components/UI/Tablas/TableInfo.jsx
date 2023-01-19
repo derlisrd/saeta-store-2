@@ -6,7 +6,7 @@ const TableInfo = ({icon,title,subtitle}) => {
     <Box padding={1} margin={1} >
     <Stack direction="row" spacing={2}>
         <Box>
-            <Avatar variant="rounded" sx={{ bgcolor: icon?.color ? icon.color : 'primary.main',padding:3 }} >
+            <Avatar variant="rounded" sx={{ bgcolor: icon?.color ? icon.color : 'primary.main',p:3 }} >
                 {icon && <Icon fontSize="large" >{icon.name}</Icon>}
             </Avatar>
         </Box>
@@ -15,7 +15,7 @@ const TableInfo = ({icon,title,subtitle}) => {
             <Typography variant='caption'>{subtitle}</Typography>
         </Box>
     </Stack>
-</Box>
+    </Box>
   )
 }
 

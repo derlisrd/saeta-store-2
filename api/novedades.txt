@@ -391,14 +391,14 @@ INSERT INTO `empresa_recibos` (`id_empresa_recibo`, `last_nro_recibo`, `updated_
 
 DROP TABLE IF EXISTS `facturas`;
 CREATE TABLE IF NOT EXISTS `facturas` (
-  `id_factura` int(11) NOT NULL AUTO_INCREMENT,
+  `id_factura` int(11)  NOT NULL PRIMARY KEY AUTO_INCREMENT ,
   `id_cliente_factura` int(11) NOT NULL,
   `id_user_factura` int(11) NOT NULL COMMENT 'id de user responsable',
   `id_caja_factura` int(11) NOT NULL,
   `id_forma_pago_factura` int(11) NOT NULL,
   `id_moneda_factura` int(11) NOT NULL DEFAULT '1' COMMENT 'moneda pagada',
   `id_empleado_factura` int(11) NOT NULL,
-  `nro_factura` varchar(255) NOT NULL COMMENT 'nro factura o recibo',
+  `nro_factura` varchar(255) COLLATE utf16_spanish_ci NOT NULL COMMENT 'nro factura o recibo',
   `fecha_factura` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `fecha_cobro_factura` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'si es a crédito',
   `tipo_factura` int(1) NOT NULL DEFAULT '1' COMMENT '0=recibo 1=contado 2=credito',
@@ -408,11 +408,13 @@ CREATE TABLE IF NOT EXISTS `facturas` (
   `valor_moneda_factura` int(11) NOT NULL,
   `estado_factura` int(1) DEFAULT '1' COMMENT '0 anulado 1 pagado 2 nopagado',
   `iva_factura` float NOT NULL COMMENT 'iva total',
+  `iva_exenta` float DEFAULT NULL,
+  `iva_5` float DEFAULT NULL,
+  `iva_10` float DEFAULT NULL,
   `retencion_iva_factura` float NOT NULL COMMENT 'retencion de iva',
-  `orden_compra` varchar(100) NOT NULL,
-  `obs_factura` text NOT NULL COMMENT 'info de pago',
-  `updated_at` datetime DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id_factura`)
+  `orden_compra` varchar(100) COLLATE utf16_spanish_ci NOT NULL,
+  `obs_factura` text COLLATE utf16_spanish_ci NOT NULL COMMENT 'info de pago',
+  `updated_at` datetime DEFAULT CURRENT_TIMESTAMP
 );
 
 -- --------------------------------------------------------

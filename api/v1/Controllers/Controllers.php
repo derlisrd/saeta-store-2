@@ -7,6 +7,7 @@ use GetController\GetController;
 use PostController\PostController;
 use PutController\PutController;
 use DeleteController\DeleteController;
+use EmailController\EmailController;
 use ExcelController\ExcelController;
 use PDFController\PDFController;
 use ExportController;
@@ -51,16 +52,19 @@ class Controllers {
 
             if($table === "generateReport"){
                 
-                ExcelController::generateReport();
+                
+                if(isset($tableArray[2]) and isset($tableArray[3]) ){
+                    ExcelController::generateReport($tableArray[2],$tableArray[3]);
+                }
                 
                 return false;
             }
 
             if($table==='view_pdf_factura'){
                 
-                $id = $tableArray[2];
-                if(isset($id)){
-                    $datos = ["id"=>$id];
+                
+                if(isset($tableArray[2])){
+                    $datos = ["id"=>$tableArray[2]];
                     
                     return PDFController::view($datos);
                 }
@@ -147,17 +151,21 @@ class Controllers {
 
             $TOKEN = isset($_GET['token']) || !empty($_GET['token']) ? $_GET['token'] : null;
             
-            if($table === "uploadJustOneImage"){
+            if($table == "uploadJustOneImage"){
                 if(!$TOKEN==null && AuthController::ValidateToken($TOKEN,false)){
                     PostController::uploadJustOneImage($_FILES);
                 }
                 return;
             }
             
+            if($table == 'sendEmail'){
+                echo EmailController::send_email($data);
+                return;
+            }
             
             
 
-            if($table === "Upload"){
+            if($table == "Upload"){
                 if(!$TOKEN==null && AuthController::ValidateToken($TOKEN,false)){
                     PostController::UploadImages($_FILES,$_POST);
                 }

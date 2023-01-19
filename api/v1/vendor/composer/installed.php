@@ -5,7 +5,7 @@
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
-        'reference' => '6fe26a1e248c50f1ba4a660136788f8e6b1c930e',
+        'reference' => '372ac3af9f39317009a556ef26a7e55b6dbe5d37',
         'name' => '__root__',
         'dev' => true,
     ),
@@ -16,7 +16,7 @@
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
-            'reference' => '6fe26a1e248c50f1ba4a660136788f8e6b1c930e',
+            'reference' => '372ac3af9f39317009a556ef26a7e55b6dbe5d37',
             'dev_requirement' => false,
         ),
         'dompdf/dompdf' => array(
@@ -125,6 +125,15 @@
             'install_path' => __DIR__ . '/../phenx/php-svg-lib',
             'aliases' => array(),
             'reference' => '4498b5df7b08e8469f0f8279651ea5de9626ed02',
+            'dev_requirement' => false,
+        ),
+        'phpmailer/phpmailer' => array(
+            'pretty_version' => 'v6.7.1',
+            'version' => '6.7.1.0',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../phpmailer/phpmailer',
+            'aliases' => array(),
+            'reference' => '49cd7ea3d2563f028d7811f06864a53b1f15ff55',
             'dev_requirement' => false,
         ),
         'phpoffice/phpspreadsheet' => array(
