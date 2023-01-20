@@ -2,11 +2,13 @@ import {useEffect,useContext,createContext,useState,useCallback} from "react";
 import { APICALLER } from "../../../Services/api";
 import { funciones } from "../../../Functions";
 import { useLang } from "../../../Contexts/LangProvider";
+import { useDatosEmpresa } from "../../../Contexts/DatosEmpresaProvider";
 
 const Context = createContext();
 
 const FacturasProvider = ({ children }) => {
   const {lang} = useLang()
+  const {EMPRESA} = useDatosEmpresa();
   const [lista, setLista] = useState([]);
   const [total, setTotal] = useState({
     facturas:0,
@@ -14,14 +16,16 @@ const FacturasProvider = ({ children }) => {
   });
   const [dialogs,setDialogs] = useState({
     estado: false,
-    imprimir:false,
-    imprimirFactura:false,
-    imprimirRecibo:false,
+    imprimirTicketRecibo:false,
+    imprimirTicketFactura:false,
+    imprimirReciboA4:false,
+    imprimirFacturaA4:false,
+    mail:false
   })
 
+  
 
-
-  let fecha = funciones.fechaActualYMD();
+  const fecha = funciones.fechaActualYMD();
   const [cargando, setCargando] = useState(true);
   const [cargandoFactura,setCargandoFactura] = useState(true);
   const [desdeFecha, setDesdeFecha] = useState(fecha);
@@ -57,22 +61,33 @@ const FacturasProvider = ({ children }) => {
 
   const consultarParaImprimir = async(fila)=>{
     setCargandoFactura(true);
-    
-     if(fila.tipo_factura==="0"){
-      setDialogs({...dialogs,imprimirRecibo:true})
+
+
+    if(fila.tipo_factura==="0"){
+          if(EMPRESA.tipo_papel==='0'){
+            setDialogs({...dialogs,imprimirTicketRecibo:true})
+          }else{
+            setDialogs({...dialogs,imprimirReciboA4:true})
+          }
     }
     else{
-      setDialogs({...dialogs,imprimirFactura:true})
+      if(EMPRESA.tipo_papel==='0'){
+        setDialogs({...dialogs,imprimirTicketFactura:true})
+      }else{
+        setDialogs({...dialogs,imprimirFacturaA4:true})
+      }
     }
 
     
     var resF = await APICALLER.get({table:'facturas_items',include:'productos,impuestos',
     on:'id_producto,id_producto_factura,id_impuesto,id_impuesto_factura',
-    where:`id_items_factura,=,${fila.id_factura}`});
+    where:`id_items_factura,=,${fila.id_factura}`,
+    fields:'codigo_producto,cantidad_producto,precio_producto_factura,porcentaje_impuesto,nombre_producto'
+    });
     
     resF.response ? setItemsFactura(resF.results) : console.log(resF);
     
-    if(fila.tipo_factura!=="0"){ 
+    if(fila.tipo_factura==="1" || fila.tipo_factura==="2"){ 
       let res = await APICALLER.get({table:'empresa_facturas',where:`id_caja_empresa,=,${fila.id_caja_factura}`});
       if(res.response) {
         let ef = res.results[0];

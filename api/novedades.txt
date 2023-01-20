@@ -334,8 +334,8 @@ CREATE TABLE IF NOT EXISTS `empresas` (
 -- Volcado de datos para la tabla `empresas`
 --
 
-INSERT INTO `empresas` (`id_empresa`, `nombre_empresa`, `propietario_empresa`, `ruc_empresa`, `direccion_empresa`, `telefono_empresa`, `impuesto_empresa`, `categoria_empresa`, `dimension_ticket`, `licencia`, `tipo_papel`, `updated_at`) VALUES
-(1, 'DERLIS RUIZ DIAZ', 'Derlis Ruiz Diaz', '4937724-8', 'CALLE JOEL EULOGIO ESTIGARRIBIA', '0983202090', 'IVA', 'ACTIVIDADES DE FOTOGRAFIA Y PORTALES WEB', 80, '2023-12-01', 0, '2022-07-02 22:27:54');
+INSERT INTO `empresas` (`id_empresa`, `nombre_empresa`, `propietario_empresa`, `ruc_empresa`, `direccion_empresa`, `telefono_empresa`, `impuesto_empresa`, `categoria_empresa`, `dimension_ticket`, `licencia`, `tipo_papel`, `updated_at`,logo_url_empresa,mensaje_recibo_empresa) VALUES
+(1, 'DERLIS RUIZ DIAZ', 'Derlis Ruiz Diaz', '4937724-8', 'CALLE JOEL EULOGIO ESTIGARRIBIA', '0983202090', 'IVA', 'ACTIVIDADES DE FOTOGRAFIA Y PORTALES WEB', 80, '2023-12-01', 0, '2022-07-02 22:27:54','','Arigato');
 
 -- --------------------------------------------------------
 
@@ -938,7 +938,7 @@ CREATE TABLE IF NOT EXISTS `proveedors` (
   `ruc_proveedor` varchar(20) DEFAULT NULL,
   `nombre_proveedor` varchar(100) NOT NULL,
   `telefono_proveedor` varchar(100) NOT NULL,
-  `updated_at` datetime DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` datetime DEFAULT CURRENT_TIMESTAMP
 ) ;
 
 --

@@ -10,7 +10,6 @@ const DatosEmpresa = () => {
 
     const {userData} = useLogin()
     const {snack,setSnack, Guardar,handleOnchange,cargando,lang,setDatosEmpresa,datosEmpresa} = useSettings()
-
     const [loadindImg,setLoadindImg] = useState(false)
 
     /* const deleteImage = e =>{

@@ -8,7 +8,6 @@ import { useVentas } from "./VentasProvider";
 
 const DialogImprimir = () => {
   const { dialogs } = useVentas();
-  
   if(dialogs.imprimirTicketRecibo){
     return <ImprimirTicketRecibo />
   }

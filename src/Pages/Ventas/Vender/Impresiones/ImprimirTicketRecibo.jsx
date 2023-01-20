@@ -23,17 +23,9 @@ const ImprimirTicketRecibo = () => {
 
 
   return (
-    <Dialog open={dialogs.imprimirTicketRecibo}
-    maxWidth="xs"
-    onClose={cerrar}
-    TransitionComponent={Zoom}>
+    <Dialog open={dialogs.imprimirTicketRecibo} maxWidth="xs" onClose={cerrar} TransitionComponent={Zoom}>
         <div style={{display:"flex",justifyContent:"center",padding:"25px",margin:"0 auto"}} id="print_factura">
-        <table
-          border="0"
-          style={{
-            width: widthDimension,
-            borderCollapse: "collapse",
-          }} 
+        <table border="0" style={{width: widthDimension,borderCollapse: "collapse"}} 
         >
           <thead style={{ fontSize: "10px" }}>
             <tr>
