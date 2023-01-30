@@ -84,7 +84,7 @@ class JsonResponse {
     }
 
 
-    public static function jsonResponseError ($response,int $status,String $message, string $sql=null){
+    public static function jsonResponseError ($response,int $status,String $message, string $sql=null,$error_code=1){
         
         if($sql){
             $json = array(
@@ -93,6 +93,7 @@ class JsonResponse {
                 "status"=> $status,
                 "sql"=>$sql,
                 "error"=>!$response,
+                "error_code"=>$error_code ?? 1
             );
         }
         else{
@@ -101,6 +102,7 @@ class JsonResponse {
                 "response" =>$response,
                 "status"=> $status,
                 "error"=> !$response,
+                "error_code"=>$error_code ?? 1
             );
         }
         

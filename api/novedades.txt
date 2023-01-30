@@ -608,6 +608,7 @@ CREATE TABLE IF NOT EXISTS `notas_pedidos` (
   `id_cliente_pedido` int(11) NOT NULL,
   `id_deposito_pedido` int(11) NOT NULL,
   `id_empleado_pedido` int(11) NOT NULL,
+  `id_user_pedido` int NOT NULL,
   `fecha_pedido` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` datetime DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id_notas_pedido`)
@@ -718,6 +719,7 @@ INSERT INTO `permisos` (`id_permiso`, `clave_permiso`, `descripcion_permiso`, `u
 (66, 'Comisiones', 'Ver comisiones', '2022-07-02 22:50:40'),
 (67, 'FormasPago', 'Alterar formas de pago', '2022-07-02 22:50:40'),
 (68, 'GenerarReportes', 'Generar Reportes', '2022-07-02 22:50:40'),
+(69, 'Notas', 'Ver todas las notas', '2022-07-02 22:50:40'),
 (72, 'Tema', 'Editar Temas', '2022-07-02 22:50:40');
 
 -- --------------------------------------------------------
@@ -1096,3 +1098,4 @@ CREATE TABLE `users_registros` (
   `fecha_login` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
+

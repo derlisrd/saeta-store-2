@@ -233,8 +233,9 @@ const TemaProvider = ({children})=>{
               ".swal-title":{color: colorText+"!important" },
               ".swal-icon--success__hide-corners,.swal-icon--success:after, .swal-icon--success:before":{background:"none !important"},
               ".swal-button":{backgroundColor: colores[tema.colors].primary.main,color:colores[tema.colors].primary.contrastText},
-              ".swal-button--cancel":{backgroundColor:colores[tema.colors].secondary.main+"!important",color:colores[tema.colors].secondary.contrastText},
+              ".swal-button--cancel":{backgroundColor:colores[tema.colors].secondary.main+"!important"},
               ".swal-text":{color: colorText+"!important" },
+              ".swal-button:not([disabled]):hover":{backgroundColor:colores[tema.colors].secondary.dark+"!important",color:colores[tema.colors].secondary.contrastText},
               ".swal-modal":{backgroundColor: PaperBgColor+" !important",border:'1px solid #666'},
               "::-webkit-scrollbar": {width: 0}
             }

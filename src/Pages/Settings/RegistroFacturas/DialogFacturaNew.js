@@ -97,10 +97,10 @@ const DialogFacturaNew = () => {
 <Grid item xs={12} sm={4}>
           <TextField
             fullWidth
-            label="Nros iniciales de factura"
+            label="Cod. exp."
             name="nro_datos_factura"
             onChange={onChange}
-            helperText="Ej: 001-002"
+            helperText="Cod. establecimiento Punto expedición"
             value={formulario.nro_datos_factura}
             required
           />

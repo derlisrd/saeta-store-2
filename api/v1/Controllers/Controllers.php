@@ -11,8 +11,9 @@ use EmailController\EmailController;
 use ExcelController\ExcelController;
 use PDFController\PDFController;
 use ExportController;
-use OptionsController\OptionsController;
-use PhpParser\Node\Stmt\Return_;
+//use OptionsController\OptionsController;
+use PatchController\PatchController;
+//use PhpParser\Node\Stmt\Return_;
 
 class Controllers {
 
@@ -201,7 +202,7 @@ class Controllers {
             $table = $tableArray[1];
             $data = file_get_contents("php://input");
             $id = isset($tableArray[2]) ? $tableArray[2] : null;
-            OptionsController::updateOrInsert($table,$id,$data);
+            PatchController::updateOrInsert($table,$id,$data);
         }
         else{
             if($TOKEN===null) { echo  JsonResponse::jsonResponseError(false,404 || !empty($_GET['token']),"Token invalid"); }

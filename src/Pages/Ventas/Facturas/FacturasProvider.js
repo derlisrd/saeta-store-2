@@ -61,8 +61,6 @@ const FacturasProvider = ({ children }) => {
 
   const consultarParaImprimir = async(fila)=>{
     setCargandoFactura(true);
-
-
     if(fila.tipo_factura==="0"){
           if(EMPRESA.tipo_papel==='0'){
             setDialogs({...dialogs,imprimirTicketRecibo:true})

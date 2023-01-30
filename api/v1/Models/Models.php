@@ -3,7 +3,6 @@
 namespace Models;
 
 use DataBaseConnect\DataBaseConnect;
-use GetController\GetController;
 use JsonResponse\JsonResponse;
 use PDO;
 

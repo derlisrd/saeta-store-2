@@ -1,11 +1,14 @@
 import { Button, Icon, IconButton, InputAdornment, Stack, TextField, Tooltip } from '@mui/material'
+import swal from 'sweetalert'
 import Tablas from '../../Components/UI/Tablas'
+import { useLogin } from '../../Contexts/LoginProvider'
+import { APICALLER } from '../../Services/api'
 import { useEmpleados } from './EmpleadosProvider'
 
 const EmpleadosLista = () => {
 
-  const {lista,dialogs,setDialogs,setForm,loading,lang} = useEmpleados()
-
+  const {listas,dialogs,setDialogs,setForm,loading,lang,getLista} = useEmpleados()
+  const {userData} = useLogin()
 
 const columnas = [
     {
@@ -31,6 +34,19 @@ const open = (f)=>{
   setDialogs({...dialogs,agregar:true});
 }
 
+const borrar = async (f)=>{
+  
+  let pregunta = await swal({ title:lang.q_borrar, text: lang.empleado,icon: "warning",buttons: [lang.cancelar, lang.borrar]});
+  
+  if(pregunta){
+    let res = await APICALLER.delete({table:'empleados',token:userData.token_user,id:f.id_empleado})
+    if(res.response){
+      swal({icon:'success',timer:2000,text:lang.borrado_correctamente});
+      getLista()
+    }
+  }
+   
+}
 
 const buscarRegistro = ()=>{
 
@@ -41,8 +57,8 @@ const Acciones = ({rowProps})=>
   <IconButton onClick={()=>open(rowProps)}>
     <Icon>edit</Icon>
   </IconButton>
-    <IconButton onClick={()=>{}}>
-    <Icon>visibility</Icon>
+    <IconButton onClick={()=>{borrar(rowProps)}}>
+    <Icon>delete</Icon>
   </IconButton>
   </Stack>)
 
@@ -77,7 +93,7 @@ const Acciones = ({rowProps})=>
         loading={loading}
         icon={{ name:"badge" }}
         columns={columnas}
-        datas={lista}
+        datas={listas.empleados}
         Accions={Acciones}
         showOptions
     />

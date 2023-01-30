@@ -83,7 +83,7 @@ class PostController {
             
             $NEWVALUES = '';
             foreach (json_decode($data["data"], true) as $key => $value) {
-                $NEWVALUES .= $key. "=" . $value. "',";
+                $NEWVALUES .= $key. "='" . $value. "',";
             }
             $NEWVALUES = substr($NEWVALUES,0,-1);
             //$sql = "INSERT INTO $table ($campos) VALUES ($values)";

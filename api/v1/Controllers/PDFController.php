@@ -2,6 +2,7 @@
 namespace PDFController;
 
 use Dompdf\Dompdf;
+use JsonResponse\JsonResponse;
 use Luecano\NumeroALetras\NumeroALetras;
 use Models\Models;
 
@@ -29,6 +30,10 @@ class PDFController {
         
         $items= Models::GET_INTERNO($query_items,"facturas_items");
         $factura = Models::GET_INTERNO($query,"facturas");
+
+        if(!isset($factura[0])){
+            return false;
+        }
 
         $df = $factura[0];
         $items_results = $items;
@@ -177,9 +182,12 @@ class PDFController {
         $id = $array["id"];
 
         $factura = self::query_factura($id);
-
-        echo $factura['html'];
-        return;
+        if($factura){
+            echo $factura['html'];
+        }
+        else{
+            return JsonResponse::jsonResponseError(false,200,'Not found');
+        }
     }
 
 

@@ -1,4 +1,5 @@
 import {useState,useEffect,useContext,createContext,useCallback,useRef} from "react";
+import swal from "sweetalert";
 import { useLang } from "../../../Contexts/LangProvider";
 import { APICALLER } from "../../../Services/api";
 
@@ -28,7 +29,8 @@ const EntregasProvider = ({ children }) => {
             where:`nro_factura,=,${nro},and,tipo_producto,=,1,and,tipo_factura,=,${tipoFactura},and,entregado_item,=,0`
           }); 
           if(res.response) {
-             setLista(res.results) 
+             setLista(res.results)
+             if(res.found === 0){ swal({timer:6000,icon:'warning',text:'No se encontraron datos'})}
           }
           else{
             console.log(res)

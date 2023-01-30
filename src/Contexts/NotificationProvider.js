@@ -19,8 +19,14 @@ function NotificationProvider({children}){
     
     const refreshDatas = async()=>{
         setIsLoading(false)
-        console.log('notificaionc');
+        console.log('notificaion');
     }
+
+    const getIntervalNotification = useCallback(async()=>{
+      setInterval(async() => {
+        console.log('notificacion')
+      }, 60000); 
+    },[])
 
 
     const getDatos = useCallback(async () => {
@@ -53,9 +59,12 @@ function NotificationProvider({children}){
     
     useEffect(() => {
         const ca = new AbortController(); let isActive = true;
-        if (isActive) {getDatos()}
+        if (isActive) {
+          getDatos()
+          getIntervalNotification()
+        }
         return () => {isActive = false;ca.abort();};
-      }, [getDatos]);
+      }, [getDatos,getIntervalNotification]);
 
     return(
         <Contexto.Provider value={values}>

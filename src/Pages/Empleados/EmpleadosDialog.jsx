@@ -13,7 +13,7 @@ const EmpleadosDialog = () => {
 
   
   const [load,setLoad] = useState(false);
-  const {dialogs,setDialogs,getLista,form,setForm,initialForm,listaRols,lang} = useEmpleados();
+  const {dialogs,setDialogs,getLista,form,setForm,initialForm,lang,listas} = useEmpleados();
 
     const cerrar = ()=>{
         setDialogs({...dialogs,agregar:false});
@@ -87,7 +87,7 @@ const EmpleadosDialog = () => {
                   <MenuItem value='0' disabled>
                       {lang.seleccionar}
                     </MenuItem>
-                  {listaRols.map((d) => (
+                  {listas.rols.map((d) => (
                     <MenuItem key={d.id_empleados_rol} value={d.id_empleados_rol}>
                       {d.descripcion_rol}
                     </MenuItem>
@@ -105,7 +105,26 @@ const EmpleadosDialog = () => {
               }}
             />
           </Grid>
-          <Grid item xs={12}>
+          <Grid item xs={12} sm={6}>
+          <FormControl fullWidth>
+                <InputLabel >{lang.usuario}</InputLabel>
+                <Select
+                  name="user_id"
+                  value={form.user_id}
+                  onChange={onChange}
+                >
+                  <MenuItem value='0' disabled>
+                      {lang.seleccionar}
+                    </MenuItem>
+                  {listas.users.map((d,index) => (
+                    <MenuItem key={index} value={d.id_user}>
+                      {d.nombre_user}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+          </Grid>
+          <Grid item xs={12} sm={6}>
           <FormLabel component="legend">{lang.tipo_salario}</FormLabel>
                 <FormControlLabel
                   value="1"

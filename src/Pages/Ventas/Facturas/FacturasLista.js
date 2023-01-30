@@ -199,35 +199,34 @@ const FacturasLista = () => {
       
       
       <Grid item xs={12} sm={6} md={3}>
-      <TextField
-          InputProps={{
-            endAdornment: (
-              <InputAdornment position="end">
-                <IconButton
-                  onClick={() => {
-                    getBuscarFactura();
-                  }}
-                >
-                  <Icon>search</Icon>
-                </IconButton>
-              </InputAdornment>
-            ),
-          }}
-          onKeyPress={(e) => {
-            if (e.key === "Enter") {
-              getBuscarFactura();
-            }
-          }}
-          onChange={(e) => setInputSearch(e.target.value)}
-          label={lang.buscar_por_nro}
-        />
+        <TextField
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton onClick={()=> {getBuscarFactura();}}>
+                    <Icon>search</Icon>
+                  </IconButton>
+                </InputAdornment>
+              ),
+            }}
+            onKeyPress={e=>{e.key==="Enter" && getBuscarFactura();}} onChange={(e) => setInputSearch(e.target.value)} label={lang.buscar_por_nro}
+          />
+        </Grid>
+        <Grid item xs={12} sm={6}  md={3}>
+          <TextField
+              InputProps={{endAdornment: (<InputAdornment position="end"><IconButton onClick={()=> { }}><Icon>search</Icon></IconButton></InputAdornment>)}}
+              onKeyPress={e=>{e.key==="Enter" && getBuscarFactura();}} onChange={(e) => setInputSearch(e.target.value)} label={lang.busca_por_cliente}
+            />
         </Grid>
         <Grid item xs={12} sm={6}  md={3}>
           <Button variant="contained" size="large"onClick={()=>go.to('ventas')}>{lang.nueva_venta}</Button>
-      </Grid>
+        </Grid>
       <Grid item xs={12} sm={6} md={3} >
-        <Alert icon={false}>{lang.total}: {funciones.numberSeparator(total.facturas)}{" "}
-        {MONEDA_PRINCIPAL.abreviatura_moneda}</Alert>
+        <Alert icon={false}>
+          {lang.total}:
+          {funciones.numberSeparator(total.facturas)}{" "}
+          {MONEDA_PRINCIPAL.abreviatura_moneda}
+        </Alert>
       </Grid>
       <Grid item xs={12} sm={6} md={3} >
         <Alert icon={false} severity="info">{lang.descuento}: {funciones.numberSeparator(total.descuentos)}{" "} {MONEDA_PRINCIPAL.abreviatura_moneda}</Alert>

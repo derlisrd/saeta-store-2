@@ -1,15 +1,22 @@
 import React,{createContext,useContext,useState,useEffect,useCallback} from 'react'
 import { APICALLER } from '../../Services/api'
 import {useLang} from '../../Contexts/LangProvider'
+import { useLogin } from '../../Contexts/LoginProvider'
 
 const Contexto = createContext()
 
 const EmpleadosProvider = ({children}) => {
 
     const {lang} = useLang()
+    const {userData} = useLogin()
+    const {token_user} = userData
     const [loading,setLoading]= useState(true)
-    const [lista,setLista] = useState([]);
-    const [listaRols,setListaRols] = useState([]);
+    const initialListas = {
+      users:[],
+      empleados:[],
+      rols:[]
+    }
+    const [listas,setListas] = useState(initialListas)
     const [dialogs,setDialogs] = useState({
       agregar:false
     })
@@ -23,6 +30,7 @@ const EmpleadosProvider = ({children}) => {
       id_rol:"0",
       salario_empleado:"",
       tipo_salario:"1",
+      user_id:''
     }
 
     const [form,setForm] = useState(initialForm)
@@ -30,17 +38,25 @@ const EmpleadosProvider = ({children}) => {
     const getLista = useCallback(async()=>{
         setLoading(true);
         const storage = JSON.parse(localStorage.getItem("facturasStorage"));
-        let res = await Promise.all([APICALLER.get({table:"empleados"}),APICALLER.get({table:'empleados_rols'})])
+        let [emp,rol,user] = await Promise.all([APICALLER.get({table:"empleados"}),APICALLER.get({table:'empleados_rols'}),APICALLER.get({table:'users',token:token_user,fields:'nombre_user,id_user'})])
         
-        res[0].response  ? setLista(res[0].results) : console.log(res);
-        res[1].response  ? setListaRols(res[1].results) : console.log(res);
+        if(emp.response && user.response){
+          setListas({
+            rols:rol.results,
+            empleados:emp.results,
+            users:user.results
+          })
+        }else{
+          console.log(emp,rol,user)
+        }
+        
         if(storage){
           let arr = {...storage}
-          arr.listaVendedores = res[0].results;
+          arr.listaVendedores = emp[0].results;
           localStorage.setItem("facturasStorage",JSON.stringify(arr));
         }
         setLoading(false)
-    },[])
+    },[token_user])
 
     useEffect(() => {
         const ca = new AbortController();
@@ -48,16 +64,15 @@ const EmpleadosProvider = ({children}) => {
         if (isActive) {getLista()}
         return () => {isActive = false; ca.abort();};
       }, [getLista]);
-  return (
-    <Contexto.Provider value={{lang,lista,getLista,loading,dialogs,setDialogs,form,setForm,initialForm,listaRols  }}>
-        {children}
-    </Contexto.Provider>
-  )
+      
+  const values = {lang,listas,getLista,loading,dialogs,setDialogs,form,setForm,initialForm  }
+
+  return <Contexto.Provider value={values}>{children}</Contexto.Provider>
 }
 
 export const useEmpleados = ()=>{
-    const {lang,lista,getLista,loading,dialogs,setDialogs,form,setForm,initialForm,listaRols} = useContext(Contexto);
-    return {lang,lista,getLista,loading,dialogs,setDialogs,form,setForm,initialForm,listaRols};
+    const {lang,listas,getLista,loading,dialogs,setDialogs,form,setForm,initialForm} = useContext(Contexto);
+    return {lang,listas,getLista,loading,dialogs,setDialogs,form,setForm,initialForm};
 }
 
 

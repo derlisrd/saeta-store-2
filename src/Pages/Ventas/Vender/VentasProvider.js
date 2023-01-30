@@ -582,6 +582,7 @@ const VentasProvider = ({ children }) => {
       let data = {
         id_deposito_pedido:fa.depositoActivo,
         id_cliente_pedido:fa.datosCliente.id_cliente,
+        id_user_pedido: userData.id_user,
         id_empleado_pedido:fa.datosFactura.id_empleado, 
         fecha_pedido: Funciones.getFechaHorarioString(),
       }
@@ -694,6 +695,9 @@ const VentasProvider = ({ children }) => {
     inputCantidad.current.value = "1";
   };
 
+
+
+  
   const hacerTotal = (fObj) => {
     let suma = 0; let iva_total = 0;
     let iva_10=0; let iva_5 = 0; let iva_exenta = 0; 
@@ -931,7 +935,7 @@ const VentasProvider = ({ children }) => {
   const getDatosFactura = useCallback(async () => {
     //consultar si hay factura en localstore
     if (localStorage.getItem("facturasStorage") === null) {
-      let res = await Promise.all([
+      let [rCajas,rMoneda,rFormasPago,rVendedores,rDepositos,cajaMonedas,cajasOpened] = await Promise.all([
         APICALLER.get({table: "cajas",include:"cajas_users", on:"id_caja,id_caja_caja",where: `id_user_caja,=,${id_user}`}),
         APICALLER.get({ table: "monedas" }),
         APICALLER.get({ table: "facturas_formas_pagos" }),
@@ -940,16 +944,12 @@ const VentasProvider = ({ children }) => {
         APICALLER.get({table:"cajas_monedas",include:"cajas,monedas,cajas_users",on:"id_caja_moneda,id_caja,id_moneda,id_moneda_caja_moneda,id_caja,id_caja_caja",where: `id_user_caja,=,${id_user}`}),
         APICALLER.get({table: "cajas",include:"cajas_users", on:"id_caja,id_caja_caja",where: `id_user_caja,=,${id_user},and,estado_caja,=,'open'`}),
       ])
-      let cajaMonedas = res[5];
-      let rDepositos = res[4];  
-      let rVendedores = res[3];
-      let rFormasPago = res[2];
-      let rMoneda = res[1];
-      let rCajas = res[0];
+      
       var ACTIVEFACTURA = false;
       var FACTURALISTA = [];
-      var rc = res[0];
-      var cajasOpened = res[6]
+      var rc = rCajas;
+      
+
       if (rc.response ) {
         if (rc.found < 1) {
           swal({text:"Debe habilitar una caja.",icon:"warning"})
@@ -969,7 +969,7 @@ const VentasProvider = ({ children }) => {
           else{
             swal({text:"Debe abrir caja.",icon:"warning"})
             .then(()=>{
-              navigate(env.BASEURL+`/cajas?dialog=open&id=${res[0].results[0].id_caja}`);
+              navigate(env.BASEURL+`/cajas?dialog=open&id=${rc.results[0].id_caja}`);
             })
             return false;
           }

@@ -5,7 +5,6 @@
 namespace OptionsController;
 
 use Models\Models;
-use JsonResponse\JsonResponse;
 
 class OptionsController {
 
