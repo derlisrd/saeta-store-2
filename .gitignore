@@ -5,6 +5,7 @@
 /api/v2/vendor
 /api/v2/node_modules
 /api/.env
+/api/v1/.env
 /node_modules
 /package-lock.json
 /api/test.php

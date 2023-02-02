@@ -279,8 +279,8 @@ CREATE TABLE IF NOT EXISTS `empleados` (
 -- Volcado de datos para la tabla `empleados`
 --
 
-INSERT INTO `empleados` (`id_empleado`, `id_rol`,`user_id`, `nombre_empleado`, `apellido_empleado`, `telefono_empleado`, `doc_empleado`, `salario_empleado`, `tipo_salario`, `updated_at`) VALUES
-(1, 2, 'Admin', 'instrador', 1, '0983202090', '0', 0, 1, '2022-07-05 01:31:43');
+INSERT INTO `empleados` (`id_empleado`, `id_rol`, `user_id`, `nombre_empleado`, `apellido_empleado`, `telefono_empleado`, `doc_empleado`, `salario_empleado`, `tipo_salario`, `updated_at`) VALUES
+(1, 2, 1, 'Admin', 'instrador', '0983202090', '0', 0, 1, '2022-07-05 01:31:43');
 
 -- --------------------------------------------------------
 
