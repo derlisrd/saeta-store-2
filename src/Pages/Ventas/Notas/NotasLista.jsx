@@ -1,10 +1,27 @@
-import React from 'react'
+import {useState} from 'react'
 import { useNotas } from './NotasProvider'
 import Tablas from "../../../Components/UI/Tablas";
-import { Button, Stack, Tooltip } from '@mui/material';
+import { Button, Grid, Icon, Stack, Tooltip } from '@mui/material';
+import { DatePickerCustom } from '../../../Components/MuiCustom/DatePickerCustom';
+import { funciones } from '../../../Functions';
 const NotasLista = () => {
-  const {lista,cargas,lang,dialogs,setDialogs,getListas} = useNotas();
+  const {lista,cargas,lang,dialogs,setDialogs,getListas,setDesdeFecha,setHastaFecha} = useNotas();
 
+
+  let today = new Date()
+
+  const [desde, setDesde] = useState(today);
+  const [hasta, setHasta] = useState(today);
+
+  const changeDatadesde = (e) => setDesde(e);
+  const changeDatahasta = (e) => setHasta(e);
+
+  const Filtrar = () => {
+    setHastaFecha(funciones.getDateYMD( hasta ));
+    setDesdeFecha(funciones.getDateYMD( desde )); 
+    //console.log(funciones.getDateYMD(desde),funciones.getDateYMD(hasta))
+    getListas()
+  };
 
   const columns = [
     {
@@ -40,12 +57,44 @@ const NotasLista = () => {
 
 
 const inputs = (
-  <Stack direction="row" spacing={2}>
-    <Button variant="contained" onClick={()=>{getListas()} }>{lang.ver_lista}</Button>
-    <Tooltip title={lang.nueva_nota} arrow >
-      <Button variant="contained" onClick={()=>{ setDialogs({...dialogs,nuevanota:true})}}>{lang.nueva_nota}</Button>
-    </Tooltip>
-  </Stack>
+  <Grid container spacing={2}>
+    <Grid item xs={12} sm={6} md={3}  >
+        <DatePickerCustom 
+        fullWidth
+        label={lang.desde}
+        value={ (desde)}
+        defaultValue={desde}
+        onChange={changeDatadesde}
+        name="desdeFecha"
+        />
+
+      </Grid>
+      <Grid item xs={12} sm={6} md={3}>
+      <DatePickerCustom 
+        fullWidth
+        label={lang.hasta}
+        value={hasta}
+        defaultValue={hasta}
+        onChange={changeDatahasta}
+        name="hastaFecha"
+        />
+      </Grid>
+      <Grid item xs={12} sm={6} md={3}>
+        <Button
+          onClick={Filtrar}
+          variant="contained"
+          size="large"
+          startIcon={<Icon>filter_list</Icon>}
+        >
+          {lang.ver_lista}
+        </Button>
+      </Grid>
+    <Grid item xs={12}>
+      <Tooltip title={lang.nueva_nota} arrow >
+        <Button variant="contained" size='large' onClick={()=>{ setDialogs({...dialogs,nuevanota:true})}}>{lang.nueva_nota}</Button>
+      </Tooltip>
+    </Grid>
+  </Grid>
 );
 
 

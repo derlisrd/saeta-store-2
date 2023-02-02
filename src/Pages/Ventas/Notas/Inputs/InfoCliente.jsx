@@ -1,12 +1,12 @@
 import { Button, Tooltip } from '@mui/material';
-import { useVentas } from './VentasProvider'
+import { useNotas } from '../NotasProvider';
 
 const InfoCliente = () => {
-    const {datosFacturas,indexFactura,setDialogs,dialogs} = useVentas();
-
-    const cl = datosFacturas.facturas[indexFactura].datosCliente;
+    const {datosNotas,indexFactura,setDialogs,dialogs} = useNotas();
+    const cl = datosNotas.facturas[indexFactura].datosCliente;
 
     const abrir = ()=> setDialogs({...dialogs,cambioCliente:true});
+
   return (
     <Tooltip arrow placement='right' title={<h3>Cambiar cliente</h3>}>
     <Button onClick={abrir} variant="text">

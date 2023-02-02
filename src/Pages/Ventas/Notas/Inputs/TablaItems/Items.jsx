@@ -1,22 +1,23 @@
 import { TableCell, TableRow,Icon,IconButton,Typography,Stack, Tooltip } from "@mui/material";
-import { useVentas } from "./VentasProvider";
-import VentasTablaOpciones from "./VentasTablaOpciones";
-import VentasTableVacio from "./VentasTableVacio";
-import { StylesTablaFacturaReponsive } from "../../../Components/UI/Tablas/StylesTablaFacturaReponsive";
+import { useNotas } from "../../NotasProvider";
+import Vacio from "./Vacio";
+import Opciones from "./Opciones";
+import { StylesTablaFacturaReponsive } from "../../../../../Components/UI/Tablas/StylesTablaFacturaReponsive";
+import { funciones } from "../../../../../Functions";
 
-const VentasTablaItems = () => {
+const Items = () => {
   const classes = StylesTablaFacturaReponsive();
 
-  const { datosFacturas, indexFactura,Funciones,restarCantidad,sumarCantidad } = useVentas();
+  const { datosNotas, indexFactura,restarCantidad,sumarCantidad} = useNotas();
 
-  const items = [...datosFacturas.facturas[indexFactura].itemsFactura];
-  const valorMoneda = parseFloat(datosFacturas.facturas[indexFactura].datosMoneda.valor_moneda);
+  const items = [...datosNotas.facturas[indexFactura].itemsFactura];
+  const valorMoneda = parseFloat(datosNotas.facturas[indexFactura].datosMoneda.valor_moneda);
 
   return (
     <>
-      {datosFacturas.facturas[indexFactura]?.itemsFactura.length === 0 ? (
+      {datosNotas.facturas[indexFactura]?.itemsFactura.length === 0 ? (
         
-          <VentasTableVacio colSpan={7} classes={classes} />
+          <Vacio colSpan={7} classes={classes} />
         
       ) : (
         items.map((d, i) => (
@@ -58,19 +59,19 @@ const VentasTablaItems = () => {
             <TableCell className={classes.tableitem}>
               <span className={classes.columname}>PRECIO</span>
               <span>
-                {Funciones.numberSeparator(d.precio_guardado / valorMoneda)}
+                {funciones.numberSeparator(d.precio_guardado / valorMoneda)}
               </span>
             </TableCell>
 
             <TableCell className={classes.tableitem}>
               <span className={classes.columname}>SUBTOTAL</span>
               <span>
-                {Funciones.numberSeparator(d.subtotal_precio / valorMoneda)}
+                {funciones.numberSeparator(d.subtotal_precio / valorMoneda)}
               </span>
             </TableCell>
 
             <TableCell className={classes.tableitem}>
-              <VentasTablaOpciones index={i} />
+              <Opciones index={i} />
             </TableCell>
           </TableRow>
         ))
@@ -79,4 +80,4 @@ const VentasTablaItems = () => {
   );
 };
 
-export default VentasTablaItems;
+export default Items;

@@ -212,7 +212,7 @@ const FacturasLista = () => {
             onKeyPress={e=>{e.key==="Enter" && getBuscarFactura();}} onChange={(e) => setInputSearch(e.target.value)} label={lang.buscar_por_nro}
           />
         </Grid>
-        <Grid item xs={12} sm={6}  md={3}>
+        <Grid item xs={12} sm={6}  md={9} >
           <TextField
               InputProps={{endAdornment: (<InputAdornment position="end"><IconButton onClick={()=> { }}><Icon>search</Icon></IconButton></InputAdornment>)}}
               onKeyPress={e=>{e.key==="Enter" && getBuscarFactura();}} onChange={(e) => setInputSearch(e.target.value)} label={lang.busca_por_cliente}

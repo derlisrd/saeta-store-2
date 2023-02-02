@@ -1,12 +1,13 @@
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Grid, Icon, InputAdornment, LinearProgress, TextField } from '@mui/material';
-import  { useRef, useState } from 'react'
-import { APICALLER } from '../../../Services/api';
-import { useLogin } from '../../../Contexts/LoginProvider';
-import { useVentas } from './VentasProvider';
+import { useRef, useState } from 'react'
+import { APICALLER } from '../../../../Services/api';
+import { useLogin } from '../../../../Contexts/LoginProvider';
 
-const DialogRegistroCliente = () => {
+import { useNotas } from '../NotasProvider';
+
+const RegistroCliente = () => {
     
-    const {dialogs,setDialogs,datosFacturas,indexFactura,setearFactura,setErrors,errors,lang} = useVentas();
+    const {dialogs,setDialogs,datosNotas,indexFactura,setearNota,setErrors,errors,lang} = useNotas();
     const {userData} = useLogin();
     const {token_user} = userData;
     const initialForm = {
@@ -67,13 +68,13 @@ const DialogRegistroCliente = () => {
             if(ins.response){ 
                
               
-            let fa = {...datosFacturas}
+            let fa = {...datosNotas}
             fa.facturas[indexFactura].datosCliente.id_cliente = ins.last_id;
             fa.facturas[indexFactura].datosCliente.ruc_cliente = formCliente.ruc_cliente;
             fa.facturas[indexFactura].datosCliente.nombre_cliente = formCliente.nombre_cliente;
             fa.facturas[indexFactura].datosCliente.direccion_cliente = formCliente.direccion_cliente;
             setErrors({...errors,cliente:false,clienteMensaje:""})
-            setearFactura(fa);
+            setearNota(fa);
             cerrar()
 
             }
@@ -225,4 +226,4 @@ const DialogRegistroCliente = () => {
   )
 }
 
-export default DialogRegistroCliente
+export default RegistroCliente

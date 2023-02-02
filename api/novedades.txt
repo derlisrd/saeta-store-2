@@ -264,6 +264,7 @@ DROP TABLE IF EXISTS `empleados`;
 CREATE TABLE IF NOT EXISTS `empleados` (
   `id_empleado` int(11) NOT NULL AUTO_INCREMENT,
   `id_rol` int(11) NOT NULL COMMENT 'id_empleados_rol',
+  `user_id` int(11) NULL,
   `nombre_empleado` varchar(200) NOT NULL,
   `apellido_empleado` varchar(80) NOT NULL,
   `telefono_empleado` varchar(25) DEFAULT NULL,
@@ -278,8 +279,8 @@ CREATE TABLE IF NOT EXISTS `empleados` (
 -- Volcado de datos para la tabla `empleados`
 --
 
-INSERT INTO `empleados` (`id_empleado`, `id_rol`, `nombre_empleado`, `apellido_empleado`, `telefono_empleado`, `doc_empleado`, `salario_empleado`, `tipo_salario`, `updated_at`) VALUES
-(1, 2, 'NOMBRE', 'APELLIDO', '0983202090', '0', 0, 1, '2022-07-05 01:31:43');
+INSERT INTO `empleados` (`id_empleado`, `id_rol`,`user_id`, `nombre_empleado`, `apellido_empleado`, `telefono_empleado`, `doc_empleado`, `salario_empleado`, `tipo_salario`, `updated_at`) VALUES
+(1, 2, 'Admin', 'instrador', 1, '0983202090', '0', 0, 1, '2022-07-05 01:31:43');
 
 -- --------------------------------------------------------
 
@@ -610,6 +611,7 @@ CREATE TABLE IF NOT EXISTS `notas_pedidos` (
   `id_empleado_pedido` int(11) NOT NULL,
   `id_user_pedido` int NOT NULL,
   `fecha_pedido` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `procesado_nota` TINYINT(1) NOT NULL DEFAULT '0',
   `updated_at` datetime DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id_notas_pedido`)
 ) ;

@@ -16,6 +16,10 @@ const columnas = [
       title:"#",
     },
     {
+      field:'nombre_user',
+      title:lang.usuario,
+    },
+    {
       field:"apellido_empleado",
       title:lang.apellido
     },

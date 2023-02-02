@@ -50,6 +50,7 @@ const LoginProvider = ({children}) => {
         localStorage.removeItem("facturasStorage");  
         localStorage.removeItem("dataProductos");
         localStorage.removeItem("compras");
+        localStorage.removeItem("notas");
         sessionStorage.setItem("userData", JSON.stringify(f))
         if(remember){
             localStorage.setItem("userData", JSON.stringify(f))
@@ -121,9 +122,9 @@ const LoginProvider = ({children}) => {
 
     const verificar = useCallback(async()=>{
         setLoading(true);
-        if (userData.login) {
+        let local = localStorage.getItem('userData') || sessionStorage.getItem('userData')
+        if (userData.login && local) {
             setInterval(async() => {
-              
               let res = await APICALLER.validateToken(userData.token_user);
               if (!res.response ) {
                   console.log(res)

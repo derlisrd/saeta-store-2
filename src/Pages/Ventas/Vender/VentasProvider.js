@@ -114,7 +114,7 @@ const VentasProvider = ({ children }) => {
   };
 
 
-  const [datosFacturas, setDatosFacturas] = useState(storage ? storage : initialFacturas);
+  const [datosFacturas, setDatosFacturas] = useState(storage ?? initialFacturas);
   const [indexPrecioCambiar, setIndexPrecioCambiar] = useState(-1);
 
   /*  FIN VARIABLES CONSTANTES Y ESTADOS*************************/

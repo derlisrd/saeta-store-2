@@ -6,7 +6,10 @@ import { useNotas } from './NotasProvider'
 
 const DialogNuevaNota = () => {
 
-    const {dialogs,setDialogs} = useNotas() 
+    const {dialogs,setDialogs,datosNotas,indexFactura,valorConvertido} = useNotas() 
+    const da = {...datosNotas.facturas[indexFactura]}
+    const ABM = da?.datosMoneda.abreviatura_moneda;
+
     const {lang} = useLang()
 
     function cerrar(){
@@ -30,7 +33,7 @@ const DialogNuevaNota = () => {
             </IconButton>
           </Tooltip>
 
-         {lang.nueva_nota} | {lang.total}: 
+         {lang.nueva_nota} | {lang.total}: {valorConvertido(da.total)} {ABM}
         </DialogTitle>
         <DialogContent dividers>
           <NotaMain />

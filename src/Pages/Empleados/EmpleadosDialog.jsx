@@ -107,7 +107,7 @@ const EmpleadosDialog = () => {
           </Grid>
           <Grid item xs={12} sm={6}>
           <FormControl fullWidth>
-                <InputLabel >{lang.usuario}</InputLabel>
+                <InputLabel >{lang.usuario_relacionado}</InputLabel>
                 <Select
                   name="user_id"
                   value={form.user_id}

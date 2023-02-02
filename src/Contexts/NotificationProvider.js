@@ -6,8 +6,9 @@ const Contexto = createContext()
 function NotificationProvider({children}){
     
 
+  
     
-    const {dataEmpresa} = useLogin()
+    const {dataEmpresa,userData} = useLogin()
     const [cantidad,setCantidad] = useState(0)
     const [notificaciones,setNotificaciones] = useState({
         vencimiento:false,
@@ -24,9 +25,12 @@ function NotificationProvider({children}){
 
     const getIntervalNotification = useCallback(async()=>{
       setInterval(async() => {
-        console.log('notificacion')
-      }, 60000); 
-    },[])
+        let local = localStorage.getItem('userData') || sessionStorage.getItem('userData')
+        if(userData.login && local){
+          console.log('is login')
+        }
+      }, 120000); 
+    },[userData])
 
 
     const getDatos = useCallback(async () => {

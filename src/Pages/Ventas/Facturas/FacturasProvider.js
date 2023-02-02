@@ -25,7 +25,8 @@ const FacturasProvider = ({ children }) => {
 
   
 
-  const fecha = funciones.fechaActualYMD();
+  //const fecha = funciones.fechaActualYMD();
+  const fecha = new Date();
   const [cargando, setCargando] = useState(true);
   const [cargandoFactura,setCargandoFactura] = useState(true);
   const [desdeFecha, setDesdeFecha] = useState(fecha);

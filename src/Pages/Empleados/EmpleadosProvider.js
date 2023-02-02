@@ -38,8 +38,12 @@ const EmpleadosProvider = ({children}) => {
     const getLista = useCallback(async()=>{
         setLoading(true);
         const storage = JSON.parse(localStorage.getItem("facturasStorage"));
-        let [emp,rol,user] = await Promise.all([APICALLER.get({table:"empleados"}),APICALLER.get({table:'empleados_rols'}),APICALLER.get({table:'users',token:token_user,fields:'nombre_user,id_user'})])
-        
+        let [emp,rol,user] = await Promise.all([
+          APICALLER.get({table:"empleados",include:'users',on:'user_id,id_user',fields:'nombre_empleado,nombre_user,apellido_empleado,doc_empleado,id_empleado'}),
+          APICALLER.get({table:'empleados_rols'}),
+          APICALLER.get({table:'users',token:token_user,fields:'nombre_user,id_user'})
+      ])
+        console.log(emp.results);
         if(emp.response && user.response){
           setListas({
             rols:rol.results,
@@ -52,7 +56,7 @@ const EmpleadosProvider = ({children}) => {
         
         if(storage){
           let arr = {...storage}
-          arr.listaVendedores = emp[0].results;
+          arr.listaVendedores = emp.results;
           localStorage.setItem("facturasStorage",JSON.stringify(arr));
         }
         setLoading(false)

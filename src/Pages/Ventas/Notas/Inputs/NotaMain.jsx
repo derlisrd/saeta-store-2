@@ -1,20 +1,23 @@
 import { Grid } from "@mui/material";
 import Botones from "./Botones";
+import InfoCliente from "./InfoCliente";
+import InfoDeposito from "./InfoDeposito";
 import Inputs from "./Inputs";
+import TablaItems from "./TablaItems";
 
 function NotaMain() {
     return (<Grid container  columnSpacing={{ xs: 1, sm: 2, md: 2 }}>
         <Grid item >
-          CLIENTE
+          <InfoCliente />
         </Grid>
         <Grid item xs={12} sm={4} md={4}>
-          deposito
+          <InfoDeposito />
         </Grid>
         <Grid item xs={12} sm={3}>
           
         </Grid>
         <Grid item xs={12} sm={12} md={12} lg={8}>
-           tabla de items
+           <TablaItems />
         </Grid>
   
         <Grid item xs={12} sm={12} md={12} lg={4}>
@@ -26,13 +29,13 @@ function NotaMain() {
               <Botones />
             </Grid>
             <Grid item xs={12}>
-              monedas
+              
             </Grid>
             <Grid item xs={12}>
-                prespuesto
+                
             </Grid>
             <Grid item xs={12}>
-              aguarda
+              
             </Grid>
           </Grid>
         </Grid>

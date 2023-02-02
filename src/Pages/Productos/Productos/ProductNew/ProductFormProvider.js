@@ -224,7 +224,7 @@ const ProductFormProvider = (props) => {
             APICALLER.get({table: `marcas`,fields: `id_marca,nombre_marca`}),
             APICALLER.get({table: `unidad_medidas`}),
             APICALLER.get({table: `impuestos`}),
-            APICALLER.get({table: `depositos`,sort:"-id_deposito",where:'tipo_deposito,=,1'})
+            APICALLER.get({table: `depositos`,sort:"id_deposito",where:'tipo_deposito,=,1'})
         ])
           let list = {categorias:va[0].results,proveedores:va[1].results,marcas:va[2].results,medidas:va[3].results,impuestos:va[4].results,depositos:va[5].results}
           setearListas(list)

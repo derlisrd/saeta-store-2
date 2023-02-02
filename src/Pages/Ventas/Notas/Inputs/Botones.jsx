@@ -4,20 +4,21 @@ import { useLang } from "../../../../Contexts/LangProvider";
 import { useNotas } from "../NotasProvider";
 
 function Botones() {
-    const {datosNotas,indexFactura,Anotar,CancelarFacturaActual,Aguardar} = useNotas();
+    const {datosNotas,indexFactura,Anotar,CancelarFacturaActual,Aguardar,valorConvertido} = useNotas();
     const {lang} = useLang()
-
+    const da = {...datosNotas.facturas[indexFactura]}
+    const ABM = da?.datosMoneda.abreviatura_moneda;
     return ( <Zoom in={datosNotas.facturas[indexFactura]?.itemsFactura.length > 0}>
         <Grid container spacing={2}>
           <Grid item xs={12} sm={6} md={12} lg={6}>
             <ButtonCustom
               size="large"
               fullWidth
-              variant="outlined"
+              variant="contained"
               onClick={Anotar}
-              color="secondary"
+              color="success"
             >
-              {lang.anotar}
+              {lang.finalizar}
             </ButtonCustom>
           </Grid>
           <Grid item xs={12} sm={6} md={12} lg={6}>
@@ -48,7 +49,7 @@ function Botones() {
             <Alert severity="info" icon={false}>
               <Typography variant="h6">
                 {" "}
-                {lang.total}: 
+                {lang.total}: {valorConvertido(da.total)} {ABM}
               </Typography>
             </Alert>
           </Grid>

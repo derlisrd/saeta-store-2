@@ -1,28 +1,43 @@
-import { CircularProgress, Grid, Icon, IconButton, InputAdornment, Stack } from "@mui/material";
-import React from "react";
+import {
+  CircularProgress,
+  Grid,
+  Icon,
+  IconButton,
+  InputAdornment,
+  Stack,
+} from "@mui/material";
 import ButtonCustom from "../../../Components/MuiCustom/ButtonCustom";
 import TextFieldCustom from "../../../Components/MuiCustom/TextFieldCustom";
 import { useVentas } from "./VentasProvider";
 
 const Inputs = () => {
+  const {
+    dialogs,
+    lang,
+    setDialogs,
+    cargas,
+    inputCodigo,
+    inputCantidad,
+    verificarExisteEnTabla,
+  } = useVentas();
+  const openDialogBuscaProducto = () => {
+    setDialogs({ ...dialogs, buscarProducto: true });
+  };
 
-    const { dialogs, lang, setDialogs, cargas,inputCodigo,inputCantidad,verificarExisteEnTabla} = useVentas();
-    const openDialogBuscaProducto = () => {setDialogs({ ...dialogs, buscarProducto: true });};
+  const presionaEnterPaBuscar = (e) => {
+    if (e.key === `Enter`) verificarExisteEnTabla(inputCodigo.current.value);
+  };
 
-  const presionaEnterPaBuscar = (e)=>{
-    if (e.key === `Enter`) verificarExisteEnTabla(inputCodigo.current.value);  
-  }
-
-  const restar = ()=>{
-    let anterior = parseFloat(inputCantidad.current.value) - 1
-    if(anterior>0){
-      inputCantidad.current.value = anterior 
+  const restar = () => {
+    let anterior = parseFloat(inputCantidad.current.value) - 1;
+    if (anterior > 0) {
+      inputCantidad.current.value = anterior;
     }
-  }
-  const sumar = ()=>{
-    let anterior = parseFloat(inputCantidad.current.value) + 1
-    inputCantidad.current.value = anterior 
-  }
+  };
+  const sumar = () => {
+    let anterior = parseFloat(inputCantidad.current.value) + 1;
+    inputCantidad.current.value = anterior;
+  };
 
   return (
     <>
@@ -55,26 +70,28 @@ const Inputs = () => {
         />
       </Grid>
       <Grid xs={12} md={6} lg={12} item>
-      <Stack direction="row">
-            
-                  <IconButton onClick={() => { restar()}}>
-                    <Icon>remove_circle_outline</Icon>
-                  </IconButton>
-                  <TextFieldCustom variant="standard"
-          onKeyPress={presionaEnterPaBuscar}
-          inputRef={inputCantidad}
-          type='number'
-          name="cantidad"
-          label={lang.cantidad}
-          defaultValue="1"
-        />    
-                  
-                  
-                  <IconButton onClick={sumar}>
-                    <Icon>add_circle_outline</Icon>
-                  </IconButton>
-                </Stack>
-        
+        <Stack direction="row">
+          <IconButton
+            onClick={() => {
+              restar();
+            }}
+          >
+            <Icon>remove_circle_outline</Icon>
+          </IconButton>
+          <TextFieldCustom
+            variant="standard"
+            onKeyPress={presionaEnterPaBuscar}
+            inputRef={inputCantidad}
+            type="number"
+            name="cantidad"
+            label={lang.cantidad}
+            defaultValue="1"
+          />
+
+          <IconButton onClick={sumar}>
+            <Icon>add_circle_outline</Icon>
+          </IconButton>
+        </Stack>
       </Grid>
       <Grid xs={12} md={6} lg={12} item>
         <ButtonCustom
