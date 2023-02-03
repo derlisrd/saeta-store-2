@@ -4,7 +4,7 @@ function Opciones({index}) {
 
     const {openCambiarPrecio,borrarItem} = useNotas()
 
-    return ( <Stack direction="row" alignItems="center" spacing={1}>
+    return ( <Stack direction="row" alignItems="center" spacing={0}>
       
     <IconButton color='warning' onClick={()=>{openCambiarPrecio(index)}} size="large">
     <Tooltip placement="top" title="Cambiar precio" arrow>

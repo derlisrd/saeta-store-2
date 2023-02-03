@@ -22,7 +22,7 @@ class Models {
             $stmt2->execute();
             $results2 = $stmt2->fetchAll(PDO::FETCH_ASSOC);
             $total = intval($results2[0]['COUNT(*)']);
-            return JsonResponse::jsonResponseGET($results,true,200,$found,$total);
+            return JsonResponse::jsonResponseGET($results,true,200,$found,$total,$sql);
             
             DataBaseConnect::CloseConnect();
         } catch (\Throwable $th) {

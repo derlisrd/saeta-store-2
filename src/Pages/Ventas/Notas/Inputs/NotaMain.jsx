@@ -16,11 +16,11 @@ function NotaMain() {
         <Grid item xs={12} sm={3}>
           
         </Grid>
-        <Grid item xs={12} sm={12} md={12} lg={8}>
+        <Grid item xs={12} sm={12} md={12} lg={9}>
            <TablaItems />
         </Grid>
   
-        <Grid item xs={12} sm={12} md={12} lg={4}>
+        <Grid item xs={12} sm={12} md={12} lg={3}>
           <Grid container rowSpacing={2} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
             
               <Inputs />
@@ -39,6 +39,7 @@ function NotaMain() {
             </Grid>
           </Grid>
         </Grid>
+
       </Grid>);
 }
 

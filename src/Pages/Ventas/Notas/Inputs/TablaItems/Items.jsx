@@ -24,14 +24,13 @@ const Items = () => {
           <TableRow key={i} className={classes.tablelist}>
             <TableCell className={classes.tableitem}>
               <span className={classes.columname}>COD.</span>
-              <span>{d.codigo_producto}</span>
+              <span>{(d.codigo_producto).substr(0,10)}</span>
             </TableCell>
 
             <TableCell className={classes.tableitem}>
               <span className={classes.columname}>CANT.</span>
               <span>
-                
-                <Stack direction="row">
+                <Stack direction="row" spacing={0}>
                   <Tooltip title="Restar 1">
                   <IconButton onClick={(e) => {restarCantidad(parseFloat(d.cantidad_producto), i)}}>
                     <Icon>remove_circle_outline</Icon>

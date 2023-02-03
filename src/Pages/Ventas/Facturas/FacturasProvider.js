@@ -26,11 +26,13 @@ const FacturasProvider = ({ children }) => {
   
 
   //const fecha = funciones.fechaActualYMD();
-  const fecha = new Date();
+  
   const [cargando, setCargando] = useState(true);
   const [cargandoFactura,setCargandoFactura] = useState(true);
+  const fecha = funciones.fechaActualYMD();
   const [desdeFecha, setDesdeFecha] = useState(fecha);
   const [hastaFecha, setHastaFecha] = useState(fecha);
+  
   const [filtro, setFiltro] = useState("");
   const initialFormulario = {
     abreviatura_moneda: "",

@@ -43,7 +43,7 @@ const EmpleadosProvider = ({children}) => {
           APICALLER.get({table:'empleados_rols'}),
           APICALLER.get({table:'users',token:token_user,fields:'nombre_user,id_user'})
       ])
-        console.log(emp.results);
+        //console.log(emp.results);
         if(emp.response && user.response){
           setListas({
             rols:rol.results,

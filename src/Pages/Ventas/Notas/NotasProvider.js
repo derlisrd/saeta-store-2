@@ -333,14 +333,15 @@ const NotasProvider = ({children}) => {
             id_empleado_pedido:datosNotas.id_empleado, 
             fecha_pedido: funciones.getFechaHorarioString(),
           }
-          
+
+
           let ins = await APICALLER.insert({token:token_user,table:"notas_pedidos",data}) 
           if(ins.response){
             let lastid= ins.last_id;
             //setIDNotaPedido(ins.last_id);
             let promesas = [];
             fa.itemsFactura.forEach(async(e) => {
-              let datos = { id_notas_pedido_item: lastid,id_producto_item: e.id_producto,precio_guardado:e.precio_guardado,cantidad_item:e.cantidad_producto }
+              let datos = { id_deposito_item: fa.depositoActivo, id_notas_pedido_item: lastid,id_producto_item: e.id_producto,precio_guardado:e.precio_guardado,cantidad_item:e.cantidad_producto }
               promesas.push(APICALLER.insert({table:"notas_items",token:token_user,data:datos}));
             });
             Promise.all(promesas);
@@ -408,8 +409,6 @@ const NotasProvider = ({children}) => {
         });
 
         res.response ? setLista(res.results) : console.log(res);
-        
-        console.log(res)
 
         setCargas({listaPedidos:false})
     },[desdeFecha,hastaFecha])

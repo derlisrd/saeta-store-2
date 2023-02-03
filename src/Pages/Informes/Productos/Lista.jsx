@@ -2,18 +2,19 @@ import { Alert, Button, Fab, FormControl, Grid, Icon, InputLabel, MenuItem, Sele
 import { useState } from "react";
 import { DatePickerCustom } from "../../../Components/MuiCustom/DatePickerCustom";
 import Tablas from "../../../Components/UI/Tablas";
+import { funciones } from "../../../Functions";
 import { useInformesProductos } from "./InformesProductosProvider";
 
 
 
 function Lista() {
     
-    const {loadings,listas,lang,setFechas, fechas,funciones,datos,tipo,setTipo} = useInformesProductos()
+    const {loadings,listas,lang,setFechas,datos,tipo,setTipo} = useInformesProductos()
     
-    
+    let today = new Date()
     //const [fecha,setFecha] = useState(fechas)
-    const [desde,setDesde] = useState(fechas.desde)
-    const [hasta,setHasta] = useState(fechas.hasta)
+    const [desde,setDesde] = useState(today)
+    const [hasta,setHasta] = useState(today)
 
     //id_producto_vendido,nombre_producto,fecha_vendido,precio_vendido,costo_producto_vendido,cantidad_vendido
     const columns = [
@@ -62,15 +63,16 @@ function Lista() {
     ];
     
 
-    const changeDatadesde = (e) => setDesde(e);
-    const changeDatahasta = (e) => setHasta(e);
+    const changeDatadesde = (e) => { setDesde(e);   }
+    const changeDatahasta = (e) => { setHasta(e);  }
 
     /* const change = e=>{
         setFecha({...fecha,[e.target.name]:e.target.value})
     } */
     const filtrar = (e)=>{
         e.preventDefault();
-        setFechas({desde:desde,hasta:hasta})
+        
+        setFechas({desde: funciones.getDateYMD( desde ),hasta: funciones.getDateYMD( hasta)})
         
     }
     

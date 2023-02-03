@@ -19,9 +19,7 @@ const ClientesProvider = ({ children }) => {
   const location = useLocation();
   const query = location.search ? new URLSearchParams(location.search) : 0;
   const [page, setPage] = useState(
-    query && query.get("p") && !isNaN(query.get("p"))
-      ? parseInt(query.get("p"))
-      : 0
+    (query && query.get("p") && !isNaN(query.get("p"))) ? parseInt(query.get("p")) : 0
   );
   
   const [limite, setLimite] = useState(30);

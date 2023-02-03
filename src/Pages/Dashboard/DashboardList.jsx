@@ -24,7 +24,7 @@ const DashboardList = () => {
           <Grid item xs={12} >
 
           </Grid>
-          <Grid item xs={12} sm={6} md={4} >
+          <Grid item xs={12} sm={6} md={6} lg={4} >
             <Card sx={{ bgcolor:'background.paper',p:2}}>
               <CardHeader
                 avatar={
@@ -44,7 +44,7 @@ const DashboardList = () => {
             </Card>
           </Grid>
     
-          <Grid item xs={12} sm={6} md={4} >
+          <Grid item xs={12} sm={6} md={6} lg={4} >
             <Card sx={{ height:'100%', p:2 }} >
               <CardHeader
                 avatar={
@@ -63,7 +63,7 @@ const DashboardList = () => {
               
             </Card>
           </Grid>
-          <Grid item xs={12} sm={12} md={4} >
+          <Grid item xs={12} sm={12} md={6} lg={4} >
             <Card sx={{ height:'100%', p:2 }} >
               <CardHeader
                 avatar={
@@ -74,10 +74,11 @@ const DashboardList = () => {
                 title={<h2>Dólar</h2>}
               />
               <CardContent>
-                <Stack direction="column" justifyContent="space-between" alignItems="flex-start">
+                <Stack direction="column" spacing={2} justifyContent="space-between" alignItems="flex-start">
                 <Typography variant="h6" display="block" >Compra: {datas.cotizacion.compra}  Gs</Typography>
                 <Typography variant="h6">Venta: {datas.cotizacion.venta} Gs</Typography>
-                
+                <Typography variant="caption">*Por cambios chaco</Typography>
+                <Button variant="contained">Aplicar cotización</Button>
                 </Stack>  
               </CardContent>
               

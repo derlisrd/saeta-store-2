@@ -8,7 +8,6 @@ const Contexto = createContext();
 const MovimientosProvider = ({ children }) => {
   const [cargando, setCargando] = useState(true);
   const {lang} = useLang();
-  const fecha = funciones.fechaActualYMD();
   const initialForm = {
     nombre_caja:"",
     id_cajas_movimiento:"",
@@ -21,8 +20,10 @@ const MovimientosProvider = ({ children }) => {
     detalles_movimiento:"",
   };
   const [form, setForm] = useState(initialForm);
+  const fecha = funciones.fechaActualYMD();
   const [desdeFecha, setDesdeFecha] = useState(fecha);
   const [hastaFecha, setHastaFecha] = useState(fecha);
+
   const initialDialog = {registrar:false,detalles:false}
   const [dialog, setDialog] = useState(initialDialog);
   const [lista, setLista] = useState([]);
@@ -40,6 +41,12 @@ const MovimientosProvider = ({ children }) => {
   };
   const [movimientos,setMovimientos] = useState(initialIngresos);
 
+
+  const getFilterDatas = useCallback(async(filters)=>{
+
+  },[])
+
+  
   const getData = useCallback(async () => {
     setCargando(true);
     const storeMonedas = localStorage.getItem("dataMonedas");
@@ -54,6 +61,7 @@ const MovimientosProvider = ({ children }) => {
       where: `fecha_movimiento,between,'${desdeFecha} 00:00:00',and,'${hastaFecha} 23:59:59'${existIDCaja} ${tipo_Registro} ${monedafiltrada}`,
       sort: "-fecha_movimiento",
     })]
+
     if(storeMonedas){
       setListaMonedas(JSON.parse(storeMonedas))
     }
@@ -92,6 +100,8 @@ const MovimientosProvider = ({ children }) => {
     setCargando(false);
   }, [idCaja, desdeFecha, hastaFecha,tipoRegistro,monedaFilter]);
 
+
+
   const getCajas = useCallback(async () => {
     let cajas = await APICALLER.get({
       table: `cajas`,
@@ -99,6 +109,7 @@ const MovimientosProvider = ({ children }) => {
     });
     cajas.response ? setListaCajas(cajas.results) : console.log(cajas);
   }, []);
+
 
   useEffect(() => {
     const ca = new AbortController();
@@ -108,42 +119,37 @@ const MovimientosProvider = ({ children }) => {
       getCajas();
     }
 
-    return () => {
-      isActive = false;
-      ca.abort();
-    };
+    return () => {isActive = false; ca.abort();};
   }, [getData, getCajas]);
 
-  return (
-    <Contexto.Provider
-      value={{lang,
-        cargando,
-        setCargando,
-        desdeFecha,
-        setDesdeFecha,
-        hastaFecha,
-        setHastaFecha,
-        dialog,
-        setDialog,
-        fecha,
-        setLista,
-        lista,
-        listaCajas,
-        setListaCajas,
-        idCaja,
-        setIdCaja,setTipoRegistro,
-        getData,
-        movimientos,
-        form, setForm,initialForm,listaMonedas,setMonedaFilter
-      }}
-    >
-      {children}
-    </Contexto.Provider>
-  );
+  const values = {lang,getFilterDatas,
+    cargando,
+    setCargando,
+    desdeFecha,
+    setDesdeFecha,
+    hastaFecha,
+    setHastaFecha,
+    dialog,
+    setDialog,
+    fecha,
+    setLista,
+    lista,
+    listaCajas,
+    setListaCajas,
+    idCaja,
+    setIdCaja,setTipoRegistro,
+    getData,
+    movimientos,
+    form, setForm,initialForm,listaMonedas,setMonedaFilter
+  }
+
+  return <Contexto.Provider value={values}>{children}</Contexto.Provider>
+
+  
 };
 
 export const useMovimientos = () => {
-  const {lang,
+  const {lang,getFilterDatas,
     cargando,
     setCargando,
     desdeFecha,
@@ -162,7 +168,7 @@ export const useMovimientos = () => {
     getData,
     movimientos,form, setForm,initialForm,listaMonedas,setMonedaFilter
   } = useContext(Contexto);
-  return {lang,
+  return {lang,getFilterDatas,
     cargando,
     setCargando,
     desdeFecha,

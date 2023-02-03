@@ -130,7 +130,7 @@ const LoginProvider = ({children}) => {
                   console.log(res)
                   logOut()
               }
-            }, 300000); //
+            }, 600000); //
         }
         setLoading(false)
     },[userData,logOut])

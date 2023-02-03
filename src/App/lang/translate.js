@@ -33,6 +33,7 @@ export const translate = {
         usuario_relacionado:'Usuario relacionado',
         q_desea_finalizar_venta_sin_cliente: 'Desea finalizar la nota sin cliente?',
         q_desea_finalizar_nota: 'Desea finalizar la nota?',
+        hacer_nota:'Hacer nota',
         montos:"Montos",
         seleccione_empleado:"Seleccione empleado",
         nro_comprobante:"Nro comprobante",

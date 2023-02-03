@@ -23,7 +23,7 @@ const VentasTablaItems = () => {
           <TableRow key={i} className={classes.tablelist}>
             <TableCell className={classes.tableitem}>
               <span className={classes.columname}>COD.</span>
-              <span>{d.codigo_producto}</span>
+              <span>{(d.codigo_producto).substr(0,9)}...</span>
             </TableCell>
 
             <TableCell className={classes.tableitem}>

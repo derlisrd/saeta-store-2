@@ -7,33 +7,37 @@ import {Button,Icon,TextField,Select,FormControl,InputLabel,MenuItem,Grid,IconBu
 import { useDatosEmpresa } from "../../../Contexts/DatosEmpresaProvider";
 import useGoto from "../../../Hooks/useGoto";
 import { DatePickerCustom } from "../../../Components/MuiCustom/DatePickerCustom";
+import { funciones } from "../../../Functions";
 
 
 
 const FacturasLista = () => {
   const {
     lista,setDesdeFecha,setHastaFecha,cargando,total,setDialogs,dialogs,
-    setFormulario,fecha,funciones,setFiltro,inputSearch,setInputSearch,
+    setFormulario,setFiltro,inputSearch,setInputSearch,
     getBuscarFactura, consultarParaImprimir,lang
   } = useFacturas();
   const { MONEDA_PRINCIPAL } = useDatosEmpresa();
 
   
 
-  const [desde, setDesde] = useState(fecha);
-  const [hasta, setHasta] = useState(fecha);
+  const today = new Date()
+
+  const [desde, setDesde] = useState(today);
+  const [hasta, setHasta] = useState(today);
+
   const [tipoFiltro, setTipoFiltro] = useState("");
 
   const go = useGoto();
 
 
-  const changeDatadesde = (e) => setDesde(e);
-  const changeDatahasta = (e) => setHasta(e);
+  const changeDatadesde = (e) => { setDesde(e);   }
+  const changeDatahasta = (e) => { setHasta(e);   }
 
   const Filtrar = () => {
     
+    setDesdeFecha(funciones.getDateYMD( desde )); 
     setHastaFecha(funciones.getDateYMD( hasta ));
-      setDesdeFecha(funciones.getDateYMD( desde )); 
       
        /* setHastaFecha( hasta );
       setDesdeFecha( desde ); */

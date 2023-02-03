@@ -1,9 +1,10 @@
 import {useState} from 'react'
 import { useNotas } from './NotasProvider'
 import Tablas from "../../../Components/UI/Tablas";
-import { Button, Grid, Icon, Stack, Tooltip } from '@mui/material';
+import { Button, Grid, Icon, Stack } from '@mui/material';
 import { DatePickerCustom } from '../../../Components/MuiCustom/DatePickerCustom';
 import { funciones } from '../../../Functions';
+import ButtonCustom from '../../../Components/MuiCustom/ButtonCustom';
 const NotasLista = () => {
   const {lista,cargas,lang,dialogs,setDialogs,getListas,setDesdeFecha,setHastaFecha} = useNotas();
 
@@ -13,12 +14,13 @@ const NotasLista = () => {
   const [desde, setDesde] = useState(today);
   const [hasta, setHasta] = useState(today);
 
-  const changeDatadesde = (e) => setDesde(e);
-  const changeDatahasta = (e) => setHasta(e);
+
+  const changeDatadesde = (e) => { setDesde(e); setDesdeFecha(funciones.getDateYMD( e ));   }
+  const changeDatahasta = (e) => { setHasta(e);  setHastaFecha(funciones.getDateYMD( e ));  }
 
   const Filtrar = () => {
-    setHastaFecha(funciones.getDateYMD( hasta ));
-    setDesdeFecha(funciones.getDateYMD( desde )); 
+    //setHastaFecha(funciones.getDateYMD( hasta ));
+    //setDesdeFecha(funciones.getDateYMD( desde )); 
     //console.log(funciones.getDateYMD(desde),funciones.getDateYMD(hasta))
     getListas()
   };
@@ -90,9 +92,11 @@ const inputs = (
         </Button>
       </Grid>
     <Grid item xs={12}>
-      <Tooltip title={lang.nueva_nota} arrow >
-        <Button variant="contained" size='large' onClick={()=>{ setDialogs({...dialogs,nuevanota:true})}}>{lang.nueva_nota}</Button>
-      </Tooltip>
+      
+        <ButtonCustom variant="contained" size='large' onClick={()=>{ setDialogs({...dialogs,nuevanota:true})}}>
+          {lang.hacer_nota}
+        </ButtonCustom>
+      
     </Grid>
   </Grid>
 );

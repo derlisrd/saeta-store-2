@@ -591,6 +591,7 @@ CREATE TABLE IF NOT EXISTS `notas_items` (
   `id_notas_item` int(11) NOT NULL AUTO_INCREMENT,
   `id_notas_pedido_item` int(11) NOT NULL COMMENT 'id_notas_pedidos',
   `id_producto_item` int(11) NOT NULL COMMENT 'id_producto',
+  `id_deposito_item` int(11) NOT NULL,
   `precio_guardado` float NOT NULL,
   `cantidad_item` float NOT NULL,
   `updated_at` datetime DEFAULT CURRENT_TIMESTAMP,

@@ -21,7 +21,7 @@ const ListaMovimientos = () => {
   const [idRegistrito,setIdRegistrito] = useState("");
   const [idMoneda,setIdMoneda] = useState("")
 
-  const changeDatadesde = (e) => setDesde(e)
+  const changeDatadesde = (e) => { setDesde(e) }
   const changeDatahasta = (e) => setHasta(e);
 
   const Filtrar = () => {

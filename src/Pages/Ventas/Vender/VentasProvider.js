@@ -512,6 +512,8 @@ const VentasProvider = ({ children }) => {
     inputCodigo.current.focus();
   };
 
+
+  
   const verificarExisteEnTabla = (codigo) => {
     if (codigo !== "") {
       let faArray = [...datosFacturas.facturas[indexFactura].itemsFactura];
@@ -539,20 +541,26 @@ const VentasProvider = ({ children }) => {
     inputCodigo.current.focus();
   };
 
+
+
   const CargarNota = async (codigo)=>{
     let fa = {...datosFacturas};
     
     setCargas({...cargas,items:true})
     setDialogs({...dialogs,nota:false});
-    let res = await Promise.all([
+    let [nota,items] = await Promise.all([
       APICALLER.get({table:"notas_pedidos",include:"clientes",on:"id_cliente,id_cliente_pedido",
       where:`id_notas_pedido,=,${codigo}`}),
-      APICALLER.get({table:"notas_items",include:"productos,impuestos",on:"id_producto,id_producto_item,id_impuesto_producto,id_impuesto",
-      where:`id_notas_pedido_item,=,${codigo}`})
+      APICALLER.get({table:"notas_items",include:"productos,impuestos,productos_depositos",
+      on:"id_producto,id_producto_item,id_impuesto_producto,id_impuesto,id_deposito_deposito,id_deposito_item",
+      where:`id_notas_pedido_item,=,${codigo},and,id_producto,=,id_producto_deposito`,
+      fields:'id_productos_deposito,codigo_producto,id_producto,id_impuesto,precio_producto,preciom_producto,costo_producto,nombre_producto,porcentaje_impuesto,porcentaje_comision,tipo_producto,stock_producto_deposito'
+    })
     ]);
-    let nota = res[0]; let items = res[1];
+    //console.log(nota,items)
     if(nota.found>0 && nota.response && items.found>0 && items.response){
       fa.facturas[indexFactura].depositoActivo = nota.results[0].id_deposito_pedido;
+      //console.log(items);
       items.results.forEach(e=>{
         insertarProductoTabla(e,parseFloat(e.cantidad_item))
       });
@@ -570,7 +578,7 @@ const VentasProvider = ({ children }) => {
       setErrors({...errors,color:"error",mensaje:"No hay nota con ese número.",error:true})
     } 
     setCargas({...cargas,items:false});
-    inputCodigo.current?.focus()
+    inputCodigo.current?.focus() 
   }
 
 
@@ -666,20 +674,20 @@ const VentasProvider = ({ children }) => {
     let obj = {
       codigo_producto: prod.codigo_producto,
       nombre_producto: prod.nombre_producto,
+      costo_producto: parseFloat(prod.costo_producto),
       precio_producto: parseFloat(prod.precio_producto),
       precio_guardado: parseFloat(prod.precio_producto),
+      preciom_producto: parseFloat(prod.preciom_producto),
+      precio_original: parseFloat(prod.precio_producto),
       cantidad_producto: cantidadInput,
-      id_productos_deposito: prod.id_productos_deposito,
+      stock_producto: parseFloat(prod.stock_producto_deposito),
       iva_porcentaje: iva_porcent,
       iva_total_producto: (subtotal * iva_porcent) / (100 + iva_porcent),
       subtotal_precio: subtotal,
-      stock_producto: parseFloat(prod.stock_producto_deposito),
-      costo_producto: parseFloat(prod.costo_producto),
-      preciom_producto: parseFloat(prod.preciom_producto),
-      precio_original: parseFloat(prod.precio_producto),
       tipo_producto: parseInt(prod.tipo_producto),
       porcentaje_comision: porcentaje_comision,
       comision_producto: (subtotal * porcentaje_comision) / 100,
+      id_productos_deposito: prod.id_productos_deposito,
       id_impuesto: prod.id_impuesto,
       id_producto: prod.id_producto,
       url_imagen: prod?.url_imagen ? prod.url_imagen : ""

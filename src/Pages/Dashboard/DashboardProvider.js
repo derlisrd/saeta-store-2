@@ -89,9 +89,11 @@ function DashboardProvider({children}) {
 
     }, []);
 
-    
+    const aplicarCotizacion = async()=>{
 
-    const values = {datas,isLoading}
+    }
+
+    const values = {datas,isLoading,aplicarCotizacion}
 
     useEffect(() => {
         const ca = new AbortController();
@@ -100,16 +102,12 @@ function DashboardProvider({children}) {
         return () => { isActive = false; ca.abort();};
       }, [getLista]);
 
-    return (
-        <Context.Provider value={values}>
-            {children}
-        </Context.Provider>
-    );
+    return <Context.Provider value={values}>{children}</Context.Provider>
 }
 
 export function useDashboard (){
-    const {datas,isLoading} = useContext(Context)
-    return {datas,isLoading}
+    const {datas,isLoading,aplicarCotizacion} = useContext(Context)
+    return {datas,isLoading,aplicarCotizacion}
 }
 
 export default DashboardProvider;

@@ -6,7 +6,7 @@ const VentasTablaOpciones = ({index}) => {
     const {borrarItem,openCambiarPrecio,openImagen} = useVentas();
 
   return (
-    <Stack direction="row" alignItems="center" spacing={1}>
+    <Stack direction="row" alignItems="center" spacing={0}>
       
       <IconButton color='success' onClick={()=>{openImagen(index)}} size="large">
         <Tooltip placement="top" title="Imagen" arrow>

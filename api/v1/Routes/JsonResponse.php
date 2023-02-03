@@ -15,7 +15,7 @@ class JsonResponse {
         return json_encode($json,http_response_code($status));
     }
 
-    public static function jsonResponseGET ($results,$response,$status,$found,$total=null){
+    public static function jsonResponseGET ($results,$response,$status,$found,$total=null,$sql=null){
         
         if($total==null){
             $json = array(
@@ -25,7 +25,8 @@ class JsonResponse {
                 "status"=> $status,
                 "error"=>!$response,
                 "message"=>null,
-                "first"=>$results[0] ?? []
+                "first"=>$results[0] ?? [],
+                "sql"=>''
             );
         }
         else{
@@ -35,6 +36,7 @@ class JsonResponse {
                 "results"=>$results,
                 "status"=> $status,
                 "total"=>$total,
+                "sql"=>'',
                 "error"=>!$response,
                 "message"=>null,
                 "first"=>$results[0] ?? []
