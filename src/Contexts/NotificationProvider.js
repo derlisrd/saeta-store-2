@@ -20,14 +20,14 @@ function NotificationProvider({children}){
     
     const refreshDatas = async()=>{
         setIsLoading(false)
-        console.log('notificaion');
+        //console.log('notificaion');
     }
 
     const getIntervalNotification = useCallback(async()=>{
       setInterval(async() => {
         let local = localStorage.getItem('userData') || sessionStorage.getItem('userData')
         if(userData.login && local){
-          console.log('is login')
+          console.log('notificaction')
         }
       }, 120000); 
     },[userData])

@@ -6,7 +6,7 @@ import { APICALLER } from '../../../Services/api';
 
 const DialogApertura = () => {
 
-    const {dialogs,setDialogs,formAbrir, setFormAbrir, funciones,aperturaCaja,errors,setErrors,cargas,dialogQuery,lang, lista,dialogID} = useCajas();
+    const {dialogs,setDialogs,formAbrir, setFormAbrir, funciones,aperturaCaja,errors,setErrors,cargas,dialogQuery,lang, listas,dialogID} = useCajas();
 
     const [loading,setLoading] = useState(true)
     const [inputsMonedas,setInputsMonedas] = useState([])
@@ -37,7 +37,7 @@ const DialogApertura = () => {
         
         let id_caja;
         if(dialogQuery==='open'){
-          let listaCajas = [...lista];
+          let listaCajas = [...listas.cajas];
           let index = listaCajas.findIndex(e=> e.id_caja === dialogID);
           if(index>=0){
             let f = listaCajas[index];
@@ -61,7 +61,9 @@ const DialogApertura = () => {
         }
       }
       setLoading(false)
-    },[dialogQuery,lista,dialogID,setFormAbrir,dialogs,formAbrir]);
+    },[dialogQuery,listas,dialogID,setFormAbrir,dialogs,formAbrir]);
+
+
 
 
     useEffect(() => {

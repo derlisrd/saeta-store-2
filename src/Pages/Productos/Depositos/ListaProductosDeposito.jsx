@@ -20,7 +20,7 @@ const ListaProductosDeposito = () => {
     let [res,dep,total] = await Promise.all([
       APICALLER.get({table:'productos',
         include:'productos_depositos',on:'id_producto,id_producto_deposito',where:`id_deposito_deposito,=,${id}`,
-        fields:'id_productos_deposito,codigo_producto,nombre_producto,stock_producto_deposito'
+        fields:'id_productos_deposito,codigo_producto,nombre_producto,stock_producto_deposito,precio_producto'
       }),
     APICALLER.get({table:'depositos',where:`id_deposito,=,${id}`,fields:'nombre_deposito'}),
     APICALLER.get({table:'productos_depositos',where:`id_deposito_deposito,=,${id}`,fields: "SUM(stock_producto_deposito) as total"})

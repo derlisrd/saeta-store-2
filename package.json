@@ -2,7 +2,7 @@
   "name": "saeta-store-2",
   "version": "2.8.8",
   "private": true,
-  "homepage": "https://grangerar.sistemadeventa.net/admin/",
+  "homepage": "https://pixcell.sistemadeventa.net/admin/",
   "dependencies": {
     "@emotion/react": "^11.9.0",
     "@emotion/styled": "^11.8.1",

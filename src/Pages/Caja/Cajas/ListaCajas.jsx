@@ -7,7 +7,7 @@ import { useCajas } from "./CajasProvider";
 
 const ListaCajas = () => {
   const {userData} = useLogin()
-  const {setIdCaja,lista,cargas,dialogs,setDialogs,setFormEdit,setFormAbrir, setDatosCajaCierre,/* setFormTransferencia,formTransferencia, setDatosCajaCierre,setTotalSumaMonedasArqueo,*/lang} = useCajas();
+  const {setIdCaja,listas,cargas,dialogs,setDialogs,setFormEdit,setFormAbrir, setDatosCajaCierre,lang} = useCajas();
   const columnas = [
     {
       field: "id_caja",
@@ -17,7 +17,10 @@ const ListaCajas = () => {
       field: "nombre_caja",
       title: lang.nombre_de_caja,
     },
-
+    {
+      field: "fecha_apertura",
+      title: lang.fecha_apertura
+    },
     {
       field: "estado_caja",
       title: lang.estado,
@@ -43,10 +46,6 @@ const ListaCajas = () => {
       },
     },
     
-    {
-      field: "nombre_user",
-      title: lang.asignado_a,
-    },
   ];
 
   const abrirEditar = (f) => {
@@ -62,14 +61,20 @@ const ListaCajas = () => {
     setDialogs({ ...dialogs, abrir: true });
   };
 
+
   const verMontos = (f)=>{
-    
     if(f.id_user_caja === userData.id_user || userData.rol_user==="1")
     {
       setIdCaja(f.id_caja)
       setDialogs({ ...dialogs, montos: true });
     }
   }
+
+  const asignaciones = f=>{
+    setIdCaja(f.id_caja)
+    setDialogs({ ...dialogs, asignaciones: true });
+  }
+
   /* const abrirTransferencia = (f) => {
     if(f.estado_caja==="0"){
       swal({text:"Una caja cerrada no puede transferir"});
@@ -104,8 +109,13 @@ const ListaCajas = () => {
 
 
   const Acciones = ({ rowProps }) => (
-    <Stack spacing={1} direction="row" justifyContent="center">
+    <Stack spacing={0} direction="row" justifyContent="center">
 
+      <Tooltip arrow title={lang.asignaciones}>
+        <IconButton onClick={() => asignaciones(rowProps)}>
+          <Icon>badge</Icon>
+        </IconButton>
+      </Tooltip>
       <Tooltip arrow title={lang.montos}>
         <IconButton onClick={() => verMontos(rowProps)}>
           <Icon>visibility</Icon>
@@ -171,7 +181,7 @@ const ListaCajas = () => {
       caption={lang.lista_de_cajas}
       icon={{ name:"point_of_sale" }}
       columns={columnas}
-      datas={lista}
+      datas={listas.cajas}
       Accions={Acciones}
       inputs={Search}
       lang={lang}

@@ -109,7 +109,7 @@ useEffect(() => {
                             </Typography>
                         </Grid>
                         <Grid item xs={12} sm={12} >
-                            <FormControlLabel control={<Checkbox onChange={(el)=>{changeCheck(el,e.id)}} />} label="Cerrar no efectivo" />
+                            <FormControlLabel control={<Checkbox onChange={(el)=>{changeCheck(el,e.id)}} />} label={lang.cerrar_tran_no_efectivo} />
                         </Grid>
                     </Fragment>
                 ))

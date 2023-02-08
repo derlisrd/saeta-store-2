@@ -11,7 +11,7 @@ const ImpresionTicketRecibo = () => {
   const {dialogs,setDialogs,formulario,itemsFactura,cargandoFactura} = useFacturas();
   
     const imprimir = () => {
-      printJS({ type: "html", printable: "print",style:'.textMono{font-family:monospace;font-size:10px;}' });
+      printJS({ type: "html", printable: "print_factura",style:'*{font-family:monospace;} .textMono{font-family:monospace;font-size:10px;}' });
     };
 
     

@@ -29,7 +29,7 @@ const LoginProvider = ({children}) => {
         username_user:null,
         permisos:[],
     }
-    const [userData,setUserData] = useState( storage ? storage : initialUserData);    
+    const [userData,setUserData] = useState( storage ?? initialUserData);    
     
     /* setInterval(async()=>{
         const store = JSON.parse(sessionStorage.getItem("userData")) || JSON.parse(localStorage.getItem("userData"));

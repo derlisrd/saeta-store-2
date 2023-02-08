@@ -109,7 +109,7 @@ const Inventario = () => {
     </Grid>
     </Grid>
   }
-  console.log(detallesRegistro)
+  //console.log(detallesRegistro)
   return (
     <Container>
       <Box p={2} boxShadow={4} borderRadius={4} m={1} bgcolor="background.paper">

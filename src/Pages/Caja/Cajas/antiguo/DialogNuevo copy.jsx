@@ -1,40 +1,20 @@
-import {Alert,Button,Checkbox,Dialog,DialogActions,DialogContent,DialogTitle,FormControlLabel,FormGroup,Grid,InputLabel,LinearProgress,Radio,Stack,TextField} from "@mui/material";
-import NumberFormatCustom from "../../../Components/thirty/NumberFormatCustom";
-import { useCajas } from "./CajasProvider";
+import {Alert,Button,Checkbox,Dialog,DialogActions,DialogContent,DialogTitle,FormControl,FormControlLabel,FormGroup,FormHelperText,Grid,InputLabel,LinearProgress,MenuItem,Radio,Select,Stack,TextField} from "@mui/material";
+import NumberFormatCustom from "../../../../Components/thirty/NumberFormatCustom";
+import { useCajas } from "../CajasProvider";
 import { Fragment, useEffect,useState } from 'react';
 
 const DialogNuevo = () => {
-  const {dialogs,setDialogs,formNew,initialFormNew,listas, errors,setErrors,agregarCajaNueva,cargas,lang} = useCajas();
+  const {dialogs,setDialogs,formNew,initialFormNew,listaUsers, listaMonedas, errors,setErrors,agregarCajaNueva,cargas,lang} = useCajas();
   
   
   
   const [form,setForm] = useState(initialFormNew)
   const [monedas,setMonedas] = useState([])
-  const [usuarios,setUsuarios] = useState([])
-
+  
   const onChange = (e) => {
     const { value, name } = e.target;
     setForm({ ...form, [name]: value });
   };
-
-  const changeUsuario = e=>{
-    let newarray = [...usuarios]
-    //console.log(e.target.checked,e.target.value)
-    
-    if(e.target.checked){
-      let index1 =  newarray.findIndex(i=> i.id_user_caja === e.target.value)
-      console.log(index1)
-      if(index1<0){
-        newarray.push({id_user_caja: e.target.value})
-      }
-    }else{
-      let index =  newarray.findIndex(i=> i.id_user_caja === e.target.value)
-      if(index>=0){
-        newarray.splice(index, 1);
-      }
-    }
-    setUsuarios(newarray);
-  }
 
   const changeMoneda = e=>{
     let newarray = [...monedas]
@@ -72,15 +52,10 @@ const DialogNuevo = () => {
       setErrors({...errors,nuevo:true,nuevoMensaje:lang.ingrese_nombre_caja});
       return false;
     }
-    /* if(form.id_user_caja===""){
-      setErrors({...errors,nuevo:true,nuevoMensaje:lang.seleccione_usuario});
-      return false;
-    } */
-    if(monedas.length<1){
+    if(form.id_user_caja===""){
       setErrors({...errors,nuevo:true,nuevoMensaje:lang.seleccione_usuario});
       return false;
     }
-     
     /* if(form.id_moneda_caja===""){
       setErrors({...errors,nuevo:true,nuevoMensaje:lang.seleccione_moneda});
       return false;
@@ -95,7 +70,7 @@ const DialogNuevo = () => {
       setErrors({...errors,nuevo:true,nuevoMensaje:lang.seleccione_moneda});
       return false;
     }
-    agregarCajaNueva(form,monedas,usuarios);
+    agregarCajaNueva(form,monedas);
     setForm(initialFormNew);
     setMonedas([]);
   }
@@ -103,7 +78,6 @@ const DialogNuevo = () => {
   const cerrar = () => {
     setDialogs({ ...dialogs, nuevo: false });
     setForm(initialFormNew);
-    setMonedas([])
   };
 
 
@@ -139,20 +113,30 @@ useEffect(() => {
             
           </Grid>
           <Grid item xs={12}>
-          <FormGroup>
-            <InputLabel>{lang.asignar_usuarios}</InputLabel>
-            {
-            listas.users.map((d,i) => (<FormControlLabel  key={i} control={<Checkbox name={d.id_user} value={d.id_user} onChange={changeUsuario} />} label={d.nombre_user}/>))
-            }
-          </FormGroup>
+            <FormControl fullWidth>
+              <InputLabel>{lang.asignar_usuario}</InputLabel>
+              <Select
+                onChange={onChange}
+                name="id_user_caja"
+                value={form.id_user_caja}
+                fullWidth disabled={cargas.nuevo}
+              >
+                {listaUsers.map((d) => (
+                  <MenuItem key={d.id_user} value={d.id_user}>
+                    {d.nombre_user}
+                  </MenuItem>
+                ))}
+              </Select>
+              <FormHelperText>{lang.asignar_usuario} </FormHelperText>
+            </FormControl>
           </Grid>
           <Grid item xs={12}>
 
           <FormGroup>
           <InputLabel>{lang.monedas_de_caja}</InputLabel>
-          {listas.monedas.map((d,i) => (
+          {listaMonedas.map((d,i) => (
             <Fragment key={i}>
-              <FormControlLabel key={i} control={<Checkbox 
+              <FormControlLabel key={i}  control={<Checkbox 
                 onChange={changeMoneda} value={d.id_moneda} name={d.id_moneda} />} 
                 label={d.nombre_moneda} />
                 {

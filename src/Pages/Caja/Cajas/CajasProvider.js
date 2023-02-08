@@ -37,7 +37,8 @@ const CajasProvider = ({ children }) => {
     transferencia: false,
     arqueo: false,
     arqueoFinal: false,
-    montos:false
+    montos:false,
+    asignaciones:false
   };
   const [dialogs, setDialogs] = useState(initialDialogs);
   const initialErrors = {
@@ -70,10 +71,15 @@ const CajasProvider = ({ children }) => {
   const [totalSumaMonedasArqueo, setTotalSumaMonedasArqueo] = useState(0);
   const [arqueo,setArqueo] = useState([]);
 
-  const [lista, setLista] = useState([]);
-  const [listaUsers, setListaUsers] = useState([]);
-  const [listaMonedas, setListaMonedas] = useState([]);
-  const [listaRegistrosMonedas, setListaRegistroMonedas] = useState([]);
+
+
+
+  const [listas,setListas] = useState({
+    cajas:[],
+    users:[],
+    monedas:[],
+    registroMonedas: []
+  })
 
   const [datosCajaCierre,setDatosCajaCierre] = useState({});
 
@@ -99,7 +105,10 @@ const CajasProvider = ({ children }) => {
 
 
 
-  const agregarCajaNueva = async (f,mon) => {
+
+
+
+  const agregarCajaNueva = async (f,mon,usuarios) => {
     setCargas({ ...cargas, nuevo: true });
     let tablecaja = { 
       nombre_caja:f.nombre_caja,
@@ -118,8 +127,16 @@ const CajasProvider = ({ children }) => {
 
     if (res.response) {
       let LASTIDCAJA = res.last_id;
-      let IDUSER = f.id_user_caja;
-      let cajaformusers = { id_user_caja: IDUSER, id_caja_caja: LASTIDCAJA };
+      /* let IDUSER = f.id_user_caja; let cajaformusers = []; */
+      let promesas = []
+      usuarios.forEach(e=>{
+        promesas.push(APICALLER.insert({
+          table: "cajas_users",
+          data: { id_user_caja: e.id_user_caja, id_caja_caja: LASTIDCAJA },
+          token: token_user,
+        }))
+      })
+      
       
       let cajamovimientosForm = {
         id_moneda_movimiento:0,
@@ -133,17 +150,12 @@ const CajasProvider = ({ children }) => {
       }
 
 
-      let promesas = [APICALLER.insert({
-        table: "cajas_users",
-        data: cajaformusers,
-        token: token_user,
-      }),APICALLER.insert({
+       promesas.push(APICALLER.insert({
         table: "cajas_movimientos",
         data: cajamovimientosForm,
         token: token_user,
-      }),
-      
-    ]
+      }))
+
       mon.forEach(elem => {
         let tablecajasmonedas = {
           id_moneda_caja_moneda: elem.id_moneda,
@@ -205,6 +217,7 @@ const CajasProvider = ({ children }) => {
 
   
   
+
 
 
 
@@ -316,22 +329,22 @@ const CajasProvider = ({ children }) => {
 
 
   const getLista = useCallback(async()=>{
+    //APICALLER.get({
       setCargas({ lista: true });
-         let val = await Promise.all([APICALLER.get({
-          table: "cajas",include: "users,cajas_users",
-          on: "id_user,id_user_caja,id_caja,id_caja_caja",
-          fields:"nombre_caja,id_caja,estado_caja,nombre_user,fecha_apertura,id_user_caja",
-        }),
+         let [cajas,users,monedas,registros] = await Promise.all([APICALLER.get({table:'cajas',fields:'id_caja,nombre_caja,estado_caja,fecha_apertura,fecha_creacion'}),
           APICALLER.get({table: "users",token: token_user,fields: "nombre_user,id_user"}),
           APICALLER.get({table: "monedas",fields: "nombre_moneda,id_moneda,abreviatura_moneda"}),
           APICALLER.get({table: "monedas_registros",include:"monedas",on:"id_moneda,id_moneda_registro" })  
         ]);
-        let usersresponse = val[1];
-        if(usersresponse.response){
-          setLista(val[0].results);
-          setListaUsers(val[1].results);
-          setListaMonedas(val[2].results)
-          setListaRegistroMonedas(val[3].results) 
+
+        if(users.response){
+          //setLista(val[0].results);setListaUsers(val[1].results);setListaMonedas(val[2].results);setListaRegistroMonedas(val[3].results);
+          setListas({
+            cajas: cajas.results,
+            users: users.results,
+            monedas: monedas.results,
+            registroMonedas: registros.results
+          })
         }else{
           logOut()
         }
@@ -344,52 +357,17 @@ const CajasProvider = ({ children }) => {
       });
     },[token_user,logOut]);
 
+
+
   useEffect(() => {
     const ca = new AbortController(); let isActive = true;
     if (isActive) {getLista();}
     return () => {isActive = false; ca.abort();};
   }, [getLista]);
 
-  return (
-    <Contexto.Provider
-      value={{idCaja,setIdCaja,
-        cargas,valoresMonedas,setValoresMonedas,
-        lista,cerrarCaja,
-        listaMonedas,
-        listaUsers,
-        listaRegistrosMonedas,
-        formEdit,
-        setFormEdit,
-        dialogs,
-        setDialogs,
-        formNew,
-        formAbrir,
-        setFormAbrir,
-        setFormNew,
-        initialFormNew,
-        funciones,
-        agregarCajaNueva,
-        editarCaja,
-        aperturaCaja,
-        errors,
-        setErrors,
- 
-        totalSumaMonedasArqueo, setTotalSumaMonedasArqueo,
-        datosCajaCierre,setDatosCajaCierre,arqueo,setArqueo,getLista,dialogQuery,dialogID,lang,valoresCierre,setValoresCierre
-      }}
-    >
-      {children}
-    </Contexto.Provider>
-  );
-};
-
-export const useCajas = () => {
-  const {idCaja,setIdCaja,
+  const values = {listas,idCaja,setIdCaja,
     cargas,valoresMonedas,setValoresMonedas,
-    lista,cerrarCaja,
-    listaMonedas,
-    listaUsers,
-    listaRegistrosMonedas,
+    cerrarCaja,
     formEdit,
     setFormEdit,
     dialogs,
@@ -398,7 +376,30 @@ export const useCajas = () => {
     formAbrir,
     setFormAbrir,
     setFormNew,
+    initialFormNew,
+    funciones,
+    agregarCajaNueva,
+    editarCaja,
+    aperturaCaja,
+    errors,
+    setErrors,
+    totalSumaMonedasArqueo, setTotalSumaMonedasArqueo,
+    datosCajaCierre,setDatosCajaCierre,arqueo,setArqueo,getLista,dialogQuery,dialogID,lang,valoresCierre,setValoresCierre}
 
+  return <Contexto.Provider value={values}>{children}</Contexto.Provider>
+};
+
+export const useCajas = () => {
+  const {listas,idCaja,setIdCaja,
+    cargas,valoresMonedas,setValoresMonedas,cerrarCaja,
+    formEdit,
+    setFormEdit,
+    dialogs,
+    setDialogs,
+    formNew,
+    formAbrir,
+    setFormAbrir,
+    setFormNew,
     initialFormNew,
     funciones,
     agregarCajaNueva,
@@ -409,12 +410,8 @@ export const useCajas = () => {
     totalSumaMonedasArqueo, setTotalSumaMonedasArqueo,
     datosCajaCierre,setDatosCajaCierre,arqueo,setArqueo,getLista,dialogQuery,dialogID,lang,valoresCierre,setValoresCierre
   } = useContext(Contexto);
-  return {idCaja,setIdCaja,
-    cargas,valoresMonedas,setValoresMonedas,
-    lista,cerrarCaja,
-    listaMonedas,
-    listaUsers,
-    listaRegistrosMonedas,
+  return {listas,idCaja,setIdCaja,
+    cargas,valoresMonedas,setValoresMonedas,cerrarCaja,
     formEdit,
     setFormEdit,
     dialogs,

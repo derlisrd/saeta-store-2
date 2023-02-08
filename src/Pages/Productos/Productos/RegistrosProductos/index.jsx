@@ -18,7 +18,8 @@ const RegistrosProductos = () => {
   const getLista = useCallback(async()=>{
     let [res,stock] = await Promise.all([
       APICALLER.get({table:'productos',
-        include:'productos_registros,depositos',on:'id_producto,id_producto_registro,id_deposito_registro,id_deposito',where:`id_producto,=,${id}`,
+        include:'productos_registros,depositos',on:'id_producto,id_producto_registro,id_deposito_registro,id_deposito',
+        where:`id_producto,=,${id}`,
         fields:'codigo_producto,id_producto,nombre_producto,cantidad_cargada,fecha_cargada,nombre_deposito'
       }),
       APICALLER.get({table: "productos_depositos",
