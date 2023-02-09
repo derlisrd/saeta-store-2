@@ -21,10 +21,8 @@ const DashboardList = () => {
       return (
         <Container maxWidth='xl'>
         <Grid container spacing={2}>
-          <Grid item xs={12} >
 
-          </Grid>
-          <Grid item xs={12} sm={6} md={6} lg={4} >
+          <Grid item xs={12} sm={12} md={6} lg={4} >
             <Card sx={{ bgcolor:'background.paper',p:2}}>
               <CardHeader
                 avatar={
@@ -44,7 +42,7 @@ const DashboardList = () => {
             </Card>
           </Grid>
     
-          <Grid item xs={12} sm={6} md={6} lg={4} >
+          <Grid item xs={12} sm={12} md={6} lg={4} >
             <Card sx={{ height:'100%', p:2 }} >
               <CardHeader
                 avatar={

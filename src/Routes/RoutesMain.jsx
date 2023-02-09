@@ -91,6 +91,7 @@ const RoutesMain = () => {
   return (
     <Routes>
       <Route path={R+"profile"} element={<PublicRoute><Profile /></PublicRoute>} />
+
       <Route path={R+"formaspago"} element={<PrivateRoute id={67}><FormasPago /></PrivateRoute>} />
       <Route path={R+"comisiones"} element={<PrivateRoute id={66}><Comisiones /></PrivateRoute>} />
       <Route path={R+"cuentas"} element={<PrivateRoute id={47}><Cuentas /></PrivateRoute>} />
@@ -135,6 +136,7 @@ const RoutesMain = () => {
       <Route path={R+'info'} element={<PublicRoute><Info /></PublicRoute>} />
       <Route path={R+'cajas'} element={<PrivateRoute id={22}><Cajas /></PrivateRoute>} />
       <Route path={R+'backup'} element={<PrivateRoute id={65}><Backup /></PrivateRoute>} />
+      
       <Route path={R+'notautorized'} element={<NotAutorized />} />
       <Route path={R} element={<LoginForm />} />
       <Route path="*" element={<ErrorPage />} />
