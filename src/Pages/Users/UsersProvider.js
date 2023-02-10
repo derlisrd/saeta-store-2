@@ -191,7 +191,7 @@ function UsersProvider ({children}){
         let promises = await Promise.all([
             APICALLER.get({table:"users",token:token_user}),
             APICALLER.get({table:'users_rols'}),
-            APICALLER.get({table:`permisos`,sort:'-descripcion_permiso'})]);
+            APICALLER.get({table:`permisos`,sort:'-clave_permiso'})]);
         let user = promises[0];
         let rol = promises[1];
         let per = promises[2];

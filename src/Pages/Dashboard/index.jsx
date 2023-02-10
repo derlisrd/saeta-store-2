@@ -10,7 +10,7 @@ const DashBoard = () => {
 
   const {permisos} = userData
 
-  if(permisos.some(e => parseInt(e.id_permiso_permiso) === parseInt(63)) ){
+  if(permisos.some(e => parseInt(e.id_permiso_permiso) === parseInt(1)) ){
     return(
     <DashboardProvider>
       <DashboardList />

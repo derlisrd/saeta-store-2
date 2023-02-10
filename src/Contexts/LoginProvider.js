@@ -45,7 +45,7 @@ const LoginProvider = ({children}) => {
     }, 900000) */
 
     
-    const setearLogin = (f,remember)=>{
+    const setearLogin = (f,remember=false)=>{
         setUserData(f);
         localStorage.removeItem("facturasStorage");  
         localStorage.removeItem("dataProductos");
@@ -119,9 +119,8 @@ const LoginProvider = ({children}) => {
         }
     }
 
-
-    const verificar = useCallback(async()=>{
-        setLoading(true);
+    const authcheck = useCallback(async()=>{
+        
         let local = localStorage.getItem('userData') || sessionStorage.getItem('userData')
         if (userData.login && local) {
             setInterval(async() => {
@@ -130,7 +129,28 @@ const LoginProvider = ({children}) => {
                   console.log(res)
                   logOut()
               }
+              console.log(res);
             }, 600000); //
+        }
+        
+    },[userData,logOut])
+
+    const verificar = useCallback(async()=>{
+        setLoading(true);
+        let local = localStorage.getItem('userData') || sessionStorage.getItem('userData')
+        if (userData.login && local) {
+
+              let [validate,permisos] = await Promise.all([
+                APICALLER.validateToken(userData.token_user),
+                APICALLER.get({table:"permisos_users",where:`id_user_permiso,=,${userData.id_user}`,fields:"id_permiso_permiso"})
+            ]);
+              if (!validate.response ) {
+                  console.log(validate)
+                  logOut()
+              }
+              if(permisos.response){
+                
+              }
         }
         setLoading(false)
     },[userData,logOut])
@@ -139,9 +159,9 @@ const LoginProvider = ({children}) => {
 
     useEffect(() => {
         const ca = new AbortController(); let isActive = true;
-        if (isActive) {verificar();}
+        if (isActive) {verificar(); authcheck()}
         return () => {isActive = false;ca.abort();};
-      }, [verificar]);
+      }, [verificar,authcheck]);
 
       const values = {userData,logIn,logOut,load,loading,Descifrar,dataEmpresa,setDataEmpresa}
 

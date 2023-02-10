@@ -91,52 +91,50 @@ const RoutesMain = () => {
   return (
     <Routes>
       <Route path={R+"profile"} element={<PublicRoute><Profile /></PublicRoute>} />
-
-      <Route path={R+"formaspago"} element={<PrivateRoute id={67}><FormasPago /></PrivateRoute>} />
-      <Route path={R+"comisiones"} element={<PrivateRoute id={66}><Comisiones /></PrivateRoute>} />
-      <Route path={R+"cuentas"} element={<PrivateRoute id={47}><Cuentas /></PrivateRoute>} />
-      <Route path={R+"turnos"} element={<PrivateRoute id={51}><Turnos /></PrivateRoute>} />
-      <Route path={R+"agenda"} element={<PrivateRoute id={51}><Agenda /></PrivateRoute>} />
-      <Route path={R+"transferencias"} element={<PrivateRoute id={60}><Transferencias /></PrivateRoute>} />
-      <Route path={R+"entregas"} element={<PrivateRoute id={16}><Entregas /></PrivateRoute>} />
-      <Route path={R+"registromovimientos"} element={<PrivateRoute id={26}><RegistroMovimientos /></PrivateRoute>} />
-      <Route path={R+"movimientos"} element={<PrivateRoute id={24}><Movimientos /></PrivateRoute>} />
-      <Route path={R+'medidas'} element={<PrivateRoute id={32}><Medidas /></PrivateRoute>} />
-      <Route path={R+'compras'} element={<PrivateRoute id={20}><Compras /></PrivateRoute>} />
-      <Route path={R+'impuestos'} element={<PrivateRoute id={45}><Impuestos /></PrivateRoute>} />
-      <Route path={R+'inventario'} element={<PrivateRoute id={43}><Inventario /></PrivateRoute>} />
-      <Route path={R+'apartados'} element={<PrivateRoute id={18}><ProductosApartados /></PrivateRoute>} />
-      <Route path={R+'empleados'} element={<PrivateRoute id={41}><Empleados /></PrivateRoute>} />
-      <Route path={R+'monedas'} element={<PrivateRoute id={30}><Monedas /></PrivateRoute>} />
-      <Route path={R+'informes'} element={<PrivateRoute id={63}><Informes /></PrivateRoute>} />
-      <Route path={R+'informesproductos'} element={<PrivateRoute id={64}><InformesProductos /></PrivateRoute>} />
-      <Route path={R+'categorias'} element={<PrivateRoute id={10}><Categorias /></PrivateRoute>} />
-      <Route path={R+'categorias/new'} element={<PrivateRoute id={11}><CategoriasForm /></PrivateRoute>} />
-      <Route path={R+"categorias/edit/:id"} element={<PrivateRoute id={11}><CategoriasForm /></PrivateRoute>} />
-      <Route path={R+"proveedores"} element={<PrivateRoute id={14}><Proveedores /></PrivateRoute>} />
-      <Route path={R+"marcas"} element={<PrivateRoute id={12}><Marcas /></PrivateRoute>} />
-      <Route path={R+'clientes'} element={<PrivateRoute id={28}><Clientes /></PrivateRoute>} />
-      <Route path={R+'settings'} element={<PrivateRoute id={36}><Settings /></PrivateRoute>} />
-      <Route path={R+'tema'} element={<PrivateRoute id={72}><Tema /></PrivateRoute>} />
-      <Route path={R+'productos/bc'} element={<PrivateRoute id={65}><ProductCode /></PrivateRoute>} />  
-      <Route path={R+'productos/edit/:id'} element={<PrivateRoute id={9}><ProductEdit /></PrivateRoute>} />
-      <Route path={R+'productos/new'} element={<PrivateRoute id={9}><ProductosNew /></PrivateRoute>} />
-      <Route path={R+'productos'} element={<PrivateRoute id={34}><Productos /></PrivateRoute>} />
-      <Route path={R+'productos/:id'} element={<PrivateRoute id={34}><RegistrosProductos /></PrivateRoute>} />
-      <Route path={R+'depositos'} element={<PrivateRoute id={39}><Depositos /></PrivateRoute>} />
-      <Route path={R+'deposito/:id'} element={<PrivateRoute id={34}><ListaProductos /></PrivateRoute>} />
-      <Route path={R+'users'} element={<PrivateRoute id={34}><Users /></PrivateRoute>} />
-      <Route path={R+'actividad'} element={<PrivateRoute id={34}><RegistroActividad /></PrivateRoute>} />
-      <Route path={R+'registrofacturas'} element={<PrivateRoute id={38}><RegistroFacturas /></PrivateRoute>} />
-      <Route path={R+'facturas'} element={<PrivateRoute id={5}><Facturas /></PrivateRoute>} />
-      <Route path={R+'notaspedidos'} element={<PrivateRoute id={6}><Notas /></PrivateRoute>} />
-      <Route path={R+'ventas'} element={<PrivateRoute id={1}><Ventas /></PrivateRoute>} />
-      <Route path={R+'reportes'} element={<PrivateRoute id={68}><Reportes /></PrivateRoute>} />
       <Route path={R+'dashboard'} element={<PublicRoute><DashBoard /></PublicRoute>} />
+      <Route path={R+'informes'} element={<PrivateRoute id={2}><Informes /></PrivateRoute>} />
+      <Route path={R+'informesproductos'} element={<PrivateRoute id={3}><InformesProductos /></PrivateRoute>} />
+      <Route path={R+"turnos"} element={<PrivateRoute id={4}><Turnos /></PrivateRoute>} />
+      <Route path={R+"agenda"} element={<PrivateRoute id={5}><Agenda /></PrivateRoute>} />
+      <Route path={R+'facturas'} element={<PrivateRoute id={6}><Facturas /></PrivateRoute>} />
+      <Route path={R+'ventas'} element={<PrivateRoute id={7}><Ventas /></PrivateRoute>} />
+      <Route path={R+'notas'} element={<PrivateRoute id={8}><Notas /></PrivateRoute>} />
+      <Route path={R+"comisiones"} element={<PrivateRoute id={10}><Comisiones /></PrivateRoute>} />
+      <Route path={R+"formaspago"} element={<PrivateRoute id={12}><FormasPago /></PrivateRoute>} />
+      <Route path={R+"entregas"} element={<PrivateRoute id={14}><Entregas /></PrivateRoute>} />
+      <Route path={R+'reportes'} element={<PrivateRoute id={16}><Reportes /></PrivateRoute>} />
+      <Route path={R+'productos'} element={<PrivateRoute id={17}><Productos /></PrivateRoute>} />
+      <Route path={R+'productos/bc'} element={<PrivateRoute id={17}><ProductCode /></PrivateRoute>} />  
+      <Route path={R+'productos/edit/:id'} element={<PrivateRoute id={18}><ProductEdit /></PrivateRoute>} />
+      <Route path={R+'productos/new'} element={<PrivateRoute id={18}><ProductosNew /></PrivateRoute>} />
+      <Route path={R+'categorias'} element={<PrivateRoute id={19}><Categorias /></PrivateRoute>} />
+      <Route path={R+'categorias/new'} element={<PrivateRoute id={20}><CategoriasForm /></PrivateRoute>} />
+      <Route path={R+"categorias/edit/:id"} element={<PrivateRoute id={20}><CategoriasForm /></PrivateRoute>} />
+      <Route path={R+"proveedores"} element={<PrivateRoute id={21}><Proveedores /></PrivateRoute>} />
+      <Route path={R+"marcas"} element={<PrivateRoute id={23}><Marcas /></PrivateRoute>} />
+      <Route path={R+'apartados'} element={<PrivateRoute id={25}><ProductosApartados /></PrivateRoute>} />
+      <Route path={R+'depositos'} element={<PrivateRoute id={27}><Depositos /></PrivateRoute>} />
+      <Route path={R+'deposito/:id'} element={<PrivateRoute id={29}><ListaProductos /></PrivateRoute>} />
+      <Route path={R+'productos/:id'} element={<PrivateRoute id={29}><RegistrosProductos /></PrivateRoute>} />
+      <Route path={R+"transferencias"} element={<PrivateRoute id={30}><Transferencias /></PrivateRoute>} />
+      <Route path={R+'inventario'} element={<PrivateRoute id={31}><Inventario /></PrivateRoute>} />
+      <Route path={R+'compras'} element={<PrivateRoute id={32}><Compras /></PrivateRoute>} />
+      <Route path={R+'cajas'} element={<PrivateRoute id={33}><Cajas /></PrivateRoute>} />
+      <Route path={R+"movimientos"} element={<PrivateRoute id={36}><Movimientos /></PrivateRoute>} />
+      <Route path={R+"registromovimientos"} element={<PrivateRoute id={37}><RegistroMovimientos /></PrivateRoute>} />
+      <Route path={R+"cuentas"} element={<PrivateRoute id={38}><Cuentas /></PrivateRoute>} />
+      <Route path={R+'clientes'} element={<PrivateRoute id={40}><Clientes /></PrivateRoute>} />
+      <Route path={R+'empleados'} element={<PrivateRoute id={42}><Empleados /></PrivateRoute>} />
+      <Route path={R+'monedas'} element={<PrivateRoute id={44}><Monedas /></PrivateRoute>} />
+      <Route path={R+'medidas'} element={<PrivateRoute id={46}><Medidas /></PrivateRoute>} />
+      <Route path={R+'impuestos'} element={<PrivateRoute id={48}><Impuestos /></PrivateRoute>} />
+      <Route path={R+'users'} element={<PrivateRoute id={49}><Users /></PrivateRoute>} />
+      <Route path={R+'actividad'} element={<PrivateRoute id={51}><RegistroActividad /></PrivateRoute>} />
+      <Route path={R+'settings'} element={<PrivateRoute id={52}><Settings /></PrivateRoute>} />
+      <Route path={R+'registrofacturas'} element={<PrivateRoute id={54}><RegistroFacturas /></PrivateRoute>} />
+      <Route path={R+'backup'} element={<PrivateRoute id={56}><Backup /></PrivateRoute>} />
+      <Route path={R+'tema'} element={<PrivateRoute id={57}><Tema /></PrivateRoute>} />
       <Route path={R+'info'} element={<PublicRoute><Info /></PublicRoute>} />
-      <Route path={R+'cajas'} element={<PrivateRoute id={22}><Cajas /></PrivateRoute>} />
-      <Route path={R+'backup'} element={<PrivateRoute id={65}><Backup /></PrivateRoute>} />
-      
       <Route path={R+'notautorized'} element={<NotAutorized />} />
       <Route path={R} element={<LoginForm />} />
       <Route path="*" element={<ErrorPage />} />

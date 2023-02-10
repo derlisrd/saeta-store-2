@@ -99,7 +99,7 @@ const Permissions = () => {
                     checked={item.checked}
                   />
                 }
-                label={item.descripcion_permiso}
+                label={`${item.clave_permiso} ${item.descripcion_permiso}`}
               /> 
             </ListItem>
           ))}

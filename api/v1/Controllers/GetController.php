@@ -6,6 +6,7 @@ namespace GetController;
 use AuthController\AuthController;
 use Models\Models;
 use JsonResponse\JsonResponse;
+use Route\Response\Response;
 
 class GetController {
 
@@ -25,7 +26,8 @@ class GetController {
 
         /*================================================================================================*/
         if(($where!==null) && count($where)<3 ){
-            echo JsonResponse::jsonResponseError(false,404,"An error has occurred in where params.");
+            //echo JsonResponse::jsonResponseError(false,404,"An error has occurred in where params.");
+            echo Response::json(['response'=>false,'error'=>true,'There is a error with the params']);
             return;
         }
         else{

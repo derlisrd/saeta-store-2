@@ -30,7 +30,7 @@ const Lists = () => {
         listaMenu.map((e,index)=>(
           <Fragment key={index}>
           {e.submenu ?
-          (permisos.some(p => parseInt(p.id_permiso_permiso)===parseInt(e.id)) || e.private===false) &&
+          
           <>
             <ListItem button onClick={()=>switchOpen(e.open,e.id)} key={index}  >
               <ListItemIcon>
