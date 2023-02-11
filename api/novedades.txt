@@ -617,6 +617,20 @@ CREATE TABLE IF NOT EXISTS `notas_pedidos` (
   PRIMARY KEY (`id_notas_pedido`)
 ) ;
 
+
+
+DROP TABLE IF EXISTS `options`;
+CREATE TABLE IF NOT EXISTS `options` (
+  `id_option` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `option_key` varchar(100) COLLATE utf16_spanish_ci NOT NULL,
+  `option_value` text COLLATE utf16_spanish_ci NOT NULL,
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ;
+
+
+INSERT INTO `options` (`id_option`, `option_key`, `option_value`, `updated_at`) VALUES
+(1, 'site_name', 'Kj Curly Me', '2023-02-11 16:54:23'),
+(2, 'site_description', 'Accesorios de acero', '2023-02-11 16:54:23');
 -- --------------------------------------------------------
 
 --
