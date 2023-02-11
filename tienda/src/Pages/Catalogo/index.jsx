@@ -1,9 +1,9 @@
 import { useState, useEffect, useCallback } from "react";
-import { Link } from "react-router-dom";
-import { Button, Col, Form, FormGroup, Input, Label, Row } from "reactstrap";
+import { Col,Row } from "reactstrap";
 import Loading from "../../Components/Loading";
 import { APICALLER } from "../../Services/api";
-import { functions } from "../../Utils/functions";
+import Listado from "./Listado";
+import Search from "./Search";
 
 const Catalogo = () => {
   const [loading, setLoading] = useState(true);
@@ -17,10 +17,10 @@ const Catalogo = () => {
       filtersField: "nombre_producto,codigo_producto",
       filtersSearch: `${search}`,
       table: "productos",
-      include: "productos_images",
-      on: "id_producto,id_image_producto",
+      include: "productos_images,categorias",
+      on: "id_producto,id_image_producto,id_categoria_producto,id_categoria",
       fields:
-        "nombre_producto,id_producto,precio_producto,url_imagen,disponible_producto",
+        "nombre_producto,id_producto,precio_producto,url_imagen,disponible_producto,nombre_categoria",
       where: "portada_imagen_producto,=,1,and,tipo_producto,=,1",
     });
     if (res.response) {
@@ -39,10 +39,10 @@ const Catalogo = () => {
     setLoading(true);
     let res = await APICALLER.get({
       table: "productos",
-      include: "productos_images",
-      on: "id_producto,id_image_producto",
+      include: "productos_images,categorias",
+      on: "id_producto,id_image_producto,id_categoria_producto,id_categoria",
       fields:
-        "nombre_producto,id_producto,precio_producto,url_imagen,disponible_producto",
+        "nombre_producto,id_producto,precio_producto,url_imagen,disponible_producto,nombre_categoria",
       where: "portada_imagen_producto,=,1,and,tipo_producto,=,1",
     });
     if (res.response) {
@@ -72,81 +72,14 @@ const Catalogo = () => {
     <>
       <Row className="gy-1 mt-3 mx-auto">
         <Col xs={12}>
-          <Form onSubmit={handleSubmit}>
-            <Row>
-              <Col xs={12} sm={8}>
-                <FormGroup floating>
-                  <Input
-                    id="search"
-                    className="rounded"
-                    name="search"
-                    placeholder="Buscar"
-                    value={search}
-                    onChange={(e) => {
-                      setSearch(e.target.value);
-                    }}
-                  />
-                  <Label for="search" className="text-muted">
-                    Buscar...
-                  </Label>
-                </FormGroup>
-              </Col>
-              <Col xs={12} sm={4}>
-                <Button
-                  color="success"
-                  outline
-                  className="rounded"
-                  type="submit"
-                >
-                  Buscar
-                </Button>
-              </Col>
-            </Row>
-          </Form>
-          <Button
-            onClick={verLista}
-            color="primary"
-            outline
-            size="sm"
-            className="mt-4 rounded"
-          >
-            Ver todos
-          </Button>
+          <Search handleSubmit={handleSubmit} search={search} setSearch={setSearch} verLista={verLista} />
         </Col>
         <Col xs={12}>
-          {" "}
-          <h3 className="text-uppercase text-muted text-center my-4">
-            {" "}
-            Productos{" "}
-          </h3>{" "}
+          <h3 className="text-uppercase text-muted text-center my-4">Productos</h3>
         </Col>
       </Row>
       <Row className="gy-5 mx-auto">
-        {lista.map((e, i) => (
-          <Col key={i} sm={12} md={6} lg={3}>
-            <Link
-              to={`/producto/${e.id_producto}`}
-              style={{ textDecoration: "none", color: "#000" }}
-            >
-              <img
-                loading="lazy"
-                className="img-thumbnail"
-                alt={e.nombre_producto}
-                style={{
-                  width: "100%",
-                  maxHeight: "300px",
-                  objectFit: "cover",
-                  height: "250px",
-                }}
-                src={e.url_imagen}
-              />
-              <h6 className="card-title my-2">{e.nombre_producto}</h6>
-              <p className="text-secondary fw-light">
-                {functions.thousandSeparator(e.precio_producto)} Gs.{" "}
-              </p>
-            </Link>
-          </Col>
-        ))}
+        <Listado lista={lista} />
       </Row>
     </>
   );

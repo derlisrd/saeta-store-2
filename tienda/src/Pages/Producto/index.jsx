@@ -18,7 +18,7 @@ const Producto = () => {
     })
 
     const search = useParams();
-    const {idproducto} = search
+    const {id} = search
     
 
     const getLista = useCallback(async () => {
@@ -29,12 +29,12 @@ const Producto = () => {
             include:'categorias',
             on:'id_categoria,id_categoria_producto',
             fields: "nombre_producto,id_producto,precio_producto,descripcion_producto,id_categoria_producto,nombre_categoria,disponible_producto",
-            where:`id_producto,=,${idproducto}`
+            where:`id_producto,=,${id}`
           }),
           APICALLER.get({
             table: "productos_images",
             fields: "url_imagen,image_name",
-            where:`id_image_producto,=,${idproducto}`
+            where:`id_image_producto,=,${id}`
           })
         ]);
         if (pro.response && pro.found>0) {
@@ -44,7 +44,8 @@ const Producto = () => {
             include: "productos_images",
             on: "id_producto,id_image_producto",
             fields: "nombre_producto,id_producto,precio_producto,url_imagen",
-            where: `portada_imagen_producto,=,1,and,tipo_producto,=,1,and,id_categoria_producto,=,${id_category},and,id_producto,<>,${idproducto}`,
+            pagesize:4,
+            where: `portada_imagen_producto,=,1,and,tipo_producto,=,1,and,id_categoria_producto,=,${id_category},and,id_producto,<>,${id}`,
           });
           setListas({
             images: ima.results,
@@ -54,7 +55,7 @@ const Producto = () => {
 
         }
         setLoading(false);
-      }, [idproducto]);
+      }, [id]);
     
 
       
@@ -89,7 +90,9 @@ const Producto = () => {
     <>
     <ScrollToTop />
     <Row className='mt-4 g-4' >
-      <Col xs={12}> <Button color='primary' outline tag={Link} to='/catalogo'>Ver Todos</Button> </Col>
+      <Col xs={12}>
+        <Button color='primary' size='sm' className='rounded' outline tag={Link} to='/catalogo'>Ver Todos</Button>
+      </Col>
     <Col xs={12} sm={12} md={6}>
       <Carrusel items={listas.images} />
     </Col>
