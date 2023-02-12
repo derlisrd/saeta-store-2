@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom';
 import { Col, Row } from 'reactstrap';
 import Loading from '../../Components/Loading';
+import ScrollToTop from '../../Components/ScrollTop';
 import { APICALLER } from '../../Services/api';
 import Listado from './Listado';
 
@@ -46,6 +47,7 @@ const Category = () => {
   
     return (
       <>
+      <ScrollToTop />
         <Row className="gy-1 mt-3 mx-auto">
           <Col xs={12}>
             <h3 className="text-uppercase text-muted text-center my-4"> Categoria {category}  </h3>

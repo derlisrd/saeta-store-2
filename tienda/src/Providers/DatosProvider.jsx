@@ -1,6 +1,6 @@
 
 import React, { createContext, useCallback, useEffect, useState,useContext } from 'react'
-import { APICALLER } from '../../Services/api'
+import { APICALLER } from '../Services/api'
 
 const DatosContext = createContext()
 
@@ -31,10 +31,11 @@ const DatosProvider = ({children}) => {
           site_name: site.response ? site.results[0].option_value : '',
           tel: tel.response ? tel.results[0].option_value : '',
           email:email.response ? email.results[0].option_value : '',
-          whatsapp:wa.response ? wa.results[0].option_value : '',
+          whatsapp:wa.response ? wa.results[0].option_value : '', 
           moneda:moneda.response ? moneda.results[0].option_value : ''
         })
         setLoadingPage(false)
+        document.title = site.response ? site.results[0].option_value : 'Catálogo';
       },[])
       
       useEffect(() => {

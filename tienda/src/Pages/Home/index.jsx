@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { Col, Row } from "reactstrap";
 import Loading from "../../Components/Loading";
 import { APICALLER } from "../../Services/api";
-import Categorias from "./Categorias";
+import Categorias from "../Components/Categorias";
 
 
 

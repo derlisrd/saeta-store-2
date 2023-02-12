@@ -6,7 +6,7 @@ import Footer from "../Components/html/Footer";
 import Loading from "../Components/Loading";
 import MenuPrincipal from "../Components/html/MenuPrincipal";
 
-import { useDatos } from "./Providers/DatosProvider";
+import { useDatos } from "../Providers/DatosProvider";
 
 const Base = ({ children }) => {
   const [isOpen, setIsOpen] = useState(false);

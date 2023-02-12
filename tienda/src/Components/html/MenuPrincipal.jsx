@@ -3,6 +3,7 @@ import {AiOutlineHome} from 'react-icons/ai'
 import { Link } from "react-router-dom";
 import {Navbar,NavbarToggler,Collapse,Nav,NavItem,NavLink,NavbarText, NavbarBrand } from "reactstrap";
 import {BsTelephoneOutbound,BsMinecart } from 'react-icons/bs';
+import {BiCategory} from 'react-icons/bi'
 
 const MenuPrincipal = ({toggle,isOpen,datos,...rest}) => {
   return (
@@ -20,7 +21,10 @@ const MenuPrincipal = ({toggle,isOpen,datos,...rest}) => {
               <NavLink tag={Link} onClick={toggle} to="/catalogo"><div className="d-flex justify-content-center align-items-center gap-2"> <BsMinecart /> Catalogo</div></NavLink>
             </NavItem>
             <NavItem>
-              <NavLink tag={Link} onClick={toggle} to="/catalogo"> <div className="d-flex justify-content-center align-items-center gap-2">  <BsTelephoneOutbound /> Contacto </div></NavLink>
+              <NavLink tag={Link} onClick={toggle} to="/category"><div className="d-flex justify-content-center align-items-center gap-2"><BiCategory />  Categorias</div></NavLink>
+            </NavItem>
+            <NavItem>
+              <NavLink tag={Link} onClick={toggle} to="/contacto"> <div className="d-flex justify-content-center align-items-center gap-2">  <BsTelephoneOutbound /> Contacto </div></NavLink>
             </NavItem>
           </Nav>
           <NavbarText className="fw-bold text-dark uppercase"> {datos.site_name} </NavbarText>
