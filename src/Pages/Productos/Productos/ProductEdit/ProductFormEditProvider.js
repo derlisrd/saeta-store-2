@@ -10,6 +10,7 @@ const ProductFormEditContexto = createContext();
 const ProductFormEditProvider = (props) => {
     const {lang} = useLang()
     const {id} = useParams();
+    const storage = JSON.parse(localStorage.getItem("dataProductos"));
     /* const {state} = useLocation();
     const page = state?.page || 0; */
     const navigate = useGoto();
@@ -23,14 +24,14 @@ const ProductFormEditProvider = (props) => {
     const [cargas,setCargas] = useState(initialCargas);
     const inputCodigo = useRef(null);
     const inputNombre = useRef(null);
-    const storage = JSON.parse(localStorage.getItem("dataProductos"));
+    
     const initialListas = {
-      medidas: storage?.medidas || [],
-      categorias:storage?.categorias || [],
-      marcas: storage?.marcas || [],
-      proveedores:storage?.proveedores || [],
-      impuestos:storage?.impuestos || [],
-      depositos: storage?.depositos || [],
+      depositos: storage ?  storage.depositos :  [],
+      medidas: storage ?  storage.medidas :  [],
+      categorias: storage ? storage.categorias :  [],
+      marcas: storage ?  storage.marcas :  [],
+      proveedores: storage ? storage.proveedores :  [],
+      impuestos: storage ? storage.impuestos :  [],
   }
     const [listas,setListas] = useState(initialListas);
     const [listaImagenes,setListaImagenes] = useState([]);
@@ -174,8 +175,30 @@ const ProductFormEditProvider = (props) => {
 
     const traerDatos = useCallback(async()=>{
     
+      const sto = localStorage.getItem("dataProductos");
+        if(sto===null){
+
+            let [cat,pro,mar,me,im,dep] = await Promise.all([
+              APICALLER.get({table: `categorias`,fields: `id_categoria,nombre_categoria,id_padre_categoria,tipo_categoria`,sort:'-nombre_categoria'}),
+              APICALLER.get({table: "proveedors",fields: "id_proveedor,nombre_proveedor"}),
+              APICALLER.get({table: `marcas`,fields: `id_marca,nombre_marca`}),
+              APICALLER.get({table: `unidad_medidas`}),
+              APICALLER.get({table: `impuestos`}),
+              APICALLER.get({table: `depositos`,where:'tipo_deposito,=,1'})
+          ])
+            
+            
+            setearListas({
+              categorias:cat.results,
+              proveedores:pro.results,
+              marcas:mar.results,
+              medidas:me.results,
+              impuestos:im.results,
+              depositos:dep.results
+            })
+        }
       
-      let re = await Promise.all([
+      let [img,pro] = await Promise.all([
         APICALLER.get({table:'productos_images',where:`id_image_producto,=,${id}`}),
         APICALLER.get({table: `productos`,where: `id_producto,=,${id}`,
         fields: `id_producto,id_unidad_medida_producto,codigo_producto,nombre_producto,descripcion_producto,id_categoria_producto,id_proveedor_producto,notificar_producto,
@@ -184,24 +207,10 @@ const ProductFormEditProvider = (props) => {
       ])
 
      
-      if(re[1].response && re[1].found>0){ 
-        let sto = localStorage.getItem("dataProductos");
-        if(sto===null){
-          let va = await Promise.all([
-            APICALLER.get({table: `categorias`,fields: `id_categoria,nombre_categoria,id_padre_categoria,tipo_categoria`,sort:'-nombre_categoria'}),
-            APICALLER.get({table: "proveedors",fields: "id_proveedor,nombre_proveedor"}),
-            APICALLER.get({table: `marcas`,fields: `id_marca,nombre_marca`}),
-            APICALLER.get({table: `unidad_medidas`}),
-            APICALLER.get({table: `impuestos`}),
-             APICALLER.get({table: `depositos`,sort:"-id_deposito"}) 
-        ]);
-            let list = {categorias:va[0].results,proveedores:va[1].results,marcas:va[2].results,medidas:va[3].results,impuestos:va[4].results}
-            setearListas(list) 
-        }
-        
-        setListaImagenes(re[0].results);
-        setFormulario(re[1].results[0]);
-        setCode(re[1].results[0].codigo_producto);
+      if(pro.response){ 
+        setListaImagenes(img.results);
+        setFormulario(pro.results[0]);
+        setCode(pro.results[0].codigo_producto);
         setCargas({main:false,imagen:false,guardar:false});
       }
       else{

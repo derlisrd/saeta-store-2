@@ -338,5 +338,24 @@ export const listaMenu = [
           },
 
         ],
-      },  
+        
+      },
+      {
+        id:575,
+        title:'sitio_web',
+        icon:'public',
+        color: "#a0aec0",
+        open: false,
+        private:false,
+        submenu:[
+          {
+            id: 59,
+            title: "configuraciones",
+            icon: "devices",
+            color: "#a0aec0",
+            url: `${BASEURL}/web`,
+            private:false
+          },
+        ]
+      }  
 ]

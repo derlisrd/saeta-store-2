@@ -629,8 +629,18 @@ CREATE TABLE IF NOT EXISTS `options` (
 
 
 INSERT INTO `options` (`id_option`, `option_key`, `option_value`, `updated_at`) VALUES
-(1, 'site_name', 'Kj Curly Me', '2023-02-11 16:54:23'),
-(2, 'site_description', 'Accesorios de acero', '2023-02-11 16:54:23');
+(1, 'site_name', 'Catalogo', '2023-02-11 21:01:31'),
+(2, 'site_title', 'Catalogo', '2023-02-11 21:01:31'),
+(3, 'site_description', 'Descripcion de sitio', '2023-02-11 21:01:31'),
+(4, 'email', 'kj.janira@gmail.com', '2023-02-11 21:01:31'),
+(5, 'tel', '0975 409328', '2023-02-11 21:01:31'),
+(6, 'whatsapp', '+595975409328', '2023-02-11 21:01:31'),
+(7, 'instagram', '', '2023-02-11 21:30:47'),
+(8, 'facebook', '', '2023-02-11 21:31:16'),
+(9, 'moneda', 'Gs.', '2023-02-11 21:42:11'),
+(10, 'color_primary', '#c9b04b', '2023-02-12 20:30:47'),
+(11, 'color_secondary', '#161616', '2023-02-12 20:31:25'),
+(12, 'logo_url', 'https://firebasestorage.googleapis.com/v0/b/con-pororo.appspot.com/o/image_default.png?alt=media&token=6422f858-0cff-43d4-b1c4-496479b1108a', '2023-02-13 15:06:40');
 -- --------------------------------------------------------
 
 --
@@ -722,7 +732,8 @@ INSERT INTO `permisos` (`id_permiso`, `clave_permiso`, `descripcion_permiso`, `u
 (55, 'Lista Reg. Facturas Reg', 'Acceder al registro de facturas', '2023-02-10 15:15:53'),
 (56, 'Copia de seguridad', 'Acceder a la copia de seguridad del sistema', '2023-02-10 15:15:53'),
 (57, 'Temas de colores', 'Modificar Tema de colores', '2023-02-10 15:56:29'),
-(58, 'Ver Ayuda', 'Ver informaciones y ayuda', '2023-02-10 15:57:38');
+(58, 'Ver Ayuda', 'Ver informaciones y ayuda', '2023-02-10 15:57:38'),
+(59,'Web', 'Hacer configuración en catálogo web','2023-02-10 15:57:38');
 
 -- --------------------------------------------------------
 
