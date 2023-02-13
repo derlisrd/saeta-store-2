@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback } from "react";
 import { Link } from "react-router-dom";
 import { Col, Row } from "reactstrap";
 import Loading from "../../Components/Loading";
+import { useDatos } from "../../Providers/DatosProvider";
 import { APICALLER } from "../../Services/api";
 import Categorias from "../Components/Categorias";
 
@@ -9,6 +10,7 @@ import Categorias from "../Components/Categorias";
 
 const Home = () => {
 
+  const {datos} = useDatos()
   const [loading, setLoading] = useState(true);
   const [lista, setLista] = useState([]);
 
@@ -49,6 +51,11 @@ const Home = () => {
 
   return (
     <Row>
+      <Col xs={12}>
+        <h1 className="text-center mt-4 text-warning">{datos.site_name}</h1>
+        <p className="text-center mt-4"><img src={`${datos.logo_url}`} alt={datos.site_name} /></p>
+        <p className="mt-4">{datos.description} </p>
+      </Col>
       <Col xs={12}>
         <div  className="mt-5 pt-5 d-flex justify-content-center align-items-center">
         <Link to="/catalogo" className="text-center btn btn-primary rounded">

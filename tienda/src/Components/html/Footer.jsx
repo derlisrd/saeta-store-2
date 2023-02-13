@@ -20,7 +20,7 @@ function Footer({datos}) {
             <p className="text-muted my-2">E-mail</p>
           </Col>
           <Col xs={12} md={4}>
-            <BsWhatsapp size="2rem" color="#05a342" />
+            <p><a href={`https://wa.me/${datos.whatsapp ?? ''}`}  rel="noreferrer" target="_blank"><BsWhatsapp size="2rem" color="#05a342" /></a></p>
             <h6 className="my-3"> {datos.whatsapp} </h6>
             <p className="text-muted my-2">Whatsapp</p>
           </Col>
@@ -28,8 +28,8 @@ function Footer({datos}) {
       </Container>
       <Container>
         <div className="d-flex justify-content-center gap-3">
-          <p><a href="https://facebook.com/" rel="noreferrer" target="_blank"> <CiFacebook color="#4267B2" size="2rem"  /></a></p>
-          <p><a href="https://instagram.com/" rel="noreferrer" target="_blank"> <FaInstagram color="#833AB4" size="2rem"  /></a></p>
+          <p><a href={`https://facebook.com/${datos.facebook ?? ''}`}  rel="noreferrer" target="_blank"> <CiFacebook color="#4267B2" size="2rem"  /></a></p>
+          <p><a href={`https://instagram.com/${datos.instagram ?? ''}`} rel="noreferrer" target="_blank"> <FaInstagram color="#833AB4" size="2rem"  /></a></p>
         </div>
       </Container> 
       <Container className="bg-muted w-100 rounded my-5" style={{ background:'#ebebeb' }}>
