@@ -12,9 +12,18 @@ const WebProvider = ({children}) => {
         general:true
     })
     const initialDatos = {
-        site_name : storage ? storage.site_name : ''
+        site_name: '',
+        site_title:'',
+        tel: '',
+        email:'',
+        whatsapp:'',
+        moneda:'',
+        facebook:'',
+        instagram:'',
+        site_description:'',
+        logo_url:''
     }
-    const [datos,setDatos] = useState(initialDatos)
+    const [datos,setDatos] = useState(storage ?? initialDatos)
 
 
 
@@ -27,7 +36,7 @@ const WebProvider = ({children}) => {
         setLoading({general:false})
         const sto = localStorage.getItem("dataWeb");
         if(sto===null){
-            let [site,tel,email,wa,moneda,f,i,desc,logo] = await Promise.all([
+            let [site,tel,email,wa,moneda,f,i,desc,logo,title] = await Promise.all([
                 APICALLER.get({table:'options',where:`option_key,=,'site_name'`,fields:'option_value'}),
                 APICALLER.get({table:'options',where:`option_key,=,'tel'`,fields:'option_value'}),
                 APICALLER.get({table:'options',where:`option_key,=,'email'`,fields:'option_value'}),
@@ -37,6 +46,7 @@ const WebProvider = ({children}) => {
                 APICALLER.get({table:'options',where:`option_key,=,'instagram'`,fields:'option_value'}),
                 APICALLER.get({table:'options',where:`option_key,=,'site_description'`,fields:'option_value'}),
                 APICALLER.get({table:'options',where:`option_key,=,'logo_url'`,fields:'option_value'}),
+                APICALLER.get({table:'options',where:`option_key,=,'site_title'`,fields:'option_value'})
               ])
               setearDatos({
                 site_name: site.response ? site.results[0].option_value : '',
@@ -46,7 +56,8 @@ const WebProvider = ({children}) => {
                 moneda:moneda.response ? moneda.results[0].option_value : '',
                 facebook:f.response ? f.results[0].option_value : '',
                 instagram:i.response ? i.results[0].option_value : '',
-                description:desc.response ? desc.results[0].option_value : '',
+                site_description:desc.response ? desc.results[0].option_value : '',
+                site_title:title.response ? title.results[0].option_value : '',
                 logo_url:logo.response ? logo.results[0].option_value : ''
               })
         }
@@ -61,14 +72,14 @@ const WebProvider = ({children}) => {
         return () => {isActive = false; ca.abort(); };
     }, [traerDatos]);
 
-    const values = {datos,loading,lang}
+    const values = {datos,loading,lang,setearDatos}
 
     return <Context.Provider value={values}>{children}</Context.Provider>
 }
 
 export const useWeb = ()=>{
-    const {datos,loading,lang} = useContext(Context)
-    return {datos,loading,lang}
+    const {datos,loading,lang,setearDatos} = useContext(Context)
+    return {datos,loading,lang,setearDatos}
 }
 
 export default WebProvider
