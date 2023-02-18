@@ -1,10 +1,11 @@
 import {createContext,useContext,useEffect,useState,useCallback} from 'react'
+import { useLang } from '../../Contexts/LangProvider';
 import { APICALLER } from '../../Services/api';
 
 const Context = createContext()
 
 const WebProvider = ({children}) => {
-  
+    const {lang} = useLang()
     const storage = JSON.parse(localStorage.getItem("dataWeb"));
     
     const [loading,setLoading] = useState({
@@ -60,14 +61,14 @@ const WebProvider = ({children}) => {
         return () => {isActive = false; ca.abort(); };
     }, [traerDatos]);
 
-    const values = {datos,loading}
+    const values = {datos,loading,lang}
 
     return <Context.Provider value={values}>{children}</Context.Provider>
 }
 
 export const useWeb = ()=>{
-    const {datos,loading} = useContext(Context)
-    return {datos,loading}
+    const {datos,loading,lang} = useContext(Context)
+    return {datos,loading,lang}
 }
 
 export default WebProvider
