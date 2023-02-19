@@ -24,8 +24,12 @@ const Informacion = ({info}) => {
         
         {info.disponible_producto==='1' ? 
         <Alert className='rounded' ><AiOutlineCheck color="#2d7345" /> Producto disponible en tienda</Alert> 
-        : 
-        <Alert className='rounded' color='danger'> Lástima, este producto está agotado</Alert>}
+        :
+        <div> 
+        <Alert className='rounded' color='danger'> Lástima, este producto está agotado</Alert>
+        <a href='https://wa.me/' target="_blank" rel='noreferrer'  >Hacer pedido de este producto</a>
+        </div>
+        }
         
       </div>
   )
