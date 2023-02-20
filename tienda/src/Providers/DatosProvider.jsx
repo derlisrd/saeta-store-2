@@ -18,13 +18,15 @@ const DatosProvider = ({children}) => {
       facebook:'',
       instagram:'',
       description:'',
-      logo_url: ''
+      logo_url: '',
+      direccion:'',
+      color_primary:''
     })
 
 
     const getDatas = useCallback(async()=>{
         setLoadingPage(true)
-        let [site,tel,email,wa,moneda,f,i,desc,logo] = await Promise.all([
+        let [site,tel,email,wa,moneda,f,i,desc,logo,dic,colp] = await Promise.all([
           APICALLER.get({table:'options',where:`option_key,=,'site_name'`,fields:'option_value'}),
           APICALLER.get({table:'options',where:`option_key,=,'tel'`,fields:'option_value'}),
           APICALLER.get({table:'options',where:`option_key,=,'email'`,fields:'option_value'}),
@@ -34,6 +36,8 @@ const DatosProvider = ({children}) => {
           APICALLER.get({table:'options',where:`option_key,=,'instagram'`,fields:'option_value'}),
           APICALLER.get({table:'options',where:`option_key,=,'site_description'`,fields:'option_value'}),
           APICALLER.get({table:'options',where:`option_key,=,'logo_url'`,fields:'option_value'}),
+          APICALLER.get({table:'options',where:`option_key,=,'direccion'`,fields:'option_value'}),
+          APICALLER.get({table:'options',where:`option_key,=,'color_primary'`,fields:'option_value'})
         ])
         setDatos({
           site_name: site.response ? site.results[0].option_value : '',
@@ -44,7 +48,9 @@ const DatosProvider = ({children}) => {
           facebook:f.response ? f.results[0].option_value : '',
           instagram:i.response ? i.results[0].option_value : '',
           description:desc.response ? desc.results[0].option_value : '',
-          logo_url:logo.response ? logo.results[0].option_value : ''
+          logo_url:logo.response ? logo.results[0].option_value : '',
+          direccion:dic.response ? dic.results[0].option_value : '',
+          color_primary:colp.response ? colp.results[0].option_value : ''
         })
         setLoadingPage(false)
         document.title = site.response ? site.results[0].option_value : 'Catálogo';

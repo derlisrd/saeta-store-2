@@ -2,6 +2,9 @@ import { Box, Tab, Tabs } from "@mui/material";
 import { useLang } from "../../Contexts/LangProvider";
 import {useState} from 'react'
 import DatosWeb from "./DatosWeb";
+import DatosContacto from "./DatosContacto";
+import DatosRedes from "./DatosRedes";
+import DatosColor from "./DatosColor";
 
 
 const WebTabs = () => {
@@ -25,15 +28,19 @@ const WebTabs = () => {
         <Tab label={lang.datos_web} />
         <Tab label={lang.contacto} />
         <Tab label={lang.redes_sociales} />
+        <Tab label={lang.colores} />
       </Tabs>
       <TabPanel value={tabValue} index={0}>
         <DatosWeb />
       </TabPanel>
       <TabPanel value={tabValue} index={1}>
-        <DatosWeb />
+        <DatosContacto />
       </TabPanel>
       <TabPanel value={tabValue} index={2}>
-        <DatosWeb />
+        <DatosRedes />
+      </TabPanel>
+      <TabPanel value={tabValue} index={3}>
+        <DatosColor />
       </TabPanel>
 
     </Box>)

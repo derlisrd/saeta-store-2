@@ -32,8 +32,11 @@ function Footer({datos}) {
           <p><a href={`https://instagram.com/${datos.instagram ?? ''}`} rel="noreferrer" target="_blank"> <FaInstagram color="#833AB4" size="2rem"  /></a></p>
         </div>
       </Container> 
-      <Container className="bg-muted w-100 rounded my-5" style={{ background:'#ebebeb' }}>
-        <p className="text-center text-muted p-4">Copyright {datos.site_name} © 2023. Todos Los Derechos Reservados. Sitio hecho con <BsFillSuitHeartFill color="#ee1e1e" /> </p>
+      <Container className="bg-muted w-100 rounded my-5 p-2" style={{ background:'#ebebeb' }}>
+        <p className="text-center text-muted mt-1">{datos.direccion ?? ''}</p>
+        <p className="text-center text-muted">
+          Copyright {datos.site_name} © 2023. Todos Los Derechos Reservados. Sitio hecho con <BsFillSuitHeartFill color="#ee1e1e" />
+        </p>
       </Container>
     </>
   );

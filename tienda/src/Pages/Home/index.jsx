@@ -52,9 +52,9 @@ const Home = () => {
   return (
     <Row>
       <Col xs={12}>
-        <h1 className="text-center mt-4 text-warning">{datos.site_name}</h1>
+        <h1 className="text-center mt-4" style={{ color: datos.color_primary ?? '#616161'  }}>{datos.site_name}</h1>
         <p className="text-center mt-4"><img src={`${datos.logo_url}`} alt={datos.site_name} /></p>
-        <p className="mt-4">{datos.description} </p>
+        <p className="mt-4 text-center">{datos.description} </p>
       </Col>
       <Col xs={12}>
         <div  className="mt-5 pt-5 d-flex justify-content-center align-items-center">

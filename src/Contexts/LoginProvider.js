@@ -69,6 +69,7 @@ const LoginProvider = ({children}) => {
             setDataEmpresa({})
         }
             localStorage.removeItem('dataProductos');
+            localStorage.removeItem('dataWeb');
     }
     const logOut = useCallback(()=>{
         

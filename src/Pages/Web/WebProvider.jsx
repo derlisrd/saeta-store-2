@@ -21,7 +21,9 @@ const WebProvider = ({children}) => {
         facebook:'',
         instagram:'',
         site_description:'',
-        logo_url:''
+        logo_url:'',
+        direccion:'',
+        color_primary:''
     }
     const [datos,setDatos] = useState(storage ?? initialDatos)
 
@@ -36,7 +38,7 @@ const WebProvider = ({children}) => {
         setLoading({general:false})
         const sto = localStorage.getItem("dataWeb");
         if(sto===null){
-            let [site,tel,email,wa,moneda,f,i,desc,logo,title] = await Promise.all([
+            let [site,tel,email,wa,moneda,f,i,desc,logo,title,dic,col] = await Promise.all([
                 APICALLER.get({table:'options',where:`option_key,=,'site_name'`,fields:'option_value'}),
                 APICALLER.get({table:'options',where:`option_key,=,'tel'`,fields:'option_value'}),
                 APICALLER.get({table:'options',where:`option_key,=,'email'`,fields:'option_value'}),
@@ -46,7 +48,9 @@ const WebProvider = ({children}) => {
                 APICALLER.get({table:'options',where:`option_key,=,'instagram'`,fields:'option_value'}),
                 APICALLER.get({table:'options',where:`option_key,=,'site_description'`,fields:'option_value'}),
                 APICALLER.get({table:'options',where:`option_key,=,'logo_url'`,fields:'option_value'}),
-                APICALLER.get({table:'options',where:`option_key,=,'site_title'`,fields:'option_value'})
+                APICALLER.get({table:'options',where:`option_key,=,'site_title'`,fields:'option_value'}),
+                APICALLER.get({table:'options',where:`option_key,=,'direccion'`,fields:'option_value'}),
+                APICALLER.get({table:'options',where:`option_key,=,'color_primary'`,fields:'option_value'}),
               ])
               setearDatos({
                 site_name: site.response ? site.results[0].option_value : '',
@@ -58,7 +62,9 @@ const WebProvider = ({children}) => {
                 instagram:i.response ? i.results[0].option_value : '',
                 site_description:desc.response ? desc.results[0].option_value : '',
                 site_title:title.response ? title.results[0].option_value : '',
-                logo_url:logo.response ? logo.results[0].option_value : ''
+                logo_url:logo.response ? logo.results[0].option_value : '',
+                direccion:dic.response ? dic.results[0].option_value : '',
+                color_primary:col.response ? col.results[0].option_value : ''
               })
         }
         setLoading({general:false})
