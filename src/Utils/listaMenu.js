@@ -354,7 +354,7 @@ export const listaMenu = [
             icon: "devices",
             color: "#a0aec0",
             url: `${BASEURL}/web`,
-            private:false
+            private:true
           },
         ]
       }  

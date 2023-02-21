@@ -18,7 +18,7 @@ const AgendaTabs = () => {
         )
       }
   return (
-    <Box p={2} boxShadow={4} borderRadius={4} m={1} bgcolor="background.paper">
+    <Box >
     <Tabs
         indicatorColor="primary"
         textColor="primary"

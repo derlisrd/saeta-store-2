@@ -50,6 +50,21 @@ const AgendaProvider = ({ children }) => {
   
 
 
+    const buscarRegistro = async(term)=>{
+      setLoading({ general: true ,listado:true});
+      let res = await APICALLER.get({ table: "agendas",include:'clientes',on:'id_cliente,id_cliente_agenda',
+      fields:'nombre_cliente,id_agenda,descripcion_agenda,fecha_inicio_agenda,horario_agenda,fecha_fin_agenda,color_agenda,telefono_cliente',
+      filtersField:"nombre_cliente,ruc_cliente",
+      filtersSearch:`${term}`
+    });
+      if (res.response) {
+        setListaAgenda(res.results)
+      }
+      else{
+        console.log(res)
+      }
+      setLoading({ general:false,listado:false});
+    }
   
 
     const getLista = useCallback( async(desde,hasta)=>{
@@ -180,7 +195,7 @@ const AgendaProvider = ({ children }) => {
       dialogs,
       setDialogs,
       insertarAgendar,updateAgenda,borrarAgenda,
-      dates,setDates,getLista
+      dates,setDates,getLista,buscarRegistro
     }
     return <Contexto.Provider value={values}>{children}</Contexto.Provider>
   };
@@ -196,7 +211,7 @@ const AgendaProvider = ({ children }) => {
       dialogs,
       setDialogs,
       insertarAgendar,updateAgenda,borrarAgenda,
-      dates,setDates,getLista
+      dates,setDates,getLista,buscarRegistro
     } = useContext(Contexto);
     return {
       eventos,lista,listaAgenda,
@@ -208,7 +223,7 @@ const AgendaProvider = ({ children }) => {
       dialogs,
       setDialogs,
       insertarAgendar,updateAgenda,borrarAgenda,
-      dates,setDates,getLista
+      dates,setDates,getLista,buscarRegistro
     };
   };
   

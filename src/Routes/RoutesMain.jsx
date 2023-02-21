@@ -135,7 +135,7 @@ const RoutesMain = () => {
       <Route path={R+'registrofacturas'} element={<PrivateRoute id={54}><RegistroFacturas /></PrivateRoute>} />
       <Route path={R+'backup'} element={<PrivateRoute id={56}><Backup /></PrivateRoute>} />
       <Route path={R+'tema'} element={<PrivateRoute id={57}><Tema /></PrivateRoute>} />
-      <Route path={R+'web'} element={<PrivateRoute id={58}><Web /></PrivateRoute>} />
+      <Route path={R+'web'} element={<PrivateRoute id={59}><Web /></PrivateRoute>} />
       <Route path={R+'info'} element={<PublicRoute><Info /></PublicRoute>} />
       <Route path={R+'notautorized'} element={<NotAutorized />} />
       <Route path={R} element={<LoginForm />} />
