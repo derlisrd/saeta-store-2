@@ -1,8 +1,7 @@
-import { Dialog, DialogContent, Grid, TextField,Chip,Stack, DialogActions, Button, DialogTitle, CircularProgress, Tooltip, IconButton, Icon, InputAdornment, Zoom, Alert } from "@mui/material";
-import { Box } from "@mui/system";
+import {Box, Dialog, DialogContent, Grid, TextField,Chip,Stack, DialogActions, Button, DialogTitle, CircularProgress, Tooltip, IconButton, Icon, InputAdornment, Zoom, Alert } from "@mui/material";
 import { useRef,useState } from "react";
-import { funciones } from "../../Functions";
-import { APICALLER } from "../../Services/api";
+import { funciones } from "../../../Functions";
+import { APICALLER } from "../../../Services/api";
 import { useAgenda } from "./AgendaProvider";
 
 const AgendaDialog = () => {

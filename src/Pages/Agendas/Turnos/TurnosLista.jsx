@@ -1,6 +1,5 @@
 import { Button, Stack} from '@mui/material'
-import React from 'react'
-import Tablas from '../../Components/UI/Tablas'
+import Tablas from '../../../Components/UI/Tablas'
 import { useTurnos } from './TurnosProvider'
 
 const TurnosLista = () => {

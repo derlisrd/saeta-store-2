@@ -5,7 +5,7 @@ import daygridPlugin from "@fullcalendar/daygrid";
 import esLocale from "@fullcalendar/core/locales/es";
 import interactionPlugin from "@fullcalendar/interaction";
 import {useAgenda} from './AgendaProvider';
-import LoadingBackDrop from "../../Components/UI/LoadingBackDrop";
+import LoadingBackDrop from "../../../Components/UI/LoadingBackDrop";
 
 
 const AgendaLista = () => {

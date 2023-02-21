@@ -22,13 +22,13 @@ import {
   Box,
   Chip,
 } from "@mui/material";
-import React, {
+import  {
   useRef,
   useState,
   Fragment,
 } from "react";
-import { APICALLER } from "../../Services/api";
-import LoadingBackDrop  from "../../Components/UI/LoadingBackDrop"; 
+import { APICALLER } from "../../../Services/api";
+import LoadingBackDrop  from "../../../Components/UI/LoadingBackDrop"; 
 import { useTurnos } from "./TurnosProvider";
 
 const TurnosDialogs = () => {

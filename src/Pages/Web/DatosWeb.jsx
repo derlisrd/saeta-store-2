@@ -6,7 +6,7 @@ import { useWeb } from "./WebProvider"
 
 
 const DatosWeb = () => {
-  const {lang,datos,setearDatos} = useWeb()
+  const {lang,datos,setearDatos,loading} = useWeb()
   const {userData} = useLogin()
   const {token_user} = userData
 
@@ -20,7 +20,7 @@ const DatosWeb = () => {
     moneda:''
   }
   const [newImage,setNewImage] = useState(null)
-  const [loading,setLoading] = useState(false)
+  const [loadingSave,setLoadingSave] = useState(false)
   const [loadindImg,setLoadindImg] = useState(false)
   const [form,setForm] = useState(formInitial)
   
@@ -35,7 +35,7 @@ const DatosWeb = () => {
 
   const submit = async(e)=>{
     e.preventDefault();
-    setLoading(true)
+    setLoadingSave(true)
     let res = await Promise.all([
       APICALLER.update({table:'options',data:{'option_value':form.site_name},token:token_user,id:1}),
       APICALLER.update({table:'options',data:{'option_value':form.site_title},token:token_user,id:2}),
@@ -54,7 +54,7 @@ const DatosWeb = () => {
     }else{
       console.log(res)
     }
-    setLoading(false)
+    setLoadingSave(false)
   }
 
 
@@ -123,7 +123,8 @@ const DatosWeb = () => {
     <form onSubmit={submit}>
     <Grid container spacing={2}>
     <Grid item xs={12}>
-      {loading && <LinearProgress />}
+      {loading.general && <LinearProgress />}
+      {loadingSave && <LinearProgress />}
     </Grid>
       <Grid item xs={12} md={4}>
         <TextField fullWidth autoComplete="off" autoFocus value={form.site_name} name='site_name' onChange={onChange} label={lang.site_name}  />

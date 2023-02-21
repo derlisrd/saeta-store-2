@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useEffect, useState,useCallback } from "react";
 import swal from "sweetalert";
-import { APICALLER } from "../../Services/api";
-import { useLogin } from "../../Contexts/LoginProvider";
+import { APICALLER } from "../../../Services/api";
+import { useLogin } from "../../../Contexts/LoginProvider";
 
 const Contexto = createContext();
 

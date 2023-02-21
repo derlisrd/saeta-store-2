@@ -1,20 +1,15 @@
-import React, {
-    createContext,
-    useState,
-    useEffect,
-    useContext,
-    useCallback,
-  } from "react";
-  import swal from "sweetalert";
-  import { APICALLER } from "../../Services/api";
-  import { useLogin } from "../../Contexts/LoginProvider";
-import { funciones } from "../../Functions";
+import {createContext,useState,useEffect,useContext,useCallback} from "react";
+import swal from "sweetalert";
+import { APICALLER } from "../../../Services/api";
+import { useLogin } from "../../../Contexts/LoginProvider";
+import { funciones } from "../../../Functions";
   
-  const Contexto = createContext();
+const Contexto = createContext();
   
-  const AgendaProvider = ({ children }) => {
+const AgendaProvider = ({ children }) => {
     const [eventos, setEventos] = useState([]);
     const [lista,setLista] = useState([]);
+    const [listaAgenda,setListaAgenda] = useState([]);
     const {userData} = useLogin();
     const {token_user,id_user} = userData;
     const initialCliente = {
@@ -40,6 +35,7 @@ import { funciones } from "../../Functions";
     const [form, setForm] = useState(initialForm);
     const initialCargas = {
       general: true,
+      listado: true
     };
     const [loading, setLoading] = useState(initialCargas);
   
@@ -52,7 +48,24 @@ import { funciones } from "../../Functions";
   
     const [dialogs, setDialogs] = useState(initialDialogs);
   
+
+
   
+
+    const getLista = useCallback( async(desde,hasta)=>{
+      setLoading({ general: true ,listado:true});
+      let res = await APICALLER.get({ table: "agendas",include:'clientes',on:'id_cliente,id_cliente_agenda',
+      fields:'nombre_cliente,id_agenda,descripcion_agenda,fecha_inicio_agenda,horario_agenda,fecha_fin_agenda,color_agenda,telefono_cliente',
+      where: `fecha_inicio_agenda,between,'${desde}',and,'${hasta}'`,
+    });
+      if (res.response) {
+        setListaAgenda(res.results)
+      }
+      else{
+        console.log(res)
+      }
+      setLoading({ general:false,listado:false});
+    },[])
   
   
     const addEvent = useCallback(
@@ -76,10 +89,12 @@ import { funciones } from "../../Functions";
   
   
     const getEvents = useCallback(async () => {
-      setLoading({ general: true });
-      let res = await APICALLER.get({ table: "agendas" });
+      setLoading({ general: true ,listado:true});
+      let res = await APICALLER.get({ table: "agendas",include:'clientes',on:'id_cliente,id_cliente_agenda',
+      fields:'nombre_cliente,id_agenda,descripcion_agenda,fecha_inicio_agenda,horario_agenda,fecha_fin_agenda,color_agenda,telefono_cliente' });
       if (res.response) {
         setLista(res.results);
+        setListaAgenda(res.results)
         let nEvents = [];
         res.results.forEach((e) => {
           nEvents.push({
@@ -87,7 +102,6 @@ import { funciones } from "../../Functions";
             title: e.descripcion_agenda,
             start: e.fecha_inicio_agenda + "T" + e.horario_agenda,
             end:e.fecha_fin_agenda,
-            
             allDay: false,
             color: e.color_agenda,
           });
@@ -96,7 +110,7 @@ import { funciones } from "../../Functions";
       } else {
         console.log(res);
       }
-      setLoading({ general: false });
+      setLoading({ general: false,listado:false });
     }, []);
   
   
@@ -105,13 +119,15 @@ import { funciones } from "../../Functions";
       if(res.response){
         swal({text:'Reagendado correctamente', icon:'success',timer:1400});
         setDialogs({ ...dialogs, editar: false });
-
         getEvents();
       }
       else{
         console.log(res);
       }
     }, [token_user,getEvents,dialogs]);
+
+
+
   
     const borrarAgenda = useCallback(async (form)=>{
      let res = await APICALLER.delete({table:'agendas',id:form.id_agenda,token:token_user});
@@ -124,9 +140,10 @@ import { funciones } from "../../Functions";
       } 
     },[dialogs,getEvents,token_user] )
   
+
+
   
     const insertarAgendar = useCallback(async(form)=>{
-
       let res = await APICALLER.insert({table:"agendas",data:form,token:token_user});
       if(res.response){
         swal({text:"Agendado correctamente", icon:"success", timer:2000});
@@ -153,29 +170,24 @@ import { funciones } from "../../Functions";
       };
     }, [getEvents]);
   
-    return (
-      <Contexto.Provider
-        value={{
-          eventos,lista,
-          addEvent,
-          loading,
-          form,setForm,
-          cliente,setCliente,initialCliente,
-          initialForm,
-          dialogs,
-          setDialogs,
-          insertarAgendar,updateAgenda,borrarAgenda,
-          dates,setDates
-        }}
-      >
-        {children}
-      </Contexto.Provider>
-    );
+    const values = {
+      eventos,lista,listaAgenda,
+      addEvent,
+      loading,
+      form,setForm,
+      cliente,setCliente,initialCliente,
+      initialForm,
+      dialogs,
+      setDialogs,
+      insertarAgendar,updateAgenda,borrarAgenda,
+      dates,setDates,getLista
+    }
+    return <Contexto.Provider value={values}>{children}</Contexto.Provider>
   };
   
   export const useAgenda = () => {
     const {
-      eventos,lista,
+      eventos,lista,listaAgenda,
       addEvent,
       loading,
       form,setForm,
@@ -184,10 +196,10 @@ import { funciones } from "../../Functions";
       dialogs,
       setDialogs,
       insertarAgendar,updateAgenda,borrarAgenda,
-      dates,setDates
+      dates,setDates,getLista
     } = useContext(Contexto);
     return {
-      eventos,lista,
+      eventos,lista,listaAgenda,
       addEvent,
       loading,
       form,setForm,
@@ -196,7 +208,7 @@ import { funciones } from "../../Functions";
       dialogs,
       setDialogs,
       insertarAgendar,updateAgenda,borrarAgenda,
-      dates,setDates
+      dates,setDates,getLista
     };
   };
   

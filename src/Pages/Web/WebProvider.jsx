@@ -35,7 +35,7 @@ const WebProvider = ({children}) => {
       }
 
     const traerDatos = useCallback(async()=>{
-        setLoading({general:false})
+        setLoading({general:true})
         const sto = localStorage.getItem("dataWeb");
         if(sto===null){
             let [site,tel,email,wa,moneda,f,i,desc,logo,title,dic,col] = await Promise.all([

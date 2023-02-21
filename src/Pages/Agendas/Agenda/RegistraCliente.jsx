@@ -1,8 +1,8 @@
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Grid, Icon, InputAdornment, LinearProgress, TextField, Zoom } from '@mui/material';
 import {useState,useRef} from 'react';
-import { useLang } from '../../Contexts/LangProvider';
-import { useLogin } from '../../Contexts/LoginProvider';
-import { APICALLER } from '../../Services/api';
+import { useLang } from '../../../Contexts/LangProvider';
+import { useLogin } from '../../../Contexts/LoginProvider';
+import { APICALLER } from '../../../Services/api';
 import { useAgenda } from './AgendaProvider';
 
 function RegistraCliente() {

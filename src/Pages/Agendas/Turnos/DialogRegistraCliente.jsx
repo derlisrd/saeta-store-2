@@ -1,8 +1,8 @@
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Grid, Icon, InputAdornment, LinearProgress, TextField } from '@mui/material';
 import React, { useRef, useState } from 'react'
-import { APICALLER } from '../../Services/api';
+import { APICALLER } from '../../../Services/api';
 
-import { useLogin } from '../../Contexts/LoginProvider';
+import { useLogin } from '../../../Contexts/LoginProvider';
 import { useTurnos } from './TurnosProvider'
 
 const DialogRegistraCliente = () => {
