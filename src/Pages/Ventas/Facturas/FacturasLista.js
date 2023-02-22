@@ -3,7 +3,6 @@ import { useState } from "react";
 import Tablas from "../../../Components/UI/Tablas";
 import { useFacturas } from "./FacturasProvider";
 import {Button,Icon,TextField,Select,FormControl,InputLabel,MenuItem,Grid,IconButton,InputAdornment, Tooltip, Stack, Alert} from "@mui/material";
-
 import { useDatosEmpresa } from "../../../Contexts/DatosEmpresaProvider";
 import useGoto from "../../../Hooks/useGoto";
 import { DatePickerCustom } from "../../../Components/MuiCustom/DatePickerCustom";
@@ -15,7 +14,7 @@ const FacturasLista = () => {
   const {
     lista,setDesdeFecha,setHastaFecha,cargando,total,setDialogs,dialogs,
     setFormulario,setFiltro,inputSearch,setInputSearch,
-    getBuscarFactura, consultarParaImprimir,lang
+    getBuscarFactura, consultarParaImprimir,lang,devolucion
   } = useFacturas();
   const { MONEDA_PRINCIPAL } = useDatosEmpresa();
 
@@ -112,6 +111,7 @@ const FacturasLista = () => {
       style:{fontWeight:"bold"}
     }
   ];
+  
 
   const abrirDetallesFactura = (datos) => {
     setDialogs({...dialogs,estado:true})
@@ -120,22 +120,18 @@ const FacturasLista = () => {
 
   const Acciones = ({ rowProps }) => (
     <Stack direction="row" spacing={2}>
-      <Tooltip
-        title="Ver estado" arrow>
-      <IconButton
-      onClick={() => {
-        abrirDetallesFactura(rowProps);
-      }}
-      >
+      <Tooltip title="Devolucion" arrow>
+      <IconButton onClick={() => {devolucion(rowProps);}}>
+        <Icon>cancel</Icon>
+      </IconButton>
+      </Tooltip>
+      <Tooltip title="Ver estado" arrow>
+      <IconButton onClick={() => {abrirDetallesFactura(rowProps);}}>
         <Icon>credit_score</Icon>
       </IconButton>
       </Tooltip>
-      <Tooltip
-        title="Imprimir" arrow
-      >
-      <IconButton
-        onClick={() => consultarParaImprimir(rowProps)}
-        >
+      <Tooltip title="Imprimir" arrow>
+      <IconButton onClick={() => consultarParaImprimir(rowProps)}>
           <Icon>print</Icon>
       </IconButton>
       </Tooltip>

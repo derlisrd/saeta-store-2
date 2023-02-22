@@ -30,11 +30,11 @@ const Informacion = ({info}) => {
         {info.disponible_producto==='1' ? 
         <Alert className='rounded' ><AiOutlineCheck color="#2d7345" /> Producto disponible en tienda</Alert> 
         :
-        <div> 
         <Alert className='rounded' color='danger'> Lástima, este producto está agotado</Alert>
+        }
+        <div> 
         <a href={link} target="_blank" className='text-decoration-none' rel='noreferrer'> <AiOutlineWhatsApp color='#128c7e' size="2rem" /> Hacer pedido de este producto</a>
         </div>
-        }
         
       </div>
   )

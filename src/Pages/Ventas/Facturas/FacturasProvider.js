@@ -3,6 +3,7 @@ import { APICALLER } from "../../../Services/api";
 import { funciones } from "../../../Functions";
 import { useLang } from "../../../Contexts/LangProvider";
 import { useDatosEmpresa } from "../../../Contexts/DatosEmpresaProvider";
+import swal from "sweetalert";
 
 const Context = createContext();
 
@@ -149,7 +150,16 @@ const FacturasProvider = ({ children }) => {
   }, [inputSearch]);
 
 
+  const devolucion = async (factura)=>{
 
+    let ask = await swal({title:'Devolución',text:'Desea hacer devolución esta factura?', icon:'warning', buttons:['No','Si, anular']})
+
+    if(ask){
+      let id = factura.id_factura;
+      //let promises = [APICALLER.update({table:'facturas',data:{estado_factura:0},token:'token_user',id})]
+    }
+
+  }
 
 
   const getLista = useCallback(async () => {
@@ -210,54 +220,42 @@ const FacturasProvider = ({ children }) => {
     const ca = new AbortController();
     let isActive = true;
     if(isActive){
-      getLista();
-    }
-
-    return ()=>{
-      isActive = false;
-      ca.abort();
-    }
-  }, [getLista]);
+      getLista();}
+    return ()=>{isActive = false;ca.abort();}}, [getLista]);
 
 
-
-  return (
-    <Context.Provider
-      value={{
-        lista,
-        setLista,
-        desdeFecha,
-        setDesdeFecha,
-        hastaFecha,
-        setHastaFecha,
-        cargando,
-        setCargando,
-        cargandoFactura,
-        lang,
-        total,
-        setTotal,
-        dialogs,setDialogs,
-        formulario,
-        setFormulario,
-        fecha,
-        filtro,
-        funciones,
-        setFiltro,
-        inputSearch,
-        setInputSearch,
-        getBuscarFactura,
-        consultarParaImprimir,
-        itemsFactura,setItemsFactura
-      }}
-    >
-      {children}
-    </Context.Provider>
-  );
+const values = {
+  lista,devolucion,
+  setLista,
+  desdeFecha,
+  setDesdeFecha,
+  hastaFecha,
+  setHastaFecha,
+  cargando,
+  setCargando,
+  cargandoFactura,
+  lang,
+  total,
+  setTotal,
+  dialogs,setDialogs,
+  formulario,
+  setFormulario,
+  fecha,
+  filtro,
+  funciones,
+  setFiltro,
+  inputSearch,
+  setInputSearch,
+  getBuscarFactura,
+  consultarParaImprimir,
+  itemsFactura,setItemsFactura
+}
+  return <Context.Provider value={values}>{children}</Context.Provider>
 };
 
 export const useFacturas = () => {
   const {
-    lista,
+    lista,devolucion,
     setLista,
     desdeFecha,
     setDesdeFecha,
@@ -284,7 +282,7 @@ export const useFacturas = () => {
   } = useContext(Context);
 
   return {
-    lista,
+    lista,devolucion,
     setLista,
     desdeFecha,
     setDesdeFecha,
