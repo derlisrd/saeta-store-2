@@ -4,12 +4,27 @@ import { funciones } from "../../../Functions";
 import { useLang } from "../../../Contexts/LangProvider";
 import { useDatosEmpresa } from "../../../Contexts/DatosEmpresaProvider";
 import swal from "sweetalert";
+import { useLogin } from "../../../Contexts/LoginProvider";
 
 const Context = createContext();
 
 const FacturasProvider = ({ children }) => {
   const {lang} = useLang()
+  const {userData} = useLogin()
+  const {token_user,id_user} = userData
+  
+
   const {EMPRESA} = useDatosEmpresa();
+  
+  const [statusDevolucion,setStatusDevolucion] = useState({
+    active:false,
+    productos:[],
+    cajas:{},
+    pagos:{},
+    id:'',
+    id_caja:'',
+    id_moneda:''
+  })
   const [lista, setLista] = useState([]);
   const [total, setTotal] = useState({
     facturas:0,
@@ -21,15 +36,17 @@ const FacturasProvider = ({ children }) => {
     imprimirTicketFactura:false,
     imprimirReciboA4:false,
     imprimirFacturaA4:false,
-    mail:false
+    mail:false,
+    devolucion:false
   })
 
-  
 
-  //const fecha = funciones.fechaActualYMD();
-  
-  const [cargando, setCargando] = useState(true);
-  const [cargandoFactura,setCargandoFactura] = useState(true);
+  const [loadings,setLoadings] = useState({
+    lista:true,
+    factura:true,
+    devolucion:true
+  })
+
   const fecha = funciones.fechaActualYMD();
   const [desdeFecha, setDesdeFecha] = useState(fecha);
   const [hastaFecha, setHastaFecha] = useState(fecha);
@@ -64,7 +81,7 @@ const FacturasProvider = ({ children }) => {
 
 
   const consultarParaImprimir = async(fila)=>{
-    setCargandoFactura(true);
+    setLoadings({lista:false,factura:true,devolucion:true});
     if(fila.tipo_factura==="0"){
           if(EMPRESA.tipo_papel==='0'){
             setDialogs({...dialogs,imprimirTicketRecibo:true})
@@ -108,7 +125,7 @@ const FacturasProvider = ({ children }) => {
     }else{
       setFormulario(fila)
     }
-    setCargandoFactura(false);  
+    setLoadings({lista:false,factura:false,devolucion:true});
   }
 
 
@@ -116,12 +133,12 @@ const FacturasProvider = ({ children }) => {
 
 
   const getBuscarFactura = useCallback(async () => {
-    setCargando(true);
+    setLoadings({lista:true,factura:true,devolucion:true});
     let res = await APICALLER.get({
       table: "facturas",include:"clientes,monedas,users",
       on: `id_cliente_factura,id_cliente,id_moneda,id_moneda_factura,id_user,id_user_factura`,
-      fields: `descuento_factura,valor_moneda_factura,nro_factura,abreviatura_moneda,nombre_moneda,abreviatura_moneda,valor_moneda,estado_factura,fecha_factura,fecha_cobro_factura,ruc_cliente,nombre_cliente,direccion_cliente,monto_total_factura,tipo_factura,id_factura,nombre_user,id_caja_factura,obs_factura,descuento_factura`,
-      filtersField:"nro_factura",filtersSearch:inputSearch,
+      fields: `id_moneda_factura,descuento_factura,valor_moneda_factura,nro_factura,abreviatura_moneda,nombre_moneda,abreviatura_moneda,valor_moneda,estado_factura,fecha_factura,fecha_cobro_factura,ruc_cliente,nombre_cliente,direccion_cliente,monto_total_factura,tipo_factura,id_factura,nombre_user,id_caja_factura,obs_factura,descuento_factura`,
+      filtersField:"nro_factura,nombre_cliente",filtersSearch:inputSearch,
       pagenumber:0,pagesize:10,
     });
     //console.log(res);
@@ -146,26 +163,67 @@ const FacturasProvider = ({ children }) => {
     } else {
       console.log(res);
     }
-    setCargando(false);
+    setLoadings({lista:false,factura:true,devolucion:true});
   }, [inputSearch]);
+
+
+  
+
 
 
   const devolucion = async (factura)=>{
 
-    let ask = await swal({title:'Devolución',text:'Desea hacer devolución esta factura?', icon:'warning', buttons:['No','Si, anular']})
+    let ask = await swal({title:'Devolución',text:'Desea hacer devolución esta factura?', icon:'warning', buttons:['No','Si']})
 
     if(ask){
+      setDialogs({...dialogs,devolucion:true})
+      setLoadings({lista:false,factura:true,devolucion:true});
       let id = factura.id_factura;
-      //let promises = [APICALLER.update({table:'facturas',data:{estado_factura:0},token:'token_user',id})]
+      let id_caja = factura.id_caja_factura;
+      let id_moneda = factura.id_moneda_factura;    
+      //let monto = factura.monto;
+      //console.log(factura)
+
+      let [products,caja,pag] = await Promise.all([
+        APICALLER.get({table:'facturas_items',include:'productos,depositos',on:'id_producto,id_producto_factura,id_deposito,id_deposito_item',
+        where:`id_items_factura,=,${id}`,fields:'id_producto_factura,cantidad_producto,nombre_producto,id_deposito_item,nombre_deposito,codigo_producto'}),
+        APICALLER.get({table:'cajas_monedas',where:`id_caja_moneda,=,${id_caja},and,id_moneda_caja_moneda,=,${id_moneda}`,fields:'monto_caja_moneda,monto_no_efectivo'}),
+        APICALLER.get({table:'facturas_pagos',where:`factura_id,=,${id}`,fields:'efectivo_factura,no_efectivo_factura'})
+      ])
+
+      if(products.response){
+        let prod = [];
+        products.results.forEach(e=>{
+          prod.push({...e,check:true})
+        })
+        setStatusDevolucion({
+          active:true,
+          productos:prod,
+          cajas: caja.results[0],
+          pagos: pag.results[0],
+          id:factura.id_factura,
+          id_caja:factura.id_caja_factura,
+          id_moneda:factura.id_moneda_factura
+        })
+      }
+      setLoadings({lista:false,factura:true,devolucion:false});
+
     }
 
   }
 
+  const finalizarDevolucion = async()=>{
+    console.log(token_user,id_user)
+    
+  }
+
+
+
+
+
 
   const getLista = useCallback(async () => {
-    setCargando(true);
-    
-
+    setLoadings({lista:true,factura:true,devolucion:false});
     var filtrosOBJ = {
       "":"",
       "0":",and,tipo_factura,=,0",
@@ -182,7 +240,7 @@ const FacturasProvider = ({ children }) => {
     const res = await APICALLER.get({
       table: "facturas",include:"clientes,monedas,users",
       on: `id_cliente_factura,id_cliente,id_moneda,id_moneda_factura,id_user,id_user_factura`,
-      fields: `descuento_factura,valor_moneda_factura,nro_factura,abreviatura_moneda,nombre_moneda,abreviatura_moneda,valor_moneda,estado_factura,fecha_factura,fecha_cobro_factura,ruc_cliente,nombre_cliente,direccion_cliente,monto_total_factura,tipo_factura,id_factura,nombre_user,id_caja_factura,obs_factura,descuento_factura`,
+      fields: `id_moneda_factura,descuento_factura,valor_moneda_factura,nro_factura,abreviatura_moneda,nombre_moneda,abreviatura_moneda,valor_moneda,estado_factura,fecha_factura,fecha_cobro_factura,ruc_cliente,nombre_cliente,direccion_cliente,monto_total_factura,tipo_factura,id_factura,nombre_user,id_caja_factura,obs_factura,descuento_factura`,
       where: `fecha_factura,between,'${desdeFecha} 00:00:00',and,'${hastaFecha} 23:59:59' ${moreFilter}`,
       sort: `fecha_factura`,
     });
@@ -210,7 +268,7 @@ const FacturasProvider = ({ children }) => {
       console.log(res);
     }
 
-    setCargando(false);
+    setLoadings({lista:false,factura:true,devolucion:true});
   }, [desdeFecha, hastaFecha, filtro]);
 
 
@@ -225,15 +283,13 @@ const FacturasProvider = ({ children }) => {
 
 
 const values = {
-  lista,devolucion,
+  lista,devolucion,statusDevolucion,setStatusDevolucion,finalizarDevolucion,
   setLista,
   desdeFecha,
   setDesdeFecha,
   hastaFecha,
   setHastaFecha,
-  cargando,
-  setCargando,
-  cargandoFactura,
+  loadings,setLoadings,
   lang,
   total,
   setTotal,
@@ -255,15 +311,13 @@ const values = {
 
 export const useFacturas = () => {
   const {
-    lista,devolucion,
+    lista,devolucion,statusDevolucion,setStatusDevolucion,finalizarDevolucion,
     setLista,
     desdeFecha,
     setDesdeFecha,
     hastaFecha,
     setHastaFecha,
-    cargando,
-    setCargando,
-    cargandoFactura,
+    loadings,setLoadings,
     lang,
     total,
     setTotal,
@@ -282,15 +336,13 @@ export const useFacturas = () => {
   } = useContext(Context);
 
   return {
-    lista,devolucion,
+    lista,devolucion,statusDevolucion,setStatusDevolucion,finalizarDevolucion,
     setLista,
     desdeFecha,
     setDesdeFecha,
     hastaFecha,
     setHastaFecha,
-    cargando,
-    setCargando,
-    cargandoFactura,
+    loadings,setLoadings,
     lang,
     total,
     setTotal,

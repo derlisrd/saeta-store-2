@@ -8,7 +8,7 @@ import {funciones} from "../../../Functions";
 import { APIURL } from "../../../App/Config/config";
 
 const ImpresionFactura = () => {
-  const { dialogs, setDialogs, formulario, itemsFactura,cargandoFactura } = useFacturas();
+  const { dialogs, setDialogs, formulario, itemsFactura,loadings } = useFacturas();
   const refPDF = useRef(null);
   const EMPRESA = JSON.parse(localStorage.getItem("dataEmpresa"));
   const DF = { ...formulario };
@@ -68,7 +68,7 @@ const ImpresionFactura = () => {
       onClose={cerrar}
       TransitionComponent={Zoom}
     ><DialogContent sx={{ margin:"0px auto" }}>
-      {cargandoFactura ? (
+      {loadings.factura ? (
         <Stack sx={{ padding: "20px" }} alignItems="center"><CircularProgress /></Stack>
       ) : (
         <div

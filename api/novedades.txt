@@ -456,6 +456,7 @@ DROP TABLE IF EXISTS `facturas_items`;
 CREATE TABLE IF NOT EXISTS `facturas_items` (
   `id_facturas_item` int(11) NOT NULL AUTO_INCREMENT,
   `id_items_factura` int(11) NOT NULL COMMENT 'id_factura',
+  id_deposito_item int(11) NULL COMMENT 'id_deposito',
   `id_impuesto_factura` int(11) NOT NULL COMMENT 'id_impuesto',
   `id_producto_factura` int(11) NOT NULL COMMENT 'id_producto',
   `porcentaje_comision_factura` float NOT NULL,
@@ -467,6 +468,16 @@ CREATE TABLE IF NOT EXISTS `facturas_items` (
 ) ;
 
 -- --------------------------------------------------------
+
+CREATE TABLE `facturas_pagos` (
+  `id_facturas_pago` int NOT NULL PRIMARY KEY AUTO_INCREMENT,
+ `factura_id` int NOT NULL,
+  `moneda_id` int NOT NULL,
+  `valor_moneda_pago` float NOT NULL,
+  `efectivo_factura` float NOT NULL,
+  `no_efectivo_factura` float NOT NULL,
+  `descuento_pago` float DEFAULT NULL
+);
 
 --
 -- Estructura de tabla para la tabla `impuestos`

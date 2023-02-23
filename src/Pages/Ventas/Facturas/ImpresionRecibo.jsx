@@ -7,7 +7,7 @@ import { useFacturas } from './FacturasProvider'
 const ImpresionRecibo = () => {
 
   const {EMPRESA} = useDatosEmpresa()
-  const {dialogs,setDialogs,formulario,itemsFactura,cargandoFactura} = useFacturas();
+  const {dialogs,setDialogs,formulario,itemsFactura,loadings} = useFacturas();
   
     const imprimir = () => {
       printJS({ type: "html", printable: "print",style:'.textMono{font-family:monospace;font-size:10px;}' });
@@ -32,7 +32,7 @@ const ImpresionRecibo = () => {
       TransitionComponent={Zoom}
     >
       {
-        cargandoFactura ?  <Stack sx={{ padding:"20px" }} alignItems="center"> <CircularProgress /> </Stack> : 
+        loadings.factura ?  <Stack sx={{ padding:"20px" }} alignItems="center"> <CircularProgress /> </Stack> : 
       
       <div style={{display:"flex",justifyContent:"center",padding:"25px",margin:"0 auto"}} id="print" className='textMono'>
         <table

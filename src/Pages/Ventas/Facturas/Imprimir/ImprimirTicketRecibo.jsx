@@ -8,7 +8,7 @@ import { useFacturas } from "../FacturasProvider";
 const ImpresionTicketRecibo = () => {
 
   const {EMPRESA} = useDatosEmpresa()
-  const {dialogs,setDialogs,formulario,itemsFactura,cargandoFactura} = useFacturas();
+  const {dialogs,setDialogs,formulario,itemsFactura,loadings} = useFacturas();
   
     const imprimir = () => {
       printJS({ type: "html", printable: "print_factura",style:'*{font-family:monospace;} .textMono{font-family:monospace;font-size:10px;}' });
@@ -25,7 +25,7 @@ const ImpresionTicketRecibo = () => {
 
   return (
     <Dialog open={dialogs.imprimirTicketRecibo} maxWidth="xs" onClose={cerrar} TransitionComponent={Zoom}>
-      {cargandoFactura ? (
+      {loadings.factura ? (
         <Stack sx={{ padding: "20px" }} alignItems="center"><CircularProgress /></Stack>
       ) : 
         <div style={{display:"flex",justifyContent:"center",padding:"25px",margin:"0 auto"}} id="print_factura">

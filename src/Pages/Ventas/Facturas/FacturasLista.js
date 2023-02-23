@@ -71,6 +71,12 @@ const FacturasLista = () => {
       compareField: "estado_factura",
       styleFieldCondition: "estado_factura",
       styleCondition: {
+        "0": {
+          backgroundColor: "#ffce6b",
+          padding: "2px",fontWeight:"bold",
+          borderRadius: "5px",
+          color: "#780c00",
+        },
         "2": {
           backgroundColor: "#ff7c6b",
           padding: "2px",fontWeight:"bold",

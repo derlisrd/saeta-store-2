@@ -10,7 +10,7 @@ import { APIURL } from '../../../../App/Config/config';
 
 const ImprimirFacturaA4 = () => {
 
-  const {dialogs,setDialogs,formulario,itemsFactura,cargandoFactura} = useFacturas();
+  const {dialogs,setDialogs,formulario,itemsFactura,loadings} = useFacturas();
   const {lang} = useLang()
   const {EMPRESA} = useDatosEmpresa()
   const DF = { ...formulario };
@@ -37,7 +37,7 @@ const ImprimirFacturaA4 = () => {
   let TOTALIVA10 = 0;
   let EXENTAS = 0;
   
-  console.log('facturas a 4')
+  //console.log('facturas a 4')
 
   itemsFactura.forEach(e => {
     let subtotal = parseFloat(e.precio_producto_factura)* parseFloat(e.cantidad_producto);
@@ -64,7 +64,7 @@ const ImprimirFacturaA4 = () => {
 
   return (
     <Dialog open={dialogs.imprimirFacturaA4} fullWidth maxWidth="md" onClose={cerrar} TransitionComponent={Zoom}>
-      {cargandoFactura ? (
+      {loadings.factura ? (
         <Stack sx={{ padding: "20px" }} alignItems="center"><CircularProgress /></Stack>
       ) : (
         <div id="print_factura" className={styles.div_central}>

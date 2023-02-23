@@ -3,6 +3,7 @@ import FacturasLista from "./FacturasLista"
 import FacturasDialogEstado from "./FacturasDialogEstado"
 import Impresion from "./Impresion" 
 import EnviarMail from "./EnviarMail"
+import DialogDevolucion from "./DialogDevolucion"
 
 
 const Facturas = () => {
@@ -11,6 +12,7 @@ const Facturas = () => {
       <FacturasDialogEstado />
       <EnviarMail />
       <Impresion /> 
+      <DialogDevolucion />
       <FacturasLista />
     </FacturasProvider>
   )

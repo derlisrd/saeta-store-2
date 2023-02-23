@@ -10,7 +10,7 @@ import { useFacturas } from "../FacturasProvider";
 
 
 const ImprimirTicketFactura = () => {
-  const {dialogs,setDialogs,formulario,itemsFactura,cargandoFactura} = useFacturas();
+  const {dialogs,setDialogs,formulario,itemsFactura,loadings} = useFacturas();
   const {EMPRESA} = useDatosEmpresa()
   const DF = { ...formulario };
   //const id = DF?.id_factura;  
@@ -56,7 +56,7 @@ const ImprimirTicketFactura = () => {
 
   return (
     <Dialog open={dialogs.imprimirTicketFactura} maxWidth="xs" onClose={cerrar} TransitionComponent={Zoom}>
-      {cargandoFactura ? (
+      {loadings.factura ? (
         <Stack sx={{ padding: "20px" }} alignItems="center"><CircularProgress /></Stack>
       ) : (
         <div style={{display:"flex",justifyContent:"center",padding:"25px",margin:"0 auto"}} id="print_factura">
