@@ -314,8 +314,7 @@ const VentasProvider = ({ children }) => {
       orden_compra: df.datosFactura.ordenCompra,
       descuento_factura: DESCUENTO
     };
-    let countAllPromises = ALLPROMISES.length;
-    console.log(countAllPromises)
+    //console.log(ALLPROMISES.length)
     let resInsert = await APICALLER.insert({table:"facturas",data: objFactura,token:token_user});
 
     if (resInsert.response ) {

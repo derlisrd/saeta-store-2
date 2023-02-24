@@ -4,7 +4,7 @@ import AgendaDialog from "./AgendaDialog";
 import AgendaDialogEdit from "./AgendaDialogEdit";
 import AgendaLista from "./AgendaLista";
 import AgendaListado from "./AgendaListado";
-import DialogBuscarCliente from "./DialogBuscarCliente";
+//import DialogBuscarCliente from "./DialogBuscarCliente";
 import RegistraCliente from "./RegistraCliente";
 
 
@@ -33,7 +33,7 @@ const AgendaTabs = () => {
       <TabPanel value={tabValue} index={0}>
         <RegistraCliente />
         <AgendaLista />
-        <DialogBuscarCliente />
+        {/* <DialogBuscarCliente /> */}
         <AgendaDialog />
         <AgendaDialogEdit /> 
       </TabPanel>

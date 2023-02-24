@@ -54,12 +54,12 @@ class AuthController {
                         echo JsonResponse::jsonResponseError(false,200,"User inactive");
                         return;
                     }else{
-                        $data_pa_token = array(
+                        $data_pa_token = [
                             "id_user" => $res[0]->id_user,
                             "username_user"=>$res[0]->username_user,
                             "nombre_user" => $res[0]->nombre_user,
                             "rol_user"=>$res[0]->rol_user
-                        );
+                        ];
                         $token = self::GenerateToken($data_pa_token);
                         $data = '{"try_user": "0","last_login_user":"' .$last_login.'"}';
                         
@@ -67,7 +67,7 @@ class AuthController {
                         $registro_data = '{"id_user_registro":"'.$res[0]->id_user.'","fecha_login": "'.$last_login.'"}';
                         
                         PostController::InsertTable('users_registros',$registro_data,false);
-                        $result = array(
+                        $result = [
                             "id_user" => $res[0]->id_user,
                             "email_user"=>$res[0]->email_user,
                             "nombre_user"=>$res[0]->nombre_user,
@@ -75,7 +75,7 @@ class AuthController {
                             "nombre_user" => $res[0]->nombre_user,
                             "rol_user"=>$res[0]->rol_user,
                             "token_user" => $token,
-                        );
+                        ];
                         echo JsonResponse::jsonResponseGET(array($result),true,200,1);
                     }
                 } // si no es igual aumentamos los try intentos
@@ -257,10 +257,17 @@ class AuthController {
 
                 if($json){
                     $res = self::GetData($token);
-                    
-                    //$res = $decode->data;
-                    //echo $res;
-                    echo JsonResponse::jsonResponseGET($res,true,200,1); 
+                    /* $data_pa_token = [
+                        "id_user" => $res[0]->id_user,
+                        "username_user"=>$res[0]->username_user,
+                        "nombre_user" => $res[0]->nombre_user,
+                        "rol_user"=>$res[0]->rol_user
+                    ];
+                    $token = self::GenerateToken($data_pa_token);
+                    $result = [
+                        "token_user" => $token,
+                    ]; */
+                    echo JsonResponse::jsonResponseGET(($res),true,200,1); 
                 }
                 return true;
             }

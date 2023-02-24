@@ -126,12 +126,12 @@ const LoginProvider = ({children}) => {
         if (userData.login && local) {
             setInterval(async() => {
               let res = await APICALLER.validateToken(userData.token_user);
-              if (!res.response ) {
+              if (!res.response ){
                   console.log(res)
                   logOut()
               }
-              console.log(res);
-            }, 600000); //
+              //console.log(res);
+            }, 300000); //
         }
         
     },[userData,logOut])
@@ -140,7 +140,6 @@ const LoginProvider = ({children}) => {
         setLoading(true);
         let local = localStorage.getItem('userData') || sessionStorage.getItem('userData')
         if (userData.login && local) {
-
               let [validate,permisos] = await Promise.all([
                 APICALLER.validateToken(userData.token_user),
                 APICALLER.get({table:"permisos_users",where:`id_user_permiso,=,${userData.id_user}`,fields:"id_permiso_permiso"})

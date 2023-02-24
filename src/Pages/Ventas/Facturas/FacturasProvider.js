@@ -175,7 +175,9 @@ const FacturasProvider = ({ children }) => {
 
 
   const devolucion = async (factura)=>{
-
+    if(factura.estado_factura==='0'){
+      return false;
+    }
     let ask = await swal({title:'Devolución',text:'Desea hacer devolución esta factura?', icon:'warning', buttons:['No','Si']})
 
     if(ask){
@@ -211,9 +213,9 @@ const FacturasProvider = ({ children }) => {
           active:true,
           productos:prod,
           deposito: dep.results,
-          monto:factura.monto,
           cajas: caja.results[0],
           pagos: pag.results[0],
+          monto:factura.monto,
           id:factura.id_factura,
           id_caja:factura.id_caja_factura,
           id_moneda:factura.id_moneda_factura,
@@ -260,6 +262,8 @@ const FacturasProvider = ({ children }) => {
           stock_producto_deposito : parseFloat(e.stock_producto_deposito)+ parseFloat(e.cantidad_producto)
         }
         }))
+        promises.push(APICALLER.delete({table:'comisions',token:token_user,namecolumns:'id_factura_comision',ids:`${dev.id}`}),
+        APICALLER.delete({table:'productos_vendidos',token:token_user,namecolumns:'id_factura_vendido',ids:`${dev.id}`}))
       }
     })
     await Promise.all(promises)

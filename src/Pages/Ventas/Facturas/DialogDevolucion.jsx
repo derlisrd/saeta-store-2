@@ -1,4 +1,4 @@
-import { Alert,  Button, Dialog, DialogActions, DialogContent, DialogTitle, Grid, LinearProgress, Paper, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material'
+import { Alert,  Button, Dialog, DialogActions, DialogContent, DialogTitle, Grid, LinearProgress, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material'
 import { funciones } from '../../../Functions'
 import { useFacturas } from './FacturasProvider'
 
@@ -6,11 +6,11 @@ const DialogDevolucion = () => {
 
     const {dialogs,setDialogs,setStatusDevolucion,statusDevolucion,loadings,finalizarDevolucion} = useFacturas()
 
+    //console.log(statusDevolucion);
     const close = ()=>{
         setDialogs({...dialogs,devolucion:false});
         setStatusDevolucion({...statusDevolucion,active:false})
     }
-    console.log(statusDevolucion)
   return (
     <Dialog open={dialogs.devolucion} onClose={close} fullWidth>
         <DialogTitle>
@@ -33,8 +33,10 @@ const DialogDevolucion = () => {
           <Typography variant='overline'>Pago sin efectivo: <b>{ funciones.numberFormat(statusDevolucion.pagos?.no_efectivo_factura)}</b></Typography>
           </Alert>
           </Grid>
+          <Grid item xs={12}>
+          {loadings.devolucion && <LinearProgress /> } 
+          </Grid>
         </Grid>
-        <Stack sx={{ width:'100%' }}> {loadings.devolucion && <LinearProgress /> }  </Stack>
         {statusDevolucion.active &&
         <TableContainer component={Paper}>
         <Table>
