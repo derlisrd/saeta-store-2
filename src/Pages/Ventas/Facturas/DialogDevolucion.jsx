@@ -1,23 +1,39 @@
-import { Button, Dialog, DialogActions, DialogContent, DialogTitle, LinearProgress, Paper, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material'
-import React from 'react'
+import { Alert,  Button, Dialog, DialogActions, DialogContent, DialogTitle, Grid, LinearProgress, Paper, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material'
+import { funciones } from '../../../Functions'
 import { useFacturas } from './FacturasProvider'
 
 const DialogDevolucion = () => {
 
     const {dialogs,setDialogs,setStatusDevolucion,statusDevolucion,loadings,finalizarDevolucion} = useFacturas()
 
-    
-
     const close = ()=>{
         setDialogs({...dialogs,devolucion:false});
         setStatusDevolucion({...statusDevolucion,active:false})
     }
+    console.log(statusDevolucion)
   return (
     <Dialog open={dialogs.devolucion} onClose={close} fullWidth>
         <DialogTitle>
             Devolución
         </DialogTitle>
       <DialogContent dividers>
+        <Grid container spacing={1}>
+          <Grid item xs={12} md={6}>
+            <Alert icon={false}>
+          <Typography variant='overline'>Tipo: <b>{ ( statusDevolucion.tipo )} </b></Typography>
+          <br />
+          <Typography variant='overline'>Moneda: <b>{ ( statusDevolucion.pagos?.nombre_moneda )} </b></Typography>
+          <br/>
+          </Alert>
+          </Grid>
+          <Grid item xs={12} md={6}>
+          <Alert icon={false}>
+          <Typography variant='overline'>Pago en efectivo: <b>{ funciones.numberFormat( statusDevolucion.pagos?.efectivo_factura )} </b></Typography>
+          <br />
+          <Typography variant='overline'>Pago sin efectivo: <b>{ funciones.numberFormat(statusDevolucion.pagos?.no_efectivo_factura)}</b></Typography>
+          </Alert>
+          </Grid>
+        </Grid>
         <Stack sx={{ width:'100%' }}> {loadings.devolucion && <LinearProgress /> }  </Stack>
         {statusDevolucion.active &&
         <TableContainer component={Paper}>
@@ -28,7 +44,7 @@ const DialogDevolucion = () => {
               <TableCell align="right">Producto</TableCell>
               <TableCell align="right">Deposito</TableCell>
               <TableCell align="right">Cantidad</TableCell>
-              <TableCell align="right">Devolver</TableCell>
+              <TableCell align="right">Precio</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -43,7 +59,7 @@ const DialogDevolucion = () => {
                 <TableCell align="right">{row.nombre_producto}</TableCell>
                 <TableCell align="right">{row.nombre_deposito}</TableCell>
                 <TableCell align="right">{row.cantidad_producto}</TableCell>
-                <TableCell align="right">{row.check ? "SI" : "NO"} </TableCell>
+                <TableCell align="right">{ funciones.numberFormat( row.precio_producto_factura )} </TableCell>
               </TableRow>
             ))}
           </TableBody>

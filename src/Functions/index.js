@@ -64,8 +64,7 @@ export const funciones = {
           date.getMinutes().toString().padStart(2, 0) +
           ":" +
           date.getSeconds().toString().padStart(2, 0);
-        let fh = `${fecha} ${hora}`; // retorna 2021-12-30 12:02:03
-        return fh;
+        return `${fecha} ${hora}`; // retorna 2021-12-30 12:02:03
     },
 
     getHorarioActualString: () => {

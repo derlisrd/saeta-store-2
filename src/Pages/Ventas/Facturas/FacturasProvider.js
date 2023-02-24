@@ -23,7 +23,11 @@ const FacturasProvider = ({ children }) => {
     pagos:{},
     id:'',
     id_caja:'',
-    id_moneda:''
+    id_moneda:'',
+    nro:'',
+    tipo:'',
+    monto:'',
+    deposito:[]
   })
   const [lista, setLista] = useState([]);
   const [total, setTotal] = useState({
@@ -131,7 +135,6 @@ const FacturasProvider = ({ children }) => {
 
 
 
-
   const getBuscarFactura = useCallback(async () => {
     setLoadings({lista:true,factura:true,devolucion:true});
     let res = await APICALLER.get({
@@ -184,11 +187,18 @@ const FacturasProvider = ({ children }) => {
       //let monto = factura.monto;
       //console.log(factura)
 
-      let [products,caja,pag] = await Promise.all([
-        APICALLER.get({table:'facturas_items',include:'productos,depositos',on:'id_producto,id_producto_factura,id_deposito,id_deposito_item',
-        where:`id_items_factura,=,${id}`,fields:'id_producto_factura,cantidad_producto,nombre_producto,id_deposito_item,nombre_deposito,codigo_producto'}),
-        APICALLER.get({table:'cajas_monedas',where:`id_caja_moneda,=,${id_caja},and,id_moneda_caja_moneda,=,${id_moneda}`,fields:'monto_caja_moneda,monto_no_efectivo'}),
-        APICALLER.get({table:'facturas_pagos',where:`factura_id,=,${id}`,fields:'efectivo_factura,no_efectivo_factura'})
+      let [products,caja,pag,dep] = await Promise.all([
+        APICALLER.get({table:'facturas_items',
+        include:'productos,depositos',on:'id_producto,id_producto_factura,id_deposito,id_deposito_item',
+        where:`id_items_factura,=,${id}`,
+        fields:'id_producto_factura,cantidad_producto,nombre_producto,id_deposito_item,nombre_deposito,codigo_producto,precio_producto_factura,tipo_producto,entregado_item'}),
+        APICALLER.get({table:'cajas_monedas',include:'cajas',on:'id_caja,id_caja_moneda',
+        where:`id_caja_moneda,=,${id_caja},and,id_moneda_caja_moneda,=,${id_moneda}`,fields:'monto_caja_moneda,monto_no_efectivo,nombre_caja,id_cajas_moneda'}),
+        APICALLER.get({table:'facturas_pagos',include:'monedas',on:'moneda_id,id_moneda',
+        where:`factura_id,=,${id}`,fields:'efectivo_factura,no_efectivo_factura,nombre_moneda,abreviatura_moneda'}),
+        APICALLER.get({table:'facturas_items',include:'productos_depositos',on:'id_producto_factura,id_producto_deposito',
+        where:`id_items_factura,=,${id},and,id_deposito_deposito,=,id_deposito_item`,
+        fields:'stock_producto_deposito,id_productos_deposito,cantidad_producto,entregado_item'})
       ])
 
       if(products.response){
@@ -196,14 +206,19 @@ const FacturasProvider = ({ children }) => {
         products.results.forEach(e=>{
           prod.push({...e,check:true})
         })
+        let tipo_factura = { "0": 'Recibo', "1":"Factura Contado", "2": "Factura Crédito", "3":"Cuota" }
         setStatusDevolucion({
           active:true,
           productos:prod,
+          deposito: dep.results,
+          monto:factura.monto,
           cajas: caja.results[0],
           pagos: pag.results[0],
           id:factura.id_factura,
           id_caja:factura.id_caja_factura,
-          id_moneda:factura.id_moneda_factura
+          id_moneda:factura.id_moneda_factura,
+          tipo: tipo_factura[factura.tipo_factura],
+          nro: factura.nro_factura
         })
       }
       setLoadings({lista:false,factura:true,devolucion:false});
@@ -213,7 +228,43 @@ const FacturasProvider = ({ children }) => {
   }
 
   const finalizarDevolucion = async()=>{
-    console.log(token_user,id_user)
+    
+    setLoadings({lista:true,factura:true,devolucion:true});
+    let dev = {...statusDevolucion}
+    let promises = [];
+    
+    let cajas_monedas = {
+       monto_caja_moneda: parseFloat(dev.cajas.monto_caja_moneda) - parseFloat(dev.pagos.efectivo_factura),
+       monto_no_efectivo: parseFloat(dev.cajas.monto_no_efectivo) - parseFloat(dev.pagos.no_efectivo_factura)
+    }
+
+    let cajas_mov = {
+      id_caja_movimiento: dev.id_caja,
+      id_moneda_movimiento:dev.id_moneda,
+      id_user_movimiento:id_user,
+      id_tipo_registro: 8,
+      monto_movimiento: dev.pagos.efectivo_factura,
+      monto_sin_efectivo: dev.pagos.no_efectivo_factura,
+      fecha_movimiento: funciones.getFechaHorarioString(),
+      detalles_movimiento:'Devolución de productos doc nro: '+dev.nro
+    }
+    promises.push([
+      APICALLER.update({table:'facturas',data:{estado_factura:0},id:dev.id,token:token_user}),
+      APICALLER.insert({table:'cajas_movimientos',data:cajas_mov,token:token_user}),
+      APICALLER.update({table:'cajas_monedas',data:cajas_monedas,id:dev.cajas.id_cajas_moneda,token:token_user})
+    ])
+    dev.deposito.forEach(e=>{
+      if(e.entregado_item === '1'){
+        promises.push(APICALLER.update({table:'productos_depositos',token:token_user,id:e.id_productos_deposito,
+        data:{
+          stock_producto_deposito : parseFloat(e.stock_producto_deposito)+ parseFloat(e.cantidad_producto)
+        }
+        }))
+      }
+    })
+    await Promise.all(promises)
+    setDialogs({...dialogs,devolucion:false})
+    getLista()
     
   }
 

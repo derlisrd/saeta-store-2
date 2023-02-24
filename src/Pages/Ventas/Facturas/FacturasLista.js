@@ -12,7 +12,7 @@ import { funciones } from "../../../Functions";
 
 const FacturasLista = () => {
   const {
-    lista,setDesdeFecha,setHastaFecha,cargando,total,setDialogs,dialogs,
+    lista,setDesdeFecha,setHastaFecha,loadings,total,setDialogs,dialogs,
     setFormulario,setFiltro,inputSearch,setInputSearch,
     getBuscarFactura, consultarParaImprimir,lang,devolucion
   } = useFacturas();
@@ -246,7 +246,7 @@ const FacturasLista = () => {
           <Tablas
             title={lang.facturas}
             icon={{ name:"assignment", }}
-            loading={cargando}
+            loading={loadings.lista}
             inputs={search}
             subtitle={lang.lista_facturas}
             datas={FilterData}
