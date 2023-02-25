@@ -22,13 +22,13 @@ class ExcelController {
         $hojaDeReportesdeFacturas->setTitle("Reporte_Facturas");
 
         # Encabezado de los productos
-        $encabezado = ['RUC', 'DENOMINACION DEL CLIENTE','NUMERO DE FACTURA','FECHA','MONTO DE VENTA 10%','MONTO DE VENTA 5%','MONTO DE VENTA EXENTA','MONTO TOTAL','CONDICION DE VENTA'];
+        $encabezado = ['RUC', 'DENOMINACION DEL CLIENTE','NUMERO DE FACTURA','FECHA','MONTO DE VENTA 10%','MONTO DE VENTA 5%','MONTO DE VENTA EXENTA','MONTO TOTAL','CONDICION DE VENTA','ESTADO'];
         # El último argumento es por defecto A1
         $hojaDeReportesdeFacturas->fromArray($encabezado, null, 'A1');
 
         $numeroDeFila = 2;
 
-        $consulta = "select nro_factura,fecha_factura,monto_total_factura,tipo_factura,nombre_cliente,ruc_cliente,iva_factura,nro_datos_factura,iva_10,iva_5,iva_exenta 
+        $consulta = "select estado_factura,nro_factura,fecha_factura,monto_total_factura,tipo_factura,nombre_cliente,ruc_cliente,iva_factura,nro_datos_factura,iva_10,iva_5,iva_exenta 
         from facturas 
         INNER JOIN clientes ON facturas.id_cliente_factura=clientes.id_cliente
         INNER JOIN cajas ON cajas.id_caja=facturas.id_caja_factura
@@ -42,6 +42,7 @@ class ExcelController {
             $numero_factura = $f['nro_datos_factura'].'-'.sprintf("%07d", $f['nro_factura']);
             $fecha_factura = $f['fecha_factura'];
             $monto_total =  $f['monto_total_factura'];
+            $estado = $f['estado_factura'] == '0' ? 'Anulado' : 'Activo';
             $iva_10=$f['iva_10'];
             $iva_5 = $f['iva_5'];
             $iva_exenta= $f['iva_exenta'];
@@ -58,6 +59,7 @@ class ExcelController {
             $hojaDeReportesdeFacturas->setCellValue("G$numeroDeFila", $iva_exenta);
             $hojaDeReportesdeFacturas->setCellValue("H$numeroDeFila", $monto_total);
             $hojaDeReportesdeFacturas->setCellValue("I$numeroDeFila", $condicion_venta); 
+            $hojaDeReportesdeFacturas->setCellValue("I$numeroDeFila", $estado); 
             $numeroDeFila ++;
         }
         
