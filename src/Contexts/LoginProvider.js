@@ -3,11 +3,13 @@ import { APICALLER } from '../Services/api';
 import {  env } from "../Utils/config";
 import CryptoJS from "crypto-js";
 import { funciones } from '../Functions';
+import { useConfiguracion } from './ConfiguracionProvider';
 
 const LoginContext = createContext()
 
 const LoginProvider = ({children}) => {
    // const navigate = useNavigate()
+    const {setearConfiguracion} = useConfiguracion()
     const CifrarTexto = t => CryptoJS.AES.encrypt(t, env.SECRETO).toString();
     const Descifrar = t => CryptoJS.AES.decrypt(t, env.SECRETO).toString(CryptoJS.enc.Utf8);
     const storage = JSON.parse(sessionStorage.getItem("userData")) || JSON.parse(localStorage.getItem("userData"));
@@ -55,6 +57,7 @@ const LoginProvider = ({children}) => {
         if(remember){
             localStorage.setItem("userData", JSON.stringify(f))
         } 
+        setearConfiguracion(1)
     }
 
     const setearEmpresa = ({empresa=null,monedas=null,mode})=>
@@ -84,6 +87,7 @@ const LoginProvider = ({children}) => {
         setearEmpresa({mode:false })
         localStorage.removeItem("userData");
         sessionStorage.removeItem("userData");
+        
 
     },[])
 

@@ -54,7 +54,8 @@ const SearchCliente = () => {
         active:true,
         doc:value.ruc_cliente,
         nombre: value.nombre_cliente,
-        id_cliente_agenda:value.id_cliente
+        id_cliente_agenda:value.id_cliente,
+        telefono_cliente: value.telefono_cliente
       })
       cerrar();
     };

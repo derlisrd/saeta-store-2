@@ -51,8 +51,8 @@ class AuthController {
                 // verificamos si la contra es igual
                 if (password_verify($password, $res[0]->password_user)) {
                     if($res[0]->estado_user==0){
-                        echo JsonResponse::jsonResponseError(false,200,"User inactive");
-                        return;
+                        echo JsonResponse::jsonResponseError(false,200,"User inactive",null,400);
+                        return false;
                     }else{
                         $data_pa_token = [
                             "id_user" => $res[0]->id_user,
@@ -83,14 +83,14 @@ class AuthController {
                     $try = $res[0]->try_user + 1;
                     $data = ["try_user" => $try];
                     PutController::UpdateTable(USERS_TABLE,$res[0]->id_user,json_encode($data,true),null,false);
-                    echo JsonResponse::jsonResponseError(false,200,"Password invalid.");
+                    echo JsonResponse::jsonResponseError(false,200,"Password invalid.",null,401);
                     return;
                 }
             } else {
-                echo JsonResponse::jsonResponseError(false,200,"Your accounts has be blocked.");
+                echo JsonResponse::jsonResponseError(false,200,"Your accounts has be blocked.",null,403);
             }
         } else {
-            echo JsonResponse::jsonResponseError(false,200,"User doesn't exist.");
+            echo JsonResponse::jsonResponseError(false,200,"User doesn't exist.",null,404);
             return;
         }
 
@@ -199,9 +199,8 @@ class AuthController {
             PostController::InsertTable(USERS_TABLE,$data);
         }
         else{
-            echo JsonResponse::jsonResponseError(true,200,"Ya existe ese usuario.");
+            echo JsonResponse::jsonResponseError(false,200,"Ya existe ese usuario.",null,2);
         }
-        
         
 
     }

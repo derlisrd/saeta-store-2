@@ -1,4 +1,4 @@
-import { Dialog,DialogActions,DialogContent,DialogTitle,Grid,TextField,Box,Chip,Stack,Button } from '@mui/material'
+import { Dialog,DialogActions,DialogContent,DialogTitle,Grid,TextField,Box,Chip,Stack,Button, Alert } from '@mui/material'
 import React from 'react'
 import { useAgenda } from './AgendaProvider';
 
@@ -27,6 +27,11 @@ const AgendaDialogEdit = () => {
       <DialogTitle>Reagendar</DialogTitle>
       <DialogContent dividers>
         <Grid container spacing={2}>
+        <Grid item xs={12}>
+          <Alert severity='info' icon={false} variant="outlined">
+           Nombre: {form.nombre_cliente} - Tel: {form.telefono_cliente}
+          </Alert>
+        </Grid>
           <Grid item xs={12}>
             <TextField
               autoComplete="off"

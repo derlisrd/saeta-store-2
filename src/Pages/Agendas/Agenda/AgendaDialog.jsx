@@ -113,6 +113,7 @@ const AgendaDialog = () => {
               </Alert>
               }
           </Grid>
+
           <Grid item xs={12}>
             <TextField
               autoComplete="off"
@@ -128,12 +129,15 @@ const AgendaDialog = () => {
             {
               cliente.active &&
               <Alert icon={false}>
-                {cliente.doc}: {cliente.nombre } 
+                {cliente.doc}: {cliente.nombre } - Tel: {cliente.telefono_cliente} 
               </Alert>
             }
           </Grid>
         <Grid item xs={12}>
             <SearchCliente />
+        </Grid>
+        <Grid item xs={12}>
+            <Button variant="outlined" onClick={()=>{setDialogs({ ...dialogs, registrarCliente:true })}} >Registrar nuevo cliente</Button>
         </Grid>
           <Grid item xs={12} sm={4}>
             <TextField

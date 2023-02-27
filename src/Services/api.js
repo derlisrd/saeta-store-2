@@ -175,9 +175,9 @@ export const APICALLER = {
     }
   },
 
-  insert: async ({ table, data, token }) => {
+  insert: async ({ table, data, token, token_encriptado=true }) => {
     try {
-      let tk = DescifrarTexto(token);
+      let tk = token_encriptado ? DescifrarTexto(token) : token;
       const res = await Axios({
         url: `${APIURL}${table}/?token=${tk}`,
         method: "POST",
@@ -191,9 +191,9 @@ export const APICALLER = {
     }
   },
 
-  update: async ({ table, data, id, token,operator }) => {
+  update: async ({ table, data, id, token,operator,token_encriptado=true  }) => {
     try {
-      let tk = DescifrarTexto(token);
+      let tk = token_encriptado ? DescifrarTexto(token) : token;
       const res = await Axios({
         url: `${APIURL}${table}/${id}/?token=${tk}&operator=${operator}`,
         method: "PUT",

@@ -18,7 +18,7 @@ const ProductFormProvider = (props) => {
     const {lang} = useLang()
     const storage = JSON.parse(localStorage.getItem("dataProductos"));
 
-    const initialDialogs = {categorias: false,proveedores:false,marcas:false,depositos:false,unidades:false}
+    const initialDialogs = {categorias: false,proveedores:false,marcas:false,depositos:false,unidades:false,colors:false}
     const [dialogs,setDialogs] = useState(initialDialogs);
     const {userData} = useLogin();
     const { token_user } = userData;
@@ -50,7 +50,8 @@ const ProductFormProvider = (props) => {
         notificar_producto: "0",
         tipo_producto: "1",
         disponible_producto:"1",
-        preguntar_precio:"0"
+        preguntar_precio:"0",
+        color_id:""
       };
     const initialStock = []
     const [stock,setStock] = useState(initialStock);
@@ -64,6 +65,7 @@ const ProductFormProvider = (props) => {
         marcas: storage ?  storage.marcas :  [],
         proveedores: storage ? storage.proveedores :  [],
         impuestos: storage ? storage.impuestos :  [],
+        colors: storage ? storage.colors :  [],
     }
     const [listas,setListas] = useState(initialListas);
     
@@ -219,13 +221,14 @@ const ProductFormProvider = (props) => {
       const sto = localStorage.getItem("dataProductos");
       if(sto===null){
 
-          let [cat,pro,mar,me,im,dep] = await Promise.all([
+          let [cat,pro,mar,me,im,dep,col] = await Promise.all([
             APICALLER.get({table: `categorias`,fields: `id_categoria,nombre_categoria,id_padre_categoria,tipo_categoria`,sort:'-nombre_categoria'}),
             APICALLER.get({table: "proveedors",fields: "id_proveedor,nombre_proveedor"}),
             APICALLER.get({table: `marcas`,fields: `id_marca,nombre_marca`}),
             APICALLER.get({table: `unidad_medidas`}),
             APICALLER.get({table: `impuestos`}),
-            APICALLER.get({table: `depositos`,where:'tipo_deposito,=,1'})
+            APICALLER.get({table: `depositos`,where:'tipo_deposito,=,1'}),
+            APICALLER.get({table: `colors`,fields:'id_color,descripcion_color'}),
         ])
           
           
@@ -235,7 +238,8 @@ const ProductFormProvider = (props) => {
             marcas:mar.results,
             medidas:me.results,
             impuestos:im.results,
-            depositos:dep.results
+            depositos:dep.results,
+            colors:col.results
           })
       }
       setCargas({main:false,imagen:false,guardar:false,verificarCodigo:false});

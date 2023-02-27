@@ -16,7 +16,8 @@ const AgendaProvider = ({ children }) => {
       active:false,
       nombre:null,
       doc:null,
-      id_cliente_agenda:null
+      id_cliente_agenda:null,
+      telefono_cliente:""
     }
     const [cliente,setCliente] = useState(initialCliente);
     const initialForm = {
@@ -27,6 +28,8 @@ const AgendaProvider = ({ children }) => {
       fecha_fin_agenda: "",
       horario_agenda: "12:00",
       color_agenda: "#0066cc",
+      nombre_cliente:"",
+      telefono_cliente:""
     };
     const [dates,setDates] = useState({
       fecha_inicio_agenda: "",
@@ -114,7 +117,7 @@ const AgendaProvider = ({ children }) => {
         res.results.forEach((e) => {
           nEvents.push({
             id: e.id_agenda,
-            title: e.descripcion_agenda,
+            title: `${e.descripcion_agenda} ${e.nombre_cliente}`,
             start: e.fecha_inicio_agenda + "T" + e.horario_agenda,
             end:e.fecha_fin_agenda,
             allDay: false,
@@ -159,7 +162,10 @@ const AgendaProvider = ({ children }) => {
 
   
     const insertarAgendar = useCallback(async(form)=>{
-      let res = await APICALLER.insert({table:"agendas",data:form,token:token_user});
+      let f = { ...form}
+      delete f.nombre_cliente
+      delete f.telefono_cliente
+      let res = await APICALLER.insert({table:"agendas",data:f,token:token_user});
       if(res.response){
         swal({text:"Agendado correctamente", icon:"success", timer:2000});
         setDialogs({ ...dialogs, agregar: false });

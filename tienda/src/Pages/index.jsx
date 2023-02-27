@@ -9,10 +9,12 @@ import DatosProvider from '../Providers/DatosProvider'
 import NotFound from '../Components/html/NotFound'
 import Categories from './Category/Categories'
 import Contacto from './Contacto'
+import CartProvider from '../Providers/CartProvider'
 
 const Pages = () => {
   return (
     <DatosProvider>
+      <CartProvider>
       <BrowserRouter>
         <Routes>
           <Route path='/' element={<Base><Home/></Base>} />
@@ -24,6 +26,7 @@ const Pages = () => {
           <Route path='*' element={<Base><NotFound /></Base>} />
         </Routes>
       </BrowserRouter>
+      </CartProvider>
     </DatosProvider>
   )
 }

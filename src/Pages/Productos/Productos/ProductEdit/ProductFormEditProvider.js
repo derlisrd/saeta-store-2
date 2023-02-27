@@ -32,6 +32,7 @@ const ProductFormEditProvider = (props) => {
       marcas: storage ?  storage.marcas :  [],
       proveedores: storage ? storage.proveedores :  [],
       impuestos: storage ? storage.impuestos :  [],
+      colors: storage ? storage.colors :  []
   }
     const [listas,setListas] = useState(initialListas);
     const [listaImagenes,setListaImagenes] = useState([]);
@@ -55,7 +56,8 @@ const ProductFormEditProvider = (props) => {
         stock_producto: "0",
         notificar_producto: "",
         tipo_producto: "1",
-        disponible_producto:"1"
+        disponible_producto:"1",
+        color_id:""
       };
       const [formulario, setFormulario] = useState(initialForm);
     const [code,setCode] = useState(null);
@@ -176,32 +178,34 @@ const ProductFormEditProvider = (props) => {
     const traerDatos = useCallback(async()=>{
     
       const sto = localStorage.getItem("dataProductos");
-        if(sto===null){
+      if(sto===null){
 
-            let [cat,pro,mar,me,im,dep] = await Promise.all([
-              APICALLER.get({table: `categorias`,fields: `id_categoria,nombre_categoria,id_padre_categoria,tipo_categoria`,sort:'-nombre_categoria'}),
-              APICALLER.get({table: "proveedors",fields: "id_proveedor,nombre_proveedor"}),
-              APICALLER.get({table: `marcas`,fields: `id_marca,nombre_marca`}),
-              APICALLER.get({table: `unidad_medidas`}),
-              APICALLER.get({table: `impuestos`}),
-              APICALLER.get({table: `depositos`,where:'tipo_deposito,=,1'})
-          ])
-            
-            
-            setearListas({
-              categorias:cat.results,
-              proveedores:pro.results,
-              marcas:mar.results,
-              medidas:me.results,
-              impuestos:im.results,
-              depositos:dep.results
-            })
-        }
+          let [cat,pro,mar,me,im,dep,col] = await Promise.all([
+            APICALLER.get({table: `categorias`,fields: `id_categoria,nombre_categoria,id_padre_categoria,tipo_categoria`,sort:'-nombre_categoria'}),
+            APICALLER.get({table: "proveedors",fields: "id_proveedor,nombre_proveedor"}),
+            APICALLER.get({table: `marcas`,fields: `id_marca,nombre_marca`}),
+            APICALLER.get({table: `unidad_medidas`}),
+            APICALLER.get({table: `impuestos`}),
+            APICALLER.get({table: `depositos`,where:'tipo_deposito,=,1'}),
+            APICALLER.get({table: `colors`,fields:'id_color,descripcion_color'}),
+        ])
+          
+          
+          setearListas({
+            categorias:cat.results,
+            proveedores:pro.results,
+            marcas:mar.results,
+            medidas:me.results,
+            impuestos:im.results,
+            depositos:dep.results,
+            colors:col.results
+          })
+      }
       
       let [img,pro] = await Promise.all([
         APICALLER.get({table:'productos_images',where:`id_image_producto,=,${id}`}),
         APICALLER.get({table: `productos`,where: `id_producto,=,${id}`,
-        fields: `id_producto,id_unidad_medida_producto,codigo_producto,nombre_producto,descripcion_producto,id_categoria_producto,id_proveedor_producto,notificar_producto,
+        fields: `color_id,id_producto,id_unidad_medida_producto,codigo_producto,nombre_producto,descripcion_producto,id_categoria_producto,id_proveedor_producto,notificar_producto,
         costo_producto,precio_producto,preciom_producto,id_impuesto_producto,tipo_producto,minimo_producto,id_marca_producto,porcentaje_comision,disponible_producto,preguntar_precio`
         })
       ])

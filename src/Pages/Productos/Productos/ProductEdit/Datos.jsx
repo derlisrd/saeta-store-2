@@ -174,7 +174,24 @@ const Datos = () => {
           </Select>
         </FormControl>
       </Grid>
-
+      <Grid item xs={12} sm={12} md={4}>
+          <FormControl fullWidth>
+              <InputLabel variant="outlined">Color</InputLabel>
+              <Select
+                name="color_id"
+                value={formulario.color_id}
+                onChange={change}
+                variant="outlined"
+                required
+              >
+                {listas.colors.map((d) => (
+                  <MenuItem key={d.id_color} value={d.id_color}>
+                    {d.descripcion_color}
+                  </MenuItem>
+                ))}
+              </Select>
+        </FormControl>
+      </Grid>
     </Grid>
   );
 }

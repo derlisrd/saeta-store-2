@@ -11,6 +11,7 @@ export const translate = {
         nopagado:'No pagado',
         seleccione_estado:'Seleccione estado',
         pagar_todo:'Pagar todo',
+        nuevo_color:'Nuevo color',
         empleado:'Empleado',
         producto:'Producto',
         actividad:'Actividad',

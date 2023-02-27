@@ -6,7 +6,7 @@ import { useDatos } from '../../Providers/DatosProvider'
 import { functions } from '../../Utils/functions'
 
 const Informacion = ({info}) => {
-
+  
   const {datos} = useDatos()
   const link = `https://wa.me/${datos.whatsapp}?text=Hola que tal? Quiero hacer pedido de este producto: ${info.codigo_producto}`
   return (

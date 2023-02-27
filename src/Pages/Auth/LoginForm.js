@@ -7,8 +7,11 @@ import LoadingBackDrop from "../../Components/UI/LoadingBackDrop";
 import { LoadingButton } from "@mui/lab";
 import { useLang } from "../../Contexts/LangProvider";
 import {env} from '../../App/Config/config'
+import { useConfiguracion } from "../../Contexts/ConfiguracionProvider";
+import ConfigIniciales from "../ConfigIniciales";
 const LoginForm = () => {
   const {lang}= useLang();
+  const {configurado} = useConfiguracion()
   const navigate = useNavigate()
   const styles = useGlobalStyles();
   const { logIn ,load,userData} = useLogin();
@@ -44,6 +47,9 @@ const LoginForm = () => {
     return <LoadingBackDrop />
   }
 
+  if(configurado === 0){
+    return <ConfigIniciales />
+  }
 
   return (
 
