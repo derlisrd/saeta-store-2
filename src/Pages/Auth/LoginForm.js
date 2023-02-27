@@ -69,14 +69,14 @@ const LoginForm = () => {
             </Alert>}
         </Grid>
           <Grid item xs={12}>
-            <TextField disabled={load.login} fullWidth InputProps={{  startAdornment: (
+            <TextField error={load.code===404} disabled={load.login} fullWidth InputProps={{  startAdornment: (
                     <InputAdornment position="start">
                       <Icon color="disabled">perm_identity</Icon>
                     </InputAdornment>
                   ),}}  autoFocus autoComplete="off" required name="username_user" label={lang.usuario} value={form.username_user} onChange={change}  />
           </Grid>
           <Grid item xs={12}>
-            <TextField autoComplete="off" inputRef={inputPasswordRef} fullWidth disabled={load.login} required type={typeInput? "password" : "text"} label={lang.contrasena} name="password_user" value={form.password_user} onChange={change}  
+            <TextField autoComplete="off" error={load.code===401} inputRef={inputPasswordRef} fullWidth disabled={load.login} required type={typeInput? "password" : "text"} label={lang.contrasena} name="password_user" value={form.password_user} onChange={change}  
               InputProps={{
                 startAdornment: (
                   <InputAdornment position="start">

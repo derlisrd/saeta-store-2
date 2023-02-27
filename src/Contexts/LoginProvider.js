@@ -19,7 +19,8 @@ const LoginProvider = ({children}) => {
     const [load,setLoad] = useState({
         login:false,
         msj:null,
-        active:false
+        active:false,
+        code:0
     })
     const initialUserData = { 
         login:false,
@@ -92,7 +93,7 @@ const LoginProvider = ({children}) => {
     },[])
 
     const logIn = async(f,remember)=>{
-        setLoad({login:true,active:false,msj:null});
+        setLoad({login:true,active:false,msj:null,code:0});
         let [res,emp,mon] = await Promise.all([APICALLER.login(f),APICALLER.get({table:"empresas"}),APICALLER.get({table:"monedas"})]);
         
         if(res.response && res.found>0){
@@ -120,7 +121,7 @@ const LoginProvider = ({children}) => {
         }
         else{
             console.log(res);
-            setLoad({login:false,active:true,msj:res.message});
+            setLoad({login:false,active:true,msj:res.message,code:res.error_code});
         }
     }
 
