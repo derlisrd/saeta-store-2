@@ -14,7 +14,8 @@ const Producto = () => {
     const [listas,setListas] = useState({
         producto:{},
         images:[],
-        relacionados: []
+        relacionados: [],
+        stock:0
     })
 
     const search = useParams();
@@ -24,7 +25,7 @@ const Producto = () => {
     const getLista = useCallback(async () => {
       window.scrollTo(0, 0);
         setLoading(true)
-        let [pro,ima] = await Promise.all([APICALLER.get({
+        let [pro,ima,dep] = await Promise.all([APICALLER.get({
             table: "productos",
             include:'categorias',
             on:'id_categoria,id_categoria_producto',
@@ -34,7 +35,12 @@ const Producto = () => {
           APICALLER.get({
             table: "productos_images",
             fields: "url_imagen,image_name",
-            where:`id_image_producto,=,${id}`
+            where:`id_image_producto,=,${id}`,
+          }),
+          APICALLER.get({
+            table: "productos_depositos",
+            fields: "SUM(stock_producto_deposito) as stock",
+            where:`id_producto_deposito,=,${id}`,
           })
         ]);
         if (pro.response && pro.found>0) {
@@ -47,10 +53,12 @@ const Producto = () => {
             pagesize:4,
             where: `portada_imagen_producto,=,1,and,tipo_producto,=,1,and,id_categoria_producto,=,${id_category},and,id_producto,<>,${id}`,
           });
+          //console.log(dep)
           setListas({
             images: ima.results,
             producto: pro.results[0],
-            relacionados: rel.response ? rel.results : [] 
+            relacionados: rel.response ? rel.results : [],
+            stock:dep.first.stock
           });
 
         }
@@ -88,7 +96,7 @@ const Producto = () => {
       <Carrusel items={listas.images} />
     </Col>
     <Col xs={12} sm={12} md={6}>
-      <Informacion info={listas.producto} />
+      <Informacion info={listas.producto} stock={listas.stock} />
     </Col>
     
     <Col xs={12}>

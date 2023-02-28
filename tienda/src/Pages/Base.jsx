@@ -7,6 +7,7 @@ import Loading from "../Components/Loading";
 import MenuPrincipal from "../Components/html/MenuPrincipal";
 
 import { useDatos } from "../Providers/DatosProvider";
+import Carrito from "../Components/Carrito";
 
 const Base = ({ children }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -19,6 +20,7 @@ const Base = ({ children }) => {
   
   return (
     <Container>
+      <Carrito />
       <MenuPrincipal toggle={toggle} isOpen={isOpen} datos={datos} />
       <Container>{children}</Container>
       <Footer datos={datos} />
