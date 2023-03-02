@@ -173,7 +173,7 @@ const CajasProvider = ({ children }) => {
       if(cajares[0].response && cajares[1].response){
         swal({
           text: lang.agregado_habilitado_correctamente,
-          timer: 1200,
+          timer: 1500,
           icon: "success",
         }).then(()=>{
           if(dialogQuery==="new"){
@@ -182,6 +182,7 @@ const CajasProvider = ({ children }) => {
           else{
             setDialogs({ ...dialogs, nuevo: false });
             getLista(false);
+            localStorage.removeItem('compras');
           }
         });
       } 

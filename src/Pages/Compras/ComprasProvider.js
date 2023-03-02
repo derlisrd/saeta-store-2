@@ -122,18 +122,19 @@ export default function ComprasProvider({children}) {
     
 
     if (localStorage.getItem("compras")===null) {
-      let res = await Promise.all([
-      APICALLER.get({table:"cajas",include:"cajas_monedas,monedas,cajas_users",on:"id_caja,id_caja_moneda,id_moneda,id_moneda_caja_moneda,id_caja,id_caja_caja",where:`id_user_caja,=,${id_user},and,estado_caja,=,'open'`,
+      let [caj, dep, pro] = await Promise.all([
+      APICALLER.get({table:"cajas",include:"cajas_monedas,monedas,cajas_users",
+      on:"id_caja,id_caja_moneda,id_moneda,id_moneda_caja_moneda,id_caja,id_caja_caja",where:`id_user_caja,=,${id_user},and,estado_caja,=,'open'`,
       fields:"id_moneda,nombre_moneda,id_cajas_moneda,id_caja_moneda,abreviatura_moneda,monto_caja_moneda,monto_no_efectivo,nombre_caja"}),
       APICALLER.get({table:'depositos',fields:"id_deposito,nombre_deposito"}),
       APICALLER.get({table:"proveedors"})
     ])
 
-      if(res[0].response){
+      if(caj.response){
         let datasresponse = {
-          cajas:res[0].results,
-          depositos:res[1].results, 
-          proveedores:res[2].results,
+          cajas:caj.results,
+          depositos:dep.results, 
+          proveedores:pro.results,
           items: [],
           insertProducto:{},
           sumatotal:0,}  
