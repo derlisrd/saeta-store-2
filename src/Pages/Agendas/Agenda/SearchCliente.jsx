@@ -35,17 +35,21 @@ const SearchCliente = () => {
   // buscador con con input text field
   const buscarClientes = useCallback(async (e) => {
     let txt = e.target.value;
+    
     if(txt!==""){
       setLoad(true)
       setTimeout(async()=>{
         let res = await APICALLER.get({table: "clientes", filtersSearch:txt,filtersField:"nombre_cliente,ruc_cliente",pagesize:"10"});
         res.response ? setListaClientes(res.results) : console.log(res);
-      },500)
+        setLoad(false)
+      },700)
+      
     }
     else{
       setListaClientes([]);
+      setLoad(false)
     }
-    setLoad(false)
+    
   },[])
 
   const insertClient = (e, value) => {
@@ -65,7 +69,7 @@ const SearchCliente = () => {
   return (
 <Autocomplete
               loading={load}
-              loadingText="Cargando..."
+              loadingText="Buscando..."
               noOptionsText="No hay clientes con ese nombre"
               onChange={insertClient}
               disableClearable

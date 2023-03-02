@@ -31,6 +31,7 @@ function RegistraCliente() {
       const [cargando,setCargando] = useState(false);
     const cerrar = () =>{
         setDialogs({...dialogs,registrarCliente:false});
+        setFormCliente(initialForm)
     }
     const cambiarValor = e => {
         const { name, value } = e.target; setFormCliente({ ...formCliente, [name]: value });

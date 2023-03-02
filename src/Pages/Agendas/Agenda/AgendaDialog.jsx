@@ -14,7 +14,8 @@ const AgendaDialog = () => {
   } */
   const initialError = {
     active:false,
-    message:null
+    message:null,
+    code:null
   }
   
   const [error,setError] = useState(initialError);
@@ -77,7 +78,7 @@ const AgendaDialog = () => {
     }
 
     if(f.descripcion_agenda === ""){
-      setError({active:true, message:"Ingrese descripcion"});
+      setError({active:true, message:"Ingrese una descripción",code:0});
       return false;
     }
 
@@ -86,12 +87,12 @@ const AgendaDialog = () => {
     let spliFin = funciones.splitFecha(f.fecha_fin_agenda)
     if((spliInicio)<today ||  (spliFin)<today )
     {
-      setError({active:true, message:"No se puede agendar en el pasado"});
+      setError({active:true, message:"No se puede agendar en el pasado",code:1});
       return false;
     }
     
     if(f.id_cliente_agenda===null || !cliente.active){
-      setError({active:true, message:"Ingrese el cliente"});
+      setError({active:true, message:"Ingrese el cliente",code:3});
       return false;
     }
 
@@ -119,6 +120,7 @@ const AgendaDialog = () => {
               autoComplete="off"
               autoFocus required
               fullWidth
+              error={error.code===0}
               label="Descripción de agenda"
               name="descripcion_agenda"
               value={form.descripcion_agenda}
@@ -129,7 +131,7 @@ const AgendaDialog = () => {
             {
               cliente.active &&
               <Alert icon={false}>
-                {cliente.doc}: {cliente.nombre } - Tel: {cliente.telefono_cliente} 
+                <b>Documento:</b> {cliente.doc}  - <b>Nombre:</b> {cliente.nombre } - <b>Tel:</b> {cliente.telefono_cliente} 
               </Alert>
             }
           </Grid>

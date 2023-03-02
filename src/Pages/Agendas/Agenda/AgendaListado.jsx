@@ -34,6 +34,10 @@ const AgendaListado = () => {
       title:"Cliente",
     },
     {
+      field:"telefono_cliente",
+      title:"TEL",
+    },
+    {
       field:'descripcion_agenda',
       title:'Descripcion'
     }
