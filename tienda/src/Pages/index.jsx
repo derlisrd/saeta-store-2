@@ -10,6 +10,7 @@ import NotFound from '../Components/html/NotFound'
 import Categories from './Category/Categories'
 import Contacto from './Contacto'
 import CartProvider from '../Providers/CartProvider'
+import CheckOut from './Checkout'
 
 const Pages = () => {
   return (
@@ -17,13 +18,16 @@ const Pages = () => {
       <CartProvider>
       <BrowserRouter>
         <Routes>
-          <Route path='/' element={<Base><Home/></Base>} />
-          <Route path='/catalogo' element={<Base><Catalogo/></Base>} />
-          <Route path='/producto/:id' element={<Base><Producto /></Base>} />
-          <Route path='/category' element={<Base><Categories /></Base>} />
-          <Route path='/category/:id' element={<Base><Category /></Base>} />
-          <Route path='/contacto' element={<Base><Contacto /></Base>} />
-          <Route path='*' element={<Base><NotFound /></Base>} />
+          <Route path='/' element={<Base />}>
+            <Route path='/' element={<Home />} />
+            <Route path='/catalogo' element={<Catalogo/>} />
+            <Route path='/producto/:id' element={<Producto />} />
+            <Route path='/category' element={<Categories />} />
+            <Route path='/category/:id' element={<Category />} />
+            <Route path='/contacto' element={<Contacto />} />
+            <Route path='/checkout' element={<CheckOut />} />
+            <Route path='*' element={<NotFound />} />
+          </Route>
         </Routes>
       </BrowserRouter>
       </CartProvider>

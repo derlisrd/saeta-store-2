@@ -8,6 +8,7 @@ import MenuPrincipal from "../Components/html/MenuPrincipal";
 
 import { useDatos } from "../Providers/DatosProvider";
 import Carrito from "../Components/Carrito";
+import { Outlet } from "react-router-dom";
 
 const Base = ({ children }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -22,7 +23,9 @@ const Base = ({ children }) => {
     <Container>
       <Carrito />
       <MenuPrincipal toggle={toggle} isOpen={isOpen} datos={datos} />
-      <Container>{children}</Container>
+      <Container>
+        <Outlet />
+      </Container>
       <Footer datos={datos} />
     </Container>
   );
