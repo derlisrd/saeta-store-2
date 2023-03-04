@@ -53,6 +53,7 @@ import RegistrosProductos from "../Pages/Productos/Productos/RegistrosProductos"
 import RegistroActividad from "../Pages/Settings/RegistroActividad";
 import Reportes from "../Pages/Ventas/Reportes";
 import Web from "../Pages/Web";
+import ListasCompras from "../Pages/Compras/ListasCompras";
 
 const RoutesMain = () => {
   const navigate = useNavigate();
@@ -121,6 +122,7 @@ const RoutesMain = () => {
       <Route path={R+"transferencias"} element={<PrivateRoute id={30}><Transferencias /></PrivateRoute>} />
       <Route path={R+'inventario'} element={<PrivateRoute id={31}><Inventario /></PrivateRoute>} />
       <Route path={R+'compras'} element={<PrivateRoute id={32}><Compras /></PrivateRoute>} />
+      <Route path={R+'listascompras'} element={<PrivateRoute id={32}><ListasCompras /></PrivateRoute>} />
       <Route path={R+'cajas'} element={<PrivateRoute id={33}><Cajas /></PrivateRoute>} />
       <Route path={R+"movimientos"} element={<PrivateRoute id={36}><Movimientos /></PrivateRoute>} />
       <Route path={R+"registromovimientos"} element={<PrivateRoute id={37}><RegistroMovimientos /></PrivateRoute>} />

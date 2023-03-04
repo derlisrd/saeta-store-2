@@ -74,7 +74,7 @@ const ProductosProvider = ({ children }) => {
   }
 
   const getPermisos = useCallback(()=>{
-    const ID_MODIFICAR_PRODUCTOS = "9"
+    const ID_MODIFICAR_PRODUCTOS = "18"
     if ( !permisos.some(item => item.id_permiso_permiso === ID_MODIFICAR_PRODUCTOS)) {
       setShowOptions(false)
     }else{ setShowOptions(true)}
@@ -87,7 +87,7 @@ const ProductosProvider = ({ children }) => {
       table: "productos",
       include: "categorias,unidad_medidas",
       on:"id_categoria_producto,id_categoria,id_unidad_medida_producto,id_unidad_medida",
-      fields:"id_producto,nombre_producto,nombre_categoria,codigo_producto,precio_producto,costo_producto,preciom_producto,descripcion_medida,tipo_producto",
+      fields:"disponible_producto,id_producto,nombre_producto,nombre_categoria,codigo_producto,precio_producto,costo_producto,preciom_producto,descripcion_medida,tipo_producto",
       filtersField:"nombre_producto,codigo_producto",
       filtersSearch:`${inputSearch}`,
       pagenumber: "0",
@@ -113,7 +113,7 @@ const ProductosProvider = ({ children }) => {
       table: "productos",
       include: "categorias,unidad_medidas",
       on:"id_categoria_producto,id_categoria,id_unidad_medida_producto,id_unidad_medida",
-      fields:"id_producto,nombre_producto,nombre_categoria,codigo_producto,precio_producto,costo_producto,preciom_producto,descripcion_medida,tipo_producto",
+      fields:"disponible_producto,id_producto,nombre_producto,nombre_categoria,codigo_producto,precio_producto,costo_producto,preciom_producto,descripcion_medida,tipo_producto",
       pagenumber: page,
       pagesize: limite,
       sort:"-id_producto" }
@@ -129,7 +129,6 @@ const ProductosProvider = ({ children }) => {
     }
 
     const res = await Promise.all([APICALLER.get(data),APICALLER.get({table:"depositos",where:"tipo_deposito,=,1"})]);
-
      if (res[1].response  && res[0].response) {
       setCountTotal(res[0].total);
       setLista({productos:res[0].results,depositos:res[1].results}); 

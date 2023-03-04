@@ -65,6 +65,8 @@ const ProductosLista = () => {
  
   const openPhoto = f => { setDialogs({...dialogs,imagen:true}); setFormDetalles(f); }
 
+
+  
   const Acciones = ({rowProps})=>
   (<Stack direction="row" spacing={1} justifyContent="center">
     <Fab onClick={()=> {openPhoto(rowProps)}}  size="small">

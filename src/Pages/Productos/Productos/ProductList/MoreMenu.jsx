@@ -1,13 +1,16 @@
 import { useRef, useState } from 'react';
-import { Menu, MenuItem, Fab, ListItemIcon, ListItemText,Icon } from '@mui/material'
+import { Menu, MenuItem, Fab, ListItemIcon, ListItemText,Icon, Switch, FormControlLabel } from '@mui/material'
 import { useProductos } from './ProductosProvider';
 import useGoto from '../../../../Hooks/useGoto';
+import { APICALLER } from '../../../../Services/api';
+import { useLogin } from '../../../../Contexts/LoginProvider';
 
 
 export default function MoreMenu({rowData}) {
   const ref = useRef(null);
+  const {userData} = useLogin()
   const [isOpen, setIsOpen] = useState(false);
-  const {borrarRegistro,getStock,dialogs,setDialogs} = useProductos();
+  const {borrarRegistro,getStock,dialogs,setDialogs,lista,setLista} = useProductos();
   const navigate = useGoto();
   const id = rowData.id_producto;
   const close = () => {setIsOpen(false);}
@@ -17,6 +20,19 @@ export default function MoreMenu({rowData}) {
       navigate.to(`productos/${rowData.id_producto}`)
     }
   }
+  const changeDisponible = async(id_product,state)=>{
+    
+    let newstate = state === '1' ? '0' : '1';
+    let l = {...lista}
+    let index = l.productos.findIndex(e=> e.id_producto === id_product);
+    l.productos[index].disponible_producto = newstate
+    setLista(l)
+    let res = await APICALLER.update({table:'productos',data:{disponible_producto:newstate},id:id_product,token:userData.token_user})
+    if(!res.response){
+      console.log(res);
+    } 
+  }
+  
   //onClick={()=> {Funciones.goto(`productos/bc?code=${rowData.codigo_producto}`)}} onClick={()=> {openPhoto(rowData)}}
   return (
     <>
@@ -34,6 +50,14 @@ export default function MoreMenu({rowData}) {
         anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
         transformOrigin={{ vertical: 'top', horizontal: 'right' }}
       >
+        <MenuItem>
+        <FormControlLabel
+          control={
+            <Switch checked={rowData.disponible_producto === "1"} onChange={()=>{changeDisponible(rowData.id_producto,rowData.disponible_producto)}} />
+          }
+          label="Catálogo"
+        />
+        </MenuItem>
         <MenuItem onClick={()=>{ openStock(rowData)}}>
           <ListItemIcon><Icon color="success">inventory</Icon></ListItemIcon>
           <ListItemText primary="Stock" primaryTypographyProps={{ variant: 'body2' }} />

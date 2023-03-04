@@ -1,6 +1,5 @@
-import { Grid, Typography } from "@mui/material";
+import { Box, Grid } from "@mui/material";
 import  ButtomCustom  from "../../../../Components/MuiCustom/ButtonCustom";
-import React from "react";
 import { useProductForm } from "./ProductFormProvider";
 import useGoto from "../../../../Hooks/useGoto";
 
@@ -9,15 +8,13 @@ const ProductButtonHead = () => {
   const go = useGoto();
   let GUARDAR_ACTIVO = (formulario.tipo_producto==="1" && stock.length===0) || cargas.guardar
   return (
+    <Box sx={{ position: 'fixed',bottom: 18, zIndex:1000, right: 18, }} bgcolor="background.paper" boxShadow={3} borderRadius={2} p={2}>
     <Grid
       container
       direction="row"
       justifyContent="space-between"
       alignItems="center"
     >
-      <Grid item xs={12}>
-        <Typography variant="h6">{lang.nuevo}</Typography>
-      </Grid>
       <Grid item xs={12}>
         <Grid container  direction="row"  spacing={2} justifyContent="flex-end"  alignItems="flex-start" >
           <Grid item>
@@ -42,6 +39,7 @@ const ProductButtonHead = () => {
         </Grid>
       </Grid>
     </Grid>
+    </Box>
   );
 };
 
