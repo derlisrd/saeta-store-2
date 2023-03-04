@@ -16,7 +16,9 @@ const Carrito = () => {
 
     const navegar = ()=>{
       setModal(false);
-      navigate("/checkout")
+      setTimeout(()=>{
+        navigate("/checkout")
+      },300)
     }
 
   return (

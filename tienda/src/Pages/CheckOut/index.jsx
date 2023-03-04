@@ -100,6 +100,20 @@ const CheckOut = () => {
         </FormGroup>
         }
       </Col>
+      <Col xs={12}>
+      <FormGroup floating>
+        <Input
+            id="obs"
+            required
+            name="obs"
+            placeholder="Observación"
+            className='rounded'
+        />
+        <Label for="obs">
+            Observación de pedido:
+        </Label>
+        </FormGroup>
+      </Col>
     </Row>
     </Form>
   )
