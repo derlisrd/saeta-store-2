@@ -7,7 +7,7 @@ const Listado = ({lista}) => {
   return (
     <>
     {lista.map((e, i) => (
-        <Col key={i} sm={12} md={6} lg={3}>
+        <Col key={i} xs={6} sm={6} md={6} lg={4}>
           <Link
             to={`/producto/${e.id_producto}`}
             style={{ textDecoration: "none", color: "#000" }}
@@ -20,7 +20,7 @@ const Listado = ({lista}) => {
                 width: "100%",
                 maxHeight: "300px",
                 objectFit: "cover",
-                height: "250px",
+                height: "180px",
               }}
               src={e.url_imagen}
             />

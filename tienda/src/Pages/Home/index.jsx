@@ -4,7 +4,7 @@ import { Col, Row } from "reactstrap";
 import Loading from "../../Components/Loading";
 import { useDatos } from "../../Providers/DatosProvider";
 import { APICALLER } from "../../Services/api";
-import Categorias from "../Components/Categorias";
+import Category from "../Components/Category";
 
 
 
@@ -23,7 +23,7 @@ const Home = () => {
       fields:
         "nombre_categoria,id_categoria,url_imagen",
       where: "portada_imagen_producto,=,1,and,tipo_producto,=,1",
-      pagesize:3, sort:'id_producto'
+      pagesize:6, sort:'id_producto'
     });
     if (res.response) {
       setLista(res.results);
@@ -67,8 +67,8 @@ const Home = () => {
         <h1 className="text-center text-muted mt-5">ULTIMAS NOVEDADES</h1>
       </Col>
       <Col xs={12}>
-      <Row className="gy-5 mx-auto mt-1">
-        <Categorias lista={lista} />
+      <Row className="gy-4 mx-auto mt-1">
+        <Category lista={lista} />
       </Row>
       </Col>
     </Row>

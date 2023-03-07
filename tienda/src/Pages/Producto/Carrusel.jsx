@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { Image } from 'react-image-and-background-image-fade';
 import { Carousel, CarouselControl, CarouselIndicators, CarouselItem } from 'reactstrap';
 
 const Carrusel = ({items,...rest}) => {
@@ -34,7 +35,7 @@ const Carrusel = ({items,...rest}) => {
         key={i}
         className="text-center"
       >
-        <img src={item.url_imagen} loading="lazy" className="mx-auto rounded img-thumbnail" alt={item.image_name} />
+        <Image width="300" height="300" src={item.url_imagen} loading="lazy" className="mx-auto rounded img-thumbnail" alt={item.image_name} />
       </CarouselItem>
     );
   });

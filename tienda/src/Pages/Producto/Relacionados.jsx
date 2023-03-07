@@ -8,7 +8,7 @@ const Relacionados = ({lista}) => {
     <Row>
         <h4 className='text-muted my-4'>Productos relacionados </h4>
     {lista.map((e, i) => (
-        <Col key={i} sm={12} md={6} lg={3}>
+        <Col key={i} xs={6} md={6} lg={3}>
           <Link
             to={`/producto/${e.id_producto}`}
             style={{ textDecoration: "none", color: "#000" }}
@@ -17,7 +17,7 @@ const Relacionados = ({lista}) => {
               loading="lazy"
               className="img-thumbnail"
               alt={e.nombre_producto}
-              style={{ width: "100%", maxHeight: "250px", objectFit: "cover", height:"250px" }}
+              style={{ width: "100%", maxHeight: "250px", objectFit: "cover", height:"180px" }}
               src={e.url_imagen}
             />
             <h6 className="card-title my-2">{e.nombre_producto}</h6>

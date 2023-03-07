@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useState } from 'react'
 import { Col, Row } from 'reactstrap';
 import Loading from '../../Components/Loading';
 import { APICALLER } from '../../Services/api';
-import Category from '../Components/Categorias';
+import Category from '../Components/Category';
 
 const Categories = () => {
 

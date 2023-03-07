@@ -6,6 +6,9 @@ import Listado from "./Listado";
 import Search from "./Search";
 
 const Catalogo = () => {
+
+  
+
   const [loading, setLoading] = useState(true);
   const [lista, setLista] = useState([]);
   const [search, setSearch] = useState("");
@@ -35,22 +38,61 @@ const Catalogo = () => {
     getLista();
   };
 
+  const setearLista = useCallback((lista)=>{
+        setLista(lista)
+        const ahoraTime = new Date();
+        let json = {
+          time: ahoraTime,
+          productos:lista
+        }
+        localStorage.setItem("catalogo_cache",JSON.stringify(json))
+      },[])
+
   const getLista = useCallback(async () => {
     setLoading(true);
-    let res = await APICALLER.get({
-      table: "productos",
-      include: "productos_images,categorias",
-      on: "id_producto,id_image_producto,id_categoria_producto,id_categoria",
-      fields:
-        "nombre_producto,id_producto,precio_producto,url_imagen,disponible_producto,nombre_categoria",
-      where: "portada_imagen_producto,=,1,and,tipo_producto,=,1",
-    });
-    if (res.response) {
-      setLista(res.results);
-      //console.log(res.results);
+    
+    let storage = JSON.parse( localStorage.getItem('catalogo_cache') );
+    
+    if(!storage ){
+      let res = await APICALLER.get({
+        table: "productos",
+        include: "productos_images,categorias",
+        on: "id_producto,id_image_producto,id_categoria_producto,id_categoria",
+        fields:
+          "nombre_producto,id_producto,precio_producto,url_imagen,disponible_producto,nombre_categoria",
+        where: "portada_imagen_producto,=,1,and,tipo_producto,=,1",
+      });
+      if (res.response) {
+        setearLista(res.results)
+      }
+    }else{
+      let ahora = new Date();
+      let time_cache = 43200000;
+      let fecha_storage = new Date(storage && storage.time )
+      let diferencia = ahora.getTime() - fecha_storage.getTime()
+      if(diferencia > time_cache){
+        let res = await APICALLER.get({
+          table: "productos",
+          include: "productos_images,categorias",
+          on: "id_producto,id_image_producto,id_categoria_producto,id_categoria",
+          fields:
+            "nombre_producto,id_producto,precio_producto,url_imagen,disponible_producto,nombre_categoria",
+          where: "portada_imagen_producto,=,1,and,tipo_producto,=,1",
+        });
+        if (res.response) {
+          setearLista(res.results)
+        }
+      }
+      else{
+        setearLista(storage.productos)
+      }
+      
     }
+
     setLoading(false);
-  }, []);
+  }, [setearLista]);
+
+
 
   useEffect(() => {
     let isActive = true;

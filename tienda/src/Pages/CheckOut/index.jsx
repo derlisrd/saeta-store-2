@@ -1,9 +1,12 @@
-import React, { useState } from 'react'
-import { Alert, Col, Form, FormGroup, Input, Label, Row } from 'reactstrap'
+import React, { Fragment, useState } from 'react'
+import { Alert, Button, Col, Form, FormGroup, Input, Label, Row } from 'reactstrap'
+import { useCart } from '../../Providers/CartProvider'
 import { useDatos } from '../../Providers/DatosProvider'
+import { functions } from '../../Utils/functions'
 
 const CheckOut = () => {
     const {datos} = useDatos()
+    const {cart,addItem,restarItem} = useCart()
     const initialForm = {
         nombre:'',
         email:'',
@@ -17,10 +20,33 @@ const CheckOut = () => {
 
   return (
     <Form>
+      
     <Row>
         <Col xs={12}>
             <h2 className='mb-5 mt-3 text-center'>Completa estos datos</h2>
         </Col>
+        <Col xs={12} >
+        <Row className='my-5'>
+            {cart.items.map((e,i)=>(
+              <Fragment key={i}>
+                <Col xs={12} md={3}>
+                  <div className='d-flex align-items-center gap-2'>
+                  <Button outline size='sm' className='rounded'  color='danger' onClick={()=>{restarItem(e)}} >-</Button>
+                  <h3>{e.cantidad}</h3>
+                  <Button outline size='sm' className='rounded'  color='success' onClick={()=>{addItem(e,1)}} >+</Button>
+                  </div>
+                </Col>
+                <Col xs={12} md={6}><b>{e.nombre_producto}</b></Col>
+                <Col xs={12} md={3}><b>{functions.thousandSeparator( e.precio_producto * e.cantidad)} {datos.moneda}</b></Col>
+                <hr className='mt-1' />
+              </Fragment>
+            ))}
+            <Col xs={12}>
+              <b>Total: { functions.thousandSeparator( cart.total ) } {datos.moneda}</b>
+            </Col>
+          </Row>
+        </Col>
+
         <Col xs={12} sm={12} md={4}>
         <FormGroup floating>
         <Input
@@ -48,6 +74,20 @@ const CheckOut = () => {
         />
         <Label for="email">
             Email
+        </Label>
+        </FormGroup>
+      </Col>
+      <Col xs={12} sm={12} md={4}>
+        <FormGroup floating>
+        <Input
+            id="doc"
+            required
+            name="doc"
+            placeholder="doc"
+            className='rounded'
+        />
+        <Label for="doc">
+            Documento:
         </Label>
         </FormGroup>
       </Col>
@@ -113,6 +153,9 @@ const CheckOut = () => {
             Observación de pedido:
         </Label>
         </FormGroup>
+      </Col>
+      <Col xs={12}>
+        <Button disabled type='submit' color='primary' className='rounded' >Cerrar pedido</Button>
       </Col>
     </Row>
     </Form>

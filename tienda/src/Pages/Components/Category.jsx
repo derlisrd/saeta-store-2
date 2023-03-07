@@ -6,7 +6,7 @@ const Category = ({lista}) => {
   return (
     <>
       {lista.map((e, i) => (
-          <Col key={i} sm={12} md={4} lg={4}>
+          <Col key={i} xs={6} sm={6} md={4} lg={3}>
             <Link
               to={`/category/${e.id_categoria}`}
               style={{ textDecoration: "none", color: "#000" }}
@@ -19,7 +19,7 @@ const Category = ({lista}) => {
                   width: "100%",
                   maxHeight: "300px",
                   objectFit: "cover",
-                  height: "250px",
+                  height: "180px",
                 }}
                 src={e.url_imagen}
               />
