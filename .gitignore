@@ -11,7 +11,7 @@
 /api/test.php
 /api/v4/vendor
 /api/v4/vendor/*
-
+node_modules/
 package-lock.json
 
 /build
