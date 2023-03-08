@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState } from 'react'
-
+import toast  from 'react-hot-toast';
 const Context = createContext()
 
 const CartProvider = ({children}) => {
@@ -27,7 +27,7 @@ const CartProvider = ({children}) => {
     }
 
     const addItem = (new_item,cantidad)=>{
-        
+        toast.success('Agregado al carrito')
         let old = {...cart}
         let id_producto = new_item.id_producto;
         let nombre_producto = new_item.nombre_producto;

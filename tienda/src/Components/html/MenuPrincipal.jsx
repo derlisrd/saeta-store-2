@@ -1,9 +1,12 @@
 import React from 'react'
 import {AiOutlineHome} from 'react-icons/ai'
 import { Link } from "react-router-dom";
-import {Navbar,NavbarToggler,Collapse,Nav,NavItem,NavLink, NavbarBrand } from "reactstrap";
+import {Navbar,Collapse,Nav,NavItem,NavLink, NavbarBrand } from "reactstrap";
+
 import {BsTelephoneOutbound,BsMinecart } from 'react-icons/bs';
 import {BiCategory} from 'react-icons/bi'
+import UseAnimations from "react-useanimations";
+import menu2 from 'react-useanimations/lib/menu2';
 
 const MenuPrincipal = ({toggle,isOpen,datos,...rest}) => {
   return (
@@ -11,7 +14,8 @@ const MenuPrincipal = ({toggle,isOpen,datos,...rest}) => {
         <NavbarBrand tag={Link} to="/" className="mr-1 text-muted">
           {datos.site_name}
         </NavbarBrand>
-        <NavbarToggler onClick={toggle} />
+
+        <UseAnimations role='button' speed={3} className='d-sm-block d-md-none' onClick={toggle} animation={menu2} size={56} />
         <Collapse isOpen={isOpen} navbar>
           <Nav className="me-auto border rounded" navbar >
             <NavItem>

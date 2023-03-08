@@ -1,5 +1,7 @@
-import { CiFacebook } from "react-icons/ci";
-import {FaInstagram} from 'react-icons/fa'
+
+import UseAnimations from "react-useanimations";
+import instagram from 'react-useanimations/lib/instagram';
+import facebook from 'react-useanimations/lib/facebook';
 import { BiEnvelope } from "react-icons/bi";
 import { BsFillSuitHeartFill, BsTelephoneOutbound, BsWhatsapp } from "react-icons/bs";
 import { Col, Container, Row } from "reactstrap";
@@ -28,8 +30,12 @@ function Footer({datos}) {
       </Container>
       <Container>
         <div className="d-flex justify-content-center gap-3">
-          <p><a href={`https://facebook.com/${datos.facebook ?? ''}`}  rel="noreferrer" target="_blank"> <CiFacebook color="#4267B2" size="2rem"  /></a></p>
-          <p><a href={`https://instagram.com/${datos.instagram ?? ''}`} rel="noreferrer" target="_blank"> <FaInstagram color="#833AB4" size="2rem"  /></a></p>
+          <><a href={`https://facebook.com/${datos.facebook ?? ''}`}  rel="noreferrer" target="_blank"> 
+          <UseAnimations strokeColor="#4267B2" animation={facebook} size={56} />
+          </a></>
+          <><a href={`https://instagram.com/${datos.instagram ?? ''}`} rel="noreferrer" target="_blank"> 
+          <UseAnimations strokeColor="#833AB4" animation={instagram} size={56} />
+          </a></>
         </div>
       </Container> 
       <Container className="bg-muted w-100 rounded my-5 p-2" style={{ background:'#ebebeb' }}>
