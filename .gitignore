@@ -12,6 +12,8 @@
 /api/v4/vendor
 /api/v4/vendor/*
 
+package-lock.json
+
 /build
 /api-2
 composer.lock

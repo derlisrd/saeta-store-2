@@ -1,19 +1,20 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Alert,
   Button,
   Col,
-  Form,
   FormGroup,
   Input,
   Label,
   Row,
 } from "reactstrap";
 import CarritoItems from "../../Components/Carrito/CarritoItems";
+import Loading from "../../Components/Loading";
 import { useDatos } from "../../Providers/DatosProvider";
 
 const CheckOut = () => {
   const { datos } = useDatos();
+  const [isLoading,setIsLoading] = useState(false)
   const initialForm = {
     nombre: "",
     email: "",
@@ -27,12 +28,20 @@ const CheckOut = () => {
 
   const enviarPedido =(e)=>{
     e.preventDefault()
+    setIsLoading(true)
+    window.scrollTo(0, 0);
   }
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [])
 
+  if(isLoading){
+    return <Loading />
+  }
 
   return (
-    <Form onSubmit={enviarPedido}>
+    <form onSubmit={enviarPedido}>
       <Row>
         <Col xs={12} md={6} className='d-none d-sm-none d-md-block'>
           <h3 className="my-5">Items: </h3>
@@ -41,7 +50,7 @@ const CheckOut = () => {
         <Col xs={12} md={6}>
           <Row>
             <Col xs={12}>
-              <h2 className="mb-5 mt-3 text-center">Completa estos datos</h2>
+              <h2 className="mb-5 mt-3 text-center">Completa datos</h2>
             </Col>
             <Col xs={12}></Col>
 
@@ -49,6 +58,7 @@ const CheckOut = () => {
               <FormGroup floating>
                 <Input
                   autoFocus
+                  
                   id="nombre"
                   name="nombre"
                   placeholder="Nombre"
@@ -167,7 +177,7 @@ const CheckOut = () => {
           </Row>
         </Col>
       </Row>
-    </Form>
+    </form>
   );
 };
 
