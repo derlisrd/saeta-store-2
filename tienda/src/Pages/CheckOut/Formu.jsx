@@ -2,9 +2,9 @@ import { useDatos } from "../../Providers/DatosProvider";
 import {Alert,Button,Col,FormFeedback,FormGroup,FormText,Input,Label,Row} from "reactstrap";
 import CarritoItems from "../../Components/Carrito/CarritoItems";
 
-function Formu({error,change,form,enviarPedido,setForm}) {
+function Formu({error,change,form,enviarPedido,setForm,total}) {
     const { datos } = useDatos();
-
+    
     return ( <Row>
         <Col xs={12} md={6} className='d-none d-sm-none d-md-block'>
           <h3 className="my-5">Items: </h3>
@@ -148,6 +148,7 @@ function Formu({error,change,form,enviarPedido,setForm}) {
             </Col>
             <Col xs={12}>
               <Button
+                disabled={total===0}
                 onClick={enviarPedido}
                 color="primary"
                 className="rounded"

@@ -64,7 +64,7 @@ const CartProvider = ({children}) => {
 
 
     const values = {
-        cart,addItem,restarItem
+        cart,addItem,restarItem,setearCart
     }
   return <Context.Provider value={values}>{children}</Context.Provider>
   
@@ -72,8 +72,8 @@ const CartProvider = ({children}) => {
 
 
 export const useCart = ()=>{
-    const {cart,addItem,restarItem} = useContext(Context)
-    return {cart,addItem,restarItem}
+    const {cart,addItem,restarItem,setearCart} = useContext(Context)
+    return {cart,addItem,restarItem,setearCart}
 }
 
 export default CartProvider
