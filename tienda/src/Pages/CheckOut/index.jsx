@@ -14,20 +14,34 @@ import { useDatos } from "../../Providers/DatosProvider";
 
 const CheckOut = () => {
   const { datos } = useDatos();
+  const [error,setError]= useState({
+    active:false,
+    code:0,
+    message:''
+  })
   const [isLoading,setIsLoading] = useState(false)
   const initialForm = {
-    nombre: "",
-    email: "",
-    whatsapp: "",
-    entrega: 1, // 0 es retira
-    direccion: "",
-    obs: "",
+    nombre_pedido: "",
+    email_pedido: "",
+    doc_pedido:"",
+    whatsapp_pedido: "",
+    entrega_pedido: 1, // 0 es retira
+    direccion_pedido: "",
+    obs_pedido: "",
   };
 
   const [form, setForm] = useState(initialForm);
 
-  const enviarPedido =(e)=>{
-    e.preventDefault()
+  const change = e=>{
+    setForm({...form,[e.target.name]:e.target.value})
+  }
+
+  const enviarPedido =()=>{
+    if(form.nombre_pedido === ""){
+      setError({active:true,code:1,message:'Complete el nombre por favor'})
+      return false;
+    }
+    setError({active:false,code:0,message:''})
     setIsLoading(true)
     window.scrollTo(0, 0);
   }
@@ -41,7 +55,7 @@ const CheckOut = () => {
   }
 
   return (
-    <form onSubmit={enviarPedido}>
+    <>
       <Row>
         <Col xs={12} md={6} className='d-none d-sm-none d-md-block'>
           <h3 className="my-5">Items: </h3>
@@ -52,15 +66,17 @@ const CheckOut = () => {
             <Col xs={12}>
               <h2 className="mb-5 mt-3 text-center">Completa datos</h2>
             </Col>
-            <Col xs={12}></Col>
+            <Col xs={12}>
+              {error.active && <Alert> {error.message}</Alert> }
+            </Col>
 
             <Col xs={12} sm={12}>
               <FormGroup floating>
                 <Input
                   autoFocus
-                  
+                  onChange={change}
                   id="nombre"
-                  name="nombre"
+                  name="nombre_pedido"
                   placeholder="Nombre"
                   className="rounded"
                   required
@@ -73,7 +89,8 @@ const CheckOut = () => {
                 <Input
                   id="email"
                   required
-                  name="email"
+                  onChange={change}
+                  name="email_pedido"
                   placeholder="Email"
                   type="email"
                   className="rounded"
@@ -85,8 +102,8 @@ const CheckOut = () => {
               <FormGroup floating>
                 <Input
                   id="doc"
-                  required
-                  name="doc"
+                  onChange={change}
+                  name="doc_pedido"
                   placeholder="doc"
                   className="rounded"
                 />
@@ -97,8 +114,8 @@ const CheckOut = () => {
               <FormGroup floating>
                 <Input
                   id="whatsapp"
-                  required
-                  name="whatsapp"
+                  onChange={change}
+                  name="whatsapp_pedido"
                   placeholder="Whatsapp"
                   className="rounded"
                 />
@@ -111,9 +128,9 @@ const CheckOut = () => {
                 <Input
                   type="radio"
                   id="delivery"
-                  checked={form.entrega === 1}
+                  checked={form.entrega_pedido === 1}
                   onChange={() => {
-                    setForm({ ...form, entrega: 1 });
+                    setForm({ ...form, entrega_pedido: 1 });
                   }}
                 />
                 <Label check for="delivery" role="button">
@@ -124,9 +141,9 @@ const CheckOut = () => {
                 <Input
                   type="radio"
                   id="retiro"
-                  checked={form.entrega === 0}
+                  checked={form.entrega_pedido === 0}
                   onChange={() => {
-                    setForm({ ...form, entrega: 0 });
+                    setForm({ ...form, entrega_pedido: 0 });
                   }}
                 />
                 <Label check for="retiro" role="button">
@@ -143,8 +160,8 @@ const CheckOut = () => {
                 <FormGroup floating>
                   <Input
                     id="direccion"
-                    required
-                    name="direccion"
+                    onChange={change}
+                    name="direccion_pedido"
                     placeholder="Dirección"
                     className="rounded"
                   />
@@ -156,8 +173,8 @@ const CheckOut = () => {
               <FormGroup floating>
                 <Input
                   id="obs"
-                  required
-                  name="obs"
+                  onChange={change}
+                  name="obs_pedido"
                   placeholder="Observación"
                   className="rounded"
                 />
@@ -166,7 +183,6 @@ const CheckOut = () => {
             </Col>
             <Col xs={12}>
               <Button
-                
                 onClick={enviarPedido}
                 color="primary"
                 className="rounded"
@@ -177,7 +193,7 @@ const CheckOut = () => {
           </Row>
         </Col>
       </Row>
-    </form>
+    </>
   );
 };
 

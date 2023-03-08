@@ -22,9 +22,9 @@ const Carrito = () => {
 
   return (
     <>
-    <div><Toaster position="bottom-right"
-  reverseOrder={true}/></div>
-    <div className="w-100 p-0 d-flex flex-row-reverse sticky-top rounded">
+    <Toaster />
+
+    <div className="w-100 p-0 d-flex flex-row-reverse sticky-top rounded" style={{ marginTop:"3px" }}>
        <Button id='carrito' onClick={toggle}><AiOutlineShoppingCart size={20} /> {lenght>0 && <Badge color='danger' className='rounded'>{lenght}</Badge>} </Button>
     </div>
       <Modal isOpen={modal} toggle={toggle} centered fullscreen >

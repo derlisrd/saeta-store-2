@@ -81,7 +81,7 @@ const Producto = () => {
 
 
 
-      if(!loading){
+      if(loading){
         return <Loading />
       }
 
