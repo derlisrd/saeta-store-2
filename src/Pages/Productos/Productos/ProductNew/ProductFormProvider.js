@@ -10,7 +10,7 @@ function useQuery() {
   const { search } = useLocation();
   return React.useMemo(() => new URLSearchParams(search), [search]);
 }
-const ProductFormProvider = (props) => {
+const ProductFormProvider = ({children}) => {
 
 
     let query = useQuery();
@@ -18,7 +18,7 @@ const ProductFormProvider = (props) => {
     const {lang} = useLang()
     const storage = JSON.parse(localStorage.getItem("dataProductos"));
 
-    const initialDialogs = {categorias: false,proveedores:false,marcas:false,depositos:false,unidades:false,colors:false}
+    const initialDialogs = {categorias: false,proveedores:false,marcas:false,depositos:false,unidades:false}
     const [dialogs,setDialogs] = useState(initialDialogs);
     const {userData} = useLogin();
     const { token_user } = userData;
@@ -36,7 +36,7 @@ const ProductFormProvider = (props) => {
         id_proveedor_producto: "",
         id_marca_producto: "",
         id_impuesto_producto: "2",
-        id_unidad_medida_producto: "",
+        id_unidad_medida_producto: "1",
         id_deposito_producto: "",
         codigo_producto: CODIGO,//CODIGO_PRODUCTO_COMPRA,
         nombre_producto: "",
@@ -50,8 +50,7 @@ const ProductFormProvider = (props) => {
         notificar_producto: "0",
         tipo_producto: "1",
         disponible_producto:"1",
-        preguntar_precio:"0",
-        color_id:""
+        preguntar_precio:"0"
       };
     const initialStock = []
     const [stock,setStock] = useState(initialStock);
@@ -65,7 +64,6 @@ const ProductFormProvider = (props) => {
         marcas: storage ?  storage.marcas :  [],
         proveedores: storage ? storage.proveedores :  [],
         impuestos: storage ? storage.impuestos :  [],
-        colors: storage ? storage.colors :  [],
     }
     const [listas,setListas] = useState(initialListas);
     
@@ -221,14 +219,13 @@ const ProductFormProvider = (props) => {
       const sto = localStorage.getItem("dataProductos");
       if(sto===null){
 
-          let [cat,pro,mar,me,im,dep,col] = await Promise.all([
+          let [cat,pro,mar,me,im,dep] = await Promise.all([
             APICALLER.get({table: `categorias`,fields: `id_categoria,nombre_categoria,id_padre_categoria,tipo_categoria`,sort:'-nombre_categoria'}),
             APICALLER.get({table: "proveedors",fields: "id_proveedor,nombre_proveedor"}),
             APICALLER.get({table: `marcas`,fields: `id_marca,nombre_marca`}),
             APICALLER.get({table: `unidad_medidas`}),
             APICALLER.get({table: `impuestos`}),
-            APICALLER.get({table: `depositos`,where:'tipo_deposito,=,1'}),
-            APICALLER.get({table: `colors`,fields:'id_color,descripcion_color'}),
+            APICALLER.get({table: `depositos`,where:'tipo_deposito,=,1'})
         ])
           
           
@@ -238,8 +235,7 @@ const ProductFormProvider = (props) => {
             marcas:mar.results,
             medidas:me.results,
             impuestos:im.results,
-            depositos:dep.results,
-            colors:col.results
+            depositos:dep.results
           })
       }
       setCargas({main:false,imagen:false,guardar:false,verificarCodigo:false});
@@ -257,7 +253,7 @@ const ProductFormProvider = (props) => {
     <ProductFormContexto.Provider 
     value={{lang,token_user,cargas,listas,setearListas,tabValue,setTabValue,formulario,setFormulario,change,sendForm,inputCodigo,inputNombre,setImagesURL,imagesURL,generateCode,
     snack,setSnack,verificarProducto,changeCheck,reiniciarTodo,images,setImages,dialogs,setDialogs,enviado,stock,setStock,cargarStock,borrarStock}}>
-        {props.children}
+        {children}
     </ProductFormContexto.Provider>
   )
 }

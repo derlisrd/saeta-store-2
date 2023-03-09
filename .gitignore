@@ -5,3 +5,7 @@ package-lock.json
 
 api\v1\vendor
 vendor/*
+
+build
+dist
+*.zip

@@ -858,7 +858,6 @@ CREATE TABLE IF NOT EXISTS `productos` (
   `id_impuesto_producto` int(11) NOT NULL COMMENT 'id_impuesto',
   `id_proveedor_producto` int(11) NOT NULL COMMENT 'con id_proveedor',
   `id_unidad_medida_producto` int(11) NOT NULL COMMENT 'id_unidad de medida',
-  `color_id` int(11) NULL,
   `codigo_producto` varchar(200) NOT NULL,
   `nombre_producto` varchar(200) NOT NULL,
   `descripcion_producto` text,
