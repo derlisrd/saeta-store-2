@@ -40,7 +40,7 @@ const ClientesProvider = ({ children }) => {
   const buscarRegistro = async (txt) => {
     setCargando(true);
     let config = {
-      tables: "clientes",
+      table: "clientes",
       where:`nombre_cliente,like,'%${txt}%'`,
       fields: "id_cliente,nombre_cliente,ruc_cliente,telefono_cliente",
     };

@@ -23,7 +23,7 @@ const DialogNuevo = () => {
     
     if(e.target.checked){
       let index1 =  newarray.findIndex(i=> i.id_user_caja === e.target.value)
-      console.log(index1)
+      //console.log(index1)
       if(index1<0){
         newarray.push({id_user_caja: e.target.value})
       }
