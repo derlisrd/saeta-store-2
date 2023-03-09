@@ -1,4 +1,4 @@
-import { Alert, Box, Button, Grid, LinearProgress, TextField, Typography } from '@mui/material'
+import { Alert, Box, Button, FormControl, Grid, InputLabel, LinearProgress, MenuItem, Select, TextField, Typography } from '@mui/material'
 import {useState} from 'react'
 import LoadingBackDrop from '../../Components/UI/LoadingBackDrop'
 import { useConfiguracion } from '../../Contexts/ConfiguracionProvider'
@@ -7,8 +7,8 @@ import { APICALLER } from '../../Services/api'
 
 const ConfigIniciales = () => {
 
-    const {loadindConfiguracion} = useConfiguracion()
-
+    const {loadindConfiguracion,monedas} = useConfiguracion()
+    const [moneda,setMoneda] = useState('')
     const [loading,setLoading] = useState(false)
     const {logIn} = useLogin()
     const [loadingGeneral,setLoadingGeneral] = useState(false)
@@ -43,7 +43,10 @@ const ConfigIniciales = () => {
     }
     const validate = async(e)=>{
         e.preventDefault()
-        
+        if(moneda===''){
+            setErrors({active:true,msg:'Seleccione moneda',code:4})
+            return false;
+        }
         if(userForm.password_user !== userForm.password_repeat){
             setErrors({active:true,msg:'Las contraseñas no coinciden',code:3})
             return false;
@@ -57,9 +60,12 @@ const ConfigIniciales = () => {
             setLoadingGeneral(true)
             let log = await APICALLER.login({username_user:userForm.username_user,password_user: userForm.password_user})
             let token_user = log.results[0].token_user;
-            let update = await APICALLER.update({table:'empresas',data:form,id:1,token:token_user,token_encriptado:false})
+            let [update,update1,update2] = await Promise.all( [APICALLER.update({table:'empresas',data:form,id:1,token:token_user,token_encriptado:false}),
+                APICALLER.update({table:'monedas',data:{activo_moneda:0},id:1,token:token_user,token_encriptado:false}),
+                APICALLER.update({table:'monedas',data:{activo_moneda:1},id:moneda,token:token_user,token_encriptado:false})
+            ])
             if(!update.response){
-                console.log(update)
+                console.log(update,update1,update2)
             }
             logIn({username_user:userForm.username_user,password_user: userForm.password_user});
             
@@ -104,6 +110,25 @@ const ConfigIniciales = () => {
         <Grid item xs={12} md={6}>
             <TextField label="Categoría de la empresa" name="categoria_empresa" onChange={change} value={form.categoria_empresa} fullWidth />
         </Grid>
+        <Grid item xs={12} md={6}>
+            <FormControl fullWidth>
+              <InputLabel variant="outlined">Seleccionar moneda principal</InputLabel>
+              <Select
+                required onChange={(e)=>{setMoneda(e.target.value)}}
+                value={moneda}
+              >
+                <MenuItem value="" disabled >
+                    Seleccionar moneda
+                </MenuItem>
+                {monedas.map((d,i) => (
+                  <MenuItem key={i} value={d.id_moneda}>
+                    {d.nombre_moneda} {d.abreviatura_moneda}
+                  </MenuItem>
+                ))}
+              </Select>
+        </FormControl>
+        </Grid>
+
         <Grid item xs={12}>
             <Typography variant='button'>Datos para usuario</Typography>
         </Grid>

@@ -256,17 +256,10 @@ class AuthController {
 
                 if($json){
                     $res = self::GetData($token);
-                    /* $data_pa_token = [
-                        "id_user" => $res[0]->id_user,
-                        "username_user"=>$res[0]->username_user,
-                        "nombre_user" => $res[0]->nombre_user,
-                        "rol_user"=>$res[0]->rol_user
-                    ];
-                    $token = self::GenerateToken($data_pa_token);
-                    $result = [
-                        "token_user" => $token,
-                    ]; */
-                    echo JsonResponse::jsonResponseGET(($res),true,200,1); 
+                    
+                    //$res = $decode->data;
+                    //echo $res;
+                    echo JsonResponse::jsonResponseGET($res,true,200,1); 
                 }
                 return true;
             }
