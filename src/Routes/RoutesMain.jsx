@@ -56,27 +56,28 @@ import Web from "../Pages/Web";
 import ListasCompras from "../Pages/Compras/ListasCompras";
 
 const RoutesMain = () => {
+  const R = env.BASEURL +`/`;
   const navigate = useNavigate();
   const {userData,loading} = useLogin();
   
   const {login,permisos} = userData
   
 
-  const PublicRoute = ({children})=> login ? <MainPage>{children}</MainPage> : <Navigate to={env.BASEURL+"/"} />
+  const PublicRoute = ({children})=> login ? <MainPage>{children}</MainPage> : <Navigate to={R} />
 
 
   const PrivateRoute = ({children,id})=>{
     if(login && !permisos.some(e => parseInt(e.id_permiso_permiso) === parseInt(id)) ){
       return <Navigate to={env.BASEURL + "/notautorized"} />
     } 
-    return login ? <MainPage> <ScrollToTop /> {children}</MainPage> : <Navigate to={env.BASEURL+"/"} />
+    return login ? <MainPage> <ScrollToTop /> {children}</MainPage> : <Navigate to={R} />
   }
 
   const verificar = useCallback(()=>{
     if(!login){
-      navigate(env.BASEURL+"/")
+      navigate(R)
     }
-  },[login,navigate])
+  },[login,navigate,R])
   
   
 
@@ -90,7 +91,7 @@ const RoutesMain = () => {
   if(loading){
     return <LoadingBackDrop />
   }
-  const R = env.BASEURL +`/`;
+  
   return (
     <Routes>
       <Route path={R+"profile"} element={<PublicRoute><Profile /></PublicRoute>} />
