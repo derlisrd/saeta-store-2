@@ -21,6 +21,7 @@ const DialogDetallesMovimientos = () => {
               <h4>{lang.detalles}: {form.detalles_movimiento}</h4>
               <h4>{lang.cantidad_efectivo}: { funciones.numberFormat( form.monto_movimiento)}</h4>
               <h4>{lang.cantidad_sin_efectivo}: { funciones.numberFormat( form.monto_sin_efectivo)}</h4>
+              <h4>{lang.fecha} {funciones.fechaActualDMY(form.fecha_movimiento)} </h4>
             </Grid>
             <Grid item xs={12}>
               <Alert icon={false} severity={form.tipo_registro==="1" ? 'success' : 'warning'}>
