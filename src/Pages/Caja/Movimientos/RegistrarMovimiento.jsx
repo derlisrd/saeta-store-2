@@ -70,8 +70,8 @@ const RegistrarMovimiento = () => {
 
 
 
-  const EfectuarMovimiento = async () => {
-    
+  const EfectuarMovimiento = async (e) => {
+    e.preventDefault()
     setErrors({...errors,status:false})
     let f = {...formulario}
     if(f.id_caja_movimiento==="" || f.monto_movimiento==="" || f.id_cajas_moneda===""){
@@ -159,6 +159,7 @@ const RegistrarMovimiento = () => {
 
   return (
     <Dialog fullWidth open={dialog.registrar} onClose={cerrar} TransitionComponent={Zoom}>
+      <form onSubmit={EfectuarMovimiento}>
       <DialogTitle>
         {lang.registrar_movimiento}
       </DialogTitle>
@@ -287,7 +288,7 @@ const RegistrarMovimiento = () => {
         <Button
           variant="contained"
           disabled={cargando}
-          onClick={EfectuarMovimiento}
+          type="submit"
         >
           {lang.registrar}
         </Button>
@@ -295,6 +296,7 @@ const RegistrarMovimiento = () => {
           {lang.cancelar}
         </Button>
       </DialogActions>
+    </form>
     </Dialog>
   );
 };

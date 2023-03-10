@@ -78,7 +78,7 @@ const InventarioProvider = ({children})=>{
             } 
         });
         setFormulario(initialForm);
-        swal({text:"Corregido correctamente",timer:1200});
+        swal({text:"Corregido correctamente",icon:"success",timer:1200});
     }
 
 
