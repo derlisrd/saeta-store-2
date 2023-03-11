@@ -6,7 +6,13 @@ export const funciones = {
         return date.setFullYear(parseInt(split[0]),parseInt(split[1]) - 1,parseInt(split[2]));
         //retorna en timestamp ejemplo: 1669932926692
     },
-    
+    dateToShortFormat:(mysqlDate)=>{
+      const date = new Date(mysqlDate);
+      const months = ["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"];
+      const monthName = months[date.getMonth()];
+      const day = date.getDate().toString().padStart(2, '0'); // Añade un cero delante si el día es menor de 10
+      return { month: monthName, day: day }; // retorna MAR-10
+    },
     // retorna los dias de cierto mes
     getDaysInMonth: (year, month) => (  new Date(year, month, 0).getDate() ),
     

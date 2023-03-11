@@ -16,7 +16,7 @@ const DashboardList = () => {
 
     if (isLoading) {
         return <LoadingLinear />;
-      }
+    }
 
       return (
         <Container maxWidth='xl'>

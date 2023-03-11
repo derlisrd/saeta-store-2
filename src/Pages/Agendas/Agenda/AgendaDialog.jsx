@@ -188,8 +188,8 @@ const AgendaDialog = () => {
 
       </DialogContent>
       <DialogActions>
+        <Button onClick={cerrar}>Cerrar</Button>
         <Button variant="contained" onClick={submit}>Agendar</Button>
-        <Button variant="outlined" onClick={cerrar}>Cerrar</Button>
       </DialogActions>
 
     </Dialog>

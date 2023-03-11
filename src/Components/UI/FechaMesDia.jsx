@@ -1,14 +1,19 @@
 import { Stack, Typography } from "@mui/material";
+import { funciones } from "../../Functions";
 
-function FechaMesDia() {
+function FechaMesDia({fecha}) {
+
+  const {month,day} = funciones.dateToShortFormat(fecha)
+  
+
   return (
     <Stack
-      sx={{ bgcolor: "background.default", borderRadius: 3, p: 1, maxWidth:'60px' }}
+      sx={{ bgcolor: "background.default", borderRadius: 3, p: 1, maxWidth:'60px',mr:1 }}
       alignItems="center"
       direction="column"
     >
-      <Typography variant="subtitle2">MAR</Typography>
-      <Typography variant="button">10</Typography>
+      <Typography variant="button">{month}</Typography>
+      <Typography variant="body1">{day}</Typography>
     </Stack>
   );
 }

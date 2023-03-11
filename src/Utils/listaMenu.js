@@ -38,13 +38,13 @@ export const listaMenu = [
         open:false,
         icon:"calendar_month",
         submenu:[
-          {
+          /* {
             id:4,
             title:'turnos',
             icon:'login',
             color: "#a0aec0",
             url:`${BASEURL}/turnos`,
-          },
+          }, */
           {
             id:5,
             title:'agenda',
