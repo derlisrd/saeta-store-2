@@ -54,6 +54,7 @@ import RegistroActividad from "../Pages/Settings/RegistroActividad";
 import Reportes from "../Pages/Ventas/Reportes";
 import Web from "../Pages/Web";
 import ListasCompras from "../Pages/Compras/ListasCompras";
+import Insumos from "../Pages/Insumos";
 
 const RoutesMain = () => {
   const R = env.BASEURL +`/`;
@@ -140,6 +141,7 @@ const RoutesMain = () => {
       <Route path={R+'backup'} element={<PrivateRoute id={56}><Backup /></PrivateRoute>} />
       <Route path={R+'tema'} element={<PrivateRoute id={57}><Tema /></PrivateRoute>} />
       <Route path={R+'web'} element={<PrivateRoute id={59}><Web /></PrivateRoute>} />
+      <Route path={R+'insumos'} element={<PrivateRoute id={60}><Insumos /></PrivateRoute>} />
       <Route path={R+'info'} element={<PublicRoute><Info /></PublicRoute>} />
       <Route path={R+'notautorized'} element={<NotAutorized />} />
       <Route path={R} element={<LoginForm />} />

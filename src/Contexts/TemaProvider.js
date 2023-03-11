@@ -24,6 +24,7 @@ const TemaProvider = ({children})=>{
     const colorText = tema.mode==='light' ? "#4e4d4d" : "#fff";
     const PaperBgColor = tema.mode==='light' ? "#fff" : "#0d1117";
     const DefaultBgColor = tema.mode==='light' ? "#f9f9f9" : "#161c24";
+    const Transparent = tema.mode==='light' ? '#ffffff3d': '#0d11176e'
 
     const FONT_PRIMARY = 'Montserrat'; // Google Font
 
@@ -56,7 +57,8 @@ const TemaProvider = ({children})=>{
           background:{
             paper:PaperBgColor,
             default:DefaultBgColor,
-            blueSky: "#50a7fd"
+            blueSky: "#50a7fd",
+            transparent:Transparent
           },
           primary:{
             light:colores[tema.colors].primary.light,

@@ -14,7 +14,7 @@ const Menu = () => {
   return (
     <>
     <Box sx={{ flexGrow: 1 }}>
-    <AppBar position="fixed" color="inherit" >
+    <AppBar position="fixed"  sx={{ backdropFilter:'blur(5px)',bgcolor:'background.transparent', boxShadow:0 }} >
       <Toolbar  >
         <div className={styles.toolbar}>
             <IconsButtonsMenu />
