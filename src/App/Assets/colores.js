@@ -7,7 +7,27 @@ export const AvaibleColors = [
   { name: "bluelight",color: "#2187ab"},
   { name: "new",color: "#2065D1"},
 ];
+
+
+
 export const colores = {
+  
+  light: {
+    textPrimary:'#2c2c2c',
+    textSecondary:'#6C737F',
+    divider:'#F2F4F7',
+    bgpaper:"#fff",
+    bgdefault:"#f9f9f9",
+    transparent:'#ffffff3d'
+  },
+  dark:{
+    textPrimary:'#EDF2F7',
+    textSecondary:'#A0AEC0',
+    divider:'#2D3748',
+    bgpaper: "#0d1117",
+    bgdefault: "#161c24",
+    transparent:'#0d11176e'
+  },
 
   new: {
     primary:{
@@ -44,15 +64,19 @@ export const colores = {
   },
   green: {
     primary: {
-      light: "#409e3f1f",
-      main: "#409e3f",
-      dark: "#258023",
+      lighter:'#C8FACD',
+      light: "#5BE584",
+      main: "#00AB55",
+      dark: "#007B55",
+      darker:'#005249',
       contrastText: "#fff",
     },
     secondary: {
-      light: "#de65b1",
-      main: "#810058",
-      dark: "#65013e",
+      lighter:'#D6E4FF',
+      light: "#84A9FF",
+      main: "#3366FF",
+      dark: "#1939B7",
+      darker:'#091A7A',
       contrastText: "#fff",
     },
   },

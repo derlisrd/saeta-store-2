@@ -16,12 +16,11 @@ const DashboardList = () => {
 
     if (isLoading) {
         return <LoadingLinear />;
-      }
+    }
 
       return (
         <Container maxWidth='xl'>
         <Grid container spacing={2}>
-
           <Grid item xs={12} sm={12} md={6} lg={4} >
             <Card sx={{ bgcolor:'background.paper',p:2}}>
               <CardHeader

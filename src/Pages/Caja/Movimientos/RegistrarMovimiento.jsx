@@ -285,6 +285,9 @@ const RegistrarMovimiento = () => {
     </Grid>
   </DialogContent>
       <DialogActions>
+      <Button  onClick={cerrar}>
+          {lang.cancelar}
+        </Button>
         <Button
           variant="contained"
           disabled={cargando}
@@ -292,9 +295,7 @@ const RegistrarMovimiento = () => {
         >
           {lang.registrar}
         </Button>
-        <Button variant="contained" onClick={cerrar}>
-          {lang.cancelar}
-        </Button>
+        
       </DialogActions>
     </form>
     </Dialog>

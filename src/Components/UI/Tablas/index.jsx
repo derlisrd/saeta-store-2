@@ -96,7 +96,7 @@ return (
                                                 : null
                                             }>
                                             {
-                                                column.before && column.before
+                                                column.before ?? null
                                             }
                                             { 
                                             column.isNumber ? 
@@ -107,7 +107,7 @@ return (
                                             data[column.field].substr(0,25)
                                             }
                                             {
-                                                column.after ?? ''
+                                                column.after ?? null
                                             }
                                             </span>
                                     </TableCell>
@@ -115,8 +115,7 @@ return (
                             }
                             <TableCell align='center'>
                                 {
-                                    showOptions &&
-                                    <Accions rowProps={data} />
+                                    showOptions && <Accions rowProps={data} />
                                 }
                             </TableCell>
                         </TableRow>

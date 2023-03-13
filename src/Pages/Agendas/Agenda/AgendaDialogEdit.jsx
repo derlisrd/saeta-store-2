@@ -89,9 +89,9 @@ const AgendaDialogEdit = () => {
         </Grid>
       </DialogContent>
       <DialogActions>
+        <Button onClick={cerrar}>Cerrar</Button>
         <Button variant="contained" color='error' onClick={()=>{borrarAgenda(form)}}>Borrar</Button>
         <Button variant="outlined" onClick={update}>Reagendar</Button>
-        <Button variant="outlined" onClick={cerrar}>Cerrar</Button>
       </DialogActions>
     </Dialog>
   )

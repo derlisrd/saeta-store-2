@@ -1,8 +1,9 @@
 import DashboardProvider from "./DashboardProvider";
-import DashboardList from './DashboardList'
+
 import { useLogin } from "../../Contexts/LoginProvider";
 import { Container } from "@mui/system";
 import { Typography } from "@mui/material";
+import DashboardMain from "./Components/DashboardMain";
 
 const DashBoard = () => {
 
@@ -13,7 +14,7 @@ const DashBoard = () => {
   if(permisos.some(e => parseInt(e.id_permiso_permiso) === parseInt(1)) ){
     return(
     <DashboardProvider>
-      <DashboardList />
+      <DashboardMain />
     </DashboardProvider>
   )
   }

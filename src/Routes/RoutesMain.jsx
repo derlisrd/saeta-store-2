@@ -54,29 +54,31 @@ import RegistroActividad from "../Pages/Settings/RegistroActividad";
 import Reportes from "../Pages/Ventas/Reportes";
 import Web from "../Pages/Web";
 import ListasCompras from "../Pages/Compras/ListasCompras";
+import Insumos from "../Pages/Insumos";
 
 const RoutesMain = () => {
+  const R = env.BASEURL +`/`;
   const navigate = useNavigate();
   const {userData,loading} = useLogin();
   
   const {login,permisos} = userData
   
 
-  const PublicRoute = ({children})=> login ? <MainPage>{children}</MainPage> : <Navigate to={env.BASEURL+"/"} />
+  const PublicRoute = ({children})=> login ? <MainPage>{children}</MainPage> : <Navigate to={R} />
 
 
   const PrivateRoute = ({children,id})=>{
     if(login && !permisos.some(e => parseInt(e.id_permiso_permiso) === parseInt(id)) ){
       return <Navigate to={env.BASEURL + "/notautorized"} />
     } 
-    return login ? <MainPage> <ScrollToTop /> {children}</MainPage> : <Navigate to={env.BASEURL+"/"} />
+    return login ? <MainPage> <ScrollToTop /> {children}</MainPage> : <Navigate to={R} />
   }
 
   const verificar = useCallback(()=>{
     if(!login){
-      navigate(env.BASEURL+"/")
+      navigate(R)
     }
-  },[login,navigate])
+  },[login,navigate,R])
   
   
 
@@ -90,7 +92,7 @@ const RoutesMain = () => {
   if(loading){
     return <LoadingBackDrop />
   }
-  const R = env.BASEURL +`/`;
+  
   return (
     <Routes>
       <Route path={R+"profile"} element={<PublicRoute><Profile /></PublicRoute>} />
@@ -139,6 +141,7 @@ const RoutesMain = () => {
       <Route path={R+'backup'} element={<PrivateRoute id={56}><Backup /></PrivateRoute>} />
       <Route path={R+'tema'} element={<PrivateRoute id={57}><Tema /></PrivateRoute>} />
       <Route path={R+'web'} element={<PrivateRoute id={59}><Web /></PrivateRoute>} />
+      <Route path={R+'insumos'} element={<PrivateRoute id={60}><Insumos /></PrivateRoute>} />
       <Route path={R+'info'} element={<PublicRoute><Info /></PublicRoute>} />
       <Route path={R+'notautorized'} element={<NotAutorized />} />
       <Route path={R} element={<LoginForm />} />

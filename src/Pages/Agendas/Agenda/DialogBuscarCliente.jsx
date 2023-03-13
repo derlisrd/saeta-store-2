@@ -71,7 +71,6 @@ const DialogBuscarCliente = () => {
                   }}
                   fullWidth
                   placeholder="Escriba el nombre del cliente"
-                  variant="outlined"
                 />
               )}
             />

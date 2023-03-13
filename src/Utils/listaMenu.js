@@ -4,7 +4,7 @@ export const listaMenu = [
     {
         id: 590,
         title: "inicio",
-        icon: "apps",
+        icon: "dashboard",
         color: "#a0aec0",
         url: `${BASEURL}/dashboard`,
         private:false
@@ -19,7 +19,7 @@ export const listaMenu = [
             id:2,
             url: `${BASEURL}/informes`,
             title:'Informes_Generales',
-            icon: "trending_up",
+            icon: "analytics",
             color: "#a0aec0",
           },
           {
@@ -38,13 +38,13 @@ export const listaMenu = [
         open:false,
         icon:"calendar_month",
         submenu:[
-          {
+          /* {
             id:4,
             title:'turnos',
             icon:'login',
             color: "#a0aec0",
             url:`${BASEURL}/turnos`,
-          },
+          }, */
           {
             id:5,
             title:'agenda',
@@ -337,25 +337,17 @@ export const listaMenu = [
             private:false
           },
 
-        ],
-        
-      },
-      {
-        id:575,
-        title:'sitio_web',
-        icon:'public',
-        color: "#a0aec0",
-        open: false,
-        private:false,
-        submenu:[
           {
             id: 59,
-            title: "configuraciones",
+            title: "sitio_web",
             icon: "devices",
             color: "#a0aec0",
             url: `${BASEURL}/web`,
             private:true
           },
-        ]
-      }  
+
+        ],
+        
+      },
+        
 ]

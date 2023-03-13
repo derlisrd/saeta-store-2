@@ -40,6 +40,7 @@ export const useGlobalStyles = makeStyles((theme)=>({
     selected: {
         "& span":{
           color: theme.palette.primary.light,
+          fontWeight:'bold'
         }
       },
     submenu:{
