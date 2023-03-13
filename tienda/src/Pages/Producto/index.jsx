@@ -96,7 +96,7 @@ const Producto = () => {
       <Carrusel items={listas.images} />
     </Col>
     <Col xs={12} sm={12} md={6}>
-      <Informacion info={listas.producto} stock={listas.stock} />
+      <Informacion info={listas.producto} image={listas.images[0]} stock={listas.stock} />
     </Col>
     
     <Col xs={12}>

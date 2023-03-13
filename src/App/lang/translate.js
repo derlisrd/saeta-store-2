@@ -12,6 +12,7 @@ export const translate = {
         seleccione_estado:'Seleccione estado',
         pagar_todo:'Pagar todo',
         actualizar:"Actualizar",
+        pedidos:"Pedidos",
         nuevo_color:'Nuevo color',
         tipo_pago:'Tipo de pago',
         seleccione_tipo_pago:'Seleccione el  tipo',

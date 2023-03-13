@@ -1,5 +1,6 @@
 import {
   Avatar,
+  Box,
   Card,
   CardContent,
   CardHeader,
@@ -37,8 +38,8 @@ function UltimasVentas({ movimientos }) {
           {movimientos.map((e, i) => (
             <Fragment key={i}>
               <ListItem
-                sx={{ pb:0, }}
-                secondaryAction={<b>{funciones.numberFormat(parseFloat(e.monto_movimiento)===0 ? e.monto_sin_efectivo : e.monto_movimiento )}</b>}
+                sx={{ pb:0, ':hover':{background:'none'} }}
+                secondaryAction={<Box sx={{ fontWeight:'bold' }}>{funciones.numberFormat(parseFloat(e.monto_movimiento)===0 ? e.monto_sin_efectivo : e.monto_movimiento )}</Box>}
               >
                 <ListItemAvatar>
                   <FechaMesDia fecha={e.fecha_movimiento} />

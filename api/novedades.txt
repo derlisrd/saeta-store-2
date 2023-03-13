@@ -666,10 +666,14 @@ INSERT INTO `options` (`id_option`, `option_key`, `option_value`, `updated_at`) 
 DROP TABLE IF EXISTS `pedidos`;
 CREATE TABLE IF NOT EXISTS `pedidos` (
   `id_pedido` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  `id_producto_pedido` int(11) NOT NULL COMMENT 'id_producto',
-  `id_usuario_pedido` int(11) NOT NULL,
-  `cantidad_pedido` float NOT NULL,
-  `obs_pedido` text NOT NULL,
+  `nombre_pedido` varchar(200) NOT NULL,
+  `email_pedido` varchar(200) DEFAULT NULL,
+  `doc_pedido` varchar(100) DEFAULT NULL,
+  `whatsapp_pedido` varchar(100) NOT NULL,
+  `entrega_pedido` int NOT NULL,
+  `direccion_pedido` varchar(200) DEFAULT NULL,
+  `obs_pedido` text,
+  `concretado_pedido` INT NOT NULL DEFAULT '0' COMMENT '0 no 1 si 2 cancel'
   `updated_at` datetime DEFAULT CURRENT_TIMESTAMP
 ) ;
 
@@ -749,7 +753,11 @@ INSERT INTO `permisos` (`id_permiso`, `clave_permiso`, `descripcion_permiso`, `u
 (56, 'Copia de seguridad', 'Acceder a la copia de seguridad del sistema', '2023-02-10 15:15:53'),
 (57, 'Temas de colores', 'Modificar Tema de colores', '2023-02-10 15:56:29'),
 (58, 'Ver Ayuda', 'Ver informaciones y ayuda', '2023-02-10 15:57:38'),
-(59,'Web', 'Hacer configuración en catálogo web','2023-02-10 15:57:38');
+(59,'Web', 'Hacer configuración en catálogo web','2023-02-10 15:57:38'),
+(60, 'Insumos', 'Ver lista de insumos', '2023-02-10 15:57:38'),
+(61, 'Insumos Registros', 'Registrar y editar insumos', '2023-02-10 15:57:38'),
+(62, 'Pedidos Online', 'Administrar pedidos online', '2023-02-10 15:57:38')
+;
 
 -- --------------------------------------------------------
 

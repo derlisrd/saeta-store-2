@@ -1,4 +1,4 @@
-import { Grid } from "@mui/material";
+import { Box, Grid, Typography } from "@mui/material";
 import LoadingLinear from "../../../Components/UI/LoadingLinear";
 import { useDashboard } from "../DashboardProvider";
 import Dolar from "./Dolar";
@@ -14,7 +14,11 @@ function DashboardMain() {
     }
 
   return (
-    <Grid container spacing={2} alignItems="flex-start">
+    <Box m={1}>
+      <Grid container spacing={2} alignItems="flex-start">
+      <Grid item xs={12}>
+        <Typography variant="h4">Visión general</Typography>
+      </Grid>
       <Grid item xs={12} sm={6} md={4}>
         <VentasDia valor={datas.ventasHoy} />
       </Grid>
@@ -31,6 +35,7 @@ function DashboardMain() {
         <MasVendidos masvendidos={datas.masvendidos} />
       </Grid>
     </Grid>
+    </Box>
   );
 }
 

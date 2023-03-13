@@ -38,13 +38,6 @@ export const listaMenu = [
         open:false,
         icon:"calendar_month",
         submenu:[
-          /* {
-            id:4,
-            title:'turnos',
-            icon:'login',
-            color: "#a0aec0",
-            url:`${BASEURL}/turnos`,
-          }, */
           {
             id:5,
             title:'agenda',
@@ -105,6 +98,13 @@ export const listaMenu = [
             color: "#a0aec0",
           },
           {
+            id: 62,
+            title: "pedidos",
+            url: `${BASEURL}/pedidos`,
+            icon: "handshake",
+            color: "#a0aec0",
+          },
+          {
             id: 16,
             title: "reportes",
             url: `${BASEURL}/reportes`,
@@ -134,7 +134,6 @@ export const listaMenu = [
             color: "#a0aec0",
             url: `${BASEURL}/productos`,
           },
-  
           {
             id: 19,
             title: "categorias",

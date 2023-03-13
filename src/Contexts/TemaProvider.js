@@ -57,7 +57,6 @@ const TemaProvider = ({children})=>{
           background:{
             paper:PaperBgColor,
             default:DefaultBgColor,
-            blueSky: "#50a7fd",
             transparent:Transparent
           },
           primary:{
@@ -72,7 +71,10 @@ const TemaProvider = ({children})=>{
             dark: colores[tema.colors].secondary.dark,
             contrastText:colores[tema.colors].secondary.contrastText
           },
-
+          text:{
+            primary: colores[tema.mode].textPrimary,
+            secondary: colores[tema.mode].textSecondary,
+          },
           colorText:colorText,
         },
         

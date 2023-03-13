@@ -6,7 +6,7 @@ import { useCart } from '../../Providers/CartProvider'
 import { useDatos } from '../../Providers/DatosProvider'
 import { functions } from '../../Utils/functions'
 
-const Informacion = ({info,stock}) => {
+const Informacion = ({info,stock,image}) => {
   const {addItem} = useCart()
   
   const {datos} = useDatos()
@@ -35,7 +35,7 @@ const Informacion = ({info,stock}) => {
         :
         <Alert className='rounded' color='danger'> Lástima, este producto está agotado. Pero puedas hacer pedido</Alert>
         }
-        <Button color='primary' onClick={()=>{addItem(info,1)}} outline className='rounded my-4'><AiOutlineShoppingCart /> Agregar al carrito</Button>
+        <Button color='primary' onClick={()=>{addItem(info,1,image)}} outline className='rounded my-4'><AiOutlineShoppingCart /> Agregar al carrito</Button>
         <div> 
         <a href={link} target="_blank" className='text-decoration-none' rel='noreferrer'> <AiOutlineWhatsApp color='#128c7e' size="2rem" /> Hacer pedido de este producto</a>
         </div>

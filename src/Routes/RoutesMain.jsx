@@ -42,7 +42,7 @@ import Transferencias from "../Pages/Productos/Transferencias";
 import Cuentas from "../Pages/Cuentas";
 import ProductCode from "../Pages/Productos/Productos/ProductCode";
 import Agenda from "../Pages/Agendas/Agenda";
-import Turnos from "../Pages/Agendas/Turnos";
+
 import Backup from "../Pages/Backup";
 import Comisiones from "../Pages/Caja/Comisiones";
 import FormasPago from "../Pages/Ventas/FormasPago";
@@ -55,6 +55,7 @@ import Reportes from "../Pages/Ventas/Reportes";
 import Web from "../Pages/Web";
 import ListasCompras from "../Pages/Compras/ListasCompras";
 import Insumos from "../Pages/Insumos";
+import Pedidos from "../Pages/Pedidos";
 
 const RoutesMain = () => {
   const R = env.BASEURL +`/`;
@@ -99,7 +100,7 @@ const RoutesMain = () => {
       <Route path={R+'dashboard'} element={<PublicRoute><DashBoard /></PublicRoute>} />
       <Route path={R+'informes'} element={<PrivateRoute id={2}><Informes /></PrivateRoute>} />
       <Route path={R+'informesproductos'} element={<PrivateRoute id={3}><InformesProductos /></PrivateRoute>} />
-      <Route path={R+"turnos"} element={<PrivateRoute id={4}><Turnos /></PrivateRoute>} />
+      
       <Route path={R+"agenda"} element={<PrivateRoute id={5}><Agenda /></PrivateRoute>} />
       <Route path={R+'facturas'} element={<PrivateRoute id={6}><Facturas /></PrivateRoute>} />
       <Route path={R+'ventas'} element={<PrivateRoute id={7}><Ventas /></PrivateRoute>} />
@@ -142,6 +143,7 @@ const RoutesMain = () => {
       <Route path={R+'tema'} element={<PrivateRoute id={57}><Tema /></PrivateRoute>} />
       <Route path={R+'web'} element={<PrivateRoute id={59}><Web /></PrivateRoute>} />
       <Route path={R+'insumos'} element={<PrivateRoute id={60}><Insumos /></PrivateRoute>} />
+      <Route path={R+'pedidos'} element={<PrivateRoute id={62}><Pedidos /></PrivateRoute>} />
       <Route path={R+'info'} element={<PublicRoute><Info /></PublicRoute>} />
       <Route path={R+'notautorized'} element={<NotAutorized />} />
       <Route path={R} element={<LoginForm />} />

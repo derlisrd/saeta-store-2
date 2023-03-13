@@ -26,19 +26,20 @@ const CartProvider = ({children}) => {
         return total;
     }
 
-    const addItem = (new_item,cantidad)=>{
+    const addItem = (new_item,cantidad,image)=>{
         toast.success('Agregado al carrito')
         let old = {...cart}
         let id_producto = new_item.id_producto;
         let nombre_producto = new_item.nombre_producto;
         let precio_producto = parseFloat(new_item.precio_producto);
+        
 
         let index = old.items.findIndex(e=> e.id_producto === id_producto)
         let new_cantidad = cantidad
         if(index>=0){
             old.items[index].cantidad += new_cantidad;
         }else{
-            old.items.push({id_producto,cantidad,nombre_producto,precio_producto})
+            old.items.push({id_producto,cantidad,nombre_producto,precio_producto,image:image.url_imagen})
         }
         
         old.total = hacerTotal(old);

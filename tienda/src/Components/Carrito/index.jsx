@@ -34,7 +34,7 @@ const Carrito = () => {
         </ModalBody>
         <ModalFooter>
           <Button color="primary" className='rounded' size='sm' disabled={cart.total===0} outline onClick={navegar}>
-            Proceder a pagar
+            Finalizar pedido
           </Button>{' '}
           <Button color="secondary" className='rounded' size='sm' outline onClick={toggle}>
             Seguir comprando
