@@ -21,10 +21,10 @@ const TemaProvider = ({children})=>{
     })
 
     const drawerWidth = 275;
-    const colorText = tema.mode==='light' ? "#4e4d4d" : "#fff";
-    const PaperBgColor = tema.mode==='light' ? "#fff" : "#0d1117";
-    const DefaultBgColor = tema.mode==='light' ? "#f9f9f9" : "#161c24";
-    const Transparent = tema.mode==='light' ? '#ffffff3d': '#0d11176e'
+    const colorText = colores[tema.mode].textPrimary;
+    const PaperBgColor = colores[tema.mode].bgpaper ;
+    const DefaultBgColor = colores[tema.mode].bgdefault ;
+    const Transparent = colores[tema.mode].transparent
 
     const FONT_PRIMARY = 'Montserrat'; // Google Font
 
@@ -53,7 +53,7 @@ const TemaProvider = ({children})=>{
 
     const theme = createTheme({        
         palette: {
-          mode: tema.mode==='light' ? "light" : "dark",
+          mode: tema.mode,
           background:{
             paper:PaperBgColor,
             default:DefaultBgColor,
@@ -93,6 +93,23 @@ const TemaProvider = ({children})=>{
           
         },
         components:{
+          MuiDialog:{
+            styleOverrides:{
+              root:{
+                
+              },
+              paper:{
+                borderRadius:'16px'
+              }
+            }
+          },
+          MuiDialogActions:{
+            styleOverrides:{
+              root:{
+                padding:'16px'
+              }
+            }
+          },
           MuiTableCell:{
             styleOverrides:{
               root:{
@@ -115,15 +132,11 @@ const TemaProvider = ({children})=>{
               color:colorText,
             }
           },
-          MuiLink: {
-            defaultProps: {
-              
-            },
-          },
+          
           MuiCard:{
             styleOverrides:{
               root:{
-                borderRadius:"12px",
+                borderRadius:"16px",
                 boxShadow:"7px 6px 8px 1px rgb(0 0 0 / 10%), 0px 1px 1px 0px rgb(0 0 0 / 14%), 3px 3px 3px 0px rgb(0 0 0 / 12%)"
               }
             }
@@ -138,17 +151,13 @@ const TemaProvider = ({children})=>{
               
             }
           },
-          MuiDrawer:{
-            styleOverrides:{
-              root:{
-                
-              }
-            }
-          },
           MuiButton:{
             styleOverrides:{
               root:{
-                borderRadius:"8px"
+                borderRadius:"8px",
+                '&:hover':{
+                  boxShadow:`#dbdbdb29 1px 9px 16px 0px`
+                }
               }
             }
           },
@@ -171,6 +180,7 @@ const TemaProvider = ({children})=>{
           MuiListItemIcon:{
             styleOverrides:{
               root:{
+                minWidth:'35px',
                 "& span":{
                   //fontSize:tema.fontSize.menu
                 },
@@ -181,7 +191,7 @@ const TemaProvider = ({children})=>{
           styleOverrides:{
             root:{
               "& span":{
-                fontSize:tema.fontSize.menu
+                fontSize:tema.fontSize.menu,
               },
           },
         },
@@ -195,7 +205,6 @@ const TemaProvider = ({children})=>{
             }
           }
         },
-        
         MuiListItem:{
             styleOverrides:{
               root:{

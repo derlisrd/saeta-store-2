@@ -1,19 +1,11 @@
+import useGet from "../../../Hooks/useGet";
 
-import DialogRegistraCliente from './DialogRegistraCliente'
-import TurnosDialogs from './TurnosDialogs'
-import TurnosDialogsEdit from './TurnosDialogsEdit'
-import TurnosLista from './TurnosLista'
-import TurnosProvider from './TurnosProvider'
+function Turnos() {
+  const {isLoading,data,error} = useGet({table:'clientes',pagesize:5,pagenumber:0})
 
-const Turnos = () => {
-  return (
-    <TurnosProvider>
-      <TurnosLista />
-      <TurnosDialogs />
-      <TurnosDialogsEdit />
-      <DialogRegistraCliente />
-    </TurnosProvider>
-  )
+  console.log(isLoading,data,error);
+
+  return (<></>  );
 }
 
-export default Turnos
+export default Turnos;

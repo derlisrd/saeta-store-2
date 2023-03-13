@@ -4,7 +4,7 @@ export const listaMenu = [
     {
         id: 590,
         title: "inicio",
-        icon: "apps",
+        icon: "dashboard",
         color: "#a0aec0",
         url: `${BASEURL}/dashboard`,
         private:false
@@ -19,7 +19,7 @@ export const listaMenu = [
             id:2,
             url: `${BASEURL}/informes`,
             title:'Informes_Generales',
-            icon: "trending_up",
+            icon: "analytics",
             color: "#a0aec0",
           },
           {

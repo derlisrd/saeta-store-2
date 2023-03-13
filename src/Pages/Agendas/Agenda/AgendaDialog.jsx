@@ -101,10 +101,10 @@ const AgendaDialog = () => {
   }
 
   return (
-    <Dialog open={dialogs.agregar} onClose={cerrar} fullWidth>
+    <Dialog open={dialogs.agregar} maxWidth='sm' onClose={cerrar} >
 
       <DialogTitle>Agendar</DialogTitle>
-      <DialogContent dividers>
+      <DialogContent >
         <Grid container spacing={2}>
           <Grid item xs={12}>
               {
@@ -172,13 +172,13 @@ const AgendaDialog = () => {
             />
           </Grid>
           <Grid item xs={12}>
-              Color de agenda: <Box sx={{background:form.color_agenda,width: 40, height: 40, }} />
+              Color de agenda: <Box sx={{background:form.color_agenda,width: 40, height: 40,borderRadius:9 }} />
           </Grid>
           <Grid item xs={12}>
             <Stack direction="row" spacing={1}>
               {
                 colores.map((e,i)=>(
-                  <Chip key={i} sx={{ bgcolor:e,width: 40, height: 40,cursor:'pointer' }} onClick={()=> changeColor(e)} />
+                  <Chip key={i} sx={{ bgcolor:e,width: 25, height: 25,cursor:'pointer' }} onClick={()=> changeColor(e)} />
                 ))
               }
               

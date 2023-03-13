@@ -51,7 +51,7 @@ const DatosEmpresa = () => {
         </Snackbar>
     <Grid container spacing={2} >
       <Grid item xs={12}>
-        <Alert severity="info">
+        <Alert variant="outlined" severity="info">
           {lang.licencia_valida_hasta}: { funciones.fechaYMDMySQLtoEs( datosEmpresa.licencia)} 
         </Alert>
       </Grid>
