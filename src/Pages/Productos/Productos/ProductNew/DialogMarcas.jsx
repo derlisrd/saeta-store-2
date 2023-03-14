@@ -5,16 +5,18 @@ import { useProductForm } from './ProductFormProvider'
 
 const DialogMarcas = () => {
 
-    const {dialogs,setDialogs,listas,setearListas,token_user,formulario,setFormulario} = useProductForm()
+    const {dialogs,setDialogs,listas,setearListas,token_user,formulario,setFormulario,lang} = useProductForm()
     const name = React.useRef(null);
     const [load,setLoad] = React.useState(false)
     
     const cerrar = ()=> setDialogs({...dialogs,marcas:false});
-    const enviar = async()=>{
-        setLoad(true)
-        let list = {...listas}
-        let form = {...formulario}
-        let nombre = name.current.value;
+    const enviar = async(e)=>{
+      e.preventDefault()
+      let list = {...listas}
+      let form = {...formulario}
+      let nombre = name.current.value;
+      setLoad(true)
+      if(nombre===''){ return false;}
         if(nombre!=="" && nombre!==null ){
         let res = await APICALLER.insert({table:'marcas',data:{nombre_marca:nombre},token:token_user})
         //console.log(res);
@@ -33,19 +35,21 @@ const DialogMarcas = () => {
 
   return (
     <Dialog open={dialogs.marcas} fullWidth onClose={cerrar}>
-      <DialogTitle>Nueva Marca</DialogTitle>
+      <form onSubmit={enviar}>
+      <DialogTitle>{lang.nueva_marca}</DialogTitle>
       <DialogContent>
         <Grid container spacing={2}>
             <Grid item xs={12}> {load && <LinearProgress />}</Grid>
             <Grid item xs={12}>
-                <TextField required autoFocus autoComplete='off' inputRef={name} fullWidth label="Nombre de marca" />
+                <TextField required autoFocus name='nombre_marca' autoComplete='off' inputRef={name} fullWidth label="Nombre de marca" />
             </Grid>
         </Grid>
       </DialogContent>
       <DialogActions>
-          <Button variant="outlined" onClick={enviar}>Guardar</Button>
-          <Button variant="outlined" onClick={cerrar}>Cerrar</Button>
+          <Button onClick={cerrar}>Cerrar</Button>
+          <Button variant="contained" type='submit'>Guardar</Button>
       </DialogActions>
+      </form>
     </Dialog>
   )
 }

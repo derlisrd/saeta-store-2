@@ -2,6 +2,7 @@ export const translate = {
     es:{
         hola:"Hola",
         perfil:'Perfil',
+        nueva_marca:"Nueva marca",
         clave:"Contraseña",
         clave_actual:"Contraseña actual",
         clave_nueva: "Contraseña nueva",

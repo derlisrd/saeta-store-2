@@ -5,18 +5,20 @@ import { useProductForm } from './ProductFormProvider'
 
 const DialogProveedores = () => {
 
-    const {dialogs,setDialogs,listas,setearListas,token_user,formulario,setFormulario} = useProductForm()
+    const {dialogs,setDialogs,listas,setearListas,token_user,formulario,setFormulario,lang} = useProductForm()
     const name = React.useRef(null);
     const ruc = React.useRef(null);
     const [load,setLoad] = React.useState(false)
     
     const cerrar = ()=> setDialogs({...dialogs,proveedores:false});
-    const enviar = async()=>{
-        setLoad(true)
+    const enviar = async(e)=>{
+        e.preventDefault()
         let list = {...listas}
         let form = {...formulario}
         let nombre = name.current.value;
         let doc = ruc.current.value;
+        if(nombre===''|| doc===''){return false;}
+        setLoad(true)
         if(nombre!=="" && doc !=="" && doc!==null && nombre!==null ){
         let res = await APICALLER.insert({table:'proveedors',data:{nombre_proveedor:nombre,ruc_proveedor:doc,telefono_proveedor:"0"},token:token_user})
         //console.log(res);
@@ -26,7 +28,9 @@ const DialogProveedores = () => {
             form.id_proveedor_producto = res.last_id;
             setearListas(list);
             setFormulario(form);
-        }else{ console.log(res)}
+        }else{
+          console.log(res)
+          }
         }
         
         cerrar()
@@ -35,7 +39,8 @@ const DialogProveedores = () => {
 
   return (
     <Dialog open={dialogs.proveedores} fullWidth onClose={cerrar}>
-      <DialogTitle>Nuevo Proveedor</DialogTitle>
+      <form onSubmit={enviar}>
+      <DialogTitle>{lang.nuevo_proveedor}</DialogTitle>
       <DialogContent>
         <Grid container spacing={2}>
             <Grid item xs={12}> {load && <LinearProgress />}</Grid>
@@ -48,9 +53,10 @@ const DialogProveedores = () => {
         </Grid>
       </DialogContent>
       <DialogActions>
-          <Button variant="outlined" onClick={enviar}>Guardar</Button>
-          <Button variant="outlined" onClick={cerrar}>Cerrar</Button>
+          <Button onClick={cerrar} >{lang.cerrar}</Button>
+          <Button variant="contained" type='submit'>{lang.guardar}</Button>
       </DialogActions>
+      </form>
     </Dialog>
   )
 }

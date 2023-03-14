@@ -2,10 +2,12 @@ import {useContext,createContext,useState,useEffect,useCallback} from "react";
 import {useLang} from "../../../Contexts/LangProvider"
 import { APICALLER } from "../../../Services/api";
 import { funciones } from "../../../Functions";
+import useInitialState from "./useInitialState";
 
 const Contexto = createContext();
 
 const MovimientosProvider = ({ children }) => {
+  const {columnsTable} = useInitialState()
   const [cargando, setCargando] = useState(true);
   const {lang} = useLang();
   const initialForm = {
@@ -29,6 +31,10 @@ const MovimientosProvider = ({ children }) => {
   const [lista, setLista] = useState([]);
   const [listaCajas, setListaCajas] = useState([]);
   const [idCaja, setIdCaja] = useState("");
+  const [dataPrint,setDataPrint]= useState({
+    headers:columnsTable,
+    datas:[]
+  })
   const [tipoRegistro,setTipoRegistro] = useState("");
   const [monedaFilter,setMonedaFilter] = useState("");
   const [listaMonedas,setListaMonedas] = useState([]);
@@ -78,15 +84,20 @@ const MovimientosProvider = ({ children }) => {
       let egresosE = 0;
       let sinEfectivo = 0;
       let total = 0;
+      let dataPrinter = []
       res.results.forEach(e => {
         if (e.tipo_registro === "1") {
           sinEfectivo += parseFloat(e.monto_sin_efectivo);
           efectivo += parseFloat(e.monto_movimiento);
           total += parseFloat(e.monto_movimiento) + parseFloat(e.monto_sin_efectivo);
+          dataPrinter.push({...e, tipo_registro:'Ingreso',
+          monto_movimiento: funciones.numberFormat(e.monto_movimiento),monto_sin_efectivo:funciones.numberFormat(e.monto_sin_efectivo)})
         } else if (e.tipo_registro === "0") {
           egresosE += parseFloat(e.monto_movimiento);
+          dataPrinter.push({...e, tipo_registro:'Ingreso',monto_movimiento: funciones.numberFormat(e.monto_movimiento)})
         }
       });
+      setDataPrint(prev=> {  return {...prev, datas:dataPrinter} })
       setMovimientos({
         ingresoEfectivo: efectivo,
         ingresoSinEfectivo: sinEfectivo,
@@ -140,7 +151,7 @@ const MovimientosProvider = ({ children }) => {
     setIdCaja,setTipoRegistro,
     getData,
     movimientos,
-    form, setForm,initialForm,listaMonedas,setMonedaFilter
+    form, setForm,initialForm,listaMonedas,setMonedaFilter,dataPrint
   }
 
   return <Contexto.Provider value={values}>{children}</Contexto.Provider>
@@ -166,7 +177,7 @@ export const useMovimientos = () => {
     idCaja,
     setIdCaja,setTipoRegistro,
     getData,
-    movimientos,form, setForm,initialForm,listaMonedas,setMonedaFilter
+    movimientos,form, setForm,initialForm,listaMonedas,setMonedaFilter,dataPrint
   } = useContext(Contexto);
   return {lang,getFilterDatas,
     cargando,
@@ -185,7 +196,7 @@ export const useMovimientos = () => {
     idCaja,setTipoRegistro,
     setIdCaja,
     getData,
-    movimientos,form, setForm,initialForm,listaMonedas,setMonedaFilter
+    movimientos,form, setForm,initialForm,listaMonedas,setMonedaFilter,dataPrint
   };
 };
 

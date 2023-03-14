@@ -4,11 +4,12 @@ import { useMovimientos } from "./MovimientosProvider";
 import { useState } from "react";
 import { funciones } from "../../../Functions";
 import { DatePickerCustom } from "../../../Components/MuiCustom/DatePickerCustom";
+import useInitialState from "./useInitialState";
 
 const ListaMovimientos = () => {
-  const { lang,setDesdeFecha,setHastaFecha,setDialog,dialog,setForm,lista,setIdCaja,listaCajas,cargando,movimientos,setTipoRegistro, listaMonedas,setMonedaFilter
+  const { dataPrint, lang,setDesdeFecha,setHastaFecha,setDialog,dialog,setForm,lista,setIdCaja,listaCajas,cargando,movimientos,setTipoRegistro, listaMonedas,setMonedaFilter
   } = useMovimientos();
-
+  const {columnsTable} = useInitialState()
 
   const today = new Date()
 
@@ -36,56 +37,7 @@ const ListaMovimientos = () => {
 
   const abrir = () => setDialog({...dialog,registrar:true})
   const abrirForm = f =>{ setForm(f); setDialog({...dialog,detalles:true})}
-  const itemscompare = {
-    0: "Egreso",
-    1: "Ingreso",
-    2: "Apertura",
-    3: "Cierre",
-    4: "Informe",
-  }
-  const columnas = [
-    {
-      field: "id_cajas_movimiento",
-      title: "#",
-    },
-    {
-      field: "fecha_movimiento",
-      title: lang.fecha,
-    },
-    {
-      field: "nombre_caja",
-      title: lang.caja,
-    },
-    {
-      field: "nombre_user",
-      title: lang.responsable,
-    },
-    {
-      field: "tipo_registro",
-      title: lang.tipo,
-      compareField:"tipo_registro",
-      items: itemscompare,
-      styleFieldCondition: "tipo_registro",
-      styleCondition:{
-        0:{backgroundColor:"#dd4632",padding:"6px",borderRadius:"5px",color:'#fff',fontWeight:"bold"},
-        1:{backgroundColor:"#00ce4f",padding:"6px",borderRadius:"5px",color:'#006226',fontWeight:"bold"},
-        2:{backgroundColor:"#1976d2",padding:"6px",borderRadius:"5px",color:'#fff',fontWeight:"bold"},
-        3:{backgroundColor:"#a2a2ce",padding:"6px",borderRadius:"5px",color:'#515168',fontWeight:"bold"},
-      },
-    },
-    
-    
-    {
-      field: "monto_movimiento",
-      title: lang.monto,
-      isNumber: true,
-    },
-    {
-      field: "monto_sin_efectivo",
-      title: lang.sin_efectivo,
-      isNumber: true,
-    },
-  ];
+  
 
   const Acciones = ({rowProps}) => (
     <Tooltip arrow title={lang.presione_mas_detalles}>
@@ -222,7 +174,6 @@ const ListaMovimientos = () => {
       </Grid>
     </Grid>
   );
-
   return (
     <>
       <Tablas
@@ -231,11 +182,12 @@ const ListaMovimientos = () => {
         title={lang.movimientos_caja}
         subtitle={lang.long_movimiento_caja}
         inputs={search}
-        columns={columnas}
+        columns={columnsTable}
         Accions={Acciones}
         datas={lista}
         loading={cargando}
         showOptions
+        datasPrint={dataPrint}
         print
       />
     </>

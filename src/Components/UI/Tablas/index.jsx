@@ -5,20 +5,20 @@ import { funciones } from '../../../Functions';
 import TableInfo from './TableInfo';
 import printJS from 'print-js';
 
-const Tablas = ({title,subtitle,loading,datas,columns,caption,inputs,Accions,showOptions,lang,icon,sort,print}) => {
+const Tablas = ({title,subtitle,loading,datas,columns,caption,inputs,Accions,showOptions,lang,icon,sort,print,datasPrint}) => {
     const style = useTablaStyles();
     if(!columns){ console.warn("Missing props 'columns'"); return; }
     if(!datas){ console.warn("Missing props 'datas[]'"); return; }
     if(!Accions){console.warn("Missing props 'Accions'"); return; }
 
-    var columnsArray = [];
-    var headersArray = [];
+    const columnsArray =  [];
+    const headersArray =  [];
 
   columns.forEach((e) => {
     if (e.noPrint === true) {
     } else {
-      columnsArray.push({ field: e.field, displayName: e.title });
-      headersArray.push({ label: e.title, key: e.field });
+        columnsArray.push({ field: e.field, displayName: e.title });
+        headersArray.push({ label: e.title, key: e.field });
     }
   });
 
@@ -26,9 +26,9 @@ return (
       <>
     <TableInfo title={title} subtitle={subtitle} icon={icon}  />
     
-    <Box borderRadius={3} boxShadow={3} padding={2} bgcolor='background.paper'>
+    <Box borderRadius={3} boxShadow={5} padding={2} bgcolor='background.paper'>
     
-        <Box padding={1} marginBottom={1}>
+        <Box padding={1} mb={1}>
             {inputs && inputs}
         </Box>
         <Box marginBottom={1}>
@@ -37,13 +37,13 @@ return (
                     variant="contained"
                     onClick={() => {
                     printJS({
-                        printable: datas,
+                        printable: datasPrint?.datas ?? datas,
                         properties: columnsArray,
                         type: "json",
-                        gridHeaderStyle: "color: red;  border: 2px solid #3971A5;",
-                        gridStyle: "border: 2px solid #3971A5;",
+                        gridHeaderStyle: " border: 1px solid #3971A5;",
+                        gridStyle: "border: 1px solid #3971A5;",
                         header: `<h3 class="custom-h3">${title}</h3>`,
-                        style: ".custom-h3 { color: red; }",
+                        style: ".custom-h3 { color: red; } *{font-family:monospace}",
                     });
                     }}
                 >

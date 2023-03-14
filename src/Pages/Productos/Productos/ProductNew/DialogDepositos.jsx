@@ -9,11 +9,13 @@ function DialogDepositos() {
     const [load,setLoad] = React.useState(false)
     const cerrar = ()=> setDialogs({...dialogs,depositos:false});
 
-    const enviar = async()=>{
-        setLoad(true)
+    const enviar = async(e)=>{
+        e.preventDefault()
         let list = {...listas}
         let form = {...formulario}
         let nombre = name.current.value;
+        if(nombre==='') {return false;}
+        setLoad(true)
         if(nombre!==""){
         let res = await APICALLER.insert({table:'depositos',data:{nombre_deposito:nombre},token:token_user})
         if(res.response){
@@ -29,6 +31,7 @@ function DialogDepositos() {
     }
   return (
     <Dialog open={dialogs.depositos} fullWidth onClose={cerrar}>
+      <form onSubmit={enviar}>
       <DialogTitle>{lang.nuevo_deposito}</DialogTitle>
       <DialogContent>
         <Grid container spacing={2}>
@@ -39,9 +42,10 @@ function DialogDepositos() {
         </Grid>
       </DialogContent>
       <DialogActions>
-          <Button variant="contained" onClick={enviar}>Guardar</Button>
-          <Button variant="contained" onClick={cerrar}>Cerrar</Button>
+          <Button onClick={cerrar}>{lang.cerrar}</Button>
+          <Button variant="contained" type='submit'>{lang.guardar}</Button>
       </DialogActions>
+      </form>
     </Dialog>
   )
 }

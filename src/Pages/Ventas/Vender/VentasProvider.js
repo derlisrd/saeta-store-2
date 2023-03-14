@@ -63,7 +63,7 @@ const VentasProvider = ({ children }) => {
     id_caja: storage && storage.listaCajas.length===1 ? storage.listaCajas[0].id_caja : "",
     id_empleado: storage && storage.listaVendedores.length===1 ? storage.listaVendedores[0].id_empleado : "",
     obs_pago: "",
-    id_formaPago: "1",
+    id_formaPago: "",
     formasPago:[],
     totalAbonado:0,
     cantidad_recibida: "",
@@ -837,11 +837,17 @@ const VentasProvider = ({ children }) => {
   };
   
   const AgregarCantidadMetodoPago = ()=>{
-    let valorInicial = parseFloat(Funciones.ComaPorPunto(Funciones.SacarPunto(cantidadRecibidaRef.current.value)));
     let fa = {...datosFacturas}
     let da = fa.facturas[indexFactura].datosFactura;
     let list = fa.listaFormasPago;
     let e = {...errors};
+    if(da.id_formaPago===''){
+      e.factura.error = true;
+      e.factura.errorMensaje="Elija el método de pago";
+      setErrors(e)
+      return false;
+    }
+    let valorInicial = parseFloat(Funciones.ComaPorPunto(Funciones.SacarPunto(cantidadRecibidaRef.current.value)));
     if(!isNaN(valorInicial) || valorInicial>0){
       let valor = valorInicial * parseFloat(fa.facturas[indexFactura].datosMoneda.valor_moneda);
       let foundIndex = da.formasPago.findIndex(e => e.id_forma_pago === da.id_formaPago);
@@ -1030,7 +1036,7 @@ const VentasProvider = ({ children }) => {
               id_caja: cajasOpened.response  && cajasOpened.found===1 ? cajasOpened.results[0].id_caja : "",
               id_empleado: rVendedores.response  && rVendedores.found===1 ? rVendedores.results[0].id_empleado : "",
               obs_pago: "",
-              id_formaPago: "1",
+              id_formaPago: "",
               cantidad_recibida: "",
               totalAbonado:0,
               formasPago:[],
