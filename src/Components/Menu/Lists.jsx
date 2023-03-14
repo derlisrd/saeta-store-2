@@ -25,7 +25,7 @@ const Lists = () => {
   const style = useGlobalStyles();
   return(
     <SimpleBar style={{ maxHeight: "100vh" }}>
-    <List component="nav">
+    <List component="nav" sx={{ mr:'6px' }}>
       {
         listaMenu.map((e,index)=>(
           <Fragment key={index}>

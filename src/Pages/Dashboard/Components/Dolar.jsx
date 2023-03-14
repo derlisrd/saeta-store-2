@@ -2,7 +2,7 @@ import { Avatar, Button, Card, CardActions, CardHeader, Icon, Typography } from 
 import { green } from '@mui/material/colors'
 import { funciones } from "../../../Functions";
 function Dolar({compra,venta}) {
-    return ( <Card sx={{ width: '100%',boxShadow:3,p:1,margin:'0 auto' }} >
+    return ( <Card sx={{ width: '100%',boxShadow:6,p:1,margin:'0 auto' }} >
     <CardHeader
         avatar={
           <Avatar sx={{ bgcolor: green[400] }}><Icon >attach_money</Icon></Avatar>

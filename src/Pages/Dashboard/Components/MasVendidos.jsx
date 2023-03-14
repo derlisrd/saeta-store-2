@@ -1,4 +1,4 @@
-import { Avatar, Card, CardContent, CardHeader, Icon, List, ListItem, ListItemText, Typography } from "@mui/material";
+import { Avatar, Card, CardContent, CardHeader, Icon, List, ListItem, ListItemAvatar, ListItemText, Typography } from "@mui/material";
 import { orange } from "@mui/material/colors";
 import { Fragment } from "react";
 
@@ -23,9 +23,12 @@ function MasVendidos({masvendidos}) {
         {masvendidos.map((e, i) => (
           <Fragment key={i}>
             <ListItem
-                sx={{ pb:0 }}
+                sx={{ pb:0, ':hover':{background:'none'} }}
                 secondaryAction={<b>{e.cantidad_vendido}</b>}
             >
+              <ListItemAvatar>
+                <Avatar sx={{ bgcolor:'primary.light' }} ><Icon >shopping_bag</Icon></Avatar>
+              </ListItemAvatar>
               <ListItemText
                 primary={<b>{e.nombre_producto}</b>}
               />

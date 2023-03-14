@@ -138,14 +138,14 @@ const DialogFinalizar = () => {
             <IconButton onClick={cerrar}><Icon>arrow_back_ios_new</Icon></IconButton>
           </Tooltip>{lang.finalizar_venta} - TOTAL: {Funciones.numberSeparator(Funciones.redondeo2decimales(TOTAL))} {ABM}</DialogTitle>
       <DialogContent>
-        <Grid container spacing={2} justifyContent="center">
+        <Grid container spacing={1} justifyContent="center">
           <Grid item xs={12}>
             {errors.factura.error && (
               <Alert severity="error">{errors.factura.errorMensaje}</Alert>
             )}
           </Grid>
           <Grid item xs={12} sm={6}>
-            <Grid container spacing={2}>
+            <Grid container spacing={1}>
               <Grid item xs={12} sm={6} >
                 <TextField
                   onKeyPress={e => {e.key === "Enter" && consultarCliente(inputDoc.current.value);}}
@@ -311,7 +311,7 @@ const DialogFinalizar = () => {
           <Grid item xs={12} sm={6}>
             <Grid
               container
-              spacing={2}
+              spacing={1}
               justifyContent="center"
               alignItems="center"
             >

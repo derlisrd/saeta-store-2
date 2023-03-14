@@ -49,6 +49,10 @@ const ListaMovimientos = () => {
       title: "#",
     },
     {
+      field: "fecha_movimiento",
+      title: lang.fecha,
+    },
+    {
       field: "nombre_caja",
       title: lang.caja,
     },
@@ -70,10 +74,7 @@ const ListaMovimientos = () => {
       },
     },
     
-    {
-      field: "fecha_movimiento",
-      title: lang.fecha,
-    },
+    
     {
       field: "monto_movimiento",
       title: lang.monto,

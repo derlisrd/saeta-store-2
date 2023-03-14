@@ -76,7 +76,7 @@ const CuentasCobrarDialog = () => {
             </Grid>
 
 
-            <Grid item xs={12}>
+            <Grid item xs={12} sm={6}>
               <FormControl fullWidth>
                 <InputLabel >{lang.formas_de_pago}</InputLabel>
                 <Select required name="id_forma_pago" value={form.id_forma_pago}
@@ -90,7 +90,7 @@ const CuentasCobrarDialog = () => {
                 </Select>
               </FormControl>
             </Grid>
-            <Grid item xs={12}>
+            <Grid item xs={12} sm={6}>
               <FormControl fullWidth>
                 <InputLabel >{lang.moneda}</InputLabel>
                 <Select required name="id_cajas_moneda" value={form.id_cajas_moneda}
