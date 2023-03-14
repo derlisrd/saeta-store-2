@@ -4,6 +4,7 @@ import { useDashboard } from "../DashboardProvider";
 import Dolar from "./Dolar";
 import MasVendidos from "./MasVendidos";
 import UltimasVentas from "./UltimasVentas";
+import UltimosProductos from "./UltimosProductos";
 import VentasDia from "./VentasDia";
 import VentasMes from "./VentasMes";
 
@@ -12,7 +13,7 @@ function DashboardMain() {
   if (isLoading) {
     return <LoadingLinear />;
     }
-
+    //console.log(datas);
   return (
     <Box m={1}>
       <Grid container spacing={2} alignItems="flex-start">
@@ -28,11 +29,14 @@ function DashboardMain() {
       <Grid item xs={12} sm={6} md={4}>
         <Dolar compra={datas.cotizacion.compra} venta={datas.cotizacion.venta} />
       </Grid>
-      <Grid item xs={12} sm={12} md={8}>
+      <Grid item xs={12} sm={12} >
         <UltimasVentas movimientos={datas.movimientos} />
       </Grid>
-      <Grid item xs={12} sm={12} md={4}>
+      <Grid item xs={12} sm={12} md={6}>
         <MasVendidos masvendidos={datas.masvendidos} />
+      </Grid>
+      <Grid item xs={12} sm={12} md={6}>
+        <UltimosProductos productos={datas.productos} />
       </Grid>
     </Grid>
     </Box>

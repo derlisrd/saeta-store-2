@@ -5,7 +5,7 @@ export const listaMenu = [
         id: 590,
         title: "inicio",
         icon: "dashboard",
-        color: "#a0aec0",
+        color: "primary",
         url: `${BASEURL}/dashboard`,
         private:false
       },

@@ -158,7 +158,7 @@ export const customTheme = ({
           root: {
             borderRadius: "8px",
             "&:hover": {
-              boxShadow: `#dbdbdb29 1px 9px 16px 0px`,
+              
             },
           },
         },

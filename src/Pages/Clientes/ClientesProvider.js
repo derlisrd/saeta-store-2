@@ -29,11 +29,11 @@ const ClientesProvider = ({ children }) => {
   const initialFormulario = {
     id_cliente:null,
     nombre_cliente:"",
-        ruc_cliente:"",
-        tipo_cliente:"3",
-        telefono_cliente:"",
-        direccion_cliente:"",
-        email_cliente:"",
+    ruc_cliente:"",
+    tipo_cliente:"3",
+    telefono_cliente:"",
+    direccion_cliente:"",
+    email_cliente:"",
   };
   const [formulario, setFormulario] = useState(initialFormulario);
 
@@ -41,8 +41,9 @@ const ClientesProvider = ({ children }) => {
     setCargando(true);
     let config = {
       table: "clientes",
-      where:`nombre_cliente,like,'%${txt}%'`,
       fields: "id_cliente,nombre_cliente,ruc_cliente,telefono_cliente",
+      filtersField:"nombre_cliente,ruc_cliente",
+      filtersSearch:`${txt}`,
     };
     let res = await APICALLER.get(config);
     setPage(0);

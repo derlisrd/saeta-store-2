@@ -94,9 +94,18 @@ const MovimientosProvider = ({ children }) => {
           monto_movimiento: funciones.numberFormat(e.monto_movimiento),monto_sin_efectivo:funciones.numberFormat(e.monto_sin_efectivo)})
         } else if (e.tipo_registro === "0") {
           egresosE += parseFloat(e.monto_movimiento);
-          dataPrinter.push({...e, tipo_registro:'Ingreso',monto_movimiento: funciones.numberFormat(e.monto_movimiento)})
+          dataPrinter.push({...e, tipo_registro:'Egreso',monto_movimiento: funciones.numberFormat(e.monto_movimiento)})
         }
       });
+      dataPrinter.push({
+        fecha_movimiento:'TOTAL INGRESOS',tipo_registro:'',nombre_caja:'',detalles_movimiento:'', 
+        monto_movimiento:funciones.numberFormat(efectivo),monto_sin_efectivo: funciones.numberFormat(sinEfectivo)
+      },{
+        fecha_movimiento:'TOTAL EGRESOS',tipo_registro:'',nombre_caja:'',detalles_movimiento:'', 
+        monto_movimiento:funciones.numberFormat(egresosE),monto_sin_efectivo:0
+      },
+      
+      )
       setDataPrint(prev=> {  return {...prev, datas:dataPrinter} })
       setMovimientos({
         ingresoEfectivo: efectivo,

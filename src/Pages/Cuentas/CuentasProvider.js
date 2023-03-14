@@ -34,7 +34,6 @@ const CuentasProvider = ({ children }) => {
   const [limite, setLimite] = useState(30); */
 
   const cobrarCuenta = async(datos)=>{
-    
 
     let monto_cobrado = parseFloat(datos.monto_cobrado),
      id_forma_pago = parseInt(datos.id_forma_pago),
@@ -42,7 +41,8 @@ const CuentasProvider = ({ children }) => {
      id_cajas_moneda = datos.id_cajas_moneda,
      cajas_monedas = [...listas.monedas],
      idcaja = formCobrar.id_caja,
-     monto_total_factura = parseFloat(formCobrar.monto_total_factura)
+     monto_total_factura = parseFloat(formCobrar.monto_total_factura),
+     descuento = parseFloat(datos.descuento)
      ;
      
      // efectivo
@@ -53,8 +53,8 @@ const CuentasProvider = ({ children }) => {
       let montoActual = parseFloat(cajas_monedas[foundMonedaIndex].monto_caja_moneda),
       montoActualNoEfectivo = parseFloat(cajas_monedas[foundMonedaIndex].monto_no_efectivo);
       
-      let montoNuevo = id_forma_pago===1 ?  (monto_cobrado + montoActual) : montoActual,
-       monto_no_efectivo = id_forma_pago!==1 ? (monto_cobrado + montoActualNoEfectivo) : montoActualNoEfectivo;
+      let montoNuevo = id_forma_pago===1 ?  ((monto_cobrado + montoActual) - descuento) : montoActual,
+       monto_no_efectivo = id_forma_pago!==1 ? ((monto_cobrado + montoActualNoEfectivo)-descuento) : montoActualNoEfectivo;
 
       let dataCajaMoneda = {monto_caja_moneda: montoNuevo,monto_no_efectivo}
       let dataCajaMovimiento = {
@@ -71,21 +71,32 @@ const CuentasProvider = ({ children }) => {
         recibido_factura: newrecibido_factura,
         estado_factura: newrecibido_factura >= monto_total_factura   ? 1 :  2 
       }
-
+      //console.log(dataCajaMoneda,dataCajaMovimiento,dataFactura);
       
       setCargando({lista:false,mov:true}); 
-      
-       await Promise.all([
+      let promesas = [
         APICALLER.update({table:'facturas',data:dataFactura,id:formCobrar.id_factura,token:token_user}),
         APICALLER.update({table:'cajas_monedas',data:dataCajaMoneda ,token: token_user,id:id_cajas_moneda}),
         APICALLER.insert({table:'cajas_movimientos',token:token_user,data:dataCajaMovimiento})
-      ]) 
+      ]
+      if(descuento>0){
+        promesas.push(APICALLER.insert({table:'cajas_movimientos',token:token_user,
+        data:{
+          id_caja_movimiento:idcaja,
+          id_user_movimiento:id_user,
+          id_moneda_movimiento: id_moneda_caja,
+          id_tipo_registro:17, 
+          monto_movimiento: id_forma_pago===1 ? descuento : 0,
+          monto_sin_efectivo: id_forma_pago!==1 ? descuento : 0,
+          detalles_movimiento: 'Descuento de venta',
+          fecha_movimiento: fecha_actual}
+      }))
+      } 
+       await Promise.all(promesas) 
       setCargando({lista:false,mov:false});
       swal({text:lang.cobrado_correctamente,icon:'success',timer:1800});
       setDialogs({pagar: false,cobrar: false,detalles:false });
-      getLista() 
-
-
+      getLista();
   }
 
 

@@ -34,16 +34,16 @@ return (
         <Box marginBottom={1}>
             { print &&
                     <Button
-                    variant="contained"
+                    variant="contained" startIcon={<Icon>print</Icon>}
                     onClick={() => {
                     printJS({
                         printable: datasPrint?.datas ?? datas,
                         properties: columnsArray,
                         type: "json",
-                        gridHeaderStyle: " border: 1px solid #3971A5;",
-                        gridStyle: "border: 1px solid #3971A5;",
+                        gridHeaderStyle: " border: 1px solid #ccc;",
+                        gridStyle: "border: 1px solid #ccc;",
                         header: `<h3 class="custom-h3">${title}</h3>`,
-                        style: ".custom-h3 { color: red; } *{font-family:monospace}",
+                        style: ".custom-h3 { color: red; } *{font-family:monospace; font-size:11px}",
                     });
                     }}
                 >

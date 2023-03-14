@@ -673,7 +673,7 @@ CREATE TABLE IF NOT EXISTS `pedidos` (
   `entrega_pedido` int NOT NULL,
   `direccion_pedido` varchar(200) DEFAULT NULL,
   `obs_pedido` text,
-  `concretado_pedido` INT NOT NULL DEFAULT '0' COMMENT '0 no 1 si 2 cancel'
+  `concretado_pedido` INT NOT NULL DEFAULT '0' COMMENT '0 no 1 si 2 cancel',
   `updated_at` datetime DEFAULT CURRENT_TIMESTAMP
 ) ;
 

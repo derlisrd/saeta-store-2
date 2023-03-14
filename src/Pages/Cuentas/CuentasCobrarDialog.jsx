@@ -10,7 +10,8 @@ const CuentasCobrarDialog = () => {
     id_forma_pago:"",
     obs:"",
     monto_cobrado:"",
-    id_cajas_moneda:""
+    id_cajas_moneda:"",
+    descuento:0
   })
 
   const change = e=>{
@@ -20,6 +21,7 @@ const CuentasCobrarDialog = () => {
 
   const cobrar = e=>{
     e.preventDefault();
+    //console.log(form);
     cobrarCuenta(form);
   }
 
@@ -36,7 +38,7 @@ const CuentasCobrarDialog = () => {
     <Dialog onClose={cerrar} TransitionComponent={Zoom} fullWidth open={dialogs.cobrar}>
       <form onSubmit={cobrar}>
         <DialogTitle>{lang.cobrar}</DialogTitle>
-        <DialogContent dividers>
+        <DialogContent >
           <Grid container spacing={2}>
           <Grid item xs={12}>
               { cargando.mov && <LinearProgress /> }
@@ -104,9 +106,15 @@ const CuentasCobrarDialog = () => {
                 </Select>
               </FormControl>
             </Grid>
-            <Grid item xs={12}>
+            <Grid item xs={12} md={6}>
               <TextField
-                label={lang.monto_a_cobrar} autoComplete="off" required fullWidth value={form.monto_cobrado} name="monto_cobrado" onChange={change} InputProps={{inputComponent: NumberFormatCustom}}
+                label={lang.monto_a_cobrar} autoComplete="off" required fullWidth onChange={change}  value={form.monto_cobrado} name="monto_cobrado" 
+                InputProps={{inputComponent: NumberFormatCustom}}
+              />
+            </Grid>
+            <Grid item xs={12} md={6}>
+              <TextField name="descuento" value={form.descuento} onChange={change} label="Descuento" fullWidth 
+                InputProps={{inputComponent: NumberFormatCustom}}
               />
             </Grid>
             <Grid item xs={12}>
@@ -115,11 +123,9 @@ const CuentasCobrarDialog = () => {
           </Grid>
         </DialogContent>
         <DialogActions>
-          <Button disabled={cargando.mov} variant="contained" size="large" type="submit">
+          <Button  onClick={cerrar}>{lang.cancelar}</Button>
+          <Button disabled={cargando.mov} variant="contained" type="submit">
             {lang.cobrar}
-          </Button>
-          <Button variant="contained" size="large" onClick={cerrar}>
-            {lang.cancelar}
           </Button>
         </DialogActions>
       </form>
