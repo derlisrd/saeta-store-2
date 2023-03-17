@@ -1070,18 +1070,17 @@ INSERT INTO `unidad_medidas` (`id_unidad_medida`, `descripcion_medida`, `simbolo
 
 DROP TABLE IF EXISTS `users`;
 CREATE TABLE IF NOT EXISTS `users` (
-  `id_user` int(11) NOT NULL AUTO_INCREMENT,
+  `id_user` bigint(20) NOT NULL AUTO_INCREMENT PRIMARY KEY,
   `nombre_user` text NOT NULL,
-  `username_user` varchar(30) NOT NULL,
-  `password_user` varchar(200) NOT NULL,
-  `email_user` varchar(100) NOT NULL,
+  `username_user` varchar(100) NOT NULL,
+  `password_user` text NOT NULL,
+  `email_user` varchar(200) NULL,
   `rol_user` int(1) DEFAULT '2' COMMENT '1 2 3 4 5',
   `estado_user` int(1) DEFAULT '1' COMMENT '0 inactivo, 1 activo',
-  `fecha_creacion_user` datetime DEFAULT CURRENT_TIMESTAMP,
+  `fecha_creacion_user` timestamp	 DEFAULT CURRENT_TIMESTAMP,
   `try_user` int(1) NOT NULL DEFAULT '0',
   `last_login_user` datetime DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` datetime DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id_user`)
+  `updated_at` datetime DEFAULT CURRENT_TIMESTAMP
 ) ;
 
 --

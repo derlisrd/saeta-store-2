@@ -1,6 +1,7 @@
 import {createContext, useCallback, useContext, useEffect,useState} from 'react'
 //import { APICALLER } from '../Services/api'
 import { useLogin } from './LoginProvider'
+//import man from '../App/Assets/man.svg'
 const Contexto = createContext()
 
 function NotificationProvider({children}){
@@ -27,7 +28,15 @@ function NotificationProvider({children}){
       setInterval(async() => {
         let local = localStorage.getItem('userData') || sessionStorage.getItem('userData')
         if(userData.login && local){
-          console.log('notificaction')
+          Notification.requestPermission().then(perm=>{
+            if(perm==='granted'){
+              new Notification('Saeta Sistema',{
+                body:"Sistema online",
+                icon: 'logo192.png',
+                vibrate:true
+              })
+            }
+          }) 
         }
       }, 120000); 
     },[userData])
