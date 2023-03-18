@@ -1,4 +1,4 @@
-import { Collapse, Icon, List, ListItem, ListItemIcon, ListItemText } from "@mui/material"
+import { Collapse, List, ListItem, ListItemIcon, ListItemText } from "@mui/material"
 import SimpleBar from 'simplebar-react';
 import { useMenu } from "../../Contexts/MenuProvider"
 import { Link,useLocation } from "react-router-dom";
@@ -7,6 +7,8 @@ import { useGlobalStyles } from "../../Styles/GlobalStyles";
 import { Fragment, useState } from "react";
 import { useLogin } from "../../Contexts/LoginProvider";
 import {useLang} from "../../Contexts/LangProvider"
+import { Icon } from "@iconify/react";
+
 const Lists = () => {
   const {changeStateMenu} = useMenu();
   const [lista,setLista] = useState(listaMenu);
@@ -34,10 +36,10 @@ const Lists = () => {
           <>
             <ListItem button onClick={()=>switchOpen(e.open,e.id)} key={index}  >
               <ListItemIcon>
-                <Icon color="inherit">{e.icon}</Icon>
+                <Icon icon={e.icon} height={18} />
               </ListItemIcon>
               <ListItemText primary={lang[e.title]}  />
-              <Icon color="inherit" >{ e.open ? `expand_more` : `chevron_right` }</Icon>
+              <Icon icon={e.open ? `mdi:expand-less` : `mdi:expand-more`} height={24}/>
             </ListItem>
             <Collapse in={e.open} timeout="auto" unmountOnExit>
               <List component="div" disablePadding className={style.submenu} >
@@ -53,7 +55,7 @@ const Lists = () => {
                         onClick={goTo}
                       >
                         <ListItemIcon>
-                          <Icon color={elem.url===l.pathname ? "primary" : "inherit"}>{elem.icon}</Icon>
+                          <Icon icon={elem.icon} height={28} />
                         </ListItemIcon>
                         <ListItemText primary={lang[elem.title]} className={elem.url===l.pathname ? style.selected : null } />
                       </ListItem>
@@ -73,7 +75,7 @@ const Lists = () => {
             onClick={goTo}
             >
             <ListItemIcon>
-              <Icon color={e.url===l.pathname ? "primary" : "inherit"}>{e.icon}</Icon>
+              <Icon icon={e.icon} height={28} />
             </ListItemIcon>
             <ListItemText primary={lang[e.title]} className={e.url===l.pathname ? style.selected : null } />
           </ListItem>

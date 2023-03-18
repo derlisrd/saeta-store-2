@@ -316,14 +316,14 @@ INSERT INTO `empleados_rols` (`id_empleados_rol`, `descripcion_rol`, `updated_at
 
 DROP TABLE IF EXISTS `empresas`;
 CREATE TABLE IF NOT EXISTS `empresas` (
-  `id_empresa` int(11) NOT NULL AUTO_INCREMENT,
-  `nombre_empresa` varchar(100) NOT NULL,
+  `id_empresa` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `nombre_empresa` varchar(200) NOT NULL,
   `propietario_empresa` varchar(100) DEFAULT NULL,
   `ruc_empresa` varchar(50) NOT NULL,
   `direccion_empresa` varchar(150) NOT NULL,
   `telefono_empresa` varchar(150) NOT NULL,
   `impuesto_empresa` varchar(25) NOT NULL COMMENT 'nombre de impuesto',
-  `categoria_empresa` varchar(200) NOT NULL,
+  `categoria_empresa` text NOT NULL,
   `dimension_ticket` int(11) NOT NULL,
   `licencia` date NOT NULL,
   `tipo_papel` tinyint(1) NOT NULL COMMENT '0=ticket 1=A4',
@@ -331,9 +331,10 @@ CREATE TABLE IF NOT EXISTS `empresas` (
   `cuota_empresa` tinyint(1) NOT NULL DEFAULT 0,
   `logo_url_empresa` text ,
   `configurado` tinyint(1) NOT NULL DEFAULT '0',
-  `updated_at` datetime DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id_empresa`)
+  `updated_at` datetime DEFAULT CURRENT_TIMESTAMP
 ) ;
+
+
 
 --
 -- Volcado de datos para la tabla `empresas`

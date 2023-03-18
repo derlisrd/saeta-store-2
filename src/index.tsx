@@ -3,6 +3,7 @@ import App from "./App";
 import TemaProvider from "./Contexts/TemaProvider";
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 import reportWebVitals from './reportWebVitals';
+import "@fontsource/poppins"
 
 const root = ReactDOM.createRoot(document.getElementById("root") as HTMLElement);
 root.render(

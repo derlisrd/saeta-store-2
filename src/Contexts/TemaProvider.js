@@ -3,6 +3,7 @@ import { createContext, useContext, useState, useEffect } from "react";
 import CssBaseline from '@mui/material/CssBaseline';
 import {colores,AvaibleColors} from "../App/Assets/colores.js"
 import { customTheme } from '../App/Assets/customTheme.js';
+import { env } from '../App/Config/config.js';
 
 const ContextTheme = createContext();
 
@@ -21,12 +22,12 @@ const TemaProvider = ({children})=>{
       }
     })
 
-    const drawerWidth = 275;
+    const drawerWidth = env.DRAWER_WIDTH ;
     const colorText = colores[tema.mode].textPrimary;
     const PaperBgColor = colores[tema.mode].bgpaper ;
     const DefaultBgColor = colores[tema.mode].bgdefault ;
     const Transparent = colores[tema.mode].transparent
-    const FONT_PRIMARY = 'Montserrat'; // Google Font
+    const FONT_PRIMARY =  'Poppins'; //'Montserrat'; // Google Font
 
     const custom = customTheme({tema,colores,PaperBgColor,DefaultBgColor,Transparent,colorText,FONT_PRIMARY})
 

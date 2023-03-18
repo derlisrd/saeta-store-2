@@ -14,5 +14,6 @@ export const env = {
     APIURL : process.env.REACT_APP_API_URL_END_POINT, // ejemplo: http://dominio.com/api/
     APPNAME : process.env.REACT_APP_NAME,
     XAPITOKEN : process.env.REACT_APP_X_API_TOKEN,
-    SECRETO :  process.env.REACT_APP_SECRETO
+    SECRETO :  process.env.REACT_APP_SECRETO,
+    DRAWER_WIDTH: 250
 }

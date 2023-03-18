@@ -182,28 +182,28 @@ export const customTheme = ({
       MuiListItemIcon: {
         styleOverrides: {
           root: {
-            minWidth: "35px",
-            "& span": {
+             minWidth: "35px",
+            /*"& span": {
               //fontSize:tema.fontSize.menu
-            },
+            }, */
           },
         },
       },
       MuiListItemText: {
         styleOverrides: {
           root: {
-            "& span": {
+            /* "& span": {
               fontSize: tema.fontSize.menu,
-            },
+            }, */
           },
         },
       },
       MuiListItemButton: {
         styleOverrides: {
           root: {
-            "&:hover": {
+            /* "&:hover": {
               borderRadius: "0 18px 18px 0",
-            },
+            }, */
           },
         },
       },
@@ -227,14 +227,14 @@ export const customTheme = ({
               borderLeft: `4px solid ${colores[tema.colors].primary.main}`,
             },
             "&:hover": {
-              backgroundColor: colores[tema.colors].primary.light,
+              /* backgroundColor: colores[tema.colors].primary.light,
               "& span": {
                 color:
                   tema.mode === "light"
                     ? colores[tema.colors].primary.main
                     : colorText,
-                /* fontWeight:"bold", */
-              },
+                 fontWeight:"bold", 
+              }, */
             },
           },
         },

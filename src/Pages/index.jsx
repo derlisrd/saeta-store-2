@@ -1,9 +1,10 @@
 import LoginProvider from "../Contexts/LoginProvider";
 import { BrowserRouter } from "react-router-dom";
 import RoutesMain from "../Routes/RoutesMain";
-import MenuProvider from "../Contexts/MenuProvider";
+/* import MenuProvider from "../Contexts/MenuProvider"; */
 import DatosEmpresaProvider from "../Contexts/DatosEmpresaProvider";
 import NotificationProvider from "../Contexts/NotificationProvider";
+import MenuProvider from "../Components/Menu/MenuProvider";
 
 const Pages = () => {
   return (

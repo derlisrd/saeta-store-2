@@ -6,10 +6,12 @@
   "dependencies": {
     "@emotion/react": "^11.9.0",
     "@emotion/styled": "^11.8.1",
+    "@fontsource/poppins": "^4.5.10",
     "@fullcalendar/core": "^5.10.1",
     "@fullcalendar/daygrid": "^5.10.1",
     "@fullcalendar/interaction": "^5.10.1",
     "@fullcalendar/react": "^5.10.1",
+    "@iconify/react": "^4.1.0",
     "@mui/lab": "^5.0.0-alpha.78",
     "@mui/material": "^5.6.2",
     "@mui/styles": "^5.6.2",
