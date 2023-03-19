@@ -2,7 +2,7 @@ import { Icon } from "@iconify/react";
 
 
 
-function LoadingBackDrop() {
+function LoadingPage() {
     
     const div = { display:'flex', justifyContent:'center',flexDirection:'column', alignItems:'center',height:'100vh', width:"100%" }
     
@@ -13,5 +13,4 @@ function LoadingBackDrop() {
     </div>);
 }
 
-
-export default LoadingBackDrop;
+export default LoadingPage;

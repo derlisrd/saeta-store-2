@@ -1,4 +1,4 @@
-import { Box, Grid, TextField,FormControlLabel,Checkbox,Icon,InputAdornment,Alert, IconButton, Stack, Typography } from "@mui/material";
+import { Box, Grid, TextField,FormControlLabel,Checkbox,InputAdornment,Alert, IconButton, Stack, Typography } from "@mui/material";
 import { useState,useEffect,useCallback,useRef } from "react";
 import { useLogin } from "../../Contexts/LoginProvider";
 import { useNavigate } from "react-router-dom";
@@ -9,6 +9,7 @@ import { useLang } from "../../Contexts/LangProvider";
 import {env} from '../../App/Config/config'
 import { useConfiguracion } from "../../Contexts/ConfiguracionProvider";
 import ConfigIniciales from "../ConfigIniciales";
+import { Icon } from "@iconify/react";
 const LoginForm = () => {
   const {lang}= useLang();
   const {configurado} = useConfiguracion()
@@ -59,7 +60,7 @@ const LoginForm = () => {
         <Grid container spacing={2}>
         <Grid item xs={12}>
             <Stack justifyContent="center" alignItems="center" spacing={2}>
-              <Icon color="primary" fontSize="large">rocket_launch</Icon>
+                <Icon icon="ph:rocket-launch-duotone" height={28}  />
               <Typography variant="h5">{lang.ingresar}</Typography>
             </Stack>
         </Grid>
@@ -71,7 +72,7 @@ const LoginForm = () => {
           <Grid item xs={12}>
             <TextField error={load.code===404} disabled={load.login} fullWidth InputProps={{  startAdornment: (
                     <InputAdornment position="start">
-                      <Icon color="disabled">perm_identity</Icon>
+                      <Icon icon="ic:twotone-person-2" height={20} />
                     </InputAdornment>
                   ),}}  autoFocus autoComplete="off" required name="username_user" label={lang.usuario} value={form.username_user} onChange={change}  />
           </Grid>
@@ -80,11 +81,11 @@ const LoginForm = () => {
               InputProps={{
                 startAdornment: (
                   <InputAdornment position="start">
-                    <Icon color="disabled">lock</Icon>
+                    <Icon icon="ic:twotone-lock" height={20} />
                   </InputAdornment>
                 ),endAdornment:(
                   <InputAdornment position="end">
-                    <IconButton onClick={changeInputType}><Icon>{typeInput ? `visibility_off` : `visibility`}</Icon></IconButton>
+                    <IconButton onClick={changeInputType}><Icon icon={typeInput ? `ic:twotone-remove-red-eye` : `ph:eye-slash-duotone`} /></IconButton>
                   </InputAdornment>
                 )
               }}
