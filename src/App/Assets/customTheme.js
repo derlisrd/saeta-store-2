@@ -182,7 +182,7 @@ export const customTheme = ({
       MuiListItemIcon: {
         styleOverrides: {
           root: {
-             minWidth: "35px",
+             minWidth: "30px",
             /*"& span": {
               //fontSize:tema.fontSize.menu
             }, */
@@ -246,7 +246,7 @@ export const customTheme = ({
             margin:0,
             padding:0,
             boxSizing:"border-box",
-            background:DefaultBgColor,
+            background:PaperBgColor,  //DefaultBgColor, //PaperBgColor,
             transition:'all 0.2s',
           },
           

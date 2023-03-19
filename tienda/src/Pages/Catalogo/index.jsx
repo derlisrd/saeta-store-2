@@ -48,6 +48,8 @@ const Catalogo = () => {
         localStorage.setItem("catalogo_cache",JSON.stringify(json))
       },[])
 
+
+
   const getLista = useCallback(async () => {
     setLoading(true);
     
@@ -56,6 +58,7 @@ const Catalogo = () => {
     if(!storage ){
       let res = await APICALLER.get({
         table: "productos",
+        sort:'id_producto',
         include: "productos_images,categorias",
         on: "id_producto,id_image_producto,id_categoria_producto,id_categoria",
         fields:
@@ -67,7 +70,7 @@ const Catalogo = () => {
       }
     }else{
       let ahora = new Date();
-      let time_cache = 43200000;
+      let time_cache = 120000;
       let fecha_storage = new Date(storage && storage.time )
       let diferencia = ahora.getTime() - fecha_storage.getTime()
       if(diferencia > time_cache){

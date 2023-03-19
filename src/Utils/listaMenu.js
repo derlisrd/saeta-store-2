@@ -4,7 +4,7 @@ export const listaMenu = [
     {
         id: 590,
         title: "inicio",
-        icon: "material-symbols:in-home-mode-outline",
+        icon: "ic:twotone-home",
         color: "primary",
         url: `${BASEURL}/dashboard`,
         private:false
@@ -12,7 +12,7 @@ export const listaMenu = [
       {
         id: 440,
         title: "informes",
-        icon: "mdi:graph-bell-curve",
+        icon: "ic:twotone-area-chart",
         color: "#a0aec0",
         open:false,
         sub:true,
@@ -20,14 +20,14 @@ export const listaMenu = [
           {
             id:2,
             url: `${BASEURL}/informes`,
-            title:'Informes_Generales',
+            title:'generales',
             icon: "mdi:report-bell-curve-cumulative",
             color: "#a0aec0",
           },
           {
             id:3,
             url: `${BASEURL}/informesproductos`,
-            title:'Informes_Productos',
+            title:'productos',
             icon: "ph:archive-box-duotone",
             color: "#a0aec0",
           },
@@ -37,14 +37,14 @@ export const listaMenu = [
       {
         id:580,
         title: "agendas",
-        icon:"material-symbols:calendar-month-outline-sharp",
+        icon:"ic:twotone-calendar-month",
         open:false,
         sub:true,
         submenu:[
           {
             id:5,
             title:'agenda',
-            icon:'mdi:calendar-search-outline',
+            icon:'ic:twotone-edit-calendar',
             color: "#a0aec0",
             url:`${BASEURL}/agenda`,
           },
@@ -134,7 +134,7 @@ export const listaMenu = [
           },
           {
             id: 17,
-            title: "lista_productos",
+            title: "listado",
             icon: "ic:twotone-content-paste",
             color: "#a0aec0",
             url: `${BASEURL}/productos`,
@@ -227,7 +227,7 @@ export const listaMenu = [
       {
         id: 31,
         title: "compras",
-        icon: "ph:basket-duotone",
+        icon: "ic:twotone-shopping-basket",
         color: "#a0aec0",
         url: `${BASEURL}/compras`,
       },
