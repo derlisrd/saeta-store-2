@@ -2,11 +2,14 @@ import {Button, Grid, Icon, IconButton, InputAdornment, Stack, TextField } from 
 import { useState } from "react";
 import { DatePickerCustom } from "../../../Components/MuiCustom/DatePickerCustom";
 import Tablas from "../../../Components/UI/Tablas";
+import { useLogin } from "../../../Contexts/LoginProvider";
 import { funciones } from "../../../Functions";
+import { APICALLER } from "../../../Services/api";
 import { useAgenda } from "./AgendaProvider"
 
 const AgendaListado = () => {
   const {listaAgenda,getLista,loading,buscarRegistro} = useAgenda()
+  const {userData} = useLogin()
   const today = new Date()
   const [search,setSearch] = useState('')
   const [desde, setDesde] = useState(today);
@@ -19,7 +22,20 @@ const AgendaListado = () => {
     getLista(funciones.getDateYMD( desde ), funciones.getDateYMD( hasta ));  
   };
 
-  
+  const Cancelar = async (e)=>{
+    let id = (e.id_agenda);
+    let data = {
+      confirmado_agenda: e.confirmado_agenda ==='1' ? '0' : '1'
+    }
+    let res = await APICALLER.update({table:'agendas',id,data,token: userData.token_user})
+    if(res.response){
+      getLista(funciones.getDateYMD( desde ), funciones.getDateYMD( hasta ))
+    }else{
+      console.log(res);
+    }
+  }
+
+
   const columnas = [
     {
       field:"fecha_inicio_agenda",
@@ -34,6 +50,30 @@ const AgendaListado = () => {
       title:"Cliente",
     },
     {
+      field:"confirmado_agenda",
+      title:"Confirmacion",
+      compareField:"confirmado_agenda",
+      items: {
+        "0": "Cancelado",
+        "1": "Confirmado",
+      },
+      styleFieldCondition: "confirmado_agenda",
+      styleCondition: {
+        "0": {
+          backgroundColor: "#ff7c6b",
+          padding: "6px",fontWeight:"bold",
+          borderRadius: "5px",
+          color: "#780c00",
+        },
+        "1": {
+          backgroundColor: "#2dec76",
+          padding: "6px", fontWeight:"bold",
+          borderRadius: "5px",
+          color: "#007b02",
+        },
+      },
+    },
+    {
       field:"telefono_cliente",
       title:"TEL",
     },
@@ -43,7 +83,10 @@ const AgendaListado = () => {
     }
     
   ];
-  const Acciones = ({rowProps})=>(<Stack direction="row" spacing={1}><Button>Detalles</Button></Stack>)
+  const Acciones = ({rowProps})=>(
+  <Stack direction="row" spacing={1}>
+    <Button variant="outlined" onClick={()=>{Cancelar(rowProps)}} > { rowProps.confirmado_agenda === '1' ? 'Cancelar' : 'Confirmar' } </Button>
+    </Stack>)
 
 const Search = (
   <Grid container spacing={2} alignItems="center">

@@ -29,7 +29,8 @@ const AgendaProvider = ({ children }) => {
       horario_agenda: "12:00",
       color_agenda: "#0066cc",
       nombre_cliente:"",
-      telefono_cliente:""
+      telefono_cliente:"",
+      confirmado_agenda:1
     };
     const [dates,setDates] = useState({
       fecha_inicio_agenda: "",
@@ -56,7 +57,7 @@ const AgendaProvider = ({ children }) => {
     const buscarRegistro = async(term)=>{
       setLoading({ general: true ,listado:true});
       let res = await APICALLER.get({ table: "agendas",include:'clientes',on:'id_cliente,id_cliente_agenda',
-      fields:'nombre_cliente,id_agenda,descripcion_agenda,fecha_inicio_agenda,horario_agenda,fecha_fin_agenda,color_agenda,telefono_cliente',
+      fields:'confirmado_agenda,nombre_cliente,id_agenda,descripcion_agenda,fecha_inicio_agenda,horario_agenda,fecha_fin_agenda,color_agenda,telefono_cliente',
       filtersField:"nombre_cliente,ruc_cliente",
       filtersSearch:`${term}`
     });
@@ -73,7 +74,7 @@ const AgendaProvider = ({ children }) => {
     const getLista = useCallback( async(desde,hasta)=>{
       setLoading({ general: true ,listado:true});
       let res = await APICALLER.get({ table: "agendas",include:'clientes',on:'id_cliente,id_cliente_agenda',
-      fields:'nombre_cliente,id_agenda,descripcion_agenda,fecha_inicio_agenda,horario_agenda,fecha_fin_agenda,color_agenda,telefono_cliente',
+      fields:'confirmado_agenda,nombre_cliente,id_agenda,descripcion_agenda,fecha_inicio_agenda,horario_agenda,fecha_fin_agenda,color_agenda,telefono_cliente',
       where: `fecha_inicio_agenda,between,'${desde}',and,'${hasta}'`,
     });
       if (res.response) {
@@ -109,7 +110,7 @@ const AgendaProvider = ({ children }) => {
     const getEvents = useCallback(async () => {
       setLoading({ general: true ,listado:true});
       let res = await APICALLER.get({ table: "agendas",include:'clientes',on:'id_cliente,id_cliente_agenda',
-      fields:'nombre_cliente,id_agenda,descripcion_agenda,fecha_inicio_agenda,horario_agenda,fecha_fin_agenda,color_agenda,telefono_cliente' });
+      fields:'confirmado_agenda,nombre_cliente,id_agenda,descripcion_agenda,fecha_inicio_agenda,horario_agenda,fecha_fin_agenda,color_agenda,telefono_cliente' });
       if (res.response) {
         setLista(res.results);
         setListaAgenda(res.results)
