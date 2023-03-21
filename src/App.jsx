@@ -1,5 +1,5 @@
 import { Suspense, lazy } from 'react';
-import LoadingPage from "./Components/UI/LoadingPage";
+import LoadingBackDrop from './Components/UI/LoadingBackDrop';
 import ConfiguracionProvider from "./Contexts/ConfiguracionProvider";
 import LangProvider from "./Contexts/LangProvider";
 
@@ -10,7 +10,7 @@ const Loadable = (Component) => (props) => {
   return (
     <Suspense
       fallback={
-        <LoadingPage />
+        <LoadingBackDrop />
       }
     >
       <Component {...props} />

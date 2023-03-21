@@ -212,7 +212,7 @@ export const listaMenu = [
             id: 36,
             title: "mov__caja",
             url: `${BASEURL}/movimientos`,
-            icon: `ph:sneaker-move-light`,
+            icon: `fe:money`,
             color: "#a0aec0",
           },
           {

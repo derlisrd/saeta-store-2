@@ -28,7 +28,7 @@ function ToolbarMain() {
       
       <Toolbar
       component="header"
-      sx={{ position:'fixed', display: "flex", width:'100%', zIndex:1100, bgcolor:'background.paper', 
+      sx={{ position:'fixed', display: "flex", width:'100%', zIndex:1100,  
       backdropFilter:'blur(5px)',  alignItems: "center",padding:'0 !important'}}
       >
         <Box display='flex' justifyContent='space-between' width='100%' alignItems="center" >

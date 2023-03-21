@@ -1,10 +1,9 @@
-import { Box, Grid, TextField,FormControlLabel,Checkbox,InputAdornment,Alert, IconButton, Stack, Typography } from "@mui/material";
+import { Box, Grid, TextField,FormControlLabel,InputAdornment,Alert, IconButton, Stack, Typography, Switch, Button, Zoom } from "@mui/material";
 import { useState,useEffect,useCallback,useRef } from "react";
 import { useLogin } from "../../Contexts/LoginProvider";
 import { useNavigate } from "react-router-dom";
-import { useGlobalStyles } from "../../Styles/GlobalStyles";
+
 import LoadingBackDrop from "../../Components/UI/LoadingBackDrop";
-import { LoadingButton } from "@mui/lab";
 import { useLang } from "../../Contexts/LangProvider";
 import {env} from '../../App/Config/config'
 import { useConfiguracion } from "../../Contexts/ConfiguracionProvider";
@@ -14,22 +13,24 @@ const LoginForm = () => {
   const {lang}= useLang();
   const {configurado} = useConfiguracion()
   const navigate = useNavigate()
-  const styles = useGlobalStyles();
+
   const { logIn ,load,userData} = useLogin();
   const {login} = userData;
-  const [recordar,setRecordar]= useState(false);
-  const inputPasswordRef = useRef(null)
+  const userRef = useRef(null)
+  const passRef = useRef(null)
+  const [recordar,setRecordar] = useState(false);
+
   const [typeInput,setTypeInput] = useState(true);
-  const changeInputType = ()=> {setTypeInput(!typeInput);inputPasswordRef.current.focus();}
-  const initialForm = {username_user: "", password_user: ""}
-  const [form,setForm] = useState(initialForm);
+  const changeInputType = ()=> {setTypeInput(!typeInput);passRef.current.focus();}
 
-  const change = e=>{
-      const {value,name} = e.target;
-      setForm({...form,[name]:value});
-  }
 
-  const enviar = e => { e.preventDefault(); logIn(form,recordar);}
+  
+
+    const trySignIn = e=>{
+      e.preventDefault();
+      const data = new FormData(e.target)
+      logIn(Object.fromEntries(data.entries()),recordar);
+    }
 
   const verificar = useCallback(()=>{
     if(login) navigate(env.BASEURL+"/dashboard")
@@ -54,30 +55,40 @@ const LoginForm = () => {
 
   return (
 
-    <div className={styles.centerDivLogin}>
-    <form onSubmit={enviar} >
-      <Box boxShadow={3} bgcolor='background.paper' padding={4} borderRadius={5} maxWidth={360}>
+
+    <form onSubmit={trySignIn}>
+    <Box
+      height="100vh"
+      display="flex"
+      justifyContent="center"
+      alignItems="center"
+    >
+      <Box maxWidth={360} borderRadius={5}  p={5}
+        boxShadow="0 4px 30px rgba(0, 0, 0, 0.1)"
+        sx={{ backdropFilter:'blur(6px) saturate(180%)',bgcolor:'background.paper',border:'1.5px solid rgba(209, 213, 219, 0.3)' }}
+      >
         <Grid container spacing={2}>
-        <Grid item xs={12}>
+          <Grid item xs={12}>
             <Stack justifyContent="center" alignItems="center" spacing={2}>
-                <Icon icon="ph:rocket-launch-duotone" height={28}  />
+                <Icon icon="icon-park-twotone:rocket-one" height={28}  />
               <Typography variant="h5">{lang.ingresar}</Typography>
             </Stack>
-        </Grid>
-        <Grid item xs={12}>
-            {load.active && <Alert variant="outlined" icon={false} severity="error">
-                {load.msj}
-            </Alert>}
-        </Grid>
+          </Grid>
           <Grid item xs={12}>
-            <TextField error={load.code===404} disabled={load.login} fullWidth InputProps={{  startAdornment: (
+           {load.active &&  <Zoom in={load.active}>
+              <Alert severity="error" >{load.msj}</Alert>
+            </Zoom>
+            }
+          </Grid>
+          <Grid item xs={12}>
+            <TextField required InputProps={{  startAdornment: (
                     <InputAdornment position="start">
                       <Icon icon="ic:twotone-person-2" height={20} />
                     </InputAdornment>
-                  ),}}  autoFocus autoComplete="off" required name="username_user" label={lang.usuario} value={form.username_user} onChange={change}  />
+                  ),}}  disabled={load.login} name="username_user" inputRef={userRef} autoFocus label={lang.usuario} fullWidth />
           </Grid>
           <Grid item xs={12}>
-            <TextField autoComplete="off" error={load.code===401} inputRef={inputPasswordRef} fullWidth disabled={load.login} required type={typeInput? "password" : "text"} label={lang.contrasena} name="password_user" value={form.password_user} onChange={change}  
+            <TextField required   disabled={load.login} name="password_user" inputRef={passRef}  type={typeInput? "password" : "text"} label={lang.contrasena}  fullWidth 
               InputProps={{
                 startAdornment: (
                   <InputAdornment position="start">
@@ -92,17 +103,18 @@ const LoginForm = () => {
             />
           </Grid>
           <Grid item xs={12}>
-          <FormControlLabel disabled={load.login} control={<Checkbox checked={recordar} onChange={e=> setRecordar(e.target.checked)} />} label={lang.recordarme} />
+            <Button size="large" type="submit" disabled={load.login} fullWidth variant="contained">
+              {load.login ? 'Cargando...' : 'Login'}
+            </Button>
           </Grid>
-        <Grid item xs={12}>
-            <LoadingButton fullWidth variant="contained" size="large" type="submit" loading={load.login ? true : false}>
-         {lang.ingresar}
-          </LoadingButton>
-        </Grid>
+          <Grid item xs={12}>
+          <FormControlLabel disabled={load.login} control={<Switch checked={recordar} onChange={e=> setRecordar(e.target.checked)} />} label={lang.recordar} />
+          </Grid>
         </Grid>
       </Box>
+    </Box>
     </form>
-    </div>
+
   );
 };
 

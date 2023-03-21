@@ -14,6 +14,7 @@ export const translate = {
         pagar_todo:'Pagar todo',
         actualizar:"Actualizar",
         generales:"Generales",
+        recordar:'Recordar',
         listado:"Listado",
         pedidos:"Pedidos",
         nuevo_color:'Nuevo color',

@@ -1,17 +1,21 @@
-import { Icon } from "@iconify/react";
 
-
+import { CircularProgress } from "@mui/material";
 
 function LoadingBackDrop() {
-    
-    const div = { display:'flex', justifyContent:'center',flexDirection:'column', alignItems:'center',height:'100vh', width:"100%" }
-    
-    return (<div style={div} >
+  const div = {
+    display: "flex",
+    justifyContent: "center",
+    flexDirection: "column",
+    alignItems: "center",
+    height: "100vh",
+    width: "100%",
+  };
 
-            <Icon icon="icon-park-twotone:rocket-one" color="#805a9d" height={72} />
-
-    </div>);
+  return (
+    <div style={div}>
+      <CircularProgress />
+    </div>
+  );
 }
-
 
 export default LoadingBackDrop;
