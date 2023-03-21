@@ -28,7 +28,7 @@ function DashboardProvider({children}) {
         setLoading({general:false}); */
 
         const cotizacion = async()=>{
-            let res = await fetch ('https://dolar.melizeche.com/api/1.0/');
+            let res = await fetch ('http://www.cambioschaco.com.py/api/branch_office/1/exchange');
             return await res.json();
         }
 
@@ -78,8 +78,18 @@ function DashboardProvider({children}) {
             masvendidos: masv.results,
             falta: faltante.results,
             cotizacion: {
-                compra: coti.dolarpy.cambioschaco.compra,
-                venta: coti.dolarpy.cambioschaco.venta
+                "GsxDolar":{
+                    compra: coti.items[0].purchasePrice,
+                    venta: coti.items[0].salePrice,
+                },
+                "GsxReal":{
+                    compra:coti.items[1].purchasePrice,
+                    venta: coti.items[1].salePrice,
+                },
+                "RealxDolar":{
+                    compra: coti.items[1].purchaseArbitrage,
+                    venta: coti.items[1].saleArbitrage
+                }       
             }
 
         });

@@ -534,13 +534,12 @@ INSERT INTO `marcas` (`id_marca`, `nombre_marca`, `updated_at`) VALUES
 
 DROP TABLE IF EXISTS `monedas`;
 CREATE TABLE IF NOT EXISTS `monedas` (
-  `id_moneda` int(11) NOT NULL AUTO_INCREMENT,
+  `id_moneda` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
   `abreviatura_moneda` varchar(10) NOT NULL,
   `nombre_moneda` varchar(50) NOT NULL COMMENT 'debe estar en plural',
-  `valor_moneda` int(11) NOT NULL COMMENT 'con respecto a la moneda activa',
-  `activo_moneda` int(11) NOT NULL DEFAULT '0',
-  `updated_at` datetime DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id_moneda`)
+  `valor_moneda` float NOT NULL COMMENT 'con respecto a la moneda activa',
+  `activo_moneda` int(1) NOT NULL DEFAULT '0',
+  `updated_at` datetime DEFAULT CURRENT_TIMESTAMP
 ) ;
 
 --

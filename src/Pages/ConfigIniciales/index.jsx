@@ -62,7 +62,7 @@ const ConfigIniciales = () => {
             let token_user = log.results[0].token_user;
             let [update,update1,update2] = await Promise.all( [APICALLER.update({table:'empresas',data:form,id:1,token:token_user,token_encriptado:false}),
                 APICALLER.update({table:'monedas',data:{activo_moneda:0},id:1,token:token_user,token_encriptado:false}),
-                APICALLER.update({table:'monedas',data:{activo_moneda:1},id:moneda,token:token_user,token_encriptado:false})
+                APICALLER.update({table:'monedas',data:{activo_moneda:1,valor_moneda:1},id:moneda,token:token_user,token_encriptado:false})
             ])
             if(!update.response){
                 console.log(update,update1,update2)

@@ -1,7 +1,14 @@
-import { Avatar, Button, Card, CardActions, CardHeader, Icon, Typography } from "@mui/material";
+import { Avatar,  Card, CardActions, CardHeader, FormControl, Icon, InputLabel, MenuItem, Select, Typography } from "@mui/material";
 import { green } from '@mui/material/colors'
+import { useState } from "react";
 import { funciones } from "../../../Functions";
-function Dolar({compra,venta}) {
+function Dolar({cotizacion}) {
+
+    const [moneda,setMoneda] = useState('GsxDolar')
+    
+
+
+
     return ( <Card sx={{ width: '100%',boxShadow:6,p:1,margin:'0 auto' }} >
     <CardHeader
         avatar={
@@ -9,14 +16,23 @@ function Dolar({compra,venta}) {
         }
         
         title={<Typography gutterBottom variant="h6" component="div">
-        {funciones.numberSeparator(compra)} {funciones.numberSeparator(venta)}
+        {funciones.numberSeparator(cotizacion[moneda].compra)} {funciones.numberSeparator(cotizacion[moneda].venta)}
       </Typography>}
         subheader={<Typography gutterBottom variant="button" component="div">
-        Dolar
+        {moneda}
       </Typography>}
       />
       <CardActions>
-    <Button endIcon={<Icon>navigate_next</Icon>} size="small">Aplicar</Button>
+      <FormControl fullWidth>
+        <InputLabel>Moneda</InputLabel>
+        <Select
+          value={moneda}
+          label="Moneda"
+          onChange={e=>{ setMoneda(e.target.value);}}
+        >
+          <MenuItem value="GsxDolar">Gs x Dolar</MenuItem><MenuItem value="GsxReal">Real x Dolar</MenuItem><MenuItem value="RealxDolar">Real x Dolar</MenuItem>
+        </Select>
+      </FormControl>
   </CardActions>
     </Card> );
 }

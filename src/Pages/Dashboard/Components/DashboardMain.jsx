@@ -27,7 +27,7 @@ function DashboardMain() {
         <VentasMes valor={datas.ventasMes} />
       </Grid>
       <Grid item xs={12} sm={6} md={4}>
-        <Dolar compra={datas.cotizacion.compra} venta={datas.cotizacion.venta} />
+        <Dolar cotizacion={datas.cotizacion} />
       </Grid>
       <Grid item xs={12} sm={12} >
         <UltimasVentas movimientos={datas.movimientos} />
