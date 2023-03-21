@@ -3,10 +3,12 @@ import LoadingLinear from "../../../Components/UI/LoadingLinear";
 import { useDashboard } from "../DashboardProvider";
 import Dolar from "./Dolar";
 import MasVendidos from "./MasVendidos";
+import MonedaPrincipal from "./MonedaPrincipal";
 import UltimasVentas from "./UltimasVentas";
 import UltimosProductos from "./UltimosProductos";
 import VentasDia from "./VentasDia";
 import VentasMes from "./VentasMes";
+import VentasTotales from "./VentasTotales";
 
 function DashboardMain() {
   const { isLoading, datas } = useDashboard();
@@ -15,7 +17,7 @@ function DashboardMain() {
     }
     //console.log(datas);
   return (
-    <Box m={1}>
+    <Box m={1} paddingBottom={3}>
       <Grid container spacing={2} alignItems="flex-start">
       <Grid item xs={12}>
         <Typography variant="h4">Visión general</Typography>
@@ -27,6 +29,12 @@ function DashboardMain() {
         <VentasMes valor={datas.ventasMes} />
       </Grid>
       <Grid item xs={12} sm={6} md={4}>
+       <VentasTotales />
+      </Grid>
+      <Grid item xs={12} sm={6} md={6}>
+        <MonedaPrincipal />
+      </Grid>
+      <Grid item xs={12} sm={6} md={6}>
         <Dolar cotizacion={datas.cotizacion} />
       </Grid>
       <Grid item xs={12} sm={12} >

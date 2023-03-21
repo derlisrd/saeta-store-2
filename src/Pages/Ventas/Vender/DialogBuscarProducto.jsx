@@ -13,7 +13,6 @@ import swal from 'sweetalert';
 
 const DialogBuscarProducto = () => {
 
-
     const {dialogs,setDialogs,datosFacturas,indexFactura,insertarProductoTabla,AgregarCantidad,inputCantidad} = useVentas();
 
     const [load,setLoad]= useState(false);
@@ -153,6 +152,7 @@ const DialogBuscarProducto = () => {
             
           </DialogContent>
           <DialogActions>
+            <Button variant='outlined' onClick={()=>{ setDialogs({...dialogs,registrarProducto:true,buscarProducto:false})}} > Registro rápido</Button>
             <Button onClick={cerrar} variant="outlined" color="primary">
               Cerrar
             </Button>

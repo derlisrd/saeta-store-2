@@ -52,7 +52,8 @@ const VentasProvider = ({ children }) => {
   
   const initialDialogs={main:!0,nota:!1,buscarProducto:!1,cambiarPrecio:!1,buscarCliente:!1,registrarCliente:!1,finalizarVenta:!1,imprimirNotaPedido:!1,
     imprimirTicketRecibo:!1,imprimirTicketFactura:!1,imprimirFacturaA4:!1,imprimirReciboA4:!1,
-    imprimirPresupuesto:!1,ayuda:!1,cambioCliente:!1,abrirCaja:!1,imagen:!1};
+    imprimirPresupuesto:!1,ayuda:!1,cambioCliente:!1,abrirCaja:!1,imagen:!1,registrarProducto:!1};
+    const llaveDialog = (nombre,boleano)=> setDialogs({...dialogs,[nombre]:boleano})
   const [dialogs, setDialogs] = useState(initialDialogs);
   const [IDNotaPedido,setIDNotaPedido] = useState("");
   const [indexFactura, setIndexFactura] = useState(storage ? storage.indexFactura : 0);
@@ -1129,17 +1130,11 @@ const VentasProvider = ({ children }) => {
     cerrarDialogFactura,
     insertarProductoTabla,restarCantidad,sumarCantidad,
     AgregarCantidadMetodoPago,borrarMetodoPago,changeMonedas,Anotar,CargarNota,permisos,cambiarDeposito,
-    MetodoDescuento,lang,IDNotaPedido,valorConvertido,lastID
+    MetodoDescuento,lang,IDNotaPedido,valorConvertido,lastID,llaveDialog
   }
 
 
-  return (
-    <Contexto.Provider
-      value={values}
-    >
-      {children}
-    </Contexto.Provider>
-  );
+  return <Contexto.Provider value={values}>{children}</Contexto.Provider>
 };
 
 export const useVentas = () => {
@@ -1169,7 +1164,7 @@ export const useVentas = () => {
     cerrarDialogFactura,
     insertarProductoTabla,restarCantidad,sumarCantidad,
     AgregarCantidadMetodoPago,borrarMetodoPago,changeMonedas,Anotar,CargarNota,permisos,cambiarDeposito,
-    MetodoDescuento,lang,IDNotaPedido,valorConvertido,lastID
+    MetodoDescuento,lang,IDNotaPedido,valorConvertido,lastID,llaveDialog
 
   } = useContext(Contexto);
   return {id_user,token_user,
@@ -1202,7 +1197,7 @@ export const useVentas = () => {
     cerrarDialogFactura,
     insertarProductoTabla,restarCantidad,sumarCantidad,
     AgregarCantidadMetodoPago,borrarMetodoPago,changeMonedas,Anotar,CargarNota,permisos,cambiarDeposito,
-    MetodoDescuento,lang,IDNotaPedido,valorConvertido,lastID
+    MetodoDescuento,lang,IDNotaPedido,valorConvertido,lastID,llaveDialog
   };
 };
 

@@ -6,7 +6,7 @@ import { useTheme } from "../../Contexts/TemaProvider";
 function ThemeToggle() {
     const {changeTheme,tema } = useTheme()
     
-    const icono = tema.mode === 'light' ?  'icon-park-twotone:dark-mode' : 'ic:twotone-light-mode'
+    const icono = tema.mode === 'light' ?  'ic:twotone-bedtime' : 'ic:twotone-light-mode'
 
     return (<IconButton onClick={changeTheme} ><Icon icon={icono} height={24} /></IconButton>  );
 }

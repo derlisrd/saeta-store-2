@@ -28,7 +28,7 @@ function DashboardProvider({children}) {
         setLoading({general:false}); */
 
         const cotizacion = async()=>{
-            let res = await fetch ('http://www.cambioschaco.com.py/api/branch_office/1/exchange');
+            let res = await fetch ('https://www.cambioschaco.com.py/api/branch_office/1/exchange');
             return await res.json();
         }
 

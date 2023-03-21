@@ -107,6 +107,13 @@ export const customTheme = ({
           },
         },
       },
+      MuiDialogContent:{
+        styleOverrides:{
+          root:{
+            paddingTop:"10px !important"
+          }
+        }
+      },
       MuiDialogActions: {
         styleOverrides: {
           root: {
