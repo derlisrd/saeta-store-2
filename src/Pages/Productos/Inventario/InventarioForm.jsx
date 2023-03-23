@@ -74,7 +74,7 @@ const Inventario = () => {
       setCargando(false);
     } else {
       setTimeout(async () => {
-        let res = await APICALLER.get({table: "productos",
+        let res = await APICALLER.get({table: "productos",include:"marcas",on:"id_marca_producto,id_marca",
         filtersField:"nombre_producto,codigo_producto",
         filtersSearch:txt,pagesize:'20',where:"tipo_producto,=,1"});
         res.response  ? setListaBuscaProducto(res.results) : console.log(res);
@@ -111,7 +111,7 @@ const Inventario = () => {
   return (
     <Container>
       <Box p={2} boxShadow={4} borderRadius={4} m={1} bgcolor="background.paper">
-      <Grid container spacing={2}>
+      <Grid container spacing={2} alignItems='center'>
         <Grid item xs={12}>
           {load2 && <LinearProgress color="primary" />}
         </Grid>
@@ -151,10 +151,16 @@ const Inventario = () => {
             <Grid item xs={12} sm={12} md={6}>
               <Alert icon={false} severity="info">
                 <Typography variant="button" display="block">
-                  CODIGO: <u>{formulario?.codigo_producto}</u>
+                  Código: <u>{formulario?.codigo_producto}</u>
                 </Typography>
                 <Typography variant="button">
                   Producto: <u>{formulario?.nombre_producto}</u>
+                </Typography>
+                <Typography display="block" variant="button">
+                  Marca: <u>{formulario?.nombre_marca}</u>
+                </Typography>
+                <Typography display="block" variant="button">
+                  Precio: <u>{formulario?.precio_producto}</u>
                 </Typography>
               </Alert>
             </Grid>
@@ -172,14 +178,14 @@ const Inventario = () => {
                     }
             </Grid>
 
-            <Grid item xs={12} sm={12} md={6} >
+            <Grid item xs={12} sm={12} md={4} >
               <TextField fullWidth
                 label="Cantidad" name="cantidadNueva" onChange={e=> setCantidadNueva(e.target.value)} value={cantidadNueva}
                 inputRef={inputCorregir} InputProps={{inputComponent: NumberFormatCustom}}
               />
             </Grid>
 
-            <Grid item xs={12} sm={12} md={6} >
+            <Grid item xs={12} sm={12} md={4} >
               <FormControl fullWidth>
                   <InputLabel variant="outlined">Elegir depósito</InputLabel>
                   <Select name="id_deposito_producto" value={idDeposito} onChange={(e)=>{setIdDeposito(e.target.value); inputCorregir.current?.focus();}} >
@@ -194,7 +200,7 @@ const Inventario = () => {
                   </Select>
               </FormControl>
             </Grid>
-            <Grid item sm={12} md={6} >
+            <Grid item sm={12} md={4} >
               <Button variant="outlined" onClick={corregirLista} size="large">Corregir</Button>
             </Grid>
             <Grid item xs={12}>

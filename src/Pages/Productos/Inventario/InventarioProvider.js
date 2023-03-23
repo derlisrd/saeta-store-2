@@ -15,7 +15,7 @@ const InventarioProvider = ({children})=>{
     const [msj,setMsj] = useState(initialMsj);
     const [cantidadNueva,setCantidadNueva] = useState("");
     const [listaStock,setListaStock]= useState([]);
-    const initialForm = {id_productos_deposito:"",id_producto:'',codigo_producto: '', nombre_producto: '', stock_producto_deposito: '',nuevoStock:false}
+    const initialForm = {nombre_marca:"",precio_producto:"", id_productos_deposito:"",id_producto:'',codigo_producto: '', nombre_producto: '', stock_producto_deposito: '',nuevoStock:false}
     const inputCorregir = useRef(null);
     const [formulario,setFormulario] = useState(initialForm)
     
