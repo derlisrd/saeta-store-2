@@ -17,15 +17,15 @@ export const colores = {
     textSecondary:'#6C737F',
     divider:'#F2F4F7',
     bgpaper:"#fff",
-    bgdefault:"#f3f3f3",
+    bgdefault:"#fff",
     transparent:'#ffffff3d'
   },
   dark:{
     textPrimary:'#EDF2F7',
     textSecondary:'#A0AEC0',
     divider:'#2D3748',
-    bgpaper: "#141922",
-    bgdefault: "#23272e",
+    bgpaper: "#1f262e",
+    bgdefault: "#161c24",
     transparent:'#0d11176e'
   },
 
