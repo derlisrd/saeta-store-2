@@ -1,4 +1,4 @@
-import { Box, Grid, TextField,FormControlLabel,InputAdornment,Alert, IconButton, Stack, Typography, Switch, Button, Zoom } from "@mui/material";
+import { Box, Grid, TextField,FormControlLabel,InputAdornment,Alert, IconButton, Stack, Typography, Switch, Button, Zoom,Icon} from "@mui/material";
 import { useState,useEffect,useCallback,useRef } from "react";
 import { useLogin } from "../../Contexts/LoginProvider";
 import { useNavigate } from "react-router-dom";
@@ -8,7 +8,6 @@ import { useLang } from "../../Contexts/LangProvider";
 import {env} from '../../App/Config/config'
 import { useConfiguracion } from "../../Contexts/ConfiguracionProvider";
 import ConfigIniciales from "../ConfigIniciales";
-import { Icon } from "@iconify/react";
 const LoginForm = () => {
   const {lang}= useLang();
   const {configurado} = useConfiguracion()
@@ -70,7 +69,7 @@ const LoginForm = () => {
         <Grid container spacing={2}>
           <Grid item xs={12}>
             <Stack justifyContent="center" alignItems="center" spacing={2}>
-                <Icon icon="icon-park-twotone:rocket-one" height={28}  />
+                <Icon >rocket_launch</Icon>
               <Typography variant="h5">{lang.ingresar}</Typography>
             </Stack>
           </Grid>
@@ -83,7 +82,7 @@ const LoginForm = () => {
           <Grid item xs={12}>
             <TextField required InputProps={{  startAdornment: (
                     <InputAdornment position="start">
-                      <Icon icon="ic:twotone-person-2" height={20} />
+                      <Icon >person</Icon>
                     </InputAdornment>
                   ),}}  disabled={load.login} name="username_user" inputRef={userRef} autoFocus label={lang.usuario} fullWidth />
           </Grid>
@@ -92,7 +91,7 @@ const LoginForm = () => {
               InputProps={{
                 startAdornment: (
                   <InputAdornment position="start">
-                    <Icon icon="ic:twotone-lock" height={20} />
+                    <Icon>lock</Icon>
                   </InputAdornment>
                 ),endAdornment:(
                   <InputAdornment position="end">

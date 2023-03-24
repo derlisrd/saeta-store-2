@@ -1,14 +1,14 @@
-import { Icon } from "@iconify/react";
-import { IconButton } from "@mui/material";
+
+import { IconButton,Icon } from "@mui/material";
 import { useTheme } from "../../Contexts/TemaProvider";
 
 
 function ThemeToggle() {
     const {changeTheme,tema } = useTheme()
     
-    const icono = tema.mode === 'light' ?  'ic:twotone-bedtime' : 'ic:twotone-light-mode'
+    const icono = tema.mode === 'light' ?  'dark_mode' : 'tungsten'
 
-    return (<IconButton onClick={changeTheme} ><Icon icon={icono} height={24} /></IconButton>  );
+    return (<IconButton onClick={changeTheme} ><Icon >{icono}</Icon></IconButton>  );
 }
 
 export default ThemeToggle;
