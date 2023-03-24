@@ -2,7 +2,7 @@
   "name": "saeta-store-2",
   "version": "2.8.8",
   "private": true,
-  "homepage": "https://ohana.sistemadeventa.net/admin/",
+  "homepage": "https://demo.sistemadeventa.net/admin/",
   "dependencies": {
     "@emotion/react": "^11.9.0",
     "@emotion/styled": "^11.8.1",
@@ -28,6 +28,7 @@
     "crypto-js": "^4.1.1",
     "date-fns": "^2.29.1",
     "dayjs": "^1.11.6",
+    "material-icons": "^1.13.3",
     "print-js": "^1.6.0",
     "react": "^18.0.0",
     "react-barcodes": "^1.2.0",
