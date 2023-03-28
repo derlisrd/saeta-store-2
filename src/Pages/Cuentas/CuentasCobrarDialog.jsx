@@ -30,12 +30,12 @@ const CuentasCobrarDialog = () => {
   
   const listaMonedas = listas.monedas.filter(e=> parseInt(e.id_caja_moneda) === parseInt(formCobrar.id_caja))
 
-  const montoFaltante = parseFloat(formCobrar.monto_total_factura) - parseFloat(formCobrar.recibido_factura)
+  const montoFaltante = parseFloat(formCobrar.monto_total_factura) - parseFloat(formCobrar.recibido_factura) - parseFloat(formCobrar.descuento_factura)
 
 
 
   return (
-    <Dialog onClose={cerrar} TransitionComponent={Zoom} fullWidth open={dialogs.cobrar}>
+    <Dialog onClose={cerrar} TransitionComponent={Zoom} maxWidth="lg" fullWidth open={dialogs.cobrar}>
       <form onSubmit={cobrar}>
         <DialogTitle>{lang.cobrar}</DialogTitle>
         <DialogContent >
@@ -60,14 +60,19 @@ const CuentasCobrarDialog = () => {
             </Grid>
 
 
-            <Grid item xs={12} sm={6} >
+            <Grid item xs={12} sm={4} >
               <Alert severity="success" icon={false}>
-                {lang.monto_total}: { funciones.numberFormat( formCobrar.monto_total_factura)}  {formCobrar.abreviatura_moneda}
+                {lang.total}: { funciones.numberFormat( formCobrar.monto_total_factura)}  {formCobrar.abreviatura_moneda}
               </Alert>
             </Grid>
-            <Grid item xs={12} sm={6}>
+            <Grid item xs={12} sm={4}>
               <Alert severity="success" icon={false}>
-                {lang.monto_recibido}: {funciones.numberFormat(formCobrar.recibido_factura)} {formCobrar.abreviatura_moneda}
+                {lang.recibido}: {funciones.numberFormat(formCobrar.recibido_factura)} {formCobrar.abreviatura_moneda}
+              </Alert>
+            </Grid>
+            <Grid item xs={12} sm={4} >
+              <Alert severity="success" icon={false}>
+                {lang.descuento}: { funciones.numberFormat( formCobrar.descuento_factura)}  {formCobrar.abreviatura_moneda}
               </Alert>
             </Grid>
 
@@ -117,6 +122,7 @@ const CuentasCobrarDialog = () => {
                 InputProps={{inputComponent: NumberFormatCustom}}
               />
             </Grid>
+            
             <Grid item xs={12}>
               <TextField autoComplete="off" label={lang.observaciones} fullWidth value={form.obs} name="obs" onChange={change}/>
             </Grid>

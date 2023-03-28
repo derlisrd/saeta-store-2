@@ -103,7 +103,7 @@ const Inventario = () => {
   if(load){
     return <Grid container spacing={2} alignItems="center">
     <Grid item xs={12}>
-      <CircularProgress />
+      <LinearProgress />
     </Grid>
     </Grid>
   }

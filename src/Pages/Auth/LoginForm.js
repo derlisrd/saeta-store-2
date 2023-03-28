@@ -2,12 +2,12 @@ import { Box, Grid, TextField,FormControlLabel,InputAdornment,Alert, IconButton,
 import { useState,useEffect,useCallback,useRef } from "react";
 import { useLogin } from "../../Contexts/LoginProvider";
 import { useNavigate } from "react-router-dom";
-
 import LoadingBackDrop from "../../Components/UI/LoadingBackDrop";
 import { useLang } from "../../Contexts/LangProvider";
 import {env} from '../../App/Config/config'
 import { useConfiguracion } from "../../Contexts/ConfiguracionProvider";
 import ConfigIniciales from "../ConfigIniciales";
+
 const LoginForm = () => {
   const {lang}= useLang();
   const {configurado} = useConfiguracion()
@@ -69,7 +69,7 @@ const LoginForm = () => {
         <Grid container spacing={2}>
           <Grid item xs={12}>
             <Stack justifyContent="center" alignItems="center" spacing={2}>
-                <Icon >rocket_launch</Icon>
+                <Icon color="primary" >rocket_launch</Icon>
               <Typography variant="h5">{lang.ingresar}</Typography>
             </Stack>
           </Grid>

@@ -151,7 +151,8 @@ const CuentasProvider = ({ children }) => {
   const getbuscarCobrar = async(f)=>{
     setCargando({lista:true,mov:false});
     let res = await APICALLER.get({
-      table: "facturas",include:"clientes,cajas",on: "id_cliente,id_cliente_factura,id_caja,id_caja_factura",where: "tipo_factura,>,1,and,estado_factura,=,2",
+      table: "facturas",include:"clientes,cajas",
+      on: "id_cliente,id_cliente_factura,id_caja,id_caja_factura",where: "tipo_factura,>,1,and,estado_factura,=,2",
       filtersField:"nombre_cliente,ruc_cliente",
       filtersSearch:`${f}`,
       })
@@ -175,7 +176,7 @@ const CuentasProvider = ({ children }) => {
       APICALLER.get({table: "facturas",include: "clientes,cajas,monedas,cajas_users",
       on: "id_caja,id_caja_caja,id_cliente,id_cliente_factura,id_caja,id_caja_factura,id_moneda,id_moneda_factura",
       where: `estado_factura,=,2`,
-      fields:"id_factura,id_cliente,nombre_cliente,nro_factura,ruc_cliente,monto_total_factura,recibido_factura,nombre_caja,abreviatura_moneda,id_user_caja,id_moneda,id_caja,tipo_factura,estado_factura"}),
+      fields:"descuento_factura,id_factura,id_cliente,nombre_cliente,nro_factura,ruc_cliente,monto_total_factura,recibido_factura,nombre_caja,abreviatura_moneda,id_user_caja,id_moneda,id_caja,tipo_factura,estado_factura"}),
       APICALLER.get({table: "compras",where: "tipo_factura_compra,=,2,and,estado_compra,=,2"}),
       APICALLER.get({table: "cajas", include:'cajas_users',on:'id_caja_caja,id_caja', where:`id_user_caja,=,${id_user},and,estado_caja,=,'open'`}),
       APICALLER.get({table: "facturas_formas_pagos"}),

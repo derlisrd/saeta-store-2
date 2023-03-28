@@ -30,7 +30,7 @@ const EmpleadosProvider = ({children}) => {
       id_rol:"0",
       salario_empleado:"",
       tipo_salario:"1",
-      user_id:''
+      user_id:'0'
     }
 
     const [form,setForm] = useState(initialForm)
@@ -39,7 +39,8 @@ const EmpleadosProvider = ({children}) => {
         setLoading(true);
         const storage = JSON.parse(localStorage.getItem("facturasStorage"));
         let [emp,rol,user] = await Promise.all([
-          APICALLER.get({table:"empleados",include:'users',on:'user_id,id_user',fields:'nombre_empleado,nombre_user,apellido_empleado,doc_empleado,id_empleado'}),
+          APICALLER.get({table:"empleados",
+          fields:'nombre_empleado,apellido_empleado,doc_empleado,id_empleado'}),
           APICALLER.get({table:'empleados_rols'}),
           APICALLER.get({table:'users',token:token_user,fields:'nombre_user,id_user'})
       ])
