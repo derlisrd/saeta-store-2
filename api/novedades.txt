@@ -265,17 +265,15 @@ INSERT INTO `depositos` (`id_deposito`, `nombre_deposito`, `tipo_deposito`, `upd
 
 DROP TABLE IF EXISTS `empleados`;
 CREATE TABLE IF NOT EXISTS `empleados` (
-  `id_empleado` int(11) NOT NULL AUTO_INCREMENT,
+  `id_empleado` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
   `id_rol` int(11) NOT NULL COMMENT 'id_empleados_rol',
-  `user_id` int(11) NULL,
-  `nombre_empleado` varchar(200) NOT NULL,
-  `apellido_empleado` varchar(80) NOT NULL,
+  `user_id` int DEFAULT '0',
+  `doc_empleado` varchar(25) UNIQUE NOT NULL,
+  `nombre_empleado` varchar(100) NOT NULL,
+  `apellido_empleado` varchar(100) NOT NULL,
   `telefono_empleado` varchar(25) DEFAULT NULL,
-  `doc_empleado` varchar(20) NOT NULL,
-  `salario_empleado` int(11) NOT NULL,
-  `tipo_salario` int(1) NOT NULL COMMENT '1=jornal 2=comision',
-  `updated_at` datetime DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id_empleado`)
+  `salario_empleado` int DEFAULT '0',
+  `updated_at` datetime DEFAULT CURRENT_TIMESTAMP
 ) ;
 
 --

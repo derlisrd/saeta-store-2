@@ -50,7 +50,7 @@ function MenuList({isMobile}) {
               <ListItem disablePadding >
                 <ListItemButton  onClick={()=>openCollapseMenu(e.open,e.id)} className={styles.listmenu}>
                   <ListItemIcon className={styles.iconmenu}>
-                  <Icon>{e.icon}</Icon>
+                  <Icon sx={{ color:e.color}} >{e.icon}</Icon>
                   </ListItemIcon>
                   <ListItemText className={styles.textmenu}  primary={lang[e.title]} />
                   <Icon>{e.open ? `expand_less` : `expand_more`}</Icon>

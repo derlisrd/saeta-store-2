@@ -50,6 +50,7 @@ const CajasProvider = ({ children }) => {
     abrirMensaje: "",
     transferencia: false,
     transferenciaMensaje: "",
+    code:0
   };
 
   const [errors, setErrors] = useState(initialErrors);

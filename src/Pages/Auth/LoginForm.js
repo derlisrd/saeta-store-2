@@ -20,7 +20,16 @@ const LoginForm = () => {
   const [recordar,setRecordar] = useState(false);
 
   const [typeInput,setTypeInput] = useState(true);
-  const changeInputType = ()=> {setTypeInput(!typeInput);passRef.current.focus();}
+  const changeInputType = ()=> {
+    setTypeInput(!typeInput)
+    let input = document.getElementById('password_user')
+    let tipo = (input.type);
+    input.type = tipo==='text'? 'password' : 'text'
+    input.focus();
+    var val = input.value;
+    input.value = '';
+    input.value = val;
+  }
 
 
   
@@ -87,7 +96,7 @@ const LoginForm = () => {
                   ),}}  disabled={load.login} name="username_user" inputRef={userRef} autoFocus label={lang.usuario} fullWidth />
           </Grid>
           <Grid item xs={12}>
-            <TextField required   disabled={load.login} name="password_user" inputRef={passRef}  type={typeInput? "password" : "text"} label={lang.contrasena}  fullWidth 
+            <TextField required   disabled={load.login} name="password_user" id="password_user" inputRef={passRef}  type="password" label={lang.contrasena}  fullWidth 
               InputProps={{
                 startAdornment: (
                   <InputAdornment position="start">
@@ -95,7 +104,7 @@ const LoginForm = () => {
                   </InputAdornment>
                 ),endAdornment:(
                   <InputAdornment position="end">
-                    <IconButton onClick={changeInputType}><Icon icon={typeInput ? `ic:twotone-remove-red-eye` : `ph:eye-slash-duotone`} /></IconButton>
+                    <IconButton onClick={changeInputType}><Icon>{typeInput ? `visibility` : `visibility_off`}</Icon></IconButton>
                   </InputAdornment>
                 )
               }}

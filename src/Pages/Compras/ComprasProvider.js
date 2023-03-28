@@ -144,8 +144,7 @@ export default function ComprasProvider({children}) {
       }
       
     }
-    
-    setCargas({main:false,items:false,insert:false,codigo:false});
+    setCargas(pre=>({...pre,main:false}) );
   },[id_user])
 
 useEffect(() => {
@@ -155,13 +154,10 @@ useEffect(() => {
     return ()=> {isActive = false;ca.abort();}
 }, [getDatas]);    
 
-const value = {enfocarInput,insertarProductoDialog,token_user,funciones,lang,setDialogs,dialogs,compras,setCompras,cargas,setCargas,errores,setErrores,inputCodigo,consultarCodigoProducto,consultarSiExiste,setearCompras}
+const values = {enfocarInput,insertarProductoDialog,token_user,funciones,lang,setDialogs,dialogs,compras,setCompras,cargas,setCargas,errores,setErrores,inputCodigo,consultarCodigoProducto,consultarSiExiste,setearCompras}
 
-  return (
-    <ComprasContext.Provider value={value} >
-        {children}
-    </ComprasContext.Provider>
-  );
+  return <ComprasContext.Provider value={values} >{children}</ComprasContext.Provider>
+
 }
 export const useCompras =()=>{
   const {enfocarInput,insertarProductoDialog,token_user,funciones,lang,setDialogs,dialogs,compras,setCompras,cargas,setCargas,errores,setErrores,inputCodigo,consultarCodigoProducto,consultarSiExiste,setearCompras} = useContext(ComprasContext);

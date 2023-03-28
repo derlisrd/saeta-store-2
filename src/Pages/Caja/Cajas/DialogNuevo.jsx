@@ -4,13 +4,15 @@ import { useCajas } from "./CajasProvider";
 import { Fragment, useEffect,useState } from 'react';
 
 const DialogNuevo = () => {
-  const {dialogs,setDialogs,formNew,initialFormNew,listas, errors,setErrors,agregarCajaNueva,cargas,lang} = useCajas();
+  const {dialogs,setDialogs,formNew,initialFormNew,listas,agregarCajaNueva,cargas,lang} = useCajas();
   
   
   
   const [form,setForm] = useState(initialFormNew)
   const [monedas,setMonedas] = useState([])
   const [usuarios,setUsuarios] = useState([])
+  const initialError = {active:false,message:'',code:0}
+  const [error,setError] = useState(initialError)
 
   const onChange = (e) => {
     const { value, name } = e.target;
@@ -69,15 +71,20 @@ const DialogNuevo = () => {
 
   const verificar = ()=>{
     if(form.nombre_caja===""){
-      setErrors({...errors,nuevo:true,nuevoMensaje:lang.ingrese_nombre_caja});
+      setError({active:true,code:1,message:'Ingrese nombre de caja de caja'})
+      document.getElementById('nombre_caja').focus()
       return false;
     }
     /* if(form.id_user_caja===""){
       setErrors({...errors,nuevo:true,nuevoMensaje:lang.seleccione_usuario});
       return false;
     } */
+    if(usuarios.length<1){
+      setError({active:true,code:2,message:'Seleccione al menos un usuario'})
+      return false;
+    }
     if(monedas.length<1){
-      setErrors({...errors,nuevo:true,nuevoMensaje:lang.seleccione_usuario});
+      setError({active:true,code:3,message:'Seleccione una moneda'})
       return false;
     }
      
@@ -86,24 +93,23 @@ const DialogNuevo = () => {
       return false;
     } */
     if(parseFloat(form.monto_inicial)<0){
-      setErrors({...errors,nuevo:true,nuevoMensaje:lang.monto_inicial_negativo});
+      setError({active:true,code:4,message:'Monto no puede ser negativo'})
       return false;
     }
-    setErrors({...errors,nuevo:false,nuevoMensaje:""});
-
-    if(monedas.length<1){
-      setErrors({...errors,nuevo:true,nuevoMensaje:lang.seleccione_moneda});
-      return false;
-    }
+   
+    setError(initialError)
     agregarCajaNueva(form,monedas,usuarios);
     setForm(initialFormNew);
     setMonedas([]);
+    setUsuarios([])
   }
 
   const cerrar = () => {
     setDialogs({ ...dialogs, nuevo: false });
     setForm(initialFormNew);
     setMonedas([])
+    setUsuarios([])
+    setError(initialError)
   };
 
 
@@ -120,7 +126,7 @@ useEffect(() => {
       <Grid container spacing={2}>
           <Grid item xs={12}>
             {
-              errors.nuevo && <Alert icon={false} severity="error">{errors.nuevoMensaje}</Alert>
+              error.active && <Alert icon={false} severity="error">{error.message}</Alert>
             }
             {
               cargas.nuevo && <LinearProgress />
@@ -128,8 +134,8 @@ useEffect(() => {
           </Grid>
           <Grid item xs={12}>
             <TextField
-              autoFocus required fullWidth autoComplete="off"
-              name="nombre_caja" disabled={cargas.nuevo}
+              autoFocus required fullWidth autoComplete="off" id="nombre_caja"
+              name="nombre_caja" disabled={cargas.nuevo} error={error.code===1}
               value={form.nombre_caja}
               onChange={onChange}
               label={lang.nombre_de_caja}

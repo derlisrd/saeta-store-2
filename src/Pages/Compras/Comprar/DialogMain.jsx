@@ -13,6 +13,8 @@ const DialogMain = () => {
 
   return (
     <Dialog onClose={close} fullScreen open={dialogs.main} >
+      { cargas.main ? <LoadingBackDrop /> : 
+      <>
       <DialogTitle>
           <Tooltip
             title={<h2>{lang.volver_menu_principal}</h2>}
@@ -29,7 +31,7 @@ const DialogMain = () => {
         </DialogTitle>
         <DialogContent dividers>
           <PopUpErrores />
-          {cargas.main && <LoadingBackDrop />}
+          
           <Grid container spacing={3}>
             <Grid item xs={12} sm={12}  lg={4}>
               <Inputs />
@@ -38,7 +40,9 @@ const DialogMain = () => {
                 <TablaItemsFactura />
             </Grid>
           </Grid>
+          
         </DialogContent>
+        </> }
     </Dialog>
   )
 }
