@@ -4,7 +4,7 @@ export const listaMenu = [
     {
         id: 590,
         title: "inicio",
-        icon: "home",
+        icon: "other_houses",
         color: "primary",
         url: `${BASEURL}/dashboard`,
         private:false
@@ -219,7 +219,7 @@ export const listaMenu = [
             id: 37,
             title: "registros__mov",
             url: `${BASEURL}/registromovimientos`,
-            icon: `widgets`,
+            icon: `phone_android`,
             color: "#a0aec0",
          },
         ],

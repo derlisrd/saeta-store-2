@@ -1,0 +1,22 @@
+export const Columns = [
+    {
+        field:'codigo_producto',
+        title:'COD'
+    },
+    {
+        field:'cantidad_apartado',
+        title:'Cant'
+    },
+    {
+        field:'nombre_producto',
+        title:'Producto'
+    },
+    {
+        field:'nombre_cliente',
+        title:'Cliente'
+    },
+    {
+        field:'nombre_user',
+        title:'Usuario'
+    }
+]

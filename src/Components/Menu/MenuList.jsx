@@ -37,7 +37,7 @@ function MenuList({isMobile}) {
   return (<SimpleBar forceVisible="y" autoHide={true} style={{ maxHeight: "100vh" }}>
     <Toolbar >
       <Stack direction='row' alignItems='center' justifyContent='space-between' width='100%'>
-        {isMobile && <IconButton onClick={closeMobileMenu} ><Icon icon='ri:menu-fold-line' height={24} /></IconButton>}
+        {isMobile && <IconButton onClick={closeMobileMenu} ><Icon>menu_open</Icon></IconButton>}
         <Typography align="center" variant="subtitle1">SISTEMA</Typography>
         </Stack>
       </Toolbar>

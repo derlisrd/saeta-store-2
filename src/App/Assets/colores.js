@@ -17,7 +17,7 @@ export const colores = {
     textSecondary:'#6C737F',
     divider:'#F2F4F7',
     bgpaper:"#fff",
-    bgdefault:"#fff",
+    bgdefault:"#f1f1f1",
     transparent:'#ffffff3d'
   },
   dark:{

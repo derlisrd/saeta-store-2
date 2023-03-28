@@ -44,6 +44,7 @@ const MovimientosProvider = ({ children }) => {
     ingresoSinEfectivo: 0,
     ingresoTotal: 0,
     egresos: 0,
+    totalCaja:0
   };
   const [movimientos,setMovimientos] = useState(initialIngresos);
 
@@ -57,9 +58,13 @@ const MovimientosProvider = ({ children }) => {
     setCargando(true);
     const storeMonedas = localStorage.getItem("dataMonedas");
     const existIDCaja = idCaja !== "" ? `,and,id_caja,=,${idCaja}` : "";
+    const filterCajaMoneda = idCaja !== "" ? `id_caja_moneda,=,${idCaja}` : "";
     const tipo_Registro = tipoRegistro !== "" ? `,and,tipo_registro,=,${tipoRegistro}` : "";
     const monedafiltrada = monedaFilter !== "" ? `,and,id_moneda_movimiento,=,${monedaFilter}` : "";
-    let promises = [APICALLER.get({
+
+    let promises = [
+      APICALLER.get({table:'cajas_monedas',where:`${filterCajaMoneda}`,fields:`SUM(	monto_caja_moneda) as monto_total`}),
+      APICALLER.get({
       table: "cajas_movimientos",
       include: "cajas,cajas_registros,users",
       on: "id_caja,id_caja_movimiento,id_cajas_registro,id_tipo_registro,id_user,id_user_movimiento",
@@ -76,8 +81,8 @@ const MovimientosProvider = ({ children }) => {
     }
 
     let getpromises = await Promise.all(promises);
-    const res = getpromises[0];
-
+    const res = getpromises[1];
+    const montoCaja = getpromises[0];
     if (res.response) {
       setLista(res.results);
       let efectivo = 0;
@@ -107,13 +112,15 @@ const MovimientosProvider = ({ children }) => {
       
       )
       setDataPrint(prev=> {  return {...prev, datas:dataPrinter} })
+    
       setMovimientos({
         ingresoEfectivo: efectivo,
         ingresoSinEfectivo: sinEfectivo,
         ingresoTotal: total,
         egresos: egresosE,
+        totalCaja: montoCaja.first.monto_total ?? 0
       });
-      promises.length>1 && setListaMonedas(promises[1].results)
+      promises.length>2 && setListaMonedas(promises[2].results)
     } else {
       console.log(res);
     }

@@ -1,5 +1,5 @@
-import { Icon } from "@iconify/react";
-import {  IconButton, Toolbar, Stack, Box, Typography } from "@mui/material";
+
+import {Icon, IconButton, Toolbar, Stack, Box, Typography } from "@mui/material";
 import { env } from "../../App/Config/config";
 import { useLogin } from "../../Contexts/LoginProvider";
 
@@ -9,7 +9,7 @@ import ThemeToggle from "./ThemeToggle";
 import UserMenu from "./UserMenu";
 
 
-const Icono = ()=>( <Icon icon='mingcute:menu-fill' height={24} ></Icon>)
+const Icono = ()=>( <Icon>menu</Icon>)
 
 function ToolbarMain() {
   const {dataEmpresa} = useLogin()

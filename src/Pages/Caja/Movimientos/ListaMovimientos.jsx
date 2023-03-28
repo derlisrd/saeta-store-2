@@ -147,28 +147,21 @@ const ListaMovimientos = () => {
       <Grid item >
       <Alert severity="success" variant="outlined" icon={false}>
         <Typography variant="h5">
-          Efectivo: {funciones.numberSeparator(movimientos.ingresoEfectivo)}{" "}
-        </Typography>
-        </Alert>
-      </Grid>
-      <Grid item >
-        <Alert severity="warning" variant="outlined" icon={false}>
-        <Typography variant="h5">
-         {lang.sin_efectivo}: {funciones.numberSeparator(movimientos.ingresoSinEfectivo)}{" "}
+          {lang.entrada}: {funciones.numberSeparator(movimientos.ingresoEfectivo + movimientos.ingresoSinEfectivo)}{" "}
         </Typography>
         </Alert>
       </Grid>
       <Grid item >
         <Alert severity="error" variant="outlined" icon={false}>
         <Typography variant="h5">
-          {lang.egresos}: {funciones.numberSeparator(movimientos.egresos)}{" "}
+          {lang.salida}: {funciones.numberSeparator(movimientos.egresos)}{" "}
         </Typography>
         </Alert>
       </Grid>
       <Grid item >
         <Alert severity="info" variant="outlined" icon={false}>
         <Typography variant="h5">
-          {lang.neto}: {funciones.numberSeparator(movimientos.ingresoEfectivo - movimientos.egresos )}{" "}
+          {lang.totalCaja}: {funciones.numberSeparator(movimientos.totalCaja)}
         </Typography>
         </Alert>
       </Grid>

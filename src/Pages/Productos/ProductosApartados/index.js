@@ -1,17 +1,16 @@
-import React from 'react'
-import DialogApartar from './DialogApartar'
-import DialogBuscarCliente from './DialogBuscarCliente'
-import DialogBuscarProducto from './DialogBuscarProducto'
-import ProductosApartadosLista from './ProductosApartadosLista'
+
+
+import Apartar from './Apartar'
+import ListaApartado from './ListaApartado'
 import ProductosApartadosProvider from './ProductosApartadosProvider'
+import RegistrarCliente from './RegistrarCliente'
 
 const ProductosApartados = () => {
   return (
     <ProductosApartadosProvider>
-      <DialogApartar />
-      <DialogBuscarCliente />
-      <DialogBuscarProducto />
-      <ProductosApartadosLista />
+      <ListaApartado />
+      <Apartar />
+      <RegistrarCliente />
     </ProductosApartadosProvider>
   )
 }

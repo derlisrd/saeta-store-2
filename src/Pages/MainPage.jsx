@@ -23,7 +23,7 @@ const MainPage = ({children}) => {
   let margin_left = isOpenMenu ? `${DRAWER_WIDTH}px` : '0';
   let width_main = isOpenMenu ? `calc(100% - ${DRAWER_WIDTH}px)` : '100%';
 
-  let stylesMain = {px:2, mt:'65px', ml:{ md: margin_left}, width: { md: width_main},bgcolor:'background.paper',minHeight:"calc(100vh - 80px)",transition:'all 0.2s' }
+  let stylesMain = {px:2, mb:'70px',mt:'65px', ml:{ md: margin_left}, width: { md: width_main},bgcolor:'background.paper',minHeight:"calc(100vh - 80px)",transition:'all 0.2s' }
 
   if(!userData.login){
     return <Navigate to="/" />

@@ -891,15 +891,15 @@ ALTER TABLE `productos` ADD `valor_comision` FLOAT NULL DEFAULT '0' AFTER `porce
 
 DROP TABLE IF EXISTS `productos_apartados`;
 CREATE TABLE IF NOT EXISTS `productos_apartados` (
-  `id_productos_apartado` int(11) NOT NULL AUTO_INCREMENT,
+  `id_productos_apartado` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
   `id_producto_apartado` int(11) NOT NULL COMMENT 'con id_producto',
   `id_deposito_apartado` int(11) NOT NULL COMMENT 'id_deposito',
   `id_deposito_producto_apartado` int(11) NOT NULL COMMENT 'id_productos_apartado',
   `id_cliente_apartado` int(11) NOT NULL COMMENT 'con id_cliente',
   `id_user_apartado` int(11) NOT NULL COMMENT 'id_user',
-  `cantidad_apartado` int(11) NOT NULL,
-  `updated_at` datetime DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id_productos_apartado`)
+  `cantidad_apartado` FLOAT NOT NULL,
+  fecha_apartado timestamp DEFAULT null,
+  `updated_at` datetime DEFAULT CURRENT_TIMESTAMP
 ) ;
 
 -- --------------------------------------------------------
