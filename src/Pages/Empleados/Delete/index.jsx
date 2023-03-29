@@ -1,17 +1,18 @@
 import { useState } from "react";
-import DialogBorrar from "../../../../Components/Dialogo/DialogBorrar";
-import useQuerys from "../../../../Hooks/useQuerys";
+import DialogBorrar from "../../../Components/Dialogos/DialogBorrar";
+
+import { APICALLER } from "../../../Services/api";
+
 import {  useEmpleados } from "../EmpleadosProvider";
 
 function Delete() {
 
-    const {dialogs,llaveDialog,getLista,formSelect} = useEmpleados()
+    const {dialogs,llaveDialog,getLista,formSelect,token_user} = useEmpleados()
     const [isLoading,setIsloading]  = useState(false)
-    const {borrar} = useQuerys()
 
     const erase = async()=>{
         setIsloading(true)
-        let res = await borrar({table:'empleados',id: formSelect.id_empleado})
+        let res = await APICALLER.delete({table:'empleados',id: formSelect.id_empleado,token:token_user})
         if(res.response){
             getLista()
             close()

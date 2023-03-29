@@ -13,27 +13,33 @@ const EmpleadosProvider = ({children}) => {
     users:[]
   })
   const [isLoading,setIsLoading] = useState(true)
-  const [dialogs,setDialogs] = useState({add:false,edit:false,delete:false})
+  const [dialogs,setDialogs] = useState({add:false,edit:false,delete:false,user:false})
   const [formSelect,setFormSelect] = useState({
-    id_empleado:"",doc_empleado:"",telefono_empleado:"",nombre_empleado:"",salario_empleado:""
+    id_empleado:"",doc_empleado:"",telefono_empleado:"",apellido_empleado:'',nombre_empleado:"",salario_empleado:"",id_rol:'',user_id:''
   })
 
   const llaveDialog = (name,bolean)=>{ setDialogs({...dialogs,[name]:bolean}) }
 
   const getLista = useCallback(async(searchTxt='')=>{
     setIsLoading(true)
-    let [res,user,rols] = await Promise.all([APICALLER.get({
+    const storage = JSON.parse(localStorage.getItem("facturasStorage"));
+    let [emp,user,rols] = await Promise.all([APICALLER.get({
       table: "empleados",
-      fields: 'id_empleado,doc_empleado,telefono_empleado,nombre_empleado,apellido_empleado,salario_empleado',
+      fields: 'id_empleado,doc_empleado,telefono_empleado,nombre_empleado,apellido_empleado,salario_empleado,id_rol,user_id',
       filtersField:"nombre_empleado,doc_empleado",
       filtersSearch:`${searchTxt}`,
     }),
     APICALLER.get({table:'users',token:token_user,fields:'id_user,nombre_user'}),
     APICALLER.get({table:'empleados_rols',fields:'id_empleados_rol,descripcion_rol'})
   ])
-    if(res.response){
-      setLista({empleados:res.results,rols:rols.results,users:user.results})
-    }else{ console.log(res);}
+    if(emp.response){
+      setLista({empleados:emp.results,rols:rols.results,users:user.results})
+    }else{ console.log(emp);}
+    if(storage){
+      let arr = {...storage}
+      arr.listaVendedores = emp.results;
+      localStorage.setItem("facturasStorage",JSON.stringify(arr));
+    }
     setIsLoading(false)
   },[token_user])
 

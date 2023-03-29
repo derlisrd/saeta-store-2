@@ -1,8 +1,7 @@
 
-import Add from './Add' /*
-
+import Add from './Add' 
 import Delete from './Delete'
-import Edit from './Edit' */
+import Edit from './Edit' 
 import EmpleadosProvider from './EmpleadosProvider'
 import Lista from './Lista'
 
@@ -10,6 +9,8 @@ import Lista from './Lista'
 const Empleados = () => {
 
   return <EmpleadosProvider>
+    <Edit />
+    <Delete />
     <Add />
     <Lista />
   </EmpleadosProvider>

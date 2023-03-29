@@ -14,6 +14,7 @@ function Opciones({rowProps}) {
 
     return (
     <Stack direction="row"> 
+        <IconButton onClick={()=>{open(rowProps,'user')}}><Icon>contact_mail</Icon></IconButton>
         <IconButton onClick={()=>{open(rowProps,'edit')}}><Icon color="info">mode_edit</Icon></IconButton>
         <IconButton onClick={()=>{open(rowProps,'delete')}}><Icon color='error' >delete_outline</Icon> </IconButton>
     </Stack>
