@@ -30,7 +30,7 @@ function Dolar({cotizacion}) {
       </Typography>}
       />
       <CardActions>
-        <Button onClick={handleOpen} endIcon={<Icon>navigate_next</Icon>}  >Seleccionar </Button>
+        <Button onClick={handleOpen} size='small' endIcon={<Icon>navigate_next</Icon>}  >Seleccionar </Button>
         <Menu
           anchorEl={anchorEl}
           open={open}

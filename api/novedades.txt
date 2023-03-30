@@ -896,7 +896,7 @@ CREATE TABLE IF NOT EXISTS `productos_apartados` (
   `id_cliente_apartado` int(11) NOT NULL COMMENT 'con id_cliente',
   `id_user_apartado` int(11) NOT NULL COMMENT 'id_user',
   `cantidad_apartado` FLOAT NOT NULL,
-  fecha_apartado timestamp DEFAULT null,
+  fecha_apartado datetime NULL,
   `updated_at` datetime DEFAULT CURRENT_TIMESTAMP
 ) ;
 
