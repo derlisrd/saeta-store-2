@@ -1,11 +1,18 @@
-import { Avatar,  Card, CardActions, CardHeader, FormControl, Icon, InputLabel, MenuItem, Select, Typography } from "@mui/material";
+import { Avatar,  Card, CardActions, CardHeader, Icon,  MenuItem, Menu, Typography,Button } from "@mui/material";
 import { green } from '@mui/material/colors'
 import { useState } from "react";
 import { funciones } from "../../../Functions";
 function Dolar({cotizacion}) {
 
     const [moneda,setMoneda] = useState('GsxDolar')
-    
+    const [anchorEl, setAnchorEl] = useState(null);
+    const open = Boolean(anchorEl);
+    const handleChange = e=>{
+        setAnchorEl(null);
+        setMoneda(e)
+    }
+    const handleOpen = (event) => {setAnchorEl(event.currentTarget); }
+    const handleClose = ()=>{ setAnchorEl(null);}
 
 
 
@@ -23,16 +30,16 @@ function Dolar({cotizacion}) {
       </Typography>}
       />
       <CardActions>
-      <FormControl fullWidth>
-        <InputLabel>Moneda</InputLabel>
-        <Select
-          value={moneda}
-          label="Moneda"
-          onChange={e=>{ setMoneda(e.target.value);}}
+        <Button onClick={handleOpen} endIcon={<Icon>navigate_next</Icon>}  >Seleccionar </Button>
+        <Menu
+          anchorEl={anchorEl}
+          open={open}
+          onClose={handleClose}
         >
-          <MenuItem value="GsxDolar">Gs x Dolar</MenuItem><MenuItem value="GsxReal">Real x Dolar</MenuItem><MenuItem value="RealxDolar">Real x Dolar</MenuItem>
-        </Select>
-      </FormControl>
+          <MenuItem onClick={()=>{handleChange("GsxDolar")}}>Gs x Dolar</MenuItem>
+          <MenuItem onClick={()=>{handleChange("GsxReal")}}>Real x Dolar</MenuItem>
+          <MenuItem onClick={()=>{handleChange("RealxDolar")}}>Real x Dolar</MenuItem>
+        </Menu>
   </CardActions>
     </Card> );
 }

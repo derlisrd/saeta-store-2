@@ -23,7 +23,7 @@ const Tablas = ({title,subtitle,loading,datas,columns,caption,inputs,Accions,sho
   });
 
 return (
-      <>
+      <Box mb={3}>
     <TableInfo title={title} subtitle={subtitle} icon={icon}  />
     
     <Box borderRadius={3} boxShadow={5} padding={2} bgcolor='background.paper'>
@@ -130,7 +130,7 @@ return (
         )
     }
     </Box>
-    </>
+    </Box>
   )
 }
 

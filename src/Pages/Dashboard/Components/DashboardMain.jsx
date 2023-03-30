@@ -22,19 +22,19 @@ function DashboardMain() {
       <Grid item xs={12}>
         <Typography variant="h4">Visión general</Typography>
       </Grid>
-      <Grid item xs={12} sm={6} md={4}>
+      <Grid item xs={12} sm={6} md={4} lg={3}>
         <VentasDia valor={datas.ventasHoy} />
       </Grid>
-      <Grid item xs={12} sm={6} md={4}>
+      <Grid item xs={12} sm={6} md={4} lg={3}>
         <VentasMes valor={datas.ventasMes} />
       </Grid>
-      <Grid item xs={12} sm={6} md={4}>
+      <Grid item xs={12} sm={6} md={4} lg={3}>
        <VentasTotales />
       </Grid>
-      <Grid item xs={12} sm={6} md={6}>
+      <Grid item xs={12} sm={6} md={6} lg={3} >
         <MonedaPrincipal />
       </Grid>
-      <Grid item xs={12} sm={6} md={6}>
+      <Grid item xs={12} sm={6} md={6} lg={3}>
         <Dolar cotizacion={datas.cotizacion} />
       </Grid>
       <Grid item xs={12} sm={12} >
