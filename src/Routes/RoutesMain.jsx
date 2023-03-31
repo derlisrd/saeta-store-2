@@ -47,7 +47,7 @@ import Backup from "../Pages/Backup";
 import Comisiones from "../Pages/Caja/Comisiones";
 import FormasPago from "../Pages/Ventas/FormasPago";
 import Profile from "../Pages/Profile";
-import ScrollToTop from "../Components/ScrollToUp";
+
 import ListaProductos from "../Pages/Productos/Depositos/ListaProductosDeposito";
 import RegistrosProductos from "../Pages/Productos/Productos/RegistrosProductos";
 import RegistroActividad from "../Pages/Settings/RegistroActividad";
@@ -72,7 +72,7 @@ const RoutesMain = () => {
     if(login && !permisos.some(e => parseInt(e.id_permiso_permiso) === parseInt(id)) ){
       return <Navigate to={env.BASEURL + "/notautorized"} />
     } 
-    return login ? <MainPage> <ScrollToTop /> {children}</MainPage> : <Navigate to={R} />
+    return login ? <MainPage>  {children}</MainPage> : <Navigate to={R} />
   }
 
   const verificar = useCallback(()=>{
