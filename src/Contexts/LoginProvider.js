@@ -92,6 +92,8 @@ const LoginProvider = ({children}) => {
 
     },[])
 
+
+
     const logIn = async(f,remember)=>{
         setLoad({login:true,active:false,msj:null,code:0});
         let [res,emp,mon] = await Promise.all([APICALLER.login(f),APICALLER.get({table:"empresas"}),APICALLER.get({table:"monedas"})]);
@@ -104,7 +106,7 @@ const LoginProvider = ({children}) => {
             let fechaLicencia = funciones.splitFecha(dataEmpresa.licencia)
 
             if(today >= fechaLicencia){
-                setLoad({login:false,active:true,msj:"Su licencia ha vencido. Por favor contacte con el proveedor."});
+                setLoad({login:false,active:true,msj:"Su licencia ha vencido. Por favor contacte con el proveedor.",code:500});
                 return false;
             }
             setearEmpresa({mode:true,empresa:dataEmpresa,monedas:dataMonedas})
@@ -117,13 +119,16 @@ const LoginProvider = ({children}) => {
                 permisos: permisosData.response ? permisosData.results : []
             }
             setearLogin(datas,remember);
-            setLoad({login:false,active:false,msj:null});
+            setLoad({login:false,active:false,msj:'',code:0});
         }
         else{
             console.log(res);
             setLoad({login:false,active:true,msj:res.message,code:res.error_code});
         }
     }
+
+
+
 
     const authcheck = useCallback(async()=>{
         

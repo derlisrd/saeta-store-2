@@ -1,5 +1,5 @@
 import { Box, Grid, TextField,FormControlLabel,InputAdornment,Alert, IconButton, Stack, Typography, Switch, Button, Zoom,Icon} from "@mui/material";
-import { useState,useEffect,useCallback,useRef } from "react";
+import { useState,useEffect,useCallback } from "react";
 import { useLogin } from "../../Contexts/LoginProvider";
 import { useNavigate } from "react-router-dom";
 import LoadingBackDrop from "../../Components/UI/LoadingBackDrop";
@@ -15,8 +15,6 @@ const LoginForm = () => {
 
   const { logIn ,load,userData} = useLogin();
   const {login} = userData;
-  const userRef = useRef(null)
-  const passRef = useRef(null)
   const [recordar,setRecordar] = useState(false);
 
   const [typeInput,setTypeInput] = useState(true);
@@ -41,8 +39,17 @@ const LoginForm = () => {
     }
 
   const verificar = useCallback(()=>{
-    if(login) navigate(env.BASEURL+"/dashboard")
-  },[login,navigate])
+    if(login){
+      navigate(env.BASEURL+"/dashboard")
+    }
+    if(load.code===404){
+      document.getElementById('username_user').focus();
+    } 
+    if(load.code===401){
+      document.getElementById('password_user').focus();
+    } 
+    
+  },[login,navigate,load])
 
 
   useEffect(() => {
@@ -89,14 +96,14 @@ const LoginForm = () => {
             }
           </Grid>
           <Grid item xs={12}>
-            <TextField required InputProps={{  startAdornment: (
+            <TextField required error={load.code===404} InputProps={{  startAdornment: (
                     <InputAdornment position="start">
-                      <Icon >person</Icon>
+                      <Icon>person</Icon>
                     </InputAdornment>
-                  ),}}  disabled={load.login} name="username_user" inputRef={userRef} autoFocus label={lang.usuario} fullWidth />
+                  ),}}  disabled={load.login} name="username_user" id="username_user" autoFocus label={lang.usuario} fullWidth />
           </Grid>
           <Grid item xs={12}>
-            <TextField required   disabled={load.login} name="password_user" id="password_user" inputRef={passRef}  type="password" label={lang.contrasena}  fullWidth 
+            <TextField required error={load.code===401} disabled={load.login} name="password_user" id="password_user" type="password" label={lang.contrasena}  fullWidth 
               InputProps={{
                 startAdornment: (
                   <InputAdornment position="start">

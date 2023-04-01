@@ -37,7 +37,7 @@ function Dolar({cotizacion}) {
           onClose={handleClose}
         >
           <MenuItem onClick={()=>{handleChange("GsxDolar")}}>Gs x Dolar</MenuItem>
-          <MenuItem onClick={()=>{handleChange("GsxReal")}}>Real x Dolar</MenuItem>
+          <MenuItem onClick={()=>{handleChange("GsxReal")}}>Gs x Dolar</MenuItem>
           <MenuItem onClick={()=>{handleChange("RealxDolar")}}>Real x Dolar</MenuItem>
         </Menu>
   </CardActions>

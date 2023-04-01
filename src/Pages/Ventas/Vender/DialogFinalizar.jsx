@@ -1,12 +1,12 @@
 import {
   Alert,AlertTitle,InputLabel,FormControl,CircularProgress,Dialog,DialogActions,DialogContent,DialogTitle,FormControlLabel,Grid,Icon,IconButton,InputAdornment,Radio,TextField,Tooltip,Typography,
-  Zoom,MenuItem,Select,Checkbox,Stack} from "@mui/material";
+  Zoom,MenuItem,Select,Checkbox,Stack,Box} from "@mui/material";
 import NumberFormatCustom from "../../../Components/thirty/NumberFormatCustom";
 import TextFieldCustom from "../../../Components/MuiCustom/TextFieldCustom";
 import ButtonCustom from "../../../Components/MuiCustom/ButtonCustom";
 import { useVentas } from "./VentasProvider";
 import { useRef,useState } from "react";
-
+import styles from './styles.module.css'
 
 const DialogFinalizar = () => {
   const {MetodoDescuento,permisos, lang, changeMonedas,
@@ -407,44 +407,31 @@ const DialogFinalizar = () => {
                 }
               </Grid>
               <Grid item xs={12} sm={12}>
-                <Alert icon={false} variant="outlined" severity="info">
-                <Grid container>
-                <Grid item xs={6} sm={6}>
-                    <h3>TOTAL A PAGAR:</h3>
+                  <Box boxShadow={3} padding={2} borderRadius={2} >
+                  <Grid container>
+                    <Grid item xs={6} md={6}>
+                      <h3 className={styles.text_left}>TOTAL: {Funciones.numberSeparator(Funciones.redondeo2decimales(TOTAL))} {ABM}</h3>
+                    </Grid>
+                    <Grid item xs={6} md={6} >
+                      <h3 className={styles.text_left}>ABONADO: {Funciones.numberSeparator(fa.datosFactura.totalAbonado/valorMoneda)} {ABM}</h3>
+                    </Grid>
+
+                    <Grid item xs={6} md={6}>
+                      <h3 className={styles.text_left}>DESCUENTOS: {Funciones.numberSeparator(fa.descuento)} {ABM}</h3>
+                    </Grid>
+                    <Grid item xs={6} md={6} >
+                      <h3 className={styles.text_left}>IMPUESTO: {Funciones.numberSeparator(Funciones.redondeo2decimales(TOTALIVA))} {ABM}</h3>
+                    </Grid>
+
+                    <Grid item xs={6}  md={6}>
+                      <h3 className={styles.text_left}>CAMBIO: {CAMBIO <= 0 ? "0 "+ ABM : Funciones.numberSeparator(CAMBIO) + " " + ABM}</h3>
+                    </Grid>
+
+                    <Grid item xs={12} >
+                      <Typography variant="overline">SON: {Funciones.NumeroALetras(TOTAL, ABM)}</Typography>
+                    </Grid>
                   </Grid>
-                  <Grid item xs={6} sm={6}>
-                    <h3>{Funciones.numberSeparator(Funciones.redondeo2decimales(TOTAL))} {ABM}</h3>
-                  </Grid>
-                  <Grid item xs={6} sm={6}>
-                    <h3>ABONADO:</h3>
-                  </Grid>
-                  <Grid item xs={6} sm={6}>
-                    <h3>{Funciones.numberSeparator(fa.datosFactura.totalAbonado/valorMoneda)} {ABM}</h3>
-                  </Grid>
-                  <Grid item xs={6} sm={6}>
-                    <h3>DESCUENTOS:</h3>
-                  </Grid>
-                  <Grid item xs={6} sm={6}>
-                    <h3>{Funciones.numberSeparator(fa.descuento)} {ABM}</h3>
-                  </Grid>
-                  
-                  <Grid item xs={6} sm={6}>
-                    <h3>IMPUESTO:</h3>
-                  </Grid>
-                  <Grid item xs={6} sm={6}>
-                    <h3>{Funciones.numberSeparator(Funciones.redondeo2decimales(TOTALIVA))} {ABM}</h3>
-                  </Grid>
-                  <Grid item xs={6} sm={6}>
-                    <h3>CAMBIO:</h3>
-                  </Grid>
-                  <Grid item xs={6} sm={6}>
-                    <h3>{CAMBIO <= 0 ? "0 "+ ABM : Funciones.numberSeparator(CAMBIO) + " " + ABM}</h3>
-                  </Grid>
-                  <Grid item xs={6} sm={12}>
-                    <Typography variant="overline">SON: {Funciones.NumeroALetras(TOTAL, ABM)}</Typography>
-                  </Grid>
-                </Grid>
-              </Alert>
+                  </Box>
               </Grid>
             </Grid>
           </Grid>

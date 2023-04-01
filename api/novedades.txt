@@ -9,6 +9,7 @@ CREATE TABLE IF NOT EXISTS `agendas` (
   `fecha_inicio_agenda` date NOT NULL,
   `fecha_fin_agenda` date NOT NULL,
   `horario_agenda` time NOT NULL,
+  `confirmado_agenda` int DEFAULT '1',
   `color_agenda` varchar(10) NOT NULL,
   `updated_at` datetime DEFAULT CURRENT_TIMESTAMP
 ) ;
