@@ -1,3 +1,13 @@
 
 
 21800101
+
+CREATE TABLE `stock_movimientos` (
+  `id_stock_movimiento` int NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  `id_producto_mov` int NOT NULL COMMENT 'id_producto',
+  `cantidad_mov` float NOT NULL DEFAULT '0',
+  `tipo_mov` int NOT NULL COMMENT '0 salida 1 entrada',
+  `tipo_stock` int NOT NULL DEFAULT '1' COMMENT '1 art 2 serv',
+  `fecha_mov` datetime DEFAULT NULL,
+  `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
