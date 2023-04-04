@@ -1005,37 +1005,16 @@ CREATE TABLE `reportes` (
 );
 
 
---
--- Estructura de tabla para la tabla `turnos`
---
+CREATE TABLE `stock_movimientos` (
+  `id_stock_movimiento` int NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  `id_producto_mov` int NOT NULL COMMENT 'id_producto',
+  `cantidad_mov` float NOT NULL DEFAULT '0',
+  `tipo_mov` int NOT NULL COMMENT '0 salida 1 entrada',
+  `tipo_stock` int NOT NULL DEFAULT '1' COMMENT '1 art 2 serv',
+  `fecha_mov` datetime DEFAULT NULL,
+  `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
 
-DROP TABLE IF EXISTS `turnos`;
-CREATE TABLE IF NOT EXISTS `turnos` (
-  `id_turno` int(11) NOT NULL AUTO_INCREMENT,
-  `id_cliente_turno` int(11) NOT NULL COMMENT 'id_cliente',
-  `id_empleado_turno` int(11) NOT NULL,
-  `fecha_tomada` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `fecha_turno` date NOT NULL COMMENT 'fecha p turno',
-  `horario_turno` time NOT NULL COMMENT 'horario de turno',
-  `estado_turno` int(1) NOT NULL COMMENT '0=no 1=espera 2=fin',
-  `updated_at` datetime NOT NULL,
-  PRIMARY KEY (`id_turno`)
-) ;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `turnos_servicios`
---
-
-DROP TABLE IF EXISTS `turnos_servicios`;
-CREATE TABLE IF NOT EXISTS `turnos_servicios` (
-  `id_turnos_servicio` int(11) NOT NULL AUTO_INCREMENT,
-  `id_turno_servicio` int(11) NOT NULL COMMENT 'id_turno',
-  `id_servicio_turno` int(11) NOT NULL COMMENT 'id_producto serv',
-  `updated_at` datetime DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id_turnos_servicio`)
-) ;
 
 -- --------------------------------------------------------
 
