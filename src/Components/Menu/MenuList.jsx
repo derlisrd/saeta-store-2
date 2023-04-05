@@ -82,7 +82,7 @@ function MenuList({isMobile}) {
                   sx={SELECTED}
                 onClick={closeMobileMenu} className={styles.listmenu}  component={Link} to={e.url}>
                   <ListItemIcon className={styles.iconmenu}>
-                    <Icon>{e.icon}</Icon>
+                    <Icon sx={{ color:e.color}} >{e.icon}</Icon>
                   </ListItemIcon>
                   <ListItemText className={styles.textmenu} primary={lang[e.title]} />
                 </ListItemButton>
