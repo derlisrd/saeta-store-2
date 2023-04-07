@@ -21,8 +21,7 @@ const VentasProvider = ({ children }) => {
   const { userData } = useLogin();
   const {token_user, id_user,permisos} = userData;
   const {lang} = useLang();
-  console.log('render ventas provider');
-  const storage = JSON.parse(localStorage.getItem("facturasStorage"));
+  
   const [lastID,setLastID] = useState('');
   const initialErrors = {
     id_error:null,
@@ -41,14 +40,18 @@ const VentasProvider = ({ children }) => {
     },
   };
   const [errors, setErrors] = useState(initialErrors);
+  
 
-  const initialCargas = {
-    general: storage===null ? true : false,
-    cargandoProducto: false,
-    items:false,
-    cargandoCliente: false,
-    finalizarVenta: storage===null ? true : false,
-  };
+  const initialCargas = ()=>{
+    let sto = JSON.parse(localStorage.getItem("facturasStorage"));
+    return {
+      general: sto===null ? true : false,
+      cargandoProducto: false,
+      items:false,
+      cargandoCliente: false,
+      finalizarVenta: sto===null ? true : false,
+    }
+  }
   const [cargas, setCargas] = useState(initialCargas);
   
   const initialDialogs={main:!0,nota:!1,buscarProducto:!1,cambiarPrecio:!1,buscarCliente:!1,registrarCliente:!1,finalizarVenta:!1,imprimirNotaPedido:!1,
@@ -57,7 +60,22 @@ const VentasProvider = ({ children }) => {
     const llaveDialog = (nombre,boleano)=> setDialogs({...dialogs,[nombre]:boleano})
   const [dialogs, setDialogs] = useState(initialDialogs);
   const [IDNotaPedido,setIDNotaPedido] = useState("");
-  const [indexFactura, setIndexFactura] = useState(storage ? storage.indexFactura : 0);
+  const [indexFactura, setIndexFactura] = useState(()=>{
+    let sto = JSON.parse(localStorage.getItem("facturasStorage"));
+    return sto ? sto.indexFactura : 0
+  });
+  
+  
+  const [storage] =  useState(()=>{
+    let sto = JSON.parse(localStorage.getItem("facturasStorage"));
+    return sto ?? null
+  }) 
+  const initialDatosCliente = {
+    id_cliente: 1,
+    nombre_cliente: "SIN NOMBRE",
+    direccion_cliente:"",
+    ruc_cliente: "0",
+  }
   const initialDatosFactura = {
     tipoCliente: "1",
     tipoFactura: "0",
@@ -77,12 +95,7 @@ const VentasProvider = ({ children }) => {
     horario_factura: Funciones.getHorarioActualString(),
     valorMoneda:1, // valor de la moneda activa
   }
-  const initialDatosCliente = {
-    id_cliente: 1,
-    nombre_cliente: "SIN NOMBRE",
-    direccion_cliente:"",
-    ruc_cliente: "0",
-  }
+  
   
   const initialFacturas = {
     facturas: [
@@ -116,7 +129,10 @@ const VentasProvider = ({ children }) => {
   };
 
 
-  const [datosFacturas, setDatosFacturas] = useState(storage ?? initialFacturas);
+  const [datosFacturas, setDatosFacturas] = useState(()=>{ 
+      let sto = JSON.parse(localStorage.getItem("facturasStorage")); 
+      return sto ?? initialFacturas 
+  });
   const [indexPrecioCambiar, setIndexPrecioCambiar] = useState(-1);
 
   /*  FIN VARIABLES CONSTANTES Y ESTADOS*************************/
@@ -970,6 +986,7 @@ const VentasProvider = ({ children }) => {
 
   const getDatosFactura = useCallback(async () => {
     //consultar si hay factura en localstore
+    console.log('render usecallback');
     if (localStorage.getItem("facturasStorage") === null) {
       let [rCajas,rMoneda,rFormasPago,rVendedores,rDepositos,cajaMonedas,cajasOpened] = await Promise.all([
         APICALLER.get({table: "cajas",include:"cajas_users", on:"id_caja,id_caja_caja",where: `id_user_caja,=,${id_user}`}),

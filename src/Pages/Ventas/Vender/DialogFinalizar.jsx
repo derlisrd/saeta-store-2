@@ -30,7 +30,7 @@ const DialogFinalizar = () => {
   };
 
   
-
+  
   const verificar = () => {
     let f = fa.datosFactura;
     let cr = parseFloat(f.totalAbonado) + fa.descuento;
