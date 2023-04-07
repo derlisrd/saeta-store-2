@@ -21,6 +21,7 @@ const VentasProvider = ({ children }) => {
   const { userData } = useLogin();
   const {token_user, id_user,permisos} = userData;
   const {lang} = useLang();
+  console.log('render ventas provider');
   const storage = JSON.parse(localStorage.getItem("facturasStorage"));
   const [lastID,setLastID] = useState('');
   const initialErrors = {
