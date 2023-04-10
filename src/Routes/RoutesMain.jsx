@@ -57,6 +57,7 @@ import ListasCompras from "../Pages/Compras/ListasCompras";
 import Insumos from "../Pages/Insumos";
 import Pedidos from "../Pages/Pedidos";
 import CuentasCliente from "../Pages/Cuentas/CuentasCliente";
+import Recetas from "../Pages/Agendas/Recetas";
 
 const RoutesMain = () => {
   const R = env.BASEURL +`/`;
@@ -103,6 +104,8 @@ const RoutesMain = () => {
       <Route path={R+'informesproductos'} element={<PrivateRoute id={3}><InformesProductos /></PrivateRoute>} />
       
       <Route path={R+"agenda"} element={<PrivateRoute id={5}><Agenda /></PrivateRoute>} />
+      <Route path={R+"recetas"} element={<PrivateRoute id={5}><Recetas /></PrivateRoute>} />
+
       <Route path={R+'facturas'} element={<PrivateRoute id={6}><Facturas /></PrivateRoute>} />
       <Route path={R+'ventas'} element={<PrivateRoute id={7}><Ventas /></PrivateRoute>} />
       <Route path={R+'notas'} element={<PrivateRoute id={8}><Notas /></PrivateRoute>} />
@@ -149,6 +152,9 @@ const RoutesMain = () => {
       <Route path={R+'pedidos'} element={<PrivateRoute id={62}><Pedidos /></PrivateRoute>} />
       <Route path={R+'info'} element={<PublicRoute><Info /></PublicRoute>} />
       <Route path={R+'notautorized'} element={<NotAutorized />} />
+
+
+
       <Route path={R} element={<LoginForm />} />
       <Route path="*" element={<ErrorPage />} />
     </Routes>

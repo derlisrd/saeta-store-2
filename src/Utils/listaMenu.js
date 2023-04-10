@@ -49,6 +49,13 @@ export const listaMenu = [
             color: "#a0aec0",
             url:`${BASEURL}/agenda`,
           },
+          {
+            id:5,
+            title:'recetas',
+            icon:'article',
+            color: "#a0aec0",
+            url:`${BASEURL}/recetas`,
+          },
         ]
       },
       {
