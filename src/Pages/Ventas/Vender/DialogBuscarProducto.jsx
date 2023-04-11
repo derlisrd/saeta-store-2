@@ -1,4 +1,4 @@
-import React, { useState,useCallback } from 'react'
+import { useState,useEffect } from 'react'
 import {
     Dialog,DialogActions,
     DialogContent,
@@ -14,7 +14,7 @@ import swal from 'sweetalert';
 const DialogBuscarProducto = () => {
 
     const {dialogs,setDialogs,datosFacturas,indexFactura,insertarProductoTabla,AgregarCantidad,inputCantidad} = useVentas();
-
+    const [search,setSearch] = useState('')
     const [load,setLoad]= useState(false);
     const [cargando,setCargando]=useState(false);
     const [listaBuscaProducto,setListaBuscaProducto] = useState([]);
@@ -88,29 +88,24 @@ const DialogBuscarProducto = () => {
       };
     
 
-
-      // buscador con con input text field
-      const buscarProductos = useCallback(async (e) => {
-        
-        let txt = e.target.value;
-        if(txt!=="" && txt.length>0){
+      
+  
+    useEffect(()=>{
+        const timer = setTimeout(async()=>{
           setLoad(true)
-          setTimeout(async() => {
-            let res = await Promise.all([APICALLER.get({
-              table: "productos",include:"impuestos",
-              on: "id_impuesto_producto,id_impuesto",
-              filtersField:"nombre_producto,codigo_producto",filtersSearch:txt,pagesize:'20'
-            })]) ;
-            setListaBuscaProducto(res[0].results);
-            setLoad(false)
+          let res = await Promise.all([APICALLER.get({
+            table: "productos",include:"impuestos",
+            on: "id_impuesto_producto,id_impuesto",
+            filtersField:"nombre_producto,codigo_producto",filtersSearch:search,pagesize:'20'
+          })]) ;
+          //console.log('busca');
+          setListaBuscaProducto(res[0].results);
+          setLoad(false)
+        },1000)
+        return ()=> clearTimeout(timer)
+    },[search])
 
-          }, 700);
-
-        }else{
-          setListaBuscaProducto([])
-        }
-        
-      },[])
+    
 
     return (
         <Dialog fullWidth open={dialogs.buscarProducto} onClose={cerrar}>
@@ -133,13 +128,13 @@ const DialogBuscarProducto = () => {
                     InputProps={{
                       ...params.InputProps,
                       endAdornment: (
-                        <React.Fragment>
+                        <>
                           {load ? <CircularProgress color="inherit" size={20} /> : null}
                           {params.InputProps.endAdornment}
-                        </React.Fragment>
+                        </>
                       ),
                     }}
-                    onChange={buscarProductos}
+                    onChange={(e)=>{ setSearch(e.target.value)}}
                     fullWidth
                     placeholder="Escriba el nombre del producto"
                     variant="outlined"

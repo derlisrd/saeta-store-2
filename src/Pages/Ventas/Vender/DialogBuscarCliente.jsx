@@ -1,5 +1,5 @@
 import { CircularProgress, Autocomplete, Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField } from '@mui/material';
-import React, { useRef, useState,useCallback } from 'react'
+import  { useRef, useState, useEffect } from 'react'
 import { APICALLER } from '../../../Services/api';
 import { useVentas } from './VentasProvider';
 
@@ -7,28 +7,13 @@ const DialogBuscarCliente = () => {
 
     const {dialogs,setDialogs,datosFacturas,indexFactura,setearFactura,setErrors,errors} = useVentas()
     const [listaClientes, setListaClientes] = useState([]);
+    const [search,setSearch] = useState('')
     const [load,setLoad] = useState(false)
     const inputBuscaCliente = useRef(null);
     const cerrar = () => setDialogs({ ...dialogs, buscarCliente: false });
   
     // buscador con con input text field
-    const buscarClientes = useCallback(async (e) => {
-      
-      let txt = e.target.value;
-      if(txt!==""){
-        setLoad(true)
-        setTimeout(async()=>{
-          let res = await APICALLER.get({table: "clientes", filtersSearch:txt,filtersField:"nombre_cliente,ruc_cliente",pagesize:"10"});
-          res.response  ? setListaClientes(res.results) : console.log(res);
-          setLoad(false)
-        },800)
-        
-      }
-      else{
-        setListaClientes([]);
-      }
-      //setLoad(false)
-    },[])
+
 
     const insertClient = (e, value) => {
         let cl = value;
@@ -44,6 +29,16 @@ const DialogBuscarCliente = () => {
 
       };
     
+      useEffect(()=>{
+        const timer = 
+        setTimeout(async()=>{
+          setLoad(true)
+          let res = await APICALLER.get({table: "clientes", filtersSearch:search,filtersField:"nombre_cliente,ruc_cliente",pagesize:"10"});
+          res.response  ? setListaClientes(res.results) : console.log(res);
+          setLoad(false)
+        },800)
+        return ()=> clearTimeout(timer)
+    },[search])
 
 
     return (
@@ -65,14 +60,14 @@ const DialogBuscarCliente = () => {
                   autoFocus
                   label="Buscar cliente"
                   inputRef={inputBuscaCliente}
-                  onChange={buscarClientes}
+                  onChange={(e)=>{setSearch(e.target.value)}}
                   InputProps={{
                     ...params.InputProps,
                     endAdornment: (
-                      <React.Fragment>
+                      <>
                         {load ? <CircularProgress color="inherit" size={20} /> : null}
                         {params.InputProps.endAdornment}
-                      </React.Fragment>
+                      </>
                     ),
                   }}
                   fullWidth
