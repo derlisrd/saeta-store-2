@@ -140,7 +140,7 @@ const FacturasProvider = ({ children }) => {
     let res = await APICALLER.get({
       table: "facturas",include:"clientes,monedas,users",
       on: `id_cliente_factura,id_cliente,id_moneda,id_moneda_factura,id_user,id_user_factura`,
-      fields: `id_moneda_factura,descuento_factura,valor_moneda_factura,nro_factura,abreviatura_moneda,nombre_moneda,abreviatura_moneda,valor_moneda,estado_factura,fecha_factura,fecha_cobro_factura,ruc_cliente,nombre_cliente,direccion_cliente,monto_total_factura,tipo_factura,id_factura,nombre_user,id_caja_factura,obs_factura,descuento_factura`,
+      fields: `recibido_factura,id_moneda_factura,descuento_factura,valor_moneda_factura,nro_factura,abreviatura_moneda,nombre_moneda,abreviatura_moneda,valor_moneda,estado_factura,fecha_factura,fecha_cobro_factura,ruc_cliente,nombre_cliente,direccion_cliente,monto_total_factura,tipo_factura,id_factura,nombre_user,id_caja_factura,obs_factura,descuento_factura`,
       filtersField:"nro_factura,nombre_cliente",filtersSearch:inputSearch,
       pagenumber:0,pagesize:10,
     });
@@ -295,7 +295,7 @@ const FacturasProvider = ({ children }) => {
     const res = await APICALLER.get({
       table: "facturas",include:"clientes,monedas,users",
       on: `id_cliente_factura,id_cliente,id_moneda,id_moneda_factura,id_user,id_user_factura`,
-      fields: `id_moneda_factura,descuento_factura,valor_moneda_factura,nro_factura,abreviatura_moneda,nombre_moneda,abreviatura_moneda,valor_moneda,estado_factura,fecha_factura,fecha_cobro_factura,ruc_cliente,nombre_cliente,direccion_cliente,monto_total_factura,tipo_factura,id_factura,nombre_user,id_caja_factura,obs_factura,descuento_factura`,
+      fields: `recibido_factura,id_moneda_factura,descuento_factura,valor_moneda_factura,nro_factura,abreviatura_moneda,nombre_moneda,abreviatura_moneda,valor_moneda,estado_factura,fecha_factura,fecha_cobro_factura,ruc_cliente,nombre_cliente,direccion_cliente,monto_total_factura,tipo_factura,id_factura,nombre_user,id_caja_factura,obs_factura,descuento_factura`,
       where: `fecha_factura,between,'${desdeFecha} 00:00:00',and,'${hastaFecha} 23:59:59' ${moreFilter}`,
       sort: `fecha_factura`,
     });

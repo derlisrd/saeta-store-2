@@ -3,13 +3,13 @@ import { withStyles} from '@mui/styles';
 const CustomTextField = withStyles({
     root: {
       '& .MuiInputBase-input': {
-        fontSize: 20, 
+        fontSize: 18, 
       },
       "& .MuiOutlinedInput-root":{
-        borderRadius:15
+        borderRadius:12
       },
-      marginTop:10,
-      marginBottom:10,
+      marginTop:8,
+      marginBottom:8,
     },
   })(TextField);
 
