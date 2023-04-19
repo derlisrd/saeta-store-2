@@ -336,6 +336,7 @@ export const translate = {
         hasta:"Hasta",
         todos:"Todos",
         filtrar:"Filtrar",
+        ver:"Ver",
         detalles_movimiento:"Detalles de movimiento",
         producto_chequeado:"Producto chequeado",
         entregas_pendientes:"Entregas pendientes",

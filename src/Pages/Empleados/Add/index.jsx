@@ -30,7 +30,7 @@ function Add() {
             setError({active:true,message:'Ingrese nombre y apellido',code:2})
             return false;
         }
-        if(datas.id_rol===''){
+        if(formInsert.id_rol==='0'){
             setError({active:true,message:'Seleccione rol',code:3})
             return false;
         }
@@ -79,11 +79,12 @@ function Add() {
                     <TextField fullWidth name="salario_empleado" required label="Salario" />
                 </Grid>
                 <Grid item xs={12} sm={6}>
-                    <SelectUser name='user_id' value={formInsert.user_id} onChange={change}  />
-                </Grid>
-                <Grid item xs={12} sm={6}>
                     <SelectRol name='id_rol' error={error} value={formInsert.id_rol} onChange={change}  />
                 </Grid>
+                <Grid item xs={12} sm={6}>
+                    <SelectUser name='user_id' value={formInsert.user_id} onChange={change}  />
+                </Grid>
+                
             </Grid>
         </DialogContent>
         <DialogActions>

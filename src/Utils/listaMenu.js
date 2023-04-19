@@ -5,7 +5,7 @@ export const listaMenu = [
         id: 590,
         title: "inicio",
         icon: "other_houses",
-        color: "primary",
+        color: "#a0aec0",
         url: `${BASEURL}/dashboard`,
         private:false
       },
@@ -38,6 +38,7 @@ export const listaMenu = [
         id:580,
         title: "agendas",
         icon:"event",
+        color: "#a0aec0",
         open:false,
         sub:true,
         submenu:[

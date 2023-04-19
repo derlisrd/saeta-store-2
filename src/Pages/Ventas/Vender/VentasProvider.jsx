@@ -7,6 +7,7 @@ import {useLang} from '../../../Contexts/LangProvider'
 import { useNavigate } from "react-router-dom";
 import { env } from "../../../App/Config/config";
 import { useDatosEmpresa } from "../../../Contexts/DatosEmpresaProvider";
+import initialStates from "./initialStates";
 
 const Contexto = createContext();
 
@@ -14,6 +15,7 @@ const Contexto = createContext();
 const VentasProvider = ({ children }) => {
   const navigate = useNavigate();
   const {EMPRESA} = useDatosEmpresa()
+  const {initialErrors,initialDialogs,initialDatosCliente} = initialStates()
   /* VARIABLES CONSTANTES, ESTADOS E INPUT*************************/
   const inputCodigo = useRef(null);
   const inputCantidad = useRef(null);
@@ -21,42 +23,39 @@ const VentasProvider = ({ children }) => {
   const { userData } = useLogin();
   const {token_user, id_user,permisos} = userData;
   const {lang} = useLang();
-  const storage = JSON.parse(localStorage.getItem("facturasStorage"));
+  
   const [lastID,setLastID] = useState('');
-  const initialErrors = {
-    id_error:null,
-    error:false,
-    notFound: false,
-    notFoundMensaje: "",
-    cambioPrecio: false,
-    cambioPrecioMensaje: "",
-    cliente: false,
-    clienteMensaje: "",
-    color:"error",
-    mensaje:"",
-    factura: {
-      error: false,
-      errorMensaje: ""
-    },
-  };
+  
   const [errors, setErrors] = useState(initialErrors);
+  
 
-  const initialCargas = {
-    general: storage===null ? true : false,
-    cargandoProducto: false,
-    items:false,
-    cargandoCliente: false,
-    finalizarVenta: storage===null ? true : false,
-  };
+  const initialCargas = ()=>{
+    let sto = JSON.parse(localStorage.getItem("facturasStorage"));
+    return {
+      general: sto===null ? true : false,
+      cargandoProducto: false,
+      items:false,
+      cargandoCliente: false,
+      finalizarVenta: sto===null ? true : false,
+    }
+  }
   const [cargas, setCargas] = useState(initialCargas);
   
-  const initialDialogs={main:!0,nota:!1,buscarProducto:!1,cambiarPrecio:!1,buscarCliente:!1,registrarCliente:!1,finalizarVenta:!1,imprimirNotaPedido:!1,
-    imprimirTicketRecibo:!1,imprimirTicketFactura:!1,imprimirFacturaA4:!1,imprimirReciboA4:!1,
-    imprimirPresupuesto:!1,ayuda:!1,cambioCliente:!1,abrirCaja:!1,imagen:!1,registrarProducto:!1};
-    const llaveDialog = (nombre,boleano)=> setDialogs({...dialogs,[nombre]:boleano})
+  
+  const llaveDialog = (nombre,boleano)=> setDialogs({...dialogs,[nombre]:boleano})
   const [dialogs, setDialogs] = useState(initialDialogs);
   const [IDNotaPedido,setIDNotaPedido] = useState("");
-  const [indexFactura, setIndexFactura] = useState(storage ? storage.indexFactura : 0);
+  const [indexFactura, setIndexFactura] = useState(()=>{
+    let sto = JSON.parse(localStorage.getItem("facturasStorage"));
+    return sto ? sto.indexFactura : 0
+  });
+  
+  
+  const [storage] =  useState(()=>{
+    let sto = JSON.parse(localStorage.getItem("facturasStorage"));
+    return sto ?? null
+  }) 
+  
   const initialDatosFactura = {
     tipoCliente: "1",
     tipoFactura: "0",
@@ -76,12 +75,7 @@ const VentasProvider = ({ children }) => {
     horario_factura: Funciones.getHorarioActualString(),
     valorMoneda:1, // valor de la moneda activa
   }
-  const initialDatosCliente = {
-    id_cliente: 1,
-    nombre_cliente: "SIN NOMBRE",
-    direccion_cliente:"",
-    ruc_cliente: "0",
-  }
+  
   
   const initialFacturas = {
     facturas: [
@@ -115,7 +109,10 @@ const VentasProvider = ({ children }) => {
   };
 
 
-  const [datosFacturas, setDatosFacturas] = useState(storage ?? initialFacturas);
+  const [datosFacturas, setDatosFacturas] = useState(()=>{ 
+      let sto = JSON.parse(localStorage.getItem("facturasStorage")); 
+      return sto ?? initialFacturas 
+  });
   const [indexPrecioCambiar, setIndexPrecioCambiar] = useState(-1);
 
   /*  FIN VARIABLES CONSTANTES Y ESTADOS*************************/
@@ -182,13 +179,13 @@ const VentasProvider = ({ children }) => {
     
 
     
-    let efectivo=0,sinEfectivo=0,cambio = 0, porcentaje_descuento_pago = 0,  observaciones = "";
+    let efectivo=0,sinEfectivo=0,cambio = 0, porcentaje_descuento_pago = 0, observaciones = "";
 
     let objDetalles = {
-      0: `Venta recibo: ${LASTNROFACTURA}. `,
-      1: `Venta contado factura: ${LASTNROFACTURA}. `,
-      2: `Venta credito factura: ${LASTNROFACTURA}. `,
-      3: `Venta cuota recibo: ${LASTNROFACTURA}. `
+      0: `Venta recibo: ${LASTNROFACTURA}. Cliente: ${df.datosCliente.id_cliente}. `,
+      1: `Venta contado factura: ${LASTNROFACTURA}. Cliente: ${df.datosCliente.id_cliente}. `,
+      2: `Venta credito factura: ${LASTNROFACTURA}. Cliente: ${df.datosCliente.id_cliente}. `,
+      3: `Venta cuota recibo: ${LASTNROFACTURA}. Cliente: ${df.datosCliente.id_cliente}. `
     }
     let detallesMov = objDetalles[tipoFactura];
     
@@ -277,9 +274,9 @@ const VentasProvider = ({ children }) => {
         });
         
 
-         let nuevo_monto_efectivo = (efectivo + parseFloat(call_monto.results[0].monto_caja_moneda)) //- DESCUENTO;
+        let nuevo_monto_efectivo = (efectivo + parseFloat(call_monto.results[0].monto_caja_moneda)) //- DESCUENTO;
         let nuevo_monto_no_efectivo = ( sinEfectivo  + parseFloat(call_monto.results[0].monto_no_efectivo));
-       
+        
         let id_de_caja_moneda = call_monto.results[0].id_cajas_moneda;
         ALLPROMISES.push(APICALLER.update({
           table: `cajas_monedas`,
@@ -289,6 +286,7 @@ const VentasProvider = ({ children }) => {
         })); 
       }
     }
+    
     Promise.all(ALLPROMISES)
     //ingresamos a la factura
     let objFactura = {
@@ -849,6 +847,8 @@ const VentasProvider = ({ children }) => {
       return false;
     }
     let valorInicial = parseFloat(Funciones.ComaPorPunto(Funciones.SacarPunto(cantidadRecibidaRef.current.value)));
+    console.log(cantidadRecibidaRef.current.value,valorInicial);
+    
     if(!isNaN(valorInicial) || valorInicial>0){
       let valor = valorInicial * parseFloat(fa.facturas[indexFactura].datosMoneda.valor_moneda);
       let foundIndex = da.formasPago.findIndex(e => e.id_forma_pago === da.id_formaPago);
@@ -880,8 +880,10 @@ const VentasProvider = ({ children }) => {
     da.obs_pago=""
     da.cantidad_recibida = "";
     setearFactura(fa);
-    cantidadRecibidaRef.current.focus();
+    cantidadRecibidaRef.current.value=0;
+    //cantidadRecibidaRef.current.focus();
   }
+
   const borrarMetodoPago = (index,cant)=>{
     let fa = {...datosFacturas}
     let da = fa.facturas[indexFactura].datosFactura;
@@ -969,7 +971,9 @@ const VentasProvider = ({ children }) => {
 
   const getDatosFactura = useCallback(async () => {
     //consultar si hay factura en localstore
+    console.log('render usecallback');
     if (localStorage.getItem("facturasStorage") === null) {
+      console.log('render local');
       let [rCajas,rMoneda,rFormasPago,rVendedores,rDepositos,cajaMonedas,cajasOpened] = await Promise.all([
         APICALLER.get({table: "cajas",include:"cajas_users", on:"id_caja,id_caja_caja",where: `id_user_caja,=,${id_user}`}),
         APICALLER.get({ table: "monedas" }),

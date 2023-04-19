@@ -8,7 +8,7 @@ function DialogRegistrarProducto() {
     const {dialogs,llaveDialog,datosFacturas,token_user,insertarProductoTabla} = useVentas()
     const [loading,setLoading] = useState(false)
     const [error,setError] = useState({active:false,code:0,message:''})
-    let dep = (datosFacturas.listaDepositos);
+    let dep = (datosFacturas?.listaDepositos);
 
     const close = ()=> llaveDialog('registrarProducto',false)
 

@@ -56,6 +56,7 @@ import Web from "../Pages/Web";
 import ListasCompras from "../Pages/Compras/ListasCompras";
 import Insumos from "../Pages/Insumos";
 import Pedidos from "../Pages/Pedidos";
+import CuentasCliente from "../Pages/Cuentas/CuentasCliente";
 
 const RoutesMain = () => {
   const R = env.BASEURL +`/`;
@@ -130,6 +131,8 @@ const RoutesMain = () => {
       <Route path={R+"movimientos"} element={<PrivateRoute id={36}><Movimientos /></PrivateRoute>} />
       <Route path={R+"registromovimientos"} element={<PrivateRoute id={37}><RegistroMovimientos /></PrivateRoute>} />
       <Route path={R+"cuentas"} element={<PrivateRoute id={38}><Cuentas /></PrivateRoute>} />
+      <Route path={R+"cuentas/:id_cliente"} element={<PrivateRoute id={38}><CuentasCliente /></PrivateRoute>} />
+
       <Route path={R+'clientes'} element={<PrivateRoute id={40}><Clientes /></PrivateRoute>} />
       <Route path={R+'empleados'} element={<PrivateRoute id={42}><Empleados /></PrivateRoute>} />
       <Route path={R+'monedas'} element={<PrivateRoute id={44}><Monedas /></PrivateRoute>} />

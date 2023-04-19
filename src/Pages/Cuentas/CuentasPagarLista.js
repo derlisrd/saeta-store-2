@@ -1,11 +1,11 @@
 
-import { Button, Stack } from '@mui/material'
 import Tablas from '../../Components/UI/Tablas'
+import AccionesPago from './Components/AccionesPago'
 import { useCuentas } from './CuentasProvider'
 
 const CuentasPagarLista = () => {
 
-    const {cargando,dialogs,setDialogs,setformPagar,lang,listas} = useCuentas()
+    const {cargando,lang,listas} = useCuentas()
 
     const columnas = [
         {
@@ -55,27 +55,15 @@ const CuentasPagarLista = () => {
           },
     ]
 
-    const openPago = (form)=>{
-        setDialogs({...dialogs,pagar:true})
-        setformPagar(form)
-    }
+    
 
 
-    const Acciones = ({ rowProps }) => (
-      <Stack spacing={2} direction="row">
-      <Button onClick={() => console.log(rowProps)} variant="outlined">
-        {lang.detalles}
-      </Button>
-      <Button onClick={() => openPago(rowProps)} variant="outlined">
-        {lang.pagar}
-      </Button>
-      </Stack>
-    );
+    
     
   return (
     <Tablas
         subtitle={lang.listas_compras}
-        Accions={Acciones}
+        Accions={AccionesPago}
         icon={{ name:"payments" }}
         columns={columnas}
         showOptions

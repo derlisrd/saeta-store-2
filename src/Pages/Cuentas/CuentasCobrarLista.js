@@ -1,12 +1,13 @@
-import { Button, Icon, IconButton, InputAdornment, Stack, TextField } from "@mui/material";
+import { Icon, IconButton, InputAdornment,  TextField } from "@mui/material";
 import Tablas from "../../Components/UI/Tablas";
 import { useCuentas } from "./CuentasProvider";
 import {funciones} from '../../Functions'
 import {useDatosEmpresa} from '../../Contexts/DatosEmpresaProvider'
 import { useState } from "react";
+import AccionesCobro from "./Components/AccionesCobro";
 const CuentasCobrarLista = () => {
   const {MONEDA_PRINCIPAL} = useDatosEmpresa()
-  const {cargando,setformCobrar,setDialogs,dialogs,lang,listas,getbuscarCobrar} = useCuentas();
+  const {cargando,lang,listas,getbuscarCobrar} = useCuentas();
   const [inputbuscar,setInputBuscar] = useState("")
   const columnas = [
     {
@@ -63,25 +64,9 @@ const CuentasCobrarLista = () => {
     },
   ];
 
-  const open = (form) => {
-    setformCobrar(form);
-    setDialogs({ ...dialogs, cobrar: true }); 
-  };
-  const detalles = (f)=>{
-    setformCobrar(f);
-    setDialogs({ ...dialogs, detalles: true }); 
-  }
 
-  const Acciones = ({ rowProps }) => (
-    <Stack spacing={2} direction="row">
-      <Button onClick={() => detalles(rowProps)} variant="outlined">
-        {lang.detalles}
-      </Button>
-      <Button onClick={() => open(rowProps)} variant="outlined">
-        {lang.cobrar}
-      </Button>
-    </Stack>
-  );
+
+
 
   
 
@@ -111,7 +96,7 @@ const CuentasCobrarLista = () => {
       title={lang.cuentas_a_cobrar}
       caption={totalTxt}
       subtitle={lang.listas_cuentas_cobrar}
-      Accions={Acciones}
+      Accions={AccionesCobro}
       loading={cargando.lista}
       columns={columnas}
       datas={listaFiltrada}

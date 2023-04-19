@@ -97,7 +97,11 @@ const FacturasLista = () => {
       items: { 1: "Contado", 2: "Crédito", 0: "Recibo","3":"Cuotas" },
       compareField: "tipo_factura",
     },
-    
+    {
+      field: "recibido_factura",
+      title:'Recibido',
+      isNumber:true
+    },
     {
       field: "monto",
       title: lang.monto,
@@ -110,12 +114,12 @@ const FacturasLista = () => {
       isNumber:true,
       title:lang.descuento
     },
-    {
+    /* {
       field:"abreviatura_moneda",
       title:lang.moneda,
       noPrint:true,
       style:{fontWeight:"bold"}
-    }
+    } */
   ];
   
 

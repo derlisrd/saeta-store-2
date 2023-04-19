@@ -9,15 +9,16 @@ import { useRef,useState } from "react";
 import styles from './styles.module.css'
 
 const DialogFinalizar = () => {
+  
   const {MetodoDescuento,permisos, lang, changeMonedas,
     dialogs,setDialogs,datosFacturas,indexFactura,Funciones,errors,cargas,setCargas,consultarCliente,changeInputsDatosFactura,setErrors,initialErrors,verificarYEnviarFactura,AgregarCantidadMetodoPago,cantidadRecibidaRef,borrarMetodoPago,//permisos, Anotar
   } = useVentas();
   const inputDoc = useRef(null);
+  const [cantidadRecibida,setCantidadRecibida] = useState('')
   const [descuentoPorcent,setDescuentoPorcent] = useState(0);
   const [descuentoAbsoluto,setDescuentoAbsoluto] = useState(0);
   const fd = {...datosFacturas};
   const fa = fd.facturas[indexFactura];
-
   //const HACERVENTA = permisos.some(e=> parseInt(e.id_permiso_permiso)=== 51);
   //const HACERNOTA = permisos.some(e=> parseInt(e.id_permiso_permiso)=== 50);
   const HACERDESCUENTO = permisos.some(e=> parseInt(e.id_permiso_permiso)=== 62);
@@ -29,8 +30,13 @@ const DialogFinalizar = () => {
     }
   };
 
-  
 
+  const AgregarCantidad = ()=>{
+    AgregarCantidadMetodoPago()
+    setCantidadRecibida('')
+    document.getElementById('cantidad_recibida').focus()
+  }
+  
   const verificar = () => {
     let f = fa.datosFactura;
     let cr = parseFloat(f.totalAbonado) + fa.descuento;
@@ -149,7 +155,7 @@ const DialogFinalizar = () => {
               <Grid item xs={12} sm={6} >
                 <TextField
                   onKeyPress={e => {e.key === "Enter" && consultarCliente(inputDoc.current.value);}}
-                  label="Documento de cliente"placeholder="Documento de cliente"fullWidth inputRef={inputDoc}variant="outlined" 
+                  label="Documento de cliente"placeholder="Documento de cliente"fullWidth inputRef={inputDoc} 
                   InputProps={{
                     startAdornment: (
                       <InputAdornment position="start">
@@ -174,7 +180,7 @@ const DialogFinalizar = () => {
               </Grid>
               <Grid item xs={12} sm={6}>
                 <FormControl fullWidth>
-                  <InputLabel variant="outlined">Seleccione caja</InputLabel>
+                  <InputLabel>Seleccione caja</InputLabel>
                   <Select
                     error={errors.id_error === 1}
                     value={fa.datosFactura.id_caja} name="id_caja"onChange={changeInputsDatosFactura} fullWidth
@@ -344,11 +350,16 @@ const DialogFinalizar = () => {
               <Grid item xs={12} sm={12} md={8}>
                 <TextFieldCustom
                   label="Cantidad recibida"
-                  onKeyPress={e => {e.key === "Enter" && AgregarCantidadMetodoPago();}}
+                  onKeyPress={e => {e.key === "Enter" && AgregarCantidad();}}
                   autoFocus inputRef={cantidadRecibidaRef} disabled={fa.datosFactura.tipoFactura === "2"}
-                  autoComplete="off"name="cantidad_recibida"
-                  value={fa.datosFactura.cantidad_recibida}
-                  onChange={changeInputsDatosFactura} fullWidth color="success" variant="outlined"
+                  autoComplete="off"
+                  name="cantidad_recibida"
+                  id="cantidad_recibida"
+                  value={cantidadRecibida}
+                  onChange={e=>{setCantidadRecibida(e.target.value)}}
+                  /* value={fa.datosFactura.cantidad_recibida}
+                  onChange={changeInputsDatosFactura}  */
+                  fullWidth
                   InputProps={{
                     startAdornment: (
                       <InputAdornment position="start">{ABM}</InputAdornment>
@@ -360,7 +371,7 @@ const DialogFinalizar = () => {
               </Grid>
               <Grid item xs={12} sm={12} md={4}>
                 <ButtonCustom disabled={fa.datosFactura.tipoFactura === "2"} variant="outlined"
-                  onClick={() => {AgregarCantidadMetodoPago(); }}
+                  onClick={() => {AgregarCantidad(); }}
                   startIcon={<Icon>add</Icon>} fullWidth
                 >
                   {lang.agregar}
