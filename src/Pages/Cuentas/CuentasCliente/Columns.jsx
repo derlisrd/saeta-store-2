@@ -13,6 +13,7 @@ export const Columns = [
     },
     {
         field:'precio_producto_factura',
-        title:'Precio'
+        title:'Precio',
+        isNumber:true
     },
 ]

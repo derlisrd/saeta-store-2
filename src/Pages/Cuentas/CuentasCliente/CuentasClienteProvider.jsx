@@ -16,11 +16,11 @@ function CuentasClienteProvider({children}) {
     const [error,setError] = useState({
         active:false,message:'',code:0
     })
-    const [data,setData] = useState({cuenta:[],cliente:{nombre_cliente:'',ruc_cliente:'',telefono_cliente:''}})
+    const [data,setData] = useState({cuenta:[],cliente:{nombre_cliente:'',ruc_cliente:'',telefono_cliente:''},factura:{recibido_factura:0}})
 
     const getLista = useCallback(async () => {
         setIsLoading(true)
-        let [cuenta,cliente] = await Promise.all([APICALLER.get({table:'facturas',
+        let [cuenta,cliente,factura] = await Promise.all([APICALLER.get({table:'facturas',
         include:'facturas_items,productos',
         on:'id_factura,id_items_factura,id_producto,id_producto_factura',
         fields:'nombre_producto,cantidad_producto,precio_producto_factura,codigo_producto,id_factura',
@@ -28,10 +28,12 @@ function CuentasClienteProvider({children}) {
         }),
         APICALLER.get({table:'clientes',
         fields:'nombre_cliente,ruc_cliente,telefono_cliente',
-        where:`id_cliente,=,${id_cliente}`})
-        ])
+        where:`id_cliente,=,${id_cliente}`}),
+        APICALLER.get({table:'facturas',where:`id_cliente_factura,=,${id_cliente},and,estado_factura,=,2`,fields:'SUM(recibido_factura) as recibido_factura'})
+        ]
+        )
         if(cliente.response){
-            setData({cuenta:cuenta.results,cliente:cliente.first})
+            setData({cuenta:cuenta.results,cliente:cliente.first,factura:factura.first})
         }else{
             console.log(cliente,cliente);
             setError({active:true,code:0,message:cliente.message})
