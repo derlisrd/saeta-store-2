@@ -8,6 +8,7 @@ import { useLang } from "../../Contexts/LangProvider";
 const Contexto = createContext();
 
 const CuentasProvider = ({ children }) => {
+  
   const {lang} = useLang()
   const {userData} = useLogin();
   const { id_user, token_user } = userData
@@ -180,8 +181,7 @@ const CuentasProvider = ({ children }) => {
       APICALLER.get({table: "compras",where: "tipo_factura_compra,=,2,and,estado_compra,=,2"}),
       APICALLER.get({table: "cajas", include:'cajas_users',on:'id_caja_caja,id_caja', where:`id_user_caja,=,${id_user},and,estado_caja,=,'open'`}),
       APICALLER.get({table: "facturas_formas_pagos"}),
-      APICALLER.get({table:"cajas_monedas",include:"monedas",
-      on:"id_moneda_caja_moneda,id_moneda",
+      APICALLER.get({table:"cajas_monedas",include:"monedas",on:"id_moneda_caja_moneda,id_moneda",
       fields:"id_moneda,nombre_moneda,id_cajas_moneda,id_caja_moneda,abreviatura_moneda,monto_caja_moneda,monto_no_efectivo,valor_moneda"}) 
     ]);
     /* APICALLER.get({table:"cajas",include:"cajas_monedas,monedas,cajas_users",
@@ -197,13 +197,13 @@ const CuentasProvider = ({ children }) => {
       totalaCobrar = montototal - totalrecibido;
       
       setListas({
-      pagar:resPagar.results,
-      cobrar:resCobrar.results,
-      cajas:resCajas.results,
-      formasPago:resFormas.results,
-      totalCobrar:totalaCobrar,
-      monedas:resMonedas.results,
-      totalPagar:0
+        pagar:resPagar.results,
+        cobrar:resCobrar.results,
+        cajas:resCajas.results,
+        formasPago:resFormas.results,
+        totalCobrar:totalaCobrar,
+        monedas:resMonedas.results,
+        totalPagar:0
       })
     }
     setCargando({lista:false,mov:false});

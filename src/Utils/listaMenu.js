@@ -237,7 +237,17 @@ export const listaMenu = [
         title: "cuentas",
         icon: "account_balance_wallet",
         color: "#a0aec0",
-        url: `${BASEURL}/cuentas`,
+        open:false,
+        sub:true,
+        submenu: [
+          {
+            id:38,
+            title:'a_cobrar',
+            url: `${BASEURL}/cuentas`,
+            icon: "account_balance_wallet",
+            color: "#a0aec0"
+          }
+        ],
       },
       {
         id: 560,
