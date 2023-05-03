@@ -7,6 +7,7 @@ export const StylesTabla = makeStyles((theme) => ({
     marginBottom: 25,
     padding: "2px",
     transition:'all 0.1s linear',
+    textAlign:"center"
   },
   tableheader: {
     [theme.breakpoints.down("md")]: {
@@ -33,6 +34,7 @@ export const StylesTabla = makeStyles((theme) => ({
       display: "flex !important",
       justifyContent: "space-between",
     },
+    textAlign:'center',
   },
   columname: {
     display: "none",

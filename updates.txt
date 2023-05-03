@@ -1,13 +1,262 @@
 
+var ALLPROMISES = [];
+    
+    if (tipoFactura === 0 || tipoFactura===3) {
+      if (nrorec.response  && nrorec.found>0) {
+        LASTNROFACTURA = nrorec.results[0].last_nro_recibo;
+        let idr = nrorec.results[0].id_empresa_recibo;
+        APICALLER.update({table: "empresa_recibos",token: token_user,id:idr, data: {last_nro_recibo: parseInt(LASTNROFACTURA) + 1} });
+      }
+    } else {
+      
+      if (nrofac.response  && nrofac.found>0) {
+        LASTNROFACTURA = parseInt(nrofac.results[0].last_nro_factura);
+        let LASTNROFACTURADECAJA = parseInt(nrofac.results[0].nro_fin_factura);
+        if(LASTNROFACTURA>LASTNROFACTURADECAJA){ 
+          swal({text:'Talonario de facturas agotado'}); 
+          setCargas({ ...cargas, finalizarVenta:false});
+          setDialogs({...dialogs,finalizarVenta:true}); 
+          return false;
+        }
+        let idf = nrofac.results[0].id_empresa_factura;
+        ALLPROMISES.push(APICALLER.update({table: "empresa_facturas",token: token_user, id:idf, 
+        data: {last_nro_factura: parseInt(LASTNROFACTURA) + 1}}))
+      }else{
+        swal({text:"Esta caja no esta relacionada con ninguna factura. Sera facturada como recibo",timer:10000});
+        LASTNROFACTURA = nrorec.results[0].last_nro_recibo;
+        let idr = nrorec.results[0].id_empresa_recibo;
+        tipoFactura = 0;
+        ALLPROMISES.push(APICALLER.update({table: "empresa_recibos",token: token_user,id:idr, data: {last_nro_recibo: parseInt(LASTNROFACTURA) + 1} }));
+      }
+    } 
+    
 
-21800101
+    
+    let efectivo=0,sinEfectivo=0,cambio = 0, porcentaje_descuento_pago = 0, observaciones = "";
 
-CREATE TABLE `stock_movimientos` (
-  `id_stock_movimiento` int NOT NULL PRIMARY KEY AUTO_INCREMENT,
-  `id_producto_mov` int NOT NULL COMMENT 'id_producto',
-  `cantidad_mov` float NOT NULL DEFAULT '0',
-  `tipo_mov` int NOT NULL COMMENT '0 salida 1 entrada',
-  `tipo_stock` int NOT NULL DEFAULT '1' COMMENT '1 art 2 serv',
-  `fecha_mov` datetime DEFAULT NULL,
-  `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
-);
+    let objDetalles = {
+      0: `Venta recibo: ${LASTNROFACTURA}. Cliente: ${df.datosCliente.id_cliente}. `,
+      1: `Venta contado factura: ${LASTNROFACTURA}. Cliente: ${df.datosCliente.id_cliente}. `,
+      2: `Venta credito factura: ${LASTNROFACTURA}. Cliente: ${df.datosCliente.id_cliente}. `,
+      3: `Venta cuota recibo: ${LASTNROFACTURA}. Cliente: ${df.datosCliente.id_cliente}. `
+    }
+    let detallesMov = objDetalles[tipoFactura];
+    
+    df.datosFactura.formasPago.forEach(e=>{
+      if(e.id_forma_pago==="1") {
+        efectivo += (e.cantidad) / VALOR_MONEDA
+        detallesMov += `Pago con efectivo ${(e.cantidad) / VALOR_MONEDA} ${NOMBRE_MONEDA}. `
+      } else{
+        porcentaje_descuento_pago = parseFloat(e.descuento)>0 ?  ((e.cantidad/VALOR_MONEDA) * parseFloat(e.descuento) / 100) : 0
+        sinEfectivo += (e.cantidad/VALOR_MONEDA) - porcentaje_descuento_pago;
+        detallesMov += `Pago con ${e.descripcion} ${e.cantidad} ${NOMBRE_MONEDA}. `
+        detallesMov += parseFloat(e.descuento)>0 ? ` Descuento de interes ${e.descuento}. ` : ''
+      }
+      observaciones += e.obs 
+    })
+    observaciones += DESCUENTO>0 ? ` Descuento: ${DESCUENTO} ` : "";
+    
+    /* if(efectivo>df.total){ */
+    if(efectivo> TOTAL_A_PAGAR){
+      cambio = efectivo - TOTAL_A_PAGAR;
+      /* cambio = efectivo - df.total; */
+    }
+   
+    efectivo = efectivo - cambio;
+    
+    //console.log(efectivo,sinEfectivo,observaciones,detallesMov,cambio)
+    // INGRESAMOS AL REGISTRO DE CAJA SI ES CONTADO, SI ES CREDITO IGNORAMOS PQ NO HAY MOVIMIENTO EN CAJA
+    //var promesas = [];
+    
+    if (tipoFactura!==2 ) {
+      //let cajasMov = 
+      let totalPagado = parseFloat(df.datosFactura.totalAbonado);
+      if(totalPagado>0){
+        ALLPROMISES.push(APICALLER.insert({
+          table: "cajas_movimientos",
+          token: token_user,
+          data: {
+            id_user_movimiento: id_user,
+            id_moneda_movimiento:df.datosMoneda.id_moneda,
+            id_caja_movimiento: df.datosFactura.id_caja,
+            id_tipo_registro: 1, // 1 VENTA CONTADO REVISAR TABLA
+            monto_movimiento: efectivo, // forma de pago efectivo  es 1
+            monto_sin_efectivo: sinEfectivo,
+            detalles_movimiento:detallesMov + observaciones,
+            fecha_movimiento: Funciones.getFechaHorarioString(),
+          },
+        }))
+
+        /* if(DESCUENTO>0){
+          promesas.push(APICALLER.insert({table: "cajas_movimientos",
+          token: token_user,
+          data: {
+            id_user_movimiento: id_user,
+            id_moneda_movimiento:df.datosMoneda.id_moneda,
+            id_caja_movimiento: df.datosFactura.id_caja,
+            id_tipo_registro: 17, // 17 DESCUENTO
+            monto_movimiento: DESCUENTO, // forma de pago efectivo  es 1
+            monto_sin_efectivo: 0,
+            detalles_movimiento:`Descuento de venta de ${DESCUENTO} NRO: ${LASTNROFACTURA}.`,
+            fecha_movimiento: Funciones.getFechaHorarioString(),
+          }}))
+        } */
+        
+        //if(!cajasMov.response) {console.log(cajasMov)}
+        // SI ES EN EFECTIVO
+       /*  if (df.datosFactura.id_formaPago === "1") {
+          let call_monto = await APICALLER.get({
+            table: `cajas_monedas`,
+            fields: `monto_caja_moneda,id_cajas_moneda`,
+            where: `id_caja_moneda,=,${df.datosFactura.id_caja},and,id_moneda_caja_moneda,=,${df.datosMoneda.id_moneda}`,
+          });
+          let nuevo_monto = (efectivo + parseFloat(call_monto.results[0].monto_caja_moneda)) - DESCUENTO;
+          let id_de_caja_moneda = call_monto.results[0].id_cajas_moneda;
+          promesas.push(APICALLER.update({
+            table: `cajas_monedas`,
+            token: token_user,
+            data: { monto_caja_moneda: nuevo_monto },
+            id: id_de_caja_moneda,
+          }));
+        } */
+
+        let call_monto = await APICALLER.get({
+          table: `cajas_monedas`,
+          fields: `monto_caja_moneda,id_cajas_moneda,monto_no_efectivo`,
+          where: `id_caja_moneda,=,${df.datosFactura.id_caja},and,id_moneda_caja_moneda,=,${df.datosMoneda.id_moneda}`,
+        });
+        
+
+        let nuevo_monto_efectivo = (efectivo + parseFloat(call_monto.results[0].monto_caja_moneda)) //- DESCUENTO;
+        let nuevo_monto_no_efectivo = ( sinEfectivo  + parseFloat(call_monto.results[0].monto_no_efectivo));
+        
+        let id_de_caja_moneda = call_monto.results[0].id_cajas_moneda;
+        ALLPROMISES.push(APICALLER.update({
+          table: `cajas_monedas`,
+          token: token_user,
+          data: { monto_caja_moneda: nuevo_monto_efectivo,monto_no_efectivo: nuevo_monto_no_efectivo },
+          id: id_de_caja_moneda,
+        })); 
+      }
+    }
+    
+    Promise.all(ALLPROMISES)
+    //ingresamos a la factura
+    let objFactura = {
+      id_cliente_factura: df.datosCliente.id_cliente,
+      id_user_factura: id_user,
+      id_caja_factura: df.datosFactura.id_caja,
+      id_empleado_factura: df.datosFactura.id_empleado,
+      id_forma_pago_factura: df.datosFactura.id_formaPago,
+      id_moneda_factura: df.datosMoneda.id_moneda,
+      valor_moneda_factura: df.datosMoneda.valor_moneda,
+      nro_factura: parseInt(LASTNROFACTURA),
+      fecha_factura: FECHA_ACTUAL,
+      fecha_cobro_factura: df.datosFactura.fecha_cobro_factura +" "+ Funciones.getHorarioActualString(),
+      estado_factura: parseInt(df.datosFactura.tipoFactura) < 2 ? 1 : 2,
+      tipo_factura: tipoFactura,
+      recibido_factura:  df.datosFactura.tipoFactura === "2" ? 0 : df.datosFactura.totalAbonado,
+      monto_total_factura: df.total,
+      iva_factura: df.total_iva,
+      iva_exenta:df.iva_exenta,
+      iva_5:df.iva_5,
+      iva_10:df.iva_10,
+      obs_factura: observaciones, /// ##############,
+      retencion_iva_factura: df.datosFactura.retencion_iva_factura,
+      orden_compra: df.datosFactura.ordenCompra,
+      descuento_factura: DESCUENTO
+    };
+    //console.log(ALLPROMISES.length)
+    let resInsert = await APICALLER.insert({table:"facturas",data: objFactura,token:token_user});
+
+    if (resInsert.response ) {
+      let ID_FACTURA = resInsert.last_id;
+      setLastID(ID_FACTURA);
+      let insertsPromises = [];
+      
+      let efe = 0 ,noefe = 0;
+      df.datosFactura.formasPago.forEach(e=>{
+        if(e.id_forma_pago==="1") {
+          efe += (e.cantidad) / VALOR_MONEDA
+        } else{
+          porcentaje_descuento_pago = parseFloat(e.descuento)>0 ?  ((e.cantidad/VALOR_MONEDA) * parseFloat(e.descuento) / 100) : 0
+          noefe += (e.cantidad/VALOR_MONEDA) - porcentaje_descuento_pago;
+        }
+      })
+      let dataFormaPago = {
+        efectivo_factura: efe,
+        factura_id: ID_FACTURA,
+        moneda_id: MONEDA_ID,
+        no_efectivo_factura: noefe,
+        valor_moneda_pago: VALOR_MONEDA
+      }
+      insertsPromises.push(APICALLER.insert({table:'facturas_pagos',token:token_user,data:dataFormaPago}))
+
+
+      df.itemsFactura.forEach(async (e) => {
+        
+        insertsPromises.push(APICALLER.insert({
+          table: "facturas_items",token: token_user,
+          data: {
+            id_items_factura: ID_FACTURA,
+            id_impuesto_factura: e.id_impuesto,
+            id_producto_factura: e.id_producto,
+            id_deposito_item: e.deposito_activo, ////////////////////**********************//////////////////////////////////
+            cantidad_producto: e.cantidad_producto,
+            precio_producto_factura: e.precio_guardado,
+            porcentaje_comision_factura: e.porcentaje_comision,
+            entregado_item: e.tipo_producto === 2 ? 2 : df.datosFactura.entregado_items,
+          },
+        }));
+
+        insertsPromises.push(APICALLER.insert({
+          table: "comisions",token: token_user,
+          data: {
+            id_factura_comision: ID_FACTURA,
+            id_empleado_comision: df.datosFactura.id_empleado,
+            id_producto_comision: e.id_producto,
+            porcentaje: e.porcentaje_comision,
+            cantidad_vendido_comision: e.cantidad_producto,
+            precio_vendido_comision: e.precio_guardado,
+            comision_valor:  ( e.precio_guardado * e.cantidad_producto * e.porcentaje_comision) / 100 ,
+            fecha_comision: Funciones.getFechaHorarioString(),
+          },
+        }));
+       
+        // si se entrega se hace esto
+        if(df.datosFactura.entregado_items==='1'){
+          insertsPromises.push(APICALLER.insert({
+            table:'productos_vendidos',token:token_user,
+            data:{
+              id_producto_vendido:e.id_producto,
+              tipo_producto_vendido:e.tipo_producto,
+              id_factura_vendido: ID_FACTURA,
+              id_cliente_vendido: df.datosCliente.id_cliente,
+              costo_producto_vendido:e.costo_producto,
+              precio_vendido: e.precio_guardado,
+              cantidad_vendido: e.cantidad_producto,
+              fecha_vendido:FECHA_ACTUAL
+            }
+          }))
+          if(e.tipo_producto === 1){
+            let ncantidad = parseFloat(e.stock_producto) - parseFloat(e.cantidad_producto);
+            insertsPromises.push(APICALLER.update({
+              table:'productos_depositos',
+              data:{stock_producto_deposito:ncantidad},
+                id:e.id_productos_deposito,token:token_user
+              }
+            ));
+          }
+        }
+        // !item.response  && console.log(item);
+      });
+      // insertando con promisses
+      
+      Promise.all(insertsPromises)
+    } else {
+      console.log(resInsert);
+    }
+
+    fa.facturas[indexFactura].datosFactura.nro_factura =  parseInt(LASTNROFACTURA);
+    setearFactura(fa);
+    setCargas({ ...cargas, finalizarVenta: false});

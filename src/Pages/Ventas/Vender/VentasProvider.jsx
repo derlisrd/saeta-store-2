@@ -2,7 +2,7 @@ import {createContext,useContext,useEffect,useState,useRef,useCallback} from "re
 import swal from "sweetalert";
 import { APICALLER } from "../../../Services/api";
 import { useLogin } from "../../../Contexts/LoginProvider";
-import {funciones as Funciones} from "../../../Functions";
+import {funciones} from "../../../Functions";
 import {useLang} from '../../../Contexts/LangProvider'
 import { useNavigate } from "react-router-dom";
 import { env } from "../../../App/Config/config";
@@ -70,9 +70,9 @@ const VentasProvider = ({ children }) => {
     entregado_items: "1",
     retencion_iva_factura: "0",
     nro_factura:"0",
-    fecha_factura: Funciones.getFechaActualString(),
-    fecha_cobro_factura : Funciones.fechaActualYMD(),
-    horario_factura: Funciones.getHorarioActualString(),
+    fecha_factura: funciones.getFechaActualString(),
+    fecha_cobro_factura : funciones.fechaActualYMD(),
+    horario_factura: funciones.getHorarioActualString(),
     valorMoneda:1, // valor de la moneda activa
   }
   
@@ -138,7 +138,7 @@ const VentasProvider = ({ children }) => {
     var DESCUENTO = df.descuento / VALOR_MONEDA;
     var IDCAJAFACTURACION = df.datosFactura.id_caja;
     var TOTAL_A_PAGAR = (df.total / VALOR_MONEDA) - (DESCUENTO);
-    var FECHA_ACTUAL = Funciones.fechaActualYMD() +" "+ Funciones.getHorarioActualString();
+    var FECHA_ACTUAL = funciones.getFechaHorarioString();
     var MONEDA_ID = df.datosMoneda.id_moneda;
     var [nrorec,nrofac] =  await Promise.all([
       APICALLER.get({ table: "empresa_recibos" }),
@@ -146,6 +146,8 @@ const VentasProvider = ({ children }) => {
     ])
     
     var tipoFactura = parseInt(df.datosFactura.tipoFactura)
+    
+
     var ALLPROMISES = [];
     
     if (tipoFactura === 0 || tipoFactura===3) {
@@ -230,7 +232,7 @@ const VentasProvider = ({ children }) => {
             monto_movimiento: efectivo, // forma de pago efectivo  es 1
             monto_sin_efectivo: sinEfectivo,
             detalles_movimiento:detallesMov + observaciones,
-            fecha_movimiento: Funciones.getFechaHorarioString(),
+            fecha_movimiento: funciones.getFechaHorarioString(),
           },
         }))
 
@@ -245,7 +247,7 @@ const VentasProvider = ({ children }) => {
             monto_movimiento: DESCUENTO, // forma de pago efectivo  es 1
             monto_sin_efectivo: 0,
             detalles_movimiento:`Descuento de venta de ${DESCUENTO} NRO: ${LASTNROFACTURA}.`,
-            fecha_movimiento: Funciones.getFechaHorarioString(),
+            fecha_movimiento: funciones.getFechaHorarioString(),
           }}))
         } */
         
@@ -299,7 +301,7 @@ const VentasProvider = ({ children }) => {
       valor_moneda_factura: df.datosMoneda.valor_moneda,
       nro_factura: parseInt(LASTNROFACTURA),
       fecha_factura: FECHA_ACTUAL,
-      fecha_cobro_factura: df.datosFactura.fecha_cobro_factura +" "+ Funciones.getHorarioActualString(),
+      fecha_cobro_factura: df.datosFactura.fecha_cobro_factura +" "+ funciones.getHorarioActualString(),
       estado_factura: parseInt(df.datosFactura.tipoFactura) < 2 ? 1 : 2,
       tipo_factura: tipoFactura,
       recibido_factura:  df.datosFactura.tipoFactura === "2" ? 0 : df.datosFactura.totalAbonado,
@@ -366,7 +368,7 @@ const VentasProvider = ({ children }) => {
             cantidad_vendido_comision: e.cantidad_producto,
             precio_vendido_comision: e.precio_guardado,
             comision_valor:  ( e.precio_guardado * e.cantidad_producto * e.porcentaje_comision) / 100 ,
-            fecha_comision: Funciones.getFechaHorarioString(),
+            fecha_comision: funciones.getFechaHorarioString(),
           },
         }));
        
@@ -407,6 +409,9 @@ const VentasProvider = ({ children }) => {
     fa.facturas[indexFactura].datosFactura.nro_factura =  parseInt(LASTNROFACTURA);
     setearFactura(fa);
     setCargas({ ...cargas, finalizarVenta: false});
+
+    
+    
    
     if ( tipoFactura === 0 || tipoFactura===3) {
       //RECIBO
@@ -414,7 +419,8 @@ const VentasProvider = ({ children }) => {
       {
         setDialogs({ ...dialogs, imprimirTicketRecibo: true, finalizarVenta:false });
       }else{
-        setDialogs({ ...dialogs, imprimirReciboA4: true, finalizarVenta:false });
+        //setDialogs({ ...dialogs, imprimirReciboA4: true, finalizarVenta:false });
+        setDialogs({ ...dialogs, imprimirTicketFactura: true, finalizarVenta:false });
       }
     } else {
       //FACTURA
@@ -422,6 +428,7 @@ const VentasProvider = ({ children }) => {
       {
         setDialogs({ ...dialogs, imprimirTicketFactura: true, finalizarVenta:false });
       }else{
+        
         setDialogs({ ...dialogs, imprimirFacturaA4: true, finalizarVenta:false });
       }
     }  
@@ -438,9 +445,9 @@ const VentasProvider = ({ children }) => {
     let fa = { ...datosFacturas };
     let df = fa.facturas[indexFactura];
     if(letter){
-      return  Funciones.redondeo2decimales(val / df.datosMoneda.valor_moneda)
+      return  funciones.redondeo2decimales(val / df.datosMoneda.valor_moneda)
     }
-    return Funciones.numberSeparator( Funciones.redondeo2decimales(val / df.datosMoneda.valor_moneda));
+    return funciones.numberSeparator( funciones.redondeo2decimales(val / df.datosMoneda.valor_moneda));
   } 
 
 
@@ -460,8 +467,8 @@ const VentasProvider = ({ children }) => {
         iva_5:0,
         iva_10:0,
         iva_exenta:0,
-        fecha_factura: Funciones.getFechaActualString(),
-        horario_factura: Funciones.getHorarioActualString(),
+        fecha_factura: funciones.getFechaActualString(),
+        horario_factura: funciones.getHorarioActualString(),
         guardado: false,
         datosMoneda: fa.monedaActiva,
         depositoActivo: fa.facturas[0].depositoActivo,
@@ -610,7 +617,7 @@ const VentasProvider = ({ children }) => {
         id_cliente_pedido:fa.datosCliente.id_cliente,
         id_user_pedido: userData.id_user,
         id_empleado_pedido:fa.datosFactura.id_empleado, 
-        fecha_pedido: Funciones.getFechaHorarioString(),
+        fecha_pedido: funciones.getFechaHorarioString(),
       }
       //console.log(fa);
       let ins = await APICALLER.insert({token:token_user,table:"notas_pedidos",data}) 
@@ -846,8 +853,8 @@ const VentasProvider = ({ children }) => {
       setErrors(e)
       return false;
     }
-    let valorInicial = parseFloat(Funciones.ComaPorPunto(Funciones.SacarPunto(cantidadRecibidaRef.current.value)));
-    console.log(cantidadRecibidaRef.current.value,valorInicial);
+    let valorInicial = parseFloat(funciones.ComaPorPunto(funciones.SacarPunto(cantidadRecibidaRef.current.value)));
+    //console.log(cantidadRecibidaRef.current.value,valorInicial);
     
     if(!isNaN(valorInicial) || valorInicial>0){
       let valor = valorInicial * parseFloat(fa.facturas[indexFactura].datosMoneda.valor_moneda);
@@ -936,8 +943,8 @@ const VentasProvider = ({ children }) => {
       iva_5:0,
       iva_10:0,
       iva_exenta:0,
-      fecha_factura: Funciones.getFechaActualString(),
-      horario_factura: Funciones.getHorarioActualString(),
+      fecha_factura: funciones.getFechaActualString(),
+      horario_factura: funciones.getHorarioActualString(),
       guardado: false,
       datosMoneda: fact.monedaActiva,
       datosFactura: initialDatosFactura,
@@ -971,9 +978,9 @@ const VentasProvider = ({ children }) => {
 
   const getDatosFactura = useCallback(async () => {
     //consultar si hay factura en localstore
-    console.log('render usecallback');
+    //console.log('render usecallback');
     if (localStorage.getItem("facturasStorage") === null) {
-      console.log('render local');
+      //console.log('render local');
       let [rCajas,rMoneda,rFormasPago,rVendedores,rDepositos,cajaMonedas,cajasOpened] = await Promise.all([
         APICALLER.get({table: "cajas",include:"cajas_users", on:"id_caja,id_caja_caja",where: `id_user_caja,=,${id_user}`}),
         APICALLER.get({ table: "monedas" }),
@@ -1048,9 +1055,9 @@ const VentasProvider = ({ children }) => {
               entregado_items: "1",
               retencion_iva_factura: "0",
               nro_factura:"0",
-              fecha_factura: Funciones.getFechaActualString(),
-              fecha_cobro_factura:Funciones.fechaActualYMD(),
-              horario_factura: Funciones.getHorarioActualString(),
+              fecha_factura: funciones.getFechaActualString(),
+              fecha_cobro_factura:funciones.fechaActualYMD(),
+              horario_factura: funciones.getHorarioActualString(),
               valorMoneda:1, // este es el valor de la moneda activa
             },
             datosCliente: {
@@ -1119,7 +1126,7 @@ const VentasProvider = ({ children }) => {
     setErrors,
     initialErrors,
     Aguardar,
-    Funciones,
+    funciones,
     setearIndexFactura,
     setearFactura,
     CancelarFacturaActual,
@@ -1153,7 +1160,7 @@ export const useVentas = () => {
     setErrors,
     initialErrors,
     Aguardar,
-    Funciones,
+    funciones,
     setearIndexFactura,
     setearFactura,
     CancelarFacturaActual,
@@ -1186,7 +1193,7 @@ export const useVentas = () => {
     setErrors,
     initialErrors,
     Aguardar,
-    Funciones,
+    funciones,
     setearIndexFactura,
     setearFactura,
     CancelarFacturaActual,

@@ -87,11 +87,12 @@ const FacturasProvider = ({ children }) => {
   const consultarParaImprimir = async(fila)=>{
     setLoadings({lista:false,factura:true,devolucion:true});
     if(fila.tipo_factura==="0"){
-          if(EMPRESA.tipo_papel==='0'){
+          /* if(EMPRESA.tipo_papel==='0'){
             setDialogs({...dialogs,imprimirTicketRecibo:true})
           }else{
             setDialogs({...dialogs,imprimirReciboA4:true})
-          }
+          } */
+          setDialogs({...dialogs,imprimirTicketRecibo:true})
     }
     else{
       if(EMPRESA.tipo_papel==='0'){

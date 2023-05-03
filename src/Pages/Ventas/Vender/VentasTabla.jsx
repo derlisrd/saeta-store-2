@@ -1,10 +1,10 @@
 import {CircularProgress,Table,TableBody,TableCell,TableContainer,TableHead,TableRow,Typography} from "@mui/material";
 import { useVentas } from "./VentasProvider";
 import VentasTablaItems from "./VentasTablaItems";
-import {StylesTabla} from "./StylesTabla";
+import { StylesTablaFacturaReponsive } from "../../../Components/UI/Tablas/StylesTablaFacturaReponsive";
 
 const VentasTabla = () => {
-  const classes = StylesTabla();
+  const classes = StylesTablaFacturaReponsive();
   const { datosFacturas, indexFactura,cargas } = useVentas();
   const columnas = [
     {
@@ -45,7 +45,7 @@ const VentasTabla = () => {
               </TableCell>
             ))}
             <TableCell className={classes.tablecell}>
-              <Typography variant="button" >OPCIONES</Typography>
+              <Typography variant="button">OPCIONES</Typography>
             </TableCell>
           </TableRow>
         </TableHead> ) }

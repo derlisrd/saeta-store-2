@@ -42,6 +42,9 @@ export const useTablaStyles = makeStyles((theme)=>({
         },
         
     },
+    headCell:{
+        padding:'12px'
+    },
     tbody:{
         
     },
@@ -62,6 +65,7 @@ export const useTablaStyles = makeStyles((theme)=>({
             display: "flex !important",
             justifyContent: "space-between",
           },
+        padding:'8px'
     },
     columntitleSpan:{
         display: "none",

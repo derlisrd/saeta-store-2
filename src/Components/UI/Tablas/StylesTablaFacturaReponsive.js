@@ -4,19 +4,25 @@ export const StylesTablaFacturaReponsive = makeStyles((theme) => ({
   tableContainer: {
     position: "relative",
     overflowX: "unset",
-    marginBottom: 25,
+    marginBottom:'20px',
     padding: "2px",
+    marginTop:'15px',
     transition:'all 0.1s linear',
+    textAlign:'center'
   },
   tableheader: {
     [theme.breakpoints.down("md")]: {
       display: "none !important",
     },
+    textAlign:'center'
   },
   tablecell: {
     position: "sticky",
     zIndex: 1,
     transition:'all 0.2s linear',
+    textAlign:'center',
+    padding: '5px',
+    backgroundColor:theme.palette.background.default
   },
   tablelist: {
     [theme.breakpoints.down("md")]: {
@@ -32,14 +38,18 @@ export const StylesTablaFacturaReponsive = makeStyles((theme) => ({
     [theme.breakpoints.down("md")]: {
       display: "flex !important",
       justifyContent: "space-between",
+      padding:'8px'
     },
+    padding:'2px',
+    textAlign:'center'
   },
   columname: {
     display: "none",
     textTransform: "uppercase",
     [theme.breakpoints.down("md")]: {
       display: "block",
-    },
+    }
+    
   },
   
 }));
