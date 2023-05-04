@@ -184,9 +184,7 @@ const CuentasProvider = ({ children }) => {
       APICALLER.get({table:"cajas_monedas",include:"monedas",on:"id_moneda_caja_moneda,id_moneda",
       fields:"id_moneda,nombre_moneda,id_cajas_moneda,id_caja_moneda,abreviatura_moneda,monto_caja_moneda,monto_no_efectivo,valor_moneda"}) 
     ]);
-    /* APICALLER.get({table:"cajas",include:"cajas_monedas,monedas,cajas_users",
-      on:"id_caja,id_caja_moneda,id_moneda,id_moneda_caja_moneda,id_caja,id_caja_caja",where:`id_user_caja,=,${id_user},and,estado_caja,=,'open'`,
-      fields:"id_moneda,nombre_moneda,id_cajas_moneda,id_caja_moneda,abreviatura_moneda,monto_caja_moneda,monto_no_efectivo"}) */
+
 
     if(resPagar.response && resCajas.response && resFormas.response){
       let totalaCobrar=0, totalrecibido = 0, montototal = 0;

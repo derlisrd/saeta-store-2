@@ -243,7 +243,7 @@ export const listaMenu = [
           {
             id:38,
             title:'a_cobrar',
-            url: `${BASEURL}/cuentas`,
+            url: `${BASEURL}/cuentas/cobrar`,
             icon: "account_balance_wallet",
             color: "#a0aec0"
           }
