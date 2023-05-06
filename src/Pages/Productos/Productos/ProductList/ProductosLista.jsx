@@ -4,10 +4,12 @@ import { useProductos } from "./ProductosProvider";
 import ProductosListaPager from "./ProductosListaPager";
 import MoreMenu from "./MoreMenu";
 import useGoto from "../../../../Hooks/useGoto";
+import { useState } from "react";
 
 const ProductosLista = () => {
   
-  const {inputSearch,idDeposito,setIdDeposito,showOptions,lang,setInputSearch,cargando,lista,buscarRegistro,dialogs,setDialogs,setFormDetalles,setLista} = useProductos();
+  const {idDeposito,setIdDeposito,showOptions,lang,cargando,lista,dialogs,setDialogs,setFormDetalles,getLista,setLista} = useProductos();
+  const [search,setSearch] = useState('')
   const go = useGoto();
   const columns = [
 
@@ -76,7 +78,7 @@ const ProductosLista = () => {
     </Stack>)
 
     
-    const search = (
+    const Inputs = (
       <Stack  direction={{ xs: 'column', sm: 'row' }} spacing={2}>
         <FormControl sx={{ width:"240px" }}>
           <InputLabel>{lang.depositos}</InputLabel>
@@ -98,14 +100,14 @@ const ProductosLista = () => {
           InputProps={{
             endAdornment: (
               <InputAdornment position="end">
-                <IconButton onClick={()=>{buscarRegistro()}}>
+                <IconButton onClick={()=>{getLista(search)}}>
                   <Icon>search</Icon>
                 </IconButton>
               </InputAdornment>
             ),
           }}
-          onKeyPress={e=>{if(e.key==='Enter'){buscarRegistro() } } }
-          onChange={(e) => setInputSearch(e.target.value)}
+          onKeyPress={e=>{if(e.key==='Enter'){getLista(search) } } }
+          onChange={(e) => setSearch(e.target.value)}
           label={lang.buscar}
         />
         <Tooltip title={lang.agregar} arrow >
@@ -117,7 +119,7 @@ const ProductosLista = () => {
       </Stack>
     );
 
-    const FilterData =  lista.productos.filter(item => item.nombre_producto.toLowerCase().includes(inputSearch.toLowerCase())|| item.codigo_producto.toLowerCase().includes(inputSearch.toLowerCase()));
+    const FilterData =  lista.productos.filter(item => item.nombre_producto.toLowerCase().includes(search.toLowerCase())|| item.codigo_producto.toLowerCase().includes(search.toLowerCase()));
 
     const sort = {
         desc : (col)=>{
@@ -164,7 +166,7 @@ const ProductosLista = () => {
           lang={lang}
           icon={{ name:"inventory" }}
           showOptions={showOptions}
-          inputs={search}
+          inputs={Inputs}
           sort={sort}
           />
         <ProductosListaPager />

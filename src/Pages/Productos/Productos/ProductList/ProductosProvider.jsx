@@ -1,6 +1,5 @@
-import React, {createContext,useContext,useState,useEffect,useCallback} from "react";
+import {createContext,useContext,useState,useEffect,useCallback} from "react";
 import { useLocation } from "react-router-dom";
-import swal from "sweetalert";
 import { APICALLER } from "../../../../Services/api";
 import { useLogin } from "../../../../Contexts/LoginProvider";
 import { useLang } from "../../../../Contexts/LangProvider";
@@ -11,57 +10,37 @@ const ProductosContext = createContext();
 const ProductosProvider = ({ children }) => {
 
   const {lang} = useLang()
-  const { userData } = useLogin(); const {token_user,permisos} = userData;
+  const { userData } = useLogin(); 
+  const {permisos} = userData;
   const location = useLocation();
-  
   const q = location.search ? new URLSearchParams(location.search) : 0;
   const [page, setPage] = useState(q && q.get("p") && !isNaN(q.get("p")) ? parseInt(q.get("p")) : 0);
-
   const [showOptions,setShowOptions] = useState(false);
-
   const initialStock = {codigo_producto:"",nombre_producto:"",listaStock:[],medida:"" }
   const [formStock,setFormStock] = useState(initialStock)
   const initialDialogs = {
     detalles:false,
     code:false,
     imagen:false,
-    stock:false
+    stock:false,
+    borrar:false
   }
   const [dialogs,setDialogs] = useState(initialDialogs);
-  
+  const [formSelect,setFormSelect] = useState({})
   const [formDetalles,setFormDetalles] = useState({});
   const [limite, setLimite] = useState(30);
   const [idDeposito,setIdDeposito] = useState("");
   const [countTotal, setCountTotal] = useState(0);
   const [cargando, setCargando] = useState({lista:true,stock:true});
   const [listaCategorias, setListaCategorias] = useState([]);
-  const [inputSearch, setInputSearch] = useState("");
+
   const [lista, setLista] = useState({
     productos:[],
     depositos:[]
   });
 
   
-  const borrarRegistro = async(id, nombre) => {
-    let e = await swal({icon: "warning",title: lang.q_borrar,text: `${lang.borrar} ${nombre}?`,buttons: [lang.cancelar, lang.ok],dangerMode: true});
-      if (e) {
-        const res = await APICALLER.delete({table: `productos`,id: id,token: token_user});
-        if (res.response ) {
-          Promise.all([
-            APICALLER.delete({table: `productos_images`,namecolumns:"id_image_producto",ids:id,token: token_user}),
-            APICALLER.delete({table: `productos_depositos`,namecolumns:"id_producto_deposito",ids:id,token: token_user})
-          ])
-          swal({icon:"success",text:lang.borrado_correctamente, timer:1200})
-          let array = [...lista];
-          let index = array.findIndex(e => e.id_producto === id);
-          array.splice(index, 1);
-          setLista(array);
-        } else {
-          console.log(res);
-        }
-      }
-    
-  };
+
 
   const getStock = async(producto)=>{
     setCargando({...cargando,stock:true});
@@ -81,29 +60,10 @@ const ProductosProvider = ({ children }) => {
   },[permisos]);
   
 
-  const buscarRegistro = async () => {
-    setCargando({lista:true,stock:true});
-    let res = await APICALLER.get({
-      table: "productos",
-      include: "categorias,unidad_medidas",
-      on:"id_categoria_producto,id_categoria,id_unidad_medida_producto,id_unidad_medida",
-      fields:"disponible_producto,id_producto,nombre_producto,nombre_categoria,codigo_producto,precio_producto,costo_producto,preciom_producto,descripcion_medida,tipo_producto",
-      filtersField:"nombre_producto,codigo_producto",
-      filtersSearch:`${inputSearch}`,
-      pagenumber: "0",
-      pagesize: limite,
-      sort:"-nombre_producto"
-    });
-    if (res.found > 0 && res.response ) {
-      setLista({...lista,productos:res.results});
-    } else {
-      console.log(res);
-    }
-    setCargando({lista:false,stock:true});
-  };
 
 
-  const getLista = useCallback(async () => {
+
+  const getLista = useCallback(async (searchTxt='') => {
     setCargando({lista:true,stock:true});
 
     let data = {};
@@ -114,6 +74,8 @@ const ProductosProvider = ({ children }) => {
       include: "categorias,unidad_medidas",
       on:"id_categoria_producto,id_categoria,id_unidad_medida_producto,id_unidad_medida",
       fields:"disponible_producto,id_producto,nombre_producto,nombre_categoria,codigo_producto,precio_producto,costo_producto,preciom_producto,descripcion_medida,tipo_producto",
+      filtersField:"nombre_producto,codigo_producto",
+      filtersSearch:`${searchTxt}`,
       pagenumber: page,
       pagesize: limite,
       sort:"-id_producto" }
@@ -156,19 +118,16 @@ const ProductosProvider = ({ children }) => {
     <ProductosContext.Provider
       value={{
         lang,idDeposito,setIdDeposito,
-        cargando,
+        cargando, getLista,
         setCargando,
         showOptions,
-        inputSearch,
-        setInputSearch,
         lista,
         setLista,
         page,
         setPage,
         limite,
         setLimite,
-        buscarRegistro,
-        borrarRegistro,
+        formSelect,setFormSelect,
         listaCategorias,
         setListaCategorias,
         countTotal,
@@ -184,19 +143,16 @@ const ProductosProvider = ({ children }) => {
 
 export const useProductos = () => {
   const { lang,idDeposito,setIdDeposito,
-    cargando,
+    cargando,getLista,
     setCargando,
     showOptions,
-    inputSearch,
-    setInputSearch,
     lista,
     setLista,
     page,
     setPage,
     limite,
     setLimite,
-    buscarRegistro,
-    borrarRegistro,
+    formSelect,setFormSelect,
     listaCategorias,
     setListaCategorias,
     countTotal,
@@ -207,19 +163,16 @@ export const useProductos = () => {
 
   return {
     lang,idDeposito,setIdDeposito,
-    cargando,
+    cargando,getLista,
     setCargando,
     showOptions,
-    inputSearch,
-    setInputSearch,
     lista,
     setLista,
     page,
     setPage,
     limite,
     setLimite,
-    buscarRegistro,
-    borrarRegistro,
+    formSelect,setFormSelect,
     listaCategorias,
     setListaCategorias,
     countTotal,

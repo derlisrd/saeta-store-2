@@ -10,7 +10,7 @@ export default function MoreMenu({rowData}) {
   const ref = useRef(null);
   const {userData} = useLogin()
   const [isOpen, setIsOpen] = useState(false);
-  const {borrarRegistro,getStock,dialogs,setDialogs,lista,setLista} = useProductos();
+  const {getStock,dialogs,setDialogs,lista,setLista,setFormSelect} = useProductos();
   const navigate = useGoto();
   const id = rowData.id_producto;
   const close = () => {setIsOpen(false);}
@@ -31,6 +31,11 @@ export default function MoreMenu({rowData}) {
     if(!res.response){
       console.log(res);
     } 
+  }
+
+  const openBorrar = r=>{
+    setFormSelect(r)
+    setDialogs({...dialogs,borrar:true})
   }
   
   //onClick={()=> {Funciones.goto(`productos/bc?code=${rowData.codigo_producto}`)}} onClick={()=> {openPhoto(rowData)}}
@@ -80,7 +85,7 @@ export default function MoreMenu({rowData}) {
           </ListItemIcon>
           <ListItemText primary="Código de barras" primaryTypographyProps={{ variant: 'body2' }} />
         </MenuItem>
-        <MenuItem onClick={()=>{borrarRegistro(id,rowData.nombre_producto)}} sx={{ color: 'text.secondary' }}>
+        <MenuItem onClick={()=>{openBorrar(rowData)}} sx={{ color: 'text.secondary' }}>
           <ListItemIcon>
           <Icon color="error">delete_sweep</Icon>
           </ListItemIcon>
