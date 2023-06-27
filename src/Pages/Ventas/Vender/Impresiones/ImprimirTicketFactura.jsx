@@ -46,6 +46,7 @@ const ImprimirTicketFactura = () => {
     }
   });
 
+  
 
   return (
     <Dialog open={dialogs.imprimirTicketFactura} maxWidth="xs" onClose={cerrar} TransitionComponent={Zoom}>

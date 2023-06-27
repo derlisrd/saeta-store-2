@@ -7,7 +7,7 @@ import { StylesTablaFacturaReponsive } from "../../../Components/UI/Tablas/Style
 const VentasTablaItems = () => {
   const classes = StylesTablaFacturaReponsive();
 
-  const { datosFacturas, indexFactura,Funciones,restarCantidad,sumarCantidad } = useVentas();
+  const { datosFacturas, indexFactura,funciones,restarCantidad,sumarCantidad } = useVentas();
 
   const items = [...datosFacturas.facturas[indexFactura].itemsFactura];
   const valorMoneda = parseFloat(datosFacturas.facturas[indexFactura].datosMoneda.valor_moneda);
@@ -30,13 +30,13 @@ const VentasTablaItems = () => {
               <span className={classes.columname}>CANT.</span>
               <span>
                 
-                <Stack direction="row">
+                <Stack direction="row" justifyContent='center' alignItems='center'>
                   <Tooltip title="Restar 1">
                   <IconButton onClick={(e) => {restarCantidad(parseFloat(d.cantidad_producto), i)}}>
                     <Icon>remove_circle_outline</Icon>
                   </IconButton>
                   </Tooltip>
-                  <Typography variant="h6">{d.cantidad_producto}</Typography>
+                  <Typography variant="button">{d.cantidad_producto}</Typography>
                   
                   <IconButton onClick={(e) => {sumarCantidad(parseFloat(d.cantidad_producto), i)}}>
                     <Icon>add_circle_outline</Icon>
@@ -58,14 +58,14 @@ const VentasTablaItems = () => {
             <TableCell className={classes.tableitem}>
               <span className={classes.columname}>PRECIO</span>
               <span>
-                {Funciones.numberSeparator(d.precio_guardado / valorMoneda)}
+                {funciones.numberSeparator(d.precio_guardado / valorMoneda)}
               </span>
             </TableCell>
 
             <TableCell className={classes.tableitem}>
               <span className={classes.columname}>SUBTOTAL</span>
               <span>
-                {Funciones.numberSeparator(d.subtotal_precio / valorMoneda)}
+                {funciones.numberSeparator(d.subtotal_precio / valorMoneda)}
               </span>
             </TableCell>
 

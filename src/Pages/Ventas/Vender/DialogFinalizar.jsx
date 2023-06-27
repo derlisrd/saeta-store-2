@@ -11,7 +11,7 @@ import styles from './styles.module.css'
 const DialogFinalizar = () => {
   
   const {MetodoDescuento,permisos, lang, changeMonedas,
-    dialogs,setDialogs,datosFacturas,indexFactura,Funciones,errors,cargas,setCargas,consultarCliente,changeInputsDatosFactura,setErrors,initialErrors,verificarYEnviarFactura,AgregarCantidadMetodoPago,cantidadRecibidaRef,borrarMetodoPago,//permisos, Anotar
+    dialogs,setDialogs,datosFacturas,indexFactura,funciones,errors,cargas,setCargas,consultarCliente,changeInputsDatosFactura,setErrors,initialErrors,verificarYEnviarFactura,AgregarCantidadMetodoPago,cantidadRecibidaRef,borrarMetodoPago,//permisos, Anotar
   } = useVentas();
   const inputDoc = useRef(null);
   const [cantidadRecibida,setCantidadRecibida] = useState('')
@@ -142,7 +142,7 @@ const DialogFinalizar = () => {
       <DialogTitle>
         <Tooltip title={<h2>{lang.volver_factura}</h2>} TransitionComponent={Zoom} arrow placement="right-start">
             <IconButton onClick={cerrar}><Icon>arrow_back_ios_new</Icon></IconButton>
-          </Tooltip>{lang.finalizar_venta} - TOTAL: {Funciones.numberSeparator(Funciones.redondeo2decimales(TOTAL))} {ABM}</DialogTitle>
+          </Tooltip>{lang.finalizar_venta} - TOTAL: {funciones.numberSeparator(funciones.redondeo2decimales(TOTAL))} {ABM}</DialogTitle>
       <DialogContent>
         <Grid container spacing={1} justifyContent="center">
           <Grid item xs={12}>
@@ -302,7 +302,7 @@ const DialogFinalizar = () => {
                 {fa.datosFactura.formasPago.map((e, i) => (
                   <Stack key={i} direction="row" alignItems={"center"}>
                     <IconButton onClick={()=> borrarMetodoPago(i,e.cantidad)}><Icon>clear</Icon></IconButton>
-                    <Typography variant="body1">{e.descripcion}: {Funciones.numberSeparator(e.cantidad/valorMoneda)} - {e.obs}</Typography>
+                    <Typography variant="body1">{e.descripcion}: {funciones.numberSeparator(e.cantidad/valorMoneda)} - {e.obs}</Typography>
                   </Stack>
                 ))}
               </Grid>
@@ -421,25 +421,25 @@ const DialogFinalizar = () => {
                   <Box boxShadow={3} padding={2} borderRadius={2} >
                   <Grid container>
                     <Grid item xs={6} md={6}>
-                      <h3 className={styles.text_left}>TOTAL: {Funciones.numberSeparator(Funciones.redondeo2decimales(TOTAL))} {ABM}</h3>
+                      <h3 className={styles.text_left}>TOTAL: {funciones.numberSeparator(funciones.redondeo2decimales(TOTAL))} {ABM}</h3>
                     </Grid>
                     <Grid item xs={6} md={6} >
-                      <h3 className={styles.text_left}>ABONADO: {Funciones.numberSeparator(fa.datosFactura.totalAbonado/valorMoneda)} {ABM}</h3>
+                      <h3 className={styles.text_left}>ABONADO: {funciones.numberSeparator(fa.datosFactura.totalAbonado/valorMoneda)} {ABM}</h3>
                     </Grid>
 
                     <Grid item xs={6} md={6}>
-                      <h3 className={styles.text_left}>DESCUENTOS: {Funciones.numberSeparator(fa.descuento)} {ABM}</h3>
+                      <h3 className={styles.text_left}>DESCUENTOS: {funciones.numberSeparator(fa.descuento)} {ABM}</h3>
                     </Grid>
                     <Grid item xs={6} md={6} >
-                      <h3 className={styles.text_left}>IMPUESTO: {Funciones.numberSeparator(Funciones.redondeo2decimales(TOTALIVA))} {ABM}</h3>
+                      <h3 className={styles.text_left}>IMPUESTO: {funciones.numberSeparator(funciones.redondeo2decimales(TOTALIVA))} {ABM}</h3>
                     </Grid>
 
                     <Grid item xs={6}  md={6}>
-                      <h3 className={styles.text_left}>CAMBIO: {CAMBIO <= 0 ? "0 "+ ABM : Funciones.numberSeparator(CAMBIO) + " " + ABM}</h3>
+                      <h3 className={styles.text_left}>CAMBIO: {CAMBIO <= 0 ? "0 "+ ABM : funciones.numberSeparator(CAMBIO) + " " + ABM}</h3>
                     </Grid>
 
                     <Grid item xs={12} >
-                      <Typography variant="overline">SON: {Funciones.NumeroALetras(TOTAL, ABM)}</Typography>
+                      <Typography variant="overline">SON: {funciones.NumeroALetras(TOTAL, ABM)}</Typography>
                     </Grid>
                   </Grid>
                   </Box>

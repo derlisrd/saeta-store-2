@@ -1,4 +1,4 @@
-import { Icon, IconButton, InputAdornment,  TextField } from "@mui/material";
+import { Icon, IconButton, InputAdornment,  Stack,  TextField } from "@mui/material";
 import Tablas from "../../Components/UI/Tablas";
 import { useCuentas } from "./CuentasProvider";
 import {funciones} from '../../Functions'
@@ -71,7 +71,7 @@ const CuentasCobrarLista = () => {
   
 
   const search = (
-    <>
+    <Stack direction='row'>
       <TextField label={lang.buscar} value={inputbuscar} onChange={e=>setInputBuscar(e.target.value)}  
         InputProps={{
             endAdornment:(
@@ -83,7 +83,7 @@ const CuentasCobrarLista = () => {
         }}
       />
 
-    </>
+    </Stack>
   );
 
   const totalTxt = "Total a cobrar: "+funciones.numberSeparator(listas.totalCobrar)+" "+ MONEDA_PRINCIPAL.abreviatura_moneda;

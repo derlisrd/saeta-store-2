@@ -39,7 +39,6 @@ import Movimientos from "../Pages/Caja/Movimientos";
 import RegistroMovimientos from "../Pages/Caja/RegistroMovimientos";
 import Entregas from "../Pages/Ventas/Entregas";
 import Transferencias from "../Pages/Productos/Transferencias";
-import Cuentas from "../Pages/Cuentas";
 import ProductCode from "../Pages/Productos/Productos/ProductCode";
 import Agenda from "../Pages/Agendas/Agenda";
 
@@ -57,6 +56,7 @@ import ListasCompras from "../Pages/Compras/ListasCompras";
 import Insumos from "../Pages/Insumos";
 import Pedidos from "../Pages/Pedidos";
 import CuentasCliente from "../Pages/Cuentas/CuentasCliente";
+import Cobrar from "../Pages/Cuentas/Cobrar";
 
 const RoutesMain = () => {
   const R = env.BASEURL +`/`;
@@ -130,8 +130,10 @@ const RoutesMain = () => {
       <Route path={R+'cajas'} element={<PrivateRoute id={33}><Cajas /></PrivateRoute>} />
       <Route path={R+"movimientos"} element={<PrivateRoute id={36}><Movimientos /></PrivateRoute>} />
       <Route path={R+"registromovimientos"} element={<PrivateRoute id={37}><RegistroMovimientos /></PrivateRoute>} />
-      <Route path={R+"cuentas"} element={<PrivateRoute id={38}><Cuentas /></PrivateRoute>} />
-      <Route path={R+"cuentas/:id_cliente"} element={<PrivateRoute id={38}><CuentasCliente /></PrivateRoute>} />
+      
+      <Route path={R+"cuentas/cobrar"} element={<PrivateRoute id={38}><Cobrar /></PrivateRoute>} />
+      
+      <Route path={R+"cuentas/cobrar/:id_cliente"} element={<PrivateRoute id={38}><CuentasCliente /></PrivateRoute>} />
 
       <Route path={R+'clientes'} element={<PrivateRoute id={40}><Clientes /></PrivateRoute>} />
       <Route path={R+'empleados'} element={<PrivateRoute id={42}><Empleados /></PrivateRoute>} />

@@ -27,7 +27,7 @@ const ImprimirReciboA4 = () => {
       </div>
       </DialogContent>
     <DialogActions>
-    <Button onClick={imprimir}>Imprmir</Button>
+    <Button onClick={imprimir}>Imprimir</Button>
     <Button onClick={cerrar}>Cerrar</Button>
     </DialogActions>
     </Dialog>

@@ -65,14 +65,14 @@ return (
                 <TableRow className={style.trtitles} >
                     {
                         columns.map((col,index)=>(
-                            <TableCell   align={col.align ? col.align : "left" } key={index}>
+                            <TableCell className={style.headCell} align={col.align ? col.align : "left" } key={index}>
                                {sort?.desc && <span onClick={()=>sort.desc(col.field)} className={style.arrow}>↓</span> }
                                {col.title} 
                                {sort?.asc && <span onClick={()=>sort.asc(col.field)} className={style.arrow}>↑</span>}
                             </TableCell>
                         ))
                     }
-                    <TableCell align='center'>
+                    <TableCell align='center' className={style.headCell} >
                         {lang? lang.opciones : "Opciones"}
                     </TableCell>
                 </TableRow>
@@ -104,7 +104,7 @@ return (
                                             column.items ?
                                             column.items[data[column.compareField]] :
                                             column.html ? column.html :
-                                            data[column.field].substr(0,25)
+                                            data[column.field].substr(0,40)
                                             }
                                             {
                                                 column.after ?? null
@@ -113,7 +113,7 @@ return (
                                     </TableCell>
                                 ))
                             }
-                            <TableCell align='center'>
+                            <TableCell align='center' className={style.tableCell} >
                                 {
                                     showOptions && <Accions rowProps={data} />
                                 }

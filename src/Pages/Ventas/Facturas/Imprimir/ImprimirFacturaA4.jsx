@@ -1,6 +1,6 @@
 import { Button, CircularProgress, Dialog, DialogActions, Icon, Stack, Zoom,Link} from '@mui/material'
-import printJS from 'print-js';
-import styles from './facturaA4.module.css';
+import { useRef } from 'react';
+import { useReactToPrint } from 'react-to-print';
 import ButtonCustom from '../../../../Components/MuiCustom/ButtonCustom';
 import { useDatosEmpresa } from '../../../../Contexts/DatosEmpresaProvider';
 import { useLang } from '../../../../Contexts/LangProvider';
@@ -13,14 +13,15 @@ const ImprimirFacturaA4 = () => {
   const {dialogs,setDialogs,formulario,itemsFactura,loadings} = useFacturas();
   const {lang} = useLang()
   const {EMPRESA} = useDatosEmpresa()
-  const DF = { ...formulario };
-  const id = DF?.id_factura;  
+  const FACTURA = { ...formulario };
+  const id = FACTURA?.id_factura;  
 
   const url_pdf = APIURL+'pdf_factura/'+id;
-  const imprimir = () => {
-    printJS({ type: "html", printable: "print_factura", 
-    style:"#print_factura{font-family:monospace; padding:0; margin:0 auto;} table{border-collapse:collapse; width:210mm; margin:0 auto; border-radius:10px;}" });
-  };
+  const divRef = useRef();
+  const handlePrint = useReactToPrint({
+        content: () => divRef.current,
+  });
+
   const cerrar = ()=>{ 
     setDialogs({...dialogs,imprimirFacturaA4:false});
   }
@@ -28,37 +29,31 @@ const ImprimirFacturaA4 = () => {
     setDialogs({...dialogs,mail:true})
   }
   //const TOTAL = DF.monto_total_factura
+  
 
-  let TOTAL5 = 0;
-  let TOTAL10 = 0;
-  let TOTALIVA = 0;
-  //let TOTALIVAG = 0;
+  let SUBTOTAL5 = 0;
+  let SUBTOTAL10 = 0;
   let TOTALIVA5 = 0;
   let TOTALIVA10 = 0;
+  let TOTAL = parseFloat(FACTURA.monto_total_factura) - parseFloat(FACTURA.descuento_factura)
   let EXENTAS = 0;
-  
-  //console.log('facturas a 4')
-
   itemsFactura.forEach(e => {
-    let subtotal = parseFloat(e.precio_producto_factura)* parseFloat(e.cantidad_producto);
-    let iva_porcent = parseInt(e.porcentaje_impuesto);
+    let cantidad = parseFloat(e.cantidad_producto)
+    let precio = parseFloat(e.precio_producto_factura)
+    let subtotal = precio*(cantidad);
+    let iva_porcent = parseFloat(e.porcentaje_impuesto);
     if(iva_porcent === 5){
-      TOTAL5 += subtotal;
+      SUBTOTAL5 += subtotal;
       TOTALIVA5 += (subtotal * iva_porcent) / (100 + iva_porcent);
     }else
     if(iva_porcent === 10){
-      TOTAL10 += subtotal;
+      SUBTOTAL10 += subtotal;
       TOTALIVA10 += (subtotal * iva_porcent) / (100 + iva_porcent);
     }else
     if(iva_porcent===0){
       EXENTAS  += subtotal;
     }
   });
-  let DESCUENTO = parseFloat(DF.descuento_factura);
-  let MONTO_TOTAL = parseFloat(DF.monto_total_factura) - DESCUENTO
-  
-  TOTALIVA = 0
-  //TOTALIVAG = 0
 
 
 
@@ -67,124 +62,150 @@ const ImprimirFacturaA4 = () => {
       {loadings.factura ? (
         <Stack sx={{ padding: "20px" }} alignItems="center"><CircularProgress /></Stack>
       ) : (
-        <div id="print_factura" className={styles.div_central}>
-          <table width="740" className={styles.table_collapse} border="1">
-            <tbody>
+        <div className="container" ref={divRef}>
+        <table className="tabla cabezera border-trl">
+          <tbody>
             <tr>
-              <td align='center' valign='center'>
-                <b>{EMPRESA.nombre_empresa}</b>
-                <br/>
-                <small>De: {EMPRESA.propietario_empresa}</small>
-                <br/>
+              <td className="titulos bg-smoke text-center">
+                <h3>{EMPRESA.nombre_empresa}</h3>
+                <h5>De: {EMPRESA.propietario_empresa}</h5>
                 <small>{EMPRESA.categoria_empresa}</small>
-                <br/>
-                <small>{EMPRESA.direccion_empresa}</small>
+                <br />
+                <small>{EMPRESA.direccion_empresa} Tel: {EMPRESA.telefono_empresa}</small>
               </td>
-              <td  align='center' valign='center'>
-                <strong>Ruc: {EMPRESA.ruc_empresa}</strong>
-                <br />
-                <small>Timbrado: {DF?.timbrado_factura}</small>
-                <br/>
-                <small>Inicio:{funciones.fechaActualDMY(DF?.inicio_timbrado)} </small>
-                <br />
-                <small>Fin:{funciones.fechaActualDMY(DF?.fin_timbrado)}</small>
-                <br/>
-                <strong>{DF?.nro_datos_factura} {  funciones.cerosantes(DF.nro_factura,7) }</strong>
+              <td className="datos bg-smoke text-center">
+                <h5>Timbrado nº: {FACTURA?.timbrado_factura}</h5>
+                <h5>RUC: {EMPRESA.ruc_empresa}</h5>
+                <h5>Inicio vigencia: {FACTURA?.inicio_timbrado}</h5>
+                <h5>Fin vigencia: {FACTURA?.fin_timbrado}</h5>
+                <h4>Factura nº: {FACTURA?.nro_datos_factura} {  funciones.cerosantes(FACTURA.nro_factura,7) } </h4>
               </td>
             </tr>
-              <tr>
-                <td align='center' valign='center'>
-                  <b>Fecha: {funciones.fechaActualDMY( DF.fecha_factura )}</b><br />
-                  <b>Nombre: {DF.nombre_cliente}</b><br />
-                  <b>RUC o CI: {DF.ruc_cliente}</b>
-                </td>
-                <td valign='center' align='center'>
-                  <b>Condición de venta: </b><br />
-                  <b>{DF.tipo_factura === "1" ? "Contado" : "Crédito"}</b>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-          <table width="740" border="1">
-            <tbody>
-              <tr>
-                <td>Cod.</td>
-                <td>Cant.</td>
-                <td>Descripcion</td>
-                <td>Precio</td>
-                <td>Exentas</td>
-                <td>5%</td>
-                <td>10%</td>
-              </tr>
-              {itemsFactura.map((e, i) => (
-              <tr key={i} >
-                          <td width="10%" align="center" valign="center">
-                            {e.codigo_producto}
-                          </td>
-                          <td width="10%" align="center" valign="center">
-                            {e.cantidad_producto}
-                          </td>
-                          <td width="50%">{e.nombre_producto}</td>
-                          <td width="10%" align="center">
-                            <span>
-                              {funciones.numberSeparator(
-                                e.precio_producto_factura
-                              )}
-                            </span>
-                          </td>
-                          <td width="10%" align="center">
-                            {e.porcentaje_impuesto === "0" ?
-                              funciones.numberSeparator(
-                                parseFloat(e.precio_producto_factura) * parseFloat(e.cantidad_producto)
-                              ) : "0"}
-                          </td>
-                          <td width="10%" align="center">
-                            {e.porcentaje_impuesto === "5" ?
-                              funciones.numberSeparator(
-                                parseFloat(e.precio_producto_factura) * parseFloat(e.cantidad_producto)
-                              ) : "0"}
-                          </td>
-                          <td width="10%" align="center">
-                            {e.porcentaje_impuesto === "10" ?
-                              funciones.numberSeparator(
-                                parseFloat(e.precio_producto_factura) * parseFloat(e.cantidad_producto)
-                              ) : "0"}
-                          </td>
-                        </tr>
-                      ))}
-            </tbody>
-          </table>
-          <table width="740" border="1">
-            <tbody>
-              <tr><td align='right' colSpan="4">Descuentos: {DESCUENTO}</td></tr>
-              <tr>
-                <td>Subtotales</td>
-                <td> { EXENTAS}</td>
-                <td>{TOTAL5}</td>
-                <td>{TOTAL10}</td>
-              </tr>
-              <tr>
-                <td>Total a pagar</td>
-                <td colSpan="2"> 
-                      {funciones.NumeroALetras(MONTO_TOTAL, "")} {DF.abreviatura_moneda} </td>
-                <td>{MONTO_TOTAL}</td>
-              </tr>
-              <tr>
-                <td>Liquidacion de IVA</td>
-                <td>5%: {funciones.redondeo2decimales(TOTALIVA5)}</td>
-                <td>10%: {funciones.redondeo2decimales(TOTALIVA10)} </td>
-                <td>Total IVA:{funciones.redondeo2decimales(TOTALIVA)} </td>
-              </tr>
-              <tr>
-                <td colSpan="4">
+          </tbody>
+        </table>
+        <table className="tabla datos_cliente">
+          <tbody>
+            <tr>
+              <td className="cliente">
+                <h5>Fecha emisión: {FACTURA.fecha_factura}</h5>
+                <h5>NOMBRE O RAZON SOCIAL: {FACTURA.nombre_cliente}</h5>
+                <h5>RUC O CI: {FACTURA.ruc_cliente}</h5>
+                <h5>DIRECCION: {FACTURA.direccion_cliente}</h5>
+              </td>
+              <td className="factura">
+                <h5>Cond. de venta: {FACTURA.tipoFactura === "1" ? "Contado" : "Crédito"}</h5>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <table className="tabla tabla_descripcion">
+          <tbody>
+            <tr className="descripcion_head">
+              <td width="3%">COD.</td>
+              <td width="3%">CANT.</td>
+              <td width="46%">DESCRIPCION.</td>
+              <td width="12%">PRECIO</td>
+              <td width="12%">EXENTAS</td>
+              <td width="12%">5%</td>
+              <td width="12%">10%</td>
+            </tr>
+            {
+              itemsFactura.map((e,i)=>(
+                <tr key={i}>
+                  <td width="3%"><small>{e.codigo_producto}</small></td>
+                  <td width="3%"><small>{e.cantidad_producto}</small></td>
+                  <td width="46%">
+                    <small>{e.nombre_producto}</small>
+                  </td>
+                  <td width="12%">
+                    <small>{funciones.numberFormat(e.precio_producto_factura)}</small>
+                  </td>
+                  <td width="12%">
+                    <small>{e.porcentaje_impuesto==='0' ? funciones.numberFormat(e.precio_producto_factura*e.cantidad_producto) : 0}</small>
+                  </td>
+                  <td width="12%">
+                    <small>{e.porcentaje_impuesto==='5' ? funciones.numberFormat(e.precio_producto_factura*e.cantidad_producto) : 0}</small>
+                  </td>
+                  <td width="12%">
+                    <small>{e.porcentaje_impuesto==='10' ? funciones.numberFormat(e.precio_producto_factura*e.cantidad_producto) : 0}</small>
+                  </td>
+                </tr>
+              ))
+            }
+          </tbody>
+        </table>
+        <table className="tabla">
+          <tbody>
+            <tr>
+                  <td width="3%"></td>
+                  <td width="3%"></td>
+                  <td width="46%"><br /></td>
+                  <td width="12%"></td>
+                  <td width="12%"></td>
+                  <td width="12%"></td>
+                  <td width="12%"></td>
+                </tr>
+            <tr className="subtotales bg-smoke">
+              <td colSpan={4}>SUBTOTAL:</td>
+              <td width='12%' className="text-right">
+                {funciones.numberFormat(EXENTAS)}
+              </td>
+              <td width='12%' className="text-right">
+                {funciones.numberFormat(SUBTOTAL5)}
+              </td>
+              <td width='12%' className="text-right">
+                {funciones.numberFormat(SUBTOTAL10)}
+              </td>
+            </tr>
+            <tr className="total">
+              <td colSpan={4}>DESCUENTO:</td>
+              <td className="text-right" colSpan={3}>
+                {funciones.numberFormat(FACTURA.descuento_factura)}
+              </td>
+            </tr>
+            <tr className="total">
+              <td colSpan={3}>
+                <small>Liquidación IVA</small>
+              </td>
+              <td className="text-right">
+                <small>5%: {funciones.numberFormat(TOTALIVA5)}</small>
+              </td>
+              <td className="text-right">
+                <small>10%: {funciones.numberFormat(TOTALIVA10)} </small>
+              </td>
+              <td className="text-right" colSpan={2}>
+                <small>Total IVA: {funciones.numberFormat(FACTURA.total_iva)}</small>
+              </td>
+            </tr>
+            <tr className="total">
+              <td colSpan={5}>
+                <small>Total: {funciones.NumeroALetras(TOTAL,'')}</small>
+              </td>
+              <td className="text-right" colSpan={2}>
+                {funciones.numberFormat(TOTAL)}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <table className="datos_graficos">
+          <tbody>
+            <tr>
+              <td className="grafica" valign="top">
                 <small>
-                  {DF.obs_empresa_factura} {DF.fecha_empresa_factura}
+                  {FACTURA.obs_empresa_factura} {FACTURA.fecha_empresa_factura}
                 </small>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+              </td>
+              <td className="fiscales">
+                <small>Original: Cliente</small>
+                <br />
+                <small>Duplicado: Archivo tributario</small>
+                <br />
+                <small>Triplicado: Contabilidad</small>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
       )}
       <DialogActions>
         <Button size='large' variant='outlined' onClick={enviarEmail} startIcon={<Icon>alternate_email</Icon>}>Enviar</Button>
@@ -197,7 +218,7 @@ const ImprimirFacturaA4 = () => {
           variant="contained"
           color="primary"
           startIcon={<Icon>print</Icon>}
-          onClick={imprimir}
+          onClick={handlePrint}
         >
           {lang.imprimir}
         </ButtonCustom>

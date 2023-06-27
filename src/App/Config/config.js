@@ -15,6 +15,6 @@ export const env = {
     APPNAME : process.env.REACT_APP_NAME,
     XAPITOKEN : process.env.REACT_APP_X_API_TOKEN,
     SECRETO :  process.env.REACT_APP_SECRETO,
-    DRAWER_WIDTH: 200,
+    DRAWER_WIDTH: 195,
     HOME_PAGE_URL: "/admin"
 }

@@ -16,7 +16,10 @@ const DialogImprimir = () => {
     return <ImprimirTicketFactura />
   }
 
+  //console.log(dialogs);
+
   if(dialogs.imprimirFacturaA4){
+    
     return <ImprimirFacturaA4 />
   }
 
