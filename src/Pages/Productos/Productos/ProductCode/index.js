@@ -18,7 +18,8 @@ const ProductCode = () => {
       background: "#fff",
       font: "monospace",
       fontSize:"14px",
-      height: 50,
+      height: 60,
+      width:1
     },
   });
   const add = ()=>{

@@ -13,3 +13,7 @@
     margin-bottom: 2px;
     text-align: center;
 }
+.codigo_content p{
+    line-height: 0;
+    margin: 0;
+}
