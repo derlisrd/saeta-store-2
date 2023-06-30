@@ -79,7 +79,7 @@ export default function MoreMenu({rowData}) {
           </ListItemIcon>
           <ListItemText primary="Editar" primaryTypographyProps={{ variant: 'body2' }} />
         </MenuItem>
-        <MenuItem onClick={()=> {navigate.to(`productos/bc?code=${rowData.codigo_producto}`)}}  sx={{ color: 'text.secondary' }}>
+        <MenuItem onClick={()=> {navigate.to(`productos/bc?code=${rowData.codigo_producto}&price=${rowData.precio_producto}`)}}  sx={{ color: 'text.secondary' }}>
           <ListItemIcon>
           <Icon color="secondary">qr_code</Icon>
           </ListItemIcon>
