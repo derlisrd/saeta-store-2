@@ -18,7 +18,7 @@ const ProductCode = () => {
       background: "#fff",
       font: "monospace",
       fontSize:"14px",
-      height: 60,
+      height: 50,
       width:1
     },
   });
