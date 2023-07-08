@@ -1,0 +1,19 @@
+.codigo_barra{
+    background-color: #fff;
+    color: #000;
+    font-family: monospace;
+    font-size: 12px;
+    max-width: 80mm;
+    padding:5px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.codigo_content{
+    margin-bottom: 2px;
+    text-align: center;
+}
+.codigo_content p{
+    line-height: 0;
+    margin: 0 0 18px 0;
+}

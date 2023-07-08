@@ -6,6 +6,7 @@ import NumberFormatCustom from "../../../Components/thirty/NumberFormatCustom";
 import { useLogin } from "../../../Contexts/LoginProvider";
 import { funciones } from "../../../Functions";
 import swal from "sweetalert";
+import { DatePickerCustom } from "../../../Components/MuiCustom/DatePickerCustom";
 
 const RegistrarMovimiento = () => {
   const { setDialog, dialog,getData,lang } = useMovimientos();
@@ -30,7 +31,8 @@ const RegistrarMovimiento = () => {
     id_cajas_moneda: "",
     id_caja_movimiento: "",
     motivo_movimiento: "",
-    tipo_movimiento:"1"
+    tipo_movimiento:"1",
+    fecha_movimiento: new Date()
   };
   const [formulario, setFormulario] = useState(initialFormulario);
 
@@ -78,7 +80,7 @@ const RegistrarMovimiento = () => {
       setErrors({status:true,message: lang.complete_datos_correctamente})
       return false;
     }
-
+    
     
     let tipo_movimiento = parseInt(f.tipo_movimiento);
 
@@ -114,10 +116,9 @@ const RegistrarMovimiento = () => {
       monto_movimiento: tipo_movimiento === 1 ? f.monto_movimiento : 0,
       monto_sin_efectivo: tipo_movimiento === 0 ? f.monto_movimiento : 0,
       detalles_movimiento: f.motivo_movimiento ,
-      fecha_movimiento: funciones.getFechaHorarioString(),
+      fecha_movimiento: funciones.getDateYMD(f.fecha_movimiento) +" "+ funciones.getHorarioActualString()
     };
 
-    
     let datos_cajas_monedas = tipo_movimiento === 1 ? { monto_caja_moneda : cantidad_nueva} : { monto_no_efectivo : cantidad_nueva}
 
     
@@ -212,7 +213,7 @@ const RegistrarMovimiento = () => {
           </FormControl>
       </Grid>     
 
-      <Grid item xs={12}>
+      <Grid item xs={12} sm={6}>
         <FormControl fullWidth>
             <InputLabel>
               {lang.selecciona_registro}
@@ -232,7 +233,7 @@ const RegistrarMovimiento = () => {
           </FormControl>
       </Grid>
       
-      <Grid item xs={12}>
+      <Grid item xs={12} sm={6}>
         <TextField
             fullWidth
             label={lang.monto_movimiento}
@@ -244,7 +245,17 @@ const RegistrarMovimiento = () => {
             onChange={onChange}
           />
       </Grid>
-      <Grid item xs={12}>
+      <Grid item xs={12} sm={6}>
+      <DatePickerCustom 
+        fullWidth
+        label={lang.fecha}
+        value={formulario.fecha_movimiento}
+        defaultValue={formulario.fecha_movimiento}
+        onChange={e=>{ setFormulario({...formulario,fecha_movimiento: e}) }}
+        name="fecha_movimiento"
+        />
+      </Grid>
+      <Grid item xs={12} sm={6}>
             <FormLabel component="legend">Tipo: </FormLabel>
                 <FormControlLabel
                   value="1"
