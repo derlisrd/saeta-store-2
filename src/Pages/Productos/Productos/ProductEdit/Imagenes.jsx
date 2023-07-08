@@ -5,14 +5,13 @@ import { useProductFormEdit } from "./ProductFormEditProvider";
 const Imagenes = () => {
   const { setImages,imagesURL,setImagesURL,images,listaImagenes,eliminarImagen } = useProductFormEdit();
   
-  const deleteImage = e =>{
-    let fileArray = [...images]; // images file
-    let imagesArray = [...imagesURL]; // images url
-    fileArray.splice(e, 1);
-    imagesArray.splice(e,1);
+  const deleteImage = index =>{
+    let fileArray = [...images]; 
+    let imagesArray = [...imagesURL]; 
+    fileArray.splice(index, 1);
+    imagesArray.splice(index,1);
     setImages(fileArray)
     setImagesURL(imagesArray);
-    
   }
   const changeImage = (e) => {
     let fileObj = [];
@@ -66,7 +65,7 @@ const Imagenes = () => {
           </Stack>
             ))}
           {
-            listaImagenes.map((e)=>(
+            listaImagenes.map((e,i)=>(
           <Stack key={e.id_productos_image} direction="column">
             <Avatar
               variant="square"
@@ -75,7 +74,7 @@ const Imagenes = () => {
               sx={{ width: 256, height: 256 }}
             />
             <Tooltip title="Borrar imagen">
-            <IconButton onClick={()=> eliminarImagen(e.id_productos_image) }>
+            <IconButton onClick={()=> eliminarImagen(e.id_productos_image,i) }>
               <Icon>delete</Icon>
             </IconButton>
             </Tooltip>

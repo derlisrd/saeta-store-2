@@ -100,7 +100,7 @@ const ProductFormEditProvider = (props) => {
 
 
 
-    const eliminarImagen = async(idImage)=>{
+    const eliminarImagen = async(idImage,index)=>{
       let borrar = await swal({icon: "warning",text:lang.q_desea_borrar_imagen,buttons: [`Cancelar`, `Ok`],dangerMode: true})
        if(borrar){
          setCargas({main:false,guardar:true});
@@ -111,9 +111,10 @@ const ProductFormEditProvider = (props) => {
             console.log(res);
           }
           let ima = [...listaImagenes];
-          let index = ima.findIndex(e=> e.id_productos_image === id)
+          //let index = ima.findIndex(e=> e.id_productos_image === id)
           ima.splice(index, 1);
           setListaImagenes(ima);
+          console.log(idImage,index);
        }
        setCargas({main:false,guardar:false});
      }
