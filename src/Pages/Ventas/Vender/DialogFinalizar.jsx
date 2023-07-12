@@ -29,7 +29,17 @@ const DialogFinalizar = () => {
       setErrors(initialErrors);
     }
   };
-
+  /* const cambiaMetodoPago = (e)=>{
+    let id_found = e.target.value
+    let listaFormasPago = [ ...fd.listaFormasPago]
+    let found = listaFormasPago.find(elem=> elem.id_facturas_formas_pago === id_found )
+    if(found.tipo_operacion === '1'){
+      // debe descontar
+      
+    }else{ 
+      // debe sumar
+    }
+  } */
 
   const AgregarCantidad = ()=>{
     AgregarCantidadMetodoPago()
@@ -154,7 +164,7 @@ const DialogFinalizar = () => {
             <Grid container spacing={1}>
               <Grid item xs={12} sm={6} >
                 <TextField
-                  onKeyPress={e => {e.key === "Enter" && consultarCliente(inputDoc.current.value);}}
+                  onKeyUp={e => {e.key === "Enter" && consultarCliente(inputDoc.current.value);}}
                   label="Documento de cliente"placeholder="Documento de cliente"fullWidth inputRef={inputDoc} 
                   InputProps={{
                     startAdornment: (

@@ -984,7 +984,7 @@ const VentasProvider = ({ children }) => {
       let [rCajas,rMoneda,rFormasPago,rVendedores,rDepositos,cajaMonedas,cajasOpened] = await Promise.all([
         APICALLER.get({table: "cajas",include:"cajas_users", on:"id_caja,id_caja_caja",where: `id_user_caja,=,${id_user}`}),
         APICALLER.get({ table: "monedas" }),
-        APICALLER.get({ table: "facturas_formas_pagos" }),
+        APICALLER.get({ table: "facturas_formas_pagos",fields:'descripcion_forma_pago,id_facturas_formas_pago,porcentaje_descuento_pago,tipo_operacion'}),
         APICALLER.get({ table: "empleados",fields:"id_empleado,nombre_empleado,apellido_empleado" }),
         APICALLER.get({table:"depositos",where:"tipo_deposito,=,1"}),
         APICALLER.get({table:"cajas_monedas",include:"cajas,monedas,cajas_users",on:"id_caja_moneda,id_caja,id_moneda,id_moneda_caja_moneda,id_caja,id_caja_caja",where: `id_user_caja,=,${id_user}`}),
