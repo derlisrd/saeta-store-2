@@ -47,6 +47,7 @@ const DialogCotizacion = () => {
       let array = [...lista];
       array[index].valor_moneda = data.valor_moneda;
       setLista(array);
+      localStorage.setItem("dataMonedas", JSON.stringify(array))
       cerrar();
     } else {
       console.log(res);
@@ -58,6 +59,7 @@ const DialogCotizacion = () => {
     const { name, value } = e.target;
     setData({ ...data, [name]: value });
   };
+
   useEffect(() => {
     const getDatos = () => {
       if (dialogCotizacion) {

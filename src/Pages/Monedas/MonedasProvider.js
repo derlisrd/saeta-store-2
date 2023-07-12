@@ -12,7 +12,7 @@ const MonedasProvider = ({children}) => {
 
     const [datosMonedas,setDatosMonedas] = useState({id_moneda: "1", abreviatura_moneda: "Gs.", nombre_moneda: "Guaraníes", valor_moneda: "1", activo_moneda: "1"})
 
-    const getLista = useCallback(async()=>{
+    const getLista = useCallback(async()=>{ 
         const local = localStorage.getItem("dataMonedas");
         if(local===null){
           const res = await APICALLER.get({table:`monedas`})
