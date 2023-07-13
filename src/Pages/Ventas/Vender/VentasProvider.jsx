@@ -861,14 +861,17 @@ const VentasProvider = ({ children }) => {
       let foundIndex = da.formasPago.findIndex(e => e.id_forma_pago === da.id_formaPago);
 
       if (foundIndex<0) {
-        let des = list.filter(e=> e.id_facturas_formas_pago === da.id_formaPago); 
+        let des = list.find(e=> e.id_facturas_formas_pago === da.id_formaPago); 
+        console.log(des);
         da.formasPago.push({
           id_forma_pago: da.id_formaPago,
           obs:da.obs_pago,
-          descuento: des[0].porcentaje_descuento_pago,
+          tipo: des.tipo_operacion,
+          descuento: des.porcentaje_descuento_pago,
+          porcentaje: parseFloat(des.porcentaje_descuento_pago),
           cantidad: isNaN(valor) ? 0 : parseFloat(valor) ,
-          descripcion: des[0].descripcion_forma_pago || ""
-        });
+          descripcion: des.descripcion_forma_pago || "",
+        }); 
         e.factura.error = false;
         e.factura.errorMensaje="";
       }else{

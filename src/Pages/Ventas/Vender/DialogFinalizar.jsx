@@ -297,9 +297,7 @@ const DialogFinalizar = () => {
                   control={
                     <Checkbox
                       name="entregado_items"
-                      value={
-                        fa.datosFactura.entregado_items === "1" ? "0" : "1"
-                      }
+                      value={fa.datosFactura.entregado_items === "1" ? "0" : "1"}
                       checked={fa.datosFactura.entregado_items === "1"}
                       onChange={changeInputsDatosFactura}
                     />
@@ -312,7 +310,7 @@ const DialogFinalizar = () => {
                 {fa.datosFactura.formasPago.map((e, i) => (
                   <Stack key={i} direction="row" alignItems={"center"}>
                     <IconButton onClick={()=> borrarMetodoPago(i,e.cantidad)}><Icon>clear</Icon></IconButton>
-                    <Typography variant="body1">{e.descripcion}: {funciones.numberSeparator(e.cantidad/valorMoneda)} - {e.obs}</Typography>
+                    <Typography variant="body1">{e.descripcion}: {funciones.numberSeparator(e.cantidad/valorMoneda)} {e.porcentaje} {e.obs}</Typography>
                   </Stack>
                 ))}
               </Grid>
@@ -333,7 +331,7 @@ const DialogFinalizar = () => {
             >
               <Grid item xs={12} sm={6}>
                 <FormControl fullWidth>
-                  <InputLabel >Método de pago</InputLabel>
+                  <InputLabel>Método de pago</InputLabel>
                   <Select
                     value={fa.datosFactura.id_formaPago}
                     name="id_formaPago" onChange={changeInputsDatosFactura}
@@ -344,7 +342,7 @@ const DialogFinalizar = () => {
                     </MenuItem>
                     {fd.listaFormasPago.map((e, i) => (
                       <MenuItem value={e.id_facturas_formas_pago} key={i}>
-                        {e.descripcion_forma_pago}
+                        {e.descripcion_forma_pago} {e.porcentaje_descuento_pago}%
                       </MenuItem>
                     ))}
                   </Select>
@@ -367,8 +365,6 @@ const DialogFinalizar = () => {
                   id="cantidad_recibida"
                   value={cantidadRecibida}
                   onChange={e=>{setCantidadRecibida(e.target.value)}}
-                  /* value={fa.datosFactura.cantidad_recibida}
-                  onChange={changeInputsDatosFactura}  */
                   fullWidth
                   InputProps={{
                     startAdornment: (
