@@ -40,10 +40,6 @@ const RegistroFacturasLista = () => {
         field:"nro_fin_factura",
         title:"Nro fin factura",
     },
-    {
-        field:"nombre_caja",
-        title:"Caja asignada"
-    }
 ]
 
 

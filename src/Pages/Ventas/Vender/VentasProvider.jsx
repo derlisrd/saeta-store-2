@@ -1010,7 +1010,9 @@ const VentasProvider = ({ children }) => {
         } else {
           if( (rc.results.some(e => e.estado_caja==="open"))){
             let IDCAJAFACTURA = rCajas.results[0].id_caja;
-            let fac = await APICALLER.get({table: "empresa_facturas",where: `id_caja_empresa,=,${IDCAJAFACTURA}`});
+            let fac = await APICALLER.get({table: "empresa_facturas",include:'facturas_cajas',on:'factura_empresa_id,id_empresa_factura',
+            where: `caja_id_factura,=,${IDCAJAFACTURA}`});
+            console.log(fac.results);
             if (fac.found > 0) {
               ACTIVEFACTURA = true;
               FACTURALISTA = fac.results

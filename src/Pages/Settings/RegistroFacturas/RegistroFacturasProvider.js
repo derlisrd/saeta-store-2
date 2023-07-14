@@ -29,12 +29,19 @@ const RegistroFacturasProvider = ({ children }) => {
     });
 
     if (res.response ) {
+      let last_id = res.last_id;
       let promises = []
       let cajasInsert = formulario.cajas;
+
       cajasInsert.forEach(el=>{
-        promises.push(APICALLER.insert({table:'facturas_cajas',}))
+        promises.push(APICALLER.insert({table:'facturas_cajas',token:token_user,
+        data:{
+          caja_id_factura: el.id_caja,
+          factura_empresa_id: last_id
+          }
+        }))
       })
-      //let insertCaja = await 
+       await Promise.all(promises)
       getDatas();
       swal({icon:"success", text:lang.registrado_correctamente, timer:1200})
       localStorage.removeItem("facturasStorage");
@@ -47,7 +54,7 @@ const RegistroFacturasProvider = ({ children }) => {
 
   const getDatas = useCallback(async () => {
     let res = await Promise.all([APICALLER.get({table: "cajas",fields: "nombre_caja,id_caja"}),
-    APICALLER.get({table: `empresas`,include:`empresa_facturas,cajas`,on: `id_empresa_empresa,id_empresa,id_caja,id_caja_empresa`})])
+    APICALLER.get({table: `empresas`,include:`empresa_facturas`,on: `id_empresa_empresa,id_empresa`})])
     
     let fac = res[1],
     caj = res[0];

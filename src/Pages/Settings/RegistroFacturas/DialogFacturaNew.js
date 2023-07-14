@@ -8,7 +8,6 @@ const DialogFacturaNew = () => {
   const { openModal, setOpenModal,lang,listaCajas,registrar,cargando} = useRegistroFacturas();
   const inicial = {
     id_empresa_empresa: "1",
-    id_caja_empresa: "",
     timbrado_factura: "",
     inicio_timbrado: "",
     fin_timbrado: "",
@@ -22,7 +21,7 @@ const DialogFacturaNew = () => {
     cajas:[]
   };
   const [formulario, setFormulario] = useState(inicial);
-  console.log(formulario);
+  //console.log(formulario);
   const enviarFormulario = e => {
     e.preventDefault();
     if(formulario.cajas<1){ return false;}
