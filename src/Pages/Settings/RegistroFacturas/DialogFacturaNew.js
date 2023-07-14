@@ -1,4 +1,4 @@
-import {Dialog,DialogContent,DialogTitle,DialogActions,Button,TextField,Select,MenuItem,FormControl,InputLabel, Grid, LinearProgress, FormControlLabel, FormLabel, Radio} from "@mui/material";
+import {Dialog,DialogContent,DialogTitle,DialogActions,Button,TextField,FormGroup,Checkbox,InputLabel, Grid, LinearProgress, FormControlLabel, FormLabel, Radio} from "@mui/material";
 import { useState } from "react";
 import { useRegistroFacturas } from "./RegistroFacturasProvider";
 
@@ -18,14 +18,34 @@ const DialogFacturaNew = () => {
     last_nro_factura: "",
     autoimpresor:"0",
     fecha_empresa_factura:"",
-    obs_empresa_factura:""
+    obs_empresa_factura:"",
+    cajas:[]
   };
   const [formulario, setFormulario] = useState(inicial);
-
+  console.log(formulario);
   const enviarFormulario = e => {
     e.preventDefault();
+    if(formulario.cajas<1){ return false;}
     registrar(formulario);
   };
+  const changeCajas = e=>{
+    let f = {...formulario}
+    
+    //console.log(e.target.checked,e.target.value)
+    
+    if(e.target.checked){
+      let index1 =  f.cajas.findIndex(i=> i.id_caja === e.target.value)
+      if(index1<0){
+        f.cajas.push({id_caja: e.target.value})
+      }
+    }else{
+      let index =  f.cajas.findIndex(i=> i.id_caja === e.target.value)
+      if(index>=0){
+        f.cajas.splice(index, 1);
+      }
+    }
+    setFormulario(f);
+  }
 
   const onChange = (e) => {
     const { name, value } = e.target;
@@ -131,13 +151,13 @@ const DialogFacturaNew = () => {
           />
           </Grid>
           <Grid item xs={12}>
-          <FormLabel component="legend">Autoimpresor?:</FormLabel>
+          <FormLabel component="legend">Autoimpresor o preimpreso?:</FormLabel>
           <FormControlLabel
             value="0"
             control={
               <Radio name="autoimpresor" checked={formulario.autoimpresor === "0"}  onChange={onChange}   />
             }
-            label="No"
+            label="No. Pre-impreso"
             labelPlacement="end"
           />
           <FormControlLabel
@@ -145,7 +165,7 @@ const DialogFacturaNew = () => {
             control={
               <Radio name="autoimpresor" checked={formulario.autoimpresor === "1"} onChange={onChange} />
             }
-            label="Si"
+            label="Si, autoimpresor"
             labelPlacement="end"
           />
           </Grid>
@@ -153,24 +173,14 @@ const DialogFacturaNew = () => {
             <TextField fullWidth onChange={onChange} name="obs_empresa_factura" value={formulario.obs_empresa_factura} label="Observaciones importantes a declarar por la set" />
           </Grid>
           <Grid item xs={12} sm={6}>
-          <FormControl fullWidth>
-            <InputLabel>Asignar factura a caja</InputLabel>
-            <Select
-              value={formulario.id_caja_empresa}
-              name="id_caja_empresa"
-              onChange={onChange}
-              required
-            >
-              {
-                listaCajas.length<1 && <MenuItem disabled>No hay cajas disponibles</MenuItem>
-              }
-              {listaCajas.map((item) => (
-                <MenuItem key={item.id_caja} value={item.id_caja}>
-                  {item.nombre_caja}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
+
+
+          <FormGroup >
+            <InputLabel>{lang.asignar_cajas}</InputLabel>
+            {
+            listaCajas.map((d,i) => (<FormControlLabel  key={i} control={<Checkbox name={d.id_caja} value={d.id_caja} onChange={changeCajas} />} label={d.nombre_caja}/>))
+            }
+          </FormGroup>
           </Grid>
           
           </Grid>

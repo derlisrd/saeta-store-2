@@ -182,12 +182,12 @@ const VentasProvider = ({ children }) => {
 
     
     let efectivo=0,sinEfectivo=0,cambio = 0, porcentaje_descuento_pago = 0, observaciones = "";
-
+    let datos_cliente = `Cliente: ${df.datosCliente.id_cliente} ${df.datosCliente.nombre_cliente}.`
     let objDetalles = {
-      0: `Venta recibo: ${LASTNROFACTURA}. Cliente: ${df.datosCliente.id_cliente}. `,
-      1: `Venta contado factura: ${LASTNROFACTURA}. Cliente: ${df.datosCliente.id_cliente}. `,
-      2: `Venta credito factura: ${LASTNROFACTURA}. Cliente: ${df.datosCliente.id_cliente}. `,
-      3: `Venta cuota recibo: ${LASTNROFACTURA}. Cliente: ${df.datosCliente.id_cliente}. `
+      0: `Venta recibo: ${LASTNROFACTURA}. ${datos_cliente} `,
+      1: `Venta contado factura: ${LASTNROFACTURA}. ${datos_cliente} `,
+      2: `Venta credito factura: ${LASTNROFACTURA}. ${datos_cliente} `,
+      3: `Venta cuota recibo: ${LASTNROFACTURA}. ${datos_cliente} `
     }
     let detallesMov = objDetalles[tipoFactura];
     
@@ -300,6 +300,7 @@ const VentasProvider = ({ children }) => {
       id_moneda_factura: df.datosMoneda.id_moneda,
       valor_moneda_factura: df.datosMoneda.valor_moneda,
       nro_factura: parseInt(LASTNROFACTURA),
+      factura_vuelto: df.datosFactura.tipoFactura === "2" ? 0 : df.datosFactura.totalAbonado - df.total,
       fecha_factura: FECHA_ACTUAL,
       fecha_cobro_factura: df.datosFactura.fecha_cobro_factura +" "+ funciones.getHorarioActualString(),
       estado_factura: parseInt(df.datosFactura.tipoFactura) < 2 ? 1 : 2,
@@ -334,6 +335,7 @@ const VentasProvider = ({ children }) => {
       })
       let dataFormaPago = {
         efectivo_factura: efe,
+        //caja_id: df.datosFactura.id_caja,
         factura_id: ID_FACTURA,
         moneda_id: MONEDA_ID,
         no_efectivo_factura: noefe,
@@ -410,9 +412,7 @@ const VentasProvider = ({ children }) => {
     setearFactura(fa);
     setCargas({ ...cargas, finalizarVenta: false});
 
-    
-    
-   
+  
     if ( tipoFactura === 0 || tipoFactura===3) {
       //RECIBO
       if(EMPRESA.tipo_papel === '0')
@@ -432,9 +432,10 @@ const VentasProvider = ({ children }) => {
         setDialogs({ ...dialogs, imprimirFacturaA4: true, finalizarVenta:false });
       }
     }  
-
-
   }
+
+
+
 
 
 
@@ -862,7 +863,7 @@ const VentasProvider = ({ children }) => {
 
       if (foundIndex<0) {
         let des = list.find(e=> e.id_facturas_formas_pago === da.id_formaPago); 
-        console.log(des);
+        //console.log(des);
         da.formasPago.push({
           id_forma_pago: da.id_formaPago,
           obs:da.obs_pago,

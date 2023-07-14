@@ -187,23 +187,24 @@ const FacturasProvider = ({ children }) => {
       let id = factura.id_factura;
       let id_caja = factura.id_caja_factura;
       let id_moneda = factura.id_moneda_factura;    
-      //let monto = factura.monto;
-      //console.log(factura)
 
       let [products,caja,pag,dep] = await Promise.all([
         APICALLER.get({table:'facturas_items',
         include:'productos,depositos',on:'id_producto,id_producto_factura,id_deposito,id_deposito_item',
         where:`id_items_factura,=,${id}`,
         fields:'id_producto_factura,cantidad_producto,nombre_producto,id_deposito_item,nombre_deposito,codigo_producto,precio_producto_factura,tipo_producto,entregado_item'}),
+
         APICALLER.get({table:'cajas_monedas',include:'cajas',on:'id_caja,id_caja_moneda',
         where:`id_caja_moneda,=,${id_caja},and,id_moneda_caja_moneda,=,${id_moneda}`,fields:'monto_caja_moneda,monto_no_efectivo,nombre_caja,id_cajas_moneda'}),
-        APICALLER.get({table:'facturas_pagos',include:'monedas',on:'moneda_id,id_moneda',
-        where:`factura_id,=,${id}`,fields:'efectivo_factura,no_efectivo_factura,nombre_moneda,abreviatura_moneda'}),
+        
+        APICALLER.get({table:'facturas_pagos',include:'monedas,facturas',on:'moneda_id,id_moneda,factura_id,id_factura',
+        where:`factura_id,=,${id}`,fields:'efectivo_factura,no_efectivo_factura,nombre_moneda,abreviatura_moneda,monto_total_factura,recibido_factura,factura_vuelto'}),
+        
         APICALLER.get({table:'facturas_items',include:'productos_depositos',on:'id_producto_factura,id_producto_deposito',
         where:`id_items_factura,=,${id},and,id_deposito_deposito,=,id_deposito_item`,
         fields:'stock_producto_deposito,id_productos_deposito,cantidad_producto,entregado_item'})
       ])
-
+ 
       if(products.response){
         let prod = [];
         products.results.forEach(e=>{
@@ -237,20 +238,21 @@ const FacturasProvider = ({ children }) => {
     let promises = [];
     
     let cajas_monedas = {
-       monto_caja_moneda: parseFloat(dev.cajas.monto_caja_moneda) - parseFloat(dev.pagos.efectivo_factura),
-       monto_no_efectivo: parseFloat(dev.cajas.monto_no_efectivo) - parseFloat(dev.pagos.no_efectivo_factura)
+      monto_caja_moneda: parseFloat(dev.cajas.monto_caja_moneda) - parseFloat(dev.pagos.efectivo_factura) - parseFloat(dev.pagos.factura_vuelto),
+      monto_no_efectivo: parseFloat(dev.cajas.monto_no_efectivo) - parseFloat(dev.pagos.no_efectivo_factura)
     }
-
+    
     let cajas_mov = {
       id_caja_movimiento: dev.id_caja,
       id_moneda_movimiento:dev.id_moneda,
       id_user_movimiento:id_user,
       id_tipo_registro: 8,
-      monto_movimiento: dev.pagos.efectivo_factura,
+      monto_movimiento: dev.pagos.efectivo_factura - parseFloat(dev.pagos.factura_vuelto) ,
       monto_sin_efectivo: dev.pagos.no_efectivo_factura,
       fecha_movimiento: funciones.getFechaHorarioString(),
-      detalles_movimiento:'Devolución de productos doc nro: '+dev.nro
+      detalles_movimiento:'Devolución de productos, venta doc nro: '+dev.nro
     }
+
     promises.push([
       APICALLER.update({table:'facturas',data:{estado_factura:0},id:dev.id,token:token_user}),
       APICALLER.insert({table:'cajas_movimientos',data:cajas_mov,token:token_user}),

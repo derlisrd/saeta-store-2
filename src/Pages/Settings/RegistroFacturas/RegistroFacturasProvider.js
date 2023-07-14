@@ -18,14 +18,23 @@ const RegistroFacturasProvider = ({ children }) => {
   const registrar = async(formulario)=>{
     setCargando({lista:true,save:true})
     let form = { ...formulario };
+    delete form.cajas;
     form.last_nro_factura = formulario.nro_inicio_factura;
     localStorage.removeItem("facturasStorage");
+    
     let res = await APICALLER.insert({
       table: "empresa_facturas",
       data: form,
       token: token_user,
     });
+
     if (res.response ) {
+      let promises = []
+      let cajasInsert = formulario.cajas;
+      cajasInsert.forEach(el=>{
+        promises.push(APICALLER.insert({table:'facturas_cajas',}))
+      })
+      //let insertCaja = await 
       getDatas();
       swal({icon:"success", text:lang.registrado_correctamente, timer:1200})
       localStorage.removeItem("facturasStorage");

@@ -310,7 +310,7 @@ const DialogFinalizar = () => {
                 {fa.datosFactura.formasPago.map((e, i) => (
                   <Stack key={i} direction="row" alignItems={"center"}>
                     <IconButton onClick={()=> borrarMetodoPago(i,e.cantidad)}><Icon>clear</Icon></IconButton>
-                    <Typography variant="body1">{e.descripcion}: {funciones.numberSeparator(e.cantidad/valorMoneda)} {e.porcentaje} {e.obs}</Typography>
+                    <Typography variant="body1">{e.descripcion}: {funciones.numberSeparator(e.cantidad/valorMoneda)} {e.porcentaje}% {e.obs}</Typography>
                   </Stack>
                 ))}
               </Grid>

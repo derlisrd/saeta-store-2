@@ -1,13 +1,14 @@
 import Tablas from "../../../Components/UI/Tablas";
-import {Button,Icon,Grid,FormControl,InputLabel,Select, MenuItem,Tooltip,Typography,Alert} from "@mui/material";
+import {Button,Icon,Grid,FormControl,InputLabel,Select, MenuItem,Typography,Alert, TextField, InputAdornment, IconButton,Stack} from "@mui/material";
 import { useMovimientos } from "./MovimientosProvider";
 import { useState } from "react";
 import { funciones } from "../../../Functions";
 import { DatePickerCustom } from "../../../Components/MuiCustom/DatePickerCustom";
 import useInitialState from "./useInitialState";
+import ButtonTip from "../../../Components/Botones/ButtonTip";
 
 const ListaMovimientos = () => {
-  const { dataPrint, lang,setDesdeFecha,setHastaFecha,setDialog,dialog,setForm,lista,setIdCaja,listaCajas,cargando,movimientos,setTipoRegistro, listaMonedas,setMonedaFilter
+  const { getData, getBuscarMovimientos, lang,setDesdeFecha,setHastaFecha,setDialog,dialog,setForm,lista,setIdCaja,listaCajas,cargando,movimientos,setTipoRegistro, listaMonedas,setMonedaFilter
   } = useMovimientos();
   const {columnsTable} = useInitialState()
 
@@ -22,7 +23,7 @@ const ListaMovimientos = () => {
   const [idRegistrito,setIdRegistrito] = useState("");
   const [idMoneda,setIdMoneda] = useState("")
 
-  const changeDatadesde = (e) => { setDesde(e) }
+  const changeDatadesde = (e) => setDesde(e);
   const changeDatahasta = (e) => setHasta(e);
 
   const Filtrar = () => {
@@ -33,6 +34,12 @@ const ListaMovimientos = () => {
     setMonedaFilter(idMoneda);
   };
 
+  const buscarMov = ()=>{
+    let valor = document.getElementById('_buscarMovimiento').value;
+    if(valor===''){return false;}
+    getBuscarMovimientos(valor,funciones.getDateYMD( desde ),funciones.getDateYMD( hasta ))
+  }
+  const pressEnterBuscaMov= (e)=>{ if(e.key==='Enter') { buscarMov()} }
   
 
   const abrir = () => setDialog({...dialog,registrar:true})
@@ -40,19 +47,13 @@ const ListaMovimientos = () => {
   
 
   const Acciones = ({rowProps}) => (
-    <Tooltip arrow title={lang.presione_mas_detalles}>
-      <Button onClick={()=>abrirForm(rowProps)} variant="outlined"  color="primary">
-        {lang.ver_mas}
-      </Button>
-    </Tooltip>
+      <ButtonTip title='Ver más detalles' onClick={()=>abrirForm(rowProps)} icon="sms" />
   );
 
   const search = (
     <Grid container spacing={2} alignItems="center">
-      <Grid item xs={12} sm={6} md={2}>
-        
+      <Grid item xs={12} sm={6} md={2} lg={2}>
         <DatePickerCustom 
-        fullWidth
         label={lang.desde}
         value={ (desde)}
         defaultValue={desde}
@@ -60,29 +61,19 @@ const ListaMovimientos = () => {
         name="desdeFecha"
         />
       </Grid>
-      <Grid item xs={12} sm={6} md={2}>
-
-
+      <Grid item xs={12} sm={6} md={2} lg={2}>
       <DatePickerCustom 
-        fullWidth
         label={lang.hasta}
         value={hasta}
         defaultValue={hasta}
         onChange={changeDatahasta}
         name="hastaFecha"
         />
-
       </Grid>
-      <Grid item xs={12} sm={4} md={3}>
+      <Grid item xs={12} sm={4} md={3} lg={2}>
         <FormControl fullWidth>
           <InputLabel>{lang.seleccione_caja}</InputLabel>
-          <Select
-            name="id_caja"
-            onChange={(e) => {
-              setIdCajita(e.target.value);
-            }}
-            value={idCajita}
-          >
+          <Select name="id_caja" onChange={(e) => {setIdCajita(e.target.value);}} value={idCajita}>
             <MenuItem value="">{lang.todos}</MenuItem>
             {listaCajas.map((item, index) => (
               <MenuItem key={index} value={item.id_caja}>
@@ -92,7 +83,7 @@ const ListaMovimientos = () => {
           </Select>
         </FormControl>
       </Grid>
-      <Grid item xs={12} sm={4} md={3}>
+      <Grid item xs={12} sm={4} md={3} lg={2}>
         <FormControl fullWidth>
           <InputLabel>{lang.seleccione_movimiento}</InputLabel>
           <Select
@@ -101,16 +92,14 @@ const ListaMovimientos = () => {
             value={idRegistrito}
           >
             <MenuItem value="">Todos</MenuItem>
-
               <MenuItem value={"2"}>{lang.apertura}</MenuItem>
               <MenuItem value={"1"}>{lang.ingreso}</MenuItem>
               <MenuItem value={"0"}>{lang.egreso}</MenuItem>
               <MenuItem value={"3"}>{lang.cierre}</MenuItem>
-              
           </Select>
         </FormControl>
       </Grid>
-      <Grid item xs={12} sm={4} md={2}>
+      <Grid item xs={12} sm={4} md={2} lg={2}>
         <FormControl fullWidth>
           <InputLabel>{lang.moneda}</InputLabel>
           <Select
@@ -129,25 +118,37 @@ const ListaMovimientos = () => {
           </Select>
         </FormControl>
       </Grid>
-      <Grid item xs={12} sm={6} md={5}>
-        <Button
-          onClick={Filtrar}
-          variant="contained"
-          size="large"
-          startIcon={<Icon>filter_list</Icon>}
-        >
-          {lang.filtrar}
-        </Button>
+      <Grid item xs={12} sm={6} md={5} lg={2}>
+        <Stack direction='row' spacing={1}>
+          <ButtonTip icon='manage_search' title='Filtrar' onClick={Filtrar} />
+          <ButtonTip icon='cleaning_services' title='Limpiar' onClick={getData} />
+        </Stack>
+      </Grid>
+      <Grid item xs={12} sm={6} md={6} >
+        <TextField fullWidth label="Buscar movimientos" onKeyUp={pressEnterBuscaMov} id="_buscarMovimiento" 
+          InputProps={{
+            endAdornment: (
+              <InputAdornment position="end">
+                <IconButton onClick={buscarMov}><Icon>search</Icon></IconButton>
+              </InputAdornment>
+            ),
+          }}
+        />
       </Grid>
       <Grid item xs={12}>
+        <Stack direction='row' spacing={1}>
         <Button variant="contained" onClick={abrir}>
           {lang.registrar_movimiento}
         </Button>
+        <Button startIcon={<Icon>feed</Icon>} variant="contained" onClick={()=>{setDialog({...dialog,reportes:true})}}>
+          Reportes
+        </Button>
+        </Stack>
       </Grid>
       <Grid item >
       <Alert severity="success" variant="outlined" icon={false}>
         <Typography variant="h5">
-          {lang.entrada}: {funciones.numberSeparator(movimientos.ingresoEfectivo + movimientos.ingresoSinEfectivo)}{" "}
+          {lang.entrada}: {funciones.numberSeparator(movimientos.ingresoEfectivo + movimientos.ingresoSinEfectivo)}
         </Typography>
         </Alert>
       </Grid>
@@ -168,7 +169,6 @@ const ListaMovimientos = () => {
     </Grid>
   );
   return (
-    <>
       <Tablas
         icon={{ name:"leaderboard" }}
         caption={`${lang.total_movimiento}: ${funciones.numberSeparator(movimientos.ingresoTotal)}`}
@@ -180,10 +180,7 @@ const ListaMovimientos = () => {
         datas={lista}
         loading={cargando}
         showOptions
-        datasPrint={dataPrint}
-        print
       />
-    </>
   );
 };
 

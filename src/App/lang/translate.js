@@ -1,6 +1,7 @@
 export const translate = {
     es:{
         hola:"Hola",
+        asignar_cajas:'Asignar cajas',
         perfil:'Perfil',
         nueva_marca:"Nueva marca",
         clave:"Contraseña",

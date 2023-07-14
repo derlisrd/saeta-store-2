@@ -26,7 +26,7 @@ const MovimientosProvider = ({ children }) => {
   const [desdeFecha, setDesdeFecha] = useState(fecha);
   const [hastaFecha, setHastaFecha] = useState(fecha);
 
-  const initialDialog = {registrar:false,detalles:false}
+  const initialDialog = {registrar:false,detalles:false,reportes:false}
   const [dialog, setDialog] = useState(initialDialog);
   const [lista, setLista] = useState([]);
   const [listaCajas, setListaCajas] = useState([]);
@@ -47,7 +47,31 @@ const MovimientosProvider = ({ children }) => {
     totalCaja:0
   };
   const [movimientos,setMovimientos] = useState(initialIngresos);
+  const getBuscarMovimientos = async(txt,fecha_inicial,fecha_final)=>{
+    setCargando(true);
+    let where_filter = `fecha_movimiento,between,'${desdeFecha} 00:00:00',and,'${hastaFecha} 23:59:59'`;
+    if(fecha_inicial && fecha_final){
+      where_filter = `fecha_movimiento,between,'${fecha_inicial} 00:00:00',and,'${fecha_final} 23:59:59'`
+    }
 
+    let res = await APICALLER.get({
+      table:'cajas_movimientos',
+      filtersField:'detalles_movimiento',
+      filtersSearch:txt,
+      sort:'id_cajas_movimiento',
+      pagesize:100,
+      where: where_filter,
+      include: "cajas,cajas_registros,users",
+      on: "id_caja,id_caja_movimiento,id_cajas_registro,id_tipo_registro,id_user,id_user_movimiento",
+      fields: `nombre_caja,id_cajas_movimiento,nombre_user,tipo_registro,fecha_movimiento,monto_movimiento,monto_sin_efectivo,descripcion_registro,detalles_movimiento`,
+    })
+    if(res.response){
+      setLista(res.results);
+    }else{
+      console.log(res);
+    }
+    setCargando(false);
+  }
 
   const getFilterDatas = useCallback(async(filters)=>{
 
@@ -70,7 +94,7 @@ const MovimientosProvider = ({ children }) => {
       on: "id_caja,id_caja_movimiento,id_cajas_registro,id_tipo_registro,id_user,id_user_movimiento",
       fields: `nombre_caja,id_cajas_movimiento,nombre_user,tipo_registro,fecha_movimiento,monto_movimiento,monto_sin_efectivo,descripcion_registro,detalles_movimiento`,
       where: `fecha_movimiento,between,'${desdeFecha} 00:00:00',and,'${hastaFecha} 23:59:59'${existIDCaja} ${tipo_Registro} ${monedafiltrada}`,
-      sort: "-fecha_movimiento",
+      sort: "fecha_movimiento",
     })]
 
     if(storeMonedas){
@@ -150,7 +174,7 @@ const MovimientosProvider = ({ children }) => {
   }, [getData, getCajas]);
 
   const values = {lang,getFilterDatas,
-    cargando,
+    cargando,getBuscarMovimientos,
     setCargando,
     desdeFecha,
     setDesdeFecha,
@@ -177,7 +201,7 @@ const MovimientosProvider = ({ children }) => {
 
 export const useMovimientos = () => {
   const {lang,getFilterDatas,
-    cargando,
+    cargando,getBuscarMovimientos,
     setCargando,
     desdeFecha,
     setDesdeFecha,
@@ -196,7 +220,7 @@ export const useMovimientos = () => {
     movimientos,form, setForm,initialForm,listaMonedas,setMonedaFilter,dataPrint
   } = useContext(Contexto);
   return {lang,getFilterDatas,
-    cargando,
+    cargando,getBuscarMovimientos,
     setCargando,
     desdeFecha,
     setDesdeFecha,

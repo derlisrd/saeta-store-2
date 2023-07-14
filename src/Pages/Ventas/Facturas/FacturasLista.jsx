@@ -67,18 +67,18 @@ const FacturasLista = () => {
       field: "estado_factura",
       title: lang.estado,
       noPrint:true,
-      items: { 0: "Anulado", 1: "Cobrado", 2: "Cobranza pendiente" },
+      items: { 0: "Anulado", 1: "Cobrado", 2: "Pendiente" },
       compareField: "estado_factura",
       styleFieldCondition: "estado_factura",
       styleCondition: {
         "0": {
-          backgroundColor: "#ffce6b",
+          backgroundColor: "#ef7373",
           padding: "2px",fontWeight:"bold",
           borderRadius: "5px",
           color: "#780c00",
         },
         "2": {
-          backgroundColor: "#ff7c6b",
+          backgroundColor: "#ffac49",
           padding: "2px",fontWeight:"bold",
           borderRadius: "5px",
           color: "#780c00",
@@ -257,7 +257,6 @@ const FacturasLista = () => {
             columns={columnas}
             Accions={Acciones}
             showOptions
-            print
             caption={`Total: ${funciones.numberSeparator(total.facturas)}`}
           />
   );
