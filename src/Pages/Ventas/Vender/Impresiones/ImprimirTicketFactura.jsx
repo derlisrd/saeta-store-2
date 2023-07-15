@@ -21,7 +21,7 @@ const ImprimirTicketFactura = () => {
     const DF = datosFacturas.facturas[indexFactura];
     const DF2 = {...datosFacturas}
     //found caja relacionada con la factura
-    const foundIndex = DF2.listaFacturas.findIndex(e => e.id_caja_empresa===DF.datosFactura.id_caja);
+    const foundIndex = DF2.listaFacturas.findIndex(e => e.caja_id_factura===DF.datosFactura.id_caja);
     const FACTURA = DF2.listaFacturas[foundIndex] ??  {}  ;
     const widthDimension = EMPRESA.dimension_ticket+"mm";
 

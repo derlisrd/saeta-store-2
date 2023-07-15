@@ -1,4 +1,4 @@
-import { Button, CircularProgress, Dialog, DialogActions, Icon, Stack, Zoom,Link} from '@mui/material'
+import { Button, CircularProgress, Dialog, DialogActions, Icon, Stack, Zoom,Link, DialogTitle} from '@mui/material'
 import { useRef } from 'react';
 import { useReactToPrint } from 'react-to-print';
 import ButtonCustom from '../../../../Components/MuiCustom/ButtonCustom';
@@ -15,19 +15,14 @@ const ImprimirFacturaA4 = () => {
   const {EMPRESA} = useDatosEmpresa()
   const FACTURA = { ...formulario };
   const id = FACTURA?.id_factura;  
-
+  console.log(formulario);
   const url_pdf = APIURL+'pdf_factura/'+id;
   const divRef = useRef();
-  const handlePrint = useReactToPrint({
-        content: () => divRef.current,
-  });
+  const handlePrint = useReactToPrint({content: () => divRef.current});
 
-  const cerrar = ()=>{ 
-    setDialogs({...dialogs,imprimirFacturaA4:false});
-  }
-  const enviarEmail = ()=>{
-    setDialogs({...dialogs,mail:true})
-  }
+  const cerrar = ()=>setDialogs({...dialogs,imprimirFacturaA4:false});
+  const enviarEmail = ()=> setDialogs({...dialogs,mail:true})
+  
   //const TOTAL = DF.monto_total_factura
   
 
@@ -59,6 +54,7 @@ const ImprimirFacturaA4 = () => {
 
   return (
     <Dialog open={dialogs.imprimirFacturaA4} fullWidth maxWidth="md" onClose={cerrar} TransitionComponent={Zoom}>
+      <DialogTitle>Imprimir Factura A4</DialogTitle>
       {loadings.factura ? (
         <Stack sx={{ padding: "20px" }} alignItems="center"><CircularProgress /></Stack>
       ) : (

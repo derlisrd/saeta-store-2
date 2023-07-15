@@ -56,7 +56,7 @@ const DialogFinalizar = () => {
     
     let listaFacturas = fd.listaFacturas,
     id_caja = fa.datosFactura.id_caja;
-    let found = listaFacturas.findIndex(e=>e.id_caja_empresa === id_caja);
+    let found = listaFacturas.findIndex(e=>e.caja_id_factura === id_caja);
     if(found<0 && (fa.datosFactura.tipoFactura==="1" || fa.datosFactura.tipoFactura==="2" )){
       e.factura.error = true;
       e.id_error = 1;

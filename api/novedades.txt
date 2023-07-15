@@ -353,7 +353,6 @@ DROP TABLE IF EXISTS `empresa_facturas`;
 CREATE TABLE IF NOT EXISTS `empresa_facturas` (
   `id_empresa_factura` int(11) NOT NULL AUTO_INCREMENT,
   `id_empresa_empresa` int(11) NOT NULL COMMENT 'id_empresa de empresas',
-  `id_caja_empresa` int(11) NOT NULL COMMENT 'con id_caja',
   `timbrado_factura` varchar(100) NOT NULL,
   `inicio_timbrado` date NOT NULL,
   `fin_timbrado` date NOT NULL,
@@ -387,7 +386,7 @@ CREATE TABLE IF NOT EXISTS `empresa_recibos` (
 --
 
 INSERT INTO `empresa_recibos` (`id_empresa_recibo`, `last_nro_recibo`, `updated_at`) VALUES
-(1, 43, '2022-07-05 05:26:57');
+(1, 1, '2022-07-05 05:26:57');
 
 -- --------------------------------------------------------
 

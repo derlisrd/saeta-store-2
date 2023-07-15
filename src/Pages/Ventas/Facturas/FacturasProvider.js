@@ -112,7 +112,8 @@ const FacturasProvider = ({ children }) => {
     resF.response ? setItemsFactura(resF.results) : console.log(resF);
     
     if(fila.tipo_factura==="1" || fila.tipo_factura==="2"){ 
-      let res = await APICALLER.get({table:'empresa_facturas',where:`id_caja_empresa,=,${fila.id_caja_factura}`});
+      let res = await APICALLER.get({table:'empresa_facturas',include:'facturas_cajas',on:'factura_empresa_id,id_empresa_factura',
+      where:`caja_id_factura,=,${fila.id_caja_factura}`});
       if(res.response) {
         let ef = res.results[0];
         let form = {...fila}

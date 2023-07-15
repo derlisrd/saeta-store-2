@@ -15,17 +15,14 @@ const ImprimirFacturaA4 = () => {
   const DF = datosFacturas.facturas[indexFactura];
   const DF2 = {...datosFacturas}
   //found caja relacionada con la factura
-  const foundIndex = DF2.listaFacturas.findIndex(e => e.id_caja_empresa===DF.datosFactura.id_caja);
+  const foundIndex = DF2.listaFacturas.findIndex(e => e.caja_id_factura===DF.datosFactura.id_caja);
   const FACTURA = DF2.listaFacturas[foundIndex] ??  {}  ;
 
 
 
   const url_pdf = APIURL+'pdf_factura/'+lastID;
-
   const divRef = useRef();
-  const handlePrint = useReactToPrint({
-        content: () => divRef.current,
-  });
+  const handlePrint = useReactToPrint({content: () => divRef.current,});
   const cerrar = ()=>{ 
     setDialogs({...dialogs,imprimirFacturaA4:false});
     cerrarDialogFactura();
@@ -55,7 +52,7 @@ const ImprimirFacturaA4 = () => {
 
   return (
     <Dialog open={dialogs.imprimirFacturaA4} fullScreen onClose={cerrar} TransitionComponent={Zoom}>
-      <DialogTitle>Imprimir Factura </DialogTitle>
+      <DialogTitle>Imprimir Factura A4 </DialogTitle>
       <DialogContent>
       <div className="container" ref={divRef}>
   <table className="tabla cabezera border-trl">

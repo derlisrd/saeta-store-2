@@ -40,14 +40,20 @@ function Reportes() {
         let desdeFecha = funciones.getDateYMD( desde ),
         hastaFecha =funciones.getDateYMD( hasta );
         setLoading(true)
-        let res = await APICALLER.get({
-            table:'cajas_movimientos', include:'cajas_registros',on:'id_cajas_registro,id_tipo_registro',
-            fields:'id_cajas_movimiento,monto_movimiento,monto_sin_efectivo,tipo_registro,descripcion_registro,detalles_movimiento,fecha_movimiento',
-            where:`id_caja_movimiento,=,${form.id_caja},and,fecha_movimiento,between,'${desdeFecha} 00:00:00',and,'${hastaFecha} 23:59:59'`
-        });
+        let [res,montos] = await Promise.all([
+            APICALLER.get({
+                table:'cajas_movimientos', include:'cajas_registros',on:'id_cajas_registro,id_tipo_registro',
+                fields:'id_cajas_movimiento,monto_movimiento,monto_sin_efectivo,tipo_registro,descripcion_registro,detalles_movimiento,fecha_movimiento',
+                where:`id_caja_movimiento,=,${form.id_caja},and,fecha_movimiento,between,'${desdeFecha} 00:00:00',and,'${hastaFecha} 23:59:59'`
+            }),
+            APICALLER.get({
+                table:'cajas_monedas',
+                where:`id_caja_moneda,=,${form.id_caja},and,active_moneda,=,1`
+            })
+        ]);
         if(res.response){
             let array = [],totalIngresoEfectivo=0, totalEgresoEfectivo=0,totalIngresoNoEfectivo=0,salidaNoEfectivo=0;
-        
+            console.log(montos.results);
             res.results.forEach(elm=>{
                 let noEfectivo=0,ingresoEfectivo=0,egresoEfectivo=0,noEfectivoSalida=0;
                 if(elm.tipo_registro==='1'){
