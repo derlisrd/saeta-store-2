@@ -63,7 +63,7 @@ export const APICALLER = {
       });
       return await res.data;
     } catch (error) {
-      const err = { results: null, response: false, message: error,error:true };
+      const err = {  response: false, message: error,error:true };
       return err;
     }
   },
@@ -79,7 +79,7 @@ export const APICALLER = {
       return await res.data;
     } catch (error) {
       console.log(error);
-      const err = { results:null, response: `error`, message: error.message };
+      const err = { response: false, error:true, message: error.message };
       return err;
     }    
   }, 
