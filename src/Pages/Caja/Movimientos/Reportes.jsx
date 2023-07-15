@@ -21,6 +21,7 @@ function Reportes() {
     const changeDatahasta = (e) => setHasta(e);
     const [form,setForm] = useState({id_caja:''})
     const [caja,setCaja] = useState('')
+    const [cajasTotales,setCajasTotales] = useState([])
     const [totales,setTotales] = useState({ingresoEfectivo:0,egresoEfectivo:0,ingresoNoEfectivo:0,salidaNoEfectivo:0})
     const change = e=>{
         const {value,name} = e.target
@@ -30,6 +31,7 @@ function Reportes() {
         setDialog({...dialog,reportes:false})
         setForm({id_caja:''})
         setLista([])
+        setCajasTotales([])
     }
     
     const print = useReactToPrint({content: () => divRef.current});
@@ -42,31 +44,31 @@ function Reportes() {
         setLoading(true)
         let [res,montos] = await Promise.all([
             APICALLER.get({
-                table:'cajas_movimientos', include:'cajas_registros',on:'id_cajas_registro,id_tipo_registro',
-                fields:'id_cajas_movimiento,monto_movimiento,monto_sin_efectivo,tipo_registro,descripcion_registro,detalles_movimiento,fecha_movimiento',
+                table:'cajas_movimientos', include:'cajas_registros,monedas',on:'id_cajas_registro,id_tipo_registro,id_moneda_movimiento,id_moneda',
+                fields:'abreviatura_moneda,valor_moneda,id_cajas_movimiento,monto_movimiento,monto_sin_efectivo,tipo_registro,descripcion_registro,detalles_movimiento,fecha_movimiento',
                 where:`id_caja_movimiento,=,${form.id_caja},and,fecha_movimiento,between,'${desdeFecha} 00:00:00',and,'${hastaFecha} 23:59:59'`
             }),
             APICALLER.get({
-                table:'cajas_monedas',
-                where:`id_caja_moneda,=,${form.id_caja},and,active_moneda,=,1`
+                table:'cajas_monedas',include:"monedas",on:"id_moneda,id_moneda_caja_moneda",
+                where:`id_caja_moneda,=,${form.id_caja}`,fields:"monto_caja_moneda,monto_inicial_caja,active_moneda_caja,abreviatura_moneda,monto_no_efectivo"
             })
         ]);
         if(res.response){
             let array = [],totalIngresoEfectivo=0, totalEgresoEfectivo=0,totalIngresoNoEfectivo=0,salidaNoEfectivo=0;
-            console.log(montos.results);
+            setCajasTotales(montos.results)
             res.results.forEach(elm=>{
                 let noEfectivo=0,ingresoEfectivo=0,egresoEfectivo=0,noEfectivoSalida=0;
                 if(elm.tipo_registro==='1'){
-                    totalIngresoEfectivo += parseInt(elm.monto_movimiento)
-                    ingresoEfectivo = parseInt(elm.monto_movimiento)
-                    noEfectivo = parseInt(elm.monto_sin_efectivo)
-                    totalIngresoNoEfectivo += parseInt(elm.monto_sin_efectivo)
+                    totalIngresoEfectivo += (parseInt(elm.monto_movimiento)*parseFloat(elm.valor_moneda))
+                    ingresoEfectivo = parseInt(elm.monto_movimiento)*parseFloat(elm.valor_moneda)
+                    noEfectivo = parseInt(elm.monto_sin_efectivo)*parseFloat(elm.valor_moneda)
+                    totalIngresoNoEfectivo += (parseInt(elm.monto_sin_efectivo)*parseFloat(elm.valor_moneda))
                 }
                 if(elm.tipo_registro==='0'){
-                    totalEgresoEfectivo += parseInt(elm.monto_movimiento)
-                    salidaNoEfectivo += parseInt(elm.monto_sin_efectivo)
-                    egresoEfectivo = parseInt(elm.monto_movimiento)
-                    noEfectivoSalida = parseInt(elm.monto_sin_efectivo)
+                    totalEgresoEfectivo += (parseInt(elm.monto_movimiento)*parseFloat(elm.valor_moneda))
+                    salidaNoEfectivo += (parseInt(elm.monto_sin_efectivo)*parseFloat(elm.valor_moneda))
+                    egresoEfectivo = parseInt(elm.monto_movimiento)*parseFloat(elm.valor_moneda)
+                    noEfectivoSalida = parseInt(elm.monto_sin_efectivo)*parseFloat(elm.valor_moneda)
                 }
                 array.push({
                     ...elm,
@@ -131,7 +133,7 @@ function Reportes() {
                 </Grid>
                 <Grid item xs={12}>
                     {
-                        lista.length>0 ? <div ref={divRef}><TablaImprimir caja={caja} desde={desde} hasta={hasta}  listado={lista} totales={totales} /> </div>: <Alert severity='warning'>SIN REGISTROS</Alert> 
+                        lista.length>0 ? <div ref={divRef}><TablaImprimir cajasTotales={cajasTotales} caja={caja} desde={desde} hasta={hasta}  listado={lista} totales={totales} /> </div>: <Alert severity='warning'>SIN REGISTROS</Alert> 
                     }
                 </Grid>
             </Grid>
