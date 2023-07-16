@@ -55,6 +55,7 @@ function TablaImprimir({listado,totales,desde,hasta,caja,cajasTotales}) {
             ))}
             <tr>
                 <td></td>
+                <td></td>
                 <td><b>TOTALES:</b></td>
                 <td className={style.total_ingreso}>{funciones.numberFormat(totales.ingresoEfectivo)}</td>
                 <td className={style.total_egreso}>{funciones.numberFormat(totales.egresoEfectivo)}</td>
