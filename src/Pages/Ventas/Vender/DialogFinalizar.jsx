@@ -456,7 +456,7 @@ const DialogFinalizar = () => {
       </DialogContent>
       <DialogActions>
         <ButtonCustom
-          variant="contained"
+          variant="outlined"
           onClick={verificar}
           disabled={cargas.finalizarVenta || fa.itemsFactura.length < 1 }
         >
