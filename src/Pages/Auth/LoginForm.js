@@ -7,6 +7,7 @@ import { useLang } from "../../Contexts/LangProvider";
 import {env} from '../../App/Config/config'
 import { useConfiguracion } from "../../Contexts/ConfiguracionProvider";
 import ConfigIniciales from "../ConfigIniciales";
+import { LoadingButton } from "@mui/lab";
 
 const LoginForm = () => {
   const {lang}= useLang();
@@ -118,9 +119,20 @@ const LoginForm = () => {
             />
           </Grid>
           <Grid item xs={12}>
+            {
+              load.login ?
+              <LoadingButton
+              loading fullWidth size="large"
+              loadingPosition="start"
+              variant="contained"
+            >
+              Cargando...
+            </LoadingButton> :
+            
             <Button size="large" type="submit" disabled={load.login} fullWidth variant="contained">
-              {load.login ? 'Cargando...' : 'Login'}
+              Entrar
             </Button>
+            }
           </Grid>
           <Grid item xs={12}>
           <FormControlLabel disabled={load.login} control={<Switch checked={recordar} onChange={e=> setRecordar(e.target.checked)} />} label={lang.recordar} />
