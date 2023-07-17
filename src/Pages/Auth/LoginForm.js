@@ -123,6 +123,7 @@ const LoginForm = () => {
               load.login ?
               <LoadingButton
               loading fullWidth size="large"
+              startIcon={<Icon>pending</Icon>}
               loadingPosition="start"
               variant="contained"
             >
