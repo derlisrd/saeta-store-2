@@ -31,7 +31,7 @@ function MenuList({isMobile}) {
     setLista(array);
   }
 
-  const SELECTED = {"&.Mui-selected":{borderRadius:'0 18px 18px 0', margin:'0 2px',borderLeftStyle:'solid',borderLeftWidth:'4px',borderLeftColor:'primary.main', 
+  const SELECTED = {"&.Mui-selected":{borderRadius:'0 18px 18px 0', margin:'0 2px',borderLeftStyle:'solid',borderLeftWidth:'2px',borderLeftColor:'primary.main', 
   "div":{color:'primary.main'},'span':{fontWeight:'bold',color:'primary.main'}}  }
 
   return (<SimpleBar forceVisible="y" autoHide={true} style={{ maxHeight: "100vh" }}>
