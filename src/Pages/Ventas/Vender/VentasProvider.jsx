@@ -133,6 +133,7 @@ const VentasProvider = ({ children }) => {
     setCargas({ ...cargas, finalizarVenta: true});
     setDialogs({...dialogs,finalizarVenta:false});
     var LASTNROFACTURA;
+    var idf=0; //id empresa factura 
     var VALOR_MONEDA = parseFloat(df.datosMoneda.valor_moneda)
     var NOMBRE_MONEDA = df.datosMoneda.nombre_moneda;
     var DESCUENTO = df.descuento / VALOR_MONEDA;
@@ -168,7 +169,7 @@ const VentasProvider = ({ children }) => {
           setDialogs({...dialogs,finalizarVenta:true}); 
           return false;
         }
-        let idf = nrofac.results[0].id_empresa_factura;
+        idf = nrofac.results[0].id_empresa_factura;
         ALLPROMISES.push(APICALLER.update({table: "empresa_facturas",token: token_user, id:idf, 
         data: {last_nro_factura: parseInt(LASTNROFACTURA) + 1}}))
       }else{
@@ -295,6 +296,7 @@ const VentasProvider = ({ children }) => {
     let objFactura = {
       id_cliente_factura: df.datosCliente.id_cliente,
       id_user_factura: id_user,
+      empresa_factura_id:idf,
       id_caja_factura: df.datosFactura.id_caja,
       id_empleado_factura: df.datosFactura.id_empleado,
       id_forma_pago_factura: df.datosFactura.id_formaPago,
@@ -1012,7 +1014,7 @@ const VentasProvider = ({ children }) => {
           if( (rc.results.some(e => e.estado_caja==="open"))){
             let IDCAJAFACTURA = rCajas.results[0].id_caja;
             let fac = await APICALLER.get({table: "empresa_facturas",include:'facturas_cajas',on:'factura_empresa_id,id_empresa_factura',
-            where: `caja_id_factura,=,${IDCAJAFACTURA},and,activo,=,1`});
+            where: `caja_id_factura,=,${IDCAJAFACTURA},and,activo_factura,=,1`});
             //console.log(fac.results);
             if (fac.found > 0) {
               ACTIVEFACTURA = true;
