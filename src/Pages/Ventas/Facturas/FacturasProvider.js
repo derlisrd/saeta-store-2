@@ -112,9 +112,11 @@ const FacturasProvider = ({ children }) => {
     resF.response ? setItemsFactura(resF.results) : console.log(resF);
     
     if(fila.tipo_factura==="1" || fila.tipo_factura==="2"){ 
-      let res = await APICALLER.get({table:'empresa_facturas',include:'facturas_cajas',on:'factura_empresa_id,id_empresa_factura',
-      where:`caja_id_factura,=,${fila.id_caja_factura}`});
+      let res = await APICALLER.get({table:'empresa_facturas',include:'facturas_cajas,facturas',
+      on:'factura_empresa_id,id_empresa_factura,empresa_factura_id,id_empresa_factura',
+      where:`caja_id_factura,=,${fila.id_caja_factura},and,id_factura,=,${fila.id_factura}`});
       if(res.response) {
+        //console.log(res.results);
         let ef = res.results[0];
         let form = {...fila}
         form.timbrado_factura = ef.timbrado_factura;

@@ -15,7 +15,7 @@ const ImprimirFacturaA4 = () => {
   const {EMPRESA} = useDatosEmpresa()
   const FACTURA = { ...formulario };
   const id = FACTURA?.id_factura;  
-  console.log(formulario);
+  //console.log(formulario);
   const url_pdf = APIURL+'pdf_factura/'+id;
   const divRef = useRef();
   const handlePrint = useReactToPrint({content: () => divRef.current});

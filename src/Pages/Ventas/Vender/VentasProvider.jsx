@@ -143,7 +143,7 @@ const VentasProvider = ({ children }) => {
     var [nrorec,nrofac] =  await Promise.all([
       APICALLER.get({ table: "empresa_recibos" }),
       APICALLER.get({ table: "empresa_facturas",include:'facturas_cajas',on:'factura_empresa_id,id_empresa_factura',
-      where: `caja_id_factura,=,${IDCAJAFACTURACION},and,activo,=,1`})
+      where: `caja_id_factura,=,${IDCAJAFACTURACION},and,activo_factura,=,1`})
     ])
     
     var tipoFactura = parseInt(df.datosFactura.tipoFactura)
