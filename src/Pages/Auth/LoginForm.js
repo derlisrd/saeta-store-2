@@ -86,8 +86,8 @@ const LoginForm = () => {
         <Grid container spacing={2}>
           <Grid item xs={12}>
             <Stack justifyContent="center" alignItems="center" spacing={2}>
-                <Icon color="primary" >rocket_launch</Icon>
-              <Typography variant="h5">{lang.ingresar}</Typography>
+                <Icon color="warning">electric_bolt</Icon>
+              <Typography variant="button">{lang.ingresar}</Typography>
             </Stack>
           </Grid>
           <Grid item xs={12}>
