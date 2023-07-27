@@ -11,7 +11,7 @@ import { columns } from "./columns";
 
 function Lista() {
     
-    const {loadings,listas,lang,setFechas,datos,tipo,setTipo} = useInformesProductos()
+    const {loadings,listas,lang,setFechas,datos,tipo,setTipo,getData} = useInformesProductos()
     const [id,setId] = useState(null);
     let today = new Date()
     //const [fecha,setFecha] = useState(fechas)
@@ -75,10 +75,10 @@ function Lista() {
           </Stack>
         </Grid>
         <Grid item xs={12} md={6}>
-          <BuscarProducto />
+          <BuscarProducto setId={setId} />
         </Grid>
         <Grid item xs={12} md={6}>
-          <Button size="large" variant="contained">BUSCAR</Button>
+          <Button size="large" onClick={()=>{getData(id)}} disabled={id===null} variant="contained">BUSCAR</Button>
         </Grid>
           <Grid item xs={12} md={4}>
               <Alert severity="success" variant="outlined" icon={false}>

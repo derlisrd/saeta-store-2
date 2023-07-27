@@ -2,13 +2,15 @@ import { useEffect, useState } from "react";
 import { APICALLER } from "../../../Services/api";
 import { Autocomplete, CircularProgress, TextField } from "@mui/material";
 
-function BuscarProducto() {
+function BuscarProducto({setId}) {
 
     const [search,setSearch] = useState('');
     const [lista,setLista] = useState([]);
     const [loading,setLoading] = useState(false)
     const insertar =(e,val)=>{
-        console.log(val);
+        if(val){
+            setId(val.id_producto)
+        }
     }
     const getOption = (option)=>{
         if(option){
