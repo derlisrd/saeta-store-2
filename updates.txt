@@ -1,8 +1,12 @@
-ALTER TABLE `facturas` ADD `factura_vuelto` FLOAT NULL DEFAULT '0' AFTER `recibido_factura`; 
-ALTER TABLE `empresa_facturas` ADD `activo` TINYINT(1) NOT NULL DEFAULT '1' COMMENT '0 no 1 si' AFTER `autoimpresor`;
-CREATE TABLE `facturas_cajas` (
-  `id_facturas_caja` int NOT NULL PRIMARY KEY AUTO_INCREMENT,
-  `caja_id_factura` int NOT NULL COMMENT 'caja',
-  `factura_empresa_id` int NOT NULL COMMENT 'empresa_facturas',
-  `updated_at` datetime DEFAULT CURRENT_TIMESTAMP
+PARADA:
+ALTER TABLE `empresa_facturas` CHANGE `activo` `activo_factura` TINYINT(1) NOT NULL DEFAULT '1' COMMENT '0 no 1 si';
+ALTER TABLE `facturas` ADD `empresa_factura_id` INT NULL DEFAULT NULL AFTER `id_factura`;
+CREATE TABLE `facturas_pagos` (
+  `id_facturas_pago` int NOT NULL PRIMARY KEY AUTO_INCREMENT,
+ `factura_id` int NOT NULL,
+  `moneda_id` int NOT NULL,
+  `valor_moneda_pago` float NOT NULL,
+  `efectivo_factura` float NOT NULL,
+  `no_efectivo_factura` float NOT NULL,
+  `descuento_pago` float DEFAULT NULL
 );

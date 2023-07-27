@@ -199,7 +199,7 @@ const DialogFinalizar = () => {
                       <em>Seleccione caja</em>
                     </MenuItem>
                     {fd.listaCajas.map((e, i) => (
-                      <MenuItem value={e.id_caja} selected key={i}>
+                      <MenuItem value={e.id_caja} selected key={i}  >
                         {e.nombre_caja}
                       </MenuItem>
                     ))}
@@ -226,12 +226,12 @@ const DialogFinalizar = () => {
                     fullWidth
                     value={fa.datosFactura.id_empleado}
                   >
-                    <MenuItem value="" selected disabled>
+                    <MenuItem value=""  disabled>
                       <em>{lang.seleccione_vendedor}</em>
                     </MenuItem>
 
                     {fd.listaVendedores.map((e, i) => (
-                      <MenuItem value={e.id_empleado} key={i}>
+                      <MenuItem value={e.id_empleado} key={i} selected >
                         {e.nombre_empleado} {e.apellido_empleado}
                       </MenuItem>
                     ))}

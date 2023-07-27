@@ -10,7 +10,7 @@ function InformesProductosProvider({children}) {
     const {lang} = useLang()
     
     const initialDatos = {
-        lucro: 0, vendido:0
+        lucro: 0, vendido:0,cantidad:0
     }
     const initialLoadings = {
         general:false,
@@ -39,13 +39,13 @@ function InformesProductosProvider({children}) {
 
         let res = await APICALLER.get({table:"productos_vendidos",include:"productos",on:"id_producto,id_producto_vendido",
         fields:"id_productos_vendido,nombre_producto,fecha_vendido,precio_vendido,costo_producto_vendido,cantidad_vendido",
-        where:`fecha_vendido,between,'${fechas.desde} 00:00:00',and,'${fechas.hasta} 23:59:59'${where_tipo_producto}`});
+        where:`fecha_vendido,between,'${fechas.desde} 00:00:00',and,'${fechas.hasta} 23:59:59'${where_tipo_producto}`,sort:'id_productos_vendido'
+        });
         if(res.response){
-            let result = [...res.results];
-            let newresult = [];
-            let lucro = 0, costo = 0, vendido = 0,lucro_vendido=0,total_vendido;
+            let result = [...res.results],newresult = [], lucro = 0, costo = 0, vendido = 0,lucro_vendido=0,total_vendido,cantidad=0;
+            
             result.forEach(elem => {
-                
+                cantidad += parseFloat(elem.cantidad_vendido);
                 vendido += (parseFloat(elem.precio_vendido) * parseFloat(elem.cantidad_vendido) );
                 costo += parseFloat(elem.costo_producto_vendido)  * parseFloat(elem.cantidad_vendido) ;
                 lucro_vendido = (parseFloat(elem.precio_vendido) - parseFloat(elem.costo_producto_vendido) ) * parseFloat(elem.cantidad_vendido)   ;
@@ -56,7 +56,7 @@ function InformesProductosProvider({children}) {
             });
             lucro = vendido - costo;
 
-            setDatos({lucro,vendido})
+            setDatos({lucro,vendido,cantidad})
             setListas({lista:newresult})
 
         }else {console.log(res);}

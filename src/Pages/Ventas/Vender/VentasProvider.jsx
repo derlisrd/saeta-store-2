@@ -56,25 +56,28 @@ const VentasProvider = ({ children }) => {
     return sto ?? null
   }) 
   
-  const initialDatosFactura = {
-    tipoCliente: "1",
-    tipoFactura: "0",
-    ordenCompra: "",
-    id_caja: storage && storage.listaCajas.length===1 ? storage.listaCajas[0].id_caja : "",
-    id_empleado: storage && storage.listaVendedores.length===1 ? storage.listaVendedores[0].id_empleado : "",
-    obs_pago: "",
-    id_formaPago: "",
-    formasPago:[],
-    totalAbonado:0,
-    cantidad_recibida: "",
-    entregado_items: "1",
-    retencion_iva_factura: "0",
-    nro_factura:"0",
-    fecha_factura: funciones.getFechaActualString(),
-    fecha_cobro_factura : funciones.fechaActualYMD(),
-    horario_factura: funciones.getHorarioActualString(),
-    valorMoneda:1, // valor de la moneda activa
-  }
+  const [initialDatosFactura] = useState(()=>{
+    let sto = JSON.parse(localStorage.getItem("facturasStorage"));
+    return {
+      tipoCliente: "1",
+      tipoFactura: "0",
+      ordenCompra: "",
+      id_caja: sto && sto.listaCajas.length===1 ? sto.listaCajas[0].id_caja : "",
+      id_empleado: sto && sto.listaVendedores.length===1 ? sto.listaVendedores[0].id_empleado : "",
+      obs_pago: "",
+      id_formaPago: "",
+      formasPago:[],
+      totalAbonado:0,
+      cantidad_recibida: "",
+      entregado_items: "1",
+      retencion_iva_factura: "0",
+      nro_factura:"0",
+      fecha_factura: funciones.getFechaActualString(),
+      fecha_cobro_factura : funciones.fechaActualYMD(),
+      horario_factura: funciones.getHorarioActualString(),
+      valorMoneda:1, // valor de la moneda activa
+    }
+  }) 
   
   
   const initialFacturas = {
@@ -123,6 +126,8 @@ const VentasProvider = ({ children }) => {
   //const cargarFactura = ()=>{}
 
   
+
+
 
 
 
@@ -442,6 +447,8 @@ const VentasProvider = ({ children }) => {
 
 
 
+
+
   const valorConvertido = (val,letter=false) =>{
     if (isNaN(val)) {
       return '0';
@@ -457,6 +464,7 @@ const VentasProvider = ({ children }) => {
 
   const cerrarDialogFactura = () => {
     let fa = { ...datosFacturas };
+    console.log(fa);
     if (indexFactura > 0) {
       fa.facturas.splice(indexFactura, 1);
       setIndexFactura(indexFactura - 1);

@@ -26,7 +26,7 @@ return (
       <Box mb={3}>
     <TableInfo title={title} subtitle={subtitle} icon={icon}  />
     
-    <Box borderRadius={3} boxShadow={5} padding={2} bgcolor='background.paper'>
+    <Box borderRadius={3} boxShadow={5} padding={1} bgcolor='background.paper'>
     
         <Box padding={1} mb={1}>
             {inputs && inputs}
