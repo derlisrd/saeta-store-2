@@ -351,7 +351,7 @@ INSERT INTO `empresas` (`id_empresa`, `nombre_empresa`, `propietario_empresa`, `
 
 DROP TABLE IF EXISTS `empresa_facturas`;
 CREATE TABLE IF NOT EXISTS `empresa_facturas` (
-  `id_empresa_factura` int(11) NOT NULL AUTO_INCREMENT,
+  `id_empresa_factura` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
   `id_empresa_empresa` int(11) NOT NULL COMMENT 'id_empresa de empresas',
   `timbrado_factura` varchar(100) NOT NULL,
   `inicio_timbrado` date NOT NULL,
@@ -360,11 +360,11 @@ CREATE TABLE IF NOT EXISTS `empresa_facturas` (
   `nro_inicio_factura` int(11) NOT NULL,
   `nro_fin_factura` int(11) NOT NULL,
   `last_nro_factura` int(11) NOT NULL COMMENT 'ultimo nro sacado',
-  `autoimpresor` tinyint(1) NOT NULL COMMENT '0=no 1=si',
+  `activo_factura` TINYINT(1) NOT NULL DEFAULT '1' COMMENT '0 no 1 si',
+  `autoimpresor` TINYINT(1) NOT NULL COMMENT '0=no 1=si',
   `fecha_empresa_factura` date DEFAULT NULL COMMENT 'fecha de factura',
   `obs_empresa_factura` text NOT NULL COMMENT 'observaciones',
-  `updated_at` datetime DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id_empresa_factura`)
+  `updated_at` datetime DEFAULT CURRENT_TIMESTAMP
 ) ;
 
 -- --------------------------------------------------------
@@ -423,18 +423,23 @@ CREATE TABLE IF NOT EXISTS `facturas` (
 );
 
 -- --------------------------------------------------------
-
+CREATE TABLE `facturas_cajas` (
+  `id_facturas_caja` int NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  `caja_id_factura` int NOT NULL COMMENT 'caja',
+  `factura_empresa_id` int NOT NULL COMMENT 'empresa_facturas',
+  `updated_at` datetime DEFAULT CURRENT_TIMESTAMP
+);
 --
 -- Estructura de tabla para la tabla `facturas_formas_pagos`
 --
 
 DROP TABLE IF EXISTS `facturas_formas_pagos`;
 CREATE TABLE IF NOT EXISTS `facturas_formas_pagos` (
-  `id_facturas_formas_pago` int(11) NOT NULL AUTO_INCREMENT,
+  `id_facturas_formas_pago` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
   `descripcion_forma_pago` varchar(100) NOT NULL,
   `porcentaje_descuento_pago` float NOT NULL DEFAULT 0 COMMENT 'descuento',
-  `updated_at` datetime DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id_facturas_formas_pago`)
+  `tipo_operacion` tinyint(1) DEFAULT '0' COMMENT '1 suma 0 descuenta',
+  `updated_at` datetime DEFAULT CURRENT_TIMESTAMP
 ) ;
 
 --
