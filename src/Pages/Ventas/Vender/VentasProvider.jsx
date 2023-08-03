@@ -56,7 +56,7 @@ const VentasProvider = ({ children }) => {
     return sto ?? null
   }) 
   
-  const [initialDatosFactura] = useState(()=>{
+  const initialDatosFactura = ()=>{
     let sto = JSON.parse(localStorage.getItem("facturasStorage"));
     return {
       tipoCliente: "1",
@@ -77,7 +77,7 @@ const VentasProvider = ({ children }) => {
       horario_factura: funciones.getHorarioActualString(),
       valorMoneda:1, // valor de la moneda activa
     }
-  }) 
+  }
   
   
   const initialFacturas = {
@@ -93,7 +93,7 @@ const VentasProvider = ({ children }) => {
         descuento:0,
         guardado: false,
         datosMoneda: {},
-        datosFactura: initialDatosFactura,
+        datosFactura: initialDatosFactura(),
         datosCliente: initialDatosCliente,
       },
     ],
@@ -419,7 +419,7 @@ const VentasProvider = ({ children }) => {
     fa.facturas[indexFactura].datosFactura.nro_factura =  parseInt(LASTNROFACTURA);
     setearFactura(fa);
     setCargas({ ...cargas, finalizarVenta: false});
-
+    
   
     if ( tipoFactura === 0 || tipoFactura===3) {
       //RECIBO
@@ -464,7 +464,7 @@ const VentasProvider = ({ children }) => {
 
   const cerrarDialogFactura = () => {
     let fa = { ...datosFacturas };
-    console.log(fa);
+    //console.log(fa);
     if (indexFactura > 0) {
       fa.facturas.splice(indexFactura, 1);
       setIndexFactura(indexFactura - 1);
@@ -484,7 +484,7 @@ const VentasProvider = ({ children }) => {
         guardado: false,
         datosMoneda: fa.monedaActiva,
         depositoActivo: fa.facturas[0].depositoActivo,
-        datosFactura: initialDatosFactura,
+        datosFactura: initialDatosFactura(),
         datosCliente: initialDatosCliente,
       };
     }
@@ -543,7 +543,7 @@ const VentasProvider = ({ children }) => {
     setIDNotaPedido("");
     inputCantidad.current.value = 1;
     fact.facturas[indexFactura].itemsFactura = [];
-    fact.facturas[indexFactura].datosFactura = initialDatosFactura;
+    fact.facturas[indexFactura].datosFactura = initialDatosFactura();
     fact.facturas[indexFactura].datosCliente = initialDatosCliente;
     hacerTotal(fact);
     inputCodigo.current.focus();
@@ -962,7 +962,7 @@ const VentasProvider = ({ children }) => {
       horario_factura: funciones.getHorarioActualString(),
       guardado: false,
       datosMoneda: fact.monedaActiva,
-      datosFactura: initialDatosFactura,
+      datosFactura: initialDatosFactura(),
       datosCliente: initialDatosCliente,
     });
     
