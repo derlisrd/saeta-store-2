@@ -304,7 +304,7 @@ const VentasProvider = ({ children }) => {
       empresa_factura_id:idf,
       id_caja_factura: df.datosFactura.id_caja,
       id_empleado_factura: df.datosFactura.id_empleado,
-      id_forma_pago_factura: df.datosFactura.id_formaPago,
+      id_forma_pago_factura: df.datosFactura.id_formaPago==='' ? 0 : df.datosFactura.id_formaPago,
       id_moneda_factura: df.datosMoneda.id_moneda,
       valor_moneda_factura: df.datosMoneda.valor_moneda,
       nro_factura: parseInt(LASTNROFACTURA),

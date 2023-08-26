@@ -1,12 +1,1 @@
-PARADA:
-ALTER TABLE `empresa_facturas` CHANGE `activo` `activo_factura` TINYINT(1) NOT NULL DEFAULT '1' COMMENT '0 no 1 si';
-ALTER TABLE `facturas` ADD `empresa_factura_id` INT NULL DEFAULT NULL AFTER `id_factura`;
-CREATE TABLE `facturas_pagos` (
-  `id_facturas_pago` int NOT NULL PRIMARY KEY AUTO_INCREMENT,
- `factura_id` int NOT NULL,
-  `moneda_id` int NOT NULL,
-  `valor_moneda_pago` float NOT NULL,
-  `efectivo_factura` float NOT NULL,
-  `no_efectivo_factura` float NOT NULL,
-  `descuento_pago` float DEFAULT NULL
-);
+ALTER TABLE `facturas` CHANGE `id_forma_pago_factura` `id_forma_pago_factura` INT NOT NULL DEFAULT '1';
