@@ -156,8 +156,10 @@ const FacturasProvider = ({ children }) => {
       let suma = 0;
       let totaldescuentos = 0;
       arrayresult.forEach((elem) => {
-        suma += parseFloat(elem.monto_total_factura);
-        totaldescuentos += parseFloat(elem.descuento_factura);
+        if(parseInt(elem.estado_factura)>0){
+          suma += parseFloat(elem.monto_total_factura);
+          totaldescuentos += parseFloat(elem.descuento_factura);
+        }
         newresult.push({
           ...elem, monto: parseFloat(elem.monto_total_factura) / parseFloat(elem.valor_moneda_factura)
       })
@@ -314,8 +316,10 @@ const FacturasProvider = ({ children }) => {
       let suma = 0;
       let totaldescuentos = 0;
       arrayresult.forEach((elem) => {
-        suma += parseFloat(elem.monto_total_factura);
-        totaldescuentos += parseFloat(elem.descuento_factura);
+        if(parseInt(elem.estado_factura)>0){
+          suma += parseFloat(elem.monto_total_factura);
+          totaldescuentos += parseFloat(elem.descuento_factura);
+        }
         newresult.push({
           ...elem, monto: parseFloat(elem.monto_total_factura) / parseFloat(elem.valor_moneda_factura)
       })
