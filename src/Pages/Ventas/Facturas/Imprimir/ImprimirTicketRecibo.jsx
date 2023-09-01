@@ -123,6 +123,11 @@ const ImpresionTicketRecibo = () => {
             </tr>
             <tr>
               <td align="center">
+                <b>{DF.obs_factura}</b>
+              </td>
+            </tr>
+            <tr>
+              <td align="center">
                 *{EMPRESA.mensaje_recibo_empresa}*
               </td>
             </tr>
