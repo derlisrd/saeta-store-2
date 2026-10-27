@@ -10,3 +10,5 @@ build
 dist
 *.zip
 composer.lock
+vendor
+.env
