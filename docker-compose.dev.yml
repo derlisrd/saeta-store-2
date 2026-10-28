@@ -1,0 +1,93 @@
+services:
+  db:
+    image: mysql:8.0
+    restart: unless-stopped
+    command: >
+      --character-set-server=utf8mb4
+      --collation-server=utf8mb4_unicode_ci
+      --default-authentication-plugin=mysql_native_password
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      TZ: America/Asuncion
+    volumes:
+      - db_data_dev:/var/lib/mysql
+      - ./docker/mysql/charset.cnf:/etc/mysql/conf.d/charset.cnf:ro
+      - ./backend/novedades.txt:/docker-entrypoint-initdb.d/01-schema.sql:ro
+      - ./docker/mysql/init/02-set-configured.sql:/docker-entrypoint-initdb.d/02-set-configured.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h 127.0.0.1 -uroot -p$$MYSQL_ROOT_PASSWORD --silent"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+    ports:
+      - "3307:3306"
+
+  php:
+    build:
+      context: .
+      dockerfile: docker/php/Dockerfile
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      ROOTPATH: api/v1/
+      UPLOADPATH: ../uploads
+      UPLOADPATHNAME: uploads
+      DBHOST: db
+      DBNAME: ${MYSQL_DATABASE}
+      DBUSER: ${MYSQL_USER}
+      DBPASS: ${MYSQL_PASSWORD}
+      X_API_TOKEN: ${X_API_TOKEN}
+      SECRET_KEY: ${SECRET_KEY}
+      ENCRYTED: HS256
+      EMAIL_PASSWORD: ${EMAIL_PASSWORD}
+      TZ: America/Asuncion
+    volumes:
+      # Código en caliente
+      - ./backend:/var/www/html/api/v1
+      # Conserva vendor instalado en la imagen
+      - backend_vendor:/var/www/html/api/v1/vendor
+      - uploads_dev:/var/www/html/uploads
+    expose:
+      - "9000"
+
+  nginx:
+    image: nginx:alpine
+    restart: unless-stopped
+    depends_on:
+      - php
+    volumes:
+      - ./docker/nginx/default.dev.conf:/etc/nginx/conf.d/default.conf:ro
+      - uploads_dev:/var/www/html/uploads:ro
+    ports:
+      - "8080:80"
+
+  vite:
+    image: node:20-alpine
+    working_dir: /app
+    restart: unless-stopped
+    depends_on:
+      - nginx
+    volumes:
+      - ./frontend:/app
+      - frontend_node_modules:/app/node_modules
+    environment:
+      VITE_DEV_API_PROXY: http://nginx:80
+      VITE_BASE_URL: /admin
+      VITE_API_URL_END_POINT: /api/v1/
+      VITE_X_API_TOKEN: ${X_API_TOKEN}
+      VITE_SECRETO: ${SECRET_KEY}
+      CHOKIDAR_USEPOLLING: "true"
+    command: sh -c "npm install && npm run dev -- --host 0.0.0.0"
+    ports:
+      - "3000:3000"
+
+volumes:
+  db_data_dev:
+  uploads_dev:
+  backend_vendor:
+  frontend_node_modules:

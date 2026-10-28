@@ -17,7 +17,7 @@ function DrawerMobile() {
         }}
         sx={{
           display: { xs: 'block', md: 'none' },
-          '& .MuiDrawer-paper': { bosmizing: 'border-box', width:DRAWER_WIDTH },
+          '& .MuiDrawer-paper': { boxSizing: 'border-box', width:DRAWER_WIDTH },
         }}
       >
         <MenuList isMobile={true} />

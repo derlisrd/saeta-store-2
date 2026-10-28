@@ -1,0 +1,73 @@
+services:
+  db:
+    image: mysql:8.0
+    restart: unless-stopped
+    command: >
+      --character-set-server=utf8mb4
+      --collation-server=utf8mb4_unicode_ci
+      --default-authentication-plugin=mysql_native_password
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      TZ: America/Asuncion
+    volumes:
+      - db_data:/var/lib/mysql
+      - ./docker/mysql/charset.cnf:/etc/mysql/conf.d/charset.cnf:ro
+      - ./backend/novedades.txt:/docker-entrypoint-initdb.d/01-schema.sql:ro
+      - ./docker/mysql/init/02-set-configured.sql:/docker-entrypoint-initdb.d/02-set-configured.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h 127.0.0.1 -uroot -p$$MYSQL_ROOT_PASSWORD --silent"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+    ports:
+      - "3307:3306"
+
+  php:
+    build:
+      context: .
+      dockerfile: docker/php/Dockerfile
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      ROOTPATH: api/v1/
+      UPLOADPATH: ../uploads
+      UPLOADPATHNAME: uploads
+      DBHOST: db
+      DBNAME: ${MYSQL_DATABASE}
+      DBUSER: ${MYSQL_USER}
+      DBPASS: ${MYSQL_PASSWORD}
+      X_API_TOKEN: ${X_API_TOKEN}
+      SECRET_KEY: ${SECRET_KEY}
+      ENCRYTED: HS256
+      EMAIL_PASSWORD: ${EMAIL_PASSWORD}
+      TZ: America/Asuncion
+    volumes:
+      - uploads:/var/www/html/uploads
+    expose:
+      - "9000"
+
+  nginx:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        VITE_BASE_URL: /admin
+        VITE_API_URL_END_POINT: /api/v1/
+        VITE_X_API_TOKEN: ${X_API_TOKEN}
+        VITE_SECRETO: ${SECRET_KEY}
+    restart: unless-stopped
+    depends_on:
+      - php
+    ports:
+      - "8080:80"
+    volumes:
+      - uploads:/var/www/html/uploads:ro
+
+volumes:
+  db_data:
+  uploads:

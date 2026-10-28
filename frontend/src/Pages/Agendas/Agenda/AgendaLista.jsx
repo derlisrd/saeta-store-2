@@ -2,7 +2,7 @@
 import { Box, Button } from "@mui/material";
 import FullCalendar from "@fullcalendar/react";
 import daygridPlugin from "@fullcalendar/daygrid";
-import esLocale from "@fullcalendar/core/locales/es";
+import esLocale from "../../../Utils/fullcalendarEsLocale";
 import interactionPlugin from "@fullcalendar/interaction";
 import {useAgenda} from './AgendaProvider';
 import LoadingBackDrop from "../../../Components/UI/LoadingBackDrop";
