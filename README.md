@@ -1,86 +1,107 @@
 # Saeta Store 2
 
-Monorepo con:
+Sistema de ventas/administración con:
 
-- `backend/`: API PHP nativa (PDO + MySQL).
-- `frontend/`: SPA React 18 + TypeScript migrada a **Vite**.
-- `docker/`: configuración de **nginx + php-fpm + MySQL 8**.
+- `backend/`: API **PHP nativa** (PDO + MySQL).
+- `frontend/`: SPA **React 18 + TypeScript + Vite**.
+- Docker: **nginx + php-fpm + MySQL 8** (sin Apache).
+
+> En el VPS hay un nginx del host (80/443) delante de Cloudflare que hace
+> proxy a `127.0.0.1:8080`. La zona real observada es **`wv.saeta.app`**.
+
+## Contexto para agentes
+
+- [`AGENTS.md`](AGENTS.md): contexto principal, reglas y comandos.
+- [`docs/README.md`](docs/README.md): índice de documentación detallada.
+  - Arquitectura, desarrollo, despliegue, frontend, backend, base de datos,
+    troubleshooting y decisiones.
 
 ## Requisitos
 
-- Docker Desktop y Docker Compose.
-- (Opcional, para frontend sin Docker) Node.js 20+.
+- Docker Desktop + Docker Compose.
+- Node.js 20+ (solo si trabajas el frontend fuera de Docker).
 
-## Producción / entorno local
+## Inicio rápido
+
+### Stack tipo producción (local)
 
 ```bash
 cp .env.example .env
-# Editar contraseñas y secretos en .env
+# Editar contraseñas y secretos
 
 docker compose up -d --build
 ```
 
-Servicios:
-
-| Servicio | URL |
+| Servicio | URL / puerto |
 |---|---|
 | Frontend | http://localhost:8080/admin/ |
 | API | http://localhost:8080/api/v1/ |
-| MySQL | interno `db:3306` (no expuesto al host) |
+| MySQL desde el host | `127.0.0.1:3307` |
+| MySQL interno | `db:3306` |
 
-### Notas de producción
-
-- nginx sirve el build de Vite en `/admin/` y pasa `/api/v1/` a php-fpm.
-- `/uploads/` se sirve desde el volumen `uploads` compartido con php-fpm.
-- La base se inicializa en el primer arranque desde:
-  - `backend/novedades.txt` (esquema + datos)
-  - `docker/mysql/init/02-set-configured.sql` (marca `empresas.configurado = 1`)
-- Para reiniciar la base desde cero:
+### Desarrollo con hot reload
 
 ```bash
-docker compose down -v   # OJO: elimina db_data y uploads
-docker compose up -d --build
-```
-
-## Desarrollo (hot reload)
-
-```bash
+docker compose down
 docker compose -f docker-compose.dev.yml up -d --build
 ```
 
-| Servicio | URL |
+| Servicio | URL / puerto |
 |---|---|
-| Vite (hot reload) | http://localhost:3000/admin/ |
-| API vía proxy de Vite | http://localhost:3000/api/v1/ |
-| nginx / API directa | http://localhost:8080/api/v1/ |
-| MySQL desde el host | `localhost:3307` |
+| Vite | http://localhost:3000/admin/ |
+| API vía proxy Vite | http://localhost:3000/api/v1/ |
+| MySQL desde el host | `127.0.0.1:3307` |
 
-El código de `backend/` se monta en caliente y `frontend/` se sirve con Vite.
+> El stack base y el de dev usan los mismos puertos (`8080`, `3307`). No los
+> levantes a la vez.
 
-## Frontend sin Docker
+### Frontend sin Docker
 
 ```bash
 cd frontend
 npm install
 npm run dev      # http://localhost:3000/admin/
-npm run build    # genera dist/
-npm run preview
+npm run build    # dist/
+npm run lint
+npm run test
 ```
 
-Variables principales (`frontend/.env`):
+## Estructura
 
-```env
-VITE_BASE_URL=/admin          # sin barra final
-VITE_API_URL_END_POINT=/api/v1/
-VITE_X_API_TOKEN=...
-VITE_SECRETO=...
+```text
+.
+├── AGENTS.md
+├── docs/
+├── docker/
+│   ├── nginx/
+│   ├── php/
+│   └── mysql/
+├── backend/
+├── frontend/
+├── docker-compose.yml
+├── docker-compose.dev.yml
+└── Dockerfile
 ```
 
-> Las variables `VITE_*` se embeben en el bundle en tiempo de build.
+## Actualizar en el VPS
 
-## Detalles de compatibilidad
+El frontend se compila dentro de la imagen de nginx. Después de `git pull`:
 
-- El proyecto original (CRA) tiene JSX dentro de archivos `.js`; Vite los transforma con el plugin `jsxInJs` de `vite.config.ts`.
-- El backend emite un header inválido (`header('charset=utf-8')`). La imagen de PHP lo filtra en `docker/php/remove-bad-header.php` sin modificar el backend.
-- El backend usa rutas relativas de `uploads`; la imagen de PHP crea enlaces para que subida y borrado apunten al mismo volumen (sin tocar el código PHP).
-- Composer se ejecuta con `--no-blocking` porque `dompdf` y `firebase/php-jwt` tienen avisos de seguridad en las versiones fijadas por `backend/composer.json`.
+```bash
+docker compose build nginx
+docker compose up -d --no-deps --force-recreate nginx
+```
+
+Luego purgar Cloudflare y hacer hard reload. Ver
+[`docs/DEPLOYMENT.md`](docs/DEPLOYMENT.md).
+
+## Notas clave
+
+- El backend PHP **no se modifica** para Docker; las adaptaciones están en
+  `docker/`.
+- MySQL se inicializa desde `backend/novedades.txt` +
+  `docker/mysql/init/02-set-configured.sql`.
+- `docker compose down -v` es **destructivo** (borra base y uploads).
+- No exponer MySQL (`3307`) ni el nginx del contenedor (`8080`) en `0.0.0.0`
+  en el VPS.
+- Documentación completa en [`docs/`](docs/README.md).
