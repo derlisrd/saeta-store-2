@@ -10,7 +10,8 @@ const VentasTablaItems = () => {
   const { datosFacturas, indexFactura,funciones,restarCantidad,sumarCantidad } = useVentas();
 
   const items = [...datosFacturas.facturas[indexFactura].itemsFactura];
-  const valorMoneda = parseFloat(datosFacturas.facturas[indexFactura].datosMoneda.valor_moneda);
+  const valorMoneda =
+    parseFloat(datosFacturas.facturas[indexFactura].datosMoneda?.valor_moneda) || 1;
 
   return (
     <>

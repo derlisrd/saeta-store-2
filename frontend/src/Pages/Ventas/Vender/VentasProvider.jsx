@@ -558,7 +558,7 @@ const VentasProvider = ({ children }) => {
       let found = faArray.filter(i => i.codigo_producto.toLowerCase() === codigo.toLowerCase());
       // si ya hay un producto tons aumenta la cantidad
       if (found.length > 0) {
-        let cantidadInput = parseFloat(inputCantidad.current.value) +faArray[index].cantidad_producto;
+        let cantidadInput = (parseFloat(inputCantidad.current.value) || 1) + faArray[index].cantidad_producto;
         let stock = faArray[index].stock_producto;
         if(stock>=cantidadInput || stock===null || isNaN(stock)){
           AgregarCantidad(cantidadInput, index);
@@ -704,7 +704,7 @@ const VentasProvider = ({ children }) => {
     
     let fa = { ...datosFacturas };
     let df = fa.facturas[indexFactura];
-    let cantidadInput = cantidad || parseFloat(inputCantidad.current.value) ;
+    let cantidadInput = cantidad || parseFloat(inputCantidad.current.value) || 1;
     let subtotal = parseFloat(prod.precio_producto) * cantidadInput;
     let iva_porcent = parseFloat(prod.porcentaje_impuesto);
     let porcentaje_comision = parseInt(prod.porcentaje_comision);
@@ -1040,7 +1040,7 @@ const VentasProvider = ({ children }) => {
       }
       
           if (rMoneda.response ) {
-            var activeMoneda = rMoneda.results.filter(e => e.activo_moneda === "1");
+            var activeMoneda = rMoneda.results.filter(e => Number(e.activo_moneda) === 1);
             var monedas = rMoneda.results
             var monedasdecajas = cajaMonedas.results;
           }
@@ -1125,6 +1125,59 @@ const VentasProvider = ({ children }) => {
     focusInput();
     return () => {isActive = false;ca.abort();};
   }, [getDatosFactura, datosFacturas, indexFactura]);
+
+  // Migración para ventas guardadas en localStorage antes del fix:
+  // si monedaActiva quedó vacía (por comparar activo_moneda === "1"),
+  // recuperamos la moneda activa sin perder los items de la venta.
+  useEffect(() => {
+    if (cargas.general) return;
+
+    const moneda = datosFacturas.monedaActiva;
+    const faltaMoneda =
+      !moneda ||
+      moneda.valor_moneda === undefined ||
+      moneda.valor_moneda === null;
+
+    if (!faltaMoneda) return;
+
+    let cancelled = false;
+
+    (async () => {
+      const res = await APICALLER.get({ table: "monedas" });
+      if (cancelled || !res.response || !res.results) return;
+
+      const activa = res.results.find(e => Number(e.activo_moneda) === 1);
+      if (!activa) return;
+
+      setDatosFacturas(prev => {
+        const facturas = prev.facturas.map(f => ({
+          ...f,
+          datosMoneda:
+            f.datosMoneda &&
+            f.datosMoneda.valor_moneda !== undefined &&
+            f.datosMoneda.valor_moneda !== null
+              ? f.datosMoneda
+              : activa,
+        }));
+
+        const updated = {
+          ...prev,
+          monedaActiva: activa,
+          listaMonedas: prev.listaMonedas?.length
+            ? prev.listaMonedas
+            : res.results,
+          facturas,
+        };
+
+        localStorage.setItem("facturasStorage", JSON.stringify(updated));
+        return updated;
+      });
+    })();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [cargas.general, datosFacturas.monedaActiva]);
 
 
   const values = {

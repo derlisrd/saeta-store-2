@@ -29,13 +29,13 @@ const Inputs = () => {
   };
 
   const restar = () => {
-    let anterior = parseFloat(inputCantidad.current.value) - 1;
+    let anterior = (parseFloat(inputCantidad.current.value) || 1) - 1;
     if (anterior > 0) {
       inputCantidad.current.value = anterior;
     }
   };
   const sumar = () => {
-    let anterior = parseFloat(inputCantidad.current.value) + 1;
+    let anterior = (parseFloat(inputCantidad.current.value) || 1) + 1;
     inputCantidad.current.value = anterior;
   };
 

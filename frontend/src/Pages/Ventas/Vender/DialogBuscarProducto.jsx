@@ -27,7 +27,7 @@ const DialogBuscarProducto = () => {
 
       //let nombre = value.nombre_producto;
         let deposito = f.facturas[indexFactura].depositoActivo;
-        var cantidadInput = parseFloat(inputCantidad.current.value);
+        var cantidadInput = parseFloat(inputCantidad.current.value) || 1;
         let fa = f.facturas[indexFactura].itemsFactura
         let index = fa.findIndex(e => e.codigo_producto.toLowerCase() === codigo.toLowerCase());
         let found = fa.filter(i => i.codigo_producto.toLowerCase() === codigo.toLowerCase());

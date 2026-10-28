@@ -424,7 +424,7 @@ const NotasProvider = ({children}) => {
         ])
 
         if (rMoneda.response ) {
-          var activeMoneda = rMoneda.results.filter(e => e.activo_moneda === "1");
+          var activeMoneda = rMoneda.results.filter(e => Number(e.activo_moneda) === 1);
           var monedas = rMoneda.results
         }
 
@@ -490,6 +490,57 @@ const NotasProvider = ({children}) => {
           ca.abort();
         }
     },[getDatosNota])
+
+    // Migración para notas guardadas en localStorage antes del fix de moneda.
+    useEffect(() => {
+      if (localStorage.getItem("notas") === null) return;
+
+      const moneda = datosNotas.monedaActiva;
+      const faltaMoneda =
+        !moneda ||
+        moneda.valor_moneda === undefined ||
+        moneda.valor_moneda === null;
+
+      if (!faltaMoneda) return;
+
+      let cancelled = false;
+
+      (async () => {
+        const res = await APICALLER.get({ table: "monedas" });
+        if (cancelled || !res.response || !res.results) return;
+
+        const activa = res.results.find(e => Number(e.activo_moneda) === 1);
+        if (!activa) return;
+
+        setDatosNotas(prev => {
+          const facturas = prev.facturas.map(f => ({
+            ...f,
+            datosMoneda:
+              f.datosMoneda &&
+              f.datosMoneda.valor_moneda !== undefined &&
+              f.datosMoneda.valor_moneda !== null
+                ? f.datosMoneda
+                : activa,
+          }));
+
+          const updated = {
+            ...prev,
+            monedaActiva: activa,
+            listaMonedas: prev.listaMonedas?.length
+              ? prev.listaMonedas
+              : res.results,
+            facturas,
+          };
+
+          localStorage.setItem("notas", JSON.stringify(updated));
+          return updated;
+        });
+      })();
+
+      return () => {
+        cancelled = true;
+      };
+    }, [datosNotas.monedaActiva]);
 
     const values = {setDesdeFecha,setHastaFecha, consultarCliente,errors, setErrors,valorConvertido,borrarItem,sumarCantidad,restarCantidad, indexPrecioCambiar, verificarExisteEnTabla,consultarPorCodigo,setearNota, lista,cargas,lang,dialogs,setDialogs,inputCantidad,inputCodigo,indexFactura,setIndexFactura,datosNotas,getListas,Anotar,CancelarFacturaActual,Aguardar,insertarProductoTabla,openCambiarPrecio}
 
