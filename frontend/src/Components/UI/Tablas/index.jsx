@@ -104,7 +104,7 @@ return (
                                             column.items ?
                                             column.items[data[column.compareField]] :
                                             column.html ? column.html :
-                                            data[column.field].substr(0,[column.substr ?? 50])
+                                            (data[column.field] == null ? "" : String(data[column.field]).substr(0, column.substr ?? 50))
                                             }
                                             {
                                                 column.after ?? null

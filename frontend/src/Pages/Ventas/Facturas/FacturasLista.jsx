@@ -45,8 +45,8 @@ const FacturasLista = () => {
 
   const FilterData = lista.filter(
     (item) =>
-      item.nro_factura.toLowerCase().includes(inputSearch.toLowerCase()) ||
-      item.nombre_cliente.toLowerCase().includes(inputSearch.toLowerCase())
+      String(item?.nro_factura ?? "").toLowerCase().includes(inputSearch.toLowerCase()) ||
+      String(item?.nombre_cliente ?? "").toLowerCase().includes(inputSearch.toLowerCase())
   );
 
   const columnas = [
