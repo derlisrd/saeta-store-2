@@ -5,6 +5,12 @@ import CryptoJS from "crypto-js";
 import { funciones } from '../Functions';
 import { useConfiguracion } from './ConfiguracionProvider';
 
+// El backend responde HTTP 200 incluso cuando el token es inválido
+// (response:false + status:200). Un fallo de red o un 5xx llega sin `status`,
+// por lo que NO debe cerrar la sesión: se reintenta en el siguiente chequeo.
+const esTokenInvalido = (res) =>
+    Boolean(res && res.response === false && res.status === 200);
+
 const LoginContext = createContext()
 
 const LoginProvider = ({children}) => {
@@ -130,48 +136,35 @@ const LoginProvider = ({children}) => {
 
 
 
-    const authcheck = useCallback(async()=>{
-        
-        let local = localStorage.getItem('userData') || sessionStorage.getItem('userData')
-        if (userData.login && local) {
-            setInterval(async() => {
-              let res = await APICALLER.validateToken(userData.token_user);
-              if (!res.response ){
-                  console.log(res)
-                  logOut()
-              }
-              //console.log(res);
-            }, 300000); //
-        }
-        
-    },[userData,logOut])
-
-    const verificar = useCallback(async()=>{
-        setLoading(true);
-        let local = localStorage.getItem('userData') || sessionStorage.getItem('userData')
-        if (userData.login && local) {
-              let [validate,permisos] = await Promise.all([
-                APICALLER.validateToken(userData.token_user),
-                APICALLER.get({table:"permisos_users",where:`id_user_permiso,=,${userData.id_user}`,fields:"id_permiso_permiso"})
-            ]);
-              if (!validate.response ) {
-                  console.log(validate)
-                  logOut()
-              }
-              if(permisos.response){
-                
-              }
-        }
-        setLoading(false)
-    },[userData,logOut])
-
-
-
     useEffect(() => {
-        const ca = new AbortController(); let isActive = true;
-        if (isActive) {verificar(); authcheck()}
-        return () => {isActive = false;ca.abort();};
-      }, [verificar,authcheck]);
+        if (!userData.login || !userData.token_user) {
+            setLoading(false);
+            return;
+        }
+
+        let cancelado = false;
+        setLoading(true);
+
+        const validarSesion = async () => {
+            const res = await APICALLER.validateToken(userData.token_user);
+            if (cancelado) return;
+            if (esTokenInvalido(res)) {
+                logOut();
+                return;
+            }
+            setLoading(false);
+        };
+
+        // Verificación inmediata al montar / cambiar de usuario.
+        validarSesion();
+
+        // Revalidación periódica. El cleanup evita intervalos acumulados.
+        const intervalId = setInterval(validarSesion, 300000);
+        return () => {
+            cancelado = true;
+            clearInterval(intervalId);
+        };
+    }, [userData.login, userData.token_user, logOut]);
 
       const values = {userData,logIn,logOut,load,loading,Descifrar,dataEmpresa,setDataEmpresa}
 
