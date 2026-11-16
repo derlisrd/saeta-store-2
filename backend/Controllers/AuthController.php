@@ -305,20 +305,11 @@ class AuthController {
 
     private static function Aud()
     {
-        $aud = '';
-
-        if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
-            $aud = $_SERVER['HTTP_CLIENT_IP'];
-        } elseif (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
-            $aud = $_SERVER['HTTP_X_FORWARDED_FOR'];
-        } else {
-            $aud = $_SERVER['REMOTE_ADDR'];
-        }
-
-        $aud .= @$_SERVER['HTTP_USER_AGENT'];
-        $aud .= gethostname();
-
-        return sha1($aud);
+        // La audiencia debe ser estable entre peticiones. Si se liga a IP,
+        // X-Forwarded-For, User-Agent o gethostname(), el token deja de
+        // validar cuando cambia la red/UA o se recrea el contenedor PHP,
+        // cerrando la sesión sin motivo. Usamos el host de la aplicación.
+        return DOMAIN_AUTH;
     }
 
 
